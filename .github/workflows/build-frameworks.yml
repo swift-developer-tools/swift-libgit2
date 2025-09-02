@@ -1,0 +1,53 @@
+name: Build XCFrameworks
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[automated]')"
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout public repo
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Checkout private build repo
+      uses: actions/checkout@v4
+      with:
+        repository: swift-developer-tools/swift-libgit2-base
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        path: swift-libgit2-base-temp
+        submodules: recursive
+    
+    - name: Build XCFrameworks
+      run: |
+        cd swift-libgit2-base-temp
+        chmod +x bin/*.sh
+        ./bin/build_openssl.sh
+        ./bin/build_libssh2.sh
+        ./bin/build_libgit2.sh
+        
+    - name: Update embedded package
+      run: |
+        rm -rf swift-libgit2-base
+        mkdir -p swift-libgit2-base
+        cp swift-libgit2-base-temp/Package.swift swift-libgit2-base/
+        cp -r swift-libgit2-base-temp/Sources swift-libgit2-base/
+        cp -r swift-libgit2-base-temp/lib swift-libgit2-base/
+        rm -rf swift-libgit2-base-temp
+    
+    - uses: stefanzweifel/git-auto-commit-action@v6
+      with:
+        commit_message: Update XCFrameworks [automated]
+        commit_user_name: GitHub Actions Bot
+        commit_user_email: actions@github.com
+        commit_author: GitHub Actions Bot <actions@github.com>
+        skip_dirty_check: false

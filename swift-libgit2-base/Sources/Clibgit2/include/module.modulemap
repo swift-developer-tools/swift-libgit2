@@ -1,0 +1,12 @@
+module Clibgit2 {
+    umbrella header "git2.h"
+    export *
+    link "libgit2"
+    link "libssh2"
+    link "libssl"
+    link "libcrypto"
+    link "z"
+    link "iconv"
+    link "framework Security"
+    link "framework CoreFoundation"
+}
