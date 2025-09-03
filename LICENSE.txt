@@ -1,3 +1,15 @@
+swift-libgit2
+Copyright (c) Margins Technologies LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+
+This license applies to the Swift wrapper code in this repository.
+Bundled third-party libraries are licensed separately - see the
+Licenses folder for their respective license terms.
+
+---
+
                                 Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
