@@ -143,6 +143,16 @@ swift-libgit2 includes the following compiled libraries:
 
 ## Topics
 
+### Annotated Commit Functions
+
+- ``gitAnnotatedCommitFromRef(out:repo:ref:)``
+- ``gitAnnotatedCommitFromFetchhead(out:repo:branchName:remoteURL:id:)``
+- ``gitAnnotatedCommitLookup(out:repo:id:)``
+- ``gitAnnotatedCommitFromRevspec(out:repo:revspec:)``
+- ``gitAnnotatedCommitID(commit:)``
+- ``gitAnnotatedCommitRef(commit:)``
+- ``gitAnnotatedCommitFree(commit:)``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``
