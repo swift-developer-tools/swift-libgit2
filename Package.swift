@@ -27,6 +27,11 @@ let package = Package(
         .package(
             name:   "swift-libgit2-base",
             path:   "swift-libgit2-base"
+        ),
+        
+        .package(
+            url:    "https://github.com/apple/swift-docc-plugin",
+            from:   "1.4.5"
         )
     ],
     targets:

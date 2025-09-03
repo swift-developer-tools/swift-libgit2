@@ -1,4 +1,4 @@
-# swift-libgit2
+# ``SwiftLibgit2``
 
 Direct Swift bindings to libgit2.
 
@@ -138,3 +138,10 @@ swift-libgit2 includes the following compiled libraries:
 | libgit2 | 1.9.1   | [https://github.com/libgit2/libgit2](https://github.com/libgit2/libgit2) | GNU GPL, Version 2, with linking exception |
 | libssh2 | 1.11.1  | [https://github.com/libssh2/libssh2](https://github.com/libssh2/libssh2) | BSD-3-Clause License |
 | OpenSSL | 3.5.2   | [https://github.com/openssl/openssl](https://github.com/openssl/openssl) | Apache License, Version 2.0 |
+
+## Topics
+
+### Global Functions
+
+- ``gitLibgit2Init()``
+- ``gitLibgit2Shutdown()``
