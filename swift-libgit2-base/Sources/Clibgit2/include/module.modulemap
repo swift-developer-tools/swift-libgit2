@@ -1,6 +1,12 @@
 module Clibgit2
 {
-    umbrella header "git2.h"
+    // `git2.h` includes all the necessary headers, excluding the deprecated
+    // ones. Using an `umbrella header` would cause a warning about Clibgit2
+    // missing the deprecated `git2/credential_helpers.h` header.
+    header "git2.h"
+    
+    // Using an `umbrella header` would cause a warning about Clibgit2 missing
+    // the deprecated `git2/sys/cred.h` header.
     header "git2/sys/alloc.h"
     header "git2/sys/commit.h"
     header "git2/sys/commit_graph.h"
@@ -24,6 +30,7 @@ module Clibgit2
     header "git2/sys/repository.h"
     header "git2/sys/stream.h"
     header "git2/sys/transport.h"
+    
     export *
     link "libgit2"
     link "libssh2"
