@@ -7,8 +7,13 @@ Direct Swift bindings to libgit2.
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org).
 libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
-Swift bindings are provided for every function, class, or object available in 
-libgit2. The Swift bindings use the same signatures and parameter names as 
+Swift bindings are provided for every function and concrete struct available in 
+libgit2. Direct access to the libgit2 C library is also provided by the package. 
+There are no Swift bindings for opaque objects, macros, and constants, but 
+these may be accessed by importing the C library. See the Usage section below 
+for an example of how to import and use either library.
+
+The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 
 [camel case](https://en.wikipedia.org/wiki/Camel_case) rather than 
 [snake case](https://en.wikipedia.org/wiki/Snake_case).
@@ -16,9 +21,6 @@ their C equivalents, but are written using
 Similar to libgit2, the Swift bindings do not use 
 [namespaces](https://en.wikipedia.org/wiki/Namespace). All Swift bindings are
 available globally.
-
-Direct access to the libgit2 C library is also provided by the package. See the 
-Usage section below for an example of how to import and use either library.
 
 ## Installation
 

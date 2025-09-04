@@ -12,42 +12,53 @@ import XCTest
 
 
 
-final class GlobalFunctionsTests: XCTestCase
+final class GlobalFunctionsTests: XCTestCaseStopOnFail
 {
-    /// Test initializing and shutting down the global libgit2 state.
+    // MARK: - testLibgit2InitAndShutdown()
+    
     func testLibgit2InitAndShutdown() throws
     {
         let initResult: Int32 = gitLibgit2Init()
         
-        XCTAssertGreaterThan(
+        XCTAssertEqual(
             initResult,
-            0,
-            "The init should return a non-zero positive reference count."
+            1,
+            "The init result was not 1."
         )
         
         
         
         let shutdownResult: Int32 = gitLibgit2Shutdown()
         
-        XCTAssertGreaterThanOrEqual(
+        XCTAssertEqual(
             shutdownResult,
             0,
-            "The shutdown should succeed."
+            "The shutdown result was not 0."
         )
     }
     
     
     
-    /// Test initializing and shutting down multiple global libgit2 states.
+    // MARK: - testMultipleLibgit2InitShutdown()
+    
     func testMultipleLibgit2InitShutdown() throws
     {
-        let firstInitResult     : Int32     = gitLibgit2Init()
-        let secondInitResult    : Int32     = gitLibgit2Init()
+        let firstInitResult: Int32 = gitLibgit2Init()
+
+        XCTAssertEqual(
+            firstInitResult,
+            1,
+            "The first init result was not 1."
+        )
+        
+        
+        
+        let secondInitResult: Int32 = gitLibgit2Init()
         
         XCTAssertEqual(
             secondInitResult,
-            firstInitResult + 1,
-            "The second init should increment the reference count."
+            2,
+            "The second init result was not 2."
         )
         
         
@@ -55,16 +66,16 @@ final class GlobalFunctionsTests: XCTestCase
         let firstShutdownResult     : Int32     = gitLibgit2Shutdown()
         let secondShutdownResult    : Int32     = gitLibgit2Shutdown()
         
-        XCTAssertGreaterThanOrEqual(
+        XCTAssertEqual(
             firstShutdownResult,
-            0,
-            "The first shutdown should succeed."
+            1,
+            "The first shutdown result was not 1."
         )
         
-        XCTAssertGreaterThanOrEqual(
+        XCTAssertEqual(
             secondShutdownResult,
             0,
-            "The second shutdown should succeed."
+            "The second shutdown result was not 0."
         )
     }
 }
