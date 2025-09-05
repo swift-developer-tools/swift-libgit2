@@ -13,7 +13,7 @@ import XCTest
 
 
 
-final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
+final class AnnotatedCommitTests: XCTestCaseStopOnFail
 {
     // MARK: - testGitAnnotatedCommitFromFetchhead()
     

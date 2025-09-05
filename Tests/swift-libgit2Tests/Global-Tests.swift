@@ -12,7 +12,7 @@ import XCTest
 
 
 
-final class GlobalFunctionsTests: XCTestCaseStopOnFail
+final class GlobalTests: XCTestCaseStopOnFail
 {
     // MARK: - testLibgit2InitAndShutdown()
     
