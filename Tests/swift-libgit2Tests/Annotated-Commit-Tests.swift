@@ -13,7 +13,7 @@ import XCTest
 
 
 
-final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
+final class AnnotatedCommitTests: XCTestCaseStopOnFail
 {
     // MARK: - testGitAnnotatedCommitFromFetchhead()
     
@@ -23,7 +23,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(from: repository)
+            var headOID: git_oid = OID.getHEADCommitOID(on: repository)
             
             
             
@@ -31,11 +31,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
             
             defer
             {
-                if annotatedCommitPointer != nil
-                {
-                    gitAnnotatedCommitFree(commit: annotatedCommitPointer!)
-                    annotatedCommitPointer = nil
-                }
+                Free.freeAnnotatedCommitPointer(&annotatedCommitPointer)
             }
             
             
@@ -48,10 +44,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
                 id:             &headOID
             )
             
-            XCTAssertOK(
-                annotatedCommitFromFetchheadResult,
-                "annotatedCommitFromFetchheadResult"
-            )
+            XCTAssertOK(annotatedCommitFromFetchheadResult)
             
             guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
             else
@@ -85,11 +78,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
             
             defer
             {
-                if headReferencePointer != nil
-                {
-                    git_reference_free(headReferencePointer!)
-                    headReferencePointer = nil
-                }
+                Free.freeReferencePointer(&headReferencePointer)
             }
             
             
@@ -100,10 +89,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
                 "HEAD"
             )
             
-            XCTAssertOK(
-                referenceLookupResult,
-                "referenceLookupResult"
-            )
+            XCTAssertOK(referenceLookupResult)
             
             guard let headReferencePointer: OpaquePointer = headReferencePointer
             else
@@ -118,11 +104,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
             
             defer
             {
-                if annotatedCommitPointer != nil
-                {
-                    gitAnnotatedCommitFree(commit: annotatedCommitPointer!)
-                    annotatedCommitPointer = nil
-                }
+                Free.freeAnnotatedCommitPointer(&annotatedCommitPointer)
             }
             
             
@@ -133,10 +115,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
                 ref:    headReferencePointer
             )
             
-            XCTAssertOK(
-                annotatedCommitFromRefResult,
-                "annotatedCommitFromRefResult"
-            )
+            XCTAssertOK(annotatedCommitFromRefResult)
             
             guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
             else
@@ -185,11 +164,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
             
             defer
             {
-                if annotatedCommitPointer != nil
-                {
-                    gitAnnotatedCommitFree(commit: annotatedCommitPointer!)
-                    annotatedCommitPointer = nil
-                }
+                Free.freeAnnotatedCommitPointer(&annotatedCommitPointer)
             }
             
             
@@ -200,10 +175,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
                 revspec:    "HEAD"
             )
             
-            XCTAssertOK(
-                annotatedCommitFromRevspecResult,
-                "annotatedCommitFromRevspecResult"
-            )
+            XCTAssertOK(annotatedCommitFromRevspecResult)
             
             guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
             else
@@ -233,7 +205,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(from: repository)
+            var headOID: git_oid = OID.getHEADCommitOID(on: repository)
             
             
             
@@ -241,11 +213,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
             
             defer
             {
-                if annotatedCommitPointer != nil
-                {
-                    gitAnnotatedCommitFree(commit: annotatedCommitPointer!)
-                    annotatedCommitPointer = nil
-                }
+                Free.freeAnnotatedCommitPointer(&annotatedCommitPointer)
             }
             
             
@@ -256,10 +224,7 @@ final class AnnotatedCommitFunctionsTests: XCTestCaseStopOnFail
                 id:     &headOID
             )
             
-            XCTAssertOK(
-                annotatedCommitLookupResult,
-                "annotatedCommitLookupResult"
-            )
+            XCTAssertOK(annotatedCommitLookupResult)
             
             guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
             else

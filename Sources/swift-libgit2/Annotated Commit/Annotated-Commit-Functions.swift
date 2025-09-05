@@ -159,9 +159,9 @@ public func gitAnnotatedCommitID(
 
 
 
-/// Get the refname that the given `git_annotated_commit` refers to.
+/// Get the reference name that the given `git_annotated_commit` refers to.
 /// - Parameter commit: The given annotated commit.
-/// - Returns: The ref name.
+/// - Returns: The reference name.
 ///
 /// ## C Equivalent
 ///
