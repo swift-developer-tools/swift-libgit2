@@ -26,7 +26,7 @@ import Foundation
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
 public struct GitApplyOptions
 {
-    /// The version to use. Defaults to `UInt32(GIT_APPLY_OPTIONS_VERSION)`.
+    /// The version to use. Defaults to ``gitApplyOptionsVersion``.
     public var version : UInt32
     
     /// The callback that will be made per delta (file) when applying a patch.
@@ -44,10 +44,10 @@ public struct GitApplyOptions
     
     
     /// Initialize a ``GitApplyOptions`` struct.
-    /// - Parameter version: The version to use. Defaults to `UInt32(GIT_APPLY_OPTIONS_VERSION)`.
+    /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
     /// - Throws: An `NSError` if the initialization failed.
     public init(
-        version: UInt32 = UInt32(GIT_APPLY_OPTIONS_VERSION)
+        version: UInt32 = gitApplyOptionsVersion
     ) throws
     {
         var applyOptions = git_apply_options()

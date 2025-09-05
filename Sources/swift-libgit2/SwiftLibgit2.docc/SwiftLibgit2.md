@@ -9,11 +9,12 @@ Direct Swift bindings to libgit2.
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org).
 libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
-Swift bindings are provided for every function and concrete struct available in 
-libgit2. Direct access to the libgit2 C library is also provided by the package. 
-There are no Swift bindings for opaque objects, macros, and constants, but 
-these may be accessed by importing the C library. See the Usage section below 
-for an example of how to import and use either library.
+Swift bindings are provided for almost every function, concrete struct, and 
+macro available in libgit2. Direct access to the libgit2 C library is also 
+provided by the package. There are no Swift bindings for initialization 
+functions, opaque structs, and initialization macros, but these may be accessed 
+by importing the C library. See the Usage section below for an example of how 
+to import and use either library.
 
 The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 
@@ -168,6 +169,10 @@ swift-libgit2 includes the following compiled libraries:
 ### Apply Structs
 
 - ``GitApplyOptions``
+
+### Apply Macros
+
+- ``gitApplyOptionsVersion``
 
 ### Apply Enums
 

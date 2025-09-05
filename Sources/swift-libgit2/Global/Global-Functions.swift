@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Init the global state.
+/// Initialize the global state.
 ///
 /// - Returns: The number of times the initialization has been called (including this one) that have not
 /// subsequently been shutdown.
