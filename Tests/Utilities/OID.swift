@@ -51,7 +51,7 @@ enum OID
     /// - Parameter repository: The repository on which the HEAD commit exists.
     /// - Returns: The HEAD commit OID.
     static func getHEADCommitOID(
-        from repository: Repository
+        on repository: Repository
     ) -> git_oid
     {
         var headOID = git_oid()
@@ -62,10 +62,7 @@ enum OID
             "HEAD"
         )
         
-        XCTAssertOK(
-            referenceNameToIDResult,
-            "referenceNameToIDResult"
-        )
+        XCTAssertOK(referenceNameToIDResult)
         
         return headOID
     }

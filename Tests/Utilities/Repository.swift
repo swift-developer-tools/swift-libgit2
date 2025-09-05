@@ -27,6 +27,12 @@ struct Repository
     
     
     
+    /// The repository is created with a single `README.md` document which says`# Hello World!`.
+    static let originalDocumentName     : String    = "README.md"
+    static let originalDocumentContent  : String    = "# Hello World!"
+    
+    
+    
     // MARK: - createInitialCommit()
     
     /// Create the initial commit on the test repository.
@@ -36,17 +42,13 @@ struct Repository
         on repository: Repository
     ) throws
     {
-        let testDocumentName: String = "README.md"
-        
-        let testDocumentURL: URL = repository.url.appending(
-            path:           testDocumentName,
+        let documentURL: URL = repository.url.appending(
+            path:           originalDocumentName,
             directoryHint:  .notDirectory
         )
         
-        let testDocumentContent: String = "# Hello World!"
-        
-        try testDocumentContent.write(
-            to:             testDocumentURL,
+        try originalDocumentContent.write(
+            to:             documentURL,
             atomically:     true,
             encoding:       .utf8
         )
@@ -60,31 +62,22 @@ struct Repository
             repository.pointer
         )
         
-        XCTAssertOK(
-            repositoryIndexResult,
-            "repositoryIndexResult"
-        )
+        XCTAssertOK(repositoryIndexResult)
         
         
         
         let indexAddBypathResult: Int32 = git_index_add_bypath(
             indexPointer,
-            testDocumentName
+            originalDocumentName
         )
         
-        XCTAssertOK(
-            indexAddBypathResult,
-            "indexAddBypathResult"
-        )
+        XCTAssertOK(indexAddBypathResult)
         
         
         
         let indexWriteResult: Int32 = git_index_write(indexPointer)
         
-        XCTAssertOK(
-            indexWriteResult,
-            "indexWriteResult"
-        )
+        XCTAssertOK(indexWriteResult)
         
         
         
@@ -95,10 +88,7 @@ struct Repository
             indexPointer
         )
         
-        XCTAssertOK(
-            indexWriteTreeResult,
-            "indexWriteTreeResult"
-        )
+        XCTAssertOK(indexWriteTreeResult)
         
         
         
@@ -106,11 +96,7 @@ struct Repository
         
         defer
         {
-            if treePointer != nil
-            {
-                git_tree_free(treePointer)
-                treePointer = nil
-            }
+            Free.freeTreePointer(&treePointer)
         }
         
         let treeLookupResult: Int32 = git_tree_lookup(
@@ -119,10 +105,7 @@ struct Repository
             &treeOID
         )
         
-        XCTAssertOK(
-            treeLookupResult,
-            "treeLookupResult"
-        )
+        XCTAssertOK(treeLookupResult)
         
         
         
@@ -130,11 +113,7 @@ struct Repository
         
         defer
         {
-            if signaturePointer != nil
-            {
-                git_signature_free(signaturePointer)
-                signaturePointer = nil
-            }
+            Free.freeSignaturePointer(&signaturePointer)
         }
         
         let signatureNowResult: Int32 = git_signature_now(
@@ -143,10 +122,7 @@ struct Repository
             "test@example.com"
         )
         
-        XCTAssertOK(
-            signatureNowResult,
-            "signatureNowResult"
-        )
+        XCTAssertOK(signatureNowResult)
         
         
         
@@ -165,10 +141,7 @@ struct Repository
             nil
         )
         
-        XCTAssertOK(
-            commitCreateResult,
-            "commitCreateResult"
-        )
+        XCTAssertOK(commitCreateResult)
     }
     
     
@@ -201,7 +174,7 @@ struct Repository
     /// - Parameter body: The closure to call.
     /// - Throws: An `Error` if the directory creation failed.
     static func withRepository(
-        _ body: (Repository) -> Void
+        _ body: (Repository) throws -> Void
     ) throws
     {
         let _: Int32 = gitLibgit2Init()
@@ -221,11 +194,7 @@ struct Repository
         
         defer
         {
-            if repositoryPointer != nil
-            {
-                git_repository_free(repositoryPointer)
-                repositoryPointer = nil
-            }
+            Free.freeRepositoryPointer(&repositoryPointer)
             
             try? FileManager.default.removeItem(at: url)
         }
@@ -238,10 +207,7 @@ struct Repository
             0
         )
         
-        XCTAssertOK(
-            repositoryInitResult,
-            "repositoryInitResult"
-        )
+        XCTAssertOK(repositoryInitResult)
         
         guard let repositoryPointer: OpaquePointer = repositoryPointer
         else
@@ -261,6 +227,6 @@ struct Repository
         
         
         
-        return body(repository)
+        return try body(repository)
     }
 }
