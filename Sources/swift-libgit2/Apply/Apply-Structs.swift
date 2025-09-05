@@ -1,0 +1,95 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import Clibgit2
+import Foundation
+
+
+
+/// Apply options structure.
+///
+/// ## Discussion
+///
+/// When the callback:
+/// - Returns a negative value, the apply process will be aborted.
+/// - Returns a positive value, the hunk will not be applied, but the apply process will continue.
+/// - Returns `0`, the hunk will be applied, and the apply process will continue.
+///
+/// ## C Equivalent
+///
+/// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
+public struct GitApplyOptions
+{
+    /// The version to use. Defaults to `UInt32(GIT_APPLY_OPTIONS_VERSION)`.
+    public var version : UInt32
+    
+    /// The callback that will be made per delta (file) when applying a patch.
+    public var deltaCB : GitApplyDeltaCB?
+    
+    /// The callback that will be made per hunk when applying a patch.
+    public var hunkCB  : GitApplyHunkCB?
+    
+    /// The payload passed to both `deltaCB` and `hunkCB`.
+    public var payload : UnsafeMutableRawPointer?
+    
+    /// The flags to use.
+    public var flags   : GitApplyFlagsT
+    
+    
+    
+    /// Initialize a ``GitApplyOptions`` struct.
+    /// - Parameter version: The version to use. Defaults to `UInt32(GIT_APPLY_OPTIONS_VERSION)`.
+    /// - Throws: An `NSError` if the initialization failed.
+    public init(
+        version: UInt32 = UInt32(GIT_APPLY_OPTIONS_VERSION)
+    ) throws
+    {
+        var applyOptions = git_apply_options()
+        
+        let applyOptionsInitResult: Int32 = git_apply_options_init(
+            &applyOptions,
+            version
+        )
+        
+        if applyOptionsInitResult != GIT_OK.rawValue
+        {
+            throw NSError(
+                domain:     "GitApplyOptions \(#function)",
+                code:       Int(applyOptionsInitResult),
+                userInfo:   nil
+            )
+        }
+        
+        self.version    = applyOptions.version
+        self.deltaCB    = applyOptions.delta_cb
+        self.hunkCB     = applyOptions.hunk_cb
+        self.payload    = applyOptions.payload
+        self.flags      = GitApplyFlagsT(rawValue: applyOptions.flags)
+    }
+    
+    
+    
+    /// Calls the given closure with a ``GitApplyOptions`` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCStruct<T>(
+        _ body: (UnsafePointer<git_apply_options>) -> T
+    ) -> T
+    {
+        var applyOptions = git_apply_options()
+        
+        applyOptions.version    = version
+        applyOptions.delta_cb   = deltaCB
+        applyOptions.hunk_cb    = hunkCB
+        applyOptions.payload    = payload
+        applyOptions.flags      = flags.rawValue
+        
+        return body(&applyOptions)
+    }
+}

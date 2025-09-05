@@ -2,6 +2,8 @@
 
 Direct Swift bindings to libgit2.
 
+
+
 ## Overview
 
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org).
@@ -21,6 +23,8 @@ their C equivalents, but are written using
 Similar to libgit2, the Swift bindings do not use 
 [namespaces](https://en.wikipedia.org/wiki/Namespace). All Swift bindings are
 available globally.
+
+
 
 ## Installation
 
@@ -47,6 +51,8 @@ on both devices and simulators:
 
 The macOS builds support both Apple Silicon and Intel.
 
+
+
 ## Usage
 
 Below is a brief example showing how to import both the Swift and C libraries 
@@ -68,6 +74,8 @@ let swiftShutdownResult : Int32 = gitLibgit2Shutdown()
 let cInitResult     : Int32 = git_libgit2_init()
 let cShutdownResult : Int32 = git_libgit2_shutdown()
 ```
+
+
 
 ## Best Practices
 
@@ -118,6 +126,8 @@ to support these authentication methods, including in-memory SSH. Consider using
 or other cryptographic APIs to securely store authentication data with 
 end-to-end encryption.
 
+
+
 ## Attribution
 
 See the [`Licenses`](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Licenses) 
@@ -141,6 +151,8 @@ swift-libgit2 includes the following compiled libraries:
 | libssh2 | 1.11.1  | [https://github.com/libssh2/libssh2](https://github.com/libssh2/libssh2) | BSD-3-Clause License |
 | OpenSSL | 3.5.2   | [https://github.com/openssl/openssl](https://github.com/openssl/openssl) | Apache License, Version 2.0 |
 
+
+
 ## Topics
 
 ### Annotated Commit Functions
@@ -152,6 +164,25 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitAnnotatedCommitID(commit:)``
 - ``gitAnnotatedCommitRef(commit:)``
 - ``gitAnnotatedCommitFree(commit:)``
+
+### Apply Structs
+
+- ``GitApplyOptions``
+
+### Apply Enums
+
+- ``GitApplyFlagsT``
+- ``GitApplyLocationT``
+
+### Apply Callbacks
+
+- ``GitApplyDeltaCB``
+- ``GitApplyHunkCB``
+
+### Apply Functions
+
+- ``gitApplyToTree(out:repo:preimage:diff:options:)``
+- ``gitApply(repo:diff:location:options:)``
 
 ### Global Functions
 

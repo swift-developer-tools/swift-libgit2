@@ -197,7 +197,6 @@ struct Repository
     
     // MARK: - withRepository()
     
-    
     /// Calls the given closure with a `Repository` instance.
     /// - Parameter body: The closure to call.
     /// - Throws: An `Error` if the directory creation failed.

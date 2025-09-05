@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>FILEHEADER</key>
-    <string> ===----------------------------------------------------------------------===//
+    <string>===----------------------------------------------------------------------===//
 //
 // This source file is part of the swift-libgit2 open source project.
 //
