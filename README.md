@@ -2,16 +2,19 @@
 
 Direct Swift bindings to libgit2.
 
+
+
 ## Overview
 
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org).
 libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
-Swift bindings are provided for every function and concrete struct available in 
-libgit2. Direct access to the libgit2 C library is also provided by the package. 
-There are no Swift bindings for opaque objects, macros, and constants, but 
-these may be accessed by importing the C library. See the Usage section below 
-for an example of how to import and use either library.
+Swift bindings are provided for every function, concrete struct, and macro 
+available in libgit2. Direct access to the libgit2 C library is also provided 
+by the package. There are no Swift bindings for opaque objects and 
+initialization macros, but these may be accessed by importing the C library. 
+See the Usage section below for an example of how to import and use either 
+library.
 
 The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 
@@ -21,6 +24,8 @@ their C equivalents, but are written using
 Similar to libgit2, the Swift bindings do not use 
 [namespaces](https://en.wikipedia.org/wiki/Namespace). All Swift bindings are
 available globally.
+
+
 
 ## Installation
 
@@ -47,6 +52,8 @@ on both devices and simulators:
 
 The macOS builds support both Apple Silicon and Intel.
 
+
+
 ## Usage
 
 Below is a brief example showing how to import both the Swift and C libraries 
@@ -68,6 +75,8 @@ let swiftShutdownResult : Int32 = gitLibgit2Shutdown()
 let cInitResult     : Int32 = git_libgit2_init()
 let cShutdownResult : Int32 = git_libgit2_shutdown()
 ```
+
+
 
 ## Best Practices
 
@@ -117,6 +126,8 @@ to support these authentication methods, including in-memory SSH. Consider using
 [iCloud Keychain](https://developer.apple.com/documentation/security/storing-keys-in-the-keychain) 
 or other cryptographic APIs to securely store authentication data with 
 end-to-end encryption.
+
+
 
 ## Attribution
 

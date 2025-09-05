@@ -93,7 +93,7 @@ final class ApplyTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(
             defaultApplyOptions.version,
-            UInt32(GIT_APPLY_OPTIONS_VERSION)
+            gitApplyOptionsVersion
         )
         
         XCTAssertNil(defaultApplyOptions.deltaCB)
