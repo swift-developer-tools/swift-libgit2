@@ -19,25 +19,14 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyFlagsT() throws
     {
-        let applyCheckFlag = GitApplyFlagsT.gitApplyCheck
+        XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.rawValue, GIT_APPLY_CHECK.rawValue)
+        XCTAssertEqual(GitApplyFlagsT(rawValue: 123).rawValue, 123)
         
-        XCTAssertEqual(
-            applyCheckFlag.rawValue,
-            GIT_APPLY_CHECK.rawValue
+        
+        
+        let combinedFlags = GitApplyFlagsT.gitApplyCheck.union(
+            GitApplyFlagsT(rawValue: 10)
         )
-        
-        
-        
-        let customFlag = GitApplyFlagsT(rawValue: 123)
-        
-        XCTAssertEqual(
-            customFlag.rawValue,
-            123
-        )
-        
-        
-        
-        let combinedFlags = GitApplyFlagsT.gitApplyCheck.union(GitApplyFlagsT(rawValue: 10))
         
         XCTAssertTrue(combinedFlags.contains(GitApplyFlagsT.gitApplyCheck))
     }
@@ -48,39 +37,10 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyLocationT() throws
     {
-        let workingDirectoryLocation = GitApplyLocationT.gitApplyLocationWorkdir
-        
-        XCTAssertEqual(
-            workingDirectoryLocation.rawValue,
-            GIT_APPLY_LOCATION_WORKDIR.rawValue
-        )
-        
-        
-        
-        let indexLocation = GitApplyLocationT.gitApplyLocationIndex
-        
-        XCTAssertEqual(
-            indexLocation.rawValue,
-            GIT_APPLY_LOCATION_INDEX.rawValue
-        )
-        
-        
-        
-        let bothLocation = GitApplyLocationT.gitApplyLocationBoth
-        
-        XCTAssertEqual(
-            bothLocation.rawValue,
-            GIT_APPLY_LOCATION_BOTH.rawValue
-        )
-        
-        
-        
-        let customLocation = GitApplyLocationT(rawValue: 123)
-        
-        XCTAssertEqual(
-            customLocation.rawValue,
-            123
-        )
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.rawValue, GIT_APPLY_LOCATION_WORKDIR.rawValue)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.rawValue, GIT_APPLY_LOCATION_INDEX.rawValue)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.rawValue, GIT_APPLY_LOCATION_BOTH.rawValue)
+        XCTAssertEqual(GitApplyLocationT(rawValue: 123).rawValue, 123)
     }
     
     
@@ -91,28 +51,17 @@ final class ApplyTests: XCTestCaseStopOnFail
     {
         let defaultApplyOptions = try GitApplyOptions()
         
-        XCTAssertEqual(
-            defaultApplyOptions.version,
-            gitApplyOptionsVersion
-        )
-        
+        XCTAssertEqual(defaultApplyOptions.version, gitApplyOptionsVersion)
         XCTAssertNil(defaultApplyOptions.deltaCB)
         XCTAssertNil(defaultApplyOptions.hunkCB)
         XCTAssertNil(defaultApplyOptions.payload)
-        
-        XCTAssertEqual(
-            defaultApplyOptions.flags.rawValue,
-            0
-        )
+        XCTAssertEqual(defaultApplyOptions.flags.rawValue, 0)
         
         
         
         let customApplyOptions = try GitApplyOptions(version: 1)
         
-        XCTAssertEqual(
-            customApplyOptions.version,
-            1
-        )
+        XCTAssertEqual(customApplyOptions.version, 1)
     }
     
     
@@ -142,11 +91,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(commitLookupResult)
-            
-            XCTAssertNotNil(
-                commitPointer,
-                "The commit pointer was nil."
-            )
+            XCTAssertNotNil(commitPointer)
             
             
             
@@ -199,11 +144,7 @@ final class ApplyTests: XCTestCaseStopOnFail
                 )
                 
                 XCTAssertOK(applyToTreeResult)
-                
-                XCTAssertNotNil(
-                    indexPointer,
-                    "The index poitner was nil."
-                )
+                XCTAssertNotNil(indexPointer)
             }
         }
     }
@@ -529,17 +470,8 @@ extension ApplyTests
                     
             
             
-            XCTAssertGreaterThan(
-                callbackCounts.deltaCount,
-                0,
-                "The delta callback was not invoked."
-            )
-            
-            XCTAssertGreaterThan(
-                callbackCounts.hunkCount,
-                0,
-                "The hunk callback was not invoked."
-            )
+            XCTAssertGreaterThan(callbackCounts.deltaCount, 0)
+            XCTAssertGreaterThan(callbackCounts.hunkCount, 0)
             
             
             
@@ -548,11 +480,7 @@ extension ApplyTests
                 encoding:       .utf8
             )
             
-            XCTAssertEqual(
-                fileContent,
-                endContent,
-                "The file content was not correct."
-            )
+            XCTAssertEqual(fileContent, endContent)
             
             
             
@@ -568,10 +496,8 @@ extension ApplyTests
                 
                 XCTAssertOK(statusFileResult)
                 
-                XCTAssertTrue(
-                    (statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0,
-                    "The file did not have staged changes in the index."
-                )
+                /// The file should have staged changes in the index.
+                XCTAssertTrue((statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0)
             }
         }
     }

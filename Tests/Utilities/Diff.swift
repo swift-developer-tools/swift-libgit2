@@ -69,11 +69,7 @@ enum Diff
         )
         
         XCTAssertOK(commitLookupResult)
-        
-        XCTAssertNotNil(
-            commitPointer,
-            "The commit pointer was nil."
-        )
+        XCTAssertNotNil(commitPointer)
         
         
         
@@ -92,11 +88,7 @@ enum Diff
         )
         
         XCTAssertOK(commitTreeResult)
-        
-        XCTAssertNotNil(
-            treePointer,
-            "The tree pointer was nil."
-        )
+        XCTAssertNotNil(treePointer)
         
         
         
