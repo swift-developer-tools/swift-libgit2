@@ -27,9 +27,9 @@ struct Repository
     
     
     
-    /// The repository is created with a single `README.md` document which says`# Hello World!`.
-    static let originalDocumentName     : String    = "README.md"
-    static let originalDocumentContent  : String    = "# Hello World!"
+    /// The repository is created with a single `README.md` file which says`# Hello World!`.
+    static let originalFileName     : String    = "README.md"
+    static let originalFileContent  : String    = "# Hello World!"
     
     
     
@@ -37,18 +37,18 @@ struct Repository
     
     /// Create the initial commit on the test repository.
     /// - Parameter repository: The test repository.
-    /// - Throws: An `Error` if the document write failed.
+    /// - Throws: An `Error` if the file write operation failed.
     private static func createInitialCommit(
         on repository: Repository
     ) throws
     {
-        let documentURL: URL = repository.url.appending(
-            path:           originalDocumentName,
+        let fileURL: URL = repository.url.appending(
+            path:           originalFileName,
             directoryHint:  .notDirectory
         )
         
-        try originalDocumentContent.write(
-            to:             documentURL,
+        try originalFileContent.write(
+            to:             fileURL,
             atomically:     true,
             encoding:       .utf8
         )
@@ -68,7 +68,7 @@ struct Repository
         
         let indexAddBypathResult: Int32 = git_index_add_bypath(
             indexPointer,
-            originalDocumentName
+            originalFileName
         )
         
         XCTAssertOK(indexAddBypathResult)

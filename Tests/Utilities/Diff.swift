@@ -28,24 +28,24 @@ enum Diff
         _   body        : (OpaquePointer) throws -> Void
     ) throws
     {
-        let documentURL: URL = repository.url.appending(
-            path:           Repository.originalDocumentName,
+        let fileURL: URL = repository.url.appending(
+            path:           Repository.originalFileName,
             directoryHint:  .notDirectory
         )
         
-        let modifiedDocumentContent: String = "\(Repository.originalDocumentContent) Goodbye World!"
+        let modifiedFileContent: String = "\(Repository.originalFileContent) Goodbye World!"
         
         do
         {
-            try modifiedDocumentContent.write(
-                to:             documentURL,
+            try modifiedFileContent.write(
+                to:             fileURL,
                 atomically:     true,
                 encoding:       .utf8
             )
         }
         catch
         {
-            XCTFail("The modified content was not written to the document: \(error)")
+            XCTFail("The modified content was not written to the file: \(error)")
             
             throw NSError(
                 domain:     #function,

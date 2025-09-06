@@ -218,7 +218,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationBoth,
             flags:          nil,
             checkIndex:     true,
-            endContent:     "\(Repository.originalDocumentContent) Goodbye World!"
+            endContent:     "\(Repository.originalFileContent) Goodbye World!"
         )
     }
     
@@ -232,7 +232,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationIndex,
             flags:          nil,
             checkIndex:     true,
-            endContent:     Repository.originalDocumentContent
+            endContent:     Repository.originalFileContent
         )
     }
     
@@ -246,7 +246,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationWorkdir,
             flags:          nil,
             checkIndex:     false,
-            endContent:     "\(Repository.originalDocumentContent) Goodbye World!"
+            endContent:     "\(Repository.originalFileContent) Goodbye World!"
         )
     }
     
@@ -260,7 +260,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationWorkdir,
             flags:          .gitApplyCheck,
             checkIndex:     false,
-            endContent:     Repository.originalDocumentContent
+            endContent:     Repository.originalFileContent
         )
     }
 }
@@ -283,20 +283,20 @@ private struct CallbackCounts
 
 /// Test `git apply` functionality by creating a diff and applying it with the given options.
 ///
-/// 1. Create a modified version of the repository's `README.md` document.
+/// 1. Create a modified version of the repository's `README.md` file.
 /// 2. Stage the modification to create a new tree state.
 /// 3. Generate a diff between the original tree and the modified tree.
 /// 4. Reset the working directory back to the original state.
 /// 5. Apply the diff using the given options.
 /// 6. Check that both the delta and hunk callbacks were invoked.
-/// 7. Check that the final document content is correct.
+/// 7. Check that the final file content is correct.
 /// 8. Optionally check that the index contains staged changes.
 ///
 /// - Parameters:
 ///   - location: The target location for applying the diff (the working directory, the index, or both).
 ///   - flags: The flags to control the apply behavior.
 ///   - checkIndex: Whether to check that the index contains staged changes after applying.
-///   - endContent: The expected document content after applying.
+///   - endContent: The expected file content after applying.
 /// - Throws: An `Error` if a Git or write operation fails, or if `GitApplyOptions` initialization fails.
 private func gitApplyFlow(
     location        : GitApplyLocationT,
@@ -350,15 +350,15 @@ private func gitApplyFlow(
         
         
         
-        let documentURL: URL = repository.url.appending(
-            path:           Repository.originalDocumentName,
+        let fileURL: URL = repository.url.appending(
+            path:           Repository.originalFileName,
             directoryHint:  .notDirectory
         )
         
-        let modifiedContent: String = "\(Repository.originalDocumentContent) Goodbye World!"
+        let modifiedContent: String = "\(Repository.originalFileContent) Goodbye World!"
         
         try modifiedContent.write(
-            to:             documentURL,
+            to:             fileURL,
             atomically:     true,
             encoding:       .utf8
         )
@@ -385,7 +385,7 @@ private func gitApplyFlow(
         
         let indexAddBypathResult: Int32 = git_index_add_bypath(
             indexPointer,
-            Repository.originalDocumentName
+            Repository.originalFileName
         )
         
         XCTAssertOK(indexAddBypathResult)
@@ -538,15 +538,15 @@ private func gitApplyFlow(
         
         
         
-        let documentContent = try String(
-            contentsOf:     documentURL,
+        let fileContent = try String(
+            contentsOf:     fileURL,
             encoding:       .utf8
         )
         
         XCTAssertEqual(
-            documentContent,
+            fileContent,
             endContent,
-            "The document content was not correct."
+            "The file content was not correct."
         )
         
         
@@ -558,14 +558,14 @@ private func gitApplyFlow(
             let statusFileResult: Int32 = git_status_file(
                 &statusFlags,
                 repository.pointer,
-                Repository.originalDocumentName
+                Repository.originalFileName
             )
             
             XCTAssertOK(statusFileResult)
             
             XCTAssertTrue(
                 (statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0,
-                "The document did not have staged changes in the index."
+                "The file did not have staged changes in the index."
             )
         }
     }
