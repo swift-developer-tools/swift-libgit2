@@ -212,10 +212,10 @@ swift-libgit2 includes the following compiled libraries:
 
 ### Attr Macros
 
-- ``gitAttrIsTrue(_:)``
-- ``gitAttrIsFalse(_:)``
-- ``gitAttrIsUnspecified(_:)``
-- ``gitAttrHasValue(_:)``
+- ``gitAttrIsTrue(attr:)``
+- ``gitAttrIsFalse(attr:)``
+- ``gitAttrIsUnspecified(attr:)``
+- ``gitAttrHasValue(attr:)``
 - ``gitAttrOptionsVersion``
 
 ### Attr Enums

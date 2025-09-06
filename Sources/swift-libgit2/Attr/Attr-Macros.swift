@@ -20,13 +20,13 @@ import Clibgit2
 /// In core Git parlance, this is the value for set attributes.
 ///
 /// For example, if the attribute file contains `*.c foo`, then for file `xyz.c`, looking up attribute
-/// `foo` gives a value for which ``gitAttrIsTrue(_:)`` returns `true`.
+/// `foo` gives a value for which ``gitAttrIsTrue(attr:)`` returns `true`.
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_TRUE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_TRUE.html)
 public func gitAttrIsTrue(
-    _ attr: UnsafePointer<CChar>?
+    attr: UnsafePointer<CChar>?
 ) -> Bool
 {
     return gitAttrValue(attr: attr) == .gitAttrValueTrue
@@ -44,13 +44,13 @@ public func gitAttrIsTrue(
 /// unspecified).
 ///
 /// For example, if the attribute file contains `*.h -foo`, then for file `zyx.h`, looking up attribute
-/// `foo` gives a value for which ``gitAttrIsFalse(_:)`` returns `true`.
+/// `foo` gives a value for which ``gitAttrIsFalse(attr:)`` returns `true`.
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_FALSE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_FALSE.html)
 public func gitAttrIsFalse(
-    _ attr: UnsafePointer<CChar>?
+    attr: UnsafePointer<CChar>?
 ) -> Bool
 {
     return gitAttrValue(attr: attr) == .gitAttrValueFalse
@@ -69,16 +69,16 @@ public func gitAttrIsFalse(
 ///
 /// For example, if the attribute file contains: `*.c foo *.h -foo onefile.c !foo`, then for file
 /// `onefile.c`, looking up attribute `foo` yields a value for which
-/// ``gitAttrIsUnspecified(_:)`` returns `true`.
+/// ``gitAttrIsUnspecified(attr:)`` returns `true`.
 ///
 /// Also, looking up `foo` on file `onefile.rb` or looking up `bar` on any file will yield a value for
-/// which ``gitAttrIsUnspecified(_:)`` returns `true`.
+/// which ``gitAttrIsUnspecified(attr:)`` returns `true`.
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_UNSPECIFIED(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_UNSPECIFIED.html)
 public func gitAttrIsUnspecified(
-    _ attr: UnsafePointer<CChar>?
+    attr: UnsafePointer<CChar>?
 ) -> Bool
 {
     return gitAttrValue(attr: attr) == .gitAttrValueUnspecified
@@ -95,13 +95,13 @@ public func gitAttrIsUnspecified(
 /// An attribute may be set to a value as opposed to being set, unset, or unspecified.
 ///
 /// For example, if the attribute file contains: `*.txt eol=lf`, then for file `onefile.txt`, looking up
-/// attribute `eol` yields a value for which ``gitAttrHasValue(_:)`` returns `true`.
+/// attribute `eol` yields a value for which ``gitAttrHasValue(attr:)`` returns `true`.
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_HAS_VALUE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_HAS_VALUE.html)
 public func gitAttrHasValue(
-    _ attr: UnsafePointer<CChar>?
+    attr: UnsafePointer<CChar>?
 ) -> Bool
 {
     return gitAttrValue(attr: attr) == .gitAttrValueString

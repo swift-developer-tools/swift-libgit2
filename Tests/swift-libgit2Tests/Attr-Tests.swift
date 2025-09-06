@@ -69,7 +69,7 @@ final class AttrTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(attrGetResult)
-            XCTAssertTrue(gitAttrIsTrue(valueOut))
+            XCTAssertTrue(gitAttrIsTrue(attr: valueOut))
         }
     }
     
@@ -100,7 +100,7 @@ final class AttrTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(attrGetResult)
-            XCTAssertTrue(gitAttrIsTrue(valueOut))
+            XCTAssertTrue(gitAttrIsTrue(attr: valueOut))
         }
     }
     
@@ -166,7 +166,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertOK(attrGetExtResult)
             XCTAssertNotNil(valueOut)
-            XCTAssertTrue(gitAttrIsTrue(valueOut))
+            XCTAssertTrue(gitAttrIsTrue(attr: valueOut))
         }
     }
     
@@ -210,7 +210,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let textAttribute: UnsafePointer<CChar>? = valueOut[0]
             
             XCTAssertNotNil(textAttribute)
-            XCTAssertTrue(gitAttrIsTrue(textAttribute))
+            XCTAssertTrue(gitAttrIsTrue(attr: textAttribute))
             
             
             
@@ -223,7 +223,7 @@ final class AttrTests: XCTestCaseStopOnFail
                 return
             }
             
-            XCTAssertTrue(gitAttrHasValue(eolAttribute))
+            XCTAssertTrue(gitAttrHasValue(attr: eolAttribute))
             XCTAssertEqual(String(cString: eolAttribute), "lf")
         }
     }
@@ -274,7 +274,7 @@ final class AttrTests: XCTestCaseStopOnFail
                 return
             }
             
-            XCTAssertTrue(gitAttrHasValue(customAttribute))
+            XCTAssertTrue(gitAttrHasValue(attr: customAttribute))
             XCTAssertEqual(String(cString: customAttribute), "customvalue")
         }
     }
@@ -301,10 +301,10 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertOK(attrGetResult)
             XCTAssertEqual(gitAttrValue(attr: valueOut), .gitAttrValueTrue)
-            XCTAssertTrue(gitAttrIsTrue(valueOut))
-            XCTAssertFalse(gitAttrIsFalse(valueOut))
-            XCTAssertFalse(gitAttrIsUnspecified(valueOut))
-            XCTAssertFalse(gitAttrHasValue(valueOut))
+            XCTAssertTrue(gitAttrIsTrue(attr: valueOut))
+            XCTAssertFalse(gitAttrIsFalse(attr: valueOut))
+            XCTAssertFalse(gitAttrIsUnspecified(attr: valueOut))
+            XCTAssertFalse(gitAttrHasValue(attr: valueOut))
             
             
             
@@ -318,10 +318,10 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertOK(attrGetResult)
             XCTAssertEqual(gitAttrValue(attr: valueOut), .gitAttrValueFalse)
-            XCTAssertFalse(gitAttrIsTrue(valueOut))
-            XCTAssertTrue(gitAttrIsFalse(valueOut))
-            XCTAssertFalse(gitAttrIsUnspecified(valueOut))
-            XCTAssertFalse(gitAttrHasValue(valueOut))
+            XCTAssertFalse(gitAttrIsTrue(attr: valueOut))
+            XCTAssertTrue(gitAttrIsFalse(attr: valueOut))
+            XCTAssertFalse(gitAttrIsUnspecified(attr: valueOut))
+            XCTAssertFalse(gitAttrHasValue(attr: valueOut))
             
             
             
@@ -335,10 +335,10 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertOK(attrGetResult)
             XCTAssertEqual(gitAttrValue(attr: valueOut), .gitAttrValueString)
-            XCTAssertFalse(gitAttrIsTrue(valueOut))
-            XCTAssertFalse(gitAttrIsFalse(valueOut))
-            XCTAssertFalse(gitAttrIsUnspecified(valueOut))
-            XCTAssertTrue(gitAttrHasValue(valueOut))
+            XCTAssertFalse(gitAttrIsTrue(attr: valueOut))
+            XCTAssertFalse(gitAttrIsFalse(attr: valueOut))
+            XCTAssertFalse(gitAttrIsUnspecified(attr: valueOut))
+            XCTAssertTrue(gitAttrHasValue(attr: valueOut))
             
             
             
@@ -352,10 +352,10 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertOK(attrGetResult)
             XCTAssertEqual(gitAttrValue(attr: valueOut), .gitAttrValueUnspecified)
-            XCTAssertFalse(gitAttrIsTrue(valueOut))
-            XCTAssertFalse(gitAttrIsFalse(valueOut))
-            XCTAssertTrue(gitAttrIsUnspecified(valueOut))
-            XCTAssertFalse(gitAttrHasValue(valueOut))
+            XCTAssertFalse(gitAttrIsTrue(attr: valueOut))
+            XCTAssertFalse(gitAttrIsFalse(attr: valueOut))
+            XCTAssertTrue(gitAttrIsUnspecified(attr: valueOut))
+            XCTAssertFalse(gitAttrHasValue(attr: valueOut))
         }
     }
     
