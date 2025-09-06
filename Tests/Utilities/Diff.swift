@@ -37,11 +37,7 @@ enum Diff
         
         do
         {
-            try modifiedFileContent.write(
-                to:             fileURL,
-                atomically:     true,
-                encoding:       .utf8
-            )
+            try modifiedFileContent.atomicWrite(to: fileURL)
         }
         catch
         {

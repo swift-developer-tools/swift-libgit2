@@ -297,7 +297,8 @@ private struct CallbackCounts
 ///   - flags: The flags to control the apply behavior.
 ///   - checkIndex: Whether to check that the index contains staged changes after applying.
 ///   - endContent: The expected file content after applying.
-/// - Throws: An `Error` if a Git or write operation fails, or if `GitApplyOptions` initialization fails.
+/// - Throws: An `Error` if a Git operation, write operation fails, or `GitApplyOptions`
+/// initialization fails.
 private func gitApplyFlow(
     location        : GitApplyLocationT,
     flags           : GitApplyFlagsT?,
@@ -357,11 +358,7 @@ private func gitApplyFlow(
         
         let modifiedContent: String = "\(Repository.originalFileContent) Goodbye World!"
         
-        try modifiedContent.write(
-            to:             fileURL,
-            atomically:     true,
-            encoding:       .utf8
-        )
+        try modifiedContent.atomicWrite(to: fileURL)
         
         
         
