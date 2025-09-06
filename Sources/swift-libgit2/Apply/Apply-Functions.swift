@@ -18,7 +18,7 @@ import Clibgit2
 ///   - preimage: The tree to apply the diff to.
 ///   - diff: The diff to apply.
 ///   - options: The options for the apply.
-/// - Returns: `0` on success or an error code.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
 ///
@@ -54,7 +54,7 @@ public func gitApplyToTree(
 ///   - diff: The diff to apply.
 ///   - location: The location to apply (the working directory, the index, or both).
 ///   - options: The options for the apply.
-/// - Returns: `0` on success or an error code.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
 ///

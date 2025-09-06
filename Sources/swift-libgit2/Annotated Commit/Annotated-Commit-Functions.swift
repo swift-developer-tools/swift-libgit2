@@ -16,7 +16,7 @@ import Clibgit2
 ///   - out: The pointer to store the `git_annotated_commit` result in.
 ///   - repo: The repository that contains the given reference.
 ///   - ref: The reference to use to lookup the `git_annotated_commit`.
-/// - Returns: `0` on success or an error code.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
@@ -47,7 +47,7 @@ public func gitAnnotatedCommitFromRef(
 ///   - branchName: The name of the (remote) branch.
 ///   - remoteURL: The URL of the remote.
 ///   - id: The commit object ID of the remote branch.
-/// - Returns: `0` on success or an error code.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
@@ -80,7 +80,7 @@ public func gitAnnotatedCommitFromFetchhead(
 ///   - out: The pointer to store the `git_annotated_commit` result in.
 ///   - repo: The repository that contains the given commit.
 ///   - id: The commit object ID to lookup.
-/// - Returns: `0` on success or an error code.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
@@ -115,7 +115,7 @@ public func gitAnnotatedCommitLookup(
 ///   - out: The pointer to store the `git_annotated_commit` result in.
 ///   - repo: The repository that contains the given commit.
 ///   - revspec: The extended SHA syntax string to use to lookup the commit.
-/// - Returns: `0` on success or an error code.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///

@@ -1,0 +1,333 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import Clibgit2
+
+
+
+/// Get the value type for a given attribute.
+/// - Parameter attr: The attribute.
+/// - Returns: The value type for the attribute.
+///
+/// ## Discussion
+///
+/// If the attribute has a ``GitAttrValueT/gitAttrValueString`` type, it can be accessed normally
+/// as a `NULL`-terminated C string.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_value()`](https://libgit2.org/docs/reference/main/attr/git_attr_value.html)
+public func gitAttrValue(
+    attr: UnsafePointer<CChar>?
+) -> GitAttrValueT
+{
+    let attributeValue: git_attr_value_t = git_attr_value(attr)
+    
+    /// Default to `gitAttrValueUnspecified` if an unexpected value is encountered, although this
+    /// should never occur.
+    return GitAttrValueT(rawValue: UInt32(attributeValue.rawValue)) ?? .gitAttrValueUnspecified
+}
+
+
+
+/// Look up the value of one attribute for a given path.
+/// - Parameters:
+///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
+///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
+///   this value.
+///   - repo: The repository containing the path.
+///   - flags: The flags to use when querying the attributes.
+///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
+///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
+///   file (not a directory).
+///   - name: The name of the attribute to look up.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_get()`](https://libgit2.org/docs/reference/main/attr/git_attr_get.html)
+public func gitAttrGet(
+    valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    repo        : OpaquePointer,
+    flags       : GitAttrCheckFlagsT,
+    path        : String,
+    name        : String
+) -> Int32
+{
+    return git_attr_get(
+        valueOut,
+        repo,
+        flags.rawValue,
+        path,
+        name
+    )
+}
+
+
+
+/// Look up the value of one attribute for a given path, with extended options.
+/// - Parameters:
+///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
+///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
+///   this value.
+///   - repo: The repository containing the path.
+///   - opts: The options to use when querying the attributes.
+///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
+///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
+///   file (not a directory).
+///   - name: The name of the attribute to look up.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_get_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_ext.html)
+public func gitAttrGetExt(
+    valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    repo        : OpaquePointer,
+    opts        : GitAttrOptions,
+    path        : String,
+    name        : String
+) -> Int32
+{
+    return opts.withCStruct
+    {
+        cOpts in
+        
+        return git_attr_get_ext(
+            valueOut,
+            repo,
+            cOpts,
+            path,
+            name
+        )
+    }
+}
+
+
+
+/// Look up the values of a list of attributes for a given path.
+/// - Parameters:
+///   - valueOut: An array of `numAttr` entries that will have string pointers written into it for the
+///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
+///   array itself if it was not allocated by the library).
+///   - repo: The repository containing the path.
+///   - flags: The flags to use when querying the attributes.
+///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
+///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
+///   file (not a directory).
+///   - numAttr: The number of attributes to look up.
+///   - names: An array of `numAttr` entries containing attribute names.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_get_many()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_many.html)
+public func gitAttrGetMany(
+    valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    repo        : OpaquePointer,
+    flags       : GitAttrCheckFlagsT,
+    path        : String,
+    numAttr     : Int,
+    names       : [String]
+) -> Int32
+{
+    return withArrayOfImmutableCStrings(names)
+    {
+        cNames in
+            
+        return git_attr_get_many(
+            valueOut,
+            repo,
+            flags.rawValue,
+            path,
+            numAttr,
+            cNames
+        )
+    }
+}
+
+
+
+/// Look up the values of a list of attributes for a given path, with extended options.
+/// - Parameters:
+///   - valueOut: An array of `numAttr` entries that will have string pointers written into it for the
+///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
+///   array itself if it was not allocated by the library).
+///   - repo: The repository containing the path.
+///   - opts: The options to use when querying the attributes.
+///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
+///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
+///   file (not a directory).
+///   - numAttr: The number of attributes to look up.
+///   - names: An array of `numAttr` entries containing attribute names.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_get_many_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_many_ext.html)
+public func gitAttrGetManyExt(
+    valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    repo        : OpaquePointer,
+    opts        : GitAttrOptions,
+    path        : String,
+    numAttr     : Int,
+    names       : [String]
+) -> Int32
+{
+    return opts.withCStruct
+    {
+        cOpts in
+        
+        return withArrayOfImmutableCStrings(names)
+        {
+            cNames in
+                
+            return git_attr_get_many_ext(
+                valueOut,
+                repo,
+                cOpts,
+                path,
+                numAttr,
+                cNames
+            )
+        }
+    }
+}
+
+
+
+/// Loop over all the attributes for a given path.
+/// - Parameters:
+///   - repo: The repository containing the path.
+///   - flags: The flags to use when querying the attributes.
+///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
+///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
+///   file (not a directory).
+///   - callback: The function to invoke on each attribute name and value.
+///   - payload: The payload passed to `callback`.
+/// - Returns: `0` on success, a non-zero `callback` return value, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_foreach()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach.html)
+public func gitAttrForEach(
+    repo        : OpaquePointer,
+    flags       : GitAttrCheckFlagsT,
+    path        : String,
+    callback    : GitAttrForEachCB?,
+    payload     : UnsafeMutableRawPointer?
+) -> Int32
+{
+    return git_attr_foreach(
+        repo,
+        flags.rawValue,
+        path,
+        callback,
+        payload
+    )
+}
+
+
+
+/// Loop over all the attributes for a given path, with extended options.
+/// - Parameters:
+///   - repo: The repository containing the path.
+///   - opts: The options to use when querying the attributes.
+///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
+///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
+///   file (not a directory).
+///   - callback: The function to invoke on each attribute name and value.
+///   - payload: The payload passed to `callback`.
+/// - Returns: `0` on success, a non-zero `callback` return value, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_foreach_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach_ext.html)
+public func gitAttrForEachExt(
+    repo        : OpaquePointer,
+    opts        : GitAttrOptions,
+    path        : String,
+    callback    : GitAttrForEachCB?,
+    payload     : UnsafeMutableRawPointer?
+) -> Int32
+{
+    return opts.withCStruct
+    {
+        cOpts in
+        
+        return git_attr_foreach_ext(
+            repo,
+            cOpts,
+            path,
+            callback,
+            payload
+        )
+    }
+}
+
+
+
+/// Flush the `.gitattributes` cache.
+/// - Parameter repo: The repository containing the `.gitattributes` cache.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// Call this function if the attributes files on the disk no longer match the cached contents in memory.
+/// This will cause the attributes files to be reloaded the next time an attribute access function is called.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_cache_flush()`](https://libgit2.org/docs/reference/main/attr/git_attr_cache_flush.html)
+public func gitAttrCacheFlush(
+    repo: OpaquePointer
+) -> Int32
+{
+    return git_attr_cache_flush(repo)
+}
+
+
+
+/// Add a macro definition.
+/// - Parameters:
+///   - repo: The repository to add the macro in.
+///   - name: The name of the macro.
+///   - values: The value of the macro.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// Macros will be automatically loaded from the top level `.gitattributes` file of the repository
+/// (plus the built-in "binary" macro). This function allows other macros to be added.
+///
+/// For example, call the following to add the default macro:
+///
+/// ```swift
+/// gitArrAddMacro(
+///     repo:       repositoryPointer,
+///     name:       "binary",
+///     values:     "-diff -crlf"
+/// )
+/// ```
+///
+/// ## C Equivalent
+///
+/// [`git_attr_add_macro()`](https://libgit2.org/docs/reference/main/attr/git_attr_add_macro.html)
+public func gitAttrAddMacro(
+    repo    : OpaquePointer,
+    name    : String,
+    values  : String
+) -> Int32
+{
+    return git_attr_add_macro(
+        repo,
+        name,
+        values
+    )
+}
