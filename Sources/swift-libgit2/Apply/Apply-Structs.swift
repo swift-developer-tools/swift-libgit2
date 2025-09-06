@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// Apply options structure.
+/// The options structure for the apply process.
 ///
 /// ## Discussion
 ///
@@ -38,7 +38,7 @@ public struct GitApplyOptions
     /// The payload passed to both `deltaCB` and `hunkCB`.
     public var payload : UnsafeMutableRawPointer?
     
-    /// The flags to use.
+    /// The flags to use when applying.
     public var flags   : GitApplyFlagsT
     
     
@@ -79,7 +79,7 @@ public struct GitApplyOptions
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     internal func withCStruct<T>(
-        _ body: (UnsafePointer<git_apply_options>) -> T
+        _ body: (UnsafeMutablePointer<git_apply_options>) -> T
     ) -> T
     {
         var applyOptions = git_apply_options()

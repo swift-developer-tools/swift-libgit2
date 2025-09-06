@@ -39,9 +39,5 @@ func XCTAssertOK(
         message += " \(errorMessage)"
     }
     
-    XCTAssertEqual(
-        result,
-        GIT_OK.rawValue,
-        message
-    )
+    XCTAssertEqual(result, GIT_OK.rawValue, message)
 }

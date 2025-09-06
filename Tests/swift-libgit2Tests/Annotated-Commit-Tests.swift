@@ -143,10 +143,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             let referenceNameString = String(cString: referenceNamePointer)
             
-            XCTAssertFalse(
-                referenceNameString.isEmpty,
-                "The reference name was empty."
-            )
+            XCTAssertFalse(referenceNameString.isEmpty)
         }
     }
     

@@ -38,11 +38,10 @@ enum OID
             return
         }
         
-        XCTAssertEqual(
-            String(cString: oid1StringPointer),
-            String(cString: oid2StringPointer),
-            "The OID strings were not equal."
-        )
+        let oid1String  = String(cString: oid1StringPointer)
+        let oid2String  = String(cString: oid2StringPointer)
+        
+        XCTAssertEqual(oid1String, oid2String)
     }
     
     

@@ -19,25 +19,14 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyFlagsT() throws
     {
-        let applyCheckFlag = GitApplyFlagsT.gitApplyCheck
+        XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.rawValue, GIT_APPLY_CHECK.rawValue)
+        XCTAssertEqual(GitApplyFlagsT(rawValue: 123).rawValue, 123)
         
-        XCTAssertEqual(
-            applyCheckFlag.rawValue,
-            GIT_APPLY_CHECK.rawValue
+        
+        
+        let combinedFlags = GitApplyFlagsT.gitApplyCheck.union(
+            GitApplyFlagsT(rawValue: 10)
         )
-        
-        
-        
-        let customFlag = GitApplyFlagsT(rawValue: 123)
-        
-        XCTAssertEqual(
-            customFlag.rawValue,
-            123
-        )
-        
-        
-        
-        let combinedFlags = GitApplyFlagsT.gitApplyCheck.union(GitApplyFlagsT(rawValue: 10))
         
         XCTAssertTrue(combinedFlags.contains(GitApplyFlagsT.gitApplyCheck))
     }
@@ -48,39 +37,10 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyLocationT() throws
     {
-        let workingDirectoryLocation = GitApplyLocationT.gitApplyLocationWorkdir
-        
-        XCTAssertEqual(
-            workingDirectoryLocation.rawValue,
-            GIT_APPLY_LOCATION_WORKDIR.rawValue
-        )
-        
-        
-        
-        let indexLocation = GitApplyLocationT.gitApplyLocationIndex
-        
-        XCTAssertEqual(
-            indexLocation.rawValue,
-            GIT_APPLY_LOCATION_INDEX.rawValue
-        )
-        
-        
-        
-        let bothLocation = GitApplyLocationT.gitApplyLocationBoth
-        
-        XCTAssertEqual(
-            bothLocation.rawValue,
-            GIT_APPLY_LOCATION_BOTH.rawValue
-        )
-        
-        
-        
-        let customLocation = GitApplyLocationT(rawValue: 123)
-        
-        XCTAssertEqual(
-            customLocation.rawValue,
-            123
-        )
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.rawValue, GIT_APPLY_LOCATION_WORKDIR.rawValue)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.rawValue, GIT_APPLY_LOCATION_INDEX.rawValue)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.rawValue, GIT_APPLY_LOCATION_BOTH.rawValue)
+        XCTAssertEqual(GitApplyLocationT(rawValue: 123).rawValue, 123)
     }
     
     
@@ -91,28 +51,17 @@ final class ApplyTests: XCTestCaseStopOnFail
     {
         let defaultApplyOptions = try GitApplyOptions()
         
-        XCTAssertEqual(
-            defaultApplyOptions.version,
-            gitApplyOptionsVersion
-        )
-        
+        XCTAssertEqual(defaultApplyOptions.version, gitApplyOptionsVersion)
         XCTAssertNil(defaultApplyOptions.deltaCB)
         XCTAssertNil(defaultApplyOptions.hunkCB)
         XCTAssertNil(defaultApplyOptions.payload)
-        
-        XCTAssertEqual(
-            defaultApplyOptions.flags.rawValue,
-            0
-        )
+        XCTAssertEqual(defaultApplyOptions.flags.rawValue, 0)
         
         
         
         let customApplyOptions = try GitApplyOptions(version: 1)
         
-        XCTAssertEqual(
-            customApplyOptions.version,
-            1
-        )
+        XCTAssertEqual(customApplyOptions.version, 1)
     }
     
     
@@ -142,11 +91,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(commitLookupResult)
-            
-            XCTAssertNotNil(
-                commitPointer,
-                "The commit pointer was nil."
-            )
+            XCTAssertNotNil(commitPointer)
             
             
             
@@ -199,11 +144,7 @@ final class ApplyTests: XCTestCaseStopOnFail
                 )
                 
                 XCTAssertOK(applyToTreeResult)
-                
-                XCTAssertNotNil(
-                    indexPointer,
-                    "The index poitner was nil."
-                )
+                XCTAssertNotNil(indexPointer)
             }
         }
     }
@@ -218,7 +159,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationBoth,
             flags:          nil,
             checkIndex:     true,
-            endContent:     "\(Repository.originalDocumentContent) Goodbye World!"
+            endContent:     "\(Repository.originalFileContent) Goodbye World!"
         )
     }
     
@@ -232,7 +173,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationIndex,
             flags:          nil,
             checkIndex:     true,
-            endContent:     Repository.originalDocumentContent
+            endContent:     Repository.originalFileContent
         )
     }
     
@@ -246,7 +187,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationWorkdir,
             flags:          nil,
             checkIndex:     false,
-            endContent:     "\(Repository.originalDocumentContent) Goodbye World!"
+            endContent:     "\(Repository.originalFileContent) Goodbye World!"
         )
     }
     
@@ -260,313 +201,304 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationWorkdir,
             flags:          .gitApplyCheck,
             checkIndex:     false,
-            endContent:     Repository.originalDocumentContent
+            endContent:     Repository.originalFileContent
         )
     }
 }
 
 
 
-// MARK: - gitApplyFlow()
-
-/// The callback count for `GitApplyOptions`.
-private struct CallbackCounts
+extension ApplyTests
 {
-    /// The number of times the delta callback was invoked.
-    var deltaCount  : Int   = 0
-    
-    /// The number of times the hunk callback was invoked.
-    var hunkCount   : Int   = 0
-}
+    // MARK: - gitApplyFlow()
 
-
-
-/// Test `git apply` functionality by creating a diff and applying it with the given options.
-///
-/// 1. Create a modified version of the repository's `README.md` document.
-/// 2. Stage the modification to create a new tree state.
-/// 3. Generate a diff between the original tree and the modified tree.
-/// 4. Reset the working directory back to the original state.
-/// 5. Apply the diff using the given options.
-/// 6. Check that both the delta and hunk callbacks were invoked.
-/// 7. Check that the final document content is correct.
-/// 8. Optionally check that the index contains staged changes.
-///
-/// - Parameters:
-///   - location: The target location for applying the diff (the working directory, the index, or both).
-///   - flags: The flags to control the apply behavior.
-///   - checkIndex: Whether to check that the index contains staged changes after applying.
-///   - endContent: The expected document content after applying.
-/// - Throws: An `Error` if a Git or write operation fails, or if `GitApplyOptions` initialization fails.
-private func gitApplyFlow(
-    location        : GitApplyLocationT,
-    flags           : GitApplyFlagsT?,
-    checkIndex      : Bool,
-    endContent      : String
-) throws
-{
-    try Repository.withRepository
+    /// The callback count for `GitApplyOptions`.
+    private struct CallbackCounts
     {
-        repository in
+        /// The number of times the delta callback was invoked.
+        var deltaCount  : Int   = 0
         
-        var headOID: git_oid = OID.getHEADCommitOID(on: repository)
-        
-        
-        
-        var commitPointer: OpaquePointer? = nil
-        
-        defer
+        /// The number of times the hunk callback was invoked.
+        var hunkCount   : Int   = 0
+    }
+
+
+
+    /// Test `git apply` functionality by creating a diff and applying it with the given options.
+    ///
+    /// 1. Create a modified version of the repository's `README.md` file.
+    /// 2. Stage the modification to create a new tree state.
+    /// 3. Generate a diff between the original tree and the modified tree.
+    /// 4. Reset the working directory back to the original state.
+    /// 5. Apply the diff using the given options.
+    /// 6. Check that both the delta and hunk callbacks were invoked.
+    /// 7. Check that the final file content is correct.
+    /// 8. Optionally check that the index contains staged changes.
+    ///
+    /// - Parameters:
+    ///   - location: The target location for applying the diff (the working directory, the index, or both).
+    ///   - flags: The flags to control the apply behavior.
+    ///   - checkIndex: Whether to check that the index contains staged changes after applying.
+    ///   - endContent: The expected file content after applying.
+    /// - Throws: An `Error` if a Git operation, write operation fails, or `GitApplyOptions`
+    /// initialization fails.
+    private func gitApplyFlow(
+        location        : GitApplyLocationT,
+        flags           : GitApplyFlagsT?,
+        checkIndex      : Bool,
+        endContent      : String
+    ) throws
+    {
+        try Repository.withRepository
         {
-            Free.freeCommitPointer(&commitPointer)
-        }
-        
-        
-        
-        let commitLookupResult: Int32 = git_commit_lookup(
-            &commitPointer,
-            repository.pointer,
-            &headOID
-        )
-        
-        XCTAssertOK(commitLookupResult)
-        
-        
-        
-        var oldTreePointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeTreePointer(&oldTreePointer)
-        }
-        
-        
-        
-        let commitTreeResult: Int32 = git_commit_tree(
-            &oldTreePointer,
-            commitPointer
-        )
-        
-        XCTAssertOK(commitTreeResult)
-        
-        
-        
-        let documentURL: URL = repository.url.appending(
-            path:           Repository.originalDocumentName,
-            directoryHint:  .notDirectory
-        )
-        
-        let modifiedContent: String = "\(Repository.originalDocumentContent) Goodbye World!"
-        
-        try modifiedContent.write(
-            to:             documentURL,
-            atomically:     true,
-            encoding:       .utf8
-        )
-        
-        
-        
-        var indexPointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeIndexPointer(&indexPointer)
-        }
-        
-        
-        
-        let repositoryIndexResult: Int32 = git_repository_index(
-            &indexPointer,
-            repository.pointer
-        )
-        
-        XCTAssertOK(repositoryIndexResult)
-        
-        
-        
-        let indexAddBypathResult: Int32 = git_index_add_bypath(
-            indexPointer,
-            Repository.originalDocumentName
-        )
-        
-        XCTAssertOK(indexAddBypathResult)
-        
-        
-        
-        var newTreeOID = git_oid()
-        
-        let indexWriteTreeResult: Int32 = git_index_write_tree(
-            &newTreeOID,
-            indexPointer
-        )
-        
-        XCTAssertOK(indexWriteTreeResult)
-        
-        
-        
-        var newTreePointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeTreePointer(&newTreePointer)
-        }
-        
-        
-        
-        let treeLookupResult: Int32 = git_tree_lookup(
-            &newTreePointer,
-            repository.pointer,
-            &newTreeOID
-        )
-        
-        XCTAssertOK(treeLookupResult)
-        
-        
-        
-        var diffPointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeDiffPointer(&diffPointer)
-        }
-        
-        
-        
-        let diffTreeToTreeResult: Int32 = git_diff_tree_to_tree(
-            &diffPointer,
-            repository.pointer,
-            oldTreePointer,
-            newTreePointer,
-            nil
-        )
-        
-        XCTAssertOK(diffTreeToTreeResult)
-        
-        guard let diffPointer: OpaquePointer = diffPointer
-        else
-        {
-            XCTFail("The diff pointer was nil.")
-            return
-        }
-        
-        
-        
-        let resetResult: Int32 = git_reset(
-            repository.pointer,
-            commitPointer,
-            GIT_RESET_HARD,
-            nil
-        )
-        
-        XCTAssertOK(resetResult)
-        
-        
-        
-        var callbackCounts = CallbackCounts()
-        
-        let deltaCB: GitApplyDeltaCB =
-        {
-            _, payload in
+            repository in
             
-            guard let payload: UnsafeMutableRawPointer = payload
-            else
+            var headOID: git_oid = OID.getHEADCommitOID(on: repository)
+            
+            
+            
+            var commitPointer: OpaquePointer? = nil
+            
+            defer
             {
-                return GIT_OK.rawValue
+                Free.freeCommitPointer(&commitPointer)
             }
             
-            let payloadPointer: UnsafeMutablePointer<CallbackCounts> = payload.assumingMemoryBound(to: CallbackCounts.self)
-            payloadPointer.pointee.deltaCount += 1
             
-            return GIT_OK.rawValue
-        }
-        
-        let hunkCB: GitApplyHunkCB =
-        {
-            _, payload in
             
-            guard let payload: UnsafeMutableRawPointer = payload
-            else
-            {
-                return GIT_OK.rawValue
-            }
-            
-            let payloadPointer: UnsafeMutablePointer<CallbackCounts> = payload.assumingMemoryBound(to: CallbackCounts.self)
-            payloadPointer.pointee.hunkCount += 1
-            
-            return GIT_OK.rawValue
-        }
-        
-        
-        
-        try withUnsafeMutablePointer(to: &callbackCounts)
-        {
-            callbackCountsPointer in
-            
-            var applyOptions = try GitApplyOptions()
-            
-            applyOptions.deltaCB    = deltaCB
-            applyOptions.hunkCB     = hunkCB
-            applyOptions.payload    = UnsafeMutableRawPointer(callbackCountsPointer)
-            
-            if let flags: GitApplyFlagsT = flags
-            {
-                applyOptions.flags = flags
-            }
-            
-            let applyResult: Int32 = gitApply(
-                repo:       repository.pointer,
-                diff:       diffPointer,
-                location:   location,
-                options:    applyOptions
-            )
-            
-            XCTAssertOK(applyResult)
-        }
-                
-        
-        
-        XCTAssertGreaterThan(
-            callbackCounts.deltaCount,
-            0,
-            "The delta callback was not invoked."
-        )
-        
-        XCTAssertGreaterThan(
-            callbackCounts.hunkCount,
-            0,
-            "The hunk callback was not invoked."
-        )
-        
-        
-        
-        let documentContent = try String(
-            contentsOf:     documentURL,
-            encoding:       .utf8
-        )
-        
-        XCTAssertEqual(
-            documentContent,
-            endContent,
-            "The document content was not correct."
-        )
-        
-        
-        
-        if checkIndex
-        {
-            var statusFlags: UInt32 = 0
-            
-            let statusFileResult: Int32 = git_status_file(
-                &statusFlags,
+            let commitLookupResult: Int32 = git_commit_lookup(
+                &commitPointer,
                 repository.pointer,
-                Repository.originalDocumentName
+                &headOID
             )
             
-            XCTAssertOK(statusFileResult)
+            XCTAssertOK(commitLookupResult)
             
-            XCTAssertTrue(
-                (statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0,
-                "The document did not have staged changes in the index."
+            
+            
+            var oldTreePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                Free.freeTreePointer(&oldTreePointer)
+            }
+            
+            
+            
+            let commitTreeResult: Int32 = git_commit_tree(
+                &oldTreePointer,
+                commitPointer
             )
+            
+            XCTAssertOK(commitTreeResult)
+            
+            
+            
+            let fileURL: URL = repository.url.appending(
+                path:           Repository.originalFileName,
+                directoryHint:  .notDirectory
+            )
+            
+            let modifiedContent: String = "\(Repository.originalFileContent) Goodbye World!"
+            
+            try modifiedContent.atomicWrite(to: fileURL)
+            
+            
+            
+            var indexPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                Free.freeIndexPointer(&indexPointer)
+            }
+            
+            
+            
+            let repositoryIndexResult: Int32 = git_repository_index(
+                &indexPointer,
+                repository.pointer
+            )
+            
+            XCTAssertOK(repositoryIndexResult)
+            
+            
+            
+            let indexAddBypathResult: Int32 = git_index_add_bypath(
+                indexPointer,
+                Repository.originalFileName
+            )
+            
+            XCTAssertOK(indexAddBypathResult)
+            
+            
+            
+            var newTreeOID = git_oid()
+            
+            let indexWriteTreeResult: Int32 = git_index_write_tree(
+                &newTreeOID,
+                indexPointer
+            )
+            
+            XCTAssertOK(indexWriteTreeResult)
+            
+            
+            
+            var newTreePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                Free.freeTreePointer(&newTreePointer)
+            }
+            
+            
+            
+            let treeLookupResult: Int32 = git_tree_lookup(
+                &newTreePointer,
+                repository.pointer,
+                &newTreeOID
+            )
+            
+            XCTAssertOK(treeLookupResult)
+            
+            
+            
+            var diffPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                Free.freeDiffPointer(&diffPointer)
+            }
+            
+            
+            
+            let diffTreeToTreeResult: Int32 = git_diff_tree_to_tree(
+                &diffPointer,
+                repository.pointer,
+                oldTreePointer,
+                newTreePointer,
+                nil
+            )
+            
+            XCTAssertOK(diffTreeToTreeResult)
+            
+            guard let diffPointer: OpaquePointer = diffPointer
+            else
+            {
+                XCTFail("The diff pointer was nil.")
+                return
+            }
+            
+            
+            
+            let resetResult: Int32 = git_reset(
+                repository.pointer,
+                commitPointer,
+                GIT_RESET_HARD,
+                nil
+            )
+            
+            XCTAssertOK(resetResult)
+            
+            
+            
+            var callbackCounts = CallbackCounts()
+            
+            let deltaCB: GitApplyDeltaCB =
+            {
+                _, payload in
+                
+                guard let payload: UnsafeMutableRawPointer = payload
+                else
+                {
+                    return GIT_OK.rawValue
+                }
+                
+                let payloadPointer: UnsafeMutablePointer<CallbackCounts>
+                    = payload.assumingMemoryBound(to: CallbackCounts.self)
+                
+                payloadPointer.pointee.deltaCount += 1
+                
+                return GIT_OK.rawValue
+            }
+            
+            
+            
+            let hunkCB: GitApplyHunkCB =
+            {
+                _, payload in
+                
+                guard let payload: UnsafeMutableRawPointer = payload
+                else
+                {
+                    return GIT_OK.rawValue
+                }
+                
+                let payloadPointer: UnsafeMutablePointer<CallbackCounts>
+                    = payload.assumingMemoryBound(to: CallbackCounts.self)
+                
+                payloadPointer.pointee.hunkCount += 1
+                
+                return GIT_OK.rawValue
+            }
+            
+            
+            
+            try withUnsafeMutablePointer(to: &callbackCounts)
+            {
+                callbackCountsPointer in
+                
+                var applyOptions = try GitApplyOptions()
+                
+                applyOptions.deltaCB    = deltaCB
+                applyOptions.hunkCB     = hunkCB
+                applyOptions.payload    = UnsafeMutableRawPointer(callbackCountsPointer)
+                
+                if let flags: GitApplyFlagsT = flags
+                {
+                    applyOptions.flags = flags
+                }
+                
+                let applyResult: Int32 = gitApply(
+                    repo:       repository.pointer,
+                    diff:       diffPointer,
+                    location:   location,
+                    options:    applyOptions
+                )
+                
+                XCTAssertOK(applyResult)
+            }
+                    
+            
+            
+            XCTAssertGreaterThan(callbackCounts.deltaCount, 0)
+            XCTAssertGreaterThan(callbackCounts.hunkCount, 0)
+            
+            
+            
+            let fileContent = try String(
+                contentsOf:     fileURL,
+                encoding:       .utf8
+            )
+            
+            XCTAssertEqual(fileContent, endContent)
+            
+            
+            
+            if checkIndex
+            {
+                var statusFlags: UInt32 = 0
+                
+                let statusFileResult: Int32 = git_status_file(
+                    &statusFlags,
+                    repository.pointer,
+                    Repository.originalFileName
+                )
+                
+                XCTAssertOK(statusFileResult)
+                
+                /// The file should have staged changes in the index.
+                XCTAssertTrue((statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0)
+            }
         }
     }
 }

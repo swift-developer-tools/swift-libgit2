@@ -9,11 +9,11 @@ Direct Swift bindings to libgit2.
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org).
 libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
-Swift bindings are provided for almost every function, concrete struct, and 
-macro available in libgit2. Direct access to the libgit2 C library is also 
-provided by the package. There are no Swift bindings for initialization 
-functions, opaque structs, and initialization macros, but these may be accessed 
-by importing the C library. See the Usage section below for an example of how 
+Swift bindings are provided for almost every function, struct, and macro 
+available in libgit2. Direct access to the libgit2 C library is also provided
+by the package. There are no Swift bindings for initialization functions, 
+opaque structs, and initialization macros, but these may be accessed by
+importing the C library. See the Usage section below for an example of how 
 to import and use either library.
 
 The Swift bindings use the same signatures and parameter names as 
@@ -25,6 +25,10 @@ Similar to libgit2, the Swift bindings do not use
 [namespaces](https://en.wikipedia.org/wiki/Namespace). All Swift bindings are
 available globally.
 
+The Swift bindings for some C enums are represented as structs, but remain in 
+their respective "Enums" documentation section to match libgit2's API 
+organization.
+
 
 
 ## Installation
@@ -32,7 +36,7 @@ available globally.
 swift-libgit2 may be installed through 
 [Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/) 
 by entering the following URL: 
-[https://github.com/swift-developer-tools/swift-libgit2.git](https://github.com/swift-developer-tools/swift-libgit2.git)
+[https://github.com/swift-developer-tools/swift-libgit2.git](https://github.com/swift-developer-tools/swift-libgit2.git).
 
 See the Xcode documentation for step-by-step instructions on how to 
 [add package dependencies](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app).
@@ -112,8 +116,8 @@ to ensure thread-safe access to libgit2.
 
 Some libgit2 APIs are asynchronous, but are not exposed as asynchronous. 
 Generally, any API which interacts with a remote repository will be 
-asynchronous. Since swift-libgit2 is a direct binding to libgit2, no Swift 
-methods are asynchronous either. Consider using an appropriate 
+asynchronous. Since swift-libgit2 provides direct bindings to libgit2, no 
+Swift methods are asynchronous either. Consider using an appropriate 
 [concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) 
 API to handle these cases and other synchronous work which may be better 
 performed off the main thread.
@@ -141,6 +145,19 @@ swift-libgit2 documentation is adapted from libgit2 under the
 MIT License.
 
 Copyright &copy; 2013 The libgit2 contributors
+
+### Source Code
+
+swift-libgit2 includes source code adapted from the Swift.org open source 
+project under the Apache License, Version 2.0, with Runtime Library Exception.
+
+Copyright &copy; 2014 - 2016 Apple Inc. and the Swift project authors.
+
+See [https://swift.org/LICENSE.txt](https://swift.org/LICENSE.txt) for license 
+information.
+
+See [https://swift.org/CONTRIBUTORS.txt](https://swift.org/CONTRIBUTORS.txt) for 
+the list of Swift project authors.
 
 ### Bundled Dependencies
 
@@ -188,6 +205,39 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitApplyToTree(out:repo:preimage:diff:options:)``
 - ``gitApply(repo:diff:location:options:)``
+
+### Attr Structs
+
+- ``GitAttrOptions``
+
+### Attr Macros
+
+- ``gitAttrIsTrue(attr:)``
+- ``gitAttrIsFalse(attr:)``
+- ``gitAttrIsUnspecified(attr:)``
+- ``gitAttrHasValue(attr:)``
+- ``gitAttrOptionsVersion``
+
+### Attr Enums
+
+- ``GitAttrCheckFlagsT``
+- ``GitAttrValueT``
+
+### Attr Callbacks
+
+- ``GitAttrForEachCB``
+
+### Attr Functions
+
+- ``gitAttrValue(attr:)``
+- ``gitAttrGet(valueOut:repo:flags:path:name:)``
+- ``gitAttrGetExt(valueOut:repo:opts:path:name:)``
+- ``gitAttrGetMany(valueOut:repo:flags:path:numAttr:names:)``
+- ``gitAttrGetManyExt(valueOut:repo:opts:path:numAttr:names:)``
+- ``gitAttrForEach(repo:flags:path:callback:payload:)``
+- ``gitAttrForEachExt(repo:opts:path:callback:payload:)``
+- ``gitAttrCacheFlush(repo:)``
+- ``gitAttrAddMacro(repo:name:values:)``
 
 ### Global Functions
 

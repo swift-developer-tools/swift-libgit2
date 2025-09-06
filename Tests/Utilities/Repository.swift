@@ -15,6 +15,12 @@ import XCTest
 
 
 /// Repository-related testing utilities.
+///
+/// The repository is created with a single `README.md` file which says`# Hello World!`.
+/// When running tests designed to check file content, prefer use of the `README.md` file.
+///
+/// Apart from the `README.md` file, various files are created to interact with other repository features,
+/// such as the files created in ``withRepository(_:)`` to interact with `.gitattributes`.
 struct Repository
 {
     // MARK: - Properties
@@ -27,9 +33,16 @@ struct Repository
     
     
     
-    /// The repository is created with a single `README.md` document which says`# Hello World!`.
-    static let originalDocumentName     : String    = "README.md"
-    static let originalDocumentContent  : String    = "# Hello World!"
+    static let originalFileName     : String    = "README.md"
+    static let originalFileContent  : String    = "# Hello World!"
+    
+    static let gitattributesFiles: [(String, String)] =
+    [
+        ("test.txt",        "This is a text file\n"),
+        ("data.bin",        "Binary data"),
+        ("file.special",    "Special file"),
+        ("negative.false",  "File with false attribute")
+    ]
     
     
     
@@ -37,21 +50,17 @@ struct Repository
     
     /// Create the initial commit on the test repository.
     /// - Parameter repository: The test repository.
-    /// - Throws: An `Error` if the document write failed.
+    /// - Throws: An `Error` if the file write operation failed.
     private static func createInitialCommit(
         on repository: Repository
     ) throws
     {
-        let documentURL: URL = repository.url.appending(
-            path:           originalDocumentName,
+        let fileURL: URL = repository.url.appending(
+            path:           originalFileName,
             directoryHint:  .notDirectory
         )
         
-        try originalDocumentContent.write(
-            to:             documentURL,
-            atomically:     true,
-            encoding:       .utf8
-        )
+        try originalFileContent.atomicWrite(to: fileURL)
         
         
         
@@ -68,7 +77,7 @@ struct Repository
         
         let indexAddBypathResult: Int32 = git_index_add_bypath(
             indexPointer,
-            originalDocumentName
+            originalFileName
         )
         
         XCTAssertOK(indexAddBypathResult)
@@ -224,6 +233,35 @@ struct Repository
         
         
         try createInitialCommit(on: repository)
+        
+        
+        
+        
+        let gitattributesContent: String =
+        """
+        *.txt text eol=lf
+        *.bin binary
+        *.special custom=customvalue
+        *.false -text
+        *.macro attr1 attr2=value
+        """
+        
+        let gitattributesURL: URL = repository.url.appending(
+            path:           ".gitattributes",
+            directoryHint:  .notDirectory
+        )
+        
+        try gitattributesContent.atomicWrite(to: gitattributesURL)
+        
+        for (filename, content) in Repository.gitattributesFiles
+        {
+            let fileURL: URL = repository.url.appending(
+                path:           filename,
+                directoryHint:  .notDirectory
+            )
+            
+            try content.atomicWrite(to: fileURL)
+        }
         
         
         
