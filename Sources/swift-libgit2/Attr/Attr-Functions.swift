@@ -296,7 +296,7 @@ public func gitAttrCacheFlush(
 
 /// Add a macro definition.
 /// - Parameters:
-///   - repo: The repository to add the macro in.
+///   - repo: The repository in which to add the macro.
 ///   - name: The name of the macro.
 ///   - values: The value of the macro.
 /// - Returns: `0` on success, or an error code.

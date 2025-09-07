@@ -15,7 +15,7 @@ import Clibgit2
 /// - Parameters:
 ///   - out: The postimage of the application.
 ///   - repo: The repository to apply.
-///   - preimage: The tree to apply the diff to.
+///   - preimage: The tree to which the diff should be applied.
 ///   - diff: The diff to apply.
 ///   - options: The options for the apply.
 /// - Returns: `0` on success, or an error code.
@@ -50,7 +50,7 @@ public func gitApplyToTree(
 /// Apply a `git_diff` to the given repository, making changes directly in the working directory, the index,
 /// or both.
 /// - Parameters:
-///   - repo: The repository to apply to.
+///   - repo: The repository to which the diff should be applied.
 ///   - diff: The diff to apply.
 ///   - location: The location to apply (the working directory, the index, or both).
 ///   - options: The options for the apply.

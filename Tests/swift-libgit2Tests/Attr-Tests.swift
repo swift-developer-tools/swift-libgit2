@@ -434,8 +434,8 @@ extension AttrTests
                 
                 
                 
-                let payloadPointer: UnsafeMutablePointer<[String: String]>
-                    = cPayload.assumingMemoryBound(to: [String: String].self)
+                let payloadPointer: UnsafeMutablePointer<[String : String]>
+                    = cPayload.assumingMemoryBound(to: [String : String].self)
                 
                 payloadPointer.pointee[name] = value
                 
