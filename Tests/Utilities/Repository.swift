@@ -33,8 +33,8 @@ struct Repository
     
     
     
-    static let originalFileName     : String    = "README.md"
-    static let originalFileContent  : String    = "# Hello World!"
+    static let readmeFileName       : String    = "README.md"
+    static let readmeFileContent    : String    = "# Hello World!"
     
     static let gitattributesFiles: [(String, String)] =
     [
@@ -56,11 +56,11 @@ struct Repository
     ) throws
     {
         let fileURL: URL = repository.url.appending(
-            path:           originalFileName,
+            path:           readmeFileName,
             directoryHint:  .notDirectory
         )
         
-        try originalFileContent.atomicWrite(to: fileURL)
+        try readmeFileContent.atomicWrite(to: fileURL)
         
         
         
@@ -77,7 +77,7 @@ struct Repository
         
         let indexAddBypathResult: Int32 = git_index_add_bypath(
             indexPointer,
-            originalFileName
+            readmeFileName
         )
         
         XCTAssertOK(indexAddBypathResult)

@@ -159,7 +159,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationBoth,
             flags:          nil,
             checkIndex:     true,
-            endContent:     "\(Repository.originalFileContent) Goodbye World!"
+            endContent:     "\(Repository.readmeFileContent) Goodbye World!"
         )
     }
     
@@ -173,7 +173,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationIndex,
             flags:          nil,
             checkIndex:     true,
-            endContent:     Repository.originalFileContent
+            endContent:     Repository.readmeFileContent
         )
     }
     
@@ -187,7 +187,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationWorkdir,
             flags:          nil,
             checkIndex:     false,
-            endContent:     "\(Repository.originalFileContent) Goodbye World!"
+            endContent:     "\(Repository.readmeFileContent) Goodbye World!"
         )
     }
     
@@ -201,7 +201,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             location:       .gitApplyLocationWorkdir,
             flags:          .gitApplyCheck,
             checkIndex:     false,
-            endContent:     Repository.originalFileContent
+            endContent:     Repository.readmeFileContent
         )
     }
 }
@@ -295,11 +295,11 @@ extension ApplyTests
             
             
             let fileURL: URL = repository.url.appending(
-                path:           Repository.originalFileName,
+                path:           Repository.readmeFileName,
                 directoryHint:  .notDirectory
             )
             
-            let modifiedContent: String = "\(Repository.originalFileContent) Goodbye World!"
+            let modifiedContent: String = "\(Repository.readmeFileContent) Goodbye World!"
             
             try modifiedContent.atomicWrite(to: fileURL)
             
@@ -325,7 +325,7 @@ extension ApplyTests
             
             let indexAddBypathResult: Int32 = git_index_add_bypath(
                 indexPointer,
-                Repository.originalFileName
+                Repository.readmeFileName
             )
             
             XCTAssertOK(indexAddBypathResult)
@@ -491,7 +491,7 @@ extension ApplyTests
                 let statusFileResult: Int32 = git_status_file(
                     &statusFlags,
                     repository.pointer,
-                    Repository.originalFileName
+                    Repository.readmeFileName
                 )
                 
                 XCTAssertOK(statusFileResult)

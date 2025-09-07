@@ -29,11 +29,11 @@ enum Diff
     ) throws
     {
         let fileURL: URL = repository.url.appending(
-            path:           Repository.originalFileName,
+            path:           Repository.readmeFileName,
             directoryHint:  .notDirectory
         )
         
-        let modifiedFileContent: String = "\(Repository.originalFileContent) Goodbye World!"
+        let modifiedFileContent: String = "\(Repository.readmeFileContent) Goodbye World!"
         
         do
         {
