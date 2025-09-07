@@ -77,14 +77,23 @@ public struct GitApplyOptions
     
     /// Calls the given closure with a ``GitApplyOptions`` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_apply_options>) -> T
-    ) -> T
+    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
+    internal func withCStruct(
+        _ body: (UnsafeMutablePointer<git_apply_options>) -> Int32
+    ) -> Int32
     {
         var applyOptions = git_apply_options()
         
-        applyOptions.version    = version
+        let applyOptionsInitResult: Int32 = git_apply_options_init(
+            &applyOptions,
+            version
+        )
+        
+        if applyOptionsInitResult != GIT_OK.rawValue
+        {
+            return applyOptionsInitResult
+        }
+        
         applyOptions.delta_cb   = deltaCB
         applyOptions.hunk_cb    = hunkCB
         applyOptions.payload    = payload
