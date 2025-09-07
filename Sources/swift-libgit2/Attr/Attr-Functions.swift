@@ -23,6 +23,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_value()`](https://libgit2.org/docs/reference/main/attr/git_attr_value.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrValue(
     attr: UnsafePointer<CChar>?
 ) -> GitAttrValueT
@@ -52,6 +53,7 @@ public func gitAttrValue(
 /// ## C Equivalent
 ///
 /// [`git_attr_get()`](https://libgit2.org/docs/reference/main/attr/git_attr_get.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGet(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
@@ -87,6 +89,7 @@ public func gitAttrGet(
 /// ## C Equivalent
 ///
 /// [`git_attr_get_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_ext.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGetExt(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
@@ -142,6 +145,7 @@ public func gitAttrGetExt(
 /// ## C Equivalent
 ///
 /// [`git_attr_get_many()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_many.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGetMany(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
@@ -185,6 +189,7 @@ public func gitAttrGetMany(
 /// ## C Equivalent
 ///
 /// [`git_attr_get_many_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_many_ext.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGetManyExt(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
@@ -245,6 +250,7 @@ public func gitAttrGetManyExt(
 /// ## C Equivalent
 ///
 /// [`git_attr_foreach()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrForEach(
     repo        : OpaquePointer,
     flags       : GitAttrCheckFlagsT,
@@ -278,6 +284,7 @@ public func gitAttrForEach(
 /// ## C Equivalent
 ///
 /// [`git_attr_foreach_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach_ext.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrForEachExt(
     repo        : OpaquePointer,
     opts        : GitAttrOptions?,
@@ -328,6 +335,7 @@ public func gitAttrForEachExt(
 /// ## C Equivalent
 ///
 /// [`git_attr_cache_flush()`](https://libgit2.org/docs/reference/main/attr/git_attr_cache_flush.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrCacheFlush(
     repo: OpaquePointer
 ) -> Int32
@@ -362,6 +370,7 @@ public func gitAttrCacheFlush(
 /// ## C Equivalent
 ///
 /// [`git_attr_add_macro()`](https://libgit2.org/docs/reference/main/attr/git_attr_add_macro.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrAddMacro(
     repo    : OpaquePointer,
     name    : String,

@@ -16,6 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_options`](https://libgit2.org/docs/reference/main/attr/git_attr_options.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitAttrOptions
 {
     /// The version to use. Defaults to ``gitAttrOptionsVersion``.

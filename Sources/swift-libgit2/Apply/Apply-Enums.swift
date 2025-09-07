@@ -23,6 +23,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_flags_t`](https://libgit2.org/docs/reference/main/apply/git_apply_flags_t.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitApplyFlagsT: OptionSet, Sendable
 {
     /// The raw value to use.
@@ -51,6 +52,7 @@ public struct GitApplyFlagsT: OptionSet, Sendable
 /// ## C Equivalent
 ///
 /// [`git_apply_location_t`](https://libgit2.org/docs/reference/main/apply/git_apply_location_t.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitApplyLocationT: OptionSet, Sendable
 {
     /// The raw value to use.

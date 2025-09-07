@@ -24,6 +24,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitApplyOptions
 {
     /// The version to use. Defaults to ``gitApplyOptionsVersion``.

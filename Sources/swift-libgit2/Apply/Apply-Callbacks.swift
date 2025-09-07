@@ -30,6 +30,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_delta_cb()`](https://libgit2.org/docs/reference/main/apply/git_apply_delta_cb.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public typealias GitApplyDeltaCB = @convention(c) (
     UnsafePointer<git_diff_delta>?,
     UnsafeMutableRawPointer?
@@ -56,6 +57,7 @@ public typealias GitApplyDeltaCB = @convention(c) (
 /// ## C Equivalent
 ///
 /// [`git_apply_hunk_cb()`](https://libgit2.org/docs/reference/main/apply/git_apply_hunk_cb.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public typealias GitApplyHunkCB = @convention(c) (
     UnsafePointer<git_diff_hunk>?,
     UnsafeMutableRawPointer?

@@ -25,6 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_TRUE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_TRUE.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrIsTrue(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -49,6 +50,7 @@ public func gitAttrIsTrue(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_FALSE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_FALSE.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrIsFalse(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -77,6 +79,7 @@ public func gitAttrIsFalse(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_UNSPECIFIED(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_UNSPECIFIED.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrIsUnspecified(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -100,6 +103,7 @@ public func gitAttrIsUnspecified(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_HAS_VALUE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_HAS_VALUE.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrHasValue(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -114,4 +118,5 @@ public func gitAttrHasValue(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_OPTIONS_VERSION.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public let gitAttrOptionsVersion: UInt32 = UInt32(GIT_ATTR_OPTIONS_VERSION)
