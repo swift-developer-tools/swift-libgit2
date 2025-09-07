@@ -23,7 +23,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(on: repository)
+            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
             
             
             
@@ -202,7 +202,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(on: repository)
+            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
             
             
             

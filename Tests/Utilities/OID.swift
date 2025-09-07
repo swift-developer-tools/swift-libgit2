@@ -50,7 +50,7 @@ enum OID
     /// - Parameter repository: The repository on which the HEAD commit exists.
     /// - Returns: The HEAD commit OID.
     static func getHEADCommitOID(
-        on repository: Repository
+        in repository: Repository
     ) -> git_oid
     {
         var headOID = git_oid()

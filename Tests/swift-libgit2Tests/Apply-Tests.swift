@@ -74,7 +74,7 @@ final class ApplyTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID         : git_oid           = OID.getHEADCommitOID(on: repository)
+            var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
             var commitPointer   : OpaquePointer?    = nil
             
             defer
@@ -131,7 +131,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             let applyOptions = try GitApplyOptions()
             
-            try Diff.withDiffPointer(on: repository)
+            try Diff.withDiffPointer(in: repository)
             {
                 diffPointer in
                 
@@ -253,7 +253,7 @@ extension ApplyTests
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(on: repository)
+            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
             
             
             

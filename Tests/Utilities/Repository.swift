@@ -52,7 +52,7 @@ struct Repository
     /// - Parameter repository: The test repository.
     /// - Throws: An `Error` if the file write operation failed.
     private static func createInitialCommit(
-        on repository: Repository
+        in repository: Repository
     ) throws
     {
         let fileURL: URL = repository.url.appending(
@@ -232,7 +232,7 @@ struct Repository
         
         
         
-        try createInitialCommit(on: repository)
+        try createInitialCommit(in: repository)
         
         
         
