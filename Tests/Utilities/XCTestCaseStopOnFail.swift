@@ -11,7 +11,7 @@ import XCTest
 
 
 
-/// Stop an `XCTest` case as soon as a failure occurs.
+/// Stops an `XCTest` case as soon as a failure occurs.
 class XCTestCaseStopOnFail: XCTestCase
 {
     override func setUp()

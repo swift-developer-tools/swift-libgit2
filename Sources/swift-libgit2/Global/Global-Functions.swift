@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Initialize the global state.
+/// Initializes the global state.
 ///
 /// - Returns: The number of times the initialization has been called (including this one) that have not
 /// subsequently been shutdown.
@@ -32,7 +32,7 @@ public func gitLibgit2Init() -> Int32
 
 
 
-/// Shutdown the global state.
+/// Shuts down the global state.
 ///
 /// - Returns: The number of remainining initializations that have not been shutdown (after this one).
 ///

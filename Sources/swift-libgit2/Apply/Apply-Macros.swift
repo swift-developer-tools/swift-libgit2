@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The current version for the ``GitApplyOptions`` struct.
+/// The current version for ``GitApplyOptions``.
 ///
 /// ## C Equivalent
 /// 

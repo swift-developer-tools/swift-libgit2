@@ -17,7 +17,7 @@ import XCTest
 
 
 
-/// Assert that a libgit2 operation result code is `GIT_OK`.
+/// Asserts that a libgit2 operation result code is `GIT_OK`.
 /// - Parameter result: The libgit2 operation result code.
 func XCTAssertOK(
     _ result: Int32

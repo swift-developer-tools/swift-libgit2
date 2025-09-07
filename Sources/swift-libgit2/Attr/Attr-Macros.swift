@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Check if an attribute is set.
+/// Checks if an attribute is set.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is set.
 ///
@@ -34,7 +34,7 @@ public func gitAttrIsTrue(
 
 
 
-/// Check if an attribute is unset.
+/// Checks if an attribute is unset.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is unset.
 ///
@@ -58,7 +58,7 @@ public func gitAttrIsFalse(
 
 
 
-/// Check if an attribute is unspecified.
+/// Checks if an attribute is unspecified.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is unspecified.
 ///
@@ -86,7 +86,7 @@ public func gitAttrIsUnspecified(
 
 
 
-/// Check if an attribute is set to a value.
+/// Checks if an attribute is set to a value.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is set to a value.
 ///
@@ -109,7 +109,7 @@ public func gitAttrHasValue(
 
 
 
-/// The current version for the ``GitAttrOptions`` struct.
+/// The current version for ``GitAttrOptions``.
 ///
 /// ## C Equivalent
 ///

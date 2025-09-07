@@ -13,7 +13,7 @@ import Clibgit2
 
 /// Creates a `git_annotated_commit` from the given reference.
 /// - Parameters:
-///   - out: The pointer to store the `git_annotated_commit` result in.
+///   - out: The pointer in which to store the `git_annotated_commit` result.
 ///   - repo: The repository that contains the given reference.
 ///   - ref: The reference to use to lookup the `git_annotated_commit`.
 /// - Returns: `0` on success, or an error code.
@@ -42,7 +42,7 @@ public func gitAnnotatedCommitFromRef(
 
 /// Creates a `git_annotated_commit` from the given fetch head data.
 /// - Parameters:
-///   - out: The pointer to store the `git_annotated_commit` result in.
+///   - out: The pointer in which to store the `git_annotated_commit` result.
 ///   - repo: The repository that contains the given commit.
 ///   - branchName: The name of the (remote) branch.
 ///   - remoteURL: The URL of the remote.
@@ -77,7 +77,7 @@ public func gitAnnotatedCommitFromFetchhead(
 
 /// Creates a `git_annotated_commit` from the given commit ID.
 /// - Parameters:
-///   - out: The pointer to store the `git_annotated_commit` result in.
+///   - out: The pointer in which to store the `git_annotated_commit` result.
 ///   - repo: The repository that contains the given commit.
 ///   - id: The commit object ID to lookup.
 /// - Returns: `0` on success, or an error code.
@@ -112,7 +112,7 @@ public func gitAnnotatedCommitLookup(
 
 /// Creates a `git_annotated_commit` from a revision string.
 /// - Parameters:
-///   - out: The pointer to store the `git_annotated_commit` result in.
+///   - out: The pointer in which to store the `git_annotated_commit` result.
 ///   - repo: The repository that contains the given commit.
 ///   - revspec: The extended SHA syntax string to use to lookup the commit.
 /// - Returns: `0` on success, or an error code.
@@ -143,7 +143,7 @@ public func gitAnnotatedCommitFromRevspec(
 
 
 
-/// Gets the commit ID that the given `git_annotated_commit` refers to.
+/// Gets the commit ID to which the given `git_annotated_commit` refers.
 /// - Parameter commit: The given annotated commit.
 /// - Returns: The commit ID.
 ///
@@ -159,7 +159,7 @@ public func gitAnnotatedCommitID(
 
 
 
-/// Get the reference name that the given `git_annotated_commit` refers to.
+/// Gets the reference name to which the given `git_annotated_commit` refers.
 /// - Parameter commit: The given annotated commit.
 /// - Returns: The reference name.
 ///

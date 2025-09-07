@@ -22,7 +22,7 @@
 
 
 
-/// Compute the prefix sums of a sequence by cumulatively applying a binary operation to each element
+/// Computes the prefix sums of a sequence by cumulatively applying a binary operation to each element
 /// of the sequence.
 ///
 /// For example, `scan([1, 2, 3, 4], 0, +)` returns `[1, 3, 6, 10]`.

@@ -33,7 +33,7 @@ public struct GitAttrOptions
     
     
     
-    /// Initialize a ``GitAttrOptions`` struct.
+    /// Creates a ``GitAttrOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitAttrOptionsVersion``.
     public init(
         version: UInt32 = gitAttrOptionsVersion

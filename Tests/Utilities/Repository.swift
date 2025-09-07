@@ -48,7 +48,7 @@ struct Repository
     
     // MARK: - createInitialCommit()
     
-    /// Create the initial commit on the test repository.
+    /// Creates the initial commit on the test repository.
     /// - Parameter repository: The test repository.
     /// - Throws: An `Error` if the file write operation failed.
     private static func createInitialCommit(
@@ -157,7 +157,7 @@ struct Repository
     
     // MARK: - createTemporaryDirectory()
     
-    /// Create a temporary directory named `SwiftLibgit2Tests`.
+    /// Creates a temporary directory named `SwiftLibgit2Tests`.
     /// - Throws: An `Error` if the directory creation failed.
     /// - Returns: The URL of the temporary directory.
     static func createTemporaryDirectory() throws -> URL

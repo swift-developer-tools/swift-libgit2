@@ -28,7 +28,7 @@ public struct GitApplyFlagsT: OptionSet, Sendable
     /// The raw value to use.
     public let rawValue: UInt32
     
-    /// Initialize a ``GitApplyFlagsT`` struct.
+    /// Creates a ``GitApplyFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -56,7 +56,7 @@ public struct GitApplyLocationT: OptionSet, Sendable
     /// The raw value to use.
     public let rawValue: UInt32
         
-    /// Initialize a ``GitApplyLocationT`` struct.
+    /// Creates a ``GitApplyLocationT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32

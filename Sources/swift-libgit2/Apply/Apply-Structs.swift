@@ -43,7 +43,7 @@ public struct GitApplyOptions
     
     
     
-    /// Initialize a ``GitApplyOptions`` struct.
+    /// Creates a ``GitApplyOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
     /// - Throws: An `NSError` if the initialization failed.
     public init(

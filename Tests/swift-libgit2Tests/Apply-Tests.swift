@@ -224,7 +224,7 @@ extension ApplyTests
 
 
 
-    /// Test `git apply` functionality by creating a diff and applying it with the given options.
+    /// Tests `git apply` functionality by creating a diff and applying it with the given options.
     ///
     /// 1. Create a modified version of the repository's `README.md` file.
     /// 2. Stage the modification to create a new tree state.

@@ -36,7 +36,7 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
     /// The raw value to use.
     public let rawValue: UInt32
     
-    /// Initialize a ``GitAttrCheckFlagsT`` struct.
+    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32

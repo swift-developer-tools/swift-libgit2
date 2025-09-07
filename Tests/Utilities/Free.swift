@@ -15,7 +15,7 @@ import Clibgit2
 /// Functions to free and reset pointers.
 enum Free
 {
-    /// Free an annotated commit pointer.
+    /// Frees an annotated commit pointer.
     /// - Parameter annotatedCommitPointer: The annotated commit pointer to free.
     static func freeAnnotatedCommitPointer(
         _ annotatedCommitPointer: inout OpaquePointer?
@@ -30,7 +30,7 @@ enum Free
     
     
     
-    /// Free a commit pointer.
+    /// Frees a commit pointer.
     /// - Parameter commitPointer: The commit pointer to free.
     static func freeCommitPointer(
         _ commitPointer: inout OpaquePointer?
@@ -45,7 +45,7 @@ enum Free
     
     
     
-    /// Free a diff pointer.
+    /// Frees a diff pointer.
     /// - Parameter diffPointer: The diff pointer to free.
     static func freeDiffPointer(
         _ diffPointer: inout OpaquePointer?
@@ -60,7 +60,7 @@ enum Free
     
     
     
-    /// Free an index pointer.
+    /// Frees an index pointer.
     /// - Parameter indexPointer: The index pointer to free.
     static func freeIndexPointer(
         _ indexPointer: inout OpaquePointer?
@@ -75,7 +75,7 @@ enum Free
     
     
     
-    /// Free a reference pointer.
+    /// Frees a reference pointer.
     /// - Parameter referencePointer: The reference pointer to free.
     static func freeReferencePointer(
         _ referencePointer: inout OpaquePointer?
@@ -90,7 +90,7 @@ enum Free
     
     
     
-    /// Free a repository pointer.
+    /// Frees a repository pointer.
     /// - Parameter repositoryPointer: The repository pointer to free.
     static func freeRepositoryPointer(
         _ repositoryPointer: inout OpaquePointer?
@@ -105,7 +105,7 @@ enum Free
     
     
     
-    /// Free a signature pointer.
+    /// Frees a signature pointer.
     /// - Parameter signaturePointer: The signature pointer to free.
     static func freeSignaturePointer(
         _ signaturePointer: inout UnsafeMutablePointer<git_signature>?
@@ -120,7 +120,7 @@ enum Free
     
     
     
-    /// Free a tree pointer.
+    /// Frees a tree pointer.
     /// - Parameter treePointer: The tree pointer to free.
     static func freeTreePointer(
         _ treePointer: inout OpaquePointer?
