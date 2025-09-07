@@ -28,9 +28,23 @@ public func gitApplyToTree(
     repo        : OpaquePointer,
     preimage    : OpaquePointer,
     diff        : OpaquePointer,
-    options     : GitApplyOptions
+    options     : GitApplyOptions?
 ) -> Int32
 {
+    guard let options: GitApplyOptions = options
+    else
+    {
+        return git_apply_to_tree(
+            out,
+            repo,
+            preimage,
+            diff,
+            nil
+        )
+    }
+    
+    
+    
     return options.withCStruct
     {
         cOptions in
@@ -63,9 +77,22 @@ public func gitApply(
     repo        : OpaquePointer,
     diff        : OpaquePointer,
     location    : GitApplyLocationT,
-    options     : GitApplyOptions
+    options     : GitApplyOptions?
 ) -> Int32
 {
+    guard let options: GitApplyOptions = options
+    else
+    {
+        return git_apply(
+            repo,
+            diff,
+            git_apply_location_t(rawValue: location.rawValue),
+            nil
+        )
+    }
+    
+    
+            
     return options.withCStruct
     {
         cOptions in

@@ -90,11 +90,25 @@ public func gitAttrGet(
 public func gitAttrGetExt(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
-    opts        : GitAttrOptions,
+    opts        : GitAttrOptions?,
     path        : String,
     name        : String
 ) -> Int32
 {
+    guard let opts: GitAttrOptions = opts
+    else
+    {
+        return git_attr_get_ext(
+            valueOut,
+            repo,
+            nil,
+            path,
+            name
+        )
+    }
+    
+    
+    
     return opts.withCStruct
     {
         cOpts in
@@ -174,20 +188,35 @@ public func gitAttrGetMany(
 public func gitAttrGetManyExt(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
-    opts        : GitAttrOptions,
+    opts        : GitAttrOptions?,
     path        : String,
     numAttr     : Int,
     names       : [String]
 ) -> Int32
 {
-    return opts.withCStruct
+    return withArrayOfImmutableCStrings(names)
     {
-        cOpts in
+        cNames in
         
-        return withArrayOfImmutableCStrings(names)
+        guard let opts: GitAttrOptions = opts
+        else
         {
-            cNames in
-                
+            return git_attr_get_many_ext(
+                valueOut,
+                repo,
+                nil,
+                path,
+                numAttr,
+                cNames
+            )
+        }
+        
+        
+        
+        return opts.withCStruct
+        {
+            cOpts in
+            
             return git_attr_get_many_ext(
                 valueOut,
                 repo,
@@ -251,12 +280,26 @@ public func gitAttrForEach(
 /// [`git_attr_foreach_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach_ext.html)
 public func gitAttrForEachExt(
     repo        : OpaquePointer,
-    opts        : GitAttrOptions,
+    opts        : GitAttrOptions?,
     path        : String,
     callback    : GitAttrForEachCB?,
     payload     : UnsafeMutableRawPointer?
 ) -> Int32
 {
+    guard let opts: GitAttrOptions = opts
+    else
+    {
+        return git_attr_foreach_ext(
+            repo,
+            nil,
+            path,
+            callback,
+            payload
+        )
+    }
+    
+    
+    
     return opts.withCStruct
     {
         cOpts in
