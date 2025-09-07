@@ -175,8 +175,8 @@ public func gitAnnotatedCommitRef(
 
 
 
-/// Frees a `git_annotated_commit`.
-/// - Parameter commit: An annotated commit to free.
+/// Frees the memory allocated for a `git_annotated_commit` instance.
+/// - Parameter commit: The annotated commit to free.
 ///
 /// ## C Equivalent
 ///

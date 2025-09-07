@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options structure for querying attributes.
+/// The options for querying attributes.
 ///
 /// ## C Equivalent
 ///

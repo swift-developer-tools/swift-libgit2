@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options structure for the apply process.
+/// The options for the apply process.
 ///
 /// ## Discussion
 ///

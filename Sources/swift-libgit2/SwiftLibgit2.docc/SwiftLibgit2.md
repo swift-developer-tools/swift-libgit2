@@ -239,6 +239,35 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitAttrCacheFlush(repo:)``
 - ``gitAttrAddMacro(repo:name:values:)``
 
+### Blame Structs
+
+- ``GitBlameOptions``
+- ``GitBlameHunk``
+- ``GitBlameLine``
+
+### Blame Macros
+
+- ``gitBlameOptionsVersion``
+
+### Blame Enums
+
+- ``GitBlameFlagT``
+
+### Blame Functions
+
+- ``gitBlameLineCount(blame:)``
+- ``gitBlameHunkCount(blame:)``
+- ``gitBlameHunkByIndex(blame:index:)``
+- ``gitBlameHunkByLine(blame:lineNo:)``
+- ``gitBlameLineByIndex(blame:idx:)``
+- ``gitBlameGetHunkCount(blame:)``
+- ``gitBlameGetHunkByIndex(blame:index:)``
+- ``gitBlameGetHunkByLine(blame:lineNo:)``
+- ``gitBlameFile(out:repo:path:options:)``
+- ``gitBlameFileFromBuffer(out:repo:path:contents:contentsLen:options:)``
+- ``gitBlameBuffer(out:base:buffer:bufferLen:)``
+- ``gitBlameFree(blame:)``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``
