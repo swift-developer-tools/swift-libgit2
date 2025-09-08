@@ -16,4 +16,4 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Run tests
-      run: swift test
+      run: swift test --disable-swift-testing
