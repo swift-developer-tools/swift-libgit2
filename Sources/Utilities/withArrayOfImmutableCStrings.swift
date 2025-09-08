@@ -22,16 +22,18 @@
 
 
 
-/// Compute the prefix sums of a sequence by cumulatively applying a binary operation to each element
+/// Computes the prefix sums of a sequence by cumulatively applying a binary operation to each element
 /// of the sequence.
-///
-/// For example, `scan([1, 2, 3, 4], 0, +)` returns `[1, 3, 6, 10]`.
 ///
 /// - Parameters:
 ///   - seq: The sequence to process.
 ///   - initial: The initial value to start the accumulation.
 ///   - combine: A binary operation that combines the running result with each element.
 /// - Returns: An array containing the cumulative results of applying `combine`.
+///
+/// ## Discussion
+///
+/// For example, `scan([1, 2, 3, 4], 0, +)` returns `[1, 3, 6, 10]`.
 internal func scan<S: Sequence, U>(
     _   seq     : S,
     _   initial : U,
@@ -105,13 +107,15 @@ internal func withArrayOfCStrings<R>(
 
 /// Calls the given closure with an array of immutable C strings created from an array of Swift strings.
 ///
-/// Use this function over ``withArrayOfCStrings(args:body:)`` when working with C functions
-/// that expect `const char **` parameters.
-///
 /// - Parameters:
 ///   - args: The array of Swift strings.
 ///   - body: The closure to call.
 /// - Returns: The return value of the closure.
+///
+/// ## Discussion
+///
+/// Use this function over ``withArrayOfCStrings(args:body:)`` when working with C functions
+/// that expect `const char **` parameters.
 internal func withArrayOfImmutableCStrings<T>(
     _   args    : [String],
     _   body    : (UnsafeMutablePointer<UnsafePointer<CChar>?>) -> T

@@ -15,7 +15,7 @@ import XCTest
 /// OID-related testing utilities.
 enum OID
 {
-    /// Assert that two OIDs are equal.
+    /// Asserts that two OIDs are equal.
     /// - Parameters:
     ///   - oid1: The first OID.
     ///   - oid2: The second OID.
@@ -46,11 +46,11 @@ enum OID
     
     
     
-    /// Get the HEAD commit OID.
+    /// Gets the HEAD commit OID.
     /// - Parameter repository: The repository on which the HEAD commit exists.
     /// - Returns: The HEAD commit OID.
     static func getHEADCommitOID(
-        on repository: Repository
+        in repository: Repository
     ) -> git_oid
     {
         var headOID = git_oid()

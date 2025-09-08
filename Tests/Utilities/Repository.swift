@@ -16,11 +16,9 @@ import XCTest
 
 /// Repository-related testing utilities.
 ///
-/// The repository is created with a single `README.md` file which says`# Hello World!`.
-/// When running tests designed to check file content, prefer use of the `README.md` file.
+/// ## Discussion
 ///
-/// Apart from the `README.md` file, various files are created to interact with other repository features,
-/// such as the files created in ``withRepository(_:)`` to interact with `.gitattributes`.
+/// The repository created by ``withRepository(_:)`` contains various files used to test bindings.
 struct Repository
 {
     // MARK: - Properties
@@ -33,8 +31,9 @@ struct Repository
     
     
     
-    static let originalFileName     : String    = "README.md"
-    static let originalFileContent  : String    = "# Hello World!"
+    static let readmeFileName       : String    = "README.md"
+    static let readmeFileContent    : String    = "# Hello World!"
+    static let blameFileName        : String    = "blame.txt"
     
     static let gitattributesFiles: [(String, String)] =
     [
@@ -46,25 +45,27 @@ struct Repository
     
     
     
-    // MARK: - createInitialCommit()
+    // MARK: - commitFile()
     
-    /// Create the initial commit on the test repository.
-    /// - Parameter repository: The test repository.
-    /// - Throws: An `Error` if the file write operation failed.
-    private static func createInitialCommit(
-        on repository: Repository
-    ) throws
+    /// Commits a file in a given repository.
+    /// - Parameters:
+    ///   - repository: The repository in which the file exists.
+    ///   - fileName: The name of the file.
+    ///   - message: The commit message.
+    private static func commitFile(
+        in repository   : Repository,
+        fileName        : String,
+        message         : String
+    )
     {
-        let fileURL: URL = repository.url.appending(
-            path:           originalFileName,
-            directoryHint:  .notDirectory
-        )
-        
-        try originalFileContent.atomicWrite(to: fileURL)
-        
-        
-        
         var indexPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            Free.freeIndexPointer(&indexPointer)
+        }
+        
+        
         
         let repositoryIndexResult: Int32 = git_repository_index(
             &indexPointer,
@@ -77,7 +78,7 @@ struct Repository
         
         let indexAddBypathResult: Int32 = git_index_add_bypath(
             indexPointer,
-            originalFileName
+            fileName
         )
         
         XCTAssertOK(indexAddBypathResult)
@@ -108,6 +109,8 @@ struct Repository
             Free.freeTreePointer(&treePointer)
         }
         
+        
+        
         let treeLookupResult: Int32 = git_tree_lookup(
             &treePointer,
             repository.pointer,
@@ -125,6 +128,8 @@ struct Repository
             Free.freeSignaturePointer(&signaturePointer)
         }
         
+        
+        
         let signatureNowResult: Int32 = git_signature_now(
             &signaturePointer,
             "Test User",
@@ -132,6 +137,46 @@ struct Repository
         )
         
         XCTAssertOK(signatureNowResult)
+        
+        
+        
+        var headOID = git_oid()
+        
+        var headCommitPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            Free.freeCommitPointer(&headCommitPointer)
+        }
+        
+        
+        
+        /// Get the current HEAD commit as the parent commit, if it exists.
+        let referenceToNameResult: Int32 = git_reference_name_to_id(
+            &headOID,
+            repository.pointer,
+            "HEAD"
+        )
+        
+        if referenceToNameResult == GIT_OK.rawValue
+        {
+            let commitLookupResult: Int32 = git_commit_lookup(
+                &headCommitPointer,
+                repository.pointer,
+                &headOID
+            )
+            
+            XCTAssertOK(commitLookupResult)
+        }
+        
+        
+        
+        var parentCommitPointers: [OpaquePointer?] = []
+        
+        if headCommitPointer != nil
+        {
+            parentCommitPointers = [headCommitPointer]
+        }
         
         
         
@@ -144,10 +189,10 @@ struct Repository
             signaturePointer,
             signaturePointer,
             nil,
-            "Initial commit",
+            message,
             treePointer,
-            0,
-            nil
+            parentCommitPointers.count,
+            &parentCommitPointers
         )
         
         XCTAssertOK(commitCreateResult)
@@ -155,9 +200,103 @@ struct Repository
     
     
     
+    // MARK: - createInitialCommit()
+    
+    /// Creates the initial commit on a given repository.
+    /// - Parameter repository: The repository in which to create the commit.
+    /// - Throws: An `Error` if the file write operation failed.
+    private static func createInitialCommit(
+        in repository: Repository
+    ) throws
+    {
+        let fileURL: URL = repository.url.appending(
+            path:           readmeFileName,
+            directoryHint:  .notDirectory
+        )
+        
+        try readmeFileContent.atomicWrite(to: fileURL)
+        
+        commitFile(
+            in:         repository,
+            fileName:   readmeFileName,
+            message:    "Initial commit"
+        )
+    }
+    
+    
+    
+    /// Creates blame data in a given repository.
+    /// - Parameter repository: The repository.
+    /// - Throws: An `Error` if the file write operation failed.
+    private static func createBlameData(
+        in repository: Repository
+    ) throws
+    {
+        let fileURL: URL = repository.url.appending(
+            path:           blameFileName,
+            directoryHint:  .notDirectory
+        )
+        
+        
+        
+        let initialContent: String =
+        """
+        1: Initial content
+        2: More content
+        3: Even more content
+        """
+        
+        try initialContent.atomicWrite(to: fileURL)
+        
+        commitFile(
+            in:         repository,
+            fileName:   blameFileName,
+            message:    "Add blame file"
+        )
+        
+        
+        
+        let modifiedContent: String =
+        """
+        1: Initial content
+        2: Modified in second commit
+        3: Even more content
+        4: Added in second commit
+        """
+        
+        try modifiedContent.atomicWrite(to: fileURL)
+        
+        commitFile(
+            in:         repository,
+            fileName:   blameFileName,
+            message:    "Modify blame file"
+        )
+        
+        
+        
+        let finalContent: String =
+        """
+        1: Initial content
+        2: Modified in second commit
+        3: Modified in third commit
+        4: Added in second commit
+        5: Added in third commit
+        """
+        
+        try finalContent.atomicWrite(to: fileURL)
+        
+        commitFile(
+            in:         repository,
+            fileName:   blameFileName,
+            message:    "Final blame file update"
+        )
+    }
+    
+    
+    
     // MARK: - createTemporaryDirectory()
     
-    /// Create a temporary directory named `SwiftLibgit2Tests`.
+    /// Creates a temporary directory named `SwiftLibgit2Tests`.
     /// - Throws: An `Error` if the directory creation failed.
     /// - Returns: The URL of the temporary directory.
     static func createTemporaryDirectory() throws -> URL
@@ -232,7 +371,7 @@ struct Repository
         
         
         
-        try createInitialCommit(on: repository)
+        try createInitialCommit(in: repository)
         
         
         
@@ -262,6 +401,10 @@ struct Repository
             
             try content.atomicWrite(to: fileURL)
         }
+        
+        
+        
+        try createBlameData(in: repository)
         
         
         

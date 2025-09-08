@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Get the value type for a given attribute.
+/// Gets the value type for a given attribute.
 /// - Parameter attr: The attribute.
 /// - Returns: The value type for the attribute.
 ///
@@ -23,6 +23,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_value()`](https://libgit2.org/docs/reference/main/attr/git_attr_value.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrValue(
     attr: UnsafePointer<CChar>?
 ) -> GitAttrValueT
@@ -36,7 +37,7 @@ public func gitAttrValue(
 
 
 
-/// Look up the value of one attribute for a given path.
+/// Looks up the value of one attribute for a given path.
 /// - Parameters:
 ///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
 ///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
@@ -52,6 +53,7 @@ public func gitAttrValue(
 /// ## C Equivalent
 ///
 /// [`git_attr_get()`](https://libgit2.org/docs/reference/main/attr/git_attr_get.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGet(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
@@ -71,7 +73,7 @@ public func gitAttrGet(
 
 
 
-/// Look up the value of one attribute for a given path, with extended options.
+/// Looks up the value of one attribute for a given path, with extended options.
 /// - Parameters:
 ///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
 ///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
@@ -87,14 +89,29 @@ public func gitAttrGet(
 /// ## C Equivalent
 ///
 /// [`git_attr_get_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_ext.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGetExt(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
-    opts        : GitAttrOptions,
+    opts        : GitAttrOptions?,
     path        : String,
     name        : String
 ) -> Int32
 {
+    guard let opts: GitAttrOptions = opts
+    else
+    {
+        return git_attr_get_ext(
+            valueOut,
+            repo,
+            nil,
+            path,
+            name
+        )
+    }
+    
+    
+    
     return opts.withCStruct
     {
         cOpts in
@@ -111,7 +128,7 @@ public func gitAttrGetExt(
 
 
 
-/// Look up the values of a list of attributes for a given path.
+/// Looks up the values of a list of attributes for a given path.
 /// - Parameters:
 ///   - valueOut: An array of `numAttr` entries that will have string pointers written into it for the
 ///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
@@ -128,6 +145,7 @@ public func gitAttrGetExt(
 /// ## C Equivalent
 ///
 /// [`git_attr_get_many()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_many.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGetMany(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
@@ -154,7 +172,7 @@ public func gitAttrGetMany(
 
 
 
-/// Look up the values of a list of attributes for a given path, with extended options.
+/// Looks up the values of a list of attributes for a given path, with extended options.
 /// - Parameters:
 ///   - valueOut: An array of `numAttr` entries that will have string pointers written into it for the
 ///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
@@ -171,23 +189,39 @@ public func gitAttrGetMany(
 /// ## C Equivalent
 ///
 /// [`git_attr_get_many_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_get_many_ext.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrGetManyExt(
     valueOut    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     repo        : OpaquePointer,
-    opts        : GitAttrOptions,
+    opts        : GitAttrOptions?,
     path        : String,
     numAttr     : Int,
     names       : [String]
 ) -> Int32
 {
-    return opts.withCStruct
+    return withArrayOfImmutableCStrings(names)
     {
-        cOpts in
+        cNames in
         
-        return withArrayOfImmutableCStrings(names)
+        guard let opts: GitAttrOptions = opts
+        else
         {
-            cNames in
-                
+            return git_attr_get_many_ext(
+                valueOut,
+                repo,
+                nil,
+                path,
+                numAttr,
+                cNames
+            )
+        }
+        
+        
+        
+        return opts.withCStruct
+        {
+            cOpts in
+            
             return git_attr_get_many_ext(
                 valueOut,
                 repo,
@@ -202,7 +236,7 @@ public func gitAttrGetManyExt(
 
 
 
-/// Loop over all the attributes for a given path.
+/// Loops over all the attributes for a given path.
 /// - Parameters:
 ///   - repo: The repository containing the path.
 ///   - flags: The flags to use when querying the attributes.
@@ -216,6 +250,7 @@ public func gitAttrGetManyExt(
 /// ## C Equivalent
 ///
 /// [`git_attr_foreach()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrForEach(
     repo        : OpaquePointer,
     flags       : GitAttrCheckFlagsT,
@@ -235,7 +270,7 @@ public func gitAttrForEach(
 
 
 
-/// Loop over all the attributes for a given path, with extended options.
+/// Loops over all the attributes for a given path, with extended options.
 /// - Parameters:
 ///   - repo: The repository containing the path.
 ///   - opts: The options to use when querying the attributes.
@@ -249,14 +284,29 @@ public func gitAttrForEach(
 /// ## C Equivalent
 ///
 /// [`git_attr_foreach_ext()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach_ext.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrForEachExt(
     repo        : OpaquePointer,
-    opts        : GitAttrOptions,
+    opts        : GitAttrOptions?,
     path        : String,
     callback    : GitAttrForEachCB?,
     payload     : UnsafeMutableRawPointer?
 ) -> Int32
 {
+    guard let opts: GitAttrOptions = opts
+    else
+    {
+        return git_attr_foreach_ext(
+            repo,
+            nil,
+            path,
+            callback,
+            payload
+        )
+    }
+    
+    
+    
     return opts.withCStruct
     {
         cOpts in
@@ -273,7 +323,7 @@ public func gitAttrForEachExt(
 
 
 
-/// Flush the `.gitattributes` cache.
+/// Flushes the `.gitattributes` cache.
 /// - Parameter repo: The repository containing the `.gitattributes` cache.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -285,6 +335,7 @@ public func gitAttrForEachExt(
 /// ## C Equivalent
 ///
 /// [`git_attr_cache_flush()`](https://libgit2.org/docs/reference/main/attr/git_attr_cache_flush.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrCacheFlush(
     repo: OpaquePointer
 ) -> Int32
@@ -294,9 +345,9 @@ public func gitAttrCacheFlush(
 
 
 
-/// Add a macro definition.
+/// Adds a macro definition.
 /// - Parameters:
-///   - repo: The repository to add the macro in.
+///   - repo: The repository in which to add the macro.
 ///   - name: The name of the macro.
 ///   - values: The value of the macro.
 /// - Returns: `0` on success, or an error code.
@@ -319,6 +370,7 @@ public func gitAttrCacheFlush(
 /// ## C Equivalent
 ///
 /// [`git_attr_add_macro()`](https://libgit2.org/docs/reference/main/attr/git_attr_add_macro.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrAddMacro(
     repo    : OpaquePointer,
     name    : String,

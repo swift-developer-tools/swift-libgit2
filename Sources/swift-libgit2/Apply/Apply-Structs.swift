@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options structure for the apply process.
+/// The options for the apply process.
 ///
 /// ## Discussion
 ///
@@ -24,6 +24,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitApplyOptions
 {
     /// The version to use. Defaults to ``gitApplyOptionsVersion``.
@@ -43,7 +44,7 @@ public struct GitApplyOptions
     
     
     
-    /// Initialize a ``GitApplyOptions`` struct.
+    /// Creates a ``GitApplyOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
     /// - Throws: An `NSError` if the initialization failed.
     public init(
@@ -77,14 +78,23 @@ public struct GitApplyOptions
     
     /// Calls the given closure with a ``GitApplyOptions`` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_apply_options>) -> T
-    ) -> T
+    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
+    internal func withCStruct(
+        _ body: (UnsafeMutablePointer<git_apply_options>) -> Int32
+    ) -> Int32
     {
         var applyOptions = git_apply_options()
         
-        applyOptions.version    = version
+        let applyOptionsInitResult: Int32 = git_apply_options_init(
+            &applyOptions,
+            version
+        )
+        
+        if applyOptionsInitResult != GIT_OK.rawValue
+        {
+            return applyOptionsInitResult
+        }
+        
         applyOptions.delta_cb   = deltaCB
         applyOptions.hunk_cb    = hunkCB
         applyOptions.payload    = payload

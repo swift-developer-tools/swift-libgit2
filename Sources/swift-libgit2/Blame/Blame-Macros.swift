@@ -7,16 +7,14 @@
 //
 //===----------------------------------------------------------------------===//
 
-import XCTest
+import Clibgit2
 
 
 
-/// Stops an `XCTest` case as soon as a failure occurs.
-class XCTestCaseStopOnFail: XCTestCase
-{
-    override func setUp()
-    {
-        super.setUp()
-        continueAfterFailure = false
-    }
-}
+/// The current version for ``GitBlameOptions``.
+///
+/// ## C Equivalent
+///
+/// [`GIT_BLAME_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/blame/GIT_BLAME_OPTIONS_VERSION.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
+public let gitBlameOptionsVersion: UInt32 = UInt32(GIT_BLAME_OPTIONS_VERSION)

@@ -11,11 +11,11 @@ import Clibgit2
 
 
 
-/// Apply a `git_diff` to a `git_tree`, and return the resulting image as an index.
+/// Applies a `git_diff` to a `git_tree`, and returns the resulting image as an index.
 /// - Parameters:
 ///   - out: The postimage of the application.
 ///   - repo: The repository to apply.
-///   - preimage: The tree to apply the diff to.
+///   - preimage: The tree to which the diff should be applied.
 ///   - diff: The diff to apply.
 ///   - options: The options for the apply.
 /// - Returns: `0` on success, or an error code.
@@ -23,14 +23,29 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_to_tree()`](https://libgit2.org/docs/reference/main/apply/git_apply_to_tree.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitApplyToTree(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
     preimage    : OpaquePointer,
     diff        : OpaquePointer,
-    options     : GitApplyOptions
+    options     : GitApplyOptions?
 ) -> Int32
 {
+    guard let options: GitApplyOptions = options
+    else
+    {
+        return git_apply_to_tree(
+            out,
+            repo,
+            preimage,
+            diff,
+            nil
+        )
+    }
+    
+    
+    
     return options.withCStruct
     {
         cOptions in
@@ -47,10 +62,10 @@ public func gitApplyToTree(
 
 
 
-/// Apply a `git_diff` to the given repository, making changes directly in the working directory, the index,
-/// or both.
+/// Applies a `git_diff` to the given repository, making changes directly in the working directory,
+/// the index, or both.
 /// - Parameters:
-///   - repo: The repository to apply to.
+///   - repo: The repository to which the diff should be applied.
 ///   - diff: The diff to apply.
 ///   - location: The location to apply (the working directory, the index, or both).
 ///   - options: The options for the apply.
@@ -59,13 +74,27 @@ public func gitApplyToTree(
 /// ## C Equivalent
 ///
 /// [`git_apply()`](https://libgit2.org/docs/reference/main/apply/git_apply.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitApply(
     repo        : OpaquePointer,
     diff        : OpaquePointer,
     location    : GitApplyLocationT,
-    options     : GitApplyOptions
+    options     : GitApplyOptions?
 ) -> Int32
 {
+    guard let options: GitApplyOptions = options
+    else
+    {
+        return git_apply(
+            repo,
+            diff,
+            git_apply_location_t(rawValue: location.rawValue),
+            nil
+        )
+    }
+    
+    
+            
     return options.withCStruct
     {
         cOptions in

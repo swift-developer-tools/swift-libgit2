@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Check if an attribute is set.
+/// Checks if an attribute is set.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is set.
 ///
@@ -25,6 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_TRUE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_TRUE.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrIsTrue(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -34,7 +35,7 @@ public func gitAttrIsTrue(
 
 
 
-/// Check if an attribute is unset.
+/// Checks if an attribute is unset.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is unset.
 ///
@@ -49,6 +50,7 @@ public func gitAttrIsTrue(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_FALSE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_FALSE.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrIsFalse(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -58,7 +60,7 @@ public func gitAttrIsFalse(
 
 
 
-/// Check if an attribute is unspecified.
+/// Checks if an attribute is unspecified.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is unspecified.
 ///
@@ -77,6 +79,7 @@ public func gitAttrIsFalse(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_IS_UNSPECIFIED(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_IS_UNSPECIFIED.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrIsUnspecified(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -86,7 +89,7 @@ public func gitAttrIsUnspecified(
 
 
 
-/// Check if an attribute is set to a value.
+/// Checks if an attribute is set to a value.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is set to a value.
 ///
@@ -100,6 +103,7 @@ public func gitAttrIsUnspecified(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_HAS_VALUE(attr)`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_HAS_VALUE.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAttrHasValue(
     attr: UnsafePointer<CChar>?
 ) -> Bool
@@ -109,9 +113,10 @@ public func gitAttrHasValue(
 
 
 
-/// The current version for the ``GitAttrOptions`` struct.
+/// The current version for ``GitAttrOptions``.
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_OPTIONS_VERSION.html)
+@available(iOS 1.0.0, macOS 1.0.0, *)
 public let gitAttrOptionsVersion: UInt32 = UInt32(GIT_ATTR_OPTIONS_VERSION)

@@ -24,16 +24,16 @@ enum Diff
     /// - Throws: An `Error` thrown by the closure, or an `NSError` if the write operation failed
     /// or the diff pointer could not be created.
     static func withDiffPointer(
-        on  repository  : Repository,
+        in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> Void
     ) throws
     {
         let fileURL: URL = repository.url.appending(
-            path:           Repository.originalFileName,
+            path:           Repository.readmeFileName,
             directoryHint:  .notDirectory
         )
         
-        let modifiedFileContent: String = "\(Repository.originalFileContent) Goodbye World!"
+        let modifiedFileContent: String = "\(Repository.readmeFileContent) Goodbye World!"
         
         do
         {
@@ -52,7 +52,7 @@ enum Diff
         
         
         
-        var headOID         : git_oid           = OID.getHEADCommitOID(on: repository)
+        var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
         var commitPointer   : OpaquePointer?    = nil
         
         defer

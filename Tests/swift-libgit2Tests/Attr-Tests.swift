@@ -401,7 +401,7 @@ extension AttrTests
 {
     // MARK: - gitAttrForEachFlow()
 
-    /// Test looping over all the attributes in a given path, with or without extended options.
+    /// Tests looping over all the attributes in a given path, with or without extended options.
     /// - Parameter options: The options to use when querying the attributes.
     /// - Throws: An `Error` if repository initialization fails.
     private func gitAttrForEachFlow(
@@ -434,8 +434,8 @@ extension AttrTests
                 
                 
                 
-                let payloadPointer: UnsafeMutablePointer<[String: String]>
-                    = cPayload.assumingMemoryBound(to: [String: String].self)
+                let payloadPointer: UnsafeMutablePointer<[String : String]>
+                    = cPayload.assumingMemoryBound(to: [String : String].self)
                 
                 payloadPointer.pointee[name] = value
                 
