@@ -153,7 +153,6 @@ public func gitBlameGetHunkCount(
 
 
 
-
 /// Gets the blame hunk at the given index.
 /// - Parameters:
 ///   - blame: The blame to query
@@ -277,7 +276,7 @@ public func gitBlameFile(
 /// ## C Equivalent
 ///
 /// [`git_blame_file_from_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_file_from_buffer.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
+/*@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameFileFromBuffer(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -315,7 +314,7 @@ public func gitBlameFileFromBuffer(
             cOptions
         )
     }
-}
+}*/
 
 
 

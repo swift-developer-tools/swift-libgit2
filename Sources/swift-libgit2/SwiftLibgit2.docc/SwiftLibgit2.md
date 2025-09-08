@@ -264,7 +264,7 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitBlameGetHunkByIndex(blame:index:)``
 - ``gitBlameGetHunkByLine(blame:lineNo:)``
 - ``gitBlameFile(out:repo:path:options:)``
-- ``gitBlameFileFromBuffer(out:repo:path:contents:contentsLen:options:)``
+<!-- ``gitBlameFileFromBuffer(out:repo:path:contents:contentsLen:options:)``-->
 - ``gitBlameBuffer(out:base:buffer:bufferLen:)``
 - ``gitBlameFree(blame:)``
 

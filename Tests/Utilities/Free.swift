@@ -30,6 +30,21 @@ enum Free
     
     
     
+    /// Frees a blame pointer.
+    /// - Parameter blamePointer: The blame pointer to free.
+    static func freeBlamePointer(
+        _ blamePointer: inout OpaquePointer?
+    )
+    {
+        if blamePointer != nil
+        {
+            gitBlameFree(blame: blamePointer)
+            blamePointer = nil
+        }
+    }
+    
+    
+    
     /// Frees a commit pointer.
     /// - Parameter commitPointer: The commit pointer to free.
     static func freeCommitPointer(
