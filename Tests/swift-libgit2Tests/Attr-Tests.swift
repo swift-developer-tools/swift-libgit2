@@ -189,6 +189,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attributeCount  : Int       = attributeNames.count
             
             
+            
             let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
             
             defer
@@ -247,6 +248,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attributeCount  : Int       = attributeNames.count
             
             
+            
             let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
             
             defer
@@ -281,6 +283,96 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertTrue(gitAttrHasValue(attr: customAttribute))
             XCTAssertEqual(String(cString: customAttribute), "customvalue")
+        }
+    }
+    
+    
+    
+    // MARK: testGitAttrGetManyWithEmptyArray()
+    
+    func testGitAttrGetManyWithEmptyArray() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            let attributeNames  : [String]  = []
+            let attributeCount  : Int       = attributeNames.count
+            
+            
+            
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            
+            defer
+            {
+                valueOut.deinitialize(count: attributeCount)
+                valueOut.deallocate()
+            }
+            
+            
+            
+            let attrGetManyResult: Int32 = gitAttrGetMany(
+                valueOut:   valueOut,
+                repo:       repository.pointer,
+                flags:      .gitAttrCheckFileThenIndex,
+                path:       "test.txt",
+                numAttr:    attributeCount,
+                names:      attributeNames
+            )
+            
+            XCTAssertOK(attrGetManyResult)
+            
+            
+            
+            let firstAttribute: UnsafePointer<CChar>? = valueOut[0]
+            
+            XCTAssertNil(firstAttribute)
+            XCTAssertTrue(gitAttrIsUnspecified(attr: firstAttribute))
+        }
+    }
+    
+    
+    
+    // MARK: testGitAttrGetManyExtWithEmptyArray()
+    
+    func testGitAttrGetManyExtWithEmptyArray() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            let attributeNames  : [String]  = []
+            let attributeCount  : Int       = attributeNames.count
+            
+            
+            
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            
+            defer
+            {
+                valueOut.deinitialize(count: attributeCount)
+                valueOut.deallocate()
+            }
+            
+            
+            
+            let attrGetManyExtResult: Int32 = gitAttrGetManyExt(
+                valueOut:   valueOut,
+                repo:       repository.pointer,
+                opts:       GitAttrOptions(),
+                path:       "file.special",
+                numAttr:    attributeCount,
+                names:      attributeNames
+            )
+            
+            XCTAssertOK(attrGetManyExtResult)
+            
+            
+            
+            let firstAttribute: UnsafePointer<CChar>? = valueOut[0]
+            
+            XCTAssertNil(firstAttribute)
+            XCTAssertTrue(gitAttrIsUnspecified(attr: firstAttribute))
         }
     }
     

@@ -71,9 +71,17 @@ internal func withArrayOfCStrings<R>(
   _     body    : ([UnsafeMutablePointer<CChar>?]) -> R
 ) -> R
 {
+    guard !args.isEmpty
+    else
+    {
+        return body([nil])
+    }
+    
+    
+    
     let argsCounts      : [Int]     = Array(args.map { $0.utf8.count + 1 })
-    let argsOffsets     : [Int]     = [ 0 ] + scan(argsCounts, 0, +)
-    let argsBufferSize  : Int       = argsOffsets.last!
+    let argsOffsets     : [Int]     = [0] + scan(argsCounts, 0, +)
+    let argsBufferSize  : Int       = argsOffsets.last ?? 0
     
     
     
@@ -92,12 +100,22 @@ internal func withArrayOfCStrings<R>(
     {
         argsBuffer in
         
-        let pointer = UnsafeMutableRawPointer(argsBuffer.baseAddress!)
+        guard let baseAddress: UnsafeMutablePointer<UInt8> = argsBuffer.baseAddress
+        else
+        {
+            return body([nil])
+        }
+        
+        
+        
+        let pointer = UnsafeMutableRawPointer(baseAddress)
             .bindMemory(to: CChar.self, capacity: argsBuffer.count)
         
         var cStrings: [UnsafeMutablePointer<CChar>?] = argsOffsets.map { pointer + $0 }
         
         cStrings[cStrings.count - 1] = nil
+        
+        
         
         return body(cStrings)
     }
@@ -127,12 +145,33 @@ internal func withArrayOfImmutableCStrings<T>(
         
         let immutableCStrings: [UnsafePointer<CChar>?] = cStrings.map { $0.map { UnsafePointer<CChar>($0) } }
         
+        
+        
         return immutableCStrings.withUnsafeBufferPointer
         {
             buffer in
             
+            guard let baseAddress: UnsafePointer<UnsafePointer<CChar>?> = buffer.baseAddress
+            else
+            {
+                var nilPointer: UnsafePointer<CChar>? = nil
+                
+                return withUnsafePointer(to: &nilPointer)
+                {
+                    unsafeNilPointer in
+                    
+                    return body(
+                        UnsafeMutablePointer<UnsafePointer<CChar>?>(
+                            mutating: unsafeNilPointer
+                        )
+                    )
+                }
+            }
+            
+            
+            
             /// Get a mutable pointer to the array of immutable pointers.
-            let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(mutating: buffer.baseAddress!)
+            let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(mutating: baseAddress)
             
             return body(pointer)
         }
