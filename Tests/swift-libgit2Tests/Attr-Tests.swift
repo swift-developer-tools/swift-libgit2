@@ -466,23 +466,40 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var options = GitAttrOptions()
+            var attrOptions = GitAttrOptions()
             
-            XCTAssertEqual(options.version, gitAttrOptionsVersion)
-            XCTAssertEqual(options.flags, [])
-            XCTAssertNil(options.commitID)
-            XCTAssertNotNil(options.attrCommitID)
+            XCTAssertEqual(attrOptions.version, gitAttrOptionsVersion)
+            XCTAssertEqual(attrOptions.flags, [])
+            XCTAssertNil(attrOptions.commitID)
+            XCTAssertNotNil(attrOptions.attrCommitID)
+            
+            XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
             
             
             
-            options.flags = [.gitAttrCheckIndexOnly, .gitAttrCheckNoSystem]
+            attrOptions.flags = GitAttrCheckFlagsT(rawValue: 123)
+            
+            XCTAssertEqual(attrOptions.flags, GitAttrCheckFlagsT(rawValue: 123))
+            
+            
+            
+            attrOptions.flags =
+            [
+                .gitAttrCheckIndexOnly,
+                .gitAttrCheckNoSystem
+            ]
+            
+            XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckIndexOnly))
+            XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckNoSystem))
+            XCTAssertFalse(attrOptions.flags.contains(.gitAttrCheckIncludeHEAD))
+            
             
             var valueOut: UnsafePointer<CChar>? = nil
             
             let attrGetExtResult: Int32 = gitAttrGetExt(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
-                opts:       options,
+                opts:       attrOptions,
                 path:       "test.txt",
                 name:       "text"
             )

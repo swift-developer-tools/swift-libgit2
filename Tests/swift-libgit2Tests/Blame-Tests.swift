@@ -58,7 +58,7 @@ final class BlameTests: XCTestCaseStopOnFail
                 out:        &bufferBlamePointer,
                 base:       baseBlamePointer,
                 buffer:     bufferContent,
-                bufferLen:  bufferContent.count
+                bufferLen:  bufferContent.utf8.count
             )
             
             XCTAssertOK(blameBufferResult)
@@ -220,7 +220,7 @@ final class BlameTests: XCTestCaseStopOnFail
     
     func testGitBlameOptions() throws
     {
-        let blameOptions = try GitBlameOptions()
+        var blameOptions = try GitBlameOptions()
         
         XCTAssertEqual(blameOptions.version, gitBlameOptionsVersion)
         XCTAssertEqual(blameOptions.flags, GitBlameFlagT.gitBlameNormal)
@@ -229,5 +229,23 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertNil(blameOptions.maxLine)
         
         XCTAssertEqual(gitBlameOptionsVersion, UInt32(GIT_BLAME_OPTIONS_VERSION))
+        
+        
+        
+        blameOptions.flags = GitBlameFlagT(rawValue: 123)
+        
+        XCTAssertEqual(blameOptions.flags, GitBlameFlagT(rawValue: 123))
+        
+        
+        
+        blameOptions.flags =
+        [
+            .gitBlameFirstParent,
+            .gitBlameUseMailmap
+        ]
+        
+        XCTAssertTrue(blameOptions.flags.contains(.gitBlameFirstParent))
+        XCTAssertTrue(blameOptions.flags.contains(.gitBlameUseMailmap))
+        XCTAssertFalse(blameOptions.flags.contains(.gitBlameIgnoreWhitespace))
     }
 }

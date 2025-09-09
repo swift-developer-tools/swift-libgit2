@@ -57,10 +57,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             let annotatedCommitOIDPointer: UnsafePointer<git_oid> = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
-            OID.assertOIDsEqual(
-                &headOID,
-                annotatedCommitOIDPointer
-            )
+            OID.assertOIDsEqual(&headOID, annotatedCommitOIDPointer)
         }
     }
     
@@ -234,10 +231,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             let annotatedCommitOIDPointer: UnsafePointer<git_oid> = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
-            OID.assertOIDsEqual(
-                &headOID,
-                annotatedCommitOIDPointer
-            )
+            OID.assertOIDsEqual(&headOID, annotatedCommitOIDPointer)
         }
     }
 }

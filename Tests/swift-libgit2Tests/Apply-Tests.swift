@@ -49,23 +49,37 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyOptionsInit()
+    // MARK: - testGitApplyOptions()
     
-    func testGitApplyOptionsInit() throws
+    func testGitApplyOptions() throws
     {
-        let defaultApplyOptions = try GitApplyOptions()
+        var applyOptions = try GitApplyOptions()
         
-        XCTAssertEqual(defaultApplyOptions.version, gitApplyOptionsVersion)
-        XCTAssertNil(defaultApplyOptions.deltaCB)
-        XCTAssertNil(defaultApplyOptions.hunkCB)
-        XCTAssertNil(defaultApplyOptions.payload)
-        XCTAssertEqual(defaultApplyOptions.flags.rawValue, 0)
+        XCTAssertEqual(applyOptions.version, gitApplyOptionsVersion)
+        XCTAssertNil(applyOptions.deltaCB)
+        XCTAssertNil(applyOptions.hunkCB)
+        XCTAssertNil(applyOptions.payload)
+        XCTAssertEqual(applyOptions.flags.rawValue, 0)
+        
+        XCTAssertEqual(gitApplyOptionsVersion, UInt32(GIT_APPLY_OPTIONS_VERSION))
         
         
         
-        let customApplyOptions = try GitApplyOptions(version: 1)
+        applyOptions.flags = GitApplyFlagsT(rawValue: 123)
         
-        XCTAssertEqual(customApplyOptions.version, 1)
+        XCTAssertEqual(applyOptions.flags, GitApplyFlagsT(rawValue: 123))
+        
+        
+        
+        applyOptions.flags =
+        [
+            .gitApplyCheck,
+            GitApplyFlagsT(rawValue: 123)
+        ]
+        
+        XCTAssertTrue(applyOptions.flags.contains(.gitApplyCheck))
+        XCTAssertTrue(applyOptions.flags.contains(GitApplyFlagsT(rawValue: 123)))
+        XCTAssertFalse(applyOptions.flags.contains(GitApplyFlagsT(rawValue: 456)))
     }
     
     
