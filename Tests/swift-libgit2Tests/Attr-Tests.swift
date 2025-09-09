@@ -116,10 +116,15 @@ final class AttrTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckNoSystem.rawValue, UInt32(GIT_ATTR_CHECK_NO_SYSTEM))
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIncludeHEAD.rawValue, UInt32(GIT_ATTR_CHECK_INCLUDE_HEAD))
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIncludeCommit.rawValue, UInt32(GIT_ATTR_CHECK_INCLUDE_COMMIT))
+        XCTAssertEqual(GitAttrCheckFlagsT(rawValue: 123).rawValue, 123)
         
         
         
-        let flags: GitAttrCheckFlagsT = [.gitAttrCheckIndexOnly, .gitAttrCheckNoSystem]
+        let flags: GitAttrCheckFlagsT =
+        [
+            .gitAttrCheckIndexOnly,
+            .gitAttrCheckNoSystem
+        ]
         
         XCTAssertTrue(flags.contains(.gitAttrCheckIndexOnly))
         XCTAssertTrue(flags.contains(.gitAttrCheckNoSystem))
@@ -184,6 +189,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attributeCount  : Int       = attributeNames.count
             
             
+            
             let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
             
             defer
@@ -242,6 +248,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attributeCount  : Int       = attributeNames.count
             
             
+            
             let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
             
             defer
@@ -276,6 +283,96 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertTrue(gitAttrHasValue(attr: customAttribute))
             XCTAssertEqual(String(cString: customAttribute), "customvalue")
+        }
+    }
+    
+    
+    
+    // MARK: testGitAttrGetManyWithEmptyArray()
+    
+    func testGitAttrGetManyWithEmptyArray() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            let attributeNames  : [String]  = []
+            let attributeCount  : Int       = attributeNames.count
+            
+            
+            
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            
+            defer
+            {
+                valueOut.deinitialize(count: attributeCount)
+                valueOut.deallocate()
+            }
+            
+            
+            
+            let attrGetManyResult: Int32 = gitAttrGetMany(
+                valueOut:   valueOut,
+                repo:       repository.pointer,
+                flags:      .gitAttrCheckFileThenIndex,
+                path:       "test.txt",
+                numAttr:    attributeCount,
+                names:      attributeNames
+            )
+            
+            XCTAssertOK(attrGetManyResult)
+            
+            
+            
+            let firstAttribute: UnsafePointer<CChar>? = valueOut[0]
+            
+            XCTAssertNil(firstAttribute)
+            XCTAssertTrue(gitAttrIsUnspecified(attr: firstAttribute))
+        }
+    }
+    
+    
+    
+    // MARK: testGitAttrGetManyExtWithEmptyArray()
+    
+    func testGitAttrGetManyExtWithEmptyArray() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            let attributeNames  : [String]  = []
+            let attributeCount  : Int       = attributeNames.count
+            
+            
+            
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            
+            defer
+            {
+                valueOut.deinitialize(count: attributeCount)
+                valueOut.deallocate()
+            }
+            
+            
+            
+            let attrGetManyExtResult: Int32 = gitAttrGetManyExt(
+                valueOut:   valueOut,
+                repo:       repository.pointer,
+                opts:       GitAttrOptions(),
+                path:       "file.special",
+                numAttr:    attributeCount,
+                names:      attributeNames
+            )
+            
+            XCTAssertOK(attrGetManyExtResult)
+            
+            
+            
+            let firstAttribute: UnsafePointer<CChar>? = valueOut[0]
+            
+            XCTAssertNil(firstAttribute)
+            XCTAssertTrue(gitAttrIsUnspecified(attr: firstAttribute))
         }
     }
     
@@ -369,23 +466,40 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var options = GitAttrOptions()
+            var attrOptions = GitAttrOptions()
             
-            XCTAssertEqual(options.version, gitAttrOptionsVersion)
-            XCTAssertEqual(options.flags, [])
-            XCTAssertNil(options.commitID)
-            XCTAssertNotNil(options.attrCommitID)
+            XCTAssertEqual(attrOptions.version, gitAttrOptionsVersion)
+            XCTAssertEqual(attrOptions.flags, [])
+            XCTAssertNil(attrOptions.commitID)
+            XCTAssertNotNil(attrOptions.attrCommitID)
+            
+            XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
             
             
             
-            options.flags = [.gitAttrCheckIndexOnly, .gitAttrCheckNoSystem]
+            attrOptions.flags = GitAttrCheckFlagsT(rawValue: 123)
+            
+            XCTAssertEqual(attrOptions.flags, GitAttrCheckFlagsT(rawValue: 123))
+            
+            
+            
+            attrOptions.flags =
+            [
+                .gitAttrCheckIndexOnly,
+                .gitAttrCheckNoSystem
+            ]
+            
+            XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckIndexOnly))
+            XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckNoSystem))
+            XCTAssertFalse(attrOptions.flags.contains(.gitAttrCheckIncludeHEAD))
+            
             
             var valueOut: UnsafePointer<CChar>? = nil
             
             let attrGetExtResult: Int32 = gitAttrGetExt(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
-                opts:       options,
+                opts:       attrOptions,
                 path:       "test.txt",
                 name:       "text"
             )
@@ -401,7 +515,7 @@ extension AttrTests
 {
     // MARK: - gitAttrForEachFlow()
 
-    /// Tests looping over all the attributes in a given path, with or without extended options.
+    /// Tests looping over all the attributes in the given path, with or without extended options.
     /// - Parameter options: The options to use when querying the attributes.
     /// - Throws: An `Error` if repository initialization fails.
     private func gitAttrForEachFlow(

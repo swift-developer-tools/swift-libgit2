@@ -75,6 +75,19 @@ enum Free
     
     
     
+    /// Frees a `git_buf`.
+    /// - Parameter buffer: The buffer to free.
+    static func freeGitBuf(
+        _ buffer: inout git_buf
+    )
+    {
+        git_buf_dispose(&buffer)
+        buffer.ptr      = nil
+        buffer.size     = 0
+    }
+    
+    
+    
     /// Frees an index pointer.
     /// - Parameter indexPointer: The index pointer to free.
     static func freeIndexPointer(

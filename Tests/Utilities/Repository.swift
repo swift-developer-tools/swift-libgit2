@@ -47,7 +47,7 @@ struct Repository
     
     // MARK: - commitFile()
     
-    /// Commits a file in a given repository.
+    /// Commits a file in the given repository.
     /// - Parameters:
     ///   - repository: The repository in which the file exists.
     ///   - fileName: The name of the file.
@@ -202,7 +202,7 @@ struct Repository
     
     // MARK: - createInitialCommit()
     
-    /// Creates the initial commit on a given repository.
+    /// Creates the initial commit on the given repository.
     /// - Parameter repository: The repository in which to create the commit.
     /// - Throws: An `Error` if the file write operation failed.
     private static func createInitialCommit(
@@ -225,7 +225,7 @@ struct Repository
     
     
     
-    /// Creates blame data in a given repository.
+    /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
     /// - Throws: An `Error` if the file write operation failed.
     private static func createBlameData(
