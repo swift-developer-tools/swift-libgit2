@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Gets the value type for a given attribute.
+/// Gets the value type for the given attribute.
 /// - Parameter attr: The attribute.
 /// - Returns: The value type for the attribute.
 ///
@@ -37,7 +37,7 @@ public func gitAttrValue(
 
 
 
-/// Looks up the value of one attribute for a given path.
+/// Looks up the value of one attribute for the given path.
 /// - Parameters:
 ///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
 ///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
@@ -73,7 +73,7 @@ public func gitAttrGet(
 
 
 
-/// Looks up the value of one attribute for a given path, with extended options.
+/// Looks up the value of one attribute for the given path, with extended options.
 /// - Parameters:
 ///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
 ///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
@@ -128,7 +128,7 @@ public func gitAttrGetExt(
 
 
 
-/// Looks up the values of a list of attributes for a given path.
+/// Looks up the values of a list of attributes for the given path.
 /// - Parameters:
 ///   - valueOut: An array of `numAttr` entries that will have string pointers written into it for the
 ///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
@@ -172,7 +172,7 @@ public func gitAttrGetMany(
 
 
 
-/// Looks up the values of a list of attributes for a given path, with extended options.
+/// Looks up the values of a list of attributes for the given path, with extended options.
 /// - Parameters:
 ///   - valueOut: An array of `numAttr` entries that will have string pointers written into it for the
 ///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
@@ -236,7 +236,7 @@ public func gitAttrGetManyExt(
 
 
 
-/// Loops over all the attributes for a given path.
+/// Loops over all the attributes for the given path.
 /// - Parameters:
 ///   - repo: The repository containing the path.
 ///   - flags: The flags to use when querying the attributes.
@@ -270,7 +270,7 @@ public func gitAttrForEach(
 
 
 
-/// Loops over all the attributes for a given path, with extended options.
+/// Loops over all the attributes for the given path, with extended options.
 /// - Parameters:
 ///   - repo: The repository containing the path.
 ///   - opts: The options to use when querying the attributes.
