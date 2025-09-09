@@ -24,11 +24,15 @@ final class ApplyTests: XCTestCaseStopOnFail
         
         
         
-        let combinedFlags = GitApplyFlagsT.gitApplyCheck.union(
+        let flags: GitApplyFlagsT =
+        [
+            .gitApplyCheck,
             GitApplyFlagsT(rawValue: 10)
-        )
+        ]
         
-        XCTAssertTrue(combinedFlags.contains(GitApplyFlagsT.gitApplyCheck))
+        XCTAssertTrue(flags.contains(.gitApplyCheck))
+        XCTAssertTrue(flags.contains(GitApplyFlagsT(rawValue: 10)))
+        XCTAssertFalse(flags.contains(GitApplyFlagsT(rawValue: 123)))
     }
     
     

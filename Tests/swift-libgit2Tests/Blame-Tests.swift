@@ -199,10 +199,15 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitBlameFlagT.gitBlameFirstParent.rawValue, GIT_BLAME_FIRST_PARENT.rawValue)
         XCTAssertEqual(GitBlameFlagT.gitBlameUseMailmap.rawValue, GIT_BLAME_USE_MAILMAP.rawValue)
         XCTAssertEqual(GitBlameFlagT.gitBlameIgnoreWhitespace.rawValue, GIT_BLAME_IGNORE_WHITESPACE.rawValue)
+        XCTAssertEqual(GitBlameFlagT(rawValue: 123).rawValue, 123)
         
         
         
-        let flags: GitBlameFlagT = [.gitBlameUseMailmap, .gitBlameIgnoreWhitespace]
+        let flags: GitBlameFlagT =
+        [
+            .gitBlameUseMailmap,
+            .gitBlameIgnoreWhitespace
+        ]
         
         XCTAssertTrue(flags.contains(.gitBlameUseMailmap))
         XCTAssertTrue(flags.contains(.gitBlameIgnoreWhitespace))

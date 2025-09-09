@@ -116,10 +116,15 @@ final class AttrTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckNoSystem.rawValue, UInt32(GIT_ATTR_CHECK_NO_SYSTEM))
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIncludeHEAD.rawValue, UInt32(GIT_ATTR_CHECK_INCLUDE_HEAD))
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIncludeCommit.rawValue, UInt32(GIT_ATTR_CHECK_INCLUDE_COMMIT))
+        XCTAssertEqual(GitAttrCheckFlagsT(rawValue: 123).rawValue, 123)
         
         
         
-        let flags: GitAttrCheckFlagsT = [.gitAttrCheckIndexOnly, .gitAttrCheckNoSystem]
+        let flags: GitAttrCheckFlagsT =
+        [
+            .gitAttrCheckIndexOnly,
+            .gitAttrCheckNoSystem
+        ]
         
         XCTAssertTrue(flags.contains(.gitAttrCheckIndexOnly))
         XCTAssertTrue(flags.contains(.gitAttrCheckNoSystem))
