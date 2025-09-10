@@ -11,16 +11,19 @@ import Clibgit2
 
 
 
-/// Creates a `git_annotated_commit` from the given reference.
+/// Creates an annotated commit from the given reference.
 /// - Parameters:
-///   - out: The pointer in which to store the `git_annotated_commit` result.
-///   - repo: The repository that contains the given reference.
-///   - ref: The reference to use to lookup the `git_annotated_commit`.
+///   - out: The pointer in which to store the result. The underlying type should be
+///   `git_annotated_commit`.
+///   - repo: The repository that contains the given reference. The underlying type should be
+///   `git_repository`.
+///   - ref: The reference to use to lookup the  annotated commit. The underlying type should be
+///   `git_reference`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
-/// The resulting `git_annotated_commit` must be freed with ``gitAnnotatedCommitFree(commit:)``.
+/// The resulting annotated commit must be freed with ``gitAnnotatedCommitFree(commit:)``.
 ///
 /// ## C Equivalent
 ///
@@ -41,10 +44,12 @@ public func gitAnnotatedCommitFromRef(
 
 
 
-/// Creates a `git_annotated_commit` from the given fetch head data.
+/// Creates an annotated commit from the given fetch head data.
 /// - Parameters:
-///   - out: The pointer in which to store the `git_annotated_commit` result.
-///   - repo: The repository that contains the given commit.
+///   - out: The pointer in which to store the result. The underlying type should be
+///   `git_annotated_commit`.
+///   - repo: The repository that contains the given commit. The underlying type should be
+///   `git_repository`.
 ///   - branchName: The name of the (remote) branch.
 ///   - remoteURL: The URL of the remote.
 ///   - id: The commit object ID of the remote branch.
@@ -52,7 +57,7 @@ public func gitAnnotatedCommitFromRef(
 ///
 /// ## Discussion
 ///
-/// The resulting `git_annotated_commit` must be freed with ``gitAnnotatedCommitFree(commit:)``.
+/// The resulting annotated commit must be freed with ``gitAnnotatedCommitFree(commit:)``.
 ///
 /// ## C Equivalent
 ///
@@ -77,16 +82,18 @@ public func gitAnnotatedCommitFromFetchhead(
 
 
 
-/// Creates a `git_annotated_commit` from the given commit ID.
+/// Creates an annotated commit from the given commit ID.
 /// - Parameters:
-///   - out: The pointer in which to store the `git_annotated_commit` result.
-///   - repo: The repository that contains the given commit.
+///   - out: The pointer in which to store the result. The underlying type should be
+///   `git_annotated_commit`.
+///   - repo: The repository that contains the given commit. The underlying type should be
+///   `git_repository`.
 ///   - id: The commit object ID to lookup.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
-/// The resulting `git_annotated_commit` must be freed with ``gitAnnotatedCommitFree(commit:)``.
+/// The resulting annotated commit must be freed with ``gitAnnotatedCommitFree(commit:)``.
 ///
 /// An annotated commit contains information about how it was looked up, which may be useful for functions
 /// like merge or rebase to provide context to the operation. For example, conflict files will include the name
@@ -113,16 +120,18 @@ public func gitAnnotatedCommitLookup(
 
 
 
-/// Creates a `git_annotated_commit` from a revision string.
+/// Creates an annotated commit from a revision string.
 /// - Parameters:
-///   - out: The pointer in which to store the `git_annotated_commit` result.
-///   - repo: The repository that contains the given commit.
+///   - out: The pointer in which to store the result. The underlying type should be
+///   `git_annotated_commit`.
+///   - repo: The repository that contains the given commit. The underlying type should be
+///   `git_repository`.
 ///   - revspec: The extended SHA syntax string to use to lookup the commit.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
-/// The resulting `git_annotated_commit` must be freed with ``gitAnnotatedCommitFree(commit:)``.
+/// The resulting annotated commit must be freed with ``gitAnnotatedCommitFree(commit:)``.
 ///
 /// See `man gitrevisions`, or
 /// [http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions](http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions)
@@ -147,8 +156,9 @@ public func gitAnnotatedCommitFromRevspec(
 
 
 
-/// Gets the commit ID to which the given `git_annotated_commit` refers.
-/// - Parameter commit: The given annotated commit.
+/// Gets the commit ID to which the given annotated commit refers.
+/// - Parameter commit: The annotated commit.  The underlying type should be
+/// `git_annotated_commit`.
 /// - Returns: The commit ID.
 ///
 /// ## C Equivalent
@@ -164,8 +174,9 @@ public func gitAnnotatedCommitID(
 
 
 
-/// Gets the reference name to which the given `git_annotated_commit` refers.
-/// - Parameter commit: The given annotated commit.
+/// Gets the reference name to which the given annotated commit refers.
+/// - Parameter commit: The annotated commit. The underlying type should be
+/// `git_annotated_commit`.
 /// - Returns: The reference name.
 ///
 /// ## C Equivalent
@@ -181,8 +192,9 @@ public func gitAnnotatedCommitRef(
 
 
 
-/// Frees the memory allocated for a `git_annotated_commit` instance.
-/// - Parameter commit: The annotated commit to free.
+/// Frees the memory allocated for an annotated commit.
+/// - Parameter commit: The annotated commit to free. The underlying type should be
+/// `git_annotated_commit`.
 ///
 /// ## C Equivalent
 ///
