@@ -62,7 +62,7 @@ struct Repository
         
         defer
         {
-            Free.freeIndexPointer(&indexPointer)
+            Free.freeIndex(&indexPointer)
         }
         
         
@@ -106,7 +106,7 @@ struct Repository
         
         defer
         {
-            Free.freeTreePointer(&treePointer)
+            Free.freeTree(&treePointer)
         }
         
         
@@ -125,7 +125,7 @@ struct Repository
         
         defer
         {
-            Free.freeSignaturePointer(&signaturePointer)
+            Free.freeSignature(&signaturePointer)
         }
         
         
@@ -146,7 +146,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommitPointer(&headCommitPointer)
+            Free.freeCommit(&headCommitPointer)
         }
         
         
@@ -342,7 +342,7 @@ struct Repository
         
         defer
         {
-            Free.freeRepositoryPointer(&repositoryPointer)
+            Free.freeRepository(&repositoryPointer)
             
             try? FileManager.default.removeItem(at: url)
         }
