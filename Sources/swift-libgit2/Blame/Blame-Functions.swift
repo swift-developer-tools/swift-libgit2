@@ -12,7 +12,7 @@ import Clibgit2
 
 
 /// Gets the number of lines that exist in the blame.
-/// - Parameter blame: The blame to query.
+/// - Parameter blame: The blame to query. The underlying type should be `git_blame`.
 /// - Returns: The number of lines that exist in the blame.
 ///
 /// ## C Equivalent
@@ -29,7 +29,7 @@ public func gitBlameLineCount(
 
 
 /// Gets the number of hunks that exist in the blame.
-/// - Parameter blame: The blame to query.
+/// - Parameter blame: The blame to query. The underlying type should be `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
 /// ## C Equivalent
@@ -47,7 +47,7 @@ public func gitBlameHunkCount(
 
 /// Gets the blame hunk at the given index.
 /// - Parameters:
-///   - blame: The blame to query.
+///   - blame: The blame to query. The underlying type should be `git_blame`.
 ///   - index: The index of the hunk to retrieve.
 /// - Returns: The hunk at the given index, or `nil` on error.
 ///
@@ -77,7 +77,7 @@ public func gitBlameHunkByIndex(
 
 /// Gets the hunk that relates to the given line number in the newest commit.
 /// - Parameters:
-///   - blame: The blame to query.
+///   - blame: The blame to query. The underlying type should be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
 /// - Returns: The hunk that contains the given line, or `nil` on error.
 ///
@@ -107,7 +107,7 @@ public func gitBlameHunkByLine(
 
 /// Gets the information about the line in the blame.
 /// - Parameters:
-///   - blame: The blame to query.
+///   - blame: The blame to query. The underlying type should be `git_blame`.
 ///   - idx: The 1-indexed line number.
 /// - Returns: The blamed line, or `nil` on error.
 ///
@@ -136,7 +136,7 @@ public func gitBlameLineByIndex(
 
 
 /// Gets the number of hunks that exist in the blame.
-/// - Parameter blame: The blame to query
+/// - Parameter blame: The blame to query. The underlying type should be `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
 /// ## C Equivalent
@@ -155,7 +155,7 @@ public func gitBlameGetHunkCount(
 
 /// Gets the blame hunk at the given index.
 /// - Parameters:
-///   - blame: The blame to query
+///   - blame: The blame to query. The underlying type should be `git_blame`.
 ///   - index: The index of the hunk to retrieve.
 /// - Returns: The hunk at the given index, or `nil` on error.
 ///
@@ -186,7 +186,7 @@ public func gitBlameGetHunkByIndex(
 
 /// Gets the hunk that relates to the given line number in the newest commit.
 /// - Parameters:
-///   - blame: The blame to query.
+///   - blame: The blame to query. The underlying type should be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
 /// - Returns: The hunk that contains the given line, or `nil` on error.
 ///
@@ -217,8 +217,10 @@ public func gitBlameGetHunkByLine(
 
 /// Gets the blame for a single file in the repository.
 /// - Parameters:
-///   - out: The pointer that will receive the blame object.
-///   - repo: The repository whose history should be walked.
+///   - out: The pointer that will receive the blame object. The underlying type should be
+///   `git_blame`.
+///   - repo: The repository whose history should be walked. The underlying type should be
+///   `git_repository`.
 ///   - path: The path to the file to consider.
 ///   - options: The options for the blame process.
 /// - Returns: `0` on success, or an error code.
@@ -265,8 +267,10 @@ public func gitBlameFile(
 /// Gets the blame for a single file in the repository, using the given buffer contents as the uncommitted
 /// changes of the file (the working directory content).
 /// - Parameters:
-///   - out: The pointer that will receive the blame object.
-///   - repo: The repository whose history should be walked.
+///   - out: The pointer that will receive the blame object. The underlying type should be
+///   `git_blame`.
+///   - repo: The repository whose history should be walked. The underlying type should be
+///   `git_repository`.
 ///   - path: The path to the file to consider.
 ///   - contents: The uncommitted changes.
 ///   - contentsLen: The length of the changes buffer.
@@ -320,8 +324,10 @@ public func gitBlameFileFromBuffer(
 
 /// Gets the blame data for a file that has been modified in memory.
 /// - Parameters:
-///   - out: The pointer that will receive the blame object.
-///   - base: The cached blame from the history of the file. This is usually the output from
+///   - out: The pointer that will receive the blame object. The underlying type should be
+///   `git_blame`.
+///   - base: The cached blame from the history of the file.  The underlying type should be
+///   `git_blame`. This is usually the output from
 ///   ``gitBlameFile(out:repo:path:options:)``.
 ///   - buffer: The possibly-modified content of the file.
 ///   - bufferLen: The number of valid bytes in the buffer.
@@ -358,7 +364,7 @@ public func gitBlameBuffer(
 
 
 /// Frees the memory allocated for a `git_blame` instance.
-/// - Parameter blame: The blame to free.
+/// - Parameter blame: The blame to free. The underlying type should be `git_blame`.
 ///
 /// ## C Equivalent
 ///
