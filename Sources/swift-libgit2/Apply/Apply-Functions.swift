@@ -11,12 +11,13 @@ import Clibgit2
 
 
 
-/// Applies a `git_diff` to a `git_tree`, and returns the resulting image as an index.
+/// Applies a diff to a tree, and returns the resulting image as an index.
 /// - Parameters:
-///   - out: The postimage of the application.
-///   - repo: The repository to apply.
-///   - preimage: The tree to which the diff should be applied.
-///   - diff: The diff to apply.
+///   - out: The postimage of the application.The underlying type should be `git_index`.
+///   - repo: The repository to apply. The underlying type should be `git_repository`.
+///   - preimage: The tree to which the diff should be applied. The underlying type should be
+///   `git_tree`.
+///   - diff: The diff to apply. The underlying type should be `git_diff`.
 ///   - options: The options for the apply.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -62,11 +63,12 @@ public func gitApplyToTree(
 
 
 
-/// Applies a `git_diff` to the given repository, making changes directly in the working directory,
+/// Applies a diff to the given repository, making changes directly in the working directory,
 /// the index, or both.
 /// - Parameters:
-///   - repo: The repository to which the diff should be applied.
-///   - diff: The diff to apply.
+///   - repo: The repository to which the diff should be applied. The underlying type should be
+///   `git_repository`.
+///   - diff: The diff to apply. The underlying type should be `git_diff`.
 ///   - location: The location to apply (the working directory, the index, or both).
 ///   - options: The options for the apply.
 /// - Returns: `0` on success, or an error code.
