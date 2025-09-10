@@ -13,7 +13,7 @@ import Clibgit2
 
 /// Applies a diff to a tree, and returns the resulting image as an index.
 /// - Parameters:
-///   - out: The postimage of the application.The underlying type should be `git_index`.
+///   - out: The postimage of the application. The underlying type should be `git_index`.
 ///   - repo: The repository to apply. The underlying type should be `git_repository`.
 ///   - preimage: The tree to which the diff should be applied. The underlying type should be
 ///   `git_tree`.
