@@ -299,6 +299,31 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitBlobDataIsBinary(data:len:)``
 - ``gitBlobDup(out:source:)``
 
+### Branch Enums
+
+- ``GitBranchT``
+
+### Branch Functions
+
+- ``gitBranchCreate(out:repo:branchName:target:force:)``
+- ``gitBranchCreateFromAnnotated(refOut:repo:branchName:target:force:)``
+- ``gitBranchDelete(branch:)``
+- ``gitBranchIteratorNew(out:repo:listFlags:)``
+- ``gitBranchNext(out:outType:iter:)``
+- ``gitBranchIteratorFree(iter:)``
+- ``gitBranchMove(out:branch:newBranchName:force:)``
+- ``gitBranchLookup(out:repo:branchName:branchType:)``
+- ``gitBranchName(out:ref:)``
+- ``gitBranchUpstream(out:ref:)``
+- ``gitBranchSetUpstream(branch:branchName:)``
+- ``gitBranchUpstreamName(out:repo:refName:)``
+- ``gitBranchIsHEAD(branch:)``
+- ``gitBranchIsCheckedOut(branch:)``
+- ``gitBranchRemoteName(out:repo:refName:)``
+- ``gitBranchUpstreamRemote(buf:repo:refName:)``
+- ``gitBranchUpstreamMerge(buf:repo:refName:)``
+- ``gitBranchIsValid(valid:name:)``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``
