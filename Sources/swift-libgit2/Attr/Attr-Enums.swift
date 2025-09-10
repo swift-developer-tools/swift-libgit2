@@ -88,4 +88,18 @@ public enum GitAttrValueT: UInt32
     
     /// The attribute has a value.
     case gitAttrValueString         = 3
+    
+    
+    
+    /// The equivalent C enum value.
+    internal var cValue: git_attr_value_t
+    {
+        switch self
+        {
+            case .gitAttrValueUnspecified   : return GIT_ATTR_VALUE_UNSPECIFIED
+            case .gitAttrValueTrue          : return GIT_ATTR_VALUE_TRUE
+            case .gitAttrValueFalse         : return GIT_ATTR_VALUE_FALSE
+            case .gitAttrValueString        : return GIT_ATTR_VALUE_STRING
+        }
+    }
 }
