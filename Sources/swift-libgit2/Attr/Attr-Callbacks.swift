@@ -15,9 +15,9 @@ import Clibgit2
 /// ``gitAttrForEach(repo:flags:path:callback:payload:)``.
 /// - Parameters:
 ///   - name: The attribute name.
-///   - value: The attribute value. May be `nil` if the attribute is explicitly set to unspecified using the
-///   `!` operator.
-///   - payload: The user-specified payload.
+///   - value: The attribute value. May be `nil` if the attribute is explicitly set to unspecified using
+///   the `!` operator.
+///   - payload: The payload provided by the caller.
 /// - Returns: `0` to continue looping or a non-zero value to stop looping. This value will be returned
 /// from ``gitAttrForEach(repo:flags:path:callback:payload:)``.
 ///

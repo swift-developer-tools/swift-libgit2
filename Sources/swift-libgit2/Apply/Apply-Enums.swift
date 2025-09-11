@@ -13,13 +13,6 @@ import Clibgit2
 
 /// Flags controlling the behavior of ``gitApply(repo:diff:location:options:)``.
 ///
-/// ## Discussion
-///
-/// When the callback:
-/// - Returns a negative value, the apply process will be aborted.
-/// - Returns a positive value, the hunk will not be applied, but the apply process will continue.
-/// - Returns `0`, the hunk will be applied, and the apply process will continue.
-///
 /// ## C Equivalent
 ///
 /// [`git_apply_flags_t`](https://libgit2.org/docs/reference/main/apply/git_apply_flags_t.html)
