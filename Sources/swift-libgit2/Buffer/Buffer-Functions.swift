@@ -33,4 +33,16 @@ public func gitBufDispose(
         
         git_buf_dispose(cBuffer)
     }
+    
+    /// `git_buf_dispose()` sets `cBuffer->ptr` to a static sentinel value, not `NULL`.
+    ///
+    /// After freeing the allocated memory, `git_buf_dispose()` sets `cBuffer->ptr`
+    /// to a static single-character array, `git_str__initstr`, which ensures that
+    /// `cBuffer->ptr` remains non-`NULL` and zero-terminated even after disposal.
+    ///
+    /// The Swift binding sets `buffer.ptr` to `nil` after disposal for more idiomatic Swift.
+    /// See ``GitBuf/ptr`` for more information.
+    buffer.ptr          = nil
+    buffer.reserved     = 0
+    buffer.size         = 0
 }

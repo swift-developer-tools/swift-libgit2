@@ -41,8 +41,8 @@ public struct GitAttrOptions
     )
     {
         /// libgit2 doesn't provide an initialization function for `git_attr_options`.
-        /// The C macro `GIT_ATTR_OPTIONS_INIT` would zero-initialize all fields other than
-        /// `version`, so that approach is mirrored here.
+        /// The C macro `GIT_ATTR_OPTIONS_INIT` would initialize all fields other than
+        /// `version` to `0` or `NULL`, so that approach is mirrored here.
         self.version        = version
         self.flags          = []
         self.commitID       = nil
