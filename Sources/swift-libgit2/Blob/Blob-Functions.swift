@@ -157,7 +157,6 @@ public func gitBlobRawSize(
 
 
 
-// TODO: Replace `git_buf` and `git_buf_dispose()` in documenation.
 /// Gets a buffer with the filtered content of the given blob.
 /// - Parameters:
 ///   - out: The buffer to be filled in.
@@ -172,8 +171,8 @@ public func gitBlobRawSize(
 /// file name. This may apply `CRLF` filtering or other types of changes depending on the file attributes
 /// set for the blob and the content detected in it.
 ///
-/// The output is written into a `git_buf` which the caller must dispose of when done
-/// (using `git_buf_dispose()`).
+/// The output is written into a ``GitBuf`` instance which the caller must dispose of when done by
+/// using ``gitBufDispose(buffer:)``.
 ///
 /// If no filters need to be applied, then the `out` buffer will just be populated with a pointer to the raw
 /// content of the blob. In that case, be careful to either copy the buffer into memory not owned by the
@@ -184,7 +183,7 @@ public func gitBlobRawSize(
 /// [`git_blob_filter()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobFilter(
-    out     : UnsafeMutablePointer<git_buf>,
+    out     : inout GitBuf,
     blob    : OpaquePointer,
     asPath  : String,
     opts    : GitBlobFilterOptions?
@@ -193,12 +192,17 @@ public func gitBlobFilter(
     guard let opts: GitBlobFilterOptions = opts
     else
     {
-        return git_blob_filter(
-            out,
-            blob,
-            asPath,
-            nil
-        )
+        return out.withCStruct
+        {
+            cOut in
+            
+            return git_blob_filter(
+                cOut,
+                blob,
+                asPath,
+                nil
+            )
+        }
     }
     
     
@@ -209,12 +213,17 @@ public func gitBlobFilter(
         {
             cOpts in
             
-            return git_blob_filter(
-                out,
-                blob,
-                asPath,
-                cOpts
-            )
+            return out.withCStruct
+            {
+                cOut in
+                
+                return git_blob_filter(
+                    cOut,
+                    blob,
+                    asPath,
+                    cOpts
+                )
+            }
         }
     }
     catch

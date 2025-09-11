@@ -379,16 +379,21 @@ public func gitBranchSetUpstream(
 /// [`git_branch_upstream_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_name.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstreamName(
-    out     : UnsafeMutablePointer<git_buf>,
+    out     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_upstream_name(
-        out,
-        repo,
-        refName
-    )
+    return out.withCStruct
+    {
+        cOut in
+        
+        return git_branch_upstream_name(
+            cOut,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -455,16 +460,21 @@ public func gitBranchIsCheckedOut(
 /// [`git_branch_remote_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_remote_name.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchRemoteName(
-    out     : UnsafeMutablePointer<git_buf>,
+    out     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_remote_name(
-        out,
-        repo,
-        refName
-    )
+    return out.withCStruct
+    {
+        cOut in
+        
+        return git_branch_remote_name(
+            cOut,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -486,16 +496,21 @@ public func gitBranchRemoteName(
 /// [`git_branch_upstream_remote()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_remote.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstreamRemote(
-    buf     : UnsafeMutablePointer<git_buf>,
+    buf     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_upstream_remote(
-        buf,
-        repo,
-        refName
-    )
+    return buf.withCStruct
+    {
+        cBuf in
+        
+        return git_branch_upstream_remote(
+            cBuf,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -517,16 +532,21 @@ public func gitBranchUpstreamRemote(
 /// [`git_branch_upstream_merge()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_merge.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstreamMerge(
-    buf     : UnsafeMutablePointer<git_buf>,
+    buf     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_upstream_merge(
-        buf,
-        repo,
-        refName
-    )
+    return buf.withCStruct
+    {
+        cBuf in
+        
+        return git_branch_upstream_merge(
+            cBuf,
+            repo,
+            refName
+        )
+    }
 }
 
 

@@ -323,11 +323,11 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var buffer = git_buf(ptr: nil, reserved: 0, size: 0)
+            var buffer = GitBuf()
             
             defer
             {
-                Free.freeBuffer(&buffer)
+                gitBufDispose(buffer: &buffer)
             }
             
             
@@ -578,7 +578,7 @@ final class BlobTests: XCTestCaseStopOnFail
 
 extension BlobTests
 {
-    // MARK: - createTestBlob()
+    // MARK: - createBlob()
     
     /// Creates a blob from the repository's `README` file and returns its ID.
     /// - Parameter repository: The repository in which to create the blob.

@@ -46,19 +46,6 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a buffer.
-    /// - Parameter buffer: The buffer to free.
-    static func freeBuffer(
-        _ buffer: inout git_buf
-    )
-    {
-        git_buf_dispose(&buffer)
-        buffer.ptr      = nil
-        buffer.size     = 0
-    }
-    
-    
-    
     /// Frees the memory allocated for a branch iterator.
     /// - Parameter branchIterator: The branch iterator to free. The underlying type should
     /// be `git_branch_iterator`.

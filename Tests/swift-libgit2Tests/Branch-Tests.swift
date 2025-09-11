@@ -296,6 +296,8 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
+    // MARK: - testGitBranchRemoteOperations()
+    
     func testGitBranchRemoteOperations() throws
     {
         try Repository.withRepository
@@ -306,11 +308,11 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            var buffer = git_buf()
+            var buffer = GitBuf()
             
             defer
             {
-                Free.freeBuffer(&buffer)
+                gitBufDispose(buffer: &buffer)
             }
             
             

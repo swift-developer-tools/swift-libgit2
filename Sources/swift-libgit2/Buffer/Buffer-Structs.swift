@@ -62,7 +62,7 @@ public struct GitBuf
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal func withCStruct<T>(
+    internal mutating func withCStruct<T>(
         _ body: (UnsafeMutablePointer<git_buf>) -> T
     ) -> T
     {
@@ -72,28 +72,12 @@ public struct GitBuf
         buffer.reserved     = reserved
         buffer.size         = size
         
-        return body(&buffer)
-    }
-    
-    
-    
-    /// Frees the memory pointed to by ``GitBuf/ptr``.
-    ///
-    /// ## Discussion
-    ///
-    /// This function does not free the ``GitBuf`` instance itself, only the memory pointed to by
-    /// ``GitBuf/ptr``.
-    internal mutating func dispose()
-    {
-        withCStruct
-        {
-            cBuffer in
-            
-            git_buf_dispose(cBuffer)
-            
-            ptr        = cBuffer.pointee.ptr
-            reserved   = cBuffer.pointee.reserved
-            size       = cBuffer.pointee.size
-        }
+        let result: T = body(&buffer)
+        
+        ptr        = buffer.ptr
+        reserved   = buffer.reserved
+        size       = buffer.size
+        
+        return result
     }
 }

@@ -27,5 +27,10 @@ public func gitBufDispose(
     buffer: inout GitBuf
 )
 {
-    buffer.dispose()
+    buffer.withCStruct
+    {
+        cBuffer in
+        
+        git_buf_dispose(cBuffer)
+    }
 }
