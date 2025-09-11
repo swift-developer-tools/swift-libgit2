@@ -201,7 +201,7 @@ public func gitAnnotatedCommitRef(
 /// [`git_annotated_commit_free()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_free.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitFree(
-    commit: OpaquePointer
+    commit: OpaquePointer?
 )
 {
     git_annotated_commit_free(commit)
