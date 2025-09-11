@@ -12,72 +12,43 @@ import Clibgit2
 
 
 
-/// Functions to free and reset pointers.
+/// Functions to free memory.
 enum Free
 {
-    /// Frees an annotated commit pointer.
-    /// - Parameter annotatedCommitPointer: The annotated commit pointer to free.
-    static func freeAnnotatedCommitPointer(
-        _ annotatedCommitPointer: inout OpaquePointer?
+    /// Frees the memory allocated for an annotated commit.
+    /// - Parameter annotatedCommit: The annotated commit to free. The underlying type
+    /// should be `git_annotated_commit`
+    static func freeAnnotatedCommit(
+        _ annotatedCommit: inout OpaquePointer?
     )
     {
-        if annotatedCommitPointer != nil
+        if annotatedCommit != nil
         {
-            gitAnnotatedCommitFree(commit: annotatedCommitPointer!)
-            annotatedCommitPointer = nil
+            gitAnnotatedCommitFree(commit: annotatedCommit!)
+            annotatedCommit = nil
         }
     }
     
     
     
-    /// Frees a blame pointer.
-    /// - Parameter blamePointer: The blame pointer to free.
-    static func freeBlamePointer(
-        _ blamePointer: inout OpaquePointer?
+    /// Frees the memory allocated for a blame.
+    /// - Parameter blame: The blame to free. The underlying type should be `git_blame`.
+    static func freeBlame(
+        _ blame: inout OpaquePointer?
     )
     {
-        if blamePointer != nil
+        if blame != nil
         {
-            gitBlameFree(blame: blamePointer)
-            blamePointer = nil
+            gitBlameFree(blame: blame)
+            blame = nil
         }
     }
     
     
     
-    /// Frees a commit pointer.
-    /// - Parameter commitPointer: The commit pointer to free.
-    static func freeCommitPointer(
-        _ commitPointer: inout OpaquePointer?
-    )
-    {
-        if commitPointer != nil
-        {
-            git_commit_free(commitPointer)
-            commitPointer = nil
-        }
-    }
-    
-    
-    
-    /// Frees a diff pointer.
-    /// - Parameter diffPointer: The diff pointer to free.
-    static func freeDiffPointer(
-        _ diffPointer: inout OpaquePointer?
-    )
-    {
-        if diffPointer != nil
-        {
-            git_diff_free(diffPointer)
-            diffPointer = nil
-        }
-    }
-    
-    
-    
-    /// Frees a `git_buf`.
+    /// Frees the memory allocated for a buffer.
     /// - Parameter buffer: The buffer to free.
-    static func freeGitBuf(
+    static func freeBuffer(
         _ buffer: inout git_buf
     )
     {
@@ -88,76 +59,124 @@ enum Free
     
     
     
-    /// Frees an index pointer.
-    /// - Parameter indexPointer: The index pointer to free.
-    static func freeIndexPointer(
-        _ indexPointer: inout OpaquePointer?
+    /// Frees the memory allocated for a branch iterator.
+    /// - Parameter branchIterator: The branch iterator to free. The underlying type should
+    /// be `git_branch_iterator`.
+    static func freeBranchIterator(
+        _ branchIterator: inout OpaquePointer?
     )
     {
-        if indexPointer != nil
+        if branchIterator != nil
         {
-            git_index_free(indexPointer)
-            indexPointer = nil
+            gitBranchIteratorFree(iter: branchIterator)
+            branchIterator = nil
         }
     }
     
     
     
-    /// Frees a reference pointer.
-    /// - Parameter referencePointer: The reference pointer to free.
-    static func freeReferencePointer(
-        _ referencePointer: inout OpaquePointer?
+    /// Frees the memory allocated for a commit.
+    /// - Parameter commit: The commit to free. The underlying type should be `git_commit`.
+    static func freeCommit(
+        _ commit: inout OpaquePointer?
     )
     {
-        if referencePointer != nil
+        if commit != nil
         {
-            git_reference_free(referencePointer!)
-            referencePointer = nil
+            git_commit_free(commit)
+            commit = nil
         }
     }
     
     
     
-    /// Frees a repository pointer.
-    /// - Parameter repositoryPointer: The repository pointer to free.
-    static func freeRepositoryPointer(
-        _ repositoryPointer: inout OpaquePointer?
+    /// Frees the memory allocated for a diff.
+    /// - Parameter diff: The diff to free. The underlying type should be `git_diff`.
+    static func freeDiff(
+        _ diff: inout OpaquePointer?
     )
     {
-        if repositoryPointer != nil
+        if diff != nil
         {
-            git_repository_free(repositoryPointer)
-            repositoryPointer = nil
+            git_diff_free(diff)
+            diff = nil
         }
     }
     
     
     
-    /// Frees a signature pointer.
-    /// - Parameter signaturePointer: The signature pointer to free.
-    static func freeSignaturePointer(
-        _ signaturePointer: inout UnsafeMutablePointer<git_signature>?
+    /// Frees the memory allocated for an index.
+    /// - Parameter index: The index to free. The underlying type should be  `git_index`.
+    static func freeIndex(
+        _ index: inout OpaquePointer?
     )
     {
-        if signaturePointer != nil
+        if index != nil
         {
-            git_signature_free(signaturePointer)
-            signaturePointer = nil
+            git_index_free(index)
+            index = nil
         }
     }
     
     
     
-    /// Frees a tree pointer.
-    /// - Parameter treePointer: The tree pointer to free.
-    static func freeTreePointer(
-        _ treePointer: inout OpaquePointer?
+    /// Frees the memory allocated for a reference.
+    /// - Parameter reference: The reference to free. The underlying type should be
+    /// `git_reference`.
+    static func freeReference(
+        _ reference: inout OpaquePointer?
     )
     {
-        if treePointer != nil
+        if reference != nil
         {
-            git_tree_free(treePointer)
-            treePointer = nil
+            git_reference_free(reference!)
+            reference = nil
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a repository.
+    /// - Parameter repository: The repository to free. The underlying type should be
+    /// `git_repository`.
+    static func freeRepository(
+        _ repository: inout OpaquePointer?
+    )
+    {
+        if repository != nil
+        {
+            git_repository_free(repository)
+            repository = nil
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a signature.
+    /// - Parameter signature: The signature to free.
+    static func freeSignature(
+        _ signature: inout UnsafeMutablePointer<git_signature>?
+    )
+    {
+        if signature != nil
+        {
+            git_signature_free(signature)
+            signature = nil
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a tree.
+    /// - Parameter tree: The tree to free. The underlying type should be `git_tree`.
+    static func freeTree(
+        _ tree: inout OpaquePointer?
+    )
+    {
+        if tree != nil
+        {
+            git_tree_free(tree)
+            tree = nil
         }
     }
 }

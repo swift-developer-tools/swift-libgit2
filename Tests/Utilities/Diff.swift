@@ -7,7 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-
 import Clibgit2
 import Foundation
 import XCTest
@@ -22,7 +21,7 @@ enum Diff
     ///   - repository: The repository on which the diff should be created.
     ///   - body: The closure to call.
     /// - Throws: An `Error` thrown by the closure, or an `NSError` if the write operation failed
-    /// or the diff pointer could not be created.
+    /// or the diff could not be created.
     static func withDiffPointer(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> Void
@@ -57,7 +56,7 @@ enum Diff
         
         defer
         {
-            Free.freeCommitPointer(&commitPointer)
+            Free.freeCommit(&commitPointer)
         }
         
         
@@ -77,7 +76,7 @@ enum Diff
         
         defer
         {
-            Free.freeTreePointer(&treePointer)
+            Free.freeTree(&treePointer)
         }
         
         
@@ -96,7 +95,7 @@ enum Diff
         
         defer
         {
-            Free.freeDiffPointer(&diffPointer)
+            Free.freeDiff(&diffPointer)
         }
         
         let diffTreeToWorkdirResult: Int32 = git_diff_tree_to_workdir(

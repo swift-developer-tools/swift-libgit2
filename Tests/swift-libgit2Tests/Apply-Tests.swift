@@ -97,7 +97,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommitPointer(&commitPointer)
+                Free.freeCommit(&commitPointer)
             }
             
             
@@ -117,7 +117,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTreePointer(&treePointer)
+                Free.freeTree(&treePointer)
             }
             
             
@@ -142,7 +142,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndexPointer(&indexPointer)
+                Free.freeIndex(&indexPointer)
             }
             
             
@@ -279,7 +279,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeCommitPointer(&commitPointer)
+                Free.freeCommit(&commitPointer)
             }
             
             
@@ -298,7 +298,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeTreePointer(&oldTreePointer)
+                Free.freeTree(&oldTreePointer)
             }
             
             
@@ -327,7 +327,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeIndexPointer(&indexPointer)
+                Free.freeIndex(&indexPointer)
             }
             
             
@@ -365,7 +365,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeTreePointer(&newTreePointer)
+                Free.freeTree(&newTreePointer)
             }
             
             
@@ -384,7 +384,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeDiffPointer(&diffPointer)
+                Free.freeDiff(&diffPointer)
             }
             
             

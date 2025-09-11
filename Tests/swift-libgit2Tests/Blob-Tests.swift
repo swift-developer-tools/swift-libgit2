@@ -327,7 +327,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeGitBuf(&buffer)
+                Free.freeBuffer(&buffer)
             }
             
             
