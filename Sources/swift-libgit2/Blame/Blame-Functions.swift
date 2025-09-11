@@ -67,7 +67,7 @@ public func gitBlameHunkByIndex(
         return nil
     }
     
-    return GitBlameHunk(blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunkPointer.pointee)
 }
 
 
@@ -96,7 +96,7 @@ public func gitBlameHunkByLine(
         return nil
     }
     
-    return GitBlameHunk(blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunkPointer.pointee)
 }
 
 
@@ -115,7 +115,7 @@ public func gitBlameLineByIndex(
     idx     : Int
 ) -> GitBlameLine?
 {
-    guard let blameLinkPointer: UnsafePointer<git_blame_line>
+    guard let blameLinePointer: UnsafePointer<git_blame_line>
             = git_blame_line_byindex(
                 blame,
                 idx
@@ -125,7 +125,7 @@ public func gitBlameLineByIndex(
         return nil
     }
     
-    return GitBlameLine(blameLinkPointer.pointee)
+    return GitBlameLine(cValue: blameLinePointer.pointee)
 }
 
 
@@ -180,7 +180,7 @@ public func gitBlameGetHunkByIndex(
         return nil
     }
     
-    return GitBlameHunk(blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunkPointer.pointee)
 }
 
 
@@ -214,7 +214,7 @@ public func gitBlameGetHunkByLine(
         return nil
     }
     
-    return GitBlameHunk(blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunkPointer.pointee)
 }
 
 
