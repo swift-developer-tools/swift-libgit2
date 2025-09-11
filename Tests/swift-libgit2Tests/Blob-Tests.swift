@@ -34,34 +34,10 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID = git_oid()
-            
-            let blobCreateFromBufferResult: Int32 = data.withUnsafeBytes
-            {
-                bytes in
-                
-                guard
-                    let baseAddress: UnsafeRawPointer = bytes.baseAddress,
-                    bytes.count > 0
-                else
-                {
-                    XCTFail("The bytes count was zero.")
-                    return GIT_EUSER.rawValue
-                }
-                
-                
-                
-                return gitBlobCreateFromBuffer(
-                    id:         &blobOID,
-                    repo:       repository.pointer,
-                    buffer:     baseAddress,
-                    len:        bytes.count
-                )
-            }
-            
-            XCTAssertOK(blobCreateFromBufferResult)
-            
-            
+            var blobOID: git_oid = Blob.createBlob(
+                in:     repository,
+                from:   .buffer(data: data)
+            )
             
             Blob.validateBlobContent(
                 in:     repository,
@@ -99,17 +75,10 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID = git_oid()
-            
-            let blobCreateFromDiskResult: Int32 = gitBlobCreateFromDisk(
-                id:     &blobOID,
-                repo:   repository.pointer,
-                path:   fileURL.path
+            var blobOID: git_oid = Blob.createBlob(
+                in:     repository,
+                from:   .disk(path: fileURL.path)
             )
-            
-            XCTAssertOK(blobCreateFromDiskResult)
-            
-            
             
             Blob.validateBlobContent(
                 in:     repository,
@@ -174,16 +143,10 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID = git_oid()
-            
-            let blobCreateFromStreamCommit: Int32 = gitBlobCreateFromStreamCommit(
-                out:        &blobOID,
-                stream:     streamPointer
+            var blobOID: git_oid = Blob.createBlob(
+                in:     repository,
+                from:   .streamCommit(stream: streamPointer)
             )
-            
-            XCTAssertOK(blobCreateFromStreamCommit)
-            
-            
             
             Blob.validateBlobContent(
                 in:     repository,
@@ -203,7 +166,10 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID: git_oid = Blob.createBlob(in: repository)
+            var blobOID: git_oid = Blob.createBlob(
+                in:     repository,
+                from:   .workingDirectory
+            )
             
             
             
@@ -293,7 +259,10 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID: git_oid = Blob.createBlob(in: repository)
+            var blobOID: git_oid = Blob.createBlob(
+                in:     repository,
+                from:   .workingDirectory
+            )
             
             
             
@@ -424,7 +393,10 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID: git_oid = Blob.createBlob(in: repository)
+            var blobOID: git_oid = Blob.createBlob(
+                in:     repository,
+                from:   .workingDirectory
+            )
             
             
             

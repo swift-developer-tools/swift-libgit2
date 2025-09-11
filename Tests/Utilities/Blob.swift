@@ -16,24 +16,106 @@ import XCTest
 /// Blob-related testing utilities.
 enum Blob
 {
-    // MARK: - createBlob()
+    // MARK: - BlobCreationSource
     
-    /// Creates a blob from the repository's `README` file and returns its ID.
-    /// - Parameter repository: The repository in which to create the blob.
-    /// - Returns: The ID of the blob.
-    static func createBlob(
-        in repository: Repository
-    ) -> git_oid
+    /// The source from which to create a blob.
+    enum BlobCreationSource
     {
-        var blobOID = git_oid()
+        /// Reads a file from the working directory of the given repository and writes it to the
+        /// object database.
+        case workingDirectory
         
-        let blobCreateFromWorkdirResult: Int32 = gitBlobCreateFromWorkdir(
-            id:             &blobOID,
-            repo:           repository.pointer,
-            relativePath:   Repository.readmeFileName
+        /// Reads a file from the file system (not necessarily inside the working directory of
+        /// the repository) and writes it to the object database.
+        /// - Parameter path: The path to the file from which the blob should be created.
+        case disk(
+            path: String
         )
         
-        XCTAssertOK(blobCreateFromWorkdirResult)
+        /// Closes the given stream and finalizes writing the blob to the object database.
+        /// - Parameter stream: The stream to close.
+        case streamCommit(
+            stream: UnsafeMutablePointer<git_writestream>
+        )
+        
+        /// Writes an in-memory buffer to the object database as a blob.
+        /// - Parameter data: The data to be written into the blob.
+        case buffer(
+            data: Data
+        )
+    }
+    
+    
+    
+    // MARK: - createBlob()
+    
+    /// Creates a blob from the given source and returns its ID.
+    /// - Parameters:
+    ///   - repository: The repository in which to create the blob.
+    ///   - source: The source from which to create the blob.
+    /// - Returns: The ID of the blob.
+    static func createBlob(
+        in      repository  : Repository,
+        from    source      : BlobCreationSource
+    ) -> git_oid
+    {
+        var blobOID             : git_oid   = git_oid()
+        var blobCreateResult    : Int32     = GIT_EUSER.rawValue
+        
+        switch source
+        {
+            case .workingDirectory:
+                
+                blobCreateResult = gitBlobCreateFromWorkdir(
+                    id:             &blobOID,
+                    repo:           repository.pointer,
+                    relativePath:   Repository.readmeFileName
+                )
+                
+            case .disk(let path):
+                
+                blobCreateResult = gitBlobCreateFromDisk(
+                    id:     &blobOID,
+                    repo:   repository.pointer,
+                    path:   path
+                )
+                
+            case .streamCommit(let stream):
+                
+                blobCreateResult = gitBlobCreateFromStreamCommit(
+                    out:        &blobOID,
+                    stream:     stream
+                )
+                
+            case .buffer(let data):
+                
+                blobCreateResult = data.withUnsafeBytes
+                {
+                    bytes in
+                    
+                    guard
+                        let baseAddress: UnsafeRawPointer = bytes.baseAddress,
+                        bytes.count > 0
+                    else
+                    {
+                        XCTFail("The bytes count was zero.")
+                        return GIT_EUSER.rawValue
+                    }
+                    
+                    
+                    
+                    return gitBlobCreateFromBuffer(
+                        id:         &blobOID,
+                        repo:       repository.pointer,
+                        buffer:     baseAddress,
+                        len:        bytes.count
+                    )
+                }
+        }
+        
+        
+        
+        XCTAssertOK(blobCreateResult)
         
         return blobOID
     }
