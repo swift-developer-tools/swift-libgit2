@@ -17,7 +17,6 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlameOptions
 {
     /// The version to use. Defaults to ``gitBlameOptionsVersion``.
@@ -142,7 +141,6 @@ public struct GitBlameOptions
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlameHunk
 {
     /// The number of lines in this hunk.
@@ -245,7 +243,6 @@ public struct GitBlameHunk
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlameLine
 {
     /// The line content.

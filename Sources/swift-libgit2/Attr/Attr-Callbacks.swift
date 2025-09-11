@@ -29,8 +29,8 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_foreach_cb()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach_cb.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
-public typealias GitAttrForEachCB = @convention(c) (
+public typealias GitAttrForEachCB = @convention(c)
+(
     UnsafePointer<CChar>?,
     UnsafePointer<CChar>?,
     UnsafeMutableRawPointer?

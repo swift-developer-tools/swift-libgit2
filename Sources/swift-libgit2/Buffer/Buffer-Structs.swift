@@ -25,7 +25,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBuf
 {
     /// The buffer contents.

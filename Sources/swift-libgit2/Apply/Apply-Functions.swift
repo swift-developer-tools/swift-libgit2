@@ -24,7 +24,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_to_tree()`](https://libgit2.org/docs/reference/main/apply/git_apply_to_tree.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitApplyToTree(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -83,7 +82,6 @@ public func gitApplyToTree(
 /// ## C Equivalent
 ///
 /// [`git_apply()`](https://libgit2.org/docs/reference/main/apply/git_apply.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitApply(
     repo        : OpaquePointer,
     diff        : OpaquePointer,

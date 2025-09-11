@@ -22,7 +22,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf_dispose()`](https://libgit2.org/docs/reference/main/buffer/git_buf_dispose.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBufDispose(
     buffer: inout GitBuf
 )

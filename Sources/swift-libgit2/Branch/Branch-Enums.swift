@@ -16,7 +16,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_branch_t`](https://libgit2.org/docs/reference/main/branch/git_branch_t.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public enum GitBranchT: UInt32
 {
     /// A local branch.

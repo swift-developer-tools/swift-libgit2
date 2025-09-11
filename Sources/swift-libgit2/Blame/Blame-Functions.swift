@@ -18,7 +18,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_linecount()`](https://libgit2.org/docs/reference/main/blame/git_blame_linecount.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameLineCount(
     blame: OpaquePointer
 ) -> Int
@@ -35,7 +34,6 @@ public func gitBlameLineCount(
 /// ## C Equivalent
 ///
 /// [`git_blame_hunkcount()`](https://libgit2.org/docs/reference/main/blame/git_blame_hunkcount.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameHunkCount(
     blame: OpaquePointer
 ) -> Int
@@ -54,7 +52,6 @@ public func gitBlameHunkCount(
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk_byindex()`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk_byindex.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameHunkByIndex(
     blame   : OpaquePointer,
     index   : Int
@@ -84,7 +81,6 @@ public func gitBlameHunkByIndex(
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk_byline()`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk_byline.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameHunkByLine(
     blame   : OpaquePointer,
     lineNo  : Int
@@ -114,7 +110,6 @@ public func gitBlameHunkByLine(
 /// ## C Equivalent
 ///
 /// [`git_blame_line_byindex()`](https://libgit2.org/docs/reference/main/blame/git_blame_line_byindex.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameLineByIndex(
     blame   : OpaquePointer,
     idx     : Int
@@ -139,11 +134,14 @@ public func gitBlameLineByIndex(
 /// - Parameter blame: The blame to query. The underlying type should be `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
+/// ## Discussion
+///
+/// This function is deprecated in libgit2.
+/// Use ``gitBlameHunkCount(blame:)`` instead.
+///
 /// ## C Equivalent
 ///
 /// [`git_blame_get_hunk_count()`](https://libgit2.org/docs/reference/main/blame/git_blame_get_hunk_count.html)
-@available(iOS,     introduced: 1.0.0, deprecated: 1.0.0, message: "Use gitBlameHunkCount(blame:) instead.")
-@available(macOS,   introduced: 1.0.0, deprecated: 1.0.0, message: "Use gitBlameHunkCount(blame:) instead.")
 public func gitBlameGetHunkCount(
     blame: OpaquePointer
 ) -> Int
@@ -159,11 +157,14 @@ public func gitBlameGetHunkCount(
 ///   - index: The index of the hunk to retrieve.
 /// - Returns: The hunk at the given index, or `nil` on error.
 ///
+/// ## Discussion
+///
+/// This function is deprecated in libgit2.
+/// Use ``gitBlameHunkByIndex(blame:index:)`` instead.
+///
 /// ## C Equivalent
 ///
 /// [`git_blame_get_hunk_byindex()`](https://libgit2.org/docs/reference/main/blame/git_blame_get_hunk_byindex.html)
-@available(iOS,     introduced: 1.0.0, deprecated: 1.0.0, message: "Use gitBlameHunkByIndex(blame:index:) instead.")
-@available(macOS,   introduced: 1.0.0, deprecated: 1.0.0, message: "Use gitBlameHunkByIndex(blame:index:) instead.")
 public func gitBlameGetHunkByIndex(
     blame   : OpaquePointer,
     index   : UInt32
@@ -190,11 +191,14 @@ public func gitBlameGetHunkByIndex(
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
 /// - Returns: The hunk that contains the given line, or `nil` on error.
 ///
+/// ## Discussion
+///
+/// This function is deprecated in libgit2.
+/// Use ``gitBlameHunkByLine(blame:lineNo:)`` instead.
+///
 /// ## C Equivalent
 ///
 /// [`git_blame_get_hunk_byline()`](https://libgit2.org/docs/reference/main/blame/git_blame_get_hunk_byline.html)
-@available(iOS,     introduced: 1.0.0, deprecated: 1.0.0, message: "Use gitBlameHunkByLine(blame:lineNo:) instead.")
-@available(macOS,   introduced: 1.0.0, deprecated: 1.0.0, message: "Use gitBlameHunkByLine(blame:lineNo:) instead.")
 public func gitBlameGetHunkByLine(
     blame   : OpaquePointer,
     lineNo  : Int
@@ -228,7 +232,6 @@ public func gitBlameGetHunkByLine(
 /// ## C Equivalent
 ///
 /// [`git_blame_file()`](https://libgit2.org/docs/reference/main/blame/git_blame_file.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameFile(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
@@ -287,8 +290,7 @@ public func gitBlameFile(
 /// ## C Equivalent
 ///
 /// [`git_blame_file_from_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_file_from_buffer.html)
-/*@available(iOS 1.0.0, macOS 1.0.0, *)
-public func gitBlameFileFromBuffer(
+/*public func gitBlameFileFromBuffer(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
     path        : String,
@@ -352,7 +354,6 @@ public func gitBlameFileFromBuffer(
 /// ## C Equivalent
 ///
 /// [`git_blame_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_buffer.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameBuffer(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     base        : OpaquePointer,
@@ -376,7 +377,6 @@ public func gitBlameBuffer(
 /// ## C Equivalent
 ///
 /// [`git_blame_free()`](https://libgit2.org/docs/reference/main/blame/git_blame_free.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlameFree(
     blame: OpaquePointer?
 )

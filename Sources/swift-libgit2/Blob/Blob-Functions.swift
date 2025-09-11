@@ -22,7 +22,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_lookup()`](https://libgit2.org/docs/reference/main/blob/git_blob_lookup.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobLookup(
     blob    : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
@@ -50,7 +49,6 @@ public func gitBlobLookup(
 /// ## C Equivalent
 ///
 /// [`git_blob_lookup_prefix()`](https://libgit2.org/docs/reference/main/blob/git_blob_lookup_prefix.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobLookupPrefix(
     blob    : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
@@ -79,7 +77,6 @@ public func gitBlobLookupPrefix(
 /// ## C Equivalent
 ///
 /// [`git_blob_free()`](https://libgit2.org/docs/reference/main/blob/git_blob_free.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobFree(
     blob: OpaquePointer?
 )
@@ -96,7 +93,6 @@ public func gitBlobFree(
 /// ## C Equivalent
 ///
 /// [`git_blob_id()`](https://libgit2.org/docs/reference/main/blob/git_blob_id.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobID(
     blob: OpaquePointer
 ) -> UnsafePointer<git_oid>?
@@ -113,7 +109,6 @@ public func gitBlobID(
 /// ## C Equivalent
 ///
 /// [`git_blob_owner()`](https://libgit2.org/docs/reference/main/blob/git_blob_owner.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobOwner(
     blob: OpaquePointer
 ) -> OpaquePointer
@@ -130,7 +125,6 @@ public func gitBlobOwner(
 /// ## C Equivalent
 ///
 /// [`git_blob_rawcontent()`](https://libgit2.org/docs/reference/main/blob/git_blob_rawcontent.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobRawContent(
     blob: OpaquePointer
 ) -> UnsafeRawPointer
@@ -147,7 +141,6 @@ public func gitBlobRawContent(
 /// ## C Equivalent
 ///
 /// [`git_blob_rawsize()`](https://libgit2.org/docs/reference/main/blob/git_blob_rawsize.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobRawSize(
     blob: OpaquePointer
 ) -> UInt64
@@ -181,7 +174,6 @@ public func gitBlobRawSize(
 /// ## C Equivalent
 ///
 /// [`git_blob_filter()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobFilter(
     out     : inout GitBuf,
     blob    : OpaquePointer,
@@ -247,7 +239,6 @@ public func gitBlobFilter(
 /// ## C Equivalent
 ///
 /// [`git_blob_create_from_workdir()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_workdir.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobCreateFromWorkdir(
     id              : UnsafeMutablePointer<git_oid>,
     repo            : OpaquePointer,
@@ -276,7 +267,6 @@ public func gitBlobCreateFromWorkdir(
 /// ## C Equivalent
 ///
 /// [`git_blob_create_from_disk()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_disk.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobCreateFromDisk(
     id      : UnsafeMutablePointer<git_oid>,
     repo    : OpaquePointer,
@@ -323,7 +313,6 @@ public func gitBlobCreateFromDisk(
 /// ## C Equivalent
 ///
 /// [`git_blob_create_from_stream()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_stream.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobCreateFromStream(
     out         : UnsafeMutablePointer<UnsafeMutablePointer<git_writestream>?>,
     repo        : OpaquePointer,
@@ -348,7 +337,6 @@ public func gitBlobCreateFromStream(
 /// ## C Equivalent
 ///
 /// [`git_blob_create_from_stream_commit()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_stream_commit.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobCreateFromStreamCommit(
     out     : UnsafeMutablePointer<git_oid>,
     stream  : UnsafeMutablePointer<git_writestream>
@@ -374,7 +362,6 @@ public func gitBlobCreateFromStreamCommit(
 /// ## C Equivalent
 ///
 /// [`git_blob_create_from_buffer()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_buffer.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobCreateFromBuffer(
     id      : UnsafeMutablePointer<git_oid>,
     repo    : OpaquePointer,
@@ -405,7 +392,6 @@ public func gitBlobCreateFromBuffer(
 /// ## C Equivalent
 ///
 /// [`git_blob_is_binary()`](https://libgit2.org/docs/reference/main/blob/git_blob_is_binary.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobIsBinary(
     blob: OpaquePointer
 ) -> Bool
@@ -429,7 +415,6 @@ public func gitBlobIsBinary(
 /// ## C Equivalent
 ///
 /// [`git_blob_data_is_binary()`](https://libgit2.org/docs/reference/main/blob/git_blob_data_is_binary.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobDataIsBinary(
     data    : String,
     len     : Int
@@ -457,7 +442,6 @@ public func gitBlobDataIsBinary(
 /// ## C Equivalent
 ///
 /// [`git_blob_dup()`](https://libgit2.org/docs/reference/main/blob/git_blob_dup.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBlobDup(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     source  : OpaquePointer

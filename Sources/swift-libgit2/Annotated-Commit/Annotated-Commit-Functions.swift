@@ -28,7 +28,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_from_ref()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_from_ref.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitFromRef(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
@@ -62,7 +61,6 @@ public func gitAnnotatedCommitFromRef(
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_from_fetchhead()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_from_fetchhead.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitFromFetchhead(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -104,7 +102,6 @@ public func gitAnnotatedCommitFromFetchhead(
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_lookup()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_lookup.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitLookup(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
@@ -140,7 +137,6 @@ public func gitAnnotatedCommitLookup(
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_from_revspec()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_from_revspec.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitFromRevspec(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
@@ -164,7 +160,6 @@ public func gitAnnotatedCommitFromRevspec(
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_id()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_id.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitID(
     commit: OpaquePointer
 ) -> UnsafePointer<git_oid>
@@ -182,7 +177,6 @@ public func gitAnnotatedCommitID(
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_ref()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_ref.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitRef(
     commit: OpaquePointer
 ) -> UnsafePointer<CChar>?
@@ -199,7 +193,6 @@ public func gitAnnotatedCommitRef(
 /// ## C Equivalent
 ///
 /// [`git_annotated_commit_free()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_free.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitAnnotatedCommitFree(
     commit: OpaquePointer?
 )

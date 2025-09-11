@@ -17,7 +17,6 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlobFilterOptions
 {
     /// The version to use. Defaults to ``gitBlobFilterOptionsVersion``.
