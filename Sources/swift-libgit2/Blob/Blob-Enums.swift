@@ -16,7 +16,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_flag_t`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_flag_t.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlobFilterFlagT: OptionSet, Sendable
 {
     /// The raw value to use.

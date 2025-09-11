@@ -31,7 +31,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_branch_create()`](https://libgit2.org/docs/reference/main/branch/git_branch_create.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchCreate(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -73,7 +72,6 @@ public func gitBranchCreate(
 /// ## C Equivalent
 ///
 /// [`git_branch_create_from_annotated()`](https://libgit2.org/docs/reference/main/branch/git_branch_create_from_annotated.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchCreateFromAnnotated(
     refOut      : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -106,7 +104,6 @@ public func gitBranchCreateFromAnnotated(
 /// ## C Equivalent
 ///
 /// [`git_branch_delete()`](https://libgit2.org/docs/reference/main/branch/git_branch_delete.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchDelete(
     branch: OpaquePointer
 ) -> Int32
@@ -127,7 +124,6 @@ public func gitBranchDelete(
 /// ## C Equivalent
 ///
 /// [`git_branch_iterator_new()`](https://libgit2.org/docs/reference/main/branch/git_branch_iterator_new.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchIteratorNew(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -153,7 +149,6 @@ public func gitBranchIteratorNew(
 /// ## C Equivalent
 ///
 /// [`git_branch_next()`](https://libgit2.org/docs/reference/main/branch/git_branch_next.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchNext(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     outType : UnsafeMutablePointer<GitBranchT>,
@@ -187,7 +182,6 @@ public func gitBranchNext(
 /// ## C Equivalent
 ///
 /// [`git_branch_iterator_free()`](https://libgit2.org/docs/reference/main/branch/git_branch_iterator_free.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchIteratorFree(
     iter: OpaquePointer?
 )
@@ -216,7 +210,6 @@ public func gitBranchIteratorFree(
 /// ## C Equivalent
 ///
 /// [`git_branch_move()`](https://libgit2.org/docs/reference/main/branch/git_branch_move.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchMove(
     out             : UnsafeMutablePointer<OpaquePointer?>,
     branch          : OpaquePointer,
@@ -251,7 +244,6 @@ public func gitBranchMove(
 /// ## C Equivalent
 ///
 /// [`git_branch_lookup()`](https://libgit2.org/docs/reference/main/branch/git_branch_lookup.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchLookup(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
@@ -287,7 +279,6 @@ public func gitBranchLookup(
 /// ## C Equivalent
 ///
 /// [`git_branch_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_name.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchName(
     out : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     ref : OpaquePointer
@@ -316,7 +307,6 @@ public func gitBranchName(
 /// ## C Equivalent
 ///
 /// [`git_branch_upstream()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstream(
     out : UnsafeMutablePointer<OpaquePointer?>,
     ref : OpaquePointer
@@ -344,7 +334,6 @@ public func gitBranchUpstream(
 /// ## C Equivalent
 ///
 /// [`git_branch_set_upstream()`](https://libgit2.org/docs/reference/main/branch/git_branch_set_upstream.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchSetUpstream(
     branch      : OpaquePointer,
     branchName  : String?
@@ -377,18 +366,22 @@ public func gitBranchSetUpstream(
 /// ## C Equivalent
 ///
 /// [`git_branch_upstream_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_name.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstreamName(
-    out     : UnsafeMutablePointer<git_buf>,
+    out     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_upstream_name(
-        out,
-        repo,
-        refName
-    )
+    return out.withCStruct
+    {
+        cOut in
+        
+        return git_branch_upstream_name(
+            cOut,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -401,7 +394,6 @@ public func gitBranchUpstreamName(
 /// ## C Equivalent
 ///
 /// [`git_branch_is_head()`](https://libgit2.org/docs/reference/main/branch/git_branch_is_head.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchIsHEAD(
     branch: OpaquePointer
 ) -> Int32
@@ -424,7 +416,6 @@ public func gitBranchIsHEAD(
 /// ## C Equivalent
 ///
 /// [`git_branch_is_checked_out()`](https://libgit2.org/docs/reference/main/branch/git_branch_is_checked_out.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchIsCheckedOut(
     branch: OpaquePointer
 ) -> Int32
@@ -453,18 +444,22 @@ public func gitBranchIsCheckedOut(
 /// ## C Equivalent
 ///
 /// [`git_branch_remote_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_remote_name.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchRemoteName(
-    out     : UnsafeMutablePointer<git_buf>,
+    out     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_remote_name(
-        out,
-        repo,
-        refName
-    )
+    return out.withCStruct
+    {
+        cOut in
+        
+        return git_branch_remote_name(
+            cOut,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -484,18 +479,22 @@ public func gitBranchRemoteName(
 /// ## C Equivalent
 ///
 /// [`git_branch_upstream_remote()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_remote.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstreamRemote(
-    buf     : UnsafeMutablePointer<git_buf>,
+    buf     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_upstream_remote(
-        buf,
-        repo,
-        refName
-    )
+    return buf.withCStruct
+    {
+        cBuf in
+        
+        return git_branch_upstream_remote(
+            cBuf,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -515,18 +514,22 @@ public func gitBranchUpstreamRemote(
 /// ## C Equivalent
 ///
 /// [`git_branch_upstream_merge()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_merge.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchUpstreamMerge(
-    buf     : UnsafeMutablePointer<git_buf>,
+    buf     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
 ) -> Int32
 {
-    return git_branch_upstream_merge(
-        buf,
-        repo,
-        refName
-    )
+    return buf.withCStruct
+    {
+        cBuf in
+        
+        return git_branch_upstream_merge(
+            cBuf,
+            repo,
+            refName
+        )
+    }
 }
 
 
@@ -540,7 +543,6 @@ public func gitBranchUpstreamMerge(
 /// ## C Equivalent
 ///
 /// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchIsValid(
     valid   : UnsafeMutablePointer<Int32>,
     name    : String

@@ -16,5 +16,4 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_BLAME_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/blame/GIT_BLAME_OPTIONS_VERSION.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public let gitBlameOptionsVersion: UInt32 = UInt32(GIT_BLAME_OPTIONS_VERSION)

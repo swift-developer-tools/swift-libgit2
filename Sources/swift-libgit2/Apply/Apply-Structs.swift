@@ -24,7 +24,6 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitApplyOptions
 {
     /// The version to use. Defaults to ``gitApplyOptionsVersion``.
@@ -36,7 +35,8 @@ public struct GitApplyOptions
     /// The callback that will be made per hunk when applying a patch.
     public var hunkCB  : GitApplyHunkCB?
     
-    /// The payload passed to both `deltaCB` and `hunkCB`.
+    /// The payload passed to both ``GitApplyOptions/deltaCB`` and
+    /// ``GitApplyOptions/hunkCB``.
     public var payload : UnsafeMutableRawPointer?
     
     /// The flags to use when applying.
@@ -46,10 +46,10 @@ public struct GitApplyOptions
     
     /// Creates a ``GitApplyOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
-    /// - Throws: An `NSError` if the initialization failed.
+    /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitApplyOptionsVersion
-    ) throws
+    ) throws(NSError)
     {
         var applyOptions = git_apply_options()
         
@@ -61,7 +61,7 @@ public struct GitApplyOptions
         if applyOptionsInitResult != GIT_OK.rawValue
         {
             throw NSError(
-                domain:     "GitApplyOptions \(#function)",
+                domain:     "GitApplyOptions.\(#function)",
                 code:       Int(applyOptionsInitResult),
                 userInfo:   nil
             )
@@ -76,12 +76,13 @@ public struct GitApplyOptions
     
     
     
-    /// Calls the given closure with a ``GitApplyOptions`` instance.
+    /// Calls the given closure with a pointer to a `git_apply_options` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_apply_options>) -> Int32
-    ) -> Int32
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_apply_options>) -> T
+    ) throws(NSError) -> T
     {
         var applyOptions = git_apply_options()
         
@@ -92,7 +93,11 @@ public struct GitApplyOptions
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            return applyOptionsInitResult
+            throw NSError(
+                domain:     "GitApplyOptions.\(#function)",
+                code:       Int(applyOptionsInitResult),
+                userInfo:   nil
+            )
         }
         
         applyOptions.delta_cb   = deltaCB

@@ -16,7 +16,6 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_options`](https://libgit2.org/docs/reference/main/attr/git_attr_options.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitAttrOptions
 {
     /// The version to use. Defaults to ``gitAttrOptionsVersion``.
@@ -41,8 +40,8 @@ public struct GitAttrOptions
     )
     {
         /// libgit2 doesn't provide an initialization function for `git_attr_options`.
-        /// The C macro `GIT_ATTR_OPTIONS_INIT` would zero-initialize all fields other than
-        /// `version`, so that approach is mirrored here.
+        /// The C macro `GIT_ATTR_OPTIONS_INIT` would initialize all fields other than
+        /// `version` to `0` or `NULL`, so that approach is mirrored here.
         self.version        = version
         self.flags          = []
         self.commitID       = nil
@@ -51,12 +50,12 @@ public struct GitAttrOptions
     
     
     
-    /// Calls the given closure with a ``GitAttrOptions`` instance.
+    /// Calls the given closure with a pointer to a `git_attr_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_attr_options>) -> Int32
-    ) -> Int32
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_attr_options>) -> T
+    ) -> T
     {
         var attrOptions = git_attr_options()
         

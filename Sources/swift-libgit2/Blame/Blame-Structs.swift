@@ -17,7 +17,6 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlameOptions
 {
     /// The version to use. Defaults to ``gitBlameOptionsVersion``.
@@ -56,10 +55,10 @@ public struct GitBlameOptions
     
     /// Creates a ``GitBlameOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitBlameOptionsVersion``.
-    /// - Throws: An `NSError` if the initialization failed.
+    /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws
+    ) throws(NSError)
     {
         var blameOptions = git_blame_options()
         
@@ -71,7 +70,7 @@ public struct GitBlameOptions
         if blameOptionsInitResult != GIT_OK.rawValue
         {
             throw NSError(
-                domain:     "GitBlameOptions \(#function)",
+                domain:     "GitBlameOptions.\(#function)",
                 code:       Int(blameOptionsInitResult),
                 userInfo:   nil
             )
@@ -88,12 +87,13 @@ public struct GitBlameOptions
     
     
     
-    /// Calls the given closure with a ``GitBlameOptions`` instance.
+    /// Calls the given closure with a pointer to a `git_blame_options` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_blame_options>) -> Int32
-    ) -> Int32
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_blame_options>) -> T
+    ) throws(NSError) -> T
     {
         var blameOptions = git_blame_options()
         
@@ -104,7 +104,11 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            return blameOptionsInitResult
+            throw NSError(
+                domain:     "GitBlameOptions.\(#function)",
+                code:       Int(blameOptionsInitResult),
+                userInfo:   nil
+            )
         }
         
         blameOptions.flags          = flags.rawValue
@@ -137,7 +141,6 @@ public struct GitBlameOptions
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlameHunk
 {
     /// The number of lines in this hunk.
@@ -214,7 +217,7 @@ public struct GitBlameHunk
     
     /// Creates a ``GitBlameHunk`` instance from the given `git_blame_hunk`.
     /// - Parameter blameHunk: The `git_blame_hunk`.
-    init(
+    internal init(
         _ blameHunk: git_blame_hunk
     )
     {
@@ -240,20 +243,19 @@ public struct GitBlameHunk
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitBlameLine
 {
     /// The line content.
-    let ptr : String?
+    public let ptr : String?
     
     /// The length of the line content.
-    let len : Int
+    public let len : Int
     
     
     
     /// Creates a ``GitBlameLine`` instance from the given `git_blame_line`.
     /// - Parameter blameLine: The `git_blame_line`.
-    init(
+    internal init(
         _ blameLine: git_blame_line
     )
     {

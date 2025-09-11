@@ -16,5 +16,4 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_BLOB_FILTER_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/blob/GIT_BLOB_FILTER_OPTIONS_VERSION.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public let gitBlobFilterOptionsVersion: UInt32 = UInt32(GIT_BLOB_FILTER_OPTIONS_VERSION)

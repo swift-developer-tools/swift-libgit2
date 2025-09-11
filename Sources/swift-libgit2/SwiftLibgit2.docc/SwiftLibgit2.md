@@ -324,6 +324,14 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitBranchUpstreamMerge(buf:repo:refName:)``
 - ``gitBranchIsValid(valid:name:)``
 
+### Buffer Structs
+
+- ``GitBuf``
+
+### Buffer Functions
+
+- ``gitBufDispose(buffer:)``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``

@@ -31,7 +31,6 @@ import Clibgit2
 /// [`GIT_ATTR_CHECK_INCLUDE_HEAD`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_HEAD.html)
 ///
 /// [`GIT_ATTR_CHECK_INCLUDE_COMMIT`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_COMMIT.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public struct GitAttrCheckFlagsT: OptionSet, Sendable
 {
     /// The raw value to use.
@@ -74,7 +73,6 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
 /// ## C Equivalent
 ///
 /// [`git_attr_value_t`](https://libgit2.org/docs/reference/main/attr/git_attr_value_t.html)
-@available(iOS 1.0.0, macOS 1.0.0, *)
 public enum GitAttrValueT: UInt32
 {
     /// The attribute has been left unspecified.
@@ -91,8 +89,8 @@ public enum GitAttrValueT: UInt32
     
     
     
-    /// Creates a `GitAttrValueT` instance from the given C value.
-    /// - Parameter cValue: The C value from which to create the `GitAttrValueT` instance.
+    /// Creates a ``GitAttrValueT`` instance from the given C value.
+    /// - Parameter cValue: The C value from which to create the ``GitAttrValueT`` instance.
     internal init?(
         cValue: git_attr_value_t
     )
