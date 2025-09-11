@@ -249,10 +249,10 @@ public struct GitBlameHunk
 public struct GitBlameLine
 {
     /// The line content.
-    let ptr : String?
+    public let ptr : String?
     
     /// The length of the line content.
-    let len : Int
+    public let len : Int
     
     
     
