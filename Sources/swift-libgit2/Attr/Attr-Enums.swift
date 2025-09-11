@@ -91,8 +91,8 @@ public enum GitAttrValueT: UInt32
     
     
     
-    /// Creates a `GitAttrValueT` instance from the given C value.
-    /// - Parameter cValue: The C value from which to create the `GitAttrValueT` instance.
+    /// Creates a ``GitAttrValueT`` instance from the given C value.
+    /// - Parameter cValue: The C value from which to create the ``GitAttrValueT`` instance.
     internal init?(
         cValue: git_attr_value_t
     )

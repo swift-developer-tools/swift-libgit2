@@ -30,7 +30,7 @@ public struct GitBlobFilterOptions
     ///
     /// ## Discussion
     ///
-    /// This value is unused, but is reserved for API compatibility.
+    /// This property is unused, but is reserved for API compatibility.
     public var commitID     : UnsafeMutablePointer<git_oid>?
     
     /// The commit from which to load attributes when

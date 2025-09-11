@@ -30,8 +30,8 @@ public enum GitBranchT: UInt32
     
     
     
-    /// Creates a `GitBranchT` instance from the given C value.
-    /// - Parameter cValue: The C value from which to create the `GitBranchT` instance.
+    /// Creates a ``GitBranchT`` instance from the given C value.
+    /// - Parameter cValue: The C value from which to create the ``GitBranchT`` instance.
     internal init?(
         cValue: git_branch_t
     )
