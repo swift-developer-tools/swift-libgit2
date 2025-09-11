@@ -203,16 +203,23 @@ public func gitBlobFilter(
     
     
     
-    return opts.withCStruct
+    do
     {
-        cOpts in
-        
-        return git_blob_filter(
-            out,
-            blob,
-            asPath,
-            cOpts
-        )
+        return try opts.withCStruct
+        {
+            cOpts in
+            
+            return git_blob_filter(
+                out,
+                blob,
+                asPath,
+                cOpts
+            )
+        }
+    }
+    catch
+    {
+        return Int32(error.code)
     }
 }
 

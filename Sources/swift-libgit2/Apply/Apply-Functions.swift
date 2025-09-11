@@ -47,17 +47,24 @@ public func gitApplyToTree(
     
     
     
-    return options.withCStruct
+    do
     {
-        cOptions in
-        
-        return git_apply_to_tree(
-            out,
-            repo,
-            preimage,
-            diff,
-            cOptions
-        )
+        return try options.withCStruct
+        {
+            cOptions in
+            
+            return git_apply_to_tree(
+                out,
+                repo,
+                preimage,
+                diff,
+                cOptions
+            )
+        }
+    }
+    catch
+    {
+        return Int32(error.code)
     }
 }
 
@@ -97,15 +104,22 @@ public func gitApply(
     
     
             
-    return options.withCStruct
+    do
     {
-        cOptions in
-        
-        return git_apply(
-            repo,
-            diff,
-            git_apply_location_t(rawValue: location.rawValue),
-            cOptions
-        )
+        return try options.withCStruct
+        {
+            cOptions in
+            
+            return git_apply(
+                repo,
+                diff,
+                git_apply_location_t(rawValue: location.rawValue),
+                cOptions
+            )
+        }
+    }
+    catch
+    {
+        return Int32(error.code)
     }
 }

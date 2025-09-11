@@ -42,10 +42,10 @@ public struct GitBlobFilterOptions
     /// Creates a ``GitBlobFilterOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to
     /// ``gitBlobFilterOptionsVersion``.
-    /// - Throws: An `NSError` if the initialization failed.
+    /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws
+    ) throws(NSError)
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -57,7 +57,7 @@ public struct GitBlobFilterOptions
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
             throw NSError(
-                domain:     "GitBlobFilterOptions \(#function)",
+                domain:     "GitBlobFilterOptions.\(#function)",
                 code:       Int(blobFilterOptionsInitResult),
                 userInfo:   nil
             )
@@ -73,10 +73,11 @@ public struct GitBlobFilterOptions
     
     /// Calls the given closure with a pointer to a `git_blob_filter_options` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> Int32
-    ) -> Int32
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> T
+    ) throws(NSError) -> T
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -87,7 +88,11 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            return blobFilterOptionsInitResult
+            throw NSError(
+                domain:     "GitBlobFilterOptions.\(#function)",
+                code:       Int(blobFilterOptionsInitResult),
+                userInfo:   nil
+            )
         }
         
         blobFilterOptions.flags             = flags.rawValue

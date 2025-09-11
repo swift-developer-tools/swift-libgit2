@@ -56,10 +56,10 @@ public struct GitBlameOptions
     
     /// Creates a ``GitBlameOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitBlameOptionsVersion``.
-    /// - Throws: An `NSError` if the initialization failed.
+    /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws
+    ) throws(NSError)
     {
         var blameOptions = git_blame_options()
         
@@ -71,7 +71,7 @@ public struct GitBlameOptions
         if blameOptionsInitResult != GIT_OK.rawValue
         {
             throw NSError(
-                domain:     "GitBlameOptions \(#function)",
+                domain:     "GitBlameOptions.\(#function)",
                 code:       Int(blameOptionsInitResult),
                 userInfo:   nil
             )
@@ -90,10 +90,11 @@ public struct GitBlameOptions
     
     /// Calls the given closure with a pointer to a `git_blame_options` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_blame_options>) -> Int32
-    ) -> Int32
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_blame_options>) -> T
+    ) throws(NSError) -> T
     {
         var blameOptions = git_blame_options()
         
@@ -104,7 +105,11 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            return blameOptionsInitResult
+            throw NSError(
+                domain:     "GitBlameOptions.\(#function)",
+                code:       Int(blameOptionsInitResult),
+                userInfo:   nil
+            )
         }
         
         blameOptions.flags          = flags.rawValue

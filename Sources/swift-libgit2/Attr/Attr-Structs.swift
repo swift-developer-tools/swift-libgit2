@@ -54,9 +54,9 @@ public struct GitAttrOptions
     /// Calls the given closure with a pointer to a `git_attr_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_attr_options>) -> Int32
-    ) -> Int32
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_attr_options>) -> T
+    ) -> T
     {
         var attrOptions = git_attr_options()
         

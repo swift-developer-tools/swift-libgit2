@@ -47,10 +47,10 @@ public struct GitApplyOptions
     
     /// Creates a ``GitApplyOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
-    /// - Throws: An `NSError` if the initialization failed.
+    /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitApplyOptionsVersion
-    ) throws
+    ) throws(NSError)
     {
         var applyOptions = git_apply_options()
         
@@ -62,7 +62,7 @@ public struct GitApplyOptions
         if applyOptionsInitResult != GIT_OK.rawValue
         {
             throw NSError(
-                domain:     "GitApplyOptions \(#function)",
+                domain:     "GitApplyOptions.\(#function)",
                 code:       Int(applyOptionsInitResult),
                 userInfo:   nil
             )
@@ -79,10 +79,11 @@ public struct GitApplyOptions
     
     /// Calls the given closure with a pointer to a `git_apply_options` instance.
     /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure, or an error code if the initialization failed.
-    internal func withCStruct(
-        _ body: (UnsafeMutablePointer<git_apply_options>) -> Int32
-    ) -> Int32
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCStruct<T>(
+        _ body: (UnsafeMutablePointer<git_apply_options>) -> T
+    ) throws(NSError) -> T
     {
         var applyOptions = git_apply_options()
         
@@ -93,7 +94,11 @@ public struct GitApplyOptions
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            return applyOptionsInitResult
+            throw NSError(
+                domain:     "GitApplyOptions.\(#function)",
+                code:       Int(applyOptionsInitResult),
+                userInfo:   nil
+            )
         }
         
         applyOptions.delta_cb   = deltaCB

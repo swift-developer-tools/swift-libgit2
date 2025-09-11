@@ -249,16 +249,23 @@ public func gitBlameFile(
     
     
     
-    return options.withCStruct
+    do
     {
-        cOptions in
-        
-        return git_blame_file(
-            out,
-            repo,
-            path,
-            cOptions
-        )
+        return try options.withCStruct
+        {
+            cOptions in
+            
+            return git_blame_file(
+                out,
+                repo,
+                path,
+                cOptions
+            )
+        }
+    }
+    catch
+    {
+        return Int32(error.code)
     }
 }
 
