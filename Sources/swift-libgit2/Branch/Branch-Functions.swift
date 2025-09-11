@@ -189,7 +189,7 @@ public func gitBranchNext(
 /// [`git_branch_iterator_free()`](https://libgit2.org/docs/reference/main/branch/git_branch_iterator_free.html)
 @available(iOS 1.0.0, macOS 1.0.0, *)
 public func gitBranchIteratorFree(
-    iter: OpaquePointer
+    iter: OpaquePointer?
 )
 {
     return git_branch_iterator_free(iter)

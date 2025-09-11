@@ -59,6 +59,22 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a branch iterator.
+    /// - Parameter branchIterator: The branch iterator to free. The underlying type should
+    /// be `git_branch_iterator`.
+    static func freeBranchIterator(
+        _ branchIterator: inout OpaquePointer?
+    )
+    {
+        if branchIterator != nil
+        {
+            gitBranchIteratorFree(iter: branchIterator)
+            branchIterator = nil
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for a commit.
     /// - Parameter commit: The commit to free. The underlying type should be `git_commit`.
     static func freeCommit(
