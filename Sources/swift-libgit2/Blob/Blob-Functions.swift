@@ -235,7 +235,6 @@ public func gitBlobFilter(
 ///   repository's working directory.
 /// - Returns: `0` on success, or an error code.
 ///
-///
 /// ## C Equivalent
 ///
 /// [`git_blob_create_from_workdir()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_workdir.html)
@@ -262,7 +261,6 @@ public func gitBlobCreateFromWorkdir(
 ///   `git_repository`. This repository may be bare.
 ///   - path: The path to the file from which the blob should be created.
 /// - Returns: `0` on success, or an error code.
-///
 ///
 /// ## C Equivalent
 ///
@@ -319,7 +317,7 @@ public func gitBlobCreateFromStream(
     hintPath    : String?
 ) -> Int32
 {
-    return git_blob_create_fromstream(
+    return git_blob_create_from_stream(
         out,
         repo,
         hintPath
@@ -369,7 +367,7 @@ public func gitBlobCreateFromBuffer(
     len     : Int
 ) -> Int32
 {
-    return git_blob_create_frombuffer(
+    return git_blob_create_from_buffer(
         id,
         repo,
         buffer,
