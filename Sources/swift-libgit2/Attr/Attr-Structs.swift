@@ -51,7 +51,7 @@ public struct GitAttrOptions
     
     
     
-    /// Calls the given closure with a ``GitAttrOptions`` instance.
+    /// Calls the given closure with a pointer to a `git_attr_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     internal func withCStruct(

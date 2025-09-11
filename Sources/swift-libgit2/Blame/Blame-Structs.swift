@@ -88,7 +88,7 @@ public struct GitBlameOptions
     
     
     
-    /// Calls the given closure with a ``GitBlameOptions`` instance.
+    /// Calls the given closure with a pointer to a `git_blame_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure, or an error code if the initialization failed.
     internal func withCStruct(
