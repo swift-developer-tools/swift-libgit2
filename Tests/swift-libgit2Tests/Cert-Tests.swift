@@ -302,9 +302,9 @@ final class CertTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitTransportCertificateCheckCallback()
+    // MARK: - testGitTransportCertificateCheckCB()
     
-    func testGitTransportCertificateCheckCallback() throws
+    func testGitTransportCertificateCheckCB() throws
     {
         var cCert = git_cert()
         
@@ -312,21 +312,21 @@ final class CertTests: XCTestCaseStopOnFail
         
         
         
-        let acceptCallback: GitTransportCertificateCheckCallback =
+        let acceptCallback: GitTransportCertificateCheckCB =
         {
             _, _, _, _ in
             
             return 0
         }
         
-        let rejectCallback: GitTransportCertificateCheckCallback =
+        let rejectCallback: GitTransportCertificateCheckCB =
         {
             _, _, _, _ in
             
             return -1
         }
         
-        let deferCallback: GitTransportCertificateCheckCallback =
+        let deferCallback: GitTransportCertificateCheckCB =
         {
             _, _, _, _ in
             

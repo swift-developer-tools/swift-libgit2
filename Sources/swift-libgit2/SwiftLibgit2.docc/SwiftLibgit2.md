@@ -346,7 +346,7 @@ swift-libgit2 includes the following compiled libraries:
 
 ### Cert Callbacks
 
-- ``GitTransportCertificateCheckCallback``
+- ``GitTransportCertificateCheckCB``
 
 ### Global Functions
 
