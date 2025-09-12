@@ -107,9 +107,13 @@ struct Repository
         
         XCTAssertEqual(actualContent, content)
     }
-    
-    
-    
+}
+
+
+
+/// Static methods related to ``Repository.withRepository(_:)``.
+extension Repository
+{
     // MARK: - commitFile()
     
     /// Commits a file in the given repository.
