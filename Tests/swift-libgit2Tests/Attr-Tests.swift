@@ -33,28 +33,16 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let macroContent: String = "*.macro testmacro\n"
-            
-            let gitAttributesURL: URL = repository.url.appending(
-                path:           ".gitattributes",
-                directoryHint:  .notDirectory
+            try repository.modifyFile(
+                path:       ".gitattributes",
+                content:    "*.macro testmacro\n",
+                append:     true
             )
             
-            
-            
-            let existingContent : String    = try String(contentsOf: gitAttributesURL)
-            let newContent      : String    = existingContent + macroContent
-            
-            try newContent.atomicWrite(to: gitAttributesURL)
-            
-            
-            
-            let testFileURL: URL = repository.url.appending(
-                path:           "test.macro",
-                directoryHint:  .notDirectory
+            try repository.modifyFile(
+                path:       "test.macro",
+                content:    "Macro test file"
             )
-            
-            try "Macro test file".atomicWrite(to: testFileURL)
             
             
             

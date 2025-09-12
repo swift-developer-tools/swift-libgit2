@@ -59,19 +59,10 @@ final class BlobTests: XCTestCaseStopOnFail
             
             let fileContent: String = "Hello World!"
             
-            let fileURL: URL = repository.url.appending(
-                path:           "test.txt",
-                directoryHint:  .notDirectory
+            let fileURL: URL = try repository.modifyFile(
+                path:       "test.txt",
+                content:    fileContent
             )
-            
-            defer
-            {
-                try? FileManager.default.removeItem(at: fileURL)
-            }
-            
-            
-            
-            try fileContent.atomicWrite(to: fileURL)
             
             
             
