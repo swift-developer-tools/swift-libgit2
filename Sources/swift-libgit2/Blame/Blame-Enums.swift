@@ -32,7 +32,11 @@ public struct GitBlameFlagT: OptionSet, Sendable
     
     
     
-    /// Normal blame. This is the default value.
+    /// Normal blame.
+    ///
+    /// ## Discussion
+    ///
+    /// This is the default value.
     public static let gitBlameNormal                        = GitBlameFlagT(rawValue: GIT_BLAME_NORMAL.rawValue)
     
     /// Track lines that have moved within a file.
