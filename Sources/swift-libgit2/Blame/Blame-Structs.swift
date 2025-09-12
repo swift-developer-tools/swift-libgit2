@@ -19,7 +19,11 @@ import Foundation
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
 public struct GitBlameOptions
 {
-    /// The version to use. Defaults to ``gitBlameOptionsVersion``.
+    /// The version to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``gitBlameOptionsVersion``.
     public var version              : UInt32
     
     /// The flags to use during the blame process.
@@ -27,9 +31,10 @@ public struct GitBlameOptions
     
     /// The lower bound on the number of alphanumeric characters that must be detected as
     /// moving/copying within a file for it to associate those lines with the parent commit.
-    /// Defaults to `20`.
     ///
     /// ## Discussion
+    ///
+    /// The default value is `20`.
     ///
     /// This value only takes effect if any of
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameFile``,
@@ -38,17 +43,32 @@ public struct GitBlameOptions
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` are specified.
     public var minMatchCharacters   : UInt16?
     
-    /// The ID of the newest commit to consider. Defaults to HEAD.
+    /// The ID of the newest commit to consider.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is HEAD.
     public var newestCommit         : git_oid
     
-    /// The ID of the oldest commit to consider. Defaults to the first commit encountered with a
-    /// `NULL` parent.
+    /// The ID of the oldest commit to consider.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is the first commit encountered with a `NULL` parent.
     public var oldestCommit         : git_oid
     
-    /// The first line in the file to blame. Defaults to `1` (line numbers are 1-indexed).
+    /// The first line in the file to blame.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `1` (line numbers are 1-indexed).
     public var minLine              : Int?
     
-    /// The last line in the file to blame. Defaults to the last line of the file.
+    /// The last line in the file to blame.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is the last line of the file.
     public var maxLine              : Int?
     
     

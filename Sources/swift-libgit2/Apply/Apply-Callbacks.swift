@@ -11,8 +11,6 @@ import Clibgit2
 
 
 
-// TODO: `git_diff_delta` Swift binding.
-
 /// The callback that will be made per delta (file) when applying a patch.
 /// - Parameters:
 ///   - delta: The delta to be applied.
@@ -30,8 +28,6 @@ public typealias GitApplyDeltaCB = @convention(c)
 ) -> Int32
 
 
-
-// TODO: `git_diff_hunk` Swift binding.
 
 /// The callback that will be made per hunk when applying a patch.
 /// - Parameters:

@@ -18,7 +18,11 @@ import Clibgit2
 /// [`git_attr_options`](https://libgit2.org/docs/reference/main/attr/git_attr_options.html)
 public struct GitAttrOptions
 {
-    /// The version to use. Defaults to ``gitAttrOptionsVersion``.
+    /// The version to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``gitAttrOptionsVersion``.
     public var version      : UInt32
     
     /// The flags to use when querying the attributes.
