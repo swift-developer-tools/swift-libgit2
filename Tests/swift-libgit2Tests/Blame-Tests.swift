@@ -223,7 +223,7 @@ final class BlameTests: XCTestCaseStopOnFail
         var blameOptions = try GitBlameOptions()
         
         XCTAssertEqual(blameOptions.version, gitBlameOptionsVersion)
-        XCTAssertEqual(blameOptions.flags, GitBlameFlagT.gitBlameNormal)
+        XCTAssertEqual(blameOptions.flags, .gitBlameNormal)
         XCTAssertNil(blameOptions.minMatchCharacters)
         XCTAssertNil(blameOptions.minLine)
         XCTAssertNil(blameOptions.maxLine)
