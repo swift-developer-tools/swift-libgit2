@@ -346,7 +346,33 @@ swift-libgit2 includes the following compiled libraries:
 
 ### Cert Callbacks
 
-- ``GitTransportCertificateCheckCallback``
+- ``GitTransportCertificateCheckCB``
+
+### Checkout Structs
+
+- ``GitCheckoutPerfData``
+- ``GitCheckoutOptions``
+
+### Checkout Macros
+
+- ``gitCheckoutOptionsVersion``
+
+### Checkout Enums
+
+- ``GitCheckoutStrategyT``
+- ``GitCheckoutNotifyT``
+
+### Checkout Callbacks
+
+- ``GitCheckoutNotifyCB``
+- ``GitCheckoutProgressCB``
+- ``GitCheckoutPerfDataCB``
+
+### Checkout Functions
+
+- ``gitCheckoutHEAD(repo:opts:)``
+- ``gitCheckoutIndex(repo:index:opts:)``
+- ``gitCheckoutTree(repo:treeish:opts:)``
 
 ### Global Functions
 

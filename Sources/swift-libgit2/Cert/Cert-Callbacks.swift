@@ -24,7 +24,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_transport_certificate_check_cb()`](https://libgit2.org/docs/reference/main/cert/git_transport_certificate_check_cb.html)
-public typealias GitTransportCertificateCheckCallback = @convention(c)
+public typealias GitTransportCertificateCheckCB = @convention(c)
 (
     UnsafeMutablePointer<git_cert>?,
     Int32,

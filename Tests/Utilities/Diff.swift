@@ -20,34 +20,17 @@ enum Diff
     /// - Parameters:
     ///   - repository: The repository on which the diff should be created.
     ///   - body: The closure to call.
-    /// - Throws: An `Error` thrown by the closure, or an `NSError` if the write operation failed
-    /// or the diff could not be created.
+    /// - Throws: An `Error` thrown by the closure or if the write operation failed,
+    /// or an `NSError` if the diff could not be created.
     static func withDiffPointer(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> Void
     ) throws
     {
-        let fileURL: URL = repository.url.appending(
-            path:           Repository.readmeFileName,
-            directoryHint:  .notDirectory
+        try repository.modifyFile(
+            path:       Repository.readmeFileName,
+            content:    "\(Repository.readmeFileContent) Goodbye World!"
         )
-        
-        let modifiedFileContent: String = "\(Repository.readmeFileContent) Goodbye World!"
-        
-        do
-        {
-            try modifiedFileContent.atomicWrite(to: fileURL)
-        }
-        catch
-        {
-            XCTFail("The modified content was not written to the file: \(error)")
-            
-            throw NSError(
-                domain:     #function,
-                code:       Int(GIT_EUSER.rawValue),
-                userInfo:   nil
-            )
-        }
         
         
         

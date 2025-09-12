@@ -19,7 +19,11 @@ import Foundation
 /// [`git_blob_filter_options`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options.html)
 public struct GitBlobFilterOptions
 {
-    /// The version to use. Defaults to ``gitBlobFilterOptionsVersion``.
+    /// The version to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``gitBlobFilterOptionsVersion``.
     public var version      : UInt32
     
     /// The flags to use during the blob filtering process.

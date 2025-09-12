@@ -19,7 +19,11 @@ import Foundation
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
 public struct GitApplyOptions
 {
-    /// The version to use. Defaults to ``gitApplyOptionsVersion``.
+    /// The version to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``gitApplyOptionsVersion``.
     public var version : UInt32
     
     /// The callback that will be made per delta (file) when applying a patch.

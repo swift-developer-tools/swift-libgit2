@@ -45,6 +45,75 @@ struct Repository
     
     
     
+    // MARK: - modifyFile()
+    
+    /// Modifies the content of a file.
+    /// - Parameters:
+    ///   - path: The path to the file to modify. This will be appended to the repository's URL.
+    ///   - content: The new content of the file.
+    ///   - append: Whether the new content should be appended to the existing content.
+    ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
+    /// - Returns: The URL to which the content was written.
+    /// - Throws: An `Error` if the file read or write operations failed.
+    @discardableResult
+    func modifyFile(
+        path            : String,
+        content         : String,
+        append          : Bool                  = false,
+        directoryHint   : URL.DirectoryHint     = .notDirectory
+    ) throws -> URL
+    {
+        let fileURL: URL = url.appending(
+            path:           path,
+            directoryHint:  directoryHint
+        )
+        
+        var writeContent: String = content
+        
+        if append
+        {
+            let existingContent = try String(contentsOf: fileURL)
+            writeContent += existingContent
+        }
+        
+        try writeContent.atomicWrite(to: fileURL)
+        
+        return fileURL
+    }
+    
+    
+    
+    // MARK: - verifyFileContent()
+    
+    /// Verifies the content of a file.
+    /// - Parameters:
+    ///   - path: The path to the file whose content should be verified. This will be appended to the
+    ///   repository's URL.
+    ///   - content: The expected content of the file.
+    ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
+    /// - Throws: An `Error` if the file read operation failed.
+    func verifyFileContent(
+        path            : String,
+        content         : String,
+        directoryHint   : URL.DirectoryHint     = .notDirectory
+    ) throws
+    {
+        let fileURL: URL = url.appending(
+            path:           path,
+            directoryHint:  directoryHint
+        )
+        
+        let actualContent = try String(contentsOf: fileURL)
+        
+        XCTAssertEqual(actualContent, content)
+    }
+}
+
+
+
+/// Static methods related to ``Repository.withRepository(_:)``.
+extension Repository
+{
     // MARK: - commitFile()
     
     /// Commits a file in the given repository.
@@ -299,7 +368,7 @@ struct Repository
     /// Creates a temporary directory named `SwiftLibgit2Tests`.
     /// - Throws: An `Error` if the directory creation failed.
     /// - Returns: The URL of the temporary directory.
-    static func createTemporaryDirectory() throws -> URL
+    private static func createTemporaryDirectory() throws -> URL
     {
         let temporaryDirectoryURL: URL = FileManager.default.temporaryDirectory
             .appending(path: "SwiftLibgit2Tests", directoryHint: .isDirectory)

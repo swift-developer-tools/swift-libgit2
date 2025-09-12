@@ -312,14 +312,12 @@ extension ApplyTests
             
             
             
-            let fileURL: URL = repository.url.appending(
-                path:           Repository.readmeFileName,
-                directoryHint:  .notDirectory
-            )
-            
             let modifiedContent: String = "\(Repository.readmeFileContent) Goodbye World!"
             
-            try modifiedContent.atomicWrite(to: fileURL)
+            try repository.modifyFile(
+                path:       Repository.readmeFileName,
+                content:    modifiedContent
+            )
             
             
             
@@ -493,12 +491,10 @@ extension ApplyTests
             
             
             
-            let fileContent = try String(
-                contentsOf:     fileURL,
-                encoding:       .utf8
+            try repository.verifyFileContent(
+                path:       Repository.readmeFileName,
+                content:    endContent
             )
-            
-            XCTAssertEqual(fileContent, endContent)
             
             
             

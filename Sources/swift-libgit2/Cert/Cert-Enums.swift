@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The type of host certificate passed to ``GitTransportCertificateCheckCallback``.
+/// The type of host certificate passed to ``GitTransportCertificateCheckCB``.
 ///
 /// ## C Equivalent
 ///

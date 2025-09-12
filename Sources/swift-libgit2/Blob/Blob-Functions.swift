@@ -230,7 +230,7 @@ public func gitBlobFilter(
 /// - Parameters:
 ///   - id: The ID of the written blob.
 ///   - repo: The repository where the blob should be written. The underlying type should be
-///   `git_repository`. This repository cannot be bare.
+///   `git_repository`. This repository may not be bare.
 ///   - relativePath: The path to the file from which the blob should be created, relative to the
 ///   repository's working directory.
 /// - Returns: `0` on success, or an error code.
