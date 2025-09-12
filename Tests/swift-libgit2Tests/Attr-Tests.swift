@@ -507,6 +507,29 @@ final class AttrTests: XCTestCaseStopOnFail
             XCTAssertOK(attrGetExtResult)
         }
     }
+    
+    
+    
+    // MARK: - testGitAttrValueT()
+    
+    func testGitAttrValueT() throws
+    {
+        XCTAssertEqual(GitAttrValueT.gitAttrValueUnspecified.rawValue, GIT_ATTR_VALUE_UNSPECIFIED.rawValue)
+        XCTAssertEqual(GitAttrValueT.gitAttrValueTrue.rawValue, GIT_ATTR_VALUE_TRUE.rawValue)
+        XCTAssertEqual(GitAttrValueT.gitAttrValueFalse.rawValue, GIT_ATTR_VALUE_FALSE.rawValue)
+        XCTAssertEqual(GitAttrValueT.gitAttrValueString.rawValue, GIT_ATTR_VALUE_STRING.rawValue)
+        XCTAssertNil(GitAttrValueT(rawValue: 123))
+        
+        XCTAssertEqual(GitAttrValueT.gitAttrValueUnspecified.cValue, GIT_ATTR_VALUE_UNSPECIFIED)
+        XCTAssertEqual(GitAttrValueT.gitAttrValueTrue.cValue, GIT_ATTR_VALUE_TRUE)
+        XCTAssertEqual(GitAttrValueT.gitAttrValueFalse.cValue, GIT_ATTR_VALUE_FALSE)
+        XCTAssertEqual(GitAttrValueT.gitAttrValueString.cValue, GIT_ATTR_VALUE_STRING)
+        
+        XCTAssertEqual(GitAttrValueT(cValue: GIT_ATTR_VALUE_UNSPECIFIED), .gitAttrValueUnspecified)
+        XCTAssertEqual(GitAttrValueT(cValue: GIT_ATTR_VALUE_TRUE), .gitAttrValueTrue)
+        XCTAssertEqual(GitAttrValueT(cValue: GIT_ATTR_VALUE_FALSE), .gitAttrValueFalse)
+        XCTAssertEqual(GitAttrValueT(cValue: GIT_ATTR_VALUE_STRING), .gitAttrValueString)
+    }
 }
 
 
