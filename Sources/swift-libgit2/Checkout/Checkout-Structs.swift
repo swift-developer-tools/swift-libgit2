@@ -164,7 +164,7 @@ public struct GitCheckoutOptions
     {
         var checkoutOptions = git_checkout_options()
         
-        let checkoutOptionsInitResult: Int32 = git_checkout_init_options(
+        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
             &checkoutOptions,
             version
         )
@@ -212,7 +212,7 @@ public struct GitCheckoutOptions
     {
         var checkoutOptions = git_checkout_options()
         
-        let checkoutOptionsInitResult: Int32 = git_checkout_init_options(
+        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
             &checkoutOptions,
             version
         )
