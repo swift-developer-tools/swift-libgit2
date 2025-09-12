@@ -29,8 +29,8 @@ public func gitAttrValue(
 {
     let attributeValue: git_attr_value_t = git_attr_value(attr)
     
-    /// Default to `gitAttrValueUnspecified` if an unexpected value is encountered, although this
-    /// should never occur.
+    /// Default to ``GitAttrValueT/gitAttrValueUnspecified`` if an unexpected value is
+    /// encountered, although this should never occur.
     return GitAttrValueT(rawValue: UInt32(attributeValue.rawValue)) ?? .gitAttrValueUnspecified
 }
 

@@ -332,6 +332,22 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitBufDispose(buffer:)``
 
+### Cert Structs
+
+- ``GitCert``
+- ``GitCertHostKey``
+- ``GitCertX509``
+
+### Cert Enums
+
+- ``GitCertT``
+- ``GitCertSSHT``
+- ``GitCertSSHRawTypeT``
+
+### Cert Callbacks
+
+- ``GitTransportCertificateCheckCallback``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``

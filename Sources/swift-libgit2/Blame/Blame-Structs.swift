@@ -215,10 +215,10 @@ public struct GitBlameHunk
     
     
     
-    /// Creates a ``GitBlameHunk`` instance from the given `git_blame_hunk`.
-    /// - Parameter blameHunk: The `git_blame_hunk`.
+    /// Creates a ``GitBlameHunk`` instance from a `git_blame_hunk` instance.
+    /// - Parameter blameHunk: The `git_blame_hunk` instance to use.
     internal init(
-        _ blameHunk: git_blame_hunk
+        cValue blameHunk: git_blame_hunk
     )
     {
         self.linesInHunk            = blameHunk.lines_in_hunk
@@ -253,10 +253,10 @@ public struct GitBlameLine
     
     
     
-    /// Creates a ``GitBlameLine`` instance from the given `git_blame_line`.
-    /// - Parameter blameLine: The `git_blame_line`.
+    /// Creates a ``GitBlameLine`` instance from a `git_blame_line` instance.
+    /// - Parameter blameLine: The `git_blame_line` instance to use.
     internal init(
-        _ blameLine: git_blame_line
+        cValue blameLine: git_blame_line
     )
     {
         self.ptr    = blameLine.ptr.map { String(cString: $0 )}

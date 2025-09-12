@@ -16,16 +16,9 @@ import Clibgit2
 /// The callback that will be made per delta (file) when applying a patch.
 /// - Parameters:
 ///   - delta: The delta to be applied.
-///   - payload: The user-specified payload.
-/// - Returns: A negative value if the apply process will be aborted, a positive value if the delta will not
-/// be applied, or `0` if the delta will be applied.
-///
-/// ## Discussion
-///
-/// When the callback:
-/// - Returns a negative value, the apply process will be aborted.
-/// - Returns a positive value, the delta will not be applied, but the apply process will continue.
-/// - Returns `0`, the delta will be applied, and the apply process will continue.
+///   - payload: The payload provided by the caller.
+/// - Returns: A negative value if the apply process should be aborted, a positive value if the delta
+/// should not be applied but the process should continue, or `0` if the delta should be applied.
 ///
 /// ## C Equivalent
 ///
@@ -43,16 +36,9 @@ public typealias GitApplyDeltaCB = @convention(c)
 /// The callback that will be made per hunk when applying a patch.
 /// - Parameters:
 ///   - hunk: The hunk to be applied.
-///   - payload: The user-specified payload.
-/// - Returns: A negative value if the apply process will be aborted, a positive value if the hunk will not
-/// be applied, or `0` if the hunk will be applied.
-///
-/// ## Discussion
-///
-/// When the callback:
-/// - Returns a negative value, the apply process will be aborted.
-/// - Returns a positive value, the hunk will not be applied, but the apply process will continue.
-/// - Returns `0`, the hunk will be applied, and the apply process will continue.
+///   - payload: The payload provided by the caller.
+/// - Returns: A negative value if the apply process should be aborted, a positive value if the hunk
+/// should not be applied but the process should continue, or `0` if the hunk should be applied.
 ///
 /// ## C Equivalent
 ///

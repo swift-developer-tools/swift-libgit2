@@ -19,7 +19,7 @@ import Clibgit2
 public enum GitBranchT: UInt32
 {
     /// A local branch.
-    case gitBranchLocal      = 1
+    case gitBranchLocal     = 1
     
     /// A remote branch.
     case gitBranchRemote    = 2
@@ -29,13 +29,13 @@ public enum GitBranchT: UInt32
     
     
     
-    /// Creates a ``GitBranchT`` instance from the given C value.
-    /// - Parameter cValue: The C value from which to create the ``GitBranchT`` instance.
+    /// Creates a ``GitBranchT`` instance from a `git_branch_t` instance.
+    /// - Parameter branch: The `git_branch_t` instance to use.
     internal init?(
-        cValue: git_branch_t
+        cValue branch: git_branch_t
     )
     {
-        switch cValue
+        switch branch
         {
             case GIT_BRANCH_LOCAL   : self = .gitBranchLocal
             case GIT_BRANCH_REMOTE  : self = .gitBranchRemote
