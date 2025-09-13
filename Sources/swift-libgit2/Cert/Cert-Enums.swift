@@ -22,7 +22,7 @@ public enum GitCertT: UInt32
     ///
     /// ## Discussion
     ///
-    /// This value may be encountered when using cURL.
+    /// This value may be encountered when using Curl.
     case gitCertNone            = 0
     
     /// The callback's certificate parameter will be a ``GitCertX509`` instance containing
@@ -38,7 +38,7 @@ public enum GitCertT: UInt32
     ///
     /// ## Discussion
     ///
-    /// This value may be encountered when using cURL.
+    /// This value may be encountered when using Curl.
     case gitCertStrArray        = 3
     
     

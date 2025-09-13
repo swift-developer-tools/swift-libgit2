@@ -374,6 +374,19 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCheckoutIndex(repo:index:opts:)``
 - ``gitCheckoutTree(repo:treeish:opts:)``
 
+### Cherry-Pick Structs
+
+- ``GitCherrypickOptions``
+
+### Cherry-Pick Macros
+
+- ``gitCherrypickOptionsVersion``
+
+### Cherry-Pick Functions
+
+- ``gitCherrypickCommit(out:repo:cherrypickCommit:ourCommit:mainline:mergeOptions:)``
+- ``gitCherrypick(repo:commit:cherrypickOptions:)``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``

@@ -45,6 +45,220 @@ struct Repository
     
     
     
+    // MARK: - createCommit()
+    
+    /// Creates a commit with the given content and message.
+    /// - Parameters:
+    ///   - path: The path to the file to modify. This will be appended to the repository's URL.
+    ///   - content: The new content of the file.
+    ///   - append: Whether the new content should be appended to the existing content.
+    ///   - message: The commit message.
+    /// - Returns: The ID of the created commit.
+    /// - Throws: An `Error` if the file write operation failed.
+    @discardableResult
+    func createCommit(
+        path    : String,
+        content : String,
+        append  : Bool      = false,
+        message : String
+    ) throws -> git_oid
+    {
+        try modifyFile(
+            path:       path,
+            content:    content,
+            append:     append
+        )
+        
+        
+        
+        var indexPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            Free.freeIndex(&indexPointer)
+        }
+        
+        
+        
+        let repositoryIndexResult: Int32 = git_repository_index(
+            &indexPointer,
+            pointer
+        )
+        
+        XCTAssertOK(repositoryIndexResult)
+        
+        
+        
+        let indexAddBypathResult: Int32 = git_index_add_bypath(
+            indexPointer,
+            path
+        )
+        
+        XCTAssertOK(indexAddBypathResult)
+        
+        
+        
+        let indexWriteResult: Int32 = git_index_write(indexPointer)
+        
+        XCTAssertOK(indexWriteResult)
+        
+        
+        
+        var treeOID = git_oid()
+        
+        let indexWriteTreeResult: Int32 = git_index_write_tree(
+            &treeOID,
+            indexPointer
+        )
+        
+        XCTAssertOK(indexWriteTreeResult)
+        
+        
+        
+        var treePointer: OpaquePointer? = nil
+        
+        defer
+        {
+            Free.freeTree(&treePointer)
+        }
+        
+        
+        
+        let treeLookupResult: Int32 = git_tree_lookup(
+            &treePointer,
+            pointer,
+            &treeOID
+        )
+        
+        XCTAssertOK(treeLookupResult)
+        
+        
+        
+        var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
+        
+        defer
+        {
+            Free.freeSignature(&signaturePointer)
+        }
+        
+        
+        
+        let signatureNowResult: Int32 = git_signature_now(
+            &signaturePointer,
+            "Test User",
+            "test@example.com"
+        )
+        
+        XCTAssertOK(signatureNowResult)
+        
+        
+        
+        var headOID = git_oid()
+        
+        var headCommitPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            Free.freeCommit(&headCommitPointer)
+        }
+        
+        
+        
+        /// Get the current HEAD commit as the parent commit, if it exists.
+        let referenceToNameToIDResult: Int32 = git_reference_name_to_id(
+            &headOID,
+            pointer,
+            "HEAD"
+        )
+        
+        if referenceToNameToIDResult == GIT_OK.rawValue
+        {
+            let commitLookupResult: Int32 = git_commit_lookup(
+                &headCommitPointer,
+                pointer,
+                &headOID
+            )
+            
+            XCTAssertOK(commitLookupResult)
+        }
+        
+        
+        
+        var parentCommitPointers: [OpaquePointer?] = []
+        
+        if headCommitPointer != nil
+        {
+            parentCommitPointers = [headCommitPointer]
+        }
+        
+        
+        
+        var commitOID = git_oid()
+        
+        let commitCreateResult: Int32 = git_commit_create(
+            &commitOID,
+            pointer,
+            "HEAD",
+            signaturePointer,
+            signaturePointer,
+            nil,
+            message,
+            treePointer,
+            parentCommitPointers.count,
+            &parentCommitPointers
+        )
+        
+        XCTAssertOK(commitCreateResult)
+        
+        
+        
+        return commitOID
+    }
+    
+    
+    
+    // MARK: - resetToCommit()
+    
+    /// Resets to the given commit.
+    /// - Parameters:
+    ///   - commitOID: The ID of the commit.
+    ///   - resetType: The reset type.
+    func resetToCommit(
+        commitOID   : inout git_oid,
+        resetType   : git_reset_t
+    )
+    {
+        var commitPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            Free.freeCommit(&commitPointer)
+        }
+        
+        
+        
+        let commitLookupResult: Int32 = git_commit_lookup(
+            &commitPointer,
+            pointer,
+            &commitOID
+        )
+        
+        XCTAssertOK(commitLookupResult)
+        
+        
+        
+        let resetResult: Int32 = git_reset(
+            pointer,
+            commitPointer,
+            resetType,
+            nil
+        )
+        
+        XCTAssertOK(resetResult)
+    }
+    
+    
+    
     // MARK: - modifyFile()
     
     /// Modifies the content of a file.
@@ -114,185 +328,7 @@ struct Repository
 /// Static methods related to ``Repository.withRepository(_:)``.
 extension Repository
 {
-    // MARK: - commitFile()
-    
-    /// Commits a file in the given repository.
-    /// - Parameters:
-    ///   - repository: The repository in which the file exists.
-    ///   - fileName: The name of the file.
-    ///   - message: The commit message.
-    private static func commitFile(
-        in repository   : Repository,
-        fileName        : String,
-        message         : String
-    )
-    {
-        var indexPointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeIndex(&indexPointer)
-        }
-        
-        
-        
-        let repositoryIndexResult: Int32 = git_repository_index(
-            &indexPointer,
-            repository.pointer
-        )
-        
-        XCTAssertOK(repositoryIndexResult)
-        
-        
-        
-        let indexAddBypathResult: Int32 = git_index_add_bypath(
-            indexPointer,
-            fileName
-        )
-        
-        XCTAssertOK(indexAddBypathResult)
-        
-        
-        
-        let indexWriteResult: Int32 = git_index_write(indexPointer)
-        
-        XCTAssertOK(indexWriteResult)
-        
-        
-        
-        var treeOID = git_oid()
-        
-        let indexWriteTreeResult: Int32 = git_index_write_tree(
-            &treeOID,
-            indexPointer
-        )
-        
-        XCTAssertOK(indexWriteTreeResult)
-        
-        
-        
-        var treePointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeTree(&treePointer)
-        }
-        
-        
-        
-        let treeLookupResult: Int32 = git_tree_lookup(
-            &treePointer,
-            repository.pointer,
-            &treeOID
-        )
-        
-        XCTAssertOK(treeLookupResult)
-        
-        
-        
-        var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
-        
-        defer
-        {
-            Free.freeSignature(&signaturePointer)
-        }
-        
-        
-        
-        let signatureNowResult: Int32 = git_signature_now(
-            &signaturePointer,
-            "Test User",
-            "test@example.com"
-        )
-        
-        XCTAssertOK(signatureNowResult)
-        
-        
-        
-        var headOID = git_oid()
-        
-        var headCommitPointer: OpaquePointer? = nil
-        
-        defer
-        {
-            Free.freeCommit(&headCommitPointer)
-        }
-        
-        
-        
-        /// Get the current HEAD commit as the parent commit, if it exists.
-        let referenceToNameResult: Int32 = git_reference_name_to_id(
-            &headOID,
-            repository.pointer,
-            "HEAD"
-        )
-        
-        if referenceToNameResult == GIT_OK.rawValue
-        {
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &headCommitPointer,
-                repository.pointer,
-                &headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-        }
-        
-        
-        
-        var parentCommitPointers: [OpaquePointer?] = []
-        
-        if headCommitPointer != nil
-        {
-            parentCommitPointers = [headCommitPointer]
-        }
-        
-        
-        
-        var commitOID = git_oid()
-        
-        let commitCreateResult: Int32 = git_commit_create(
-            &commitOID,
-            repository.pointer,
-            "HEAD",
-            signaturePointer,
-            signaturePointer,
-            nil,
-            message,
-            treePointer,
-            parentCommitPointers.count,
-            &parentCommitPointers
-        )
-        
-        XCTAssertOK(commitCreateResult)
-    }
-    
-    
-    
-    // MARK: - createInitialCommit()
-    
-    /// Creates the initial commit on the given repository.
-    /// - Parameter repository: The repository in which to create the commit.
-    /// - Throws: An `Error` if the file write operation failed.
-    private static func createInitialCommit(
-        in repository: Repository
-    ) throws
-    {
-        let fileURL: URL = repository.url.appending(
-            path:           readmeFileName,
-            directoryHint:  .notDirectory
-        )
-        
-        try readmeFileContent.atomicWrite(to: fileURL)
-        
-        commitFile(
-            in:         repository,
-            fileName:   readmeFileName,
-            message:    "Initial commit"
-        )
-    }
-    
-    
+    // MARK: - createBlameData()
     
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
@@ -301,13 +337,6 @@ extension Repository
         in repository: Repository
     ) throws
     {
-        let fileURL: URL = repository.url.appending(
-            path:           blameFileName,
-            directoryHint:  .notDirectory
-        )
-        
-        
-        
         let initialContent: String =
         """
         1: Initial content
@@ -315,11 +344,9 @@ extension Repository
         3: Even more content
         """
         
-        try initialContent.atomicWrite(to: fileURL)
-        
-        commitFile(
-            in:         repository,
-            fileName:   blameFileName,
+        try repository.createCommit(
+            path:       blameFileName,
+            content:    initialContent,
             message:    "Add blame file"
         )
         
@@ -333,11 +360,9 @@ extension Repository
         4: Added in second commit
         """
         
-        try modifiedContent.atomicWrite(to: fileURL)
-        
-        commitFile(
-            in:         repository,
-            fileName:   blameFileName,
+        try repository.createCommit(
+            path:       blameFileName,
+            content:    modifiedContent,
             message:    "Modify blame file"
         )
         
@@ -352,11 +377,9 @@ extension Repository
         5: Added in third commit
         """
         
-        try finalContent.atomicWrite(to: fileURL)
-        
-        commitFile(
-            in:         repository,
-            fileName:   blameFileName,
+        try repository.createCommit(
+            path:       blameFileName,
+            content:    finalContent,
             message:    "Final blame file update"
         )
     }
@@ -440,7 +463,11 @@ extension Repository
         
         
         
-        try createInitialCommit(in: repository)
+        try repository.createCommit(
+            path:       readmeFileName,
+            content:    readmeFileContent,
+            message:    "Initial commit"
+        )
         
         
         

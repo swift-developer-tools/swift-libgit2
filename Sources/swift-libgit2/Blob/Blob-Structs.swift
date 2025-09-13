@@ -66,6 +66,18 @@ public struct GitBlobFilterOptions
             )
         }
         
+        self.init(cValue: blobFilterOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitBlobFilterOptions`` instance from a
+    /// `git_blob_filter_options` instance.
+    /// - Parameter blobFilterOptions: The `git_blob_filter_options` instance to use.
+    internal init(
+        cValue blobFilterOptions: git_blob_filter_options
+    )
+    {
         self.version        = UInt32(blobFilterOptions.version)
         self.flags          = GitBlobFilterFlagT(rawValue: blobFilterOptions.flags)
         self.commitID       = nil

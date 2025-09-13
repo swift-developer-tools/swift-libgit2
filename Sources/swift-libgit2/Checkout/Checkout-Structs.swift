@@ -164,7 +164,7 @@ public struct GitCheckoutOptions
     {
         var checkoutOptions = git_checkout_options()
         
-        let checkoutOptionsInitResult: Int32 = git_checkout_init_options(
+        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
             &checkoutOptions,
             version
         )
@@ -178,6 +178,17 @@ public struct GitCheckoutOptions
             )
         }
         
+        self.init(cValue: checkoutOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitCheckoutOptions`` instance from a `git_checkout_options` instance.
+    /// - Parameter checkoutOptions: The `git_checkout_options` instance to use.
+    internal init(
+        cValue checkoutOptions: git_checkout_options
+    )
+    {
         self.version            = checkoutOptions.version
         self.checkoutStrategy   = GitCheckoutStrategyT(rawValue: checkoutOptions.checkout_strategy)
         self.disableFilters     = checkoutOptions.disable_filters == 1
@@ -212,7 +223,7 @@ public struct GitCheckoutOptions
     {
         var checkoutOptions = git_checkout_options()
         
-        let checkoutOptionsInitResult: Int32 = git_checkout_init_options(
+        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
             &checkoutOptions,
             version
         )
