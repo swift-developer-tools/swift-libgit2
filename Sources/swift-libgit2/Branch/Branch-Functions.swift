@@ -92,6 +92,7 @@ public func gitBranchCreateFromAnnotated(
 
 
 // TODO: Replace `git_reference_free()` in documentation.
+
 /// Deletes an existing branch.
 /// - Parameter branch: The branch to delete. The underlying type should be `git_reference`.
 /// - Returns: `0` on success, or an error code.
@@ -99,7 +100,7 @@ public func gitBranchCreateFromAnnotated(
 /// ## Discussion
 ///
 /// If the deletion is successful, the given branch reference will no longer be valid and should be freed
-/// immediately using `git_reference_free()`.
+/// immediately with `git_reference_free()`.
 ///
 /// ## C Equivalent
 ///
@@ -192,6 +193,7 @@ public func gitBranchIteratorFree(
 
 
 // TODO: Replace `git_reference_free()` in documentation.
+
 /// Moves or renames the given local branch.
 /// - Parameters:
 ///   - out: The new reference object for the updated name. The underlying type should be
@@ -205,7 +207,7 @@ public func gitBranchIteratorFree(
 /// ## Discussion
 ///
 /// If the move is successful, the given branch reference will no longer be valid and should be freed
-/// immediately using `git_reference_free()`.
+/// immediately with `git_reference_free()`.
 ///
 /// ## C Equivalent
 ///
