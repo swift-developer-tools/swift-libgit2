@@ -64,6 +64,17 @@ public struct GitApplyOptions
             )
         }
         
+        self.init(cValue: applyOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitApplyOptions`` instance from a `git_apply_options` instance.
+    /// - Parameter applyOptions: The `git_apply_options` instance to use.
+    internal init(
+        cValue applyOptions: git_apply_options
+    )
+    {
         self.version    = applyOptions.version
         self.deltaCB    = applyOptions.delta_cb
         self.hunkCB     = applyOptions.hunk_cb
