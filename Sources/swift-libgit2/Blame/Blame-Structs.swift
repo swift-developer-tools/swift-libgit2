@@ -96,6 +96,17 @@ public struct GitBlameOptions
             )
         }
         
+        self.init(cValue: blameOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitBlameOptions`` instance from a `git_blame_options` instance.
+    /// - Parameter blameOptions: The `git_blame_options` instance to use.
+    internal init(
+        cValue blameOptions: git_blame_options
+    )
+    {
         self.version                = blameOptions.version
         self.flags                  = GitBlameFlagT(rawValue: blameOptions.flags)
         self.minMatchCharacters     = nil
