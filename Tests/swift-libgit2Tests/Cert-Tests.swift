@@ -129,7 +129,7 @@ final class CertTests: XCTestCaseStopOnFail
             
             
             
-            let certHostKey = GitCertHostKey(cValue: &cCertHostKey)
+            let certHostKey = GitCertHostKey(cValue: cCertHostKey)
             
             XCTAssertEqual(certHostKey.parent.certType, .gitCertHostKeyLibSSH2)
             
