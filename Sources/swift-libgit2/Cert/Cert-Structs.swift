@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The parent type for ``GitCertHostKey`` and ``GitCertX509``
+/// The parent type for ``GitCertHostKey`` and ``GitCertX509``.
 ///
 /// ## C Equivalent
 ///

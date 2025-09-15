@@ -32,7 +32,7 @@ public func gitApplyToTree(
     options     : GitApplyOptions?
 ) -> Int32
 {
-    guard let options: GitApplyOptions = options
+    guard var cOptions: git_apply_options = options?.cValue
     else
     {
         return git_apply_to_tree(
@@ -46,25 +46,13 @@ public func gitApplyToTree(
     
     
     
-    do
-    {
-        return try options.withCStruct
-        {
-            cOptions in
-            
-            return git_apply_to_tree(
-                out,
-                repo,
-                preimage,
-                diff,
-                cOptions
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_apply_to_tree(
+        out,
+        repo,
+        preimage,
+        diff,
+        &cOptions
+    )
 }
 
 
@@ -89,7 +77,7 @@ public func gitApply(
     options     : GitApplyOptions?
 ) -> Int32
 {
-    guard let options: GitApplyOptions = options
+    guard var cOptions: git_apply_options = options?.cValue
     else
     {
         return git_apply(
@@ -102,22 +90,10 @@ public func gitApply(
     
     
             
-    do
-    {
-        return try options.withCStruct
-        {
-            cOptions in
-            
-            return git_apply(
-                repo,
-                diff,
-                git_apply_location_t(rawValue: location.rawValue),
-                cOptions
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_apply(
+        repo,
+        diff,
+        git_apply_location_t(rawValue: location.rawValue),
+        &cOptions
+    )
 }
