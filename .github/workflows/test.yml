@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    if: false
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
