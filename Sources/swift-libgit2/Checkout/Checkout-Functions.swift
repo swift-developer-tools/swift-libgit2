@@ -39,7 +39,7 @@ public func gitCheckoutHEAD(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard let opts: GitCheckoutOptions = opts
+    guard var cOpts: git_checkout_options = opts?.cValue
     else
     {
         return git_checkout_head(
@@ -50,22 +50,10 @@ public func gitCheckoutHEAD(
     
     
     
-    do
-    {
-        return try opts.withCStruct
-        {
-            cOpts in
-            
-            return git_checkout_head(
-                repo,
-                cOpts
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_checkout_head(
+        repo,
+        &cOpts
+    )
 }
 
 
@@ -89,7 +77,7 @@ public func gitCheckoutIndex(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard let opts: GitCheckoutOptions = opts
+    guard var cOpts: git_checkout_options = opts?.cValue
     else
     {
         return git_checkout_index(
@@ -101,23 +89,11 @@ public func gitCheckoutIndex(
     
     
     
-    do
-    {
-        return try opts.withCStruct
-        {
-            cOpts in
-            
-            return git_checkout_index(
-                repo,
-                index,
-                cOpts
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_checkout_index(
+        repo,
+        index,
+        &cOpts
+    )
 }
 
 
@@ -142,7 +118,7 @@ public func gitCheckoutTree(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard let opts: GitCheckoutOptions = opts
+    guard var cOpts: git_checkout_options = opts?.cValue
     else
     {
         return git_checkout_tree(
@@ -154,21 +130,9 @@ public func gitCheckoutTree(
     
     
     
-    do
-    {
-        return try opts.withCStruct
-        {
-            cOpts in
-            
-            return git_checkout_tree(
-                repo,
-                treeish,
-                cOpts
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_checkout_tree(
+        repo,
+        treeish,
+        &cOpts
+    )
 }

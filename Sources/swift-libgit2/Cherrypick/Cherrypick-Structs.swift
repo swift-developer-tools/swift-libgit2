@@ -102,16 +102,11 @@ public struct GitCherrypickOptions
             cherrypickOptions.merge_opts = mergeOpts
         }
         
-        if let checkoutOpts: GitCheckoutOptions = checkoutOpts
+        if let cCheckoutOpts: git_checkout_options = checkoutOpts?.cValue
         {
-            return try checkoutOpts.withCStruct
-            {
-                cCheckoutOpts in
-                
-                cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
-                
-                return body(&cherrypickOptions)
-            }
+            cherrypickOptions.checkout_opts = cCheckoutOpts
+            
+            return body(&cherrypickOptions)
         }
         
         return body(&cherrypickOptions)

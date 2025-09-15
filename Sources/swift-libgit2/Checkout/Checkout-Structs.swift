@@ -213,13 +213,12 @@ public struct GitCheckoutOptions
     
     
     
-    /// Calls the given closure with a pointer to a `git_checkout_options` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_checkout_options>) -> T
-    ) throws(NSError) -> T
+    /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This value will be `nil` if the initialization failed.
+    internal var cValue: git_checkout_options?
     {
         var checkoutOptions = git_checkout_options()
         
@@ -230,11 +229,7 @@ public struct GitCheckoutOptions
         
         if checkoutOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitCheckoutOptions.\(#function)",
-                code:       Int(checkoutOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         checkoutOptions.version             = version
@@ -258,6 +253,6 @@ public struct GitCheckoutOptions
         checkoutOptions.perfdata_cb         = perfDataCB
         checkoutOptions.perfdata_payload    = perfDataPayload
         
-        return body(&checkoutOptions)
+        return checkoutOptions
     }
 }
