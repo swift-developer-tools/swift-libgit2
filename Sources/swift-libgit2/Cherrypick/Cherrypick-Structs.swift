@@ -69,13 +69,12 @@ public struct GitCherrypickOptions
     
     
     
-    /// Calls the given closure with a pointer to a `git_cherrypick_options` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_cherrypick_options>) -> T
-    ) throws(NSError) -> T
+    /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This value will be `nil` if the initialization failed.
+    internal var cValue: git_cherrypick_options?
     {
         var cherrypickOptions = git_cherrypick_options()
         
@@ -86,11 +85,7 @@ public struct GitCherrypickOptions
         
         if cherrypickOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitCherrypickOptions.\(#function)",
-                code:       Int(cherrypickOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         cherrypickOptions.version   = version
@@ -106,9 +101,9 @@ public struct GitCherrypickOptions
         {
             cherrypickOptions.checkout_opts = cCheckoutOpts
             
-            return body(&cherrypickOptions)
+            return cherrypickOptions
         }
         
-        return body(&cherrypickOptions)
+        return cherrypickOptions
     }
 }
