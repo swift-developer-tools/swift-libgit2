@@ -95,7 +95,7 @@ public func gitAttrGetExt(
     name        : String
 ) -> Int32
 {
-    guard let opts: GitAttrOptions = opts
+    guard var cOpts: git_attr_options = opts?.cValue
     else
     {
         return git_attr_get_ext(
@@ -109,18 +109,13 @@ public func gitAttrGetExt(
     
     
     
-    return opts.withCStruct
-    {
-        cOpts in
-        
-        return git_attr_get_ext(
-            valueOut,
-            repo,
-            cOpts,
-            path,
-            name
-        )
-    }
+    return git_attr_get_ext(
+        valueOut,
+        repo,
+        &cOpts,
+        path,
+        name
+    )
 }
 
 
@@ -198,7 +193,7 @@ public func gitAttrGetManyExt(
     {
         cNames in
         
-        guard let opts: GitAttrOptions = opts
+        guard var cOpts: git_attr_options = opts?.cValue
         else
         {
             return git_attr_get_many_ext(
@@ -213,19 +208,14 @@ public func gitAttrGetManyExt(
         
         
         
-        return opts.withCStruct
-        {
-            cOpts in
-            
-            return git_attr_get_many_ext(
-                valueOut,
-                repo,
-                cOpts,
-                path,
-                numAttr,
-                cNames
-            )
-        }
+        return git_attr_get_many_ext(
+            valueOut,
+            repo,
+            &cOpts,
+            path,
+            numAttr,
+            cNames
+        )
     }
 }
 
@@ -286,7 +276,7 @@ public func gitAttrForEachExt(
     payload     : UnsafeMutableRawPointer?
 ) -> Int32
 {
-    guard let opts: GitAttrOptions = opts
+    guard var cOpts: git_attr_options = opts?.cValue
     else
     {
         return git_attr_foreach_ext(
@@ -300,18 +290,13 @@ public func gitAttrForEachExt(
     
     
     
-    return opts.withCStruct
-    {
-        cOpts in
-        
-        return git_attr_foreach_ext(
-            repo,
-            cOpts,
-            path,
-            callback,
-            payload
-        )
-    }
+    return git_attr_foreach_ext(
+        repo,
+        &cOpts,
+        path,
+        callback,
+        payload
+    )
 }
 
 
