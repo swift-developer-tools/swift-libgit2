@@ -86,13 +86,12 @@ public struct GitBlobFilterOptions
     
     
     
-    /// Calls the given closure with a pointer to a `git_blob_filter_options` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> T
-    ) throws(NSError) -> T
+    /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This value will be `nil` if the initialization failed.
+    internal var cValue: git_blob_filter_options?
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -103,17 +102,13 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlobFilterOptions.\(#function)",
-                code:       Int(blobFilterOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         blobFilterOptions.flags             = flags.rawValue
         blobFilterOptions.commit_id         = commitID
         blobFilterOptions.attr_commit_id    = attrCommitID
         
-        return body(&blobFilterOptions)
+        return blobFilterOptions
     }
 }
