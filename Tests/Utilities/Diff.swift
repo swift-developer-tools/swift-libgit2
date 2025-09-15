@@ -10,6 +10,7 @@
 import Clibgit2
 import Foundation
 import XCTest
+@testable import SwiftLibgit2
 
 
 
@@ -34,7 +35,7 @@ enum Diff
         
         
         
-        var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
+        let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
         var commitPointer   : OpaquePointer?    = nil
         
         defer
@@ -44,10 +45,12 @@ enum Diff
         
         
         
+        var cHeadOID: git_oid = headOID.cValue
+        
         let commitLookupResult: Int32 = git_commit_lookup(
             &commitPointer,
             repository.pointer,
-            &headOID
+            &cHeadOID
         )
         
         XCTAssertOK(commitLookupResult)

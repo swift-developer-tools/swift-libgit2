@@ -92,7 +92,7 @@ final class ApplyTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
+            let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
             var commitPointer   : OpaquePointer?    = nil
             
             defer
@@ -102,10 +102,12 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &commitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -271,7 +273,7 @@ extension ApplyTests
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             
             
@@ -284,10 +286,12 @@ extension ApplyTests
             
             
             
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &commitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)

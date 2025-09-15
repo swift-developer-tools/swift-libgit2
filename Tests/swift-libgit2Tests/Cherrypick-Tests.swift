@@ -23,7 +23,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var (_, featureCommitOID): (git_oid, git_oid) = try setupCherrypickScenario(in: repository)
+            var (_, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
             
             
             
@@ -36,10 +36,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
+            var cFeatureCommitOID: git_oid = featureCommitOID.cValue
+            
             let featureCommitLookupResult: Int32 = git_commit_lookup(
                 &featureCommitPointer,
                 repository.pointer,
-                &featureCommitOID
+                &cFeatureCommitOID
             )
             
             XCTAssertOK(featureCommitLookupResult)
@@ -70,10 +72,10 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             repository.resetToCommit(
-                commitOID:  &headOID,
+                commitOID:  headOID,
                 resetType:  GIT_RESET_HARD
             )
             
@@ -119,7 +121,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var (mainCommitOID, featureCommitOID): (git_oid, git_oid) = try setupCherrypickScenario(in: repository)
+            var (mainCommitOID, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
             
             
             
@@ -136,10 +138,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
+            var cMainCommitOID: git_oid = mainCommitOID.cValue
+            
             let mainCommitLookupResult: Int32 = git_commit_lookup(
                 &mainCommitPointer,
                 repository.pointer,
-                &mainCommitOID
+                &cMainCommitOID
             )
             
             XCTAssertOK(mainCommitLookupResult)
@@ -153,10 +157,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
+            var cFeatureCommitOID: git_oid = featureCommitOID.cValue
+            
             let featureCommitLookupResult: Int32 = git_commit_lookup(
                 &featureCommitPointer,
                 repository.pointer,
-                &featureCommitOID
+                &cFeatureCommitOID
             )
             
             XCTAssertOK(featureCommitLookupResult)
@@ -235,9 +241,9 @@ extension CherrypickTests
     /// - Returns: A tuple containing the main branch commit and the feature branch commit.
     private func setupCherrypickScenario(
         in repository: Repository
-    ) throws -> (git_oid, git_oid)
+    ) throws -> (GitOID, GitOID)
     {
-        let mainCommitOID: git_oid = try repository.createCommit(
+        let mainCommitOID: GitOID = try repository.createCommit(
             path:       "feature.txt",
             content:    CherrypickTests.mainBranchContent,
             message:    "Add feature on main branch"
@@ -274,7 +280,7 @@ extension CherrypickTests
         
         
         
-        let featureCommitOID: git_oid = try repository.createCommit(
+        let featureCommitOID: GitOID = try repository.createCommit(
             path:       "feature.txt",
             content:    CherrypickTests.featureBranchContent,
             message:    "Add feature branch changes"
@@ -282,8 +288,7 @@ extension CherrypickTests
         
         
         
-        var headOID: git_oid = OID.getHEADCommitOID(in: repository)
-        
+        let headOID             : GitOID            = OID.getHEADCommitOID(in: repository)
         var headCommitPointer   : OpaquePointer?    = nil
         var branchPointer       : OpaquePointer?    = nil
         
@@ -295,10 +300,12 @@ extension CherrypickTests
         
         
         
+        var cHeadOID: git_oid = headOID.cValue
+        
         let commitLookupResult: Int32 = git_commit_lookup(
             &headCommitPointer,
             repository.pointer,
-            &headOID
+            &cHeadOID
         )
         
         XCTAssertOK(commitLookupResult)

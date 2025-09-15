@@ -61,7 +61,7 @@ struct Repository
         content : String,
         append  : Bool      = false,
         message : String
-    ) throws -> git_oid
+    ) throws -> GitOID
     {
         try modifyFile(
             path:       path,
@@ -212,7 +212,7 @@ struct Repository
         
         
         
-        return commitOID
+        return GitOID(cValue: commitOID)
     }
     
     
@@ -224,7 +224,7 @@ struct Repository
     ///   - commitOID: The ID of the commit.
     ///   - resetType: The reset type.
     func resetToCommit(
-        commitOID   : inout git_oid,
+        commitOID   : GitOID,
         resetType   : git_reset_t
     )
     {
@@ -237,10 +237,12 @@ struct Repository
         
         
         
+        var cCommitOID: git_oid = commitOID.cValue
+        
         let commitLookupResult: Int32 = git_commit_lookup(
             &commitPointer,
             pointer,
-            &commitOID
+            &cCommitOID
         )
         
         XCTAssertOK(commitLookupResult)

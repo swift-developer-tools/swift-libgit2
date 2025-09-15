@@ -519,7 +519,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
+            let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
             var commitPointer   : OpaquePointer?    = nil
             var treePointer     : OpaquePointer?    = nil
             
@@ -531,10 +531,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &commitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)

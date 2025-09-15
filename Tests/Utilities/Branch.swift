@@ -57,7 +57,7 @@ enum Branch
         
         
         
-        var headOID: git_oid = OID.getHEADCommitOID(in: repository)
+        let headOID: GitOID = OID.getHEADCommitOID(in: repository)
         
         
         
@@ -66,7 +66,7 @@ enum Branch
             let annotatedCommitLookup: Int32 = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
-                id:     GitOID(cValue: headOID)
+                id:     headOID
             )
             
             XCTAssertOK(annotatedCommitLookup)
@@ -97,10 +97,12 @@ enum Branch
         }
         else
         {
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &headCommitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)

@@ -214,11 +214,7 @@ final class BlobTests: XCTestCaseStopOnFail
                 return
             }
             
-            // TODO: Replace once `OID` functions are updated.
-            var cBlobOID    : git_oid   = blobOID.cValue
-            var cBlobID     : git_oid   = blobID.cValue
-            
-            OID.assertOIDsEqual(&cBlobOID, &cBlobID)
+            OID.assertOIDsEqual(blobOID, blobID)
             
             
             
@@ -448,11 +444,7 @@ final class BlobTests: XCTestCaseStopOnFail
                 return
             }
             
-            // TODO: Replace once `OID` functions are updated.
-            var cOriginalBlobID     : git_oid   = originalBlobID.cValue
-            var cDuplicatedBlobID   : git_oid   = duplicatedBlobID.cValue
-            
-            OID.assertOIDsEqual(&cOriginalBlobID, &cDuplicatedBlobID)
+            OID.assertOIDsEqual(originalBlobID, duplicatedBlobID)
             
             
             
