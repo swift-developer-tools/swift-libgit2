@@ -27,11 +27,13 @@ public struct GitOID
     /// Creates a ``GitOID`` instance from a `git_oid` instance.
     /// - Parameter oid: The `git_oid` instance to use.
     internal init(
-        cValue oid: inout git_oid
+        cValue oid: git_oid
     )
     {
+        var oidCopy: git_oid = oid
+        
         self.id = Data(
-            bytes:  &oid.id,
+            bytes:  &oidCopy.id,
             count:  20
         )
     }
