@@ -66,7 +66,7 @@ enum Branch
             let annotatedCommitLookup: Int32 = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
-                id:     &headOID
+                id:     GitOID(cValue: headOID)
             )
             
             XCTAssertOK(annotatedCommitLookup)

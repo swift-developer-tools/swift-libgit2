@@ -66,15 +66,17 @@ public func gitAnnotatedCommitFromFetchhead(
     repo        : OpaquePointer,
     branchName  : String,
     remoteURL   : String,
-    id          : UnsafePointer<git_oid>
+    id          : GitOID
 ) -> Int32
 {
+    var cID: git_oid = id.cValue
+    
     return git_annotated_commit_from_fetchhead(
         out,
         repo,
         branchName,
         remoteURL,
-        id
+        &cID
     )
 }
 
@@ -105,13 +107,15 @@ public func gitAnnotatedCommitFromFetchhead(
 public func gitAnnotatedCommitLookup(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
-    id      : UnsafePointer<git_oid>
+    id      : GitOID
 ) -> Int32
 {
+    var cID: git_oid = id.cValue
+    
     return git_annotated_commit_lookup(
         out,
         repo,
-        id
+        &cID
     )
 }
 
@@ -162,9 +166,11 @@ public func gitAnnotatedCommitFromRevspec(
 /// [`git_annotated_commit_id()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_id.html)
 public func gitAnnotatedCommitID(
     commit: OpaquePointer
-) -> UnsafePointer<git_oid>
+) -> GitOID
 {
-    return git_annotated_commit_id(commit)
+    let annotatedCommitIDPointer: UnsafePointer<git_oid> = git_annotated_commit_id(commit)
+    
+    return GitOID(cValue: annotatedCommitIDPointer.pointee)
 }
 
 

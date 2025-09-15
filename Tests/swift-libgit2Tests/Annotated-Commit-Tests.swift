@@ -41,7 +41,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
                 repo:           repository.pointer,
                 branchName:     "main",
                 remoteURL:      "https://github.com/github/gitignore",
-                id:             &headOID
+                id:             GitOID(cValue: headOID)
             )
             
             XCTAssertOK(annotatedCommitFromFetchheadResult)
@@ -55,9 +55,10 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitOIDPointer: UnsafePointer<git_oid> = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            let annotatedCommitOID  : GitOID    = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            var cAnnotatedCommitOID : git_oid   = annotatedCommitOID.cValue
             
-            OID.assertOIDsEqual(&headOID, annotatedCommitOIDPointer)
+            OID.assertOIDsEqual(&headOID, &cAnnotatedCommitOID)
         }
     }
     
@@ -123,7 +124,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let _: UnsafePointer<git_oid> = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            let _: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
             
             
@@ -180,7 +181,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let _: UnsafePointer<git_oid> = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            let _: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
             
             
@@ -215,7 +216,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             let annotatedCommitLookupResult: Int32 = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
-                id:     &headOID
+                id:     GitOID(cValue: headOID)
             )
             
             XCTAssertOK(annotatedCommitLookupResult)
@@ -229,9 +230,10 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitOIDPointer: UnsafePointer<git_oid> = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            let annotatedCommitOID  : GitOID    = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            var cAnnotatedCommitOID : git_oid   = annotatedCommitOID.cValue
             
-            OID.assertOIDsEqual(&headOID, annotatedCommitOIDPointer)
+            OID.assertOIDsEqual(&headOID, &cAnnotatedCommitOID)
         }
     }
 }
