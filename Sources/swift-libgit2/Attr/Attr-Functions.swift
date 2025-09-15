@@ -95,7 +95,7 @@ public func gitAttrGetExt(
     name        : String
 ) -> Int32
 {
-    guard var cOpts: git_attr_options = opts?.cValue
+    guard let opts: GitAttrOptions = opts
     else
     {
         return git_attr_get_ext(
@@ -109,13 +109,18 @@ public func gitAttrGetExt(
     
     
     
-    return git_attr_get_ext(
-        valueOut,
-        repo,
-        &cOpts,
-        path,
-        name
-    )
+    return opts.withCValue
+    {
+        cOpts in
+        
+        return git_attr_get_ext(
+            valueOut,
+            repo,
+            cOpts,
+            path,
+            name
+        )
+    }
 }
 
 
@@ -193,7 +198,7 @@ public func gitAttrGetManyExt(
     {
         cNames in
         
-        guard var cOpts: git_attr_options = opts?.cValue
+        guard let opts: GitAttrOptions = opts
         else
         {
             return git_attr_get_many_ext(
@@ -208,14 +213,19 @@ public func gitAttrGetManyExt(
         
         
         
-        return git_attr_get_many_ext(
-            valueOut,
-            repo,
-            &cOpts,
-            path,
-            numAttr,
-            cNames
-        )
+        return opts.withCValue
+        {
+            cOpts in
+            
+            return git_attr_get_many_ext(
+                valueOut,
+                repo,
+                cOpts,
+                path,
+                numAttr,
+                cNames
+            )
+        }
     }
 }
 
@@ -276,7 +286,7 @@ public func gitAttrForEachExt(
     payload     : UnsafeMutableRawPointer?
 ) -> Int32
 {
-    guard var cOpts: git_attr_options = opts?.cValue
+    guard let opts: GitAttrOptions = opts
     else
     {
         return git_attr_foreach_ext(
@@ -290,13 +300,18 @@ public func gitAttrForEachExt(
     
     
     
-    return git_attr_foreach_ext(
-        repo,
-        &cOpts,
-        path,
-        callback,
-        payload
-    )
+    return opts.withCValue
+    {
+        cOpts in
+        
+        return git_attr_foreach_ext(
+            repo,
+            cOpts,
+            path,
+            callback,
+            payload
+        )
+    }
 }
 
 

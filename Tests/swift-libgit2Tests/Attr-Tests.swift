@@ -459,7 +459,7 @@ final class AttrTests: XCTestCaseStopOnFail
             XCTAssertEqual(attrOptions.version, gitAttrOptionsVersion)
             XCTAssertEqual(attrOptions.flags, [])
             XCTAssertNil(attrOptions.commitID)
-            XCTAssertNotNil(attrOptions.attrCommitID)
+            XCTAssertNil(attrOptions.attrCommitID)
             
             XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
             
