@@ -184,7 +184,7 @@ public func gitBlobFilter(
     guard var cOpts: git_blob_filter_options = opts?.cValue
     else
     {
-        return out.withCStruct
+        return out.withCValue
         {
             cOut in
             
@@ -199,7 +199,7 @@ public func gitBlobFilter(
     
     
     
-    return out.withCStruct
+    return out.withCValue
     {
         cOut in
         

@@ -70,7 +70,7 @@ public struct GitBuf
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal mutating func withCStruct<T>(
+    internal mutating func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_buf>) -> T
     ) -> T
     {

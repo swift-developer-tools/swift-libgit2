@@ -374,7 +374,7 @@ public func gitBranchUpstreamName(
     refName : String
 ) -> Int32
 {
-    return out.withCStruct
+    return out.withCValue
     {
         cOut in
         
@@ -452,7 +452,7 @@ public func gitBranchRemoteName(
     refName : String
 ) -> Int32
 {
-    return out.withCStruct
+    return out.withCValue
     {
         cOut in
         
@@ -487,7 +487,7 @@ public func gitBranchUpstreamRemote(
     refName : String
 ) -> Int32
 {
-    return buf.withCStruct
+    return buf.withCValue
     {
         cBuf in
         
@@ -522,7 +522,7 @@ public func gitBranchUpstreamMerge(
     refName : String
 ) -> Int32
 {
-    return buf.withCStruct
+    return buf.withCValue
     {
         cBuf in
         
