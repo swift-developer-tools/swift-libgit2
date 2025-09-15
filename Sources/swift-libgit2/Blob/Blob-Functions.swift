@@ -181,7 +181,7 @@ public func gitBlobFilter(
     opts    : GitBlobFilterOptions?
 ) -> Int32
 {
-    guard var cOpts: git_blob_filter_options = opts?.cValue
+    guard let opts: GitBlobFilterOptions = opts
     else
     {
         return out.withCValue
@@ -199,16 +199,28 @@ public func gitBlobFilter(
     
     
     
-    return out.withCValue
+    do
     {
-        cOut in
-        
-        return git_blob_filter(
-            cOut,
-            blob,
-            asPath,
-            &cOpts
-        )
+        return try opts.withCValue
+        {
+            cOpts in
+            
+            return out.withCValue
+            {
+                cOut in
+                
+                return git_blob_filter(
+                    cOut,
+                    blob,
+                    asPath,
+                    cOpts
+                )
+            }
+        }
+    }
+    catch
+    {
+        return Int32(error.code)
     }
 }
 

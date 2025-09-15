@@ -34,11 +34,11 @@ public struct GitBlobFilterOptions
     /// ## Discussion
     ///
     /// This property is unused, but is reserved for API compatibility.
-    public var commitID     : UnsafeMutablePointer<git_oid>?
+    public var commitID     : GitOID?
     
     /// The commit from which to load attributes when
     /// ``GitBlobFilterFlagT/gitBlobFilterAttributesFromCommit`` is specified.
-    public var attrCommitID : git_oid
+    public var attrCommitID : GitOID?
     
     
     
@@ -81,17 +81,18 @@ public struct GitBlobFilterOptions
         self.version        = UInt32(blobFilterOptions.version)
         self.flags          = GitBlobFilterFlagT(rawValue: blobFilterOptions.flags)
         self.commitID       = nil
-        self.attrCommitID   = git_oid()
+        self.attrCommitID   = nil
     }
     
     
     
-    /// The equivalent C value.
-    ///
-    /// ## Discussion
-    ///
-    /// This value will be `nil` if the initialization failed.
-    internal var cValue: git_blob_filter_options?
+    /// Calls the given closure with a pointer to a `git_blob_filter_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> T
+    ) throws(NSError) -> T
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -102,13 +103,34 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            return nil
+            throw NSError(
+                domain:     "GitBlobFilterOptions.\(#function)",
+                code:       Int(blobFilterOptionsInitResult),
+                userInfo:   nil
+            )
         }
         
         blobFilterOptions.flags             = flags.rawValue
-        blobFilterOptions.commit_id         = commitID
-        blobFilterOptions.attr_commit_id    = attrCommitID
+        blobFilterOptions.attr_commit_id    = attrCommitID?.cValue ?? git_oid()
         
-        return blobFilterOptions
+        if let commitID: GitOID = commitID
+        {
+            var cCommitID: git_oid = commitID.cValue
+            
+            return withUnsafeMutablePointer(to: &cCommitID)
+            {
+                commitIDPointer in
+                
+                blobFilterOptions.commit_id = commitIDPointer
+                
+                return body(&blobFilterOptions)
+            }
+        }
+        else
+        {
+            blobFilterOptions.commit_id = nil
+            
+            return body(&blobFilterOptions)
+        }
     }
 }
