@@ -239,7 +239,7 @@ public func gitBlameFile(
     options : GitBlameOptions?
 ) -> Int32
 {
-    guard let options: GitBlameOptions = options
+    guard var cOptions: git_blame_options = options?.cValue
     else
     {
         return git_blame_file(
@@ -252,24 +252,12 @@ public func gitBlameFile(
     
     
     
-    do
-    {
-        return try options.withCStruct
-        {
-            cOptions in
-            
-            return git_blame_file(
-                out,
-                repo,
-                path,
-                cOptions
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_blame_file(
+        out,
+        repo,
+        path,
+        &cOptions
+    )
 }
 
 
@@ -299,7 +287,7 @@ public func gitBlameFile(
     options     : GitBlameOptions?
 ) -> Int32
 {
-    guard let options: GitBlameOptions = options
+    guard var cOptions: git_blame_options = options?.cValue
     else
     {
         return git_blame_file_from_buffer(
@@ -314,19 +302,14 @@ public func gitBlameFile(
     
     
     
-    return options.withCStruct
-    {
-        cOptions in
-        
-        return git_blame_file_from_buffer(
-            out,
-            repo,
-            path,
-            contents,
-            contentsLen,
-            cOptions
-        )
-    }
+    return git_blame_file_from_buffer(
+        out,
+        repo,
+        path,
+        contents,
+        contentsLen,
+        &cOptions
+    )
 }*/
 
 

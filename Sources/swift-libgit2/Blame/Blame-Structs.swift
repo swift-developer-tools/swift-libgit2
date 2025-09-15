@@ -118,13 +118,12 @@ public struct GitBlameOptions
     
     
     
-    /// Calls the given closure with a pointer to a `git_blame_options` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_blame_options>) -> T
-    ) throws(NSError) -> T
+    /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This value will be `nil` if the initialization failed.
+    internal var cValue: git_blame_options?
     {
         var blameOptions = git_blame_options()
         
@@ -135,11 +134,7 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlameOptions.\(#function)",
-                code:       Int(blameOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         blameOptions.flags          = flags.rawValue
@@ -161,7 +156,7 @@ public struct GitBlameOptions
             blameOptions.max_line = maxLine
         }
         
-        return body(&blameOptions)
+        return blameOptions
     }
 }
 
