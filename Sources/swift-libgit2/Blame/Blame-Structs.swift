@@ -48,14 +48,14 @@ public struct GitBlameOptions
     /// ## Discussion
     ///
     /// The default value is HEAD.
-    public var newestCommit         : git_oid
+    public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
     /// The default value is the first commit encountered with a `NULL` parent.
-    public var oldestCommit         : git_oid
+    public var oldestCommit         : GitOID
     
     /// The first line in the file to blame.
     ///
@@ -110,8 +110,8 @@ public struct GitBlameOptions
         self.version                = blameOptions.version
         self.flags                  = GitBlameFlagT(rawValue: blameOptions.flags)
         self.minMatchCharacters     = nil
-        self.newestCommit           = git_oid()
-        self.oldestCommit           = git_oid()
+        self.newestCommit           = GitOID(cValue: blameOptions.newest_commit)
+        self.oldestCommit           = GitOID(cValue: blameOptions.oldest_commit)
         self.minLine                = nil
         self.maxLine                = nil
     }
@@ -138,8 +138,8 @@ public struct GitBlameOptions
         }
         
         blameOptions.flags          = flags.rawValue
-        blameOptions.newest_commit  = newestCommit
-        blameOptions.oldest_commit  = oldestCommit
+        blameOptions.newest_commit  = newestCommit.cValue
+        blameOptions.oldest_commit  = oldestCommit.cValue
         
         if let minMatchCharacters: UInt16 = minMatchCharacters
         {
@@ -173,7 +173,7 @@ public struct GitBlameHunk
     public let linesInHunk          : Int
     
     /// The OID of the commit where this hunk was last changed.
-    public let finalCommitID        : git_oid
+    public let finalCommitID        : GitOID
     
     /// The 1-indexed line number where this hunk begins, in the final version of the file.
     public let finalStartLineNumber : Int
@@ -200,7 +200,7 @@ public struct GitBlameHunk
     ///
     /// This will usually be the same as ``GitBlameHunk/finalCommitID``, except when
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` has been specified.
-    public let origCommitID         : git_oid
+    public let origCommitID         : GitOID
     
     /// The path to the file where this hunk originated, as of the commit specified by
     /// ``GitBlameHunk/origCommitID``.
@@ -248,11 +248,11 @@ public struct GitBlameHunk
     )
     {
         self.linesInHunk            = blameHunk.lines_in_hunk
-        self.finalCommitID          = blameHunk.final_commit_id
+        self.finalCommitID          = GitOID(cValue: blameHunk.final_commit_id)
         self.finalStartLineNumber   = blameHunk.final_start_line_number
         self.finalSignature         = blameHunk.final_signature
         self.finalCommitter         = blameHunk.final_committer
-        self.origCommitID           = blameHunk.orig_commit_id
+        self.origCommitID           = GitOID(cValue: blameHunk.orig_commit_id)
         self.origPath               = blameHunk.orig_path.map { String(cString: $0 )}
         self.origStartLineNumber    = blameHunk.orig_start_line_number
         self.origSignature          = blameHunk.orig_signature
