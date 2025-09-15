@@ -57,9 +57,9 @@ enum Blob
     static func createBlob(
         in      repository  : Repository,
         from    source      : BlobCreationSource
-    ) -> git_oid
+    ) -> GitOID
     {
-        var blobOID             : git_oid   = git_oid()
+        var blobOID             : GitOID    = GitOID()
         var blobCreateResult    : Int32     = GIT_EUSER.rawValue
         
         switch source
@@ -131,7 +131,7 @@ enum Blob
     ///   - expectedContent: The expected content of the blob.
     static func validateBlobContent(
         in  repository      : Repository,
-        id  blobOID         : UnsafeMutablePointer<git_oid>,
+        id  blobOID         : inout GitOID,
         as  expectedContent : String
     )
     {

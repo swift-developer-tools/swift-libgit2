@@ -25,13 +25,15 @@ import Clibgit2
 public func gitBlobLookup(
     blob    : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
-    id      : UnsafePointer<git_oid>
+    id      : GitOID
 ) -> Int32
 {
+    var cID: git_oid = id.cValue
+    
     return git_blob_lookup(
         blob,
         repo,
-        id
+        &cID
     )
 }
 
@@ -52,14 +54,16 @@ public func gitBlobLookup(
 public func gitBlobLookupPrefix(
     blob    : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
-    id      : UnsafePointer<git_oid>,
+    id      : GitOID,
     len     : Int
 ) -> Int32
 {
+    var cID: git_oid = id.cValue
+    
     return git_blob_lookup_prefix(
         blob,
         repo,
-        id,
+        &cID,
         len
     )
 }
@@ -95,9 +99,15 @@ public func gitBlobFree(
 /// [`git_blob_id()`](https://libgit2.org/docs/reference/main/blob/git_blob_id.html)
 public func gitBlobID(
     blob: OpaquePointer
-) -> UnsafePointer<git_oid>?
+) -> GitOID?
 {
-    return git_blob_id(blob)
+    guard let blobIDPointer: UnsafePointer<git_oid> = git_blob_id(blob)
+    else
+    {
+        return nil
+    }
+    
+    return GitOID(cValue: blobIDPointer.pointee)
 }
 
 
@@ -239,16 +249,22 @@ public func gitBlobFilter(
 ///
 /// [`git_blob_create_from_workdir()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_workdir.html)
 public func gitBlobCreateFromWorkdir(
-    id              : UnsafeMutablePointer<git_oid>,
+    id              : inout GitOID,
     repo            : OpaquePointer,
     relativePath    : String
 ) -> Int32
 {
-    return git_blob_create_from_workdir(
-        id,
+    var cID: git_oid = id.cValue
+    
+    let blobCreateFromWorkdirResult: Int32 = git_blob_create_from_workdir(
+        &cID,
         repo,
         relativePath
     )
+    
+    id = GitOID(cValue: cID)
+    
+    return blobCreateFromWorkdirResult
 }
 
 
@@ -266,16 +282,22 @@ public func gitBlobCreateFromWorkdir(
 ///
 /// [`git_blob_create_from_disk()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_disk.html)
 public func gitBlobCreateFromDisk(
-    id      : UnsafeMutablePointer<git_oid>,
+    id      : inout GitOID,
     repo    : OpaquePointer,
     path    : String
 ) -> Int32
 {
-    return git_blob_create_from_disk(
-        id,
+    var cID: git_oid = id.cValue
+    
+    let blobCreateFromDiskResult: Int32 = git_blob_create_from_disk(
+        &cID,
         repo,
         path
     )
+    
+    id = GitOID(cValue: cID)
+    
+    return blobCreateFromDiskResult
 }
 
 
@@ -336,14 +358,20 @@ public func gitBlobCreateFromStream(
 ///
 /// [`git_blob_create_from_stream_commit()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_stream_commit.html)
 public func gitBlobCreateFromStreamCommit(
-    out     : UnsafeMutablePointer<git_oid>,
+    out     : inout GitOID,
     stream  : UnsafeMutablePointer<git_writestream>
 ) -> Int32
 {
-    return git_blob_create_from_stream_commit(
-        out,
+    var cOut: git_oid = out.cValue
+    
+    let blobCreateFromStreamCommitResult: Int32 = git_blob_create_from_stream_commit(
+        &cOut,
         stream
     )
+    
+    out = GitOID(cValue: cOut)
+    
+    return blobCreateFromStreamCommitResult
 }
 
 
@@ -361,18 +389,24 @@ public func gitBlobCreateFromStreamCommit(
 ///
 /// [`git_blob_create_from_buffer()`](https://libgit2.org/docs/reference/main/blob/git_blob_create_from_buffer.html)
 public func gitBlobCreateFromBuffer(
-    id      : UnsafeMutablePointer<git_oid>,
+    id      : inout GitOID,
     repo    : OpaquePointer,
     buffer  : UnsafeRawPointer,
     len     : Int
 ) -> Int32
 {
-    return git_blob_create_from_buffer(
-        id,
+    var cID: git_oid = id.cValue
+    
+    let blobCreateFromBufferResult: Int32 = git_blob_create_from_buffer(
+        &cID,
         repo,
         buffer,
         len
     )
+    
+    id = GitOID(cValue: cID)
+    
+    return blobCreateFromBufferResult
 }
 
 

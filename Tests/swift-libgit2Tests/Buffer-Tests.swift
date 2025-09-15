@@ -71,7 +71,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .buffer(data: data)
             )
@@ -90,7 +90,7 @@ final class BufferTests: XCTestCaseStopOnFail
             let blobLookupResult: Int32 = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID
+                id:     blobOID
             )
             
             XCTAssertOK(blobLookupResult)
