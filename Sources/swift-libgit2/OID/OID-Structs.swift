@@ -20,7 +20,18 @@ import Foundation
 public struct GitOID
 {
     /// The raw binary-formatted ID.
-    let id: Data
+    var id: Data
+    
+    /// The size of a Git OID in bytes.
+    private static let size: Int = 20
+    
+    
+    
+    /// Creates a ``GitOID`` instance.
+    init()
+    {
+        self.id = Data(count: Self.size)
+    }
     
     
     
@@ -34,7 +45,7 @@ public struct GitOID
         
         self.id = Data(
             bytes:  &oidCopy.id,
-            count:  20
+            count:  Self.size
         )
     }
     
@@ -52,7 +63,7 @@ public struct GitOID
             _ = memcpy(
                 &oid.id,
                 bytes.baseAddress,
-                20
+                Self.size
             )
         }
         
