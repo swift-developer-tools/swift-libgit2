@@ -184,7 +184,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let finalSignature       : UnsafeMutablePointer<git_signature>?
+    public let finalSignature       : GitSignature?
     
     /// The committer of ``GitBlameHunk/finalCommitID``.
     ///
@@ -192,7 +192,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let finalCommitter       : UnsafeMutablePointer<git_signature>?
+    public let finalCommitter       : GitSignature?
     
     /// The OID of the commit where this hunk was found.
     ///
@@ -217,7 +217,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let origSignature        : UnsafeMutablePointer<git_signature>?
+    public let origSignature        : GitSignature?
     
     /// The committer of ``GitBlameHunk/origCommitID``.
     ///
@@ -225,7 +225,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let origCommitter        : UnsafeMutablePointer<git_signature>?
+    public let origCommitter        : GitSignature?
     
     /// The summary of the commit where this hunk was last changed.
     public let summary              : String?
@@ -250,13 +250,13 @@ public struct GitBlameHunk
         self.linesInHunk            = blameHunk.lines_in_hunk
         self.finalCommitID          = GitOID(cValue: blameHunk.final_commit_id)
         self.finalStartLineNumber   = blameHunk.final_start_line_number
-        self.finalSignature         = blameHunk.final_signature
-        self.finalCommitter         = blameHunk.final_committer
+        self.finalSignature         = GitSignature(cValue: blameHunk.final_signature.pointee)
+        self.finalCommitter         = GitSignature(cValue: blameHunk.final_committer.pointee)
         self.origCommitID           = GitOID(cValue: blameHunk.orig_commit_id)
         self.origPath               = blameHunk.orig_path.map { String(cString: $0 )}
         self.origStartLineNumber    = blameHunk.orig_start_line_number
-        self.origSignature          = blameHunk.orig_signature
-        self.origCommitter          = blameHunk.orig_committer
+        self.origSignature          = GitSignature(cValue: blameHunk.orig_signature.pointee)
+        self.origCommitter          = GitSignature(cValue: blameHunk.orig_committer.pointee)
         self.summary                = blameHunk.summary.map { String(cString: $0 )}
         self.boundary               = blameHunk.boundary == 1
     }
