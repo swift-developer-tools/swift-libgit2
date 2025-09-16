@@ -96,10 +96,9 @@ enum Diff
         guard let diffPointer: OpaquePointer = diffPointer
         else
         {
-            throw NSError(
-                domain:     #function,
-                code:       Int(GIT_EUSER.rawValue),
-                userInfo:   nil
+            throw NSError.create(
+                code:       Int(EINVAL),
+                message:    "The diff pointer was nil."
             )
         }
         

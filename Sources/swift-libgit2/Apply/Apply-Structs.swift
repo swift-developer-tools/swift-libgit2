@@ -57,10 +57,9 @@ public struct GitApplyOptions
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitApplyOptions.\(#function)",
+            throw NSError.create(
                 code:       Int(applyOptionsInitResult),
-                userInfo:   nil
+                message:    "Failed to initialize GitApplyOptions."
             )
         }
         

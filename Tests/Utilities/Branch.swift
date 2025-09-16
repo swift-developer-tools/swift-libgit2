@@ -76,10 +76,9 @@ enum Branch
             {
                 XCTFail("The annotated commit pointer was nil.")
                 
-                throw NSError(
-                    domain:     #function,
-                    code:       Int(GIT_EUSER.rawValue),
-                    userInfo:   nil
+                throw NSError.create(
+                    code:       Int(EINVAL),
+                    message:    "The annotated commit pointer was nil."
                 )
             }
             
@@ -110,12 +109,11 @@ enum Branch
             guard let headCommitPointer: OpaquePointer = headCommitPointer
             else
             {
-                XCTFail("The HEAD commit pointer was nil.")
+                XCTFail("The  was nil.")
                 
-                throw NSError(
-                    domain:     #function,
-                    code:       Int(GIT_EUSER.rawValue),
-                    userInfo:   nil
+                throw NSError.create(
+                    code:       Int(EINVAL),
+                    message:    "The HEAD commit pointer was nil."
                 )
             }
             

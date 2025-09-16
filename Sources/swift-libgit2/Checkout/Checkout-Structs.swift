@@ -171,10 +171,9 @@ public struct GitCheckoutOptions
         
         if checkoutOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitCheckoutOptions.\(#function)",
+            throw NSError.create(
                 code:       Int(checkoutOptionsInitResult),
-                userInfo:   nil
+                message:    "Failed to initialize GitCheckoutOptions."
             )
         }
         

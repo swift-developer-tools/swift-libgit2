@@ -321,15 +321,14 @@ extension CherrypickTests
         
         
         
-        guard let referenceNameResult: UnsafePointer<CChar> = git_reference_name(branchPointer)
+        guard let referenceName: UnsafePointer<CChar> = git_reference_name(branchPointer)
         else
         {
             XCTFail("The branch name was nil.")
             
-            throw NSError(
-                domain:     "CherrypickTests.\(#function)",
-                code:       Int(GIT_EUSER.rawValue),
-                userInfo:   nil
+            throw NSError.create(
+                code:       Int(EINVAL),
+                message:    "The branch name was nil."
             )
         }
         
@@ -337,7 +336,7 @@ extension CherrypickTests
         
         let repositorySetHEADResult: Int32 = git_repository_set_head(
             repository.pointer,
-            referenceNameResult
+            referenceName
         )
         
         XCTAssertOK(repositorySetHEADResult)

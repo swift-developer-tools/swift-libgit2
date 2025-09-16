@@ -54,10 +54,9 @@ public struct GitCherrypickOptions
         
         if cherrypickOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitCherrypickOptions.\(#function)",
+            throw NSError.create(
                 code:       Int(cherrypickOptionsInitResult),
-                userInfo:   nil
+                message:    "Failed to initialize GitCherrypickOptions."
             )
         }
         

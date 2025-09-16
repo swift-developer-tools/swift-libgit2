@@ -59,10 +59,9 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlobFilterOptions.\(#function)",
+            throw NSError.create(
                 code:       Int(blobFilterOptionsInitResult),
-                userInfo:   nil
+                message:    "Failed to initialize GitBlobFilterOptions."
             )
         }
         
@@ -103,10 +102,9 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlobFilterOptions.\(#function)",
+            throw NSError.create(
                 code:       Int(blobFilterOptionsInitResult),
-                userInfo:   nil
+                message:    "Failed to initialize GitBlobFilterOptions."
             )
         }
         

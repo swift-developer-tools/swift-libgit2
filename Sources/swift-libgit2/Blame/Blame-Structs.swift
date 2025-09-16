@@ -89,10 +89,9 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlameOptions.\(#function)",
+            throw NSError.create(
                 code:       Int(blameOptionsInitResult),
-                userInfo:   nil
+                message:    "Failed to initialize GitBlameOptions."
             )
         }
         
