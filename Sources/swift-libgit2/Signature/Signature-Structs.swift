@@ -19,13 +19,13 @@ import Clibgit2
 public struct GitSignature
 {
     /// The full name of the author.
-    let name    : String
+    public let name    : String
     
     /// The email of the author.
-    let email   : String
+    public let email   : String
     
     /// The time when the action happened.
-    let when    : GitTime
+    public let when    : GitTime
     
     
     
