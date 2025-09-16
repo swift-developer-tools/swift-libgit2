@@ -23,7 +23,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var (_, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
+            let (_, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
             
             
             
@@ -121,7 +121,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var (mainCommitOID, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
+            let (mainCommitOID, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
             
             
             
