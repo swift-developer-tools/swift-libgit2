@@ -31,7 +31,7 @@ public struct GitDiffFile
     /// ``GitDeltaT/gitDeltaAdded`` delta), then the ID will be zeroes.
     public let id       : GitOID
     
-    /// The `NULL`-terminated path to the entry relative to the working directory of the repository.
+    /// The null-terminated path to the entry relative to the working directory of the repository.
     public let path     : String
     
     /// The size of the entry in bytes.

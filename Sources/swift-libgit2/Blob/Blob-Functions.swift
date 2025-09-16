@@ -423,7 +423,7 @@ public func gitBlobCreateFromBuffer(
 /// ## Discussion
 ///
 /// The heuristic used to guess whether a file is binary is taken from core Git and involves searching for
-/// `NULL` bytes and looking for a reasonable ratio of printable to non-printable characters among
+/// `NUL` bytes and looking for a reasonable ratio of printable to non-printable characters among
 /// the first 8,000 bytes.
 ///
 /// ## C Equivalent

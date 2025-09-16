@@ -18,7 +18,7 @@ import Clibgit2
 /// ## Discussion
 ///
 /// If the attribute has a ``GitAttrValueT/gitAttrValueString`` type, it can be accessed normally
-/// as a `NULL`-terminated C string.
+/// as a null-terminated C string.
 ///
 /// ## C Equivalent
 ///
