@@ -391,3 +391,13 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitLibgit2Init()``
 - ``gitLibgit2Shutdown()``
+
+### Types Aliases
+
+- ``GitOffT``
+- ``GitTimeT``
+
+### Types Structs
+
+- ``GitTime``
+- ``GitWritestream``
