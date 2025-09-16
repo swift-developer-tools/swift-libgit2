@@ -100,15 +100,8 @@ internal func withArrayOfCStrings<R>(
     {
         argsBuffer in
         
-        guard let baseAddress: UnsafeMutablePointer<UInt8> = argsBuffer.baseAddress
-        else
-        {
-            return body([nil])
-        }
-        
-        
-        
-        let pointer = UnsafeMutableRawPointer(baseAddress)
+        /// `baseAddress` should never be `nil` since the buffer will not be empty at this point.
+        let pointer = UnsafeMutableRawPointer(argsBuffer.baseAddress!)
             .bindMemory(to: CChar.self, capacity: argsBuffer.count)
         
         var cStrings: [UnsafeMutablePointer<CChar>?] = argsOffsets.map { pointer + $0 }
@@ -132,7 +125,7 @@ internal func withArrayOfCStrings<R>(
 ///
 /// ## Discussion
 ///
-/// Use this function over ``withArrayOfCStrings(args:body:)`` when working with C functions
+/// Use this function over ``withArrayOfCStrings(args:body:)`` when working with C APIs
 /// that expect `const char **` parameters.
 internal func withArrayOfImmutableCStrings<T>(
     _   args    : [String],
@@ -151,27 +144,8 @@ internal func withArrayOfImmutableCStrings<T>(
         {
             buffer in
             
-            guard let baseAddress: UnsafePointer<UnsafePointer<CChar>?> = buffer.baseAddress
-            else
-            {
-                var nilPointer: UnsafePointer<CChar>? = nil
-                
-                return withUnsafePointer(to: &nilPointer)
-                {
-                    unsafeNilPointer in
-                    
-                    return body(
-                        UnsafeMutablePointer<UnsafePointer<CChar>?>(
-                            mutating: unsafeNilPointer
-                        )
-                    )
-                }
-            }
-            
-            
-            
-            /// Get a mutable pointer to the array of immutable pointers.
-            let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(mutating: baseAddress)
+            /// `baseAddress` should never be `nil` since the buffer will not be empty at this point.
+            let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(mutating: buffer.baseAddress!)
             
             return body(pointer)
         }
