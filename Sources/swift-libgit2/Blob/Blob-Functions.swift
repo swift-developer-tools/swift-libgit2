@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -228,9 +229,13 @@ public func gitBlobFilter(
             }
         }
     }
-    catch
+    catch let error as NSError
     {
         return Int32(error.code)
+    }
+    catch
+    {
+        return GIT_EUSER.rawValue
     }
 }
 

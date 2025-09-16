@@ -97,7 +97,7 @@ enum Diff
         else
         {
             throw NSError.create(
-                code:       Int(EINVAL),
+                code:       Int(GIT_EUSER.rawValue),
                 message:    "The diff pointer was nil."
             )
         }

@@ -48,7 +48,7 @@ public struct GitBlobFilterOptions
     /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws(NSError)
+    ) throws
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -91,7 +91,7 @@ public struct GitBlobFilterOptions
     /// - Throws: An `NSError` if initialization failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> T
-    ) throws(NSError) -> T
+    ) throws -> T
     {
         var blobFilterOptions = git_blob_filter_options()
         

@@ -160,7 +160,7 @@ public struct GitCheckoutOptions
     /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitCheckoutOptionsVersion
-    ) throws(NSError)
+    ) throws
     {
         var checkoutOptions = git_checkout_options()
         

@@ -43,7 +43,7 @@ public struct GitCherrypickOptions
     /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitCherrypickOptionsVersion
-    ) throws(NSError)
+    ) throws
     {
         var cherrypickOptions = git_cherrypick_options()
         

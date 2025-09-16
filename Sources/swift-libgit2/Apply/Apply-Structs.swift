@@ -46,7 +46,7 @@ public struct GitApplyOptions
     /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitApplyOptionsVersion
-    ) throws(NSError)
+    ) throws
     {
         var applyOptions = git_apply_options()
         

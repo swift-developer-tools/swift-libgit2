@@ -78,7 +78,7 @@ public struct GitBlameOptions
     /// - Throws: An `NSError` if initialization failed.
     public init(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws(NSError)
+    ) throws
     {
         var blameOptions = git_blame_options()
         
