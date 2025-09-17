@@ -178,11 +178,12 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
+                capacity: attributeCount
+            )
             
             defer
             {
-                valueOut.deinitialize(count: attributeCount)
                 valueOut.deallocate()
             }
             
@@ -237,11 +238,12 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
+                capacity: attributeCount
+            )
             
             defer
             {
-                valueOut.deinitialize(count: attributeCount)
                 valueOut.deallocate()
             }
             
@@ -289,11 +291,12 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
+                capacity: attributeCount
+            )
             
             defer
             {
-                valueOut.deinitialize(count: attributeCount)
                 valueOut.deallocate()
             }
             
@@ -334,11 +337,12 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(capacity: attributeCount)
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
+                capacity: attributeCount
+            )
             
             defer
             {
-                valueOut.deinitialize(count: attributeCount)
                 valueOut.deallocate()
             }
             
