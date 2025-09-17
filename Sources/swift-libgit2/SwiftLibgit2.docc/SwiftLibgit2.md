@@ -387,10 +387,36 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCherrypickCommit(out:repo:cherrypickCommit:ourCommit:mainline:mergeOptions:)``
 - ``gitCherrypick(repo:commit:cherrypickOptions:)``
 
+### Diff Structs
+
+- ``GitDiffFile``
+- ``GitDiffDelta``
+
+### Diff Enums
+
+- ``GitDeltaT``
+- ``GitDiffFlagT``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``
 - ``gitLibgit2Shutdown()``
+
+### Object Aliases
+
+- ``GitObjectSizeT``
+
+### OID Structs
+
+- ``GitOID``
+
+### OID Functions
+
+- ``gitOIDEqual(a:b:)``
+
+### Tree Enums
+
+- ``GitFileModeT``
 
 ### Types Aliases
 
