@@ -18,7 +18,8 @@ import XCTest
 ///
 /// ## Discussion
 ///
-/// The repository created by ``withRepository(_:)`` contains various files used to test bindings.
+/// The repository created by ``Repository/withRepository(_:)`` contains various files used
+/// to test bindings.
 struct Repository
 {
     // MARK: - Properties
@@ -327,7 +328,7 @@ struct Repository
 
 
 
-/// Static methods related to ``Repository.withRepository(_:)``.
+/// Static methods related to ``Repository/withRepository(_:)``.
 extension Repository
 {
     // MARK: - createBlameData()
@@ -419,15 +420,6 @@ extension Repository
         _ body: (Repository) throws -> Void
     ) throws
     {
-        let _: Int32 = gitLibgit2Init()
-        
-        defer
-        {
-            let _: Int32 = gitLibgit2Shutdown()
-        }
-        
-        
-        
         let url: URL = try createTemporaryDirectory()
         
         
