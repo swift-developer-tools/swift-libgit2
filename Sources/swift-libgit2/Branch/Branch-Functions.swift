@@ -152,11 +152,11 @@ public func gitBranchIteratorNew(
 /// [`git_branch_next()`](https://libgit2.org/docs/reference/main/branch/git_branch_next.html)
 public func gitBranchNext(
     out     : UnsafeMutablePointer<OpaquePointer?>,
-    outType : UnsafeMutablePointer<GitBranchT>,
+    outType : inout GitBranchT,
     iter    : OpaquePointer
 ) -> Int32
 {
-    var cOutType: git_branch_t = outType.pointee.cValue
+    var cOutType: git_branch_t = outType.cValue
     
     let branchNextResult: Int32 = git_branch_next(
         out,
@@ -168,7 +168,7 @@ public func gitBranchNext(
         branchNextResult == GIT_OK.rawValue,
         let swiftOutType = GitBranchT(cValue: cOutType)
     {
-        outType.pointee = swiftOutType
+        outType = swiftOutType
     }
     
     return branchNextResult
