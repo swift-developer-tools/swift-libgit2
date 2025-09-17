@@ -28,7 +28,7 @@ public struct GitOID
     
     
     /// Creates a ``GitOID`` instance.
-    init()
+    public init()
     {
         self.id = Data(count: Self.size)
     }
