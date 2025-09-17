@@ -139,21 +139,6 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a signature.
-    /// - Parameter signature: The signature to free.
-    static func freeSignature(
-        _ signature: inout UnsafeMutablePointer<git_signature>?
-    )
-    {
-        if signature != nil
-        {
-            git_signature_free(signature)
-            signature = nil
-        }
-    }
-    
-    
-    
     /// Frees the memory allocated for a tree.
     /// - Parameter tree: The tree to free. The underlying type should be `git_tree`.
     static func freeTree(

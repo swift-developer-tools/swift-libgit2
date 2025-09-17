@@ -39,33 +39,19 @@ final class TypesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
+            var signature = GitSignature()
             
-            defer
-            {
-                Free.freeSignature(&signaturePointer)
-            }
-            
-            
-            
-            let signatureNowResult: Int32 = git_signature_now(
-                &signaturePointer,
-                "Test User",
-                "test@example.com"
+            let signatureNowResult: Int32 = gitSignatureNow(
+                out:    &signature,
+                name:   "Test User",
+                email:  "test@example.com"
             )
             
             XCTAssertOK(signatureNowResult)
             
-            guard let signaturePointer: UnsafeMutablePointer<git_signature> = signaturePointer
-            else
-            {
-                XCTFail("The signature pointer was nil.")
-                return
-            }
             
             
-            
-            let cTime   : git_time  = signaturePointer.pointee.when
+            let cTime   : git_time  = signature.when.cValue
             let gitTime : GitTime   = GitTime(cValue: cTime)
             
             XCTAssertGreaterThan(gitTime.time, 0)
