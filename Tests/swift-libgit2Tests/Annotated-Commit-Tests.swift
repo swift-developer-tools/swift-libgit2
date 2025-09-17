@@ -31,7 +31,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(&annotatedCommitPointer)
+                Free.freeAnnotatedCommit(annotatedCommitPointer)
             }
             
             
@@ -75,7 +75,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeReference(&headReferencePointer)
+                Free.freeReference(headReferencePointer)
             }
             
             
@@ -101,7 +101,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(&annotatedCommitPointer)
+                Free.freeAnnotatedCommit(annotatedCommitPointer)
             }
             
             
@@ -158,7 +158,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(&annotatedCommitPointer)
+                Free.freeAnnotatedCommit(annotatedCommitPointer)
             }
             
             
@@ -207,7 +207,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(&annotatedCommitPointer)
+                Free.freeAnnotatedCommit(annotatedCommitPointer)
             }
             
             

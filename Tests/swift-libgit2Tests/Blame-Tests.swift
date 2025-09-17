@@ -28,8 +28,8 @@ final class BlameTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlame(&baseBlamePointer)
-                Free.freeBlame(&bufferBlamePointer)
+                Free.freeBlame(baseBlamePointer)
+                Free.freeBlame(bufferBlamePointer)
             }
             
             
@@ -80,7 +80,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlame(&blamePointer)
+                Free.freeBlame(blamePointer)
             }
             
             

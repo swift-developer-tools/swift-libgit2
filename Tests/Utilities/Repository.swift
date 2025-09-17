@@ -76,7 +76,7 @@ struct Repository
         
         defer
         {
-            Free.freeIndex(&indexPointer)
+            Free.freeIndex(indexPointer)
         }
         
         
@@ -120,7 +120,7 @@ struct Repository
         
         defer
         {
-            Free.freeTree(&treePointer)
+            Free.freeTree(treePointer)
         }
         
         
@@ -143,7 +143,6 @@ struct Repository
             if signaturePointer != nil
             {
                 git_signature_free(signaturePointer)
-                signaturePointer = nil
             }
         }
         
@@ -165,7 +164,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(&headCommitPointer)
+            Free.freeCommit(headCommitPointer)
         }
         
         
@@ -238,7 +237,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(&commitPointer)
+            Free.freeCommit(commitPointer)
         }
         
         
@@ -433,7 +432,7 @@ extension Repository
         
         defer
         {
-            Free.freeRepository(&repositoryPointer)
+            Free.freeRepository(repositoryPointer)
             
             try? FileManager.default.removeItem(at: url)
         }

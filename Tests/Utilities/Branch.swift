@@ -46,12 +46,12 @@ enum Branch
         
         defer
         {
-            Free.freeCommit(&headCommitPointer)
-            Free.freeAnnotatedCommit(&annotatedCommitPointer)
+            Free.freeCommit(headCommitPointer)
+            Free.freeAnnotatedCommit(annotatedCommitPointer)
             
             if freeBranch
             {
-                Free.freeReference(&branchPointer)
+                Free.freeReference(branchPointer)
             }
         }
         
@@ -155,7 +155,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(&branchPointer)
+            Free.freeReference(branchPointer)
         }
         
         
@@ -205,7 +205,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(&branchPointer)
+            Free.freeReference(branchPointer)
         }
         
         

@@ -40,7 +40,7 @@ enum Diff
         
         defer
         {
-            Free.freeCommit(&commitPointer)
+            Free.freeCommit(commitPointer)
         }
         
         
@@ -62,7 +62,7 @@ enum Diff
         
         defer
         {
-            Free.freeTree(&treePointer)
+            Free.freeTree(treePointer)
         }
         
         
@@ -81,7 +81,7 @@ enum Diff
         
         defer
         {
-            Free.freeDiff(&diffPointer)
+            Free.freeDiff(diffPointer)
         }
         
         let diffTreeToWorkdirResult: Int32 = git_diff_tree_to_workdir(

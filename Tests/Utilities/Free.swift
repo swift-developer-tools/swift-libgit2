@@ -19,13 +19,12 @@ enum Free
     /// - Parameter annotatedCommit: The annotated commit to free. The underlying type
     /// should be `git_annotated_commit`
     static func freeAnnotatedCommit(
-        _ annotatedCommit: inout OpaquePointer?
+        _ annotatedCommit: OpaquePointer?
     )
     {
         if annotatedCommit != nil
         {
             gitAnnotatedCommitFree(commit: annotatedCommit!)
-            annotatedCommit = nil
         }
     }
     
@@ -34,13 +33,12 @@ enum Free
     /// Frees the memory allocated for a blame.
     /// - Parameter blame: The blame to free. The underlying type should be `git_blame`.
     static func freeBlame(
-        _ blame: inout OpaquePointer?
+        _ blame: OpaquePointer?
     )
     {
         if blame != nil
         {
             gitBlameFree(blame: blame)
-            blame = nil
         }
     }
     
@@ -50,13 +48,12 @@ enum Free
     /// - Parameter branchIterator: The branch iterator to free. The underlying type should
     /// be `git_branch_iterator`.
     static func freeBranchIterator(
-        _ branchIterator: inout OpaquePointer?
+        _ branchIterator: OpaquePointer?
     )
     {
         if branchIterator != nil
         {
             gitBranchIteratorFree(iter: branchIterator)
-            branchIterator = nil
         }
     }
     
@@ -65,13 +62,12 @@ enum Free
     /// Frees the memory allocated for a commit.
     /// - Parameter commit: The commit to free. The underlying type should be `git_commit`.
     static func freeCommit(
-        _ commit: inout OpaquePointer?
+        _ commit: OpaquePointer?
     )
     {
         if commit != nil
         {
             git_commit_free(commit)
-            commit = nil
         }
     }
     
@@ -80,13 +76,12 @@ enum Free
     /// Frees the memory allocated for a diff.
     /// - Parameter diff: The diff to free. The underlying type should be `git_diff`.
     static func freeDiff(
-        _ diff: inout OpaquePointer?
+        _ diff: OpaquePointer?
     )
     {
         if diff != nil
         {
             git_diff_free(diff)
-            diff = nil
         }
     }
     
@@ -95,13 +90,12 @@ enum Free
     /// Frees the memory allocated for an index.
     /// - Parameter index: The index to free. The underlying type should be  `git_index`.
     static func freeIndex(
-        _ index: inout OpaquePointer?
+        _ index: OpaquePointer?
     )
     {
         if index != nil
         {
             git_index_free(index)
-            index = nil
         }
     }
     
@@ -111,13 +105,12 @@ enum Free
     /// - Parameter reference: The reference to free. The underlying type should be
     /// `git_reference`.
     static func freeReference(
-        _ reference: inout OpaquePointer?
+        _ reference: OpaquePointer?
     )
     {
         if reference != nil
         {
             git_reference_free(reference!)
-            reference = nil
         }
     }
     
@@ -127,13 +120,12 @@ enum Free
     /// - Parameter repository: The repository to free. The underlying type should be
     /// `git_repository`.
     static func freeRepository(
-        _ repository: inout OpaquePointer?
+        _ repository: OpaquePointer?
     )
     {
         if repository != nil
         {
             git_repository_free(repository)
-            repository = nil
         }
     }
     
@@ -142,13 +134,12 @@ enum Free
     /// Frees the memory allocated for a tree.
     /// - Parameter tree: The tree to free. The underlying type should be `git_tree`.
     static func freeTree(
-        _ tree: inout OpaquePointer?
+        _ tree: OpaquePointer?
     )
     {
         if tree != nil
         {
             git_tree_free(tree)
-            tree = nil
         }
     }
 }

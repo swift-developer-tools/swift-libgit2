@@ -95,7 +95,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeReference(&movedBranchPointer)
+                    Free.freeReference(movedBranchPointer)
                 }
                 
                 
@@ -268,7 +268,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeReference(&upstreamPointer)
+                    Free.freeReference(upstreamPointer)
                 }
                 
                 

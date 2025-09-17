@@ -31,7 +31,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(&featureCommitPointer)
+                Free.freeCommit(featureCommitPointer)
             }
             
             
@@ -131,9 +131,9 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(&mainCommitPointer)
-                Free.freeCommit(&featureCommitPointer)
-                Free.freeIndex(&indexPointer)
+                Free.freeCommit(mainCommitPointer)
+                Free.freeCommit(featureCommitPointer)
+                Free.freeIndex(indexPointer)
             }
             
             
@@ -294,8 +294,8 @@ extension CherrypickTests
         
         defer
         {
-            Free.freeCommit(&headCommitPointer)
-            Free.freeReference(&branchPointer)
+            Free.freeCommit(headCommitPointer)
+            Free.freeReference(branchPointer)
         }
         
         

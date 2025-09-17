@@ -244,7 +244,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(&indexPointer)
+                Free.freeIndex(indexPointer)
             }
             
             
@@ -525,8 +525,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(&commitPointer)
-                Free.freeTree(&treePointer)
+                Free.freeCommit(commitPointer)
+                Free.freeTree(treePointer)
             }
             
             
