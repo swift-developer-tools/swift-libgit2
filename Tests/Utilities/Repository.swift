@@ -135,14 +135,14 @@ struct Repository
         
         
         
-        // TODO: Replace with `GitSignature` once `git_commit_create()` has a binding.
+        // TODO: Replace with `GitSignature` once `git_commit_create()` has a binding, and remove `defer` block.
         var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
         
         defer
         {
             if signaturePointer != nil
             {
-                git_signature_free(signaturePointer)
+                gitSignatureFree(sig: signaturePointer)
             }
         }
         

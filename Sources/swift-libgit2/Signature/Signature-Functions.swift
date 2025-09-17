@@ -165,13 +165,11 @@ public func gitSignatureDefaultFromEnv(
         if authorPointer != nil
         {
             gitSignatureFree(sig: authorPointer)
-            authorPointer = nil
         }
         
         if committerPointer != nil
         {
             gitSignatureFree(sig: committerPointer)
-            committerPointer = nil
         }
     }
     
@@ -344,7 +342,7 @@ public func gitSignatureDup(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_signature` pointers allocated by
+/// This function is only needed when working directly with `git_signature` instances allocated by
 /// libgit2. ``GitSignature`` instances do not need to be freed.
 ///
 /// Since `git_signature` is not an opaque struct, it is legal to free it manually, but be sure to

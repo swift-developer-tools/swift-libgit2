@@ -116,7 +116,6 @@ public struct GitSignature
             if signaturePointer != nil
             {
                 gitSignatureFree(sig: signaturePointer)
-                signaturePointer = nil
             }
         }
         
