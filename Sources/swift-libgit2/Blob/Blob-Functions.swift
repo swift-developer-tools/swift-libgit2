@@ -195,7 +195,7 @@ public func gitBlobFilter(
     guard let opts: GitBlobFilterOptions = opts
     else
     {
-        return out.withCValue
+        return out.withMutatingCValue
         {
             cOut in
             
@@ -216,7 +216,7 @@ public func gitBlobFilter(
         {
             cOpts in
             
-            return out.withCValue
+            return out.withMutatingCValue
             {
                 cOut in
                 

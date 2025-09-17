@@ -19,8 +19,6 @@
 /// Parts of the function below are adapted from the Swift.org open source project. Original source code:
 /// https://github.com/swiftlang/swift/blob/c3b7709a7c4789f1ad7249d357f69509fb8be731/stdlib/private/SwiftPrivate/SwiftPrivate.swift
 
-import Foundation
-
 
 
 internal extension String
@@ -34,7 +32,7 @@ internal extension String
     /// Use this function over ``String.withCString(_:)`` when working with C APIs
     /// that expect mutable strings.
     ///
-    /// This could be done more simply by as follows:
+    /// The core of a simpler implementation would be:
     ///
     /// ```swift
     /// guard let mutableCString: UnsafeMutablePointer<CChar> = strdup(self)
