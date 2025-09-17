@@ -54,10 +54,9 @@ internal extension String
         _ body: (UnsafeMutablePointer<CChar>) -> T
     ) -> T
     {
-        let utf8Count   : Int       = self.utf8.count
-        var buffer      : [UInt8]   = []
+        var buffer: [UInt8] = []
         
-        buffer.reserveCapacity(utf8Count + 1)
+        buffer.reserveCapacity(self.utf8.count + 1)
         
         if !self.isEmpty
         {
