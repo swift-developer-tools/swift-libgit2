@@ -28,7 +28,7 @@ public struct GitDiffFile
     /// ## Discussion
     ///
     /// If the entry represents an absent side of a diff (for example, the `old_file` of a
-    /// ``GitDeltaT/gitDeltaAdded`` delta), then the ID will be zeroes.
+    /// ``GitDeltaT/gitDeltaAdded`` delta), then the ID will be all zeros.
     public let id       : GitOID
     
     /// The null-terminated path to the entry relative to the working directory of the repository.
@@ -49,7 +49,7 @@ public struct GitDiffFile
     /// ## Discussion
     ///
     /// This is generally `GIT_OID_SHA1_HEXSIZE`, unless this delta was created from reading
-    /// a patch file, in which case it may be abbreviated to something reasonable, like 7 characters.
+    /// a patch file, in which case it may be abbreviated to something reasonable, like seven characters.
     public let idAbbrev : UInt16
     
     
