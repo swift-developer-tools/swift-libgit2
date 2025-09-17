@@ -39,6 +39,20 @@ public struct GitTime
         self.offset     = time.offset
         self.sign       = time.sign
     }
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_time
+    {
+        var cTime = git_time()
+        
+        cTime.time      = time
+        cTime.offset    = offset
+        cTime.sign      = sign
+        
+        return cTime
+    }
 }
 
 
