@@ -414,6 +414,20 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitOIDEqual(a:b:)``
 
+### Signature Structs
+
+- ``GitSignature``
+
+### Signature Functions
+
+- ``gitSignatureNew(out:name:email:time:offset:)``
+- ``gitSignatureNow(out:name:email:)``
+- ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)``
+- ``gitSignatureDefault(out:repo:)``
+- ``gitSignatureFromBuffer(out:buf:)``
+- ``gitSignatureDup(dest:sig:)``
+- ``gitSignatureFree(sig:)``
+
 ### Tree Enums
 
 - ``GitFileModeT``
