@@ -92,7 +92,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var cherrypickOptions = try GitCherrypickOptions()
+            guard var cherrypickOptions = GitCherrypickOptions()
+            else
+            {
+                XCTFail("The cherrypick options were not initialized.")
+                return
+            }
             
             cherrypickOptions.mainline      = 0
             cherrypickOptions.checkoutOpts  = checkoutOptions
@@ -213,7 +218,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     func testGitCherrypickOptions() throws
     {
-        var cherrypickOptions = try GitCherrypickOptions()
+        guard var cherrypickOptions = GitCherrypickOptions()
+        else
+        {
+            XCTFail("The cherrypick options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(cherrypickOptions.version, gitCherrypickOptionsVersion)
         XCTAssertEqual(cherrypickOptions.mainline, 0)

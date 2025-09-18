@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -40,10 +39,9 @@ public struct GitCherrypickOptions
     /// Creates a ``GitCherrypickOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to
     /// ``gitCherrypickOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitCherrypickOptionsVersion
-    ) throws
+    )
     {
         var cherrypickOptions = git_cherrypick_options()
         
@@ -54,10 +52,7 @@ public struct GitCherrypickOptions
         
         if cherrypickOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(cherrypickOptionsInitResult),
-                message:    "Failed to initialize GitCherrypickOptions."
-            )
+            return nil
         }
         
         self.version        = cherrypickOptions.version
