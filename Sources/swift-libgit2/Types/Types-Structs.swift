@@ -87,9 +87,9 @@ public struct GitWritestream
     
     /// The function to free the stream.
     public let free: @convention(c)
-   (
+    (
         UnsafeMutablePointer<git_writestream>?
-   ) -> Void
+    ) -> Void
     
     
     

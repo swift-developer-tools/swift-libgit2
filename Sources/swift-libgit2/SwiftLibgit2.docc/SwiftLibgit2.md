@@ -403,6 +403,20 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitLibgit2Init()``
 - ``gitLibgit2Shutdown()``
 
+### Merge Structs
+
+- ``GitMergeOptions``
+
+### Merge Macros
+
+- ``gitMergeOptionsVersion``
+
+### Merge Enums
+
+- ``GitMergeFlagT``
+- ``GitMergeFileFavorT``
+- ``GitMergeFileFlagT``
+
 ### Object Aliases
 
 - ``GitObjectSizeT``

@@ -83,7 +83,7 @@ public struct GitCheckoutOptions
     /// The default value is `0644` or `0755` as dictated by the blob.
     public var fileMode         : UInt32
     
-    /// Flags controlling the file opening process.
+    /// The flags controlling the file opening process.
     ///
     /// ## Discussion
     ///
