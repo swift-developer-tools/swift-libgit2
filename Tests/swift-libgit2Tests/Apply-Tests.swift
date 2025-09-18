@@ -53,7 +53,12 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyOptions() throws
     {
-        var applyOptions = try GitApplyOptions()
+        guard var applyOptions = GitApplyOptions()
+        else
+        {
+            XCTFail("The apply options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(applyOptions.version, gitApplyOptionsVersion)
         XCTAssertNil(applyOptions.deltaCB)
@@ -149,7 +154,12 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let applyOptions = try GitApplyOptions()
+            guard let applyOptions = GitApplyOptions()
+            else
+            {
+                XCTFail("The apply options were not initialized.")
+                return
+            }
             
             try Diff.withDiffPointer(in: repository)
             {
@@ -463,11 +473,16 @@ extension ApplyTests
             
             
             
-            try withUnsafeMutablePointer(to: &callbackCounts)
+            withUnsafeMutablePointer(to: &callbackCounts)
             {
                 callbackCountsPointer in
                 
-                var applyOptions = try GitApplyOptions()
+                guard var applyOptions = GitApplyOptions()
+                else
+                {
+                    XCTFail("The apply options were not initialized.")
+                    return
+                }
                 
                 applyOptions.deltaCB    = deltaCB
                 applyOptions.hunkCB     = hunkCB

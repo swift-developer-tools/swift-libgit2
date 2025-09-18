@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -43,10 +42,9 @@ public struct GitApplyOptions
     
     /// Creates a ``GitApplyOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitApplyOptionsVersion
-    ) throws
+    )
     {
         var applyOptions = git_apply_options()
         
@@ -57,10 +55,7 @@ public struct GitApplyOptions
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(applyOptionsInitResult),
-                message:    "Failed to initialize GitApplyOptions."
-            )
+            return nil
         }
         
         self.init(cValue: applyOptions)
