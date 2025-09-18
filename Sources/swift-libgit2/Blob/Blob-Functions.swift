@@ -181,7 +181,7 @@ public func gitBlobRawSize(
 /// content of the blob. In that case, be careful to either copy the buffer into memory not owned by the
 /// library, or to not free the blob until the buffer is no longer needed.
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
 /// to the equivalent C value.
 ///
 /// ## C Equivalent

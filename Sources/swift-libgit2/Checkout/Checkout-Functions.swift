@@ -30,7 +30,7 @@ import Clibgit2
 /// Instead, checkout the target of the branch and then update HEAD using
 /// `git_repository_set_head()` to point to the checked-out branch.
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
 /// to the equivalent C value.
 ///
 /// ## C Equivalent
@@ -83,7 +83,7 @@ public func gitCheckoutHEAD(
 ///
 /// ## Discussion
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
 /// to the equivalent C value.
 ///
 /// ## C Equivalent
@@ -140,7 +140,7 @@ public func gitCheckoutIndex(
 ///
 /// ## Discussion
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
 /// to the equivalent C value.
 ///
 /// ## C Equivalent

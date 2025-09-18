@@ -61,6 +61,11 @@ public func gitCherrypickCommit(
 ///   - cherrypickOptions: The options to use for the cherry-pick process.
 /// - Returns: `0` on success, or an error code.
 ///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `cherrypickOptions` was provided, but there was an error
+/// converting it to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_cherrypick()`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick.html)
@@ -85,6 +90,12 @@ public func gitCherrypick(
     return cherrypickOptions.withCValue
     {
         cCherrypickOptions in
+        
+        guard let cCherrypickOptions: UnsafeMutablePointer<git_cherrypick_options> = cCherrypickOptions
+        else
+        {
+            return GIT_EUSER.rawValue
+        }
         
         return git_cherrypick(
             repo,
