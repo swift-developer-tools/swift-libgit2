@@ -85,7 +85,12 @@ final class BlameTests: XCTestCaseStopOnFail
             
             
             
-            let blameOptions = try GitBlameOptions()
+            guard let blameOptions = GitBlameOptions()
+            else
+            {
+                XCTFail("The blame options were not initialized.")
+                return
+            }
             
             var blameFileResult: Int32 = gitBlameFile(
                 out:        &blamePointer,
@@ -220,7 +225,12 @@ final class BlameTests: XCTestCaseStopOnFail
     
     func testGitBlameOptions() throws
     {
-        var blameOptions = try GitBlameOptions()
+        guard var blameOptions = GitBlameOptions()
+        else
+        {
+            XCTFail("The blame options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(blameOptions.version, gitBlameOptionsVersion)
         XCTAssertEqual(blameOptions.flags, .gitBlameNormal)

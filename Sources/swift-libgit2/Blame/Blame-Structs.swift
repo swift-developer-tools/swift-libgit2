@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -75,10 +74,9 @@ public struct GitBlameOptions
     
     /// Creates a ``GitBlameOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitBlameOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws
+    )
     {
         var blameOptions = git_blame_options()
         
@@ -89,10 +87,7 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(blameOptionsInitResult),
-                message:    "Failed to initialize GitBlameOptions."
-            )
+            return nil
         }
         
         self.init(cValue: blameOptions)
