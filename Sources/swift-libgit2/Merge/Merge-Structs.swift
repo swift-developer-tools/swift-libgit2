@@ -111,9 +111,8 @@ public struct GitMergeOptions
     ///
     /// ## Discussion
     ///
-    /// ``GitMergeOptions/fileFavor`` defaults to
-    /// ``GitMergeFileFavorT/gitMergeFileFavorNormal`` if an unexpected value is
-    /// encountered, although this should never occur.
+    /// ``fileFavor`` defaults to ``GitMergeFileFavorT/gitMergeFileFavorNormal``
+    /// if an unexpected value is encountered, although this should never occur.
     internal init(
         cValue mergeOptions: git_merge_options
     )
