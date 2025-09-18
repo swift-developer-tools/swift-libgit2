@@ -71,7 +71,7 @@ public struct GitSignature
     /// Use this function when working with C APIs that work with existing signatures and expect
     /// `const git_signature *` parameters.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_signature>?) -> T
+        _ body: (UnsafeMutablePointer<git_signature>) -> T
     ) -> T
     {
         var signature = git_signature()
