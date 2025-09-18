@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -86,10 +85,9 @@ public struct GitMergeOptions
     
     /// Creates a ``GitMergeOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitMergeOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitMergeOptionsVersion
-    ) throws
+    )
     {
         var mergeOptions = git_merge_options()
         
@@ -100,10 +98,7 @@ public struct GitMergeOptions
         
         if mergeOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(mergeOptionsInitResult),
-                message:    "Failed to initialize GitMergeOptions."
-            )
+            return nil
         }
         
         self.init(cValue: mergeOptions)
