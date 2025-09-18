@@ -391,6 +391,7 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``GitDiffFile``
 - ``GitDiffDelta``
+- ``GitDiffSimilarityMetric``
 
 ### Diff Enums
 

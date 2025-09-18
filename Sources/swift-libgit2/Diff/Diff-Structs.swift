@@ -167,3 +167,74 @@ public struct GitDiffDelta
         self.newFile        = GitDiffFile(cValue: diffDelta.new_file)
     }
 }
+
+
+
+/// A pluggable similarity metric.
+///
+/// ## Discussion
+///
+/// This struct is provided for documentation purposes, but is not used by other bindings.
+///
+/// `git_diff_similarity_metric` is treated as an opaque struct since its function pointers are
+/// allocated and managed by libgit2, and cannot be meaningfully recreated or translated.
+///
+/// ## C Equivalent
+///
+/// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
+public struct GitDiffSimilarityMetric
+{
+    /// The function to generate a signature for a file.
+    public let fileSignature: @convention(c)
+    (
+        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
+        UnsafePointer<git_diff_file>?,
+        UnsafePointer<CChar>?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    /// The function to generate a signature for a buffer.
+    public let bufferSignature: @convention(c)
+    (
+        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
+        UnsafePointer<git_diff_file>?,
+        UnsafePointer<CChar>?,
+        Int,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    /// The function to free a signature.
+    public let freeSignature: @convention(c)
+    (
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?
+    ) -> Void
+    
+    /// The function to determine the similarity score of two files.
+    public let similarity: @convention(c)
+    (
+        UnsafeMutablePointer<Int32>?,
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    /// The payload provided by the caller.
+    public let payload: UnsafeMutableRawPointer?
+    
+    
+    
+    /// Creates a ``GitWritestream`` instance from a `git_diff_similarity_metric`
+    /// instance.
+    /// - Parameter writeStream: The `git_diff_similarity_metric` instance to use.
+    internal init(
+        cValue diffSimilarityMetric: git_diff_similarity_metric
+    )
+    {
+        self.fileSignature      = diffSimilarityMetric.file_signature
+        self.bufferSignature    = diffSimilarityMetric.buffer_signature
+        self.freeSignature      = diffSimilarityMetric.free_signature
+        self.similarity         = diffSimilarityMetric.similarity
+        self.payload            = diffSimilarityMetric.payload
+    }
+}
