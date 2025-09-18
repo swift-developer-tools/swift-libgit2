@@ -120,7 +120,12 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            let blobFilterOptions = try GitBlobFilterOptions()
+            guard let blobFilterOptions = GitBlobFilterOptions()
+            else
+            {
+                XCTFail("The blob filter options were not initialized.")
+                return
+            }
             
             /// Test reuse behavior of the same buffer.
             blobFilterResult = gitBlobFilter(

@@ -45,10 +45,9 @@ public struct GitBlobFilterOptions
     /// Creates a ``GitBlobFilterOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to
     /// ``gitBlobFilterOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws
+    )
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -59,10 +58,7 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(blobFilterOptionsInitResult),
-                message:    "Failed to initialize GitBlobFilterOptions."
-            )
+            return nil
         }
         
         self.init(cValue: blobFilterOptions)

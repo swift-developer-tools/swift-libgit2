@@ -303,7 +303,12 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobFilterOptions = try GitBlobFilterOptions()
+            guard let blobFilterOptions = GitBlobFilterOptions()
+            else
+            {
+                XCTFail("The blob filter options were not initialized.")
+                return
+            }
             
             blobFilterResult = gitBlobFilter(
                 out:        &buffer,
@@ -347,7 +352,12 @@ final class BlobTests: XCTestCaseStopOnFail
     
     func testGitBlobFilterOptions() throws
     {
-        var blobFilterOptions = try GitBlobFilterOptions()
+        guard var blobFilterOptions = GitBlobFilterOptions()
+        else
+        {
+            XCTFail("The blob filter options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(blobFilterOptions.version, gitBlobFilterOptionsVersion)
         XCTAssertEqual(blobFilterOptions.flags, GitBlobFilterFlagT.gitBlobFilterCheckForBinary)
