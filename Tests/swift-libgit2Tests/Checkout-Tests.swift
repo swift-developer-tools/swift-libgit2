@@ -114,11 +114,16 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try withUnsafeMutablePointer(to: &callbackData)
+            withUnsafeMutablePointer(to: &callbackData)
             {
                 callbackDataPointer in
                 
-                var checkoutOptions = try GitCheckoutOptions()
+                guard var checkoutOptions = GitCheckoutOptions()
+                else
+                {
+                    XCTFail("The checkout options were not initialized.")
+                    return
+                }
                 
                 checkoutOptions.checkoutStrategy    = .gitCheckoutForce
                 checkoutOptions.notifyFlags         = .gitCheckoutNotifyUpdated
@@ -185,7 +190,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
@@ -272,7 +282,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
@@ -354,7 +369,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutOptions() throws
     {
-        var checkoutOptions = try GitCheckoutOptions()
+        guard var checkoutOptions = GitCheckoutOptions()
+        else
+        {
+            XCTFail("The checkout options were not initialized.")
+            return
+        }
         
         /// `dirMode`, `fileMode`, and `fileOpenFlags` are zero-initialized.
         /// The documentation defaults refer to runtime defaults set in `checkout_data_init()`
@@ -566,7 +586,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             

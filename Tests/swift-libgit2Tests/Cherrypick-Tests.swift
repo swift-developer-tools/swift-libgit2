@@ -81,7 +81,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             

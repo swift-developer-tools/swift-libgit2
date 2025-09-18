@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -156,10 +155,9 @@ public struct GitCheckoutOptions
     /// Creates a ``GitCheckoutOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to
     /// ``gitCheckoutOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitCheckoutOptionsVersion
-    ) throws
+    )
     {
         var checkoutOptions = git_checkout_options()
         
@@ -170,10 +168,7 @@ public struct GitCheckoutOptions
         
         if checkoutOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(checkoutOptionsInitResult),
-                message:    "Failed to initialize GitCheckoutOptions."
-            )
+            return nil
         }
         
         self.init(cValue: checkoutOptions)
