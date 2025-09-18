@@ -23,7 +23,7 @@
 
 internal extension String
 {
-    /// Calls the given closure with a mutable C string.
+    /// Calls the given closure with a mutable C string pointer.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
     ///

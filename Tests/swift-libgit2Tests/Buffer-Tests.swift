@@ -144,8 +144,15 @@ final class BufferTests: XCTestCaseStopOnFail
                 return
             }
             
+            guard let bufferContent = String(optionalCString: bufferPointer)
+            else
+            {
+                XCTFail("The buffer content was nil.")
+                return
+            }
+            
             XCTAssertEqual(buffer.size, firstBufferSize)
-            XCTAssertEqual(String(cString: bufferPointer), content)
+            XCTAssertEqual(bufferContent, content)
         }
     }
 }

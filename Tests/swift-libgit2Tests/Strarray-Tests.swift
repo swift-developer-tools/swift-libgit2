@@ -48,14 +48,14 @@ final class StrarrayTests: XCTestCaseStopOnFail
             
             for (index, swiftString) in strings.enumerated()
             {
-                guard let cString: UnsafeMutablePointer<CChar> = cStrings[index]
+                guard let cString = String(optionalCString: cStrings[index])
                 else
                 {
                     XCTFail("The C string at index \(index) was nil.")
                     return
                 }
                 
-                XCTAssertEqual(String(cString: cString), swiftString)
+                XCTAssertEqual(cString, swiftString)
             }
         }
         
@@ -105,14 +105,14 @@ final class StrarrayTests: XCTestCaseStopOnFail
             
             for (index, swiftString) in outerArray.enumerated()
             {
-                guard let cString: UnsafeMutablePointer<CChar> = outerCStrings[index]
+                guard let cString = String(optionalCString: outerCStrings[index])
                 else
                 {
                     XCTFail("The C string at index \(index) was nil.")
                     return
                 }
                 
-                XCTAssertEqual(String(cString: cString), swiftString)
+                XCTAssertEqual(cString, swiftString)
             }
             
             
@@ -134,14 +134,14 @@ final class StrarrayTests: XCTestCaseStopOnFail
                 
                 for (index, swiftString) in innerArray.enumerated()
                 {
-                    guard let cString: UnsafeMutablePointer<CChar> = innerCStrings[index]
+                    guard let cString = String(optionalCString: innerCStrings[index])
                     else
                     {
                         XCTFail("The C string at index \(index) was nil.")
                         return
                     }
                     
-                    XCTAssertEqual(String(cString: cString), swiftString)
+                    XCTAssertEqual(cString, swiftString)
                 }
                 
                 
@@ -160,14 +160,14 @@ final class StrarrayTests: XCTestCaseStopOnFail
                 
                 for (index, swiftString) in outerArray.enumerated()
                 {
-                    guard let cString: UnsafeMutablePointer<CChar> = outerCStrings[index]
+                    guard let cString = String(optionalCString: outerCStrings[index])
                     else
                     {
                         XCTFail("The C string at index \(index) was nil.")
                         return
                     }
                     
-                    XCTAssertEqual(String(cString: cString), swiftString)
+                    XCTAssertEqual(cString, swiftString)
                 }
             }
         }

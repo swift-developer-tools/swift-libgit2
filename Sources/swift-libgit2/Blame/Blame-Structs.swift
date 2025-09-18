@@ -247,11 +247,11 @@ public struct GitBlameHunk
         self.finalSignature         = GitSignature(cValue: blameHunk.final_signature.pointee)
         self.finalCommitter         = GitSignature(cValue: blameHunk.final_committer.pointee)
         self.origCommitID           = GitOID(cValue: blameHunk.orig_commit_id)
-        self.origPath               = blameHunk.orig_path.map { String(cString: $0 )}
+        self.origPath               = String(optionalCString: blameHunk.orig_path)
         self.origStartLineNumber    = blameHunk.orig_start_line_number
         self.origSignature          = GitSignature(cValue: blameHunk.orig_signature.pointee)
         self.origCommitter          = GitSignature(cValue: blameHunk.orig_committer.pointee)
-        self.summary                = blameHunk.summary.map { String(cString: $0 )}
+        self.summary                = String(optionalCString: blameHunk.summary)
         self.boundary               = blameHunk.boundary == 1
     }
 }
@@ -279,7 +279,7 @@ public struct GitBlameLine
         cValue blameLine: git_blame_line
     )
     {
-        self.ptr    = blameLine.ptr.map { String(cString: $0 )}
+        self.ptr    = String(optionalCString: blameLine.ptr)
         self.len    = blameLine.len
     }
 }

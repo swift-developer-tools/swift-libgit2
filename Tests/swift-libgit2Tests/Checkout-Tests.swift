@@ -58,9 +58,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 payloadPointer.pointee.notifyCallCount      += 1
                 payloadPointer.pointee.lastNotifyReason     = GitCheckoutNotifyT(rawValue: why.rawValue)
                 
-                if let path: UnsafePointer<CChar> = path
+                if let path = String(optionalCString: path)
                 {
-                    payloadPointer.pointee.lastNotifyPath = String(cString: path)
+                    payloadPointer.pointee.lastNotifyPath = path
                 }
                 
                 return GIT_OK.rawValue
@@ -85,9 +85,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 payloadPointer.pointee.lastCompletedSteps   = completedSteps
                 payloadPointer.pointee.lastTotalSteps       = totalSteps
                 
-                if let path: UnsafePointer<CChar> = path
+                if let path = String(optionalCString: path)
                 {
-                    payloadPointer.pointee.lastPath = String(cString: path)
+                    payloadPointer.pointee.lastPath = path
                 }
             }
             

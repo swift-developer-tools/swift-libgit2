@@ -123,7 +123,7 @@ public struct GitMergeOptions
         self.targetLimit        = mergeOptions.target_limit
         self.metric             = mergeOptions.metric
         self.recursionLimit     = mergeOptions.recursion_limit
-        self.defaultDriver      = String(cString: mergeOptions.default_driver)
+        self.defaultDriver      = String(optionalCString: mergeOptions.default_driver)
         self.fileFavor          = GitMergeFileFavorT(cValue: mergeOptions.file_favor) ?? .gitMergeFileFavorNormal
         self.fileFlags          = GitMergeFileFlagT(rawValue: mergeOptions.file_flags)
     }

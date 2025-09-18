@@ -55,8 +55,10 @@ public struct GitSignature
         cValue signature: git_signature
     )
     {
-        self.name   = String(cString: signature.name)
-        self.email  = String(cString: signature.email)
+        /// Use empty strings for `nil` pointers to ensure validation failures, since Git requires
+        /// non-empty identity information. Generally, neither of these should ever be `nil`.
+        self.name   = String(optionalCString: signature.name)   ?? ""
+        self.email  = String(optionalCString: signature.email)  ?? ""
         self.when   = GitTime(cValue: signature.when)
     }
     

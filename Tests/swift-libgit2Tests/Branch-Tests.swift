@@ -248,7 +248,14 @@ final class BranchTests: XCTestCaseStopOnFail
                     return
                 }
                 
-                XCTAssertEqual(String(cString: branchNamePointer), branchName)
+                guard let branchNameString = String(optionalCString: branchNamePointer)
+                else
+                {
+                    XCTFail("The branch name string was nil.")
+                    return
+                }
+                
+                XCTAssertEqual(branchNameString, branchName)
                 
                 
                 

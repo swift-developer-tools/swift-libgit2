@@ -94,9 +94,9 @@ internal extension Array where Element == String
         
         for index in 0..<strarray.count
         {
-            if let cString: UnsafeMutablePointer<CChar> = cStrings[index]
+            if let swiftString = String(optionalCString: cStrings[index])
             {
-                swiftStrings.append(String(cString: cString))
+                swiftStrings.append(swiftString)
             }
         }
         

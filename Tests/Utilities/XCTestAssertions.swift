@@ -9,6 +9,7 @@
 
 import Clibgit2
 import XCTest
+@testable import SwiftLibgit2
 
 
 
@@ -17,7 +18,7 @@ import XCTest
 
 
 
-/// Asserts that a libgit2 operation result code is `GIT_OK`.
+/// Asserts that the given libgit2 operation result code is `GIT_OK`.
 /// - Parameter result: The libgit2 operation result code.
 func XCTAssertOK(
     _ result: Int32
@@ -34,7 +35,7 @@ func XCTAssertOK(
     let error   : UnsafePointer<git_error>?     = git_error_last()
     var message : String                        = "Code: \(result)."
     
-    if let errorMessage: String = error?.pointee.message.map({ String(cString: $0) })
+    if let errorMessage = String(optionalCString: error?.pointee.message)
     {
         message += " \(errorMessage)"
     }

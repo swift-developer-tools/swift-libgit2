@@ -32,7 +32,7 @@ public struct GitDiffFile
     public let id       : GitOID
     
     /// The null-terminated path to the entry relative to the working directory of the repository.
-    public let path     : String
+    public let path     : String?
     
     /// The size of the entry in bytes.
     public let size     : GitObjectSizeT
@@ -61,7 +61,7 @@ public struct GitDiffFile
     )
     {
         self.id         = GitOID(cValue: diffFile.id)
-        self.path       = String(cString: diffFile.path)
+        self.path       = String(optionalCString: diffFile.path)
         self.size       = diffFile.size
         self.flags      = GitDiffFlagT(rawValue: diffFile.flags)
         self.idAbbrev   = diffFile.id_abbrev

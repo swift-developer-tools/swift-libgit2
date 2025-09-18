@@ -219,7 +219,15 @@ final class AttrTests: XCTestCaseStopOnFail
             }
             
             XCTAssertTrue(gitAttrHasValue(attr: eolAttribute))
-            XCTAssertEqual(String(cString: eolAttribute), "lf")
+            
+            guard let eolAttributeString = String(optionalCString: eolAttribute)
+            else
+            {
+                XCTFail("The EOL attribute string was nil.")
+                return
+            }
+            
+            XCTAssertEqual(eolAttributeString, "lf")
         }
     }
     
@@ -272,7 +280,15 @@ final class AttrTests: XCTestCaseStopOnFail
             }
             
             XCTAssertTrue(gitAttrHasValue(attr: customAttribute))
-            XCTAssertEqual(String(cString: customAttribute), "customvalue")
+            
+            guard let customAttributeString = String(optionalCString: customAttribute)
+            else
+            {
+                XCTFail("The custom attribute string was nil.")
+                return
+            }
+            
+            XCTAssertEqual(customAttributeString, "customvalue")
         }
     }
     
@@ -548,18 +564,13 @@ extension AttrTests
                 cName, cValue, cPayload in
                 
                 guard
-                    let cName       : UnsafePointer<CChar>      = cName,
-                    let cValue      : UnsafePointer<CChar>      = cValue,
+                    let name        : String                    = String(optionalCString: cName),
+                    let value       : String                    = String(optionalCString: cValue),
                     let cPayload    : UnsafeMutableRawPointer   = cPayload
                 else
                 {
                     return GIT_OK.rawValue
                 }
-                
-                
-                
-                let name    = String(cString: cName)
-                let value   = String(cString: cValue)
                 
                 
                 

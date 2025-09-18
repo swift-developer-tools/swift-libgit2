@@ -61,7 +61,7 @@ internal func scan<S: Sequence, U>(
 
 
 
-/// Calls the given closure with an array of C strings created from an array of Swift strings.
+/// Calls the given closure with an array of C string pointers created from an array of Swift strings.
 /// - Parameters:
 ///   - args: The array of Swift strings.
 ///   - body: The closure to call.
@@ -116,7 +116,7 @@ internal func withArrayOfCStrings<R>(
 
 
 
-/// Calls the given closure with an array of immutable C strings created from an array of Swift strings.
+/// Calls the given closure with an array of immutable C string pointers created from an array of Swift strings.
 ///
 /// - Parameters:
 ///   - args: The array of Swift strings.

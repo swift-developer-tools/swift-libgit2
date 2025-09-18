@@ -138,7 +138,12 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let referenceNameString = String(cString: referenceNamePointer)
+            guard let referenceNameString = String(optionalCString: referenceNamePointer)
+            else
+            {
+                XCTFail("The reference name string was nil.")
+                return
+            }
             
             XCTAssertFalse(referenceNameString.isEmpty)
         }
