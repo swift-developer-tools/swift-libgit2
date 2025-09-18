@@ -12,7 +12,6 @@ import Clibgit2
 
 
 // TODO: Replace `git_repository_set_head()` in documentation.
-
 /// Updates files in the index and in the working tree to match the contenet of the commit
 /// pointed at by HEAD.
 /// - Parameters:
@@ -30,6 +29,9 @@ import Clibgit2
 ///
 /// Instead, checkout the target of the branch and then update HEAD using
 /// `git_repository_set_head()` to point to the checked-out branch.
+///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -54,6 +56,12 @@ public func gitCheckoutHEAD(
     {
         cOpts in
         
+        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
+        else
+        {
+            return GIT_EUSER.rawValue
+        }
+        
         return git_checkout_head(
             repo,
             cOpts
@@ -72,6 +80,11 @@ public func gitCheckoutHEAD(
 ///   - opts: The options for the checkout process.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
+///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -98,6 +111,12 @@ public func gitCheckoutIndex(
     {
         cOpts in
         
+        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
+        else
+        {
+            return GIT_EUSER.rawValue
+        }
+        
         return git_checkout_index(
             repo,
             index,
@@ -118,6 +137,11 @@ public func gitCheckoutIndex(
 ///   - opts: The options for the checkout process.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
+///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -143,6 +167,12 @@ public func gitCheckoutTree(
     return opts.withCValue
     {
         cOpts in
+        
+        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
+        else
+        {
+            return GIT_EUSER.rawValue
+        }
         
         return git_checkout_tree(
             repo,
