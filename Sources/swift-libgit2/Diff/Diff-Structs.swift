@@ -226,7 +226,8 @@ public struct GitDiffSimilarityMetric
     
     /// Creates a ``GitWritestream`` instance from a `git_diff_similarity_metric`
     /// instance.
-    /// - Parameter writeStream: The `git_diff_similarity_metric` instance to use.
+    /// - Parameter diffSimilarityMetric: The `git_diff_similarity_metric`
+    /// instance to use.
     internal init(
         cValue diffSimilarityMetric: git_diff_similarity_metric
     )
