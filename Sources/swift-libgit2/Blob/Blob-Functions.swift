@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -182,6 +181,9 @@ public func gitBlobRawSize(
 /// content of the blob. In that case, be careful to either copy the buffer into memory not owned by the
 /// library, or to not free the blob until the buffer is no longer needed.
 ///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there as an error converting it
+/// to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_blob_filter()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter.html)
@@ -210,32 +212,27 @@ public func gitBlobFilter(
     
     
     
-    do
+    return opts.withCValue
     {
-        return try opts.withCValue
+        cOpts in
+        
+        guard let cOpts: UnsafeMutablePointer<git_blob_filter_options> = cOpts
+        else
         {
-            cOpts in
-            
-            return out.withMutatingCValue
-            {
-                cOut in
-                
-                return git_blob_filter(
-                    cOut,
-                    blob,
-                    asPath,
-                    cOpts
-                )
-            }
+            return GIT_EUSER.rawValue
         }
-    }
-    catch let error as NSError
-    {
-        return Int32(error.code)
-    }
-    catch
-    {
-        return GIT_EUSER.rawValue
+        
+        return out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_blob_filter(
+                cOut,
+                blob,
+                asPath,
+                cOpts
+            )
+        }
     }
 }
 

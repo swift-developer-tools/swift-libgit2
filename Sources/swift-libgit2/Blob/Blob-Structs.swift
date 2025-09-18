@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -84,10 +83,13 @@ public struct GitBlobFilterOptions
     /// Calls the given closure with a pointer to a `git_blob_filter_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    ///
+    /// ## Discussion
+    ///
+    /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> T
-    ) throws -> T
+        _ body: (UnsafeMutablePointer<git_blob_filter_options>?) -> T
+    ) -> T
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -98,10 +100,7 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError.create(
-                code:       Int(blobFilterOptionsInitResult),
-                message:    "Failed to initialize GitBlobFilterOptions."
-            )
+            return body(nil)
         }
         
         blobFilterOptions.flags             = flags.rawValue
