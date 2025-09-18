@@ -45,7 +45,7 @@ public struct GitBlobFilterOptions
     /// - Parameter version: The version to use. Defaults to
     /// ``gitBlobFilterOptionsVersion``.
     public init?(
-        version: UInt32 = gitBlameOptionsVersion
+        version: UInt32 = gitBlobFilterOptionsVersion
     )
     {
         var blobFilterOptions = git_blob_filter_options()
