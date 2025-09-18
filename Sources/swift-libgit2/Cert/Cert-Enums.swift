@@ -43,7 +43,7 @@ public enum GitCertT: UInt32
     
     
     /// Creates a ``GitCertT`` instance from a `git_cert_t` instance.
-    /// - Parameter cValue: The `git_cert_t` instance to use.
+    /// - Parameter cert: The `git_cert_t` instance to use.
     internal init?(
         cValue cert: git_cert_t
     )
