@@ -32,7 +32,6 @@ public enum GitCertT: UInt32
     /// The callback's certificate parameter will be a ``GitCertHostKey`` instance.
     case gitCertHostKeyLibSSH2  = 2
     
-    // TODO: Replace `git_strarray` in documentation.
     /// The callback's certificate parameter will contain a `git_strarray` with `name:content`
     /// strings.
     ///

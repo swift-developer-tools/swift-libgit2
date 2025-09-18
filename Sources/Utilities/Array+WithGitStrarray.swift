@@ -66,4 +66,40 @@ internal extension Array where Element == String
             return body(&strarray)
         }
     }
+    
+    
+    
+    /// Creates a `[String]` from a `git_strarray` instance.
+    /// - Parameter strarray: The `git_strarray` instance to convert.
+    init(
+        _ strarray: git_strarray
+    )
+    {
+        guard
+            strarray.count > 0,
+            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strarray.strings
+        else
+        {
+            self = []
+            return
+        }
+        
+        
+        
+        var swiftStrings: [String] = []
+        
+        swiftStrings.reserveCapacity(strarray.count)
+        
+        
+        
+        for index in 0..<strarray.count
+        {
+            if let cString = cStrings[index]
+            {
+                swiftStrings.append(String(cString: cString))
+            }
+        }
+        
+        self = swiftStrings
+    }
 }

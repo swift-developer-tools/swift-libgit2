@@ -39,7 +39,7 @@ public func gitCheckoutHEAD(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard var cOpts: git_checkout_options = opts?.cValue
+    guard let opts: GitCheckoutOptions = opts
     else
     {
         return git_checkout_head(
@@ -50,10 +50,15 @@ public func gitCheckoutHEAD(
     
     
     
-    return git_checkout_head(
-        repo,
-        &cOpts
-    )
+    return opts.withCValue
+    {
+        cOpts in
+        
+        return git_checkout_head(
+            repo,
+            cOpts
+        )
+    }
 }
 
 
@@ -77,7 +82,7 @@ public func gitCheckoutIndex(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard var cOpts: git_checkout_options = opts?.cValue
+    guard let opts: GitCheckoutOptions = opts
     else
     {
         return git_checkout_index(
@@ -89,11 +94,16 @@ public func gitCheckoutIndex(
     
     
     
-    return git_checkout_index(
-        repo,
-        index,
-        &cOpts
-    )
+    return opts.withCValue
+    {
+        cOpts in
+        
+        return git_checkout_index(
+            repo,
+            index,
+            cOpts
+        )
+    }
 }
 
 
@@ -118,7 +128,7 @@ public func gitCheckoutTree(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard var cOpts: git_checkout_options = opts?.cValue
+    guard let opts: GitCheckoutOptions = opts
     else
     {
         return git_checkout_tree(
@@ -130,9 +140,14 @@ public func gitCheckoutTree(
     
     
     
-    return git_checkout_tree(
-        repo,
-        treeish,
-        &cOpts
-    )
+    return opts.withCValue
+    {
+        cOpts in
+        
+        return git_checkout_tree(
+            repo,
+            treeish,
+            cOpts
+        )
+    }
 }

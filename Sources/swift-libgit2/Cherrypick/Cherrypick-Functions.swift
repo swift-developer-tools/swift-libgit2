@@ -70,7 +70,7 @@ public func gitCherrypick(
     cherrypickOptions   : GitCherrypickOptions?
 ) -> Int32
 {
-    guard var cCherrypickOptions: git_cherrypick_options = cherrypickOptions?.cValue
+    guard let cherrypickOptions: GitCherrypickOptions = cherrypickOptions
     else
     {
         return git_cherrypick(
@@ -82,9 +82,14 @@ public func gitCherrypick(
     
     
     
-    return git_cherrypick(
-        repo,
-        commit,
-        &cCherrypickOptions
-    )
+    return cherrypickOptions.withCValue
+    {
+        cCherrypickOptions in
+        
+        return git_cherrypick(
+            repo,
+            commit,
+            cCherrypickOptions
+        )
+    }
 }

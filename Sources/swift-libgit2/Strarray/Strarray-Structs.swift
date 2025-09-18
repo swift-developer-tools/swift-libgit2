@@ -17,7 +17,7 @@ import Clibgit2
 ///
 /// This struct is provided for documentation purposes, but is not used by other bindings.
 ///
-/// Bindings for libgit2 functions that accept `git_strarray` use `[String]` instead.
+/// All bindings use `[String]` instead of `git_strarray`.
 ///
 /// ## C Equivalent
 ///

@@ -68,12 +68,16 @@ public struct GitCherrypickOptions
     
     
     
-    /// The equivalent C value.
+    /// Calls the given closure with a pointer to a `git_cherrypick_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     ///
     /// ## Discussion
     ///
-    /// This value will be `nil` if the initialization failed.
-    internal var cValue: git_cherrypick_options?
+    /// The pointer will be `nil` if the initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_cherrypick_options>?) -> T
+    ) -> T
     {
         var cherrypickOptions = git_cherrypick_options()
         
@@ -84,11 +88,15 @@ public struct GitCherrypickOptions
         
         if cherrypickOptionsInitResult != GIT_OK.rawValue
         {
-            return nil
+            return body(nil)
         }
+        
+        
         
         cherrypickOptions.version   = version
         cherrypickOptions.mainline  = mainline
+        
+        
         
         // TODO: This should change once `GitMergeOptions` is added.
         if let mergeOpts: git_merge_options = mergeOpts
@@ -96,13 +104,29 @@ public struct GitCherrypickOptions
             cherrypickOptions.merge_opts = mergeOpts
         }
         
-        if let cCheckoutOpts: git_checkout_options = checkoutOpts?.cValue
+        
+        
+        guard let checkoutOpts: GitCheckoutOptions = checkoutOpts
+        else
         {
-            cherrypickOptions.checkout_opts = cCheckoutOpts
-            
-            return cherrypickOptions
+            return body(&cherrypickOptions)
         }
         
-        return cherrypickOptions
+        
+        
+        return checkoutOpts.withCValue
+        {
+            cCheckoutOpts in
+            
+            guard let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
+            else
+            {
+                return body(nil)
+            }
+            
+            cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
+            
+            return body(&cherrypickOptions)
+        }
     }
 }
