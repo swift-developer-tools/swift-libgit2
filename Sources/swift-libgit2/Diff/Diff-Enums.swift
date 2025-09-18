@@ -109,13 +109,12 @@ public enum GitDeltaT: UInt32
 
 
 
-// TODO: Replace `git_diff_delta` in documentation.
 /// Flags for the delta object and the file objects on each side of the delta.
 ///
 /// ## Discussion
 ///
-/// These flags are used for both the `flags` property of the `git_diff_delta` object and the
-/// ``GitDiffFile/flags`` property of ``GitDiffFile`` object that represent the old and new
+/// These flags are used for both the ``GitDiffDelta/flags`` property of ``GitDiffDelta`` and
+/// the ``GitDiffFile/flags`` property of ``GitDiffFile`` that represent the old and new
 /// sides of the delta.
 ///
 /// Values outside of the public supported range should be considered reserved for internal or future use.
