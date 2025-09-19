@@ -387,6 +387,27 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCherrypickCommit(out:repo:cherrypickCommit:ourCommit:mainline:mergeOptions:)``
 - ``gitCherrypick(repo:commit:cherrypickOptions:)``
 
+### Clone Structs
+
+- ``GitCloneOptions``
+
+### Clone Macros
+
+- ``gitCloneOptionsVersion``
+
+### Clone Enums
+
+- ``GitCloneLocalT``
+
+### Clone Callbacks
+
+- ``GitRemoteCreateCB``
+- ``GitRepositoryCreateCB``
+
+### Clone Functions
+
+- ``gitClone(out:url:localPath:options:)``
+
 ### Diff Structs
 
 - ``GitDiffFile``

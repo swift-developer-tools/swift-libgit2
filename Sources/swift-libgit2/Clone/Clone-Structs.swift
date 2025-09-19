@@ -1,0 +1,145 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import Clibgit2
+
+
+
+/// The options for the clone process.
+///
+/// ## C Equivalent
+///
+/// [`git_clone_options`](https://libgit2.org/docs/reference/main/clone/git_clone_options.html)
+public struct GitCloneOptions
+{
+    /// The version to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``gitCloneOptionsVersion``.
+    public var version              : UInt32
+    
+    /// The options for the checkout process.
+    public var checkoutOpts         : GitCheckoutOptions?
+    
+    /// The options for the fetch process, including callbacks.
+    ///
+    /// ## Discussion
+    ///
+    /// The callbacks are used for reporting fetch progress and for acquiring credentials in the event
+    /// that they are needed.
+    public var fetchOpts            : git_fetch_options?
+    
+    /// Whether a bare repository should be created.
+    public var bare                 : Bool
+    
+    /// The options for bypassing the Git-aware transport on clone.
+    public var local                : GitCloneLocalT
+    
+    /// The name of the branch to checkout.
+    ///
+    /// ## Discussion
+    ///
+    /// Pass `nil` to use the remote's default branch.
+    public var checkoutBranch       : String?
+    
+    /// A callback used to create the new repository into which to clone.
+    ///
+    /// ## Discussion
+    ///
+    /// If this is `nil`, then the ``bare`` property will be used to determine whether to create a
+    /// bare repository.
+    public var repositoryCB         : git_repository_create_cb?
+    
+    /// The caller-specified payload passed to ``repositoryCB``.
+    ///
+    /// ## Discussion
+    ///
+    /// This property will be ignored unless ``repositoryCB`` is not `nil`.
+    public var repositoryCBPayload  : UnsafeMutableRawPointer?
+    
+    /// A callback used to create the remote, prior to its being used to perform the clone operation.
+    public var remoteCB             : git_remote_create_cb?
+    
+    /// The caller-specified payload passed to ``remoteCB``.
+    ///
+    /// ## Discussion
+    ///
+    /// This property will be ignored unless ``remoteCB`` is not `nil`.
+    public var remoteCBPayload      : UnsafeMutableRawPointer?
+    
+    
+    
+    /// Creates a ``GitCloneOptions`` instance from a version number.
+    /// - Parameter version: The version to use. Defaults to ``gitCloneOptionsVersion``.
+    public init?(
+        version: UInt32 = gitCloneOptionsVersion
+    )
+    {
+        var cloneOptions = git_clone_options()
+        
+        let cloneOptionsInitResult: Int32 = git_clone_options_init(
+            &cloneOptions,
+            version
+        )
+        
+        if cloneOptionsInitResult != GIT_OK.rawValue
+        {
+            return nil
+        }
+        
+        self.version                = cloneOptions.version
+        self.checkoutOpts           = GitCheckoutOptions(cValue: cloneOptions.checkout_opts)
+        self.fetchOpts              = cloneOptions.fetch_opts
+        self.bare                   = cloneOptions.bare == 1
+        self.local                  = GitCloneLocalT(cValue: cloneOptions.local) ?? .gitCloneLocal
+        self.checkoutBranch         = String(optionalCString: cloneOptions.checkout_branch)
+        self.repositoryCB           = cloneOptions.repository_cb
+        self.repositoryCBPayload    = cloneOptions.repository_cb_payload
+        self.remoteCB               = cloneOptions.remote_cb
+        self.remoteCBPayload        = cloneOptions.remote_cb_payload
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_clone_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// The pointer will be `nil` if the initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_clone_options>?) -> T
+    ) -> T
+    {
+        var cloneOptions = git_clone_options()
+        
+        let cloneOptionsInitResult: Int32 = git_clone_options_init(
+            &cloneOptions,
+            version
+        )
+        
+        if cloneOptionsInitResult != GIT_OK.rawValue
+        {
+            return body(nil)
+        }
+        
+        cloneOptions.version                 = version
+        cloneOptions.bare                   = bare.cValue
+        cloneOptions.local                  = local.cValue
+        cloneOptions.repository_cb          = repositoryCB
+        cloneOptions.repository_cb_payload  = repositoryCBPayload
+        cloneOptions.remote_cb              = remoteCB
+        cloneOptions.remote_cb_payload      = remoteCBPayload
+        
+        // TODO: Sequential handlers once `GitFetchOptions` is added.
+        return body(&cloneOptions)
+    }
+}
