@@ -275,10 +275,10 @@ extension CherrypickTests
         {
             branchPointer in
             
-            let checkoutTreeResult: Int32 = git_checkout_tree(
-                repository.pointer,
-                nil,
-                nil
+            let checkoutTreeResult: Int32 = gitCheckoutTree(
+                repo:       repository.pointer,
+                treeish:    nil,
+                opts:       nil
             )
             
             XCTAssertOK(checkoutTreeResult)
