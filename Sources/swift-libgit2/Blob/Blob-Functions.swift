@@ -16,7 +16,7 @@ import Clibgit2
 ///   - blob: The pointer that should receive the blob. The underlying type should be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type should be
 ///   `git_repository`.
-///   - id: The identity of the blob to locate.
+///   - id: The ID of the blob to locate.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
@@ -44,7 +44,7 @@ public func gitBlobLookup(
 ///   - blob: The pointer that should receive the blob. The underlying type should be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type should be
 ///   `git_repository`.
-///   - id: The identity of the blob to locate.
+///   - id: The ID of the blob to locate.
 ///   - len: The length of the short ID.
 /// - Returns: `0` on success, or an error code.
 ///
