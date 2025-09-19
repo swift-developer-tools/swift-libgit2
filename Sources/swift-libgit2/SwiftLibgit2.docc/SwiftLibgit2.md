@@ -432,6 +432,10 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitLibgit2Init()``
 - ``gitLibgit2Shutdown()``
 
+### Indexer Callbacks
+
+- ``GitIndexerProgressCB``
+
 ### Merge Structs
 
 - ``GitMergeOptions``
