@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Flags controlling the behavior of the blob filtering process.
+/// The flags controlling the behavior of the blob filtering process.
 ///
 /// ## C Equivalent
 ///

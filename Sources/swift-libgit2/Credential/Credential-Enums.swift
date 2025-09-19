@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Flags controlling the supported credential types.
+/// The flags controlling the supported credential types.
 ///
 /// ## C Equivalent
 ///

@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Flags controlling the behavior of ``gitApply(repo:diff:location:options:)``.
+/// The flags controlling the behavior of ``gitApply(repo:diff:location:options:)``.
 ///
 /// ## C Equivalent
 ///

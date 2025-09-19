@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Flags controlling the behavior of the merge process.
+/// The flags controlling the behavior of the merge process.
 ///
 /// ## C Equivalent
 ///
@@ -70,7 +70,7 @@ public struct GitMergeFlagT: OptionSet, Sendable
 
 
 
-/// Flags controlling the handling of conflicting file regions during file-level merge operations.
+/// The flags controlling the handling of conflicting file regions during file-level merge operations.
 ///
 /// ## C Equivalent
 ///
@@ -134,7 +134,7 @@ public enum GitMergeFileFavorT: UInt32
 
 
 
-/// Flags controlling the behavior of the file merging process.
+/// The flags controlling the behavior of the file merging process.
 ///
 /// ## C Equivalent
 ///

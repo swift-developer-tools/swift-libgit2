@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Flags controlling the behavior of attribute examination.
+/// The flags controlling the behavior of attribute examination.
 ///
 /// ## Discussion
 ///
@@ -68,7 +68,7 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
 
 
 
-/// Possible states for an attribute.
+/// The possible states of an attribute.
 ///
 /// ## C Equivalent
 ///

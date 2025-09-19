@@ -13,7 +13,7 @@ import Clibgit2
 
 // TODO: Replace `git_repository_set_head()` in documentation.
 
-/// Flags controlling the behavior of the checkout process.
+/// The flags controlling the behavior of the checkout process.
 ///
 /// ## Discussion
 ///
@@ -181,7 +181,7 @@ public struct GitCheckoutStrategyT: OptionSet, Sendable
 
 
 
-/// Flags controlling the behavior of checkout notifications.
+/// The flags controlling the behavior of checkout notifications.
 ///
 /// ## Discussion
 ///

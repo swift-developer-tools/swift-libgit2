@@ -89,7 +89,7 @@ public struct GitCheckoutOptions
     /// The default value is `O_CREAT | O_TRUNC | O_WRONLY`.
     public var fileOpenFlags    : Int32
     
-    /// Flags controlling the behavior of checkout notifications.
+    /// The flags controlling the behavior of checkout notifications.
     public var notifyFlags      : GitCheckoutNotifyT
     
     /// The callback for checkout notifications.
