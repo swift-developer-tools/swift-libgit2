@@ -239,7 +239,7 @@ public func gitAttrGetManyExt(
 ///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
 ///   file (not a directory).
 ///   - callback: The function to invoke on each attribute name and value.
-///   - payload: The payload passed to `callback`.
+///   - payload: The caller-specified payload passed to `callback`.
 /// - Returns: `0` on success, a non-zero `callback` return value, or an error code.
 ///
 /// ## C Equivalent
@@ -272,7 +272,7 @@ public func gitAttrForEach(
 ///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
 ///   file (not a directory).
 ///   - callback: The function to invoke on each attribute name and value.
-///   - payload: The payload passed to `callback`.
+///   - payload: The caller-specified payload passed to `callback`.
 /// - Returns: `0` on success, a non-zero `callback` return value, or an error code.
 ///
 /// ## C Equivalent
