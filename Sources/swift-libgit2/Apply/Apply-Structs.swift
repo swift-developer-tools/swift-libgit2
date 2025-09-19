@@ -31,7 +31,7 @@ public struct GitApplyOptions
     /// The callback that will be made per hunk when applying a patch.
     public var hunkCB  : GitApplyHunkCB?
     
-    /// The payload passed to both ``GitApplyOptions/deltaCB`` and
+    /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB`` and
     /// ``GitApplyOptions/hunkCB``.
     public var payload : UnsafeMutableRawPointer?
     
