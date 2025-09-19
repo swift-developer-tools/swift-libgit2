@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// Adds a remote with the default fetch refspec to the repository's configuration.
+/// The callback to add a remote with the default fetch refspec to the repository's configuration.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting remote. The underlying type should be
 ///   `git_remote`.
@@ -41,7 +41,7 @@ public typealias GitRemoteCreateCB = @convention(c)
 
 
 
-/// Creates a new Git repository in the given folder.
+/// The callback to create a new Git repository in the given folder.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting repository. The underlying type should be
 ///   `git_repository`.
