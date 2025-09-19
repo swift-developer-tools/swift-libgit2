@@ -408,6 +408,14 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitClone(out:url:localPath:options:)``
 
+### Credential Enums
+
+- ``GitCredentialT``
+
+### Credential Callbacks
+
+- ``GitCredentialAcquireCB``
+
 ### Diff Structs
 
 - ``GitDiffFile``
