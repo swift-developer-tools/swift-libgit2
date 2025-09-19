@@ -493,3 +493,7 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``GitTime``
 - ``GitWritestream``
+
+### Credential (Advanced)
+
+- ``GitCredential``
