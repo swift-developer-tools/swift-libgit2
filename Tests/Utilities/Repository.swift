@@ -18,7 +18,8 @@ import XCTest
 ///
 /// ## Discussion
 ///
-/// The repository created by ``withRepository(_:)`` contains various files used to test bindings.
+/// The repository created by ``Repository/withRepository(_:)`` contains various files used
+/// to test bindings.
 struct Repository
 {
     // MARK: - Properties
@@ -61,7 +62,7 @@ struct Repository
         content : String,
         append  : Bool      = false,
         message : String
-    ) throws -> git_oid
+    ) throws -> GitOID
     {
         try modifyFile(
             path:       path,
@@ -75,7 +76,7 @@ struct Repository
         
         defer
         {
-            Free.freeIndex(&indexPointer)
+            Free.freeIndex(indexPointer)
         }
         
         
@@ -119,7 +120,7 @@ struct Repository
         
         defer
         {
-            Free.freeTree(&treePointer)
+            Free.freeTree(treePointer)
         }
         
         
@@ -134,11 +135,15 @@ struct Repository
         
         
         
+        // TODO: Replace with `GitSignature` once `git_commit_create()` has a binding, and remove `defer` block.
         var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
         
         defer
         {
-            Free.freeSignature(&signaturePointer)
+            if signaturePointer != nil
+            {
+                gitSignatureFree(sig: signaturePointer)
+            }
         }
         
         
@@ -159,7 +164,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(&headCommitPointer)
+            Free.freeCommit(headCommitPointer)
         }
         
         
@@ -212,7 +217,7 @@ struct Repository
         
         
         
-        return commitOID
+        return GitOID(cValue: commitOID)
     }
     
     
@@ -224,7 +229,7 @@ struct Repository
     ///   - commitOID: The ID of the commit.
     ///   - resetType: The reset type.
     func resetToCommit(
-        commitOID   : inout git_oid,
+        commitOID   : GitOID,
         resetType   : git_reset_t
     )
     {
@@ -232,15 +237,17 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(&commitPointer)
+            Free.freeCommit(commitPointer)
         }
         
         
         
+        var cCommitOID: git_oid = commitOID.cValue
+        
         let commitLookupResult: Int32 = git_commit_lookup(
             &commitPointer,
             pointer,
-            &commitOID
+            &cCommitOID
         )
         
         XCTAssertOK(commitLookupResult)
@@ -325,7 +332,7 @@ struct Repository
 
 
 
-/// Static methods related to ``Repository.withRepository(_:)``.
+/// Static methods related to ``Repository/withRepository(_:)``.
 extension Repository
 {
     // MARK: - createBlameData()
@@ -417,15 +424,6 @@ extension Repository
         _ body: (Repository) throws -> Void
     ) throws
     {
-        let _: Int32 = gitLibgit2Init()
-        
-        defer
-        {
-            let _: Int32 = gitLibgit2Shutdown()
-        }
-        
-        
-        
         let url: URL = try createTemporaryDirectory()
         
         
@@ -434,7 +432,7 @@ extension Repository
         
         defer
         {
-            Free.freeRepository(&repositoryPointer)
+            Free.freeRepository(repositoryPointer)
             
             try? FileManager.default.removeItem(at: url)
         }

@@ -53,7 +53,12 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyOptions() throws
     {
-        var applyOptions = try GitApplyOptions()
+        guard var applyOptions = GitApplyOptions()
+        else
+        {
+            XCTFail("The apply options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(applyOptions.version, gitApplyOptionsVersion)
         XCTAssertNil(applyOptions.deltaCB)
@@ -92,20 +97,22 @@ final class ApplyTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
+            let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
             var commitPointer   : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeCommit(&commitPointer)
+                Free.freeCommit(commitPointer)
             }
             
             
             
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &commitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -117,7 +124,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(&treePointer)
+                Free.freeTree(treePointer)
             }
             
             
@@ -142,12 +149,17 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(&indexPointer)
+                Free.freeIndex(indexPointer)
             }
             
             
             
-            let applyOptions = try GitApplyOptions()
+            guard let applyOptions = GitApplyOptions()
+            else
+            {
+                XCTFail("The apply options were not initialized.")
+                return
+            }
             
             try Diff.withDiffPointer(in: repository)
             {
@@ -271,7 +283,7 @@ extension ApplyTests
         {
             repository in
             
-            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             
             
@@ -279,15 +291,17 @@ extension ApplyTests
             
             defer
             {
-                Free.freeCommit(&commitPointer)
+                Free.freeCommit(commitPointer)
             }
             
             
             
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &commitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -298,7 +312,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeTree(&oldTreePointer)
+                Free.freeTree(oldTreePointer)
             }
             
             
@@ -325,7 +339,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeIndex(&indexPointer)
+                Free.freeIndex(indexPointer)
             }
             
             
@@ -363,7 +377,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeTree(&newTreePointer)
+                Free.freeTree(newTreePointer)
             }
             
             
@@ -382,7 +396,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeDiff(&diffPointer)
+                Free.freeDiff(diffPointer)
             }
             
             
@@ -459,11 +473,16 @@ extension ApplyTests
             
             
             
-            try withUnsafeMutablePointer(to: &callbackCounts)
+            withUnsafeMutablePointer(to: &callbackCounts)
             {
                 callbackCountsPointer in
                 
-                var applyOptions = try GitApplyOptions()
+                guard var applyOptions = GitApplyOptions()
+                else
+                {
+                    XCTFail("The apply options were not initialized.")
+                    return
+                }
                 
                 applyOptions.deltaCB    = deltaCB
                 applyOptions.hunkCB     = hunkCB

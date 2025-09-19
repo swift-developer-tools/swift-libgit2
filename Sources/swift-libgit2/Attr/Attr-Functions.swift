@@ -18,7 +18,7 @@ import Clibgit2
 /// ## Discussion
 ///
 /// If the attribute has a ``GitAttrValueT/gitAttrValueString`` type, it can be accessed normally
-/// as a `NULL`-terminated C string.
+/// as a null-terminated C string.
 ///
 /// ## C Equivalent
 ///
@@ -109,7 +109,7 @@ public func gitAttrGetExt(
     
     
     
-    return opts.withCStruct
+    return opts.withCValue
     {
         cOpts in
         
@@ -213,7 +213,7 @@ public func gitAttrGetManyExt(
         
         
         
-        return opts.withCStruct
+        return opts.withCValue
         {
             cOpts in
             
@@ -300,7 +300,7 @@ public func gitAttrForEachExt(
     
     
     
-    return opts.withCStruct
+    return opts.withCValue
     {
         cOpts in
         

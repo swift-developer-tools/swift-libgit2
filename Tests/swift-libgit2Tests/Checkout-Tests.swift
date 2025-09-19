@@ -58,9 +58,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 payloadPointer.pointee.notifyCallCount      += 1
                 payloadPointer.pointee.lastNotifyReason     = GitCheckoutNotifyT(rawValue: why.rawValue)
                 
-                if let path: UnsafePointer<CChar> = path
+                if let path = String(optionalCString: path)
                 {
-                    payloadPointer.pointee.lastNotifyPath = String(cString: path)
+                    payloadPointer.pointee.lastNotifyPath = path
                 }
                 
                 return GIT_OK.rawValue
@@ -85,9 +85,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 payloadPointer.pointee.lastCompletedSteps   = completedSteps
                 payloadPointer.pointee.lastTotalSteps       = totalSteps
                 
-                if let path: UnsafePointer<CChar> = path
+                if let path = String(optionalCString: path)
                 {
-                    payloadPointer.pointee.lastPath = String(cString: path)
+                    payloadPointer.pointee.lastPath = path
                 }
             }
             
@@ -114,11 +114,16 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try withUnsafeMutablePointer(to: &callbackData)
+            withUnsafeMutablePointer(to: &callbackData)
             {
                 callbackDataPointer in
                 
-                var checkoutOptions = try GitCheckoutOptions()
+                guard var checkoutOptions = GitCheckoutOptions()
+                else
+                {
+                    XCTFail("The checkout options were not initialized.")
+                    return
+                }
                 
                 checkoutOptions.checkoutStrategy    = .gitCheckoutForce
                 checkoutOptions.notifyFlags         = .gitCheckoutNotifyUpdated
@@ -185,7 +190,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
@@ -244,7 +254,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(&indexPointer)
+                Free.freeIndex(indexPointer)
             }
             
             
@@ -272,7 +282,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
@@ -354,7 +369,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutOptions() throws
     {
-        var checkoutOptions = try GitCheckoutOptions()
+        guard var checkoutOptions = GitCheckoutOptions()
+        else
+        {
+            XCTFail("The checkout options were not initialized.")
+            return
+        }
         
         /// `dirMode`, `fileMode`, and `fileOpenFlags` are zero-initialized.
         /// The documentation defaults refer to runtime defaults set in `checkout_data_init()`
@@ -519,22 +539,24 @@ final class CheckoutTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
+            let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
             var commitPointer   : OpaquePointer?    = nil
             var treePointer     : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeCommit(&commitPointer)
-                Free.freeTree(&treePointer)
+                Free.freeCommit(commitPointer)
+                Free.freeTree(treePointer)
             }
             
             
             
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &commitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -564,7 +586,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             

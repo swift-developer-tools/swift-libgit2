@@ -29,11 +29,11 @@ public struct GitAttrOptions
     public var flags        : GitAttrCheckFlagsT
     
     /// The commit ID.
-    public var commitID     : UnsafeMutablePointer<git_oid>?
+    public var commitID     : GitOID?
     
     /// The commit to load attributes from when
     /// ``GitAttrCheckFlagsT/gitAttrCheckIncludeCommit`` is specified.
-    public var attrCommitID : git_oid
+    public var attrCommitID : GitOID?
     
     
     
@@ -49,7 +49,7 @@ public struct GitAttrOptions
         self.version        = version
         self.flags          = []
         self.commitID       = nil
-        self.attrCommitID   = git_oid()
+        self.attrCommitID   = nil
     }
     
     
@@ -57,7 +57,7 @@ public struct GitAttrOptions
     /// Calls the given closure with a pointer to a `git_attr_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal func withCStruct<T>(
+    internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_attr_options>) -> T
     ) -> T
     {
@@ -65,9 +65,26 @@ public struct GitAttrOptions
         
         attrOptions.version         = version
         attrOptions.flags           = flags.rawValue
-        attrOptions.commit_id       = commitID
-        attrOptions.attr_commit_id  = attrCommitID
+        attrOptions.attr_commit_id  = attrCommitID?.cValue ?? git_oid()
         
-        return body(&attrOptions)
+        if let commitID: GitOID = commitID
+        {
+            var cCommitID: git_oid = commitID.cValue
+            
+            return withUnsafeMutablePointer(to: &cCommitID)
+            {
+                commitIDPointer in
+                
+                attrOptions.commit_id = commitIDPointer
+                
+                return body(&attrOptions)
+            }
+        }
+        else
+        {
+            attrOptions.commit_id = nil
+            
+            return body(&attrOptions)
+        }
     }
 }

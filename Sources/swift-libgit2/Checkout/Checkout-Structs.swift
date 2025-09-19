@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -83,7 +82,7 @@ public struct GitCheckoutOptions
     /// The default value is `0644` or `0755` as dictated by the blob.
     public var fileMode         : UInt32
     
-    /// Flags controlling the file opening process.
+    /// The flags controlling the file opening process.
     ///
     /// ## Discussion
     ///
@@ -105,7 +104,6 @@ public struct GitCheckoutOptions
     /// The caller-specified payload passed to ``progressCB``.
     public var progressPayload  : UnsafeMutableRawPointer?
     
-    // TODO: Replace `git_strarray`.
     /// A list of wildmatch patterns or paths.
     ///
     /// ## Discussion
@@ -115,7 +113,7 @@ public struct GitCheckoutOptions
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.
-    public var paths            : git_strarray
+    public var paths            : [String]
     
     /// The expected content of the working directory. The underlying type should be `git_tree`.
     ///
@@ -157,10 +155,9 @@ public struct GitCheckoutOptions
     /// Creates a ``GitCheckoutOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to
     /// ``gitCheckoutOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitCheckoutOptionsVersion
-    ) throws(NSError)
+    )
     {
         var checkoutOptions = git_checkout_options()
         
@@ -171,11 +168,7 @@ public struct GitCheckoutOptions
         
         if checkoutOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitCheckoutOptions.\(#function)",
-                code:       Int(checkoutOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         self.init(cValue: checkoutOptions)
@@ -200,7 +193,7 @@ public struct GitCheckoutOptions
         self.notifyPayload      = checkoutOptions.notify_payload
         self.progressCB         = checkoutOptions.progress_cb
         self.progressPayload    = checkoutOptions.progress_payload
-        self.paths              = checkoutOptions.paths
+        self.paths              = Array(checkoutOptions.paths)
         self.baseline           = checkoutOptions.baseline
         self.baselineIndex      = checkoutOptions.baseline_index
         self.targetDirectory    = checkoutOptions.target_directory
@@ -216,48 +209,52 @@ public struct GitCheckoutOptions
     /// Calls the given closure with a pointer to a `git_checkout_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_checkout_options>) -> T
-    ) throws(NSError) -> T
+    ///
+    /// ## Discussion
+    ///
+    /// The pointer will be `nil` if the initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_checkout_options>?) -> T
+    ) -> T
     {
-        var checkoutOptions = git_checkout_options()
-        
-        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
-            &checkoutOptions,
-            version
-        )
-        
-        if checkoutOptionsInitResult != GIT_OK.rawValue
+        return paths.withGitStrarray
         {
-            throw NSError(
-                domain:     "GitCheckoutOptions.\(#function)",
-                code:       Int(checkoutOptionsInitResult),
-                userInfo:   nil
+            cPaths in
+            
+            var checkoutOptions = git_checkout_options()
+            
+            let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
+                &checkoutOptions,
+                version
             )
+            
+            if checkoutOptionsInitResult != GIT_OK.rawValue
+            {
+                return body(nil)
+            }
+            
+            checkoutOptions.version             = version
+            checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
+            checkoutOptions.disable_filters     = disableFilters.cValue
+            checkoutOptions.dir_mode            = dirMode
+            checkoutOptions.file_mode           = fileMode
+            checkoutOptions.file_open_flags     = fileOpenFlags
+            checkoutOptions.notify_flags        = notifyFlags.rawValue
+            checkoutOptions.notify_cb           = notifyCB
+            checkoutOptions.notify_payload      = notifyPayload
+            checkoutOptions.progress_cb         = progressCB
+            checkoutOptions.progress_payload    = progressPayload
+            checkoutOptions.paths               = cPaths.pointee
+            checkoutOptions.baseline            = baseline
+            checkoutOptions.baseline_index      = baselineIndex
+            checkoutOptions.target_directory    = targetDirectory
+            checkoutOptions.ancestor_label      = ancestorLabel
+            checkoutOptions.our_label           = ourLabel
+            checkoutOptions.their_label         = theirLabel
+            checkoutOptions.perfdata_cb         = perfDataCB
+            checkoutOptions.perfdata_payload    = perfDataPayload
+            
+            return body(&checkoutOptions)
         }
-        
-        checkoutOptions.version             = version
-        checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
-        checkoutOptions.disable_filters     = disableFilters.cValue
-        checkoutOptions.dir_mode            = dirMode
-        checkoutOptions.file_mode           = fileMode
-        checkoutOptions.file_open_flags     = fileOpenFlags
-        checkoutOptions.notify_flags        = notifyFlags.rawValue
-        checkoutOptions.notify_cb           = notifyCB
-        checkoutOptions.notify_payload      = notifyPayload
-        checkoutOptions.progress_cb         = progressCB
-        checkoutOptions.progress_payload    = progressPayload
-        checkoutOptions.paths               = paths
-        checkoutOptions.baseline            = baseline
-        checkoutOptions.baseline_index      = baselineIndex
-        checkoutOptions.target_directory    = targetDirectory
-        checkoutOptions.ancestor_label      = ancestorLabel
-        checkoutOptions.our_label           = ourLabel
-        checkoutOptions.their_label         = theirLabel
-        checkoutOptions.perfdata_cb         = perfDataCB
-        checkoutOptions.perfdata_payload    = perfDataPayload
-        
-        return body(&checkoutOptions)
     }
 }

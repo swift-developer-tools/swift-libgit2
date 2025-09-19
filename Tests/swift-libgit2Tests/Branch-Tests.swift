@@ -95,7 +95,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeReference(&movedBranchPointer)
+                    Free.freeReference(movedBranchPointer)
                 }
                 
                 
@@ -248,7 +248,14 @@ final class BranchTests: XCTestCaseStopOnFail
                     return
                 }
                 
-                XCTAssertEqual(String(cString: branchNamePointer), branchName)
+                guard let branchNameString = String(optionalCString: branchNamePointer)
+                else
+                {
+                    XCTFail("The branch name string was nil.")
+                    return
+                }
+                
+                XCTAssertEqual(branchNameString, branchName)
                 
                 
                 
@@ -268,7 +275,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeReference(&upstreamPointer)
+                    Free.freeReference(upstreamPointer)
                 }
                 
                 

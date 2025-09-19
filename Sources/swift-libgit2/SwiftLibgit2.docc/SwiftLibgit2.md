@@ -86,7 +86,7 @@ let cShutdownResult : Int32 = git_libgit2_shutdown()
 
 ### Error Handling
 
-Most APIs return an `Int32` error code in Swift (or an `int` error code in C). 
+Most Swift function bindings return an `Int32` libgit2 result code.
 A value of `0` represents success, while any negative value represents an error. 
 Handle errors gracefully before moving on to the next step of the process.
 
@@ -387,7 +387,80 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCherrypickCommit(out:repo:cherrypickCommit:ourCommit:mainline:mergeOptions:)``
 - ``gitCherrypick(repo:commit:cherrypickOptions:)``
 
+### Diff Structs
+
+- ``GitDiffFile``
+- ``GitDiffDelta``
+- ``GitDiffSimilarityMetric``
+
+### Diff Enums
+
+- ``GitDeltaT``
+- ``GitDiffFlagT``
+
 ### Global Functions
 
 - ``gitLibgit2Init()``
 - ``gitLibgit2Shutdown()``
+
+### Merge Structs
+
+- ``GitMergeOptions``
+
+### Merge Macros
+
+- ``gitMergeOptionsVersion``
+
+### Merge Enums
+
+- ``GitMergeFlagT``
+- ``GitMergeFileFavorT``
+- ``GitMergeFileFlagT``
+
+### Object Aliases
+
+- ``GitObjectSizeT``
+
+### OID Structs
+
+- ``GitOID``
+
+### OID Functions
+
+- ``gitOIDEqual(a:b:)``
+
+### Signature Structs
+
+- ``GitSignature``
+
+### Signature Functions
+
+- ``gitSignatureNew(out:name:email:time:offset:)``
+- ``gitSignatureNow(out:name:email:)``
+- ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)``
+- ``gitSignatureDefault(out:repo:)``
+- ``gitSignatureFromBuffer(out:buf:)``
+- ``gitSignatureDup(dest:sig:)``
+- ``gitSignatureFree(sig:)``
+
+### Strarray Structs
+
+- ``GitStrarray``
+
+### Strarray Functions
+
+- ``gitStrarrayDispose(array:)``
+
+### Tree Enums
+
+- ``GitFileModeT``
+
+### Types Aliases
+
+- ``GitOffT``
+- ``GitTimeT``
+
+### Types Structs
+
+- ``GitTime``
+- ``GitWritestream``

@@ -86,11 +86,7 @@ public func gitBlameHunkByLine(
     lineNo  : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk>
-            = git_blame_hunk_byline(
-                blame,
-                lineNo
-            )
+    guard let blameHunkPointer: UnsafePointer<git_blame_hunk> = git_blame_hunk_byline(blame, lineNo)
     else
     {
         return nil
@@ -115,11 +111,7 @@ public func gitBlameLineByIndex(
     idx     : Int
 ) -> GitBlameLine?
 {
-    guard let blameLinePointer: UnsafePointer<git_blame_line>
-            = git_blame_line_byindex(
-                blame,
-                idx
-            )
+    guard let blameLinePointer: UnsafePointer<git_blame_line> = git_blame_line_byindex(blame, idx)
     else
     {
         return nil
@@ -170,11 +162,7 @@ public func gitBlameGetHunkByIndex(
     index   : UInt32
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk>
-            = git_blame_get_hunk_byindex(
-                blame,
-                index
-            )
+    guard let blameHunkPointer: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byindex(blame, index)
     else
     {
         return nil
@@ -204,11 +192,7 @@ public func gitBlameGetHunkByLine(
     lineNo  : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk>
-            = git_blame_get_hunk_byline(
-                blame,
-                lineNo
-            )
+    guard let blameHunkPointer: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byline(blame, lineNo)
     else
     {
         return nil
@@ -239,7 +223,7 @@ public func gitBlameFile(
     options : GitBlameOptions?
 ) -> Int32
 {
-    guard let options: GitBlameOptions = options
+    guard var cOptions: git_blame_options = options?.cValue
     else
     {
         return git_blame_file(
@@ -252,24 +236,12 @@ public func gitBlameFile(
     
     
     
-    do
-    {
-        return try options.withCStruct
-        {
-            cOptions in
-            
-            return git_blame_file(
-                out,
-                repo,
-                path,
-                cOptions
-            )
-        }
-    }
-    catch
-    {
-        return Int32(error.code)
-    }
+    return git_blame_file(
+        out,
+        repo,
+        path,
+        &cOptions
+    )
 }
 
 
@@ -299,7 +271,7 @@ public func gitBlameFile(
     options     : GitBlameOptions?
 ) -> Int32
 {
-    guard let options: GitBlameOptions = options
+    guard var cOptions: git_blame_options = options?.cValue
     else
     {
         return git_blame_file_from_buffer(
@@ -314,19 +286,14 @@ public func gitBlameFile(
     
     
     
-    return options.withCStruct
-    {
-        cOptions in
-        
-        return git_blame_file_from_buffer(
-            out,
-            repo,
-            path,
-            contents,
-            contentsLen,
-            cOptions
-        )
-    }
+    return git_blame_file_from_buffer(
+        out,
+        repo,
+        path,
+        contents,
+        contentsLen,
+        &cOptions
+    )
 }*/
 
 

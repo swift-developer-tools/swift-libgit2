@@ -71,7 +71,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .buffer(data: data)
             )
@@ -90,7 +90,7 @@ final class BufferTests: XCTestCaseStopOnFail
             let blobLookupResult: Int32 = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID
+                id:     blobOID
             )
             
             XCTAssertOK(blobLookupResult)
@@ -120,7 +120,12 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            let blobFilterOptions = try GitBlobFilterOptions()
+            guard let blobFilterOptions = GitBlobFilterOptions()
+            else
+            {
+                XCTFail("The blob filter options were not initialized.")
+                return
+            }
             
             /// Test reuse behavior of the same buffer.
             blobFilterResult = gitBlobFilter(
@@ -139,8 +144,15 @@ final class BufferTests: XCTestCaseStopOnFail
                 return
             }
             
+            guard let bufferContent = String(optionalCString: bufferPointer)
+            else
+            {
+                XCTFail("The buffer content was nil.")
+                return
+            }
+            
             XCTAssertEqual(buffer.size, firstBufferSize)
-            XCTAssertEqual(String(cString: bufferPointer), content)
+            XCTAssertEqual(bufferContent, content)
         }
     }
 }

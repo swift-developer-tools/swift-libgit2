@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -48,14 +47,14 @@ public struct GitBlameOptions
     /// ## Discussion
     ///
     /// The default value is HEAD.
-    public var newestCommit         : git_oid
+    public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
     /// The default value is the first commit encountered with a `NULL` parent.
-    public var oldestCommit         : git_oid
+    public var oldestCommit         : GitOID
     
     /// The first line in the file to blame.
     ///
@@ -75,10 +74,9 @@ public struct GitBlameOptions
     
     /// Creates a ``GitBlameOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitBlameOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitBlameOptionsVersion
-    ) throws(NSError)
+    )
     {
         var blameOptions = git_blame_options()
         
@@ -89,11 +87,7 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlameOptions.\(#function)",
-                code:       Int(blameOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         self.init(cValue: blameOptions)
@@ -110,21 +104,20 @@ public struct GitBlameOptions
         self.version                = blameOptions.version
         self.flags                  = GitBlameFlagT(rawValue: blameOptions.flags)
         self.minMatchCharacters     = nil
-        self.newestCommit           = git_oid()
-        self.oldestCommit           = git_oid()
+        self.newestCommit           = GitOID(cValue: blameOptions.newest_commit)
+        self.oldestCommit           = GitOID(cValue: blameOptions.oldest_commit)
         self.minLine                = nil
         self.maxLine                = nil
     }
     
     
     
-    /// Calls the given closure with a pointer to a `git_blame_options` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_blame_options>) -> T
-    ) throws(NSError) -> T
+    /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This value will be `nil` if the initialization failed.
+    internal var cValue: git_blame_options?
     {
         var blameOptions = git_blame_options()
         
@@ -135,16 +128,12 @@ public struct GitBlameOptions
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlameOptions.\(#function)",
-                code:       Int(blameOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         blameOptions.flags          = flags.rawValue
-        blameOptions.newest_commit  = newestCommit
-        blameOptions.oldest_commit  = oldestCommit
+        blameOptions.newest_commit  = newestCommit.cValue
+        blameOptions.oldest_commit  = oldestCommit.cValue
         
         if let minMatchCharacters: UInt16 = minMatchCharacters
         {
@@ -161,7 +150,7 @@ public struct GitBlameOptions
             blameOptions.max_line = maxLine
         }
         
-        return body(&blameOptions)
+        return blameOptions
     }
 }
 
@@ -178,7 +167,7 @@ public struct GitBlameHunk
     public let linesInHunk          : Int
     
     /// The OID of the commit where this hunk was last changed.
-    public let finalCommitID        : git_oid
+    public let finalCommitID        : GitOID
     
     /// The 1-indexed line number where this hunk begins, in the final version of the file.
     public let finalStartLineNumber : Int
@@ -189,7 +178,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let finalSignature       : UnsafeMutablePointer<git_signature>?
+    public let finalSignature       : GitSignature?
     
     /// The committer of ``GitBlameHunk/finalCommitID``.
     ///
@@ -197,7 +186,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let finalCommitter       : UnsafeMutablePointer<git_signature>?
+    public let finalCommitter       : GitSignature?
     
     /// The OID of the commit where this hunk was found.
     ///
@@ -205,7 +194,7 @@ public struct GitBlameHunk
     ///
     /// This will usually be the same as ``GitBlameHunk/finalCommitID``, except when
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` has been specified.
-    public let origCommitID         : git_oid
+    public let origCommitID         : GitOID
     
     /// The path to the file where this hunk originated, as of the commit specified by
     /// ``GitBlameHunk/origCommitID``.
@@ -222,7 +211,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let origSignature        : UnsafeMutablePointer<git_signature>?
+    public let origSignature        : GitSignature?
     
     /// The committer of ``GitBlameHunk/origCommitID``.
     ///
@@ -230,7 +219,7 @@ public struct GitBlameHunk
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
     /// canonical real name and email address.
-    public let origCommitter        : UnsafeMutablePointer<git_signature>?
+    public let origCommitter        : GitSignature?
     
     /// The summary of the commit where this hunk was last changed.
     public let summary              : String?
@@ -253,16 +242,16 @@ public struct GitBlameHunk
     )
     {
         self.linesInHunk            = blameHunk.lines_in_hunk
-        self.finalCommitID          = blameHunk.final_commit_id
+        self.finalCommitID          = GitOID(cValue: blameHunk.final_commit_id)
         self.finalStartLineNumber   = blameHunk.final_start_line_number
-        self.finalSignature         = blameHunk.final_signature
-        self.finalCommitter         = blameHunk.final_committer
-        self.origCommitID           = blameHunk.orig_commit_id
-        self.origPath               = blameHunk.orig_path.map { String(cString: $0 )}
+        self.finalSignature         = GitSignature(cValue: blameHunk.final_signature.pointee)
+        self.finalCommitter         = GitSignature(cValue: blameHunk.final_committer.pointee)
+        self.origCommitID           = GitOID(cValue: blameHunk.orig_commit_id)
+        self.origPath               = String(optionalCString: blameHunk.orig_path)
         self.origStartLineNumber    = blameHunk.orig_start_line_number
-        self.origSignature          = blameHunk.orig_signature
-        self.origCommitter          = blameHunk.orig_committer
-        self.summary                = blameHunk.summary.map { String(cString: $0 )}
+        self.origSignature          = GitSignature(cValue: blameHunk.orig_signature.pointee)
+        self.origCommitter          = GitSignature(cValue: blameHunk.orig_committer.pointee)
+        self.summary                = String(optionalCString: blameHunk.summary)
         self.boundary               = blameHunk.boundary == 1
     }
 }
@@ -290,7 +279,7 @@ public struct GitBlameLine
         cValue blameLine: git_blame_line
     )
     {
-        self.ptr    = blameLine.ptr.map { String(cString: $0 )}
+        self.ptr    = String(optionalCString: blameLine.ptr)
         self.len    = blameLine.len
     }
 }

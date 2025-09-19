@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -34,21 +33,20 @@ public struct GitBlobFilterOptions
     /// ## Discussion
     ///
     /// This property is unused, but is reserved for API compatibility.
-    public var commitID     : UnsafeMutablePointer<git_oid>?
+    public var commitID     : GitOID?
     
     /// The commit from which to load attributes when
     /// ``GitBlobFilterFlagT/gitBlobFilterAttributesFromCommit`` is specified.
-    public var attrCommitID : git_oid
+    public var attrCommitID : GitOID?
     
     
     
     /// Creates a ``GitBlobFilterOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to
     /// ``gitBlobFilterOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
-        version: UInt32 = gitBlameOptionsVersion
-    ) throws(NSError)
+    public init?(
+        version: UInt32 = gitBlobFilterOptionsVersion
+    )
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -59,11 +57,7 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlobFilterOptions.\(#function)",
-                code:       Int(blobFilterOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         self.init(cValue: blobFilterOptions)
@@ -81,7 +75,7 @@ public struct GitBlobFilterOptions
         self.version        = UInt32(blobFilterOptions.version)
         self.flags          = GitBlobFilterFlagT(rawValue: blobFilterOptions.flags)
         self.commitID       = nil
-        self.attrCommitID   = git_oid()
+        self.attrCommitID   = nil
     }
     
     
@@ -89,10 +83,13 @@ public struct GitBlobFilterOptions
     /// Calls the given closure with a pointer to a `git_blob_filter_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_blob_filter_options>) -> T
-    ) throws(NSError) -> T
+    ///
+    /// ## Discussion
+    ///
+    /// The pointer will be `nil` if the initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blob_filter_options>?) -> T
+    ) -> T
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -103,17 +100,30 @@ public struct GitBlobFilterOptions
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitBlobFilterOptions.\(#function)",
-                code:       Int(blobFilterOptionsInitResult),
-                userInfo:   nil
-            )
+            return body(nil)
         }
         
         blobFilterOptions.flags             = flags.rawValue
-        blobFilterOptions.commit_id         = commitID
-        blobFilterOptions.attr_commit_id    = attrCommitID
+        blobFilterOptions.attr_commit_id    = attrCommitID?.cValue ?? git_oid()
         
-        return body(&blobFilterOptions)
+        if let commitID: GitOID = commitID
+        {
+            var cCommitID: git_oid = commitID.cValue
+            
+            return withUnsafeMutablePointer(to: &cCommitID)
+            {
+                commitIDPointer in
+                
+                blobFilterOptions.commit_id = commitIDPointer
+                
+                return body(&blobFilterOptions)
+            }
+        }
+        else
+        {
+            blobFilterOptions.commit_id = nil
+            
+            return body(&blobFilterOptions)
+        }
     }
 }

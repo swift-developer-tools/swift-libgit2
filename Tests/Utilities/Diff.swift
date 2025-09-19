@@ -10,6 +10,7 @@
 import Clibgit2
 import Foundation
 import XCTest
+@testable import SwiftLibgit2
 
 
 
@@ -34,20 +35,22 @@ enum Diff
         
         
         
-        var headOID         : git_oid           = OID.getHEADCommitOID(in: repository)
+        let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
         var commitPointer   : OpaquePointer?    = nil
         
         defer
         {
-            Free.freeCommit(&commitPointer)
+            Free.freeCommit(commitPointer)
         }
         
         
         
+        var cHeadOID: git_oid = headOID.cValue
+        
         let commitLookupResult: Int32 = git_commit_lookup(
             &commitPointer,
             repository.pointer,
-            &headOID
+            &cHeadOID
         )
         
         XCTAssertOK(commitLookupResult)
@@ -59,7 +62,7 @@ enum Diff
         
         defer
         {
-            Free.freeTree(&treePointer)
+            Free.freeTree(treePointer)
         }
         
         
@@ -78,7 +81,7 @@ enum Diff
         
         defer
         {
-            Free.freeDiff(&diffPointer)
+            Free.freeDiff(diffPointer)
         }
         
         let diffTreeToWorkdirResult: Int32 = git_diff_tree_to_workdir(
@@ -93,10 +96,9 @@ enum Diff
         guard let diffPointer: OpaquePointer = diffPointer
         else
         {
-            throw NSError(
-                domain:     #function,
+            throw NSError.create(
                 code:       Int(GIT_EUSER.rawValue),
-                userInfo:   nil
+                message:    "The diff pointer was nil."
             )
         }
         

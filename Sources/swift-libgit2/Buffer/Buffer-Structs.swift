@@ -19,8 +19,8 @@ import Clibgit2
 /// responsibility for freeing that memory. To make ownership clear in these cases, libgit2 uses ``GitBuf``
 /// to return this data. Callers should use ``gitBufDispose(buffer:)`` to free the memory.
 ///
-/// A ``GitBuf`` contains a pointer to a `NULL`-terminated C string and the length of the string, in bytes.
-/// The length of the string does not include the `NULL` terminator.
+/// A ``GitBuf`` contains a pointer to a null-terminated C string and the length of the string, in bytes.
+/// The length of the string does not include the null terminator.
 ///
 /// ## C Equivalent
 ///
@@ -32,7 +32,7 @@ public struct GitBuf
     /// ## Discussion
     ///
     /// ``GitBuf/ptr`` points to the start of the buffer being returned. The buffer's length, in bytes,
-    /// is specified by the ``GitBuf/size`` property. The buffer contains a `NULL` terminator at
+    /// is specified by the ``GitBuf/size`` property. The buffer contains a null terminator at
     /// position `size + 1`.
     ///
     /// In libgit2, `git_buf->ptr` has the following lifecycle:
@@ -48,7 +48,7 @@ public struct GitBuf
     /// This property is unused, but is reserved for API compatibility.
     public var reserved : Int
     
-    /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the `NULL`
+    /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the null
     /// terminator.
     public var size     : Int
     
@@ -70,7 +70,7 @@ public struct GitBuf
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal mutating func withCStruct<T>(
+    internal mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<git_buf>) -> T
     ) -> T
     {

@@ -34,7 +34,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: git_oid = Blob.createBlob(
+            var blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .buffer(data: data)
             )
@@ -66,7 +66,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: git_oid = Blob.createBlob(
+            var blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .disk(path: fileURL.path)
             )
@@ -134,7 +134,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: git_oid = Blob.createBlob(
+            var blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .streamCommit(stream: streamPointer)
             )
@@ -157,7 +157,7 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID: git_oid = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .workingDirectory
             )
@@ -176,7 +176,7 @@ final class BlobTests: XCTestCaseStopOnFail
             let blobLookupResult: Int32 = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID
+                id:     blobOID
             )
             
             XCTAssertOK(blobLookupResult)
@@ -186,7 +186,7 @@ final class BlobTests: XCTestCaseStopOnFail
             let blobLookupPrefixResult: Int32 = gitBlobLookupPrefix(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID,
+                id:     blobOID,
                 len:    8
             )
             
@@ -207,14 +207,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            guard let blobID: UnsafePointer<git_oid> = gitBlobID(blob: blobPointer)
+            guard let blobID: GitOID = gitBlobID(blob: blobPointer)
             else
             {
                 XCTFail("The blob ID was nil.")
                 return
             }
             
-            OID.assertOIDsEqual(&blobOID, blobID)
+            OID.assertOIDsEqual(blobOID, blobID)
             
             
             
@@ -250,7 +250,7 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID: git_oid = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .workingDirectory
             )
@@ -269,7 +269,7 @@ final class BlobTests: XCTestCaseStopOnFail
             let blobLookupResult: Int32 = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID
+                id:     blobOID
             )
             
             XCTAssertOK(blobLookupResult)
@@ -303,7 +303,12 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobFilterOptions = try GitBlobFilterOptions()
+            guard let blobFilterOptions = GitBlobFilterOptions()
+            else
+            {
+                XCTFail("The blob filter options were not initialized.")
+                return
+            }
             
             blobFilterResult = gitBlobFilter(
                 out:        &buffer,
@@ -347,7 +352,12 @@ final class BlobTests: XCTestCaseStopOnFail
     
     func testGitBlobFilterOptions() throws
     {
-        var blobFilterOptions = try GitBlobFilterOptions()
+        guard var blobFilterOptions = GitBlobFilterOptions()
+        else
+        {
+            XCTFail("The blob filter options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(blobFilterOptions.version, gitBlobFilterOptionsVersion)
         XCTAssertEqual(blobFilterOptions.flags, GitBlobFilterFlagT.gitBlobFilterCheckForBinary)
@@ -384,7 +394,7 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID: git_oid = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .workingDirectory
             )
@@ -405,7 +415,7 @@ final class BlobTests: XCTestCaseStopOnFail
             let blobLookupResult: Int32 = gitBlobLookup(
                 blob:   &originalBlobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID
+                id:     blobOID
             )
             
             XCTAssertOK(blobLookupResult)
@@ -436,8 +446,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             guard
-                let originalBlobID      : UnsafePointer<git_oid>    = gitBlobID(blob: originalBlobPointer),
-                let duplicatedBlobID    : UnsafePointer<git_oid>    = gitBlobID(blob: duplicatedBlobPointer)
+                let originalBlobID      : GitOID    = gitBlobID(blob: originalBlobPointer),
+                let duplicatedBlobID    : GitOID    = gitBlobID(blob: duplicatedBlobPointer)
             else
             {
                 XCTFail("The original or duplicated blob IDs were nil.")
@@ -465,7 +475,7 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var blobOID = git_oid()
+            var blobOID = GitOID()
             
             let data = Data(
             [
@@ -518,7 +528,7 @@ final class BlobTests: XCTestCaseStopOnFail
             let blobLookupResult: Int32 = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
-                id:     &blobOID
+                id:     blobOID
             )
             
             XCTAssertOK(blobLookupResult)

@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
-import Foundation
 
 
 
@@ -43,10 +42,9 @@ public struct GitApplyOptions
     
     /// Creates a ``GitApplyOptions`` instance from a version number.
     /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
-    /// - Throws: An `NSError` if initialization failed.
-    public init(
+    public init?(
         version: UInt32 = gitApplyOptionsVersion
-    ) throws(NSError)
+    )
     {
         var applyOptions = git_apply_options()
         
@@ -57,11 +55,7 @@ public struct GitApplyOptions
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitApplyOptions.\(#function)",
-                code:       Int(applyOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         self.init(cValue: applyOptions)
@@ -84,13 +78,12 @@ public struct GitApplyOptions
     
     
     
-    /// Calls the given closure with a pointer to a `git_apply_options` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
-    internal func withCStruct<T>(
-        _ body: (UnsafeMutablePointer<git_apply_options>) -> T
-    ) throws(NSError) -> T
+    /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This value will be `nil` if the initialization failed.
+    internal var cValue: git_apply_options?
     {
         var applyOptions = git_apply_options()
         
@@ -101,11 +94,7 @@ public struct GitApplyOptions
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            throw NSError(
-                domain:     "GitApplyOptions.\(#function)",
-                code:       Int(applyOptionsInitResult),
-                userInfo:   nil
-            )
+            return nil
         }
         
         applyOptions.delta_cb   = deltaCB
@@ -113,6 +102,6 @@ public struct GitApplyOptions
         applyOptions.payload    = payload
         applyOptions.flags      = flags.rawValue
         
-        return body(&applyOptions)
+        return applyOptions
     }
 }

@@ -12,7 +12,6 @@ import Clibgit2
 
 
 // TODO: Replace `git_repository_set_head()` in documentation.
-
 /// Updates files in the index and in the working tree to match the contenet of the commit
 /// pointed at by HEAD.
 /// - Parameters:
@@ -30,6 +29,9 @@ import Clibgit2
 ///
 /// Instead, checkout the target of the branch and then update HEAD using
 /// `git_repository_set_head()` to point to the checked-out branch.
+///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
+/// to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -50,21 +52,20 @@ public func gitCheckoutHEAD(
     
     
     
-    do
+    return opts.withCValue
     {
-        return try opts.withCStruct
+        cOpts in
+        
+        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
+        else
         {
-            cOpts in
-            
-            return git_checkout_head(
-                repo,
-                cOpts
-            )
+            return GIT_EUSER.rawValue
         }
-    }
-    catch
-    {
-        return Int32(error.code)
+        
+        return git_checkout_head(
+            repo,
+            cOpts
+        )
     }
 }
 
@@ -79,6 +80,11 @@ public func gitCheckoutHEAD(
 ///   - opts: The options for the checkout process.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
+///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
+/// to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -101,22 +107,21 @@ public func gitCheckoutIndex(
     
     
     
-    do
+    return opts.withCValue
     {
-        return try opts.withCStruct
+        cOpts in
+        
+        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
+        else
         {
-            cOpts in
-            
-            return git_checkout_index(
-                repo,
-                index,
-                cOpts
-            )
+            return GIT_EUSER.rawValue
         }
-    }
-    catch
-    {
-        return Int32(error.code)
+        
+        return git_checkout_index(
+            repo,
+            index,
+            cOpts
+        )
     }
 }
 
@@ -132,6 +137,11 @@ public func gitCheckoutIndex(
 ///   - opts: The options for the checkout process.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
+///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
+/// to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -154,21 +164,20 @@ public func gitCheckoutTree(
     
     
     
-    do
+    return opts.withCValue
     {
-        return try opts.withCStruct
+        cOpts in
+        
+        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
+        else
         {
-            cOpts in
-            
-            return git_checkout_tree(
-                repo,
-                treeish,
-                cOpts
-            )
+            return GIT_EUSER.rawValue
         }
-    }
-    catch
-    {
-        return Int32(error.code)
+        
+        return git_checkout_tree(
+            repo,
+            treeish,
+            cOpts
+        )
     }
 }

@@ -12,7 +12,6 @@ import Clibgit2
 
 
 // TODO: Replace `git_index_free()` in documentation.
-
 /// Cherry-picks the given commit against the given "our" commit, and produces an index that reflects
 /// the result of the cherry-pick operation.
 /// - Parameters:
@@ -29,6 +28,9 @@ import Clibgit2
 ///
 /// The returned index should be freed with `git_index_free()`.
 ///
+/// This function will return `GIT_EUSER` if `mergeOptions` was provided, but there was an error
+/// converting it to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_commit()`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_commit.html)
@@ -38,17 +40,43 @@ public func gitCherrypickCommit(
     cherrypickCommit    : OpaquePointer,
     ourCommit           : OpaquePointer,
     mainline            : UInt32,
-    mergeOptions        : UnsafePointer<git_merge_options>?
+    mergeOptions        : GitMergeOptions?
 ) -> Int32
 {
-    return git_cherrypick_commit(
-        out,
-        repo,
-        cherrypickCommit,
-        ourCommit,
-        mainline,
-        mergeOptions
-    )
+    guard let mergeOptions: GitMergeOptions = mergeOptions
+    else
+    {
+        return git_cherrypick_commit(
+            out,
+            repo,
+            cherrypickCommit,
+            ourCommit,
+            mainline,
+            nil
+        )
+    }
+    
+    
+    
+    return mergeOptions.withCValue
+    {
+        cMergeOptions in
+        
+        guard let cMergeOptions: UnsafeMutablePointer<git_merge_options> = cMergeOptions
+        else
+        {
+            return GIT_EUSER.rawValue
+        }
+        
+        return git_cherrypick_commit(
+            out,
+            repo,
+            cherrypickCommit,
+            ourCommit,
+            mainline,
+            cMergeOptions
+        )
+    }
 }
 
 
@@ -60,6 +88,11 @@ public func gitCherrypickCommit(
 ///   - commit: The commit to cherry-pick.
 ///   - cherrypickOptions: The options to use for the cherry-pick process.
 /// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `cherrypickOptions` was provided, but there was an error
+/// converting it to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -82,21 +115,20 @@ public func gitCherrypick(
     
     
     
-    do
+    return cherrypickOptions.withCValue
     {
-        return try cherrypickOptions.withCStruct
+        cCherrypickOptions in
+        
+        guard let cCherrypickOptions: UnsafeMutablePointer<git_cherrypick_options> = cCherrypickOptions
+        else
         {
-            cCherrypickOptions in
-            
-            return git_cherrypick(
-                repo,
-                commit,
-                cCherrypickOptions
-            )
+            return GIT_EUSER.rawValue
         }
-    }
-    catch
-    {
-        return Int32(error.code)
+        
+        return git_cherrypick(
+            repo,
+            commit,
+            cCherrypickOptions
+        )
     }
 }

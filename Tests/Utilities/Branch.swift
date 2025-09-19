@@ -46,18 +46,18 @@ enum Branch
         
         defer
         {
-            Free.freeCommit(&headCommitPointer)
-            Free.freeAnnotatedCommit(&annotatedCommitPointer)
+            Free.freeCommit(headCommitPointer)
+            Free.freeAnnotatedCommit(annotatedCommitPointer)
             
             if freeBranch
             {
-                Free.freeReference(&branchPointer)
+                Free.freeReference(branchPointer)
             }
         }
         
         
         
-        var headOID: git_oid = OID.getHEADCommitOID(in: repository)
+        let headOID: GitOID = OID.getHEADCommitOID(in: repository)
         
         
         
@@ -66,7 +66,7 @@ enum Branch
             let annotatedCommitLookup: Int32 = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
-                id:     &headOID
+                id:     headOID
             )
             
             XCTAssertOK(annotatedCommitLookup)
@@ -76,10 +76,9 @@ enum Branch
             {
                 XCTFail("The annotated commit pointer was nil.")
                 
-                throw NSError(
-                    domain:     #function,
+                throw NSError.create(
                     code:       Int(GIT_EUSER.rawValue),
-                    userInfo:   nil
+                    message:    "The annotated commit pointer was nil."
                 )
             }
             
@@ -97,10 +96,12 @@ enum Branch
         }
         else
         {
+            var cHeadOID: git_oid = headOID.cValue
+            
             let commitLookupResult: Int32 = git_commit_lookup(
                 &headCommitPointer,
                 repository.pointer,
-                &headOID
+                &cHeadOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -108,12 +109,11 @@ enum Branch
             guard let headCommitPointer: OpaquePointer = headCommitPointer
             else
             {
-                XCTFail("The HEAD commit pointer was nil.")
+                XCTFail("The  was nil.")
                 
-                throw NSError(
-                    domain:     #function,
+                throw NSError.create(
                     code:       Int(GIT_EUSER.rawValue),
-                    userInfo:   nil
+                    message:    "The HEAD commit pointer was nil."
                 )
             }
             
@@ -155,7 +155,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(&branchPointer)
+            Free.freeReference(branchPointer)
         }
         
         
@@ -205,7 +205,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(&branchPointer)
+            Free.freeReference(branchPointer)
         }
         
         

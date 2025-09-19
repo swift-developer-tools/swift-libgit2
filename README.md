@@ -86,7 +86,7 @@ let cShutdownResult : Int32 = git_libgit2_shutdown()
 
 ### Error Handling
 
-Most APIs return an `Int32` error code in Swift (or an `int` error code in C). 
+Most Swift function bindings return an `Int32` libgit2 result code.
 A value of `0` represents success, while any negative value represents an error. 
 Handle errors gracefully before moving on to the next step of the process.
 

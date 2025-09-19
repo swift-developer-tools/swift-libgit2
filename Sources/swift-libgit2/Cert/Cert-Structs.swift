@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The parent type for ``GitCertHostKey`` and ``GitCertX509``
+/// The parent type for ``GitCertHostKey`` and ``GitCertX509``.
 ///
 /// ## C Equivalent
 ///
@@ -113,14 +113,16 @@ public struct GitCertHostKey
     /// ``GitCertSSHRawTypeT/gitCertSSHRawTypeUnknown`` if an unexpected value is
     /// encountered, although this should never occur.
     internal init(
-        cValue certHostKey: inout git_cert_hostkey
+        cValue certHostKey: git_cert_hostkey
     )
     {
+        var certHostKeyCopy: git_cert_hostkey = certHostKey
+        
         self.parent         = GitCert(cValue: certHostKey.parent)
         self.type           = GitCertSSHT(rawValue: certHostKey.type.rawValue)
-        self.hashMD5        = Data(bytes: &certHostKey.hash_md5, count: 16)
-        self.hashSHA1       = Data(bytes: &certHostKey.hash_sha1, count: 20)
-        self.hashSHA256     = Data(bytes: &certHostKey.hash_sha256, count: 32)
+        self.hashMD5        = Data(bytes: &certHostKeyCopy.hash_md5, count: 16)
+        self.hashSHA1       = Data(bytes: &certHostKeyCopy.hash_sha1, count: 20)
+        self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: 32)
         self.rawType        = GitCertSSHRawTypeT(cValue: certHostKey.raw_type) ?? .gitCertSSHRawTypeUnknown
         self.hostKey        = certHostKey.hostkey
         self.hostKeyLen     = certHostKey.hostkey_len

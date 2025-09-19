@@ -23,7 +23,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var (_, featureCommitOID): (git_oid, git_oid) = try setupCherrypickScenario(in: repository)
+            let (_, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
             
             
             
@@ -31,15 +31,17 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(&featureCommitPointer)
+                Free.freeCommit(featureCommitPointer)
             }
             
             
             
+            var cFeatureCommitOID: git_oid = featureCommitOID.cValue
+            
             let featureCommitLookupResult: Int32 = git_commit_lookup(
                 &featureCommitPointer,
                 repository.pointer,
-                &featureCommitOID
+                &cFeatureCommitOID
             )
             
             XCTAssertOK(featureCommitLookupResult)
@@ -70,22 +72,32 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var headOID: git_oid = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             repository.resetToCommit(
-                commitOID:  &headOID,
+                commitOID:  headOID,
                 resetType:  GIT_RESET_HARD
             )
             
             
             
-            var checkoutOptions = try GitCheckoutOptions()
+            guard var checkoutOptions = GitCheckoutOptions()
+            else
+            {
+                XCTFail("The checkout options were not initialized.")
+                return
+            }
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
             
             
-            var cherrypickOptions = try GitCherrypickOptions()
+            guard var cherrypickOptions = GitCherrypickOptions()
+            else
+            {
+                XCTFail("The cherrypick options were not initialized.")
+                return
+            }
             
             cherrypickOptions.mainline      = 0
             cherrypickOptions.checkoutOpts  = checkoutOptions
@@ -119,7 +131,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var (mainCommitOID, featureCommitOID): (git_oid, git_oid) = try setupCherrypickScenario(in: repository)
+            let (mainCommitOID, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
             
             
             
@@ -129,17 +141,19 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(&mainCommitPointer)
-                Free.freeCommit(&featureCommitPointer)
-                Free.freeIndex(&indexPointer)
+                Free.freeCommit(mainCommitPointer)
+                Free.freeCommit(featureCommitPointer)
+                Free.freeIndex(indexPointer)
             }
             
             
             
+            var cMainCommitOID: git_oid = mainCommitOID.cValue
+            
             let mainCommitLookupResult: Int32 = git_commit_lookup(
                 &mainCommitPointer,
                 repository.pointer,
-                &mainCommitOID
+                &cMainCommitOID
             )
             
             XCTAssertOK(mainCommitLookupResult)
@@ -153,10 +167,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
+            var cFeatureCommitOID: git_oid = featureCommitOID.cValue
+            
             let featureCommitLookupResult: Int32 = git_commit_lookup(
                 &featureCommitPointer,
                 repository.pointer,
-                &featureCommitOID
+                &cFeatureCommitOID
             )
             
             XCTAssertOK(featureCommitLookupResult)
@@ -202,7 +218,12 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     func testGitCherrypickOptions() throws
     {
-        var cherrypickOptions = try GitCherrypickOptions()
+        guard var cherrypickOptions = GitCherrypickOptions()
+        else
+        {
+            XCTFail("The cherrypick options were not initialized.")
+            return
+        }
         
         XCTAssertEqual(cherrypickOptions.version, gitCherrypickOptionsVersion)
         XCTAssertEqual(cherrypickOptions.mainline, 0)
@@ -235,9 +256,9 @@ extension CherrypickTests
     /// - Returns: A tuple containing the main branch commit and the feature branch commit.
     private func setupCherrypickScenario(
         in repository: Repository
-    ) throws -> (git_oid, git_oid)
+    ) throws -> (GitOID, GitOID)
     {
-        let mainCommitOID: git_oid = try repository.createCommit(
+        let mainCommitOID: GitOID = try repository.createCommit(
             path:       "feature.txt",
             content:    CherrypickTests.mainBranchContent,
             message:    "Add feature on main branch"
@@ -254,10 +275,10 @@ extension CherrypickTests
         {
             branchPointer in
             
-            let checkoutTreeResult: Int32 = git_checkout_tree(
-                repository.pointer,
-                nil,
-                nil
+            let checkoutTreeResult: Int32 = gitCheckoutTree(
+                repo:       repository.pointer,
+                treeish:    nil,
+                opts:       nil
             )
             
             XCTAssertOK(checkoutTreeResult)
@@ -274,7 +295,7 @@ extension CherrypickTests
         
         
         
-        let featureCommitOID: git_oid = try repository.createCommit(
+        let featureCommitOID: GitOID = try repository.createCommit(
             path:       "feature.txt",
             content:    CherrypickTests.featureBranchContent,
             message:    "Add feature branch changes"
@@ -282,23 +303,24 @@ extension CherrypickTests
         
         
         
-        var headOID: git_oid = OID.getHEADCommitOID(in: repository)
-        
+        let headOID             : GitOID            = OID.getHEADCommitOID(in: repository)
         var headCommitPointer   : OpaquePointer?    = nil
         var branchPointer       : OpaquePointer?    = nil
         
         defer
         {
-            Free.freeCommit(&headCommitPointer)
-            Free.freeReference(&branchPointer)
+            Free.freeCommit(headCommitPointer)
+            Free.freeReference(branchPointer)
         }
         
         
         
+        var cHeadOID: git_oid = headOID.cValue
+        
         let commitLookupResult: Int32 = git_commit_lookup(
             &headCommitPointer,
             repository.pointer,
-            &headOID
+            &cHeadOID
         )
         
         XCTAssertOK(commitLookupResult)
@@ -314,15 +336,14 @@ extension CherrypickTests
         
         
         
-        guard let referenceNameResult: UnsafePointer<CChar> = git_reference_name(branchPointer)
+        guard let referenceName: UnsafePointer<CChar> = git_reference_name(branchPointer)
         else
         {
             XCTFail("The branch name was nil.")
             
-            throw NSError(
-                domain:     "CherrypickTests.\(#function)",
+            throw NSError.create(
                 code:       Int(GIT_EUSER.rawValue),
-                userInfo:   nil
+                message:    "The branch name was nil."
             )
         }
         
@@ -330,7 +351,7 @@ extension CherrypickTests
         
         let repositorySetHEADResult: Int32 = git_repository_set_head(
             repository.pointer,
-            referenceNameResult
+            referenceName
         )
         
         XCTAssertOK(repositorySetHEADResult)
