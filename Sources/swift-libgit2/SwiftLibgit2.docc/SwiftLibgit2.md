@@ -462,6 +462,18 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitOIDEqual(a:b:)``
 
+### Proxy Structs
+
+- ``GitProxyOptions``
+
+### Proxy Macros
+
+- ``gitProxyOptionsVersion``
+
+### Proxy Enums
+
+- ``GitProxyT``
+
 ### Signature Structs
 
 - ``GitSignature``
