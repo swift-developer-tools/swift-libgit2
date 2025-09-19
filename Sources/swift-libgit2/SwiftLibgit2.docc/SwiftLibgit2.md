@@ -462,6 +462,11 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitOIDEqual(a:b:)``
 
+### Pack Callbacks
+
+- ``GitPackbuilderForEachCB``
+- ``GitPackbuilderProgressCB``
+
 ### Proxy Structs
 
 - ``GitProxyOptions``
