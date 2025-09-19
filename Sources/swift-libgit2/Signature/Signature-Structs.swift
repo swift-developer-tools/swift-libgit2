@@ -40,8 +40,8 @@ public struct GitSignature
     /// Creates a ``GitSignature`` instance.
     public init()
     {
-        /// Direct initialization using `self.init(cValue: git_signature())` is not used
-        /// since the unitialized C struct contains null pointers for the `name` and `email` fields.
+        /// Direct initialization with `self.init(cValue: git_signature())` is not used
+        /// since the unitialized C struct contains `nil` pointers for the `name` and `email` fields.
         self.name   = ""
         self.email  = ""
         self.when   = GitTime(cValue: git_time())
