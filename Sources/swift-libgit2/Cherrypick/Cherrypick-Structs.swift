@@ -55,6 +55,18 @@ public struct GitCherrypickOptions
             return nil
         }
         
+        self.init(cValue: cherrypickOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitCherrypickOptions`` instance from a `git_cherrypick_options`
+    /// instance.
+    /// - Parameter cherrypickOptions: The `git_cherrypick_options` instance to use.
+    internal init(
+        cValue cherrypickOptions: git_cherrypick_options
+    )
+    {
         self.version        = cherrypickOptions.version
         self.mainline       = cherrypickOptions.mainline
         self.mergeOpts      = GitMergeOptions(cValue: cherrypickOptions.merge_opts)
