@@ -55,7 +55,7 @@ public struct GitCloneOptions
     ///
     /// If this is `nil`, then the ``bare`` property will be used to determine whether to create a
     /// bare repository.
-    public var repositoryCB         : git_repository_create_cb?
+    public var repositoryCB         : GitRepositoryCreateCB?
     
     /// The caller-specified payload passed to ``repositoryCB``.
     ///
@@ -65,7 +65,7 @@ public struct GitCloneOptions
     public var repositoryCBPayload  : UnsafeMutableRawPointer?
     
     /// A callback used to create the remote, prior to its being used to perform the clone operation.
-    public var remoteCB             : git_remote_create_cb?
+    public var remoteCB             : GitRemoteCreateCB?
     
     /// The caller-specified payload passed to ``remoteCB``.
     ///
