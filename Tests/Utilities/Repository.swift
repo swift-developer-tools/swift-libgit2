@@ -427,11 +427,8 @@ extension Repository
         _ body: (Repository) throws -> Void
     ) throws
     {
-        let url: URL = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
-        
-        
-        
-        var repositoryPointer: OpaquePointer? = nil
+        var repositoryPointer   : OpaquePointer?    = nil
+        let url                 : URL               = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
         
         defer
         {
