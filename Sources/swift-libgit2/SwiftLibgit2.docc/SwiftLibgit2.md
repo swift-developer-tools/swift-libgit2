@@ -479,6 +479,39 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``GitProxyT``
 
+### Remote Structs
+
+- ``GitRemoteCallbacks``
+
+### Remote Macros
+
+- ``gitRemoteCreateOptionsVersion``
+- ``gitRemoteCallbacksVersion``
+- ``gitFetchOptionsVersion``
+- ``gitPushOptionsVersion``
+- ``gitRemoteConnectOptionsVersion``
+
+### Remote Enums
+
+- ``GitRemoteRedirectT``
+- ``GitRemoteCreateFlags``
+- ``GitRemoteUpdateFlags``
+- ``GitRemoteCompletionT``
+- ``GitFetchPruneT``
+- ``GitRemoteAutoTagOptionT``
+- ``GitFetchDepthT``
+
+### Remote Callbacks
+
+- ``GitPushTransferProgressCB``
+- ``GitPushNegotiationCB``
+- ``GitPushUpdateReferenceCB``
+- ``GitURLResolveCB``
+- ``GitRemoteReadyCB``
+- ``GitRemoteCompletionCB``
+- ``GitRemoteUpdateTipsCB``
+- ``GitRemoteUpdateRefsCB``
+
 ### Signature Structs
 
 - ``GitSignature``
