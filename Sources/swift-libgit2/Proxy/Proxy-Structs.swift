@@ -123,7 +123,6 @@ public struct GitProxyOptions
             return body(nil)
         }
         
-        proxyOptions.version            = version
         proxyOptions.type               = type.cValue
         proxyOptions.credentials        = credentials
         proxyOptions.certificate_check  = certificateCheck
