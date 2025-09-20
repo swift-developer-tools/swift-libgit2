@@ -131,7 +131,6 @@ public struct GitCloneOptions
             return body(nil)
         }
         
-        cloneOptions.version                 = version
         cloneOptions.bare                   = bare.cValue
         cloneOptions.local                  = local.cValue
         cloneOptions.repository_cb          = repositoryCB
