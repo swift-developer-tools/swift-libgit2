@@ -105,7 +105,7 @@ public struct GitRemoteUpdateFlags: OptionSet, Sendable
     
     
     /// Update `FETCH_HEAD` during fetch operations.
-    public static let gitRemoteUpdateFetchHead          = GitRemoteUpdateFlags(rawValue: GIT_REMOTE_UPDATE_FETCHHEAD.rawValue)
+    public static let gitRemoteUpdateFetchHEAD          = GitRemoteUpdateFlags(rawValue: GIT_REMOTE_UPDATE_FETCHHEAD.rawValue)
     
     /// Report status updates even for references that have not changed.
     public static let gitRemoteUpdateReportUnchanged    = GitRemoteUpdateFlags(rawValue: GIT_REMOTE_UPDATE_REPORT_UNCHANGED.rawValue)
