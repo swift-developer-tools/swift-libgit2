@@ -482,6 +482,7 @@ swift-libgit2 includes the following compiled libraries:
 ### Remote Structs
 
 - ``GitRemoteCallbacks``
+- ``GitFetchOptions``
 
 ### Remote Macros
 
