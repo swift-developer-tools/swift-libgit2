@@ -86,8 +86,7 @@ public struct GitCherrypickOptions
             return body(nil)
         }
         
-        cherrypickOptions.version   = version
-        cherrypickOptions.mainline  = mainline
+        cherrypickOptions.mainline = mainline
         
         return withComposedProperties(
             &cherrypickOptions,
