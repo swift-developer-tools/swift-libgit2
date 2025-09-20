@@ -180,3 +180,240 @@ public struct GitRemoteCallbacks
         return remoteCallbacks
     }
 }
+
+
+
+/// The options for the fetch operation.
+///
+/// ## C Equivalent
+///
+/// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
+public struct GitFetchOptions
+{
+    /// The version to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``gitFetchOptionsVersion``.
+    public var version          : UInt32
+    
+    /// The callbacks invoked by the remote to inform the user about the progress of network operations.
+    public var callbacks        : GitRemoteCallbacks?
+    
+    /// The acceptable prune settings when performing a fetch operation.
+    public var prune            : GitFetchPruneT
+    
+    /// The flags controlling remote updates.
+    public var updateFetchHEAD  : GitRemoteUpdateFlags
+    
+    /// The automatic tag-following option used to determine which `--tags` option to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsAuto``.
+    public var downloadTags     : GitRemoteAutoTagOptionT
+    
+    /// The options for connecting through a proxy.
+    public var proxyOpts        : GitProxyOptions?
+    
+    /// The shallowness of the fetch operation.
+    public var depth            : GitFetchDepthT
+    
+    /// Remote redirection settings.
+    public var followRedirects  : GitRemoteRedirectT
+    
+    /// Extra headers for the fetch operation.
+    public var customHeaders    : [String]
+    
+    
+    
+    /// Creates a ``GitFetchOptions`` instance from a version number.
+    /// - Parameter version: The version to use. Defaults to ``gitFetchOptionsVersion``.
+    public init?(
+        version: UInt32 = gitFetchOptionsVersion
+    )
+    {
+        var fetchOptions = git_fetch_options()
+        
+        let fetchOptionsInitResult: Int32 = git_fetch_options_init(
+            &fetchOptions,
+            version
+        )
+        
+        if fetchOptionsInitResult != GIT_OK.rawValue
+        {
+            return nil
+        }
+        
+        self.init(cValue: fetchOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitFetchOptions`` instance from a `git_fetch_options` instance.
+    /// - Parameter fetchOptions: The `git_fetch_options` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// If unexpected values are encountered, the following defaults are used:
+    /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``,
+    /// - ``downloadTags``: ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsUnspecified``
+    /// - ``depth``: ``GitFetchDepthT/gitFetchDepthFull``
+    /// - ``followRedirects``: ``GitRemoteRedirectT/gitRemoteRedirectInitial``
+    ///
+    /// This should never occur.
+    internal init(
+        cValue fetchOptions: git_fetch_options
+    )
+    {
+        self.version            = UInt32(fetchOptions.version)
+        self.callbacks          = GitRemoteCallbacks(cValue: fetchOptions.callbacks)
+        self.prune              = GitFetchPruneT(cValue: fetchOptions.prune)                            ?? .gitFetchPruneUnspecified
+        self.updateFetchHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
+        self.downloadTags       = GitRemoteAutoTagOptionT(cValue: fetchOptions.download_tags)           ?? .gitRemoteDownloadTagsUnspecified
+        self.proxyOpts          = GitProxyOptions(cValue: fetchOptions.proxy_opts)
+        self.depth              = GitFetchDepthT(rawValue: UInt32(fetchOptions.depth))                  ?? .gitFetchDepthFull
+        self.followRedirects    = GitRemoteRedirectT(rawValue: fetchOptions.follow_redirects.rawValue)  ?? .gitRemoteRedirectInitial
+        self.customHeaders      = Array(fetchOptions.custom_headers)
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_fetch_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// The pointer will be `nil` if the initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_fetch_options>?) -> T
+    ) -> T
+    {
+        var fetchOptions = git_fetch_options()
+        
+        let fetchOptionsInitResult: Int32 = git_fetch_options_init(
+            &fetchOptions,
+            version
+        )
+        
+        if fetchOptionsInitResult != GIT_OK.rawValue
+        {
+            return body(nil)
+        }
+        
+        if let cCallbacks: git_remote_callbacks = callbacks?.cValue
+        {
+            fetchOptions.callbacks = cCallbacks
+        }
+        
+        fetchOptions.prune              = prune.cValue
+        fetchOptions.update_fetchhead   = updateFetchHEAD.rawValue
+        fetchOptions.download_tags      = downloadTags.cValue
+        fetchOptions.depth              = Int32(depth.rawValue)
+        fetchOptions.follow_redirects   = followRedirects.cValue
+        
+        return withComposedProperties(
+            &fetchOptions,
+            body
+        )
+    }
+    
+    
+    
+    /// Composes the optional properties of ``GitFetchOptions``, then calls the given closure
+    /// with a pointer to the updated `git_fetch_options` instance.
+    /// - Parameters:
+    ///   - fetchOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// This function composes the following optional properties:
+    /// - ``proxyOpts``
+    /// - ``customHeaders``
+    ///
+    /// The composition begins by calling ``withProxyOptions(_:_:)``.
+    private func withComposedProperties<T>(
+        _   fetchOptions    : UnsafeMutablePointer<git_fetch_options>,
+        _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
+    ) -> T
+    {
+        return withProxyOptions(
+            fetchOptions,
+            body
+        )
+    }
+    
+    
+    
+    /// Updates the given `git_fetch_options` instance with the value of ``proxyOpts``,
+    /// then continues the composition by calling ``withCustomHeaders(_:_:)``.
+    /// - Parameters:
+    ///   - fetchOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``proxyOpts`` is `nil`, this function will proceed directly to the next step in the composition.
+    ///
+    /// If ``GitProxyOptions.withCValue(_:)`` fails, this function will call the given closure
+    /// with `nil`.
+    private func withProxyOptions<T>(
+        _   fetchOptions    : UnsafeMutablePointer<git_fetch_options>,
+        _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
+    ) -> T
+    {
+        guard let proxyOpts: GitProxyOptions = proxyOpts
+        else
+        {
+            return withCustomHeaders(
+                fetchOptions,
+                body
+            )
+        }
+        
+        return proxyOpts.withCValue
+        {
+            cProxyOpts in
+            
+            guard let cProxyOpts: UnsafeMutablePointer<git_proxy_options> = cProxyOpts
+            else
+            {
+                return body(nil)
+            }
+            
+            fetchOptions.pointee.proxy_opts = cProxyOpts.pointee
+            
+            return withCustomHeaders(
+                fetchOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Updates the given `git_fetch_options` instance with the value of ``customHeaders``,
+    /// then finishes the composition by calling the given closure.
+    /// - Parameters:
+    ///   - fetchOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    private func withCustomHeaders<T>(
+        _   fetchOptions    : UnsafeMutablePointer<git_fetch_options>,
+        _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
+    ) -> T
+    {
+        return customHeaders.withGitStrarray
+        {
+            cCustomHeaders in
+            
+            fetchOptions.pointee.custom_headers = cCustomHeaders.pointee
+            
+            return body(fetchOptions)
+        }
+    }
+}
