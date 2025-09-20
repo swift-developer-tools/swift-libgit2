@@ -110,6 +110,17 @@ public struct GitRemoteCallbacks
             return nil
         }
         
+        self.init(cValue: remoteCallbacks)
+    }
+    
+    
+    
+    /// Creates a ``GitRemoteCallbacks`` instance from a `git_remote_callbacks` instance.
+    /// - Parameter remoteCallbacks: The `git_remote_callbacks` instance to use.
+    internal init(
+        cValue remoteCallbacks: git_remote_callbacks
+    )
+    {
         self.version                = remoteCallbacks.version
         self.sidebandProgress       = remoteCallbacks.sideband_progress
         self.completion             = remoteCallbacks.completion
