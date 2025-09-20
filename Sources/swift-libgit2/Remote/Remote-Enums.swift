@@ -21,34 +21,51 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_redirect_t`](https://libgit2.org/docs/reference/main/remote/git_remote_redirect_t.html)
-public struct GitRemoteRedirectT: OptionSet, Sendable
+public enum GitRemoteRedirectT: UInt32
 {
-    /// The raw value to use.
-    public let rawValue: UInt32
-    
-    /// Creates a ``GitRemoteRedirectT`` instance from a raw value.
-    /// - Parameter rawValue: The raw value to use.
-    public init(
-        rawValue: UInt32
-    )
-    {
-        self.rawValue = rawValue
-    }
-    
-    
-    
     /// Do not follow any off-site redirects at any stage of the fetch or push operation.
-    public static let gitRemoteRedirectNone     = GitRemoteRedirectT(rawValue: GIT_REMOTE_REDIRECT_NONE.rawValue)
+    case gitRemoteRedirectNone      = 0
     
     /// Allow off-site redirects only upon the initial request.
     ///
     /// ## Discussion
     ///
     /// This is the default value.
-    public static let gitRemoteRedirectInitial  = GitRemoteRedirectT(rawValue: GIT_REMOTE_REDIRECT_INITIAL.rawValue)
+    case gitRemoteRedirectInitial   = 1
     
     /// Allow redirects at any stage in the fetch or push operation.
-    public static let gitRemoteRedirectAll      = GitRemoteRedirectT(rawValue: GIT_REMOTE_REDIRECT_ALL.rawValue)
+    case gitRemoteRedirectAll       = 2
+    
+    
+    
+    /// Creates a ``GitRemoteRedirectT`` instance from a `git_remote_redirect_t`
+    /// instance.
+    /// - Parameter remoteRedirect: The `git_remote_redirect_t` instance to use.
+    internal init?(
+        cValue remoteRedirect: git_remote_redirect_t
+    )
+    {
+        switch remoteRedirect
+        {
+            case GIT_REMOTE_REDIRECT_NONE       : self = .gitRemoteRedirectNone
+            case GIT_REMOTE_REDIRECT_INITIAL    : self = .gitRemoteRedirectInitial
+            case GIT_REMOTE_REDIRECT_ALL        : self = .gitRemoteRedirectAll
+            default                             : return nil
+        }
+    }
+    
+    
+    
+    /// The equivalent C enum value.
+    internal var cValue: git_remote_redirect_t
+    {
+        switch self
+        {
+            case .gitRemoteRedirectNone     : return GIT_REMOTE_REDIRECT_NONE
+            case .gitRemoteRedirectInitial  : return GIT_REMOTE_REDIRECT_INITIAL
+            case .gitRemoteRedirectAll      : return GIT_REMOTE_REDIRECT_ALL
+        }
+    }
 }
 
 
