@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the clone process.
+/// The options for the clone operation.
 ///
 /// ## C Equivalent
 ///
@@ -25,10 +25,10 @@ public struct GitCloneOptions
     /// The default value is ``gitCloneOptionsVersion``.
     public var version              : UInt32
     
-    /// The options for the checkout process.
+    /// The options for the checkout operation.
     public var checkoutOpts         : GitCheckoutOptions?
     
-    /// The options for the fetch process, including callbacks.
+    /// The options for the fetch operation, including callbacks.
     ///
     /// ## Discussion
     ///

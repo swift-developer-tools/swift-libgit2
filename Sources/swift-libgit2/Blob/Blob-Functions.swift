@@ -164,8 +164,8 @@ public func gitBlobRawSize(
 /// - Parameters:
 ///   - out: The buffer to be filled in.
 ///   - blob: The blob. The underlying type should be `git_blob`.
-///   - asPath: The path used for attribute lookups and other processes.
-///   - opts: The options for the blob filtering process.
+///   - asPath: The path used for attribute lookups and other operations.
+///   - opts: The options for the blob filtering operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion

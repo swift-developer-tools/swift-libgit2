@@ -17,7 +17,7 @@ import Clibgit2
 ///   `git_repository`.
 ///   - url: The URL of the remote to clone.
 ///   - localPath: The path to the local directory in which to clone.
-///   - options: The options for the clone process.
+///   - options: The options for the clone operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitRemoteCreateCB`` or
 /// ``GitRepositoryCreateCB``, or an error code.
 ///

@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the apply process.
+/// The options for the apply operation.
 ///
 /// ## C Equivalent
 ///

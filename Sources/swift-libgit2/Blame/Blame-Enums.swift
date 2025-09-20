@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The flags controlling the behavior of the blame process.
+/// The flags controlling the behavior of the blame operation.
 ///
 /// ## C Equivalent
 ///

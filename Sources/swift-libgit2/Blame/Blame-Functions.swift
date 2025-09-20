@@ -210,7 +210,7 @@ public func gitBlameGetHunkByLine(
 ///   - repo: The repository whose history should be walked. The underlying type should be
 ///   `git_repository`.
 ///   - path: The path to the file to consider.
-///   - options: The options for the blame process.
+///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
@@ -256,7 +256,7 @@ public func gitBlameFile(
 ///   - path: The path to the file to consider.
 ///   - contents: The uncommitted changes.
 ///   - contentsLen: The length of the changes buffer.
-///   - options: The options for the blame process.
+///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent

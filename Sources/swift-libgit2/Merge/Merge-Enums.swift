@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The flags controlling the behavior of the merge process.
+/// The flags controlling the behavior of the merge operation.
 ///
 /// ## C Equivalent
 ///
@@ -78,7 +78,7 @@ public struct GitMergeFlagT: OptionSet, Sendable
 public enum GitMergeFileFavorT: UInt32
 {
     /// When a region of a file is changed in both branches, a conflict will be recorded in the index so
-    /// that the checkout process can produce a merge file with conflict markers in the working directory.
+    /// that the checkout operation can produce a merge file with conflict markers in the working directory.
     ///
     /// ## Discussion
     ///

@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the blob filtering process.
+/// The options for the blob filtering operation.
 ///
 /// ## C Equivalent
 ///
@@ -25,7 +25,7 @@ public struct GitBlobFilterOptions
     /// The default value is ``gitBlobFilterOptionsVersion``.
     public var version      : UInt32
     
-    /// The flags to use during the blob filtering process.
+    /// The flags to use during the blob filtering operation.
     public var flags        : GitBlobFilterFlagT
     
     /// The commit ID.

@@ -18,13 +18,13 @@ import Clibgit2
 /// [`git_checkout_perfdata`](https://libgit2.org/docs/reference/main/checkout/git_checkout_perfdata.html)
 public struct GitCheckoutPerfData
 {
-    /// The number of times `mkdir` was called during the checkout process.
+    /// The number of times `mkdir` was called during the checkout operation.
     public let mkdirCalls   : Int
     
-    /// The number of times `stat` was called during the checkout process.
+    /// The number of times `stat` was called during the checkout operation.
     public let statCalls    : Int
     
-    /// The number of times `chmod` was called during the checkout process.
+    /// The number of times `chmod` was called during the checkout operation.
     public let chmodCalls   : Int
     
     
@@ -44,7 +44,7 @@ public struct GitCheckoutPerfData
 
 
 
-/// The options for the checkout process.
+/// The options for the checkout operation.
 ///
 /// ## C Equivalent
 ///

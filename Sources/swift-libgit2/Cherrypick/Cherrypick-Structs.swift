@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the cherry-pick process.
+/// The options for the cherry-pick operation.
 ///
 /// ## C Equivalent
 ///
@@ -28,10 +28,10 @@ public struct GitCherrypickOptions
     /// The parent for merge commits.
     public var mainline     : UInt32
     
-    /// The options for the merge process.
+    /// The options for the merge operation.
     public var mergeOpts    : GitMergeOptions?
     
-    /// The options for the checkout process.
+    /// The options for the checkout operation.
     public var checkoutOpts : GitCheckoutOptions?
     
     
