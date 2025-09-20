@@ -94,6 +94,17 @@ public struct GitCloneOptions
             return nil
         }
         
+        self.init(cValue: cloneOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitCloneOptions`` instance from a `git_clone_options` instance.
+    /// - Parameter cloneOptions: The `git_clone_options` instance to use.
+    internal init(
+        cValue cloneOptions: git_clone_options
+    )
+    {
         self.version                = cloneOptions.version
         self.checkoutOpts           = GitCheckoutOptions(cValue: cloneOptions.checkout_opts)
         self.fetchOpts              = cloneOptions.fetch_opts
