@@ -229,7 +229,6 @@ public struct GitCheckoutOptions
             return body(nil)
         }
         
-        checkoutOptions.version             = version
         checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
         checkoutOptions.disable_filters     = disableFilters.cValue
         checkoutOptions.dir_mode            = dirMode
