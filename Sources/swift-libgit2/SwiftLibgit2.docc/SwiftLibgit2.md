@@ -501,6 +501,11 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitStrarrayDispose(array:)``
 
+### Transport Callbacks
+
+- ``GitTransportMessageCB``
+- ``GitTransportCB``
+
 ### Tree Enums
 
 - ``GitFileModeT``
