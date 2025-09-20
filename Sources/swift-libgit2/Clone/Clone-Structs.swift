@@ -34,7 +34,7 @@ public struct GitCloneOptions
     ///
     /// The callbacks are used for reporting fetch progress and for acquiring credentials in the event
     /// that they are needed.
-    public var fetchOpts            : git_fetch_options?
+    public var fetchOpts            : GitFetchOptions?
     
     /// Whether a bare repository should be created.
     public var bare                 : Bool
@@ -107,7 +107,7 @@ public struct GitCloneOptions
     {
         self.version                = cloneOptions.version
         self.checkoutOpts           = GitCheckoutOptions(cValue: cloneOptions.checkout_opts)
-        self.fetchOpts              = cloneOptions.fetch_opts
+        self.fetchOpts              = GitFetchOptions(cValue: cloneOptions.fetch_opts)
         self.bare                   = cloneOptions.bare == 1
         self.local                  = GitCloneLocalT(cValue: cloneOptions.local) ?? .gitCloneLocal
         self.checkoutBranch         = String(optionalCString: cloneOptions.checkout_branch)
@@ -149,7 +149,168 @@ public struct GitCloneOptions
         cloneOptions.remote_cb              = remoteCB
         cloneOptions.remote_cb_payload      = remoteCBPayload
         
-        // TODO: Sequential handlers once `GitFetchOptions` is added.
-        return body(&cloneOptions)
+        return withComposedProperties(
+            &cloneOptions,
+            body
+        )
+    }
+    
+    
+    
+    /// Composes the optional properties of ``GitCloneOptions``, then calls the given closure
+    /// with a pointer to the updated `git_clone_options` instance.
+    /// - Parameters:
+    ///   - cloneOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// This function composes the following optional properties:
+    /// - ``checkoutOpts``
+    /// - ``fetchOpts``
+    /// - ``checkoutBranch``
+    ///
+    /// The composition begins by calling ``withCheckoutOptions(_:_:)``.
+    private func withComposedProperties<T>(
+        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
+        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
+    ) -> T
+    {
+        return withCheckoutOptions(
+            cloneOptions,
+            body
+        )
+    }
+    
+    
+    
+    /// Updates the given `git_clone_options` instance with the value of ``checkoutOpts``,
+    /// then continues the composition by calling ``withFetchOptions(_:_:)``.
+    /// - Parameters:
+    ///   - cloneOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``checkoutOpts`` is `nil`, this function will proceed directly to the next step in the
+    /// composition.
+    ///
+    /// If ``GitCheckoutOptions.withCValue(_:)`` fails, this function will call the given closure
+    /// with `nil`.
+    private func withCheckoutOptions<T>(
+        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
+        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
+    ) -> T
+    {
+        guard let checkoutOpts: GitCheckoutOptions = checkoutOpts
+        else
+        {
+            return withFetchOptions(
+                cloneOptions,
+                body
+            )
+        }
+        
+        return checkoutOpts.withCValue
+        {
+            cCheckoutOpts in
+            
+            guard let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
+            else
+            {
+                return body(nil)
+            }
+            
+            cloneOptions.pointee.checkout_opts = cCheckoutOpts.pointee
+            
+            return withFetchOptions(
+                cloneOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Updates the given `git_clone_options` instance with the value of ``fetchOpts``,
+    /// then continues the composition by calling ``withCheckoutBranch(_:_:)``.
+    /// - Parameters:
+    ///   - cloneOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``fetchOpts`` is `nil`, this function will proceed directly to the next step in the
+    /// composition.
+    ///
+    /// If ``GitFetchOptions.withCValue(_:)`` fails, this function will call the given closure
+    /// with `nil`.
+    private func withFetchOptions<T>(
+        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
+        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
+    ) -> T
+    {
+        guard let fetchOpts: GitFetchOptions = fetchOpts
+        else
+        {
+            return withCheckoutBranch(
+                cloneOptions,
+                body
+            )
+        }
+        
+        return fetchOpts.withCValue
+        {
+            cFetchOpts in
+            
+            guard let cFetchOpts: UnsafeMutablePointer<git_fetch_options> = cFetchOpts
+            else
+            {
+                return body(nil)
+            }
+            
+            cloneOptions.pointee.fetch_opts = cFetchOpts.pointee
+            
+            return withCheckoutBranch(
+                cloneOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Updates the given `git_clone_options` instance with the value of ``checkoutBranch``,
+    /// then finishes the composition by calling the given closure.
+    /// - Parameters:
+    ///   - cloneOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``checkoutBranch`` is `nil`, this function will proceed directly to calling the given closure.
+    private func withCheckoutBranch<T>(
+        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
+        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
+    ) -> T
+    {
+        guard let checkoutBranch: String = checkoutBranch
+        else
+        {
+            return body(cloneOptions)
+        }
+        
+        return checkoutBranch.withCString
+        {
+            cCheckoutBranch in
+            
+            cloneOptions.pointee.checkout_branch = cCheckoutBranch
+            
+            return body(cloneOptions)
+        }
     }
 }
