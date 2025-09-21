@@ -123,29 +123,18 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let _: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            _ = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
             
             
-            let referenceNamePointer: UnsafePointer<CChar>? = gitAnnotatedCommitRef(commit: annotatedCommitPointer)
-            
-            guard let referenceNamePointer: UnsafePointer<CChar> = referenceNamePointer
+            guard let referenceName: String = gitAnnotatedCommitRef(commit: annotatedCommitPointer)
             else
             {
-                XCTFail("The reference name pointer was nil.")
+                XCTFail("The reference name was nil.")
                 return
             }
             
-            
-            
-            guard let referenceNameString = String(optionalCString: referenceNamePointer)
-            else
-            {
-                XCTFail("The reference name string was nil.")
-                return
-            }
-            
-            XCTAssertFalse(referenceNameString.isEmpty)
+            XCTAssertFalse(referenceName.isEmpty)
         }
     }
     
@@ -185,12 +174,12 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let _: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            _ = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
             
             
             /// The reference name may be `nil` for revspec-created commits.
-            let _: UnsafePointer<CChar>? = gitAnnotatedCommitRef(commit: annotatedCommitPointer)
+            _ = gitAnnotatedCommitRef(commit: annotatedCommitPointer)
         }
     }
     
