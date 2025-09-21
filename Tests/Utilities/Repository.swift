@@ -486,7 +486,7 @@ extension Repository
         
         try gitattributesContent.atomicWrite(to: gitattributesURL)
         
-        for (filename, content) in Repository.gitattributesFiles
+        for (filename, content) in gitattributesFiles
         {
             let fileURL: URL = repository.url.appending(
                 path:           filename,

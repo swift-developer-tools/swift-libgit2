@@ -195,7 +195,7 @@ enum Branch
         _           body        : (inout OpaquePointer?) throws -> Void
     ) throws
     {
-        var branchPointer: OpaquePointer? = try Branch.createLocalBranch(
+        var branchPointer: OpaquePointer? = try createLocalBranch(
             named:      branchName,
             in:         repository,
             force:      force,
