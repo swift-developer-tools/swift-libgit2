@@ -58,7 +58,7 @@ public struct GitCertHostKey
     ///
     /// ## Discussion
     ///
-    /// This will contain the MD5 hash of the host key if ``GitCertHostKey/type``
+    /// This will represent the MD5 hash of the host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHMD5``.
     public let hashMD5      : Data
     
@@ -66,7 +66,7 @@ public struct GitCertHostKey
     ///
     /// ## Discussion
     ///
-    /// This will contain the SHA-1 hash of the host key if ``GitCertHostKey/type``
+    /// This will represent the SHA-1 hash of the host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHSHA1``.
     public let hashSHA1     : Data
     
@@ -74,7 +74,7 @@ public struct GitCertHostKey
     ///
     /// ## Discussion
     ///
-    /// This will contain the SHA-256 hash of the host key if ``GitCertHostKey/type``
+    /// This will represent the SHA-256 hash of the host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHSHA256``.
     public let hashSHA256   : Data
     
@@ -82,7 +82,7 @@ public struct GitCertHostKey
     ///
     /// ## Discussion
     ///
-    /// This will contain the type of the raw host key if ``GitCertHostKey/type``
+    /// This will represent the type of the raw host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHRaw``.
     public let rawType      : GitCertSSHRawTypeT
     
@@ -90,15 +90,15 @@ public struct GitCertHostKey
     ///
     /// ## Discussion
     ///
-    /// This will contain the content of the raw host key if ``GitCertHostKey/type``
+    /// This will represent the content of the raw host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHRaw``.
-    public let hostKey      : UnsafePointer<CChar>?
+    public let hostKey      : Data?
     
     /// The content length of the raw host key.
     ///
     /// ## Discussion
     ///
-    /// This will contain the content length of the raw host key if ``GitCertHostKey/type``
+    /// This will represent the content length of the raw host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHRaw``.
     public let hostKeyLen   : Int
     
@@ -124,7 +124,7 @@ public struct GitCertHostKey
         self.hashSHA1       = Data(bytes: &certHostKeyCopy.hash_sha1, count: 20)
         self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: 32)
         self.rawType        = GitCertSSHRawTypeT(cValue: certHostKey.raw_type) ?? .gitCertSSHRawTypeUnknown
-        self.hostKey        = certHostKey.hostkey
+        self.hostKey        = certHostKey.hostkey.map { Data(bytes: $0, count: certHostKey.hostkey_len) }
         self.hostKeyLen     = certHostKey.hostkey_len
     }
 }
