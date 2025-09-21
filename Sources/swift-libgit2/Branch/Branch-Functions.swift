@@ -13,7 +13,8 @@ import Clibgit2
 
 /// Creates a new branch pointing at the given target commit.
 /// - Parameters:
-///   - out: The pointer in which to store the result. The underlying type should be `git_reference`.
+///   - out: The pointer in which to store the resulting reference. The underlying type should be
+///   `git_reference`.
 ///   - repo: The repository in which to create the branch. The underlying type should be
 ///   `git_repository`.
 ///   - branchName: The branch name. The name will be validated for consistency and should
@@ -52,7 +53,7 @@ public func gitBranchCreate(
 
 /// Creates a new branch pointing at the given target annotated commit.
 /// - Parameters:
-///   - refOut: The pointer in which to store the result. The underlying type should be
+///   - refOut: The pointer in which to store the resulting reference. The underlying type should be
 ///   `git_reference`.
 ///   - repo: The repository in which to create the branch. The underlying type should be
 ///   `git_repository`.
@@ -538,7 +539,7 @@ public func gitBranchUpstreamMerge(
 
 /// Checks whether the given branch name is valid.
 /// - Parameters:
-///   - valid: The pointer in which to store the result.
+///   - valid: The pointer in which to store the resulting boolean.
 ///   - name: The branch name.
 /// - Returns: `0` on success, or an error code.
 ///
