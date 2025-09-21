@@ -546,12 +546,18 @@ public func gitBranchUpstreamMerge(
 ///
 /// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
 public func gitBranchIsValid(
-    valid   : UnsafeMutablePointer<Int32>,
+    valid   : UnsafeMutablePointer<Bool>,
     name    : String
 ) -> Int32
 {
-    return git_branch_name_is_valid(
-        valid,
+    var intValid: Int32 = 0
+    
+    let branchNameIsValidResult: Int32 = git_branch_name_is_valid(
+        &intValid,
         name
     )
+    
+    valid.pointee = intValid == 1
+    
+    return branchNameIsValidResult
 }
