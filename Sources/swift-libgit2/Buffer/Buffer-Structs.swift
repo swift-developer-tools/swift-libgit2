@@ -57,7 +57,7 @@ public struct GitBuf
     /// Creates a ``GitBuf`` instance.
     public init()
     {
-        /// libgit2 doesn't provide an initialization function for `git_buf`.
+        /// libgit2 does not provide an initialization function for `git_buf`.
         /// The C macro `GIT_BUF_INIT` would initialize all fields to `0` or `NULL`,
         /// so that approach is mirrored here.
         self.ptr        = nil
