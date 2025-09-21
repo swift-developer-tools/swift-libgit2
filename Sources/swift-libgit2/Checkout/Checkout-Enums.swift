@@ -13,7 +13,7 @@ import Clibgit2
 
 // TODO: Replace `git_repository_set_head()` in documentation.
 
-/// Flags controlling the behavior of the checkout process.
+/// The flags controlling the behavior of the checkout operation.
 ///
 /// ## Discussion
 ///
@@ -21,13 +21,13 @@ import Clibgit2
 /// Unlike `git checkout`, it does not move the HEAD commit - use
 /// `git_repository_set_head()` or a similar function for that purpose.
 ///
-/// The checkout process considers the following:
+/// The checkout operation considers the following:
 /// - The target tree to be checked out.
 /// - The baseline tree of what was previously checked out.
 /// - The working directory for actual files.
 /// - The index for staged changes.
 ///
-/// The caller provides one of two strategies for updating during the checkout process:
+/// The caller provides one of two strategies for updating during the checkout operation:
 /// - ``gitCheckoutSafe``: This is the default value, similar to Git's default, which will make
 /// modifications that will not lose changes in the working directory.
 /// - ``gitCheckoutForce``: This will take any action to make the working directory match the
@@ -81,7 +81,7 @@ public struct GitCheckoutStrategyT: OptionSet, Sendable
     public static let gitCheckoutRecreateMissing            = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_RECREATE_MISSING.rawValue)
     
     /// Allow the checkout to make safe updates even if there are conflicts, instead of canceling the
-    /// checkout process.
+    /// checkout operation.
     public static let gitCheckoutAllowConflicts             = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_ALLOW_CONFLICTS.rawValue)
     
     /// Remove untracked files that are not in the index (and are not ignored).
@@ -140,7 +140,7 @@ public struct GitCheckoutStrategyT: OptionSet, Sendable
     ///
     /// ## Discussion
     ///
-    /// This prevents the checkout process from removing files or folders that fold to the same name
+    /// This prevents the checkout operation from removing files or folders that fold to the same name
     /// on case-insensitive file systems. This may cause files to retain their existing names and write
     /// through existing symbolic links.
     public static let gitCheckoutDontRemoveExisting         = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_DONT_REMOVE_EXISTING.rawValue)
@@ -181,11 +181,11 @@ public struct GitCheckoutStrategyT: OptionSet, Sendable
 
 
 
-/// Flags controlling the behavior of checkout notifications.
+/// The flags controlling the behavior of checkout notifications.
 ///
 /// ## Discussion
 ///
-/// The checkout process will invoke a checkout notification callback for certain cases specified
+/// The checkout operation will invoke a checkout notification callback for certain cases specified
 /// by the given flags.
 ///
 /// Returning a non-zero value from this callback will cancel the checkout. The non-zero return value
@@ -224,7 +224,7 @@ public struct GitCheckoutNotifyT: OptionSet, Sendable
     /// ## Discussion
     ///
     /// A file is considered "dirty" if it does not need an update, but no longer matches the baseline.
-    /// Core Git displays these files when the checkout process runs, but will not stop the process.
+    /// Core Git displays these files when the checkout operation runs, but will not stop the operation.
     public static let gitCheckoutNotifyDirty        = GitCheckoutNotifyT(rawValue: GIT_CHECKOUT_NOTIFY_DIRTY.rawValue)
     
     /// Send notifications for any changed file.

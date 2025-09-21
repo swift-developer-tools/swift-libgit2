@@ -387,6 +387,35 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCherrypickCommit(out:repo:cherrypickCommit:ourCommit:mainline:mergeOptions:)``
 - ``gitCherrypick(repo:commit:cherrypickOptions:)``
 
+### Clone Structs
+
+- ``GitCloneOptions``
+
+### Clone Macros
+
+- ``gitCloneOptionsVersion``
+
+### Clone Enums
+
+- ``GitCloneLocalT``
+
+### Clone Callbacks
+
+- ``GitRemoteCreateCB``
+- ``GitRepositoryCreateCB``
+
+### Clone Functions
+
+- ``gitClone(out:url:localPath:options:)``
+
+### Credential Enums
+
+- ``GitCredentialT``
+
+### Credential Callbacks
+
+- ``GitCredentialAcquireCB``
+
 ### Diff Structs
 
 - ``GitDiffFile``
@@ -402,6 +431,10 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitLibgit2Init()``
 - ``gitLibgit2Shutdown()``
+
+### Indexer Callbacks
+
+- ``GitIndexerProgressCB``
 
 ### Merge Structs
 
@@ -429,6 +462,57 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitOIDEqual(a:b:)``
 
+### Pack Callbacks
+
+- ``GitPackbuilderForEachCB``
+- ``GitPackbuilderProgressCB``
+
+### Proxy Structs
+
+- ``GitProxyOptions``
+
+### Proxy Macros
+
+- ``gitProxyOptionsVersion``
+
+### Proxy Enums
+
+- ``GitProxyT``
+
+### Remote Structs
+
+- ``GitRemoteCallbacks``
+- ``GitFetchOptions``
+
+### Remote Macros
+
+- ``gitRemoteCreateOptionsVersion``
+- ``gitRemoteCallbacksVersion``
+- ``gitFetchOptionsVersion``
+- ``gitPushOptionsVersion``
+- ``gitRemoteConnectOptionsVersion``
+
+### Remote Enums
+
+- ``GitRemoteRedirectT``
+- ``GitRemoteCreateFlags``
+- ``GitRemoteUpdateFlags``
+- ``GitRemoteCompletionT``
+- ``GitFetchPruneT``
+- ``GitRemoteAutoTagOptionT``
+- ``GitFetchDepthT``
+
+### Remote Callbacks
+
+- ``GitPushTransferProgressCB``
+- ``GitPushNegotiationCB``
+- ``GitPushUpdateReferenceCB``
+- ``GitURLResolveCB``
+- ``GitRemoteReadyCB``
+- ``GitRemoteCompletionCB``
+- ``GitRemoteUpdateTipsCB``
+- ``GitRemoteUpdateRefsCB``
+
 ### Signature Structs
 
 - ``GitSignature``
@@ -451,6 +535,11 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitStrarrayDispose(array:)``
 
+### Transport Callbacks
+
+- ``GitTransportMessageCB``
+- ``GitTransportCB``
+
 ### Tree Enums
 
 - ``GitFileModeT``
@@ -464,3 +553,7 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``GitTime``
 - ``GitWritestream``
+
+### Credential (Advanced)
+
+- ``GitCredential``

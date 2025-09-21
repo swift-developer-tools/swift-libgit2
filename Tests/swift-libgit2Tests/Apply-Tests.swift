@@ -56,7 +56,7 @@ final class ApplyTests: XCTestCaseStopOnFail
         guard var applyOptions = GitApplyOptions()
         else
         {
-            XCTFail("The apply options were not initialized.")
+            XCTFail("The apply options were nil.")
             return
         }
         
@@ -157,7 +157,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             guard let applyOptions = GitApplyOptions()
             else
             {
-                XCTFail("The apply options were not initialized.")
+                XCTFail("The apply options were nil.")
                 return
             }
             
@@ -480,7 +480,7 @@ extension ApplyTests
                 guard var applyOptions = GitApplyOptions()
                 else
                 {
-                    XCTFail("The apply options were not initialized.")
+                    XCTFail("The apply options were nil.")
                     return
                 }
                 

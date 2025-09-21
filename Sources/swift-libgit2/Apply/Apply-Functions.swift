@@ -18,7 +18,7 @@ import Clibgit2
 ///   - preimage: The tree to which the diff should be applied. The underlying type should be
 ///   `git_tree`.
 ///   - diff: The diff to apply. The underlying type should be `git_diff`.
-///   - options: The options for the apply process.
+///   - options: The options for the apply operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
@@ -64,7 +64,7 @@ public func gitApplyToTree(
 ///   `git_repository`.
 ///   - diff: The diff to apply. The underlying type should be `git_diff`.
 ///   - location: The location to apply (the working directory, the index, or both).
-///   - options: The options for the apply process.
+///   - options: The options for the apply operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent

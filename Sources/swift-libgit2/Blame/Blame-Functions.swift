@@ -128,7 +128,7 @@ public func gitBlameLineByIndex(
 ///
 /// ## Discussion
 ///
-/// This function is deprecated in libgit2 and will be removed in the next major release.
+/// This is deprecated in libgit2 and will be removed in the next major release.
 /// Use ``gitBlameHunkCount(blame:)`` instead.
 ///
 /// ## C Equivalent
@@ -151,7 +151,7 @@ public func gitBlameGetHunkCount(
 ///
 /// ## Discussion
 ///
-/// This function is deprecated in libgit2 and will be removed in the next major release.
+/// This is deprecated in libgit2 and will be removed in the next major release.
 /// Use ``gitBlameHunkByIndex(blame:index:)`` instead.
 ///
 /// ## C Equivalent
@@ -181,7 +181,7 @@ public func gitBlameGetHunkByIndex(
 ///
 /// ## Discussion
 ///
-/// This function is deprecated in libgit2 and will be removed in the next major release.
+/// This is deprecated in libgit2 and will be removed in the next major release.
 /// Use ``gitBlameHunkByLine(blame:lineNo:)`` instead.
 ///
 /// ## C Equivalent
@@ -210,7 +210,7 @@ public func gitBlameGetHunkByLine(
 ///   - repo: The repository whose history should be walked. The underlying type should be
 ///   `git_repository`.
 ///   - path: The path to the file to consider.
-///   - options: The options for the blame process.
+///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
@@ -256,7 +256,7 @@ public func gitBlameFile(
 ///   - path: The path to the file to consider.
 ///   - contents: The uncommitted changes.
 ///   - contentsLen: The length of the changes buffer.
-///   - options: The options for the blame process.
+///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent

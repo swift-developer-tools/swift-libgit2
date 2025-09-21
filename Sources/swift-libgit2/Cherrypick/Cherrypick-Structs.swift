@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the cherry-pick process.
+/// The options for the cherry-pick operation.
 ///
 /// ## C Equivalent
 ///
@@ -28,10 +28,10 @@ public struct GitCherrypickOptions
     /// The parent for merge commits.
     public var mainline     : UInt32
     
-    /// The options for the merge process.
+    /// The options for the merge operation.
     public var mergeOpts    : GitMergeOptions?
     
-    /// The options for the checkout process.
+    /// The options for the checkout operation.
     public var checkoutOpts : GitCheckoutOptions?
     
     
@@ -55,6 +55,18 @@ public struct GitCherrypickOptions
             return nil
         }
         
+        self.init(cValue: cherrypickOptions)
+    }
+    
+    
+    
+    /// Creates a ``GitCherrypickOptions`` instance from a `git_cherrypick_options`
+    /// instance.
+    /// - Parameter cherrypickOptions: The `git_cherrypick_options` instance to use.
+    internal init(
+        cValue cherrypickOptions: git_cherrypick_options
+    )
+    {
         self.version        = cherrypickOptions.version
         self.mainline       = cherrypickOptions.mainline
         self.mergeOpts      = GitMergeOptions(cValue: cherrypickOptions.merge_opts)
@@ -86,8 +98,7 @@ public struct GitCherrypickOptions
             return body(nil)
         }
         
-        cherrypickOptions.version   = version
-        cherrypickOptions.mainline  = mainline
+        cherrypickOptions.mainline = mainline
         
         return withComposedProperties(
             &cherrypickOptions,

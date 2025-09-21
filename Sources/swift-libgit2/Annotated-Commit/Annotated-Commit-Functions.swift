@@ -51,7 +51,7 @@ public func gitAnnotatedCommitFromRef(
 ///   `git_repository`.
 ///   - branchName: The name of the (remote) branch.
 ///   - remoteURL: The URL of the remote.
-///   - id: The commit object ID of the remote branch.
+///   - id: The commit ID of the remote branch.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
@@ -88,7 +88,7 @@ public func gitAnnotatedCommitFromFetchhead(
 ///   `git_annotated_commit`.
 ///   - repo: The repository that contains the given commit. The underlying type should be
 ///   `git_repository`.
-///   - id: The commit object ID to lookup.
+///   - id: The commit ID to lookup.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion

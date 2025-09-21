@@ -88,7 +88,7 @@ final class BlameTests: XCTestCaseStopOnFail
             guard let blameOptions = GitBlameOptions()
             else
             {
-                XCTFail("The blame options were not initialized.")
+                XCTFail("The blame options were nil.")
                 return
             }
             
@@ -228,7 +228,7 @@ final class BlameTests: XCTestCaseStopOnFail
         guard var blameOptions = GitBlameOptions()
         else
         {
-            XCTFail("The blame options were not initialized.")
+            XCTFail("The blame options were nil.")
             return
         }
         

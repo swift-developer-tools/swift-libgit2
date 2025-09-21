@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the blame process.
+/// The options for the blame operation.
 ///
 /// ## C Equivalent
 ///
@@ -25,7 +25,7 @@ public struct GitBlameOptions
     /// The default value is ``gitBlameOptionsVersion``.
     public var version              : UInt32
     
-    /// The flags to use during the blame process.
+    /// The flags to use during the blame operation.
     public var flags                : GitBlameFlagT
     
     /// The lower bound on the number of alphanumeric characters that must be detected as

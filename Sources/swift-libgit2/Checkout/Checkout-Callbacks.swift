@@ -40,7 +40,7 @@ public typealias GitCheckoutNotifyCB = @convention(c)
 /// - Parameters:
 ///   - path: The path to the file being checked out.
 ///   - completedSteps: The number of checkout steps completed.
-///   - totalSteps: The total number of steps in the checkout process.
+///   - totalSteps: The total number of steps in the checkout operation.
 ///   - payload: The payload provided by the caller.
 ///
 /// ## C Equivalent

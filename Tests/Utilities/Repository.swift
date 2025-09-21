@@ -395,13 +395,16 @@ extension Repository
     
     // MARK: - createTemporaryDirectory()
     
-    /// Creates a temporary directory named `SwiftLibgit2Tests`.
-    /// - Throws: An `Error` if the directory creation failed.
+    /// Creates a temporary directory with the given name.
+    /// - Parameter directoryName: The name of the directory.
     /// - Returns: The URL of the temporary directory.
-    private static func createTemporaryDirectory() throws -> URL
+    /// - Throws: An `Error` if the directory creation failed.
+    static func createTemporaryDirectory(
+        named directoryName: String
+    ) throws -> URL
     {
         let temporaryDirectoryURL: URL = FileManager.default.temporaryDirectory
-            .appending(path: "SwiftLibgit2Tests", directoryHint: .isDirectory)
+            .appending(path: directoryName, directoryHint: .isDirectory)
             .appendingPathExtension(UUID().uuidString)
         
         try FileManager.default.createDirectory(
@@ -424,11 +427,8 @@ extension Repository
         _ body: (Repository) throws -> Void
     ) throws
     {
-        let url: URL = try createTemporaryDirectory()
-        
-        
-        
-        var repositoryPointer: OpaquePointer? = nil
+        var repositoryPointer   : OpaquePointer?    = nil
+        let url                 : URL               = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
         
         defer
         {
@@ -486,7 +486,7 @@ extension Repository
         
         try gitattributesContent.atomicWrite(to: gitattributesURL)
         
-        for (filename, content) in Repository.gitattributesFiles
+        for (filename, content) in gitattributesFiles
         {
             let fileURL: URL = repository.url.appending(
                 path:           filename,

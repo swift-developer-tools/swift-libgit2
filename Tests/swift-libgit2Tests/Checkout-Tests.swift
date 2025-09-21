@@ -121,7 +121,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 guard var checkoutOptions = GitCheckoutOptions()
                 else
                 {
-                    XCTFail("The checkout options were not initialized.")
+                    XCTFail("The checkout options were nil.")
                     return
                 }
                 
@@ -193,7 +193,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             guard var checkoutOptions = GitCheckoutOptions()
             else
             {
-                XCTFail("The checkout options were not initialized.")
+                XCTFail("The checkout options were nil.")
                 return
             }
             
@@ -285,7 +285,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             guard var checkoutOptions = GitCheckoutOptions()
             else
             {
-                XCTFail("The checkout options were not initialized.")
+                XCTFail("The checkout options were nil.")
                 return
             }
             
@@ -372,7 +372,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
         guard var checkoutOptions = GitCheckoutOptions()
         else
         {
-            XCTFail("The checkout options were not initialized.")
+            XCTFail("The checkout options were nil.")
             return
         }
         
@@ -589,7 +589,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             guard var checkoutOptions = GitCheckoutOptions()
             else
             {
-                XCTFail("The checkout options were not initialized.")
+                XCTFail("The checkout options were nil.")
                 return
             }
             

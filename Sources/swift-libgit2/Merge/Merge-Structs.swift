@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-/// The options for the merge process.
+/// The options for the merge operation.
 ///
 /// ## C Equivalent
 ///
@@ -25,7 +25,7 @@ public struct GitMergeOptions
     /// The default value is ``gitMergeOptionsVersion``.
     public var version          : UInt32
     
-    /// The flags controlling the behavior of the merge process.
+    /// The flags controlling the behavior of the merge operation.
     public var flags            : GitMergeFlagT
     
     /// The similarity percentage beyond which a file should be treated as a rename.

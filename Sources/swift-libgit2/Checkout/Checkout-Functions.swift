@@ -17,7 +17,7 @@ import Clibgit2
 /// - Parameters:
 ///   - repo: The repository to check out. The underlying type should be `git_repository`.
 ///   This repository may not be bare.
-///   - opts: The options for the checkout process.
+///   - opts: The options for the checkout operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
 ///
@@ -77,7 +77,7 @@ public func gitCheckoutHEAD(
 ///   This repository may not be bare.
 ///   - index: The index to check out. The underlying type should be `git_index`.
 ///   Pass `nil` to use the repository index.
-///   - opts: The options for the checkout process.
+///   - opts: The options for the checkout operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
 ///
@@ -134,7 +134,7 @@ public func gitCheckoutIndex(
 ///   This repository may not be bare.
 ///   - treeish: The commit, tag, or tree whose content will be used to update the working
 ///   directory. The underlying type should be `git_object`. Pass `nil` to use HEAD.
-///   - opts: The options for the checkout process.
+///   - opts: The options for the checkout operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.
 ///

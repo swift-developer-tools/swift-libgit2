@@ -84,7 +84,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             guard var checkoutOptions = GitCheckoutOptions()
             else
             {
-                XCTFail("The checkout options were not initialized.")
+                XCTFail("The checkout options were nil.")
                 return
             }
             
@@ -95,7 +95,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             guard var cherrypickOptions = GitCherrypickOptions()
             else
             {
-                XCTFail("The cherrypick options were not initialized.")
+                XCTFail("The cherrypick options were nil.")
                 return
             }
             
@@ -221,7 +221,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
         guard var cherrypickOptions = GitCherrypickOptions()
         else
         {
-            XCTFail("The cherrypick options were not initialized.")
+            XCTFail("The cherrypick options were nil.")
             return
         }
         

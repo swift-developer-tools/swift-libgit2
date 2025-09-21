@@ -29,7 +29,7 @@ public struct GitCert
     ///
     /// ## Discussion
     ///
-    /// ``GitCert/certType`` defaults to ``GitCertT/gitCertNone`` if an unexpected
+    /// ``certType`` defaults to ``GitCertT/gitCertNone`` if an unexpected
     /// value is encountered, although this should never occur.
     internal init(
         cValue cert: git_cert
