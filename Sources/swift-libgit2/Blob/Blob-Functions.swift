@@ -96,13 +96,13 @@ public func gitBlobID(
     blob: OpaquePointer
 ) -> GitOID?
 {
-    guard let blobIDPointer: UnsafePointer<git_oid> = git_blob_id(blob)
+    guard let blobID: UnsafePointer<git_oid> = git_blob_id(blob)
     else
     {
         return nil
     }
     
-    return GitOID(cValue: blobIDPointer.pointee)
+    return GitOID(cValue: blobID.pointee)
 }
 
 
