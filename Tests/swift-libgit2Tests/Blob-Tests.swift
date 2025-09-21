@@ -306,7 +306,7 @@ final class BlobTests: XCTestCaseStopOnFail
             guard let blobFilterOptions = GitBlobFilterOptions()
             else
             {
-                XCTFail("The blob filter options were not initialized.")
+                XCTFail("The blob filter options were nil.")
                 return
             }
             
@@ -355,7 +355,7 @@ final class BlobTests: XCTestCaseStopOnFail
         guard var blobFilterOptions = GitBlobFilterOptions()
         else
         {
-            XCTFail("The blob filter options were not initialized.")
+            XCTFail("The blob filter options were nil.")
             return
         }
         

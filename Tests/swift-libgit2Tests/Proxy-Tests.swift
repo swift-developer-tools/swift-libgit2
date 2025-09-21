@@ -22,7 +22,7 @@ final class ProxyTests: XCTestCaseStopOnFail
         guard let proxyOptions = GitProxyOptions()
         else
         {
-            XCTFail("The proxy options were not initialized.")
+            XCTFail("The proxy options were nil.")
             return
         }
         
