@@ -20,7 +20,7 @@ final class StrarrayTests: XCTestCaseStopOnFail
     {
         let strings: [String] = ["hello", "world"]
         
-        let strarray = GitStrarray(
+        let strarray = GitStrArray(
             strings:    strings,
             count:      strings.count
         )
@@ -30,7 +30,7 @@ final class StrarrayTests: XCTestCaseStopOnFail
         
         
         
-        strings.withGitStrarray
+        strings.withGitStrArray
         {
             strarray in
             
@@ -61,7 +61,7 @@ final class StrarrayTests: XCTestCaseStopOnFail
         
         
         
-        [].withGitStrarray
+        [].withGitStrArray
         {
             strarray in
             
@@ -88,7 +88,7 @@ final class StrarrayTests: XCTestCaseStopOnFail
         let outerArray  : [String]  = ["outer1", "outer2"]
         let innerArray  : [String]  = ["inner1", "inner2"]
         
-        outerArray.withGitStrarray
+        outerArray.withGitStrArray
         {
             outerStrarray in
             
@@ -117,7 +117,7 @@ final class StrarrayTests: XCTestCaseStopOnFail
             
             
             
-            innerArray.withGitStrarray
+            innerArray.withGitStrArray
             {
                 innerStrarray in
                 

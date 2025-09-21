@@ -244,7 +244,7 @@ public struct GitCheckoutOptions
         checkoutOptions.perfdata_cb         = perfDataCB
         checkoutOptions.perfdata_payload    = perfDataPayload
         
-        return paths.withGitStrarray
+        return paths.withGitStrArray
         {
             cPaths in
             
