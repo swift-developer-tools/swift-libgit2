@@ -25,6 +25,15 @@ Similar to libgit2, the Swift bindings do not use
 [namespaces](https://en.wikipedia.org/wiki/Namespace). All Swift bindings are
 available globally.
 
+The Swift bindings use native Swift types wherever possible, while preserving 
+libgit2's behavior and semantics. For example, some functions and structs are 
+translated to use Swift types like `String` instead of `UnsafePointer<CChar>`.
+
+Some bindings must use C types to maintain compatibility with libgit2's 
+memory management and calling conventions. This includes callbacks invoked by 
+libgit2 internally, output parameters where libgit2 owns the returned memory, 
+and other cases where C types cannot be accurately represented in Swift.
+
 The Swift bindings for some C enums are represented as structs, but remain in 
 their respective "Enums" documentation section to match libgit2's API 
 organization.

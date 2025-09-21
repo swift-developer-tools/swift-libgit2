@@ -185,9 +185,11 @@ public func gitAnnotatedCommitID(
 /// [`git_annotated_commit_ref()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_ref.html)
 public func gitAnnotatedCommitRef(
     commit: OpaquePointer
-) -> UnsafePointer<CChar>?
+) -> String?
 {
-    return git_annotated_commit_ref(commit)
+    let referenceName: UnsafePointer<CChar>? = git_annotated_commit_ref(commit)
+    
+    return String(optionalCString: referenceName)
 }
 
 

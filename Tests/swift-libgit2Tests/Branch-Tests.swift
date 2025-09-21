@@ -19,7 +19,7 @@ final class BranchTests: XCTestCaseStopOnFail
     
     func testGitBranchIsValid() throws
     {
-        var isValid: Int32 = 0
+        var isValid: Bool = false
         
         var branchIsValidResult: Int32 = gitBranchIsValid(
             valid:  &isValid,
@@ -27,7 +27,7 @@ final class BranchTests: XCTestCaseStopOnFail
         )
         
         XCTAssertOK(branchIsValidResult)
-        XCTAssertEqual(isValid, 1)
+        XCTAssertTrue(isValid)
         
         
         
@@ -47,7 +47,7 @@ final class BranchTests: XCTestCaseStopOnFail
         
         for invalidBranchName in invalidBranchNames
         {
-            isValid = 0
+            isValid = false
             
             branchIsValidResult = gitBranchIsValid(
                 valid:  &isValid,
@@ -55,7 +55,7 @@ final class BranchTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(branchIsValidResult)
-            XCTAssertEqual(isValid, 0)
+            XCTAssertFalse(isValid)
         }
     }
     
