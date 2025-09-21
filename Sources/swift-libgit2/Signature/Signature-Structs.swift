@@ -111,21 +111,21 @@ public struct GitSignature
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<git_signature>?>) -> T
     ) -> T
     {
-        var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
+        var signature: UnsafeMutablePointer<git_signature>? = nil
         
         defer
         {
-            if signaturePointer != nil
+            if signature != nil
             {
-                gitSignatureFree(sig: signaturePointer)
+                gitSignatureFree(sig: signature)
             }
         }
         
         
         
-        let result: T = body(&signaturePointer)
+        let result: T = body(&signature)
         
-        guard let signaturePointer: UnsafeMutablePointer<git_signature> = signaturePointer
+        guard let signature: UnsafeMutablePointer<git_signature> = signature
         else
         {
             return result
@@ -135,12 +135,12 @@ public struct GitSignature
         {
             if intResult == GIT_OK.rawValue
             {
-                self = GitSignature(cValue: signaturePointer.pointee)
+                self = GitSignature(cValue: signature.pointee)
             }
         }
         else
         {
-            self = GitSignature(cValue: signaturePointer.pointee)
+            self = GitSignature(cValue: signature.pointee)
         }
         
         
