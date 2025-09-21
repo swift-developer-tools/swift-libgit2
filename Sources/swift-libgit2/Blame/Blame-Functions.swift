@@ -57,17 +57,13 @@ public func gitBlameHunkByIndex(
     index   : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk>
-            = git_blame_hunk_byindex(
-                blame,
-                index
-            )
+    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_hunk_byindex(blame, index)
     else
     {
         return nil
     }
     
-    return GitBlameHunk(cValue: blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunk.pointee)
 }
 
 
@@ -86,13 +82,13 @@ public func gitBlameHunkByLine(
     lineNo  : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk> = git_blame_hunk_byline(blame, lineNo)
+    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_hunk_byline(blame, lineNo)
     else
     {
         return nil
     }
     
-    return GitBlameHunk(cValue: blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunk.pointee)
 }
 
 
@@ -111,13 +107,13 @@ public func gitBlameLineByIndex(
     idx     : Int
 ) -> GitBlameLine?
 {
-    guard let blameLinePointer: UnsafePointer<git_blame_line> = git_blame_line_byindex(blame, idx)
+    guard let blameLine: UnsafePointer<git_blame_line> = git_blame_line_byindex(blame, idx)
     else
     {
         return nil
     }
     
-    return GitBlameLine(cValue: blameLinePointer.pointee)
+    return GitBlameLine(cValue: blameLine.pointee)
 }
 
 
@@ -162,13 +158,13 @@ public func gitBlameGetHunkByIndex(
     index   : UInt32
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byindex(blame, index)
+    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byindex(blame, index)
     else
     {
         return nil
     }
     
-    return GitBlameHunk(cValue: blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunk.pointee)
 }
 
 
@@ -192,13 +188,13 @@ public func gitBlameGetHunkByLine(
     lineNo  : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunkPointer: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byline(blame, lineNo)
+    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byline(blame, lineNo)
     else
     {
         return nil
     }
     
-    return GitBlameHunk(cValue: blameHunkPointer.pointee)
+    return GitBlameHunk(cValue: blameHunk.pointee)
 }
 
 
