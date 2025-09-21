@@ -29,7 +29,7 @@ The Swift bindings use native Swift types wherever possible, while preserving
 libgit2's behavior and semantics. For example, some functions and structs are 
 translated to use Swift types like `String` instead of `UnsafePointer<CChar>`.
 
-Some bindings must retain C types to maintain compatibility with libgit2's 
+Some bindings must use C types to maintain compatibility with libgit2's 
 memory management and calling conventions. This includes callbacks invoked by 
 libgit2 internally, output parameters where libgit2 owns the returned memory, 
 and other cases where C types cannot be accurately represented in Swift.
