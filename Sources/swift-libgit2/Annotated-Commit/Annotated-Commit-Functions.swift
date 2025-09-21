@@ -168,9 +168,9 @@ public func gitAnnotatedCommitID(
     commit: OpaquePointer
 ) -> GitOID
 {
-    let annotatedCommitIDPointer: UnsafePointer<git_oid> = git_annotated_commit_id(commit)
+    let annotatedCommitID: UnsafePointer<git_oid> = git_annotated_commit_id(commit)
     
-    return GitOID(cValue: annotatedCommitIDPointer.pointee)
+    return GitOID(cValue: annotatedCommitID.pointee)
 }
 
 
