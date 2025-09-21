@@ -133,16 +133,16 @@ public struct GitCheckoutOptions
     public var baselineIndex    : OpaquePointer?
     
     /// The alternative checkout path to the working directory.
-    public var targetDirectory  : UnsafePointer<CChar>?
+    public var targetDirectory  : String?
     
     /// The name of the common ancestor side of conflicts.
-    public var ancestorLabel    : UnsafePointer<CChar>?
+    public var ancestorLabel    : String?
     
     /// The name of the "our" side of conflicts.
-    public var ourLabel         : UnsafePointer<CChar>?
+    public var ourLabel         : String?
     
     /// The name of the "theirr" side of conflicts.
-    public var theirLabel       : UnsafePointer<CChar>?
+    public var theirLabel       : String?
     
     /// The callback for reporting checkout performance data.
     public var perfDataCB       : GitCheckoutPerfDataCB?
@@ -196,10 +196,10 @@ public struct GitCheckoutOptions
         self.paths              = Array(checkoutOptions.paths)
         self.baseline           = checkoutOptions.baseline
         self.baselineIndex      = checkoutOptions.baseline_index
-        self.targetDirectory    = checkoutOptions.target_directory
-        self.ancestorLabel      = checkoutOptions.ancestor_label
-        self.ourLabel           = checkoutOptions.our_label
-        self.theirLabel         = checkoutOptions.their_label
+        self.targetDirectory    = String(optionalCString: checkoutOptions.target_directory)
+        self.ancestorLabel      = String(optionalCString: checkoutOptions.ancestor_label)
+        self.ourLabel           = String(optionalCString: checkoutOptions.our_label)
+        self.theirLabel         = String(optionalCString: checkoutOptions.their_label)
         self.perfDataCB         = checkoutOptions.perfdata_cb
         self.perfDataPayload    = checkoutOptions.perfdata_payload
     }
@@ -241,10 +241,6 @@ public struct GitCheckoutOptions
         checkoutOptions.progress_payload    = progressPayload
         checkoutOptions.baseline            = baseline
         checkoutOptions.baseline_index      = baselineIndex
-        checkoutOptions.target_directory    = targetDirectory
-        checkoutOptions.ancestor_label      = ancestorLabel
-        checkoutOptions.our_label           = ourLabel
-        checkoutOptions.their_label         = theirLabel
         checkoutOptions.perfdata_cb         = perfDataCB
         checkoutOptions.perfdata_payload    = perfDataPayload
         
@@ -254,7 +250,193 @@ public struct GitCheckoutOptions
             
             checkoutOptions.paths = cPaths.pointee
             
-            return body(&checkoutOptions)
+            return withComposedProperties(
+                &checkoutOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Composes the optional properties of ``GitCheckoutOptions``, then calls the given
+    /// closure with a pointer to the updated `git_checkout_options` instance.
+    /// - Parameters:
+    ///   - checkoutOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// This function composes the following optional properties:
+    /// - ``targetDirectory``
+    /// - ``ancestorLabel``
+    /// - ``ourLabel``
+    /// - ``theirLabel``
+    ///
+    /// The composition begins by calling ``withTargetDirectory(_:_:)``.
+    private func withComposedProperties<T>(
+        _   checkoutOptions : UnsafeMutablePointer<git_checkout_options>,
+        _   body            : (UnsafeMutablePointer<git_checkout_options>?) -> T
+    ) -> T
+    {
+        return withTargetDirectory(
+            checkoutOptions,
+            body
+        )
+    }
+    
+    
+    
+    /// Updates the given `git_checkout_options` instance with the value of
+    /// ``targetDirectory``, then continues the composition by calling
+    /// ``withAncestorLabel(_:_:)``.
+    /// - Parameters:
+    ///   - checkoutOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``targetDirectory`` is `nil`, this function will proceed directly to the next step in the
+    /// composition.
+    private func withTargetDirectory<T>(
+        _   checkoutOptions : UnsafeMutablePointer<git_checkout_options>,
+        _   body            : (UnsafeMutablePointer<git_checkout_options>?) -> T
+    ) -> T
+    {
+        guard let targetDirectory: String = targetDirectory
+        else
+        {
+            return withAncestorLabel(
+                checkoutOptions,
+                body
+            )
+        }
+        
+        return targetDirectory.withCString
+        {
+            cTargetDirectory in
+            
+            checkoutOptions.pointee.target_directory = cTargetDirectory
+            
+            return withAncestorLabel(
+                checkoutOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Updates the given `git_checkout_options` instance with the value of
+    /// ``ancestorLabel``, then continues the composition by calling ``withOurLabel(_:_:)``.
+    /// - Parameters:
+    ///   - checkoutOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``ancestorLabel`` is `nil`, this function will proceed directly to the next step in the
+    /// composition.
+    private func withAncestorLabel<T>(
+        _   checkoutOptions : UnsafeMutablePointer<git_checkout_options>,
+        _   body            : (UnsafeMutablePointer<git_checkout_options>?) -> T
+    ) -> T
+    {
+        guard let ancestorLabel: String = ancestorLabel
+        else
+        {
+            return withOurLabel(
+                checkoutOptions,
+                body
+            )
+        }
+        
+        return ancestorLabel.withCString
+        {
+            cAncestorLabel in
+            
+            checkoutOptions.pointee.ancestor_label = cAncestorLabel
+            
+            return withOurLabel(
+                checkoutOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Updates the given `git_checkout_options` instance with the value of ``ourLabel``,
+    /// then continues the composition by calling ``withTheirLabel(_:_:)``.
+    /// - Parameters:
+    ///   - checkoutOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``ourLabel`` is `nil`, this function will proceed directly to the next step in the
+    /// composition.
+    private func withOurLabel<T>(
+        _   checkoutOptions : UnsafeMutablePointer<git_checkout_options>,
+        _   body            : (UnsafeMutablePointer<git_checkout_options>?) -> T
+    ) -> T
+    {
+        guard let ourLabel: String = ourLabel
+        else
+        {
+            return withTheirLabel(
+                checkoutOptions,
+                body
+            )
+        }
+        
+        return ourLabel.withCString
+        {
+            cOurLabel in
+            
+            checkoutOptions.pointee.our_label = cOurLabel
+            
+            return withTheirLabel(
+                checkoutOptions,
+                body
+            )
+        }
+    }
+    
+    
+    
+    /// Updates the given `git_checkout_options` instance with the value of ``theirLabel``,
+    /// then finishes the composition by calling the given closure.
+    /// - Parameters:
+    ///   - checkoutOptions: The options to update.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// If ``theirLabel`` is `nil`, this function will proceed directly to calling the given closure.
+    private func withTheirLabel<T>(
+        _   checkoutOptions : UnsafeMutablePointer<git_checkout_options>,
+        _   body            : (UnsafeMutablePointer<git_checkout_options>?) -> T
+    ) -> T
+    {
+        guard let theirLabel: String = theirLabel
+        else
+        {
+            return body(checkoutOptions)
+        }
+        
+        return theirLabel.withCString
+        {
+            cTheirLabel in
+            
+            checkoutOptions.pointee.their_label = cTheirLabel
+            
+            return body(checkoutOptions)
         }
     }
 }
