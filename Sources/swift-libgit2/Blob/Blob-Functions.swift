@@ -157,7 +157,7 @@ public func gitBlobRawSize(
 
 /// Gets a buffer with the filtered content of the given blob.
 /// - Parameters:
-///   - out: The buffer to be filled in.
+///   - out: The buffer into which the filtered content should be written.
 ///   - blob: The blob. The underlying type should be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.
 ///   - opts: The options for the blob filtering operation.
