@@ -15,8 +15,6 @@ import XCTest
 
 final class BranchTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitBranchIsValid()
-    
     func testGitBranchIsValid() throws
     {
         var isValid: Bool = false
@@ -60,8 +58,6 @@ final class BranchTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBranchOperationsAndIteration()
     
     func testGitBranchOperationsAndIteration() throws
     {
@@ -127,7 +123,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             /// Create the branch named `branchName` again, with `force` specified, and
             /// this time create it from an annotated commit. Free it automatically.
-            _ = try Branch.createLocalBranch(
+            try Branch.createLocalBranch(
                 named:      branchName,
                 in:         repository,
                 force:      true,
@@ -148,7 +144,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    gitBranchIteratorFree(iter: branchIteratorPointer)
+                    Free.freeBranchIterator(branchIteratorPointer)
                 }
                 
                 
@@ -201,8 +197,6 @@ final class BranchTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBranchProperties()
     
     func testGitBranchProperties() throws
     {
@@ -303,8 +297,6 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBranchRemoteOperations()
-    
     func testGitBranchRemoteOperations() throws
     {
         try Repository.withRepository
@@ -369,8 +361,6 @@ final class BranchTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBranchT()
     
     func testGitBranchT() throws
     {

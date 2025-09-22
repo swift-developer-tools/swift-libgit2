@@ -16,8 +16,6 @@ import XCTest
 /// Branch-related testing utilities.
 enum Branch
 {
-    // MARK: - createLocalBranch()
-    
     /// Creates a local branch from the HEAD commit.
     /// - Parameters:
     ///   - branchName: The branch name.
@@ -32,6 +30,7 @@ enum Branch
     /// ## Discussion
     ///
     /// If `free` is `false`, the caller is responsible for freeing the branch.
+    @discardableResult
     static func createLocalBranch(
         named       branchName  : String,
         in          repository  : Repository,
@@ -96,12 +95,10 @@ enum Branch
         }
         else
         {
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &headCommitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &headCommitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -136,8 +133,6 @@ enum Branch
     }
     
     
-    
-    // MARK: - withExistingLocalBranchPointer()
     
     /// Calls the given closure with a pointer to an existing local branch.
     /// - Parameters:
@@ -175,8 +170,6 @@ enum Branch
     }
     
     
-    
-    // MARK: - withNewLocalBranchPointer()
     
     /// Calls the given closure with a pointer to a local branch created from the HEAD commit.
     /// - Parameters:

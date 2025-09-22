@@ -15,8 +15,6 @@ import XCTest
 
 final class CertTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitCert()
-    
     func testGitCert() throws
     {
         var cCert = git_cert()
@@ -39,8 +37,6 @@ final class CertTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCertHostKey()
     
     func testGitCertHostKey() throws
     {
@@ -160,8 +156,6 @@ final class CertTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCertSSHRawTypeT()
-    
     func testGitCertSSHRawTypeT() throws
     {
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeUnknown.rawValue, GIT_CERT_SSH_RAW_TYPE_UNKNOWN.rawValue)
@@ -190,8 +184,6 @@ final class CertTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCertSSHT()
     
     func testGitCertSSHT() throws
     {
@@ -237,8 +229,6 @@ final class CertTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCertT()
-    
     func testGitCertT() throws
     {
         XCTAssertEqual(GitCertT.gitCertNone.rawValue, GIT_CERT_NONE.rawValue)
@@ -259,8 +249,6 @@ final class CertTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCertX509()
     
     func testGitCertX509() throws
     {
@@ -301,8 +289,6 @@ final class CertTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitTransportCertificateCheckCB()
     
     func testGitTransportCertificateCheckCB() throws
     {

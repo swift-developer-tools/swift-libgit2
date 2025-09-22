@@ -22,8 +22,6 @@ import XCTest
 /// to test bindings.
 struct Repository
 {
-    // MARK: - Properties
-    
     /// The URL of the repository.
     let url     : URL
     
@@ -32,6 +30,8 @@ struct Repository
     
     
     
+    static let commitAuthorName     : String    = "Test User"
+    static let commitAuthorEmail    : String    = "test@example.com"
     static let readmeFileName       : String    = "README.md"
     static let readmeFileContent    : String    = "# Hello World!"
     static let blameFileName        : String    = "blame.txt"
@@ -46,22 +46,26 @@ struct Repository
     
     
     
-    // MARK: - createCommit()
-    
     /// Creates a commit with the given content and message.
     /// - Parameters:
     ///   - path: The path to the file to modify. This will be appended to the repository's URL.
     ///   - content: The new content of the file.
     ///   - append: Whether the new content should be appended to the existing content.
     ///   - message: The commit message.
+    ///   - options: The options for commit creation. The options are only used when creating
+    ///   a commit from staged changes.
+    ///   - fromStage: Whether the commit should be created from staged changes.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An `Error` if the file write operation failed.
+    /// - Throws: An `Error` if the file write operation failed, or an `NSError` if the commit
+    /// or tree initialization failed.
     @discardableResult
     func createCommit(
-        path    : String,
-        content : String,
-        append  : Bool      = false,
-        message : String
+        path        : String,
+        content     : String,
+        append      : Bool                      = false,
+        message     : String,
+        options     : GitCommitCreateOptions?   = nil,
+        fromStage   : Bool                      = false
     ) throws -> GitOID
     {
         try modifyFile(
@@ -105,6 +109,76 @@ struct Repository
         
         
         
+        if fromStage
+        {
+            var commitOID = GitOID()
+            
+            let commitCreateFromStageResult: Int32 = gitCommitCreateFromStage(
+                id:         &commitOID,
+                repo:       pointer,
+                message:    "Commit from stage",
+                opts:       options
+            )
+            
+            XCTAssertOK(commitCreateFromStageResult)
+            OID.assertOIDsNotEqual(commitOID, GitOID())
+            
+            
+            
+            var commitPointer: OpaquePointer? = nil
+
+            defer
+            {
+                Free.freeCommit(commitPointer)
+            }
+            
+            
+            
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       pointer,
+                id:         commitOID
+            )
+            
+            XCTAssertOK(commitLookupResult)
+            
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                throw NSError.create(
+                    code:       Int(GIT_EUSER.rawValue),
+                    message:    "The staged commit pointer was nil."
+                )
+            }
+            
+            
+            
+            let messageEncoding: String? = gitCommitMessageEncoding(commit: commitPointer)
+            
+            XCTAssertNotNil(messageEncoding)
+            XCTAssertEqual(messageEncoding, options?.messageEncoding)
+            
+            
+            
+            let author: GitSignature = gitCommitAuthor(commit: commitPointer)
+            
+            XCTAssertEqual(author.name, options?.author?.name)
+            XCTAssertEqual(author.email, options?.author?.email)
+            
+            
+            
+            let committer: GitSignature = gitCommitCommitter(commit: commitPointer)
+            
+            XCTAssertEqual(committer.name, options?.committer?.name)
+            XCTAssertEqual(committer.email, options?.committer?.email)
+            
+            
+            
+            return commitOID
+        }
+        
+        
+        
         var treeOID = git_oid()
         
         let indexWriteTreeResult: Int32 = git_index_write_tree(
@@ -133,32 +207,28 @@ struct Repository
         
         XCTAssertOK(treeLookupResult)
         
-        
-        
-        // TODO: Replace with `GitSignature` once `git_commit_create()` has a binding, and remove `defer` block.
-        var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
-        
-        defer
+        guard let treePointer: OpaquePointer = treePointer
+        else
         {
-            if signaturePointer != nil
-            {
-                gitSignatureFree(sig: signaturePointer)
-            }
+            throw NSError.create(
+                code:       Int(GIT_EUSER.rawValue),
+                message:    "The tree pointer was nil."
+            )
         }
         
         
         
-        let signatureNowResult: Int32 = git_signature_now(
-            &signaturePointer,
-            "Test User",
-            "test@example.com"
+        var signature = GitSignature()
+        
+        let signatureNowResult: Int32 = gitSignatureNow(
+            out:    &signature,
+            name:   Self.commitAuthorName,
+            email:  Self.commitAuthorEmail
         )
         
         XCTAssertOK(signatureNowResult)
         
         
-        
-        var headOID = git_oid()
         
         var headCommitPointer: OpaquePointer? = nil
         
@@ -169,19 +239,22 @@ struct Repository
         
         
         
+        // TODO: Remove once `git_reference_name_to_id()` has a binding.
+        var cHeadOID = git_oid()
+        
         /// Get the current HEAD commit as the parent commit, if it exists.
         let referenceToNameToIDResult: Int32 = git_reference_name_to_id(
-            &headOID,
+            &cHeadOID,
             pointer,
             "HEAD"
         )
         
         if referenceToNameToIDResult == GIT_OK.rawValue
         {
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &headCommitPointer,
-                pointer,
-                &headOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &headCommitPointer,
+                repo:       pointer,
+                id:         GitOID(cValue: cHeadOID)
             )
             
             XCTAssertOK(commitLookupResult)
@@ -198,31 +271,29 @@ struct Repository
         
         
         
-        var commitOID = git_oid()
+        var commitOID = GitOID()
         
-        let commitCreateResult: Int32 = git_commit_create(
-            &commitOID,
-            pointer,
-            "HEAD",
-            signaturePointer,
-            signaturePointer,
-            nil,
-            message,
-            treePointer,
-            parentCommitPointers.count,
-            &parentCommitPointers
+        let commitCreateResult: Int32 = gitCommitCreate(
+            id:                 &commitOID,
+            repo:               pointer,
+            updateRef:          "HEAD",
+            author:             signature,
+            committer:          signature,
+            messageEncoding:    nil,
+            message:            message,
+            tree:               treePointer,
+            parentCount:        parentCommitPointers.count,
+            parents:            &parentCommitPointers
         )
         
         XCTAssertOK(commitCreateResult)
         
         
         
-        return GitOID(cValue: commitOID)
+        return commitOID
     }
     
     
-    
-    // MARK: - resetToCommit()
     
     /// Resets to the given commit.
     /// - Parameters:
@@ -242,12 +313,10 @@ struct Repository
         
         
         
-        var cCommitOID: git_oid = commitOID.cValue
-        
-        let commitLookupResult: Int32 = git_commit_lookup(
-            &commitPointer,
-            pointer,
-            &cCommitOID
+        let commitLookupResult: Int32 = gitCommitLookup(
+            commit:     &commitPointer,
+            repo:       pointer,
+            id:         commitOID
         )
         
         XCTAssertOK(commitLookupResult)
@@ -265,8 +334,6 @@ struct Repository
     }
     
     
-    
-    // MARK: - modifyFile()
     
     /// Modifies the content of a file.
     /// - Parameters:
@@ -304,8 +371,6 @@ struct Repository
     
     
     
-    // MARK: - verifyFileContent()
-    
     /// Verifies the content of a file.
     /// - Parameters:
     ///   - path: The path to the file whose content should be verified. This will be appended to the
@@ -332,11 +397,11 @@ struct Repository
 
 
 
+// MARK: - Extensions
+
 /// Static methods related to ``Repository/withRepository(_:)``.
 extension Repository
 {
-    // MARK: - createBlameData()
-    
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
     /// - Throws: An `Error` if the file write operation failed.
@@ -393,8 +458,6 @@ extension Repository
     
     
     
-    // MARK: - createTemporaryDirectory()
-    
     /// Creates a temporary directory with the given name.
     /// - Parameter directoryName: The name of the directory.
     /// - Returns: The URL of the temporary directory.
@@ -417,8 +480,6 @@ extension Repository
     }
     
     
-    
-    // MARK: - withRepository()
     
     /// Calls the given closure with a `Repository` instance.
     /// - Parameter body: The closure to call.

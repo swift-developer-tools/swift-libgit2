@@ -11,13 +11,13 @@ import Clibgit2
 
 
 
-/// Frees the strings contained in a string array.
+/// Frees the strings contained in a `git_strarray`.
 /// - Parameter array: The array containing the strings to free.
 ///
 /// ## Discussion
 ///
 /// This function is only needed when working directly with `git_strarray` instances allocated by
-/// libgit2. ``GitStrarray`` instances do not need to be freed.
+/// libgit2. ``GitStrArray`` instances do not need to be freed.
 ///
 /// This function does not free the `git_strarray` itself, since libgit2 will never allocate that object
 /// directly.
@@ -25,7 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_strarray_dispose()`](https://libgit2.org/docs/reference/main/strarray/git_strarray_dispose.html)
-public func gitStrarrayDispose(
+public func gitStrArrayDispose(
     array: UnsafeMutablePointer<git_strarray>?
 )
 {

@@ -15,8 +15,6 @@ import XCTest
 
 final class SignatureTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitSignature()
-    
     func testGitSignature() throws
     {
         let signature = GitSignature()
@@ -27,8 +25,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureDefault()
     
     func testGitSignatureDefault() throws
     {
@@ -52,14 +48,12 @@ final class SignatureTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitSignatureDefaultFromBuffer()
-    
     func testGitSignatureDefaultFromBuffer() throws
     {
         var signature = GitSignature()
         
-        let name    : String    = "Test User"
-        let email   : String    = "test@example.com"
+        let name    : String    = Repository.commitAuthorName
+        let email   : String    = Repository.commitAuthorEmail
         let time    : GitTimeT  = 946684800
         let offset  : Int32     = 120
         
@@ -125,8 +119,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureDefaultFromEnv()
     
     func testGitSignatureDefaultFromEnv() throws
     {
@@ -208,14 +200,12 @@ final class SignatureTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitSignatureNewAndDup()
-    
     func testGitSignatureNewAndDup() throws
     {
         var signature = GitSignature()
         
-        let name    : String    = "Test User"
-        let email   : String    = "test@example.com"
+        let name    : String    = Repository.commitAuthorName
+        let email   : String    = Repository.commitAuthorEmail
         let time    : GitTimeT  = 946684800
         let offset  : Int32     = 120
         
@@ -312,14 +302,12 @@ final class SignatureTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitSignatureNow()
-    
     func testGitSignatureNow() throws
     {
         var signature = GitSignature()
         
-        let name        : String        = "Test User"
-        let email       : String        = "test@example.com"
+        let name        : String        = Repository.commitAuthorName
+        let email       : String        = Repository.commitAuthorEmail
         let beforeTime  : TimeInterval  = Date().timeIntervalSince1970
         
         let signatureNowResult: Int32 = gitSignatureNow(

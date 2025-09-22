@@ -15,8 +15,6 @@ import XCTest
 
 final class BufferTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitBuf()
-    
     func testGitBuf() throws
     {
         try Repository.withRepository
@@ -82,7 +80,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             

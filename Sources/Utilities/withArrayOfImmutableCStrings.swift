@@ -136,7 +136,10 @@ internal func withArrayOfImmutableCStrings<T>(
     {
         cStrings in
         
-        let immutableCStrings: [UnsafePointer<CChar>?] = cStrings.map { $0.map { UnsafePointer<CChar>($0) } }
+        let immutableCStrings: [UnsafePointer<CChar>?] = cStrings.map
+        {
+            $0.map { UnsafePointer<CChar>($0) }
+        }
         
         
         
@@ -145,7 +148,9 @@ internal func withArrayOfImmutableCStrings<T>(
             buffer in
             
             /// `baseAddress` should never be `nil` since the buffer will not be empty at this point.
-            let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(mutating: buffer.baseAddress!)
+            let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(
+                mutating: buffer.baseAddress!
+            )
             
             return body(pointer)
         }

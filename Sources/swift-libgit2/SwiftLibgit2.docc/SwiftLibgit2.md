@@ -9,12 +9,12 @@ Direct Swift bindings to libgit2.
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org).
 libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
-Swift bindings are provided for almost every function, struct, and macro 
-available in libgit2. Direct access to the libgit2 C library is also provided
-by the package. There are no Swift bindings for initialization functions, 
-opaque structs, and initialization macros, but these may be accessed by
-importing the C library. See the Usage section below for an example of how 
-to import and use either library.
+Swift bindings are provided for almost every API available in libgit2. Direct
+access to the libgit2 C library is also provided by the package. There are no
+Swift bindings for opaque structs, initialization functions and macros, or 
+variadic functions that do not use `va_list` for their arguments, but these may 
+be accessed by importing the C library. See the Usage section below for an 
+example of how to import and use either library.
 
 The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 
@@ -417,6 +417,54 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitClone(out:url:localPath:options:)``
 
+### Commit Structs
+
+- ``GitCommitCreateOptions``
+- ``GitCommitArray``
+
+### Commit Macros
+
+- ``gitCommitCreateOptionsVersion``
+
+### Commit Callbacks
+
+- ``GitCommitCreateCB``
+
+### Commit Functions
+
+- ``gitCommitLookup(commit:repo:id:)``
+- ``gitCommitLookupPrefix(commit:repo:id:len:)``
+- ``gitCommitFree(commit:)``
+- ``gitCommitID(commit:)``
+- ``gitCommitOwner(commit:)``
+- ``gitCommitMessageEncoding(commit:)``
+- ``gitCommitMessage(commit:)``
+- ``gitCommitMessageRaw(commit:)``
+- ``gitCommitSummary(commit:)``
+- ``gitCommitBody(commit:)``
+- ``gitCommitTime(commit:)``
+- ``gitCommitTimeOffset(commit:)``
+- ``gitCommitCommitter(commit:)``
+- ``gitCommitAuthor(commit:)``
+- ``gitCommitCommitterWithMailmap(out:commit:mailmap:)``
+- ``gitCommitAuthorWithMailmap(out:commit:mailmap:)``
+- ``gitCommitRawHeader(commit:)``
+- ``gitCommitTree(out:commit:)``
+- ``gitCommitTreeID(commit:)``
+- ``gitCommitParentCount(commit:)``
+- ``gitCommitParent(out:commit:n:)``
+- ``gitCommitParentID(commit:n:)``
+- ``gitCommitNthGenAncestor(ancestor:commit:n:)``
+- ``gitCommitHeaderField(out:commit:field:)``
+- ``gitCommitExtractSignature(signature:signedData:repo:commitID:field:)``
+- ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``
+- ``gitCommitCreateFromStage(id:repo:message:opts:)``
+- ``gitCommitAmend(id:commitToAmend:updateRef:author:committer:messageEncoding:message:tree:)``
+- ``gitCommitCreateBuffer(out:repo:author:committer:messageEncoding:message:tree:parentCount:parents:)``
+- ``gitCommitCreateWithSignature(out:repo:commitContent:signature:signatureField:)``
+- ``gitCommitDup(out:source:)``
+- ``gitCommitArrayDispose(array:)``
+
 ### Credential Enums
 
 - ``GitCredentialT``
@@ -538,11 +586,11 @@ swift-libgit2 includes the following compiled libraries:
 
 ### Strarray Structs
 
-- ``GitStrarray``
+- ``GitStrArray``
 
 ### Strarray Functions
 
-- ``gitStrarrayDispose(array:)``
+- ``gitStrArrayDispose(array:)``
 
 ### Transport Callbacks
 

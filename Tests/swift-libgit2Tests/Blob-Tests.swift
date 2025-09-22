@@ -15,8 +15,6 @@ import XCTest
 
 final class BlobTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitBlobCreateFromBuffer()
-    
     func testGitBlobCreateFromBuffer() throws
     {
         try Repository.withRepository
@@ -49,8 +47,6 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlobCreateFromDisk()
-    
     func testGitBlobCreateFromDisk() throws
     {
         try Repository.withRepository
@@ -80,8 +76,6 @@ final class BlobTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBlobCreateFromStream()
     
     func testGitBlobCreateFromStream() throws
     {
@@ -149,8 +143,6 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlobCreateFromWorkdir()
-    
     func testGitBlobCreateFromWorkdir() throws
     {
         try Repository.withRepository
@@ -168,7 +160,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             
@@ -226,8 +218,6 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlobDataIsBinary()
-    
     func testGitBlobDataIsBinary() throws
     {
         let text: String = "Hello World!"
@@ -241,8 +231,6 @@ final class BlobTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBlobFilter()
     
     func testGitBlobFilter() throws
     {
@@ -261,7 +249,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             
@@ -323,8 +311,6 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlobFilterFlagT()
-    
     func testGitBlobFilterFlagT() throws
     {
         XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterCheckForBinary.rawValue, GIT_BLOB_FILTER_CHECK_FOR_BINARY.rawValue)
@@ -347,8 +333,6 @@ final class BlobTests: XCTestCaseStopOnFail
     }
     
     
-        
-    // MARK: - testGitBlobFilterOptions()
     
     func testGitBlobFilterOptions() throws
     {
@@ -386,8 +370,6 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlobIsDup()
-    
     func testGitBlobIsDup() throws
     {
         try Repository.withRepository
@@ -406,8 +388,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: originalBlobPointer)
-                gitBlobFree(blob: duplicatedBlobPointer)
+                Free.freeBlob(originalBlobPointer)
+                Free.freeBlob(duplicatedBlobPointer)
             }
             
             
@@ -467,8 +449,6 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlobIsBinary()
-    
     func testGitBlobIsBinary() throws
     {
         try Repository.withRepository
@@ -520,7 +500,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             

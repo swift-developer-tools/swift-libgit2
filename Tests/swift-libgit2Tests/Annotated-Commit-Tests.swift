@@ -15,8 +15,6 @@ import XCTest
 
 final class AnnotatedCommitTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitAnnotatedCommitFromFetchhead()
-    
     func testGitAnnotatedCommitFromFetchhead() throws
     {
         try Repository.withRepository
@@ -62,8 +60,6 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitAnnotatedCommitFromRef()
     
     func testGitAnnotatedCommitFromRef() throws
     {
@@ -140,8 +136,6 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAnnotatedCommitFromRevspec()
-    
     func testGitAnnotatedCommitFromRevspec() throws
     {
         try Repository.withRepository
@@ -184,8 +178,6 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitAnnotatedCommitLookup()
     
     func testGitAnnotatedCommitLookup() throws
     {

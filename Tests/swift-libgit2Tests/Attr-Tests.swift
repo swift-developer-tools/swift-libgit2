@@ -15,8 +15,6 @@ import XCTest
 
 final class AttrTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitAttrAddMacro()
-    
     func testGitAttrAddMacro() throws
     {
         try Repository.withRepository
@@ -63,8 +61,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAttrCacheFlush()
-    
     func testGitAttrCacheFlush() throws
     {
         try Repository.withRepository
@@ -94,8 +90,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAttrCheckFlags()
-    
     func testGitAttrCheckFlags() throws
     {
         XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckFileThenIndex.rawValue, UInt32(GIT_ATTR_CHECK_FILE_THEN_INDEX))
@@ -121,8 +115,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAttrForEach()
-    
     func testGitAttrForEach() throws
     {
         try gitAttrForEachFlow(options: nil)
@@ -130,16 +122,12 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAttrForEachExt()
-    
     func testGitAttrForEachExt() throws
     {
         try gitAttrForEachFlow(options: GitAttrOptions())
     }
     
     
-    
-    // MARK: - testGitAttrGetExt()
     
     func testGitAttrGetExt() throws
     {
@@ -164,8 +152,6 @@ final class AttrTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: testGitAttrGetMany()
     
     func testGitAttrGetMany() throws
     {
@@ -233,8 +219,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: testGitAttrGetManyExt()
-    
     func testGitAttrGetManyExt() throws
     {
         try Repository.withRepository
@@ -294,8 +278,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: testGitAttrGetManyWithEmptyArray()
-    
     func testGitAttrGetManyWithEmptyArray() throws
     {
         try Repository.withRepository
@@ -340,8 +322,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: testGitAttrGetManyExtWithEmptyArray()
-    
     func testGitAttrGetManyExtWithEmptyArray() throws
     {
         try Repository.withRepository
@@ -385,8 +365,6 @@ final class AttrTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitAttrMacros()
     
     func testGitAttrMacros() throws
     {
@@ -466,8 +444,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAttrOptions()
-    
     func testGitAttrOptions() throws
     {
         try Repository.withRepository
@@ -518,8 +494,6 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitAttrValueT()
-    
     func testGitAttrValueT() throws
     {
         XCTAssertEqual(GitAttrValueT.gitAttrValueUnspecified.rawValue, GIT_ATTR_VALUE_UNSPECIFIED.rawValue)
@@ -542,10 +516,10 @@ final class AttrTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension AttrTests
 {
-    // MARK: - gitAttrForEachFlow()
-
     /// Tests looping over all the attributes in the given path, with or without extended options.
     /// - Parameter options: The options to use when querying the attributes.
     /// - Throws: An `Error` if repository initialization fails.

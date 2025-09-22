@@ -15,8 +15,6 @@ import XCTest
 
 final class CherrypickTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitCherrypick()
-    
     func testGitCherrypick() throws
     {
         try Repository.withRepository
@@ -36,12 +34,10 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var cFeatureCommitOID: git_oid = featureCommitOID.cValue
-            
-            let featureCommitLookupResult: Int32 = git_commit_lookup(
-                &featureCommitPointer,
-                repository.pointer,
-                &cFeatureCommitOID
+            let featureCommitLookupResult: Int32 = gitCommitLookup(
+                commit:     &featureCommitPointer,
+                repo:       repository.pointer,
+                id:         featureCommitOID
             )
             
             XCTAssertOK(featureCommitLookupResult)
@@ -123,8 +119,6 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCherrypickCommit()
-    
     func testGitCherrypickCommit() throws
     {
         try Repository.withRepository
@@ -148,12 +142,10 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var cMainCommitOID: git_oid = mainCommitOID.cValue
-            
-            let mainCommitLookupResult: Int32 = git_commit_lookup(
-                &mainCommitPointer,
-                repository.pointer,
-                &cMainCommitOID
+            let mainCommitLookupResult: Int32 = gitCommitLookup(
+                commit:     &mainCommitPointer,
+                repo:       repository.pointer,
+                id:         mainCommitOID
             )
             
             XCTAssertOK(mainCommitLookupResult)
@@ -167,12 +159,10 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            var cFeatureCommitOID: git_oid = featureCommitOID.cValue
-            
-            let featureCommitLookupResult: Int32 = git_commit_lookup(
-                &featureCommitPointer,
-                repository.pointer,
-                &cFeatureCommitOID
+            let featureCommitLookupResult: Int32 = gitCommitLookup(
+                commit:     &featureCommitPointer,
+                repo:       repository.pointer,
+                id:         featureCommitOID
             )
             
             XCTAssertOK(featureCommitLookupResult)
@@ -214,8 +204,6 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCherrypickOptions()
-    
     func testGitCherrypickOptions() throws
     {
         guard var cherrypickOptions = GitCherrypickOptions()
@@ -242,14 +230,14 @@ final class CherrypickTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension CherrypickTests
 {
     private static let mainBranchContent    : String    = "Main branch feature\nHello World\n"
     private static let featureBranchContent : String    = "Feature branch change\nHello World\nGoodbye World\n"
     
     
-    
-    // MARK: - setupCherrypickScenario()
     
     /// Creates a repository with branches suitable for cherry-picking.
     /// - Parameter repository: The repository in which to create the branches.
@@ -315,12 +303,10 @@ extension CherrypickTests
         
         
         
-        var cHeadOID: git_oid = headOID.cValue
-        
-        let commitLookupResult: Int32 = git_commit_lookup(
-            &headCommitPointer,
-            repository.pointer,
-            &cHeadOID
+        let commitLookupResult: Int32 = gitCommitLookup(
+            commit:     &headCommitPointer,
+            repo:       repository.pointer,
+            id:         headOID
         )
         
         XCTAssertOK(commitLookupResult)

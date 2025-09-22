@@ -157,19 +157,19 @@ public func gitSignatureDefaultFromEnv(
     
     
     
-    var authorPointer       : UnsafeMutablePointer<git_signature>?  = nil
-    var committerPointer    : UnsafeMutablePointer<git_signature>?  = nil
+    var author      : UnsafeMutablePointer<git_signature>?  = nil
+    var committer   : UnsafeMutablePointer<git_signature>?  = nil
     
     defer
     {
-        if authorPointer != nil
+        if author != nil
         {
-            gitSignatureFree(sig: authorPointer)
+            gitSignatureFree(sig: author)
         }
         
-        if committerPointer != nil
+        if committer != nil
         {
-            gitSignatureFree(sig: committerPointer)
+            gitSignatureFree(sig: committer)
         }
     }
     
@@ -182,15 +182,15 @@ public func gitSignatureDefaultFromEnv(
         case (true, true):
             
             signatureDefaultFromEnvResult = git_signature_default_from_env(
-                &authorPointer,
-                &committerPointer,
+                &author,
+                &committer,
                 repo
             )
             
         case (true, false):
             
             signatureDefaultFromEnvResult = git_signature_default_from_env(
-                &authorPointer,
+                &author,
                 nil,
                 repo
             )
@@ -199,7 +199,7 @@ public func gitSignatureDefaultFromEnv(
             
             signatureDefaultFromEnvResult = git_signature_default_from_env(
                 nil,
-                &committerPointer,
+                &committer,
                 repo
             )
             
@@ -212,12 +212,12 @@ public func gitSignatureDefaultFromEnv(
     
     if signatureDefaultFromEnvResult == GIT_OK.rawValue
     {
-        if let authorSignature: git_signature = authorPointer?.pointee
+        if let authorSignature: git_signature = author?.pointee
         {
             authorOut = GitSignature(cValue: authorSignature)
         }
         
-        if let committerSignature: git_signature = committerPointer?.pointee
+        if let committerSignature: git_signature = committer?.pointee
         {
             committerOut = GitSignature(cValue: committerSignature)
         }

@@ -12,32 +12,30 @@ import XCTest
 
 
 
-final class StrarrayTests: XCTestCaseStopOnFail
+final class StrArrayTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitStrarray()
-    
-    func testGitStrarray() throws
+    func testGitStrArray() throws
     {
         let strings: [String] = ["hello", "world"]
         
-        let strarray = GitStrarray(
+        let strArray = GitStrArray(
             strings:    strings,
             count:      strings.count
         )
         
-        XCTAssertEqual(strarray.strings, strings)
-        XCTAssertEqual(strarray.count, strings.count)
+        XCTAssertEqual(strArray.strings, strings)
+        XCTAssertEqual(strArray.count, strings.count)
         
         
         
-        strings.withGitStrarray
+        strings.withGitStrArray
         {
-            strarray in
+            strArray in
             
-            /// Adjust for the null terminator in `git_strarray`.
-            XCTAssertEqual(strarray.pointee.count - 1, strings.count)
+            /// Adjust for the null terminator in `git_strArray`.
+            XCTAssertEqual(strArray.pointee.count - 1, strings.count)
             
-            guard let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strarray.pointee.strings
+            guard let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strArray.pointee.strings
             else
             {
                 XCTFail("The C strings were nil.")
@@ -61,42 +59,38 @@ final class StrarrayTests: XCTestCaseStopOnFail
         
         
         
-        [].withGitStrarray
+        [].withGitStrArray
         {
-            strarray in
+            strArray in
             
-            XCTAssertNil(strarray.pointee.strings)
-            XCTAssertEqual(strarray.pointee.count, 0)
+            XCTAssertNil(strArray.pointee.strings)
+            XCTAssertEqual(strArray.pointee.count, 0)
         }
     }
     
     
     
-    // MARK: - testGitStrarrayDispose()
-    
-    func testGitStrarrayDispose() throws
+    func testGitStrArrayDispose() throws
     {
-        gitStrarrayDispose(array: nil)
+        gitStrArrayDispose(array: nil)
     }
     
     
     
-    // MARK: - testGitStrarrayNested()
-    
-    func testGitStrarrayNested() throws
+    func testGitStrArrayNested() throws
     {
         let outerArray  : [String]  = ["outer1", "outer2"]
         let innerArray  : [String]  = ["inner1", "inner2"]
         
-        outerArray.withGitStrarray
+        outerArray.withGitStrArray
         {
-            outerStrarray in
+            outerStrArray in
             
-            /// Adjust for the null terminator in `git_strarray`.
-            XCTAssertEqual(outerStrarray.pointee.count - 1, outerArray.count)
-            XCTAssertNotNil(outerStrarray.pointee.strings)
+            /// Adjust for the null terminator in `git_strArray`.
+            XCTAssertEqual(outerStrArray.pointee.count - 1, outerArray.count)
+            XCTAssertNotNil(outerStrArray.pointee.strings)
             
-            guard let outerCStrings = outerStrarray.pointee.strings
+            guard let outerCStrings = outerStrArray.pointee.strings
             else
             {
                 XCTFail("The outer C strings were nil.")
@@ -117,15 +111,15 @@ final class StrarrayTests: XCTestCaseStopOnFail
             
             
             
-            innerArray.withGitStrarray
+            innerArray.withGitStrArray
             {
-                innerStrarray in
+                innerStrArray in
                 
-                /// Adjust for the null terminator in `git_strarray`.
-                XCTAssertEqual(innerStrarray.pointee.count - 1, innerArray.count)
-                XCTAssertNotNil(innerStrarray.pointee.strings)
+                /// Adjust for the null terminator in `git_strArray`.
+                XCTAssertEqual(innerStrArray.pointee.count - 1, innerArray.count)
+                XCTAssertNotNil(innerStrArray.pointee.strings)
                 
-                guard let innerCStrings = innerStrarray.pointee.strings
+                guard let innerCStrings = innerStrArray.pointee.strings
                 else
                 {
                     XCTFail("The inner C strings were nil.")
@@ -147,11 +141,11 @@ final class StrarrayTests: XCTestCaseStopOnFail
                 
                 
                 /// Test `outerArray` again within the `innerArray` closure.
-                /// Adjust for the null terminator in `git_strarray`.
-                XCTAssertEqual(outerStrarray.pointee.count - 1, outerArray.count)
-                XCTAssertNotNil(outerStrarray.pointee.strings)
+                /// Adjust for the null terminator in `git_strArray`.
+                XCTAssertEqual(outerStrArray.pointee.count - 1, outerArray.count)
+                XCTAssertNotNil(outerStrArray.pointee.strings)
                 
-                guard let outerCStrings = outerStrarray.pointee.strings
+                guard let outerCStrings = outerStrArray.pointee.strings
                 else
                 {
                     XCTFail("The outer C strings were nil")

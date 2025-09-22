@@ -15,8 +15,6 @@ import XCTest
 
 final class TypesTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitOffT()
-    
     func testGitOffT() throws
     {
         let offset1 : GitOffT   = 1024
@@ -31,8 +29,6 @@ final class TypesTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitTime
-    
     func testGitTime() throws
     {
         try Repository.withRepository
@@ -43,8 +39,8 @@ final class TypesTests: XCTestCaseStopOnFail
             
             let signatureNowResult: Int32 = gitSignatureNow(
                 out:    &signature,
-                name:   "Test User",
-                email:  "test@example.com"
+                name:   Repository.commitAuthorName,
+                email:  Repository.commitAuthorEmail
             )
             
             XCTAssertOK(signatureNowResult)
@@ -68,8 +64,6 @@ final class TypesTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitTimeT
-    
     func testGitTimeT() throws
     {
         let timestamp1  : GitTimeT  = 946684800
@@ -83,8 +77,6 @@ final class TypesTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitWritestream
     
     func testGitWritestream() throws
     {

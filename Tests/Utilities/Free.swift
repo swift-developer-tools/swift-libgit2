@@ -44,6 +44,20 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a blob.
+    /// - Parameter blob: The blob to free. The underlying type should be `git_blob`.
+    static func freeBlob(
+        _ blob: OpaquePointer?
+    )
+    {
+        if blob != nil
+        {
+            gitBlobFree(blob: blob)
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for a branch iterator.
     /// - Parameter branchIterator: The branch iterator to free. The underlying type should
     /// be `git_branch_iterator`.
@@ -67,7 +81,7 @@ enum Free
     {
         if commit != nil
         {
-            git_commit_free(commit)
+            gitCommitFree(commit: commit)
         }
     }
     
@@ -101,6 +115,19 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a rebase.
+    /// - Parameter rebase: The rebase to free. The underlying type should be `git_rebase`.
+    static func freeRebase(
+        _ rebase: OpaquePointer?
+    )
+    {
+        if rebase != nil
+        {
+            git_rebase_free(rebase)
+        }
+    }
+    
+    
     /// Frees the memory allocated for a reference.
     /// - Parameter reference: The reference to free. The underlying type should be
     /// `git_reference`.
@@ -110,7 +137,7 @@ enum Free
     {
         if reference != nil
         {
-            git_reference_free(reference!)
+            git_reference_free(reference)
         }
     }
     

@@ -73,11 +73,6 @@ public func gitBlobLookupPrefix(
 /// Frees the memory allocated for a `git_blob` instance.
 /// - Parameter blob: The blob to free. The underlying type should be `git_blob`.
 ///
-/// ## Discussion
-///
-/// It is necessary to call this method when a blob is no longer needed, otherwise it will cause
-/// a memory leak.
-///
 /// ## C Equivalent
 ///
 /// [`git_blob_free()`](https://libgit2.org/docs/reference/main/blob/git_blob_free.html)
@@ -101,13 +96,13 @@ public func gitBlobID(
     blob: OpaquePointer
 ) -> GitOID?
 {
-    guard let blobIDPointer: UnsafePointer<git_oid> = git_blob_id(blob)
+    guard let blobID: UnsafePointer<git_oid> = git_blob_id(blob)
     else
     {
         return nil
     }
     
-    return GitOID(cValue: blobIDPointer.pointee)
+    return GitOID(cValue: blobID.pointee)
 }
 
 
@@ -162,7 +157,7 @@ public func gitBlobRawSize(
 
 /// Gets a buffer with the filtered content of the given blob.
 /// - Parameters:
-///   - out: The buffer to be filled in.
+///   - out: The buffer into which the filtered content should be written.
 ///   - blob: The blob. The underlying type should be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.
 ///   - opts: The options for the blob filtering operation.

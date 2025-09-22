@@ -13,7 +13,7 @@ import Clibgit2
 
 /// Creates an annotated commit from the given reference.
 /// - Parameters:
-///   - out: The pointer in which to store the result. The underlying type should be
+///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
 ///   - repo: The repository that contains the given reference. The underlying type should be
 ///   `git_repository`.
@@ -45,7 +45,7 @@ public func gitAnnotatedCommitFromRef(
 
 /// Creates an annotated commit from the given fetch head data.
 /// - Parameters:
-///   - out: The pointer in which to store the result. The underlying type should be
+///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
 ///   - repo: The repository that contains the given commit. The underlying type should be
 ///   `git_repository`.
@@ -84,7 +84,7 @@ public func gitAnnotatedCommitFromFetchhead(
 
 /// Creates an annotated commit from the given commit ID.
 /// - Parameters:
-///   - out: The pointer in which to store the result. The underlying type should be
+///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
 ///   - repo: The repository that contains the given commit. The underlying type should be
 ///   `git_repository`.
@@ -123,7 +123,7 @@ public func gitAnnotatedCommitLookup(
 
 /// Creates an annotated commit from a revision string.
 /// - Parameters:
-///   - out: The pointer in which to store the result. The underlying type should be
+///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
 ///   - repo: The repository that contains the given commit. The underlying type should be
 ///   `git_repository`.
@@ -168,9 +168,9 @@ public func gitAnnotatedCommitID(
     commit: OpaquePointer
 ) -> GitOID
 {
-    let annotatedCommitIDPointer: UnsafePointer<git_oid> = git_annotated_commit_id(commit)
+    let annotatedCommitID: UnsafePointer<git_oid> = git_annotated_commit_id(commit)
     
-    return GitOID(cValue: annotatedCommitIDPointer.pointee)
+    return GitOID(cValue: annotatedCommitID.pointee)
 }
 
 

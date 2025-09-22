@@ -15,8 +15,6 @@ import XCTest
 
 final class ApplyTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitApplyFlagsT()
-    
     func testGitApplyFlagsT() throws
     {
         XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.rawValue, GIT_APPLY_CHECK.rawValue)
@@ -37,8 +35,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyLocationT()
-    
     func testGitApplyLocationT() throws
     {
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.rawValue, GIT_APPLY_LOCATION_WORKDIR.rawValue)
@@ -48,8 +44,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyOptions()
     
     func testGitApplyOptions() throws
     {
@@ -89,8 +83,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyToTree()
-    
     func testGitApplyToTree() throws
     {
         try Repository.withRepository
@@ -107,16 +99,20 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &commitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
-            XCTAssertNotNil(commitPointer)
+            
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                XCTFail("The commit pointer was nil.")
+                return
+            }
             
             
             
@@ -129,9 +125,9 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: Int32 = git_commit_tree(
-                &treePointer,
-                commitPointer
+            let commitTreeResult: Int32 = gitCommitTree(
+                out:        &treePointer,
+                commit:     commitPointer
             )
             
             XCTAssertOK(commitTreeResult)
@@ -181,8 +177,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyToBoth()
-    
     func testGitApplyToBoth() throws
     {
         try gitApplyFlow(
@@ -194,8 +188,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyToIndex()
     
     func testGitApplyToIndex() throws
     {
@@ -209,8 +201,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyToWorkdir()
-    
     func testGitApplyToWorkdir() throws
     {
         try gitApplyFlow(
@@ -222,8 +212,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyWithCheckFlag()
     
     func testGitApplyWithCheckFlag() throws
     {
@@ -238,10 +226,10 @@ final class ApplyTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension ApplyTests
 {
-    // MARK: - gitApplyFlow()
-
     /// The callback count for `GitApplyOptions`.
     private struct CallbackCounts
     {
@@ -296,15 +284,20 @@ extension ApplyTests
             
             
             
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &commitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
+            
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                XCTFail("The commit pointer was nil.")
+                return
+            }
             
             
             
@@ -317,9 +310,9 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: Int32 = git_commit_tree(
-                &oldTreePointer,
-                commitPointer
+            let commitTreeResult: Int32 = gitCommitTree(
+                out:        &oldTreePointer,
+                commit:     commitPointer
             )
             
             XCTAssertOK(commitTreeResult)

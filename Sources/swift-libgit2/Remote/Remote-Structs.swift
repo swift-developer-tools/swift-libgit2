@@ -407,7 +407,7 @@ public struct GitFetchOptions
         _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
     ) -> T
     {
-        return customHeaders.withGitStrarray
+        return customHeaders.withGitStrArray
         {
             cCustomHeaders in
             

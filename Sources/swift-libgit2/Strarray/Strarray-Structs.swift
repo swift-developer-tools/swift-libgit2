@@ -22,11 +22,11 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_strarray`](https://libgit2.org/docs/reference/main/strarray/git_strarray.html)
-public struct GitStrarray
+public struct GitStrArray
 {
     /// The array of strings.
     public let strings  : [String]
     
-    /// The number of elements in the array of strings.
+    /// The number of strings in the array.
     public let count    : Int
 }

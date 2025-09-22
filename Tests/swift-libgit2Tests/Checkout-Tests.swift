@@ -15,8 +15,6 @@ import XCTest
 
 final class CheckoutTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitCheckoutCallbacks()
-    
     func testGitCheckoutCallbacks() throws
     {
         try Repository.withRepository
@@ -168,8 +166,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutHEAD()
-    
     func testGitCheckoutHEAD() throws
     {
         try Repository.withRepository
@@ -241,8 +237,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutIndex()
     
     func testGitCheckoutIndex() throws
     {
@@ -337,8 +331,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutNotifyT()
-    
     func testGitCheckoutNotifyT() throws
     {
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyNone.rawValue, GIT_CHECKOUT_NOTIFY_NONE.rawValue)
@@ -364,8 +356,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutOptions()
     
     func testGitCheckoutOptions() throws
     {
@@ -465,8 +455,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutPerfData()
-    
     func testGitCheckoutPerfData() throws
     {
         var cPerfData = git_checkout_perfdata()
@@ -485,8 +473,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutStrategyT()
     
     func testGitCheckoutStrategyT() throws
     {
@@ -531,8 +517,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutTree()
-    
     func testGitCheckoutTree() throws
     {
         try Repository.withRepository
@@ -551,21 +535,26 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &commitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
             
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                XCTFail("The commit pointer was nil.")
+                return
+            }
             
             
-            let commitTreeResult: Int32 = git_commit_tree(
-                &treePointer,
-                commitPointer
+            
+            let commitTreeResult: Int32 = gitCommitTree(
+                out:        &treePointer,
+                commit:     commitPointer
             )
             
             XCTAssertOK(commitTreeResult)
@@ -642,10 +631,10 @@ final class CheckoutTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension CheckoutTests
 {
-    // MARK: - CheckoutCallbackData
-    
     private struct CheckoutCallbackData
     {
         var notifyCallCount     : Int                   = 0
