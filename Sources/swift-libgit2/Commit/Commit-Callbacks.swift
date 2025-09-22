@@ -37,5 +37,5 @@ public typealias GitCommitCreateCB = @convention(c)
     OpaquePointer?,
     Int,
     UnsafeMutablePointer<OpaquePointer?>?,
-    UnsafeMutableRawPointer
+    UnsafeMutableRawPointer?
 ) -> Int32
