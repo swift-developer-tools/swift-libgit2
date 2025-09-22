@@ -30,6 +30,7 @@ enum Branch
     /// ## Discussion
     ///
     /// If `free` is `false`, the caller is responsible for freeing the branch.
+    @discardableResult
     static func createLocalBranch(
         named       branchName  : String,
         in          repository  : Repository,

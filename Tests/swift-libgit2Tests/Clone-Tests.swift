@@ -240,7 +240,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             let testBranchName: String = "test-branch"
             
-            _ = try Branch.createLocalBranch(
+            try Branch.createLocalBranch(
                 named:      testBranchName,
                 in:         repository,
                 force:      false,

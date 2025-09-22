@@ -123,7 +123,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             /// Create the branch named `branchName` again, with `force` specified, and
             /// this time create it from an annotated commit. Free it automatically.
-            _ = try Branch.createLocalBranch(
+            try Branch.createLocalBranch(
                 named:      branchName,
                 in:         repository,
                 force:      true,
