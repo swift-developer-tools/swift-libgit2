@@ -94,7 +94,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitCommitFree(commit: commitPointer)
+                Free.freeCommit(commitPointer)
             }
             
             
@@ -279,7 +279,7 @@ extension ApplyTests
             
             defer
             {
-                gitCommitFree(commit: commitPointer)
+                Free.freeCommit(commitPointer)
             }
             
             

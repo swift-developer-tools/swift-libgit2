@@ -529,7 +529,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitCommitFree(commit: commitPointer)
+                Free.freeCommit(commitPointer)
                 Free.freeTree(treePointer)
             }
             

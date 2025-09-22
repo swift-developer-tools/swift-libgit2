@@ -59,6 +59,20 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a commit.
+    /// - Parameter commit: The commit to free. The underlying type should be `git_commit`.
+    static func freeCommit(
+        _ commit: OpaquePointer?
+    )
+    {
+        if commit != nil
+        {
+            gitCommitFree(commit: commit)
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for a diff.
     /// - Parameter diff: The diff to free. The underlying type should be `git_diff`.
     static func freeDiff(
