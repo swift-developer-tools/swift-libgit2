@@ -94,12 +94,10 @@ enum Branch
         }
         else
         {
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &headCommitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &headCommitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
