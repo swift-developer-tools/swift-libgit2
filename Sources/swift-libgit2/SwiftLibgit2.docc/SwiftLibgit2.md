@@ -538,11 +538,11 @@ swift-libgit2 includes the following compiled libraries:
 
 ### Strarray Structs
 
-- ``GitStrarray``
+- ``GitStrArray``
 
 ### Strarray Functions
 
-- ``gitStrarrayDispose(array:)``
+- ``gitStrArrayDispose(array:)``
 
 ### Transport Callbacks
 
