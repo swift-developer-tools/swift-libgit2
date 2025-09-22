@@ -732,7 +732,6 @@ public func gitCommitCreate(
 
 
 
-
 /// Commits the staged changes in the repository.
 /// - Parameters:
 ///   - id: The ID of the newly-created commit.
@@ -963,6 +962,76 @@ public func gitCommitCreateBuffer(
             }
         }
     }
+}
+
+
+
+/// Creates a commit from the given content and signature.
+/// - Parameters:
+///   - out: The ID of the newly-created commit
+///   - repo: The repository in which to store the commit. The underlying type should be
+///   `git_repository`.
+///   - commitContent: The content of the unsigned commit.
+///   - signature: The signature to add to the commit.
+///   - signatureField: The header field which should contain the signature. Pass `nil` to use
+///   `gpgsig`.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## C Equivalent
+///
+/// [`git_commit_create_with_signature()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_with_signature.html)
+public func gitCommitCreateWithSignature(
+    out             : inout GitOID,
+    repo            : OpaquePointer,
+    commitContent   : String,
+    signature       : String?,
+    signatureField  : String?
+) -> Int32
+{
+    var cOut: git_oid = out.cValue
+    
+    
+    
+    let commitCreateWithSignatureResult: Int32 = commitContent.withCString
+    {
+        cCommitContent in
+        
+        return (signatureField ?? "gpgsig").withCString
+        {
+            cSignatureField in
+            
+            guard let signature: String = signature
+            else
+            {
+                return git_commit_create_with_signature(
+                    &cOut,
+                    repo,
+                    cCommitContent,
+                    nil,
+                    cSignatureField
+                )
+            }
+            
+            return signature.withCString
+            {
+                cSignature in
+                
+                return git_commit_create_with_signature(
+                    &cOut,
+                    repo,
+                    cCommitContent,
+                    cSignature,
+                    cSignatureField
+                )
+            }
+        }
+    }
+    
+    
+    
+    out = GitOID(cValue: cOut)
+    
+    return commitCreateWithSignatureResult
 }
 
 
