@@ -115,6 +115,19 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a rebase.
+    /// - Parameter rebase: The rebase to free. The underlying type should be `git_rebase`.
+    static func freeRebase(
+        _ rebase: OpaquePointer?
+    )
+    {
+        if rebase != nil
+        {
+            git_rebase_free(rebase)
+        }
+    }
+    
+    
     /// Frees the memory allocated for a reference.
     /// - Parameter reference: The reference to free. The underlying type should be
     /// `git_reference`.
@@ -124,7 +137,7 @@ enum Free
     {
         if reference != nil
         {
-            git_reference_free(reference!)
+            git_reference_free(reference)
         }
     }
     

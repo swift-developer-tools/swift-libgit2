@@ -52,15 +52,20 @@ struct Repository
     ///   - content: The new content of the file.
     ///   - append: Whether the new content should be appended to the existing content.
     ///   - message: The commit message.
+    ///   - options: The options for commit creation. The options are only used when creating
+    ///   a commit from staged changes.
+    ///   - fromStage: Whether the commit should be created from staged changes.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An `Error` if the file write operation failed, or an `NSError` if the tree
-    /// initialization failed.
+    /// - Throws: An `Error` if the file write operation failed, or an `NSError` if the commit
+    /// or tree initialization failed.
     @discardableResult
     func createCommit(
-        path    : String,
-        content : String,
-        append  : Bool      = false,
-        message : String
+        path        : String,
+        content     : String,
+        append      : Bool                      = false,
+        message     : String,
+        options     : GitCommitCreateOptions?   = nil,
+        fromStage   : Bool                      = false
     ) throws -> GitOID
     {
         try modifyFile(
@@ -101,6 +106,76 @@ struct Repository
         let indexWriteResult: Int32 = git_index_write(indexPointer)
         
         XCTAssertOK(indexWriteResult)
+        
+        
+        
+        if fromStage
+        {
+            var commitOID = GitOID()
+            
+            let commitCreateFromStageResult: Int32 = gitCommitCreateFromStage(
+                id:         &commitOID,
+                repo:       pointer,
+                message:    "Commit from stage",
+                opts:       options
+            )
+            
+            XCTAssertOK(commitCreateFromStageResult)
+            OID.assertOIDsNotEqual(commitOID, GitOID())
+            
+            
+            
+            var commitPointer: OpaquePointer? = nil
+
+            defer
+            {
+                Free.freeCommit(commitPointer)
+            }
+            
+            
+            
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       pointer,
+                id:         commitOID
+            )
+            
+            XCTAssertOK(commitLookupResult)
+            
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                throw NSError.create(
+                    code:       Int(GIT_EUSER.rawValue),
+                    message:    "The staged commit pointer was nil."
+                )
+            }
+            
+            
+            
+            let messageEncoding: String? = gitCommitMessageEncoding(commit: commitPointer)
+            
+            XCTAssertNotNil(messageEncoding)
+            XCTAssertEqual(messageEncoding, options?.messageEncoding)
+            
+            
+            
+            let author: GitSignature = gitCommitAuthor(commit: commitPointer)
+            
+            XCTAssertEqual(author.name, options?.author?.name)
+            XCTAssertEqual(author.email, options?.author?.email)
+            
+            
+            
+            let committer: GitSignature = gitCommitCommitter(commit: commitPointer)
+            
+            XCTAssertEqual(committer.name, options?.committer?.name)
+            XCTAssertEqual(committer.email, options?.committer?.email)
+            
+            
+            
+            return commitOID
+        }
         
         
         
