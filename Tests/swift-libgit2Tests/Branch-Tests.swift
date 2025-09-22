@@ -144,7 +144,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    gitBranchIteratorFree(iter: branchIteratorPointer)
+                    Free.freeBranchIterator(branchIteratorPointer)
                 }
                 
                 
