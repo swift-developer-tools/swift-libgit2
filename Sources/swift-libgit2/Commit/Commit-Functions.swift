@@ -132,7 +132,7 @@ public func gitCommitMessageEncoding(
     commit: OpaquePointer
 ) -> String?
 {
-    let encoding: UnsafePointer<CChar> = git_commit_message_encoding(commit)
+    let encoding: UnsafePointer<CChar>? = git_commit_message_encoding(commit)
     
     return String(optionalCString: encoding)
 }
@@ -154,7 +154,7 @@ public func gitCommitMessage(
     commit: OpaquePointer
 ) -> String?
 {
-    let message: UnsafePointer<CChar> = git_commit_message(commit)
+    let message: UnsafePointer<CChar>? = git_commit_message(commit)
     
     return String(optionalCString: message)
 }
@@ -172,7 +172,7 @@ public func gitCommitMessageRaw(
     commit: OpaquePointer
 ) -> String?
 {
-    let message: UnsafePointer<CChar> = git_commit_message_raw(commit)
+    let message: UnsafePointer<CChar>? = git_commit_message_raw(commit)
     
     return String(optionalCString: message)
 }
@@ -195,7 +195,7 @@ public func gitCommitSummary(
     commit: OpaquePointer
 ) -> String?
 {
-    let summary: UnsafePointer<CChar> = git_commit_summary(commit)
+    let summary: UnsafePointer<CChar>? = git_commit_summary(commit)
     
     return String(optionalCString: summary)
 }
@@ -218,7 +218,7 @@ public func gitCommitBody(
     commit: OpaquePointer
 ) -> String?
 {
-    let body: UnsafePointer<CChar> = git_commit_body(commit)
+    let body: UnsafePointer<CChar>? = git_commit_body(commit)
     
     return String(optionalCString: body)
 }
@@ -376,7 +376,7 @@ public func gitCommitRawHeader(
     commit: OpaquePointer
 ) -> String?
 {
-    let rawHeader: UnsafePointer<CChar> = git_commit_raw_header(commit)
+    let rawHeader: UnsafePointer<CChar>? = git_commit_raw_header(commit)
     
     return String(optionalCString: rawHeader)
 }
