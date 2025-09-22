@@ -160,7 +160,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(headCommitPointer)
+            gitCommitFree(commit: headCommitPointer)
         }
         
         
@@ -231,7 +231,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(commitPointer)
+            gitCommitFree(commit: commitPointer)
         }
         
         

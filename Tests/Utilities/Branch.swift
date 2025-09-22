@@ -44,7 +44,7 @@ enum Branch
         
         defer
         {
-            Free.freeCommit(headCommitPointer)
+            gitCommitFree(commit: headCommitPointer)
             Free.freeAnnotatedCommit(annotatedCommitPointer)
             
             if freeBranch

@@ -40,7 +40,7 @@ enum Diff
         
         defer
         {
-            Free.freeCommit(commitPointer)
+            gitCommitFree(commit: commitPointer)
         }
         
         
