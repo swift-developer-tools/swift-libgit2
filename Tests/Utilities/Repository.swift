@@ -51,7 +51,8 @@ struct Repository
     ///   - append: Whether the new content should be appended to the existing content.
     ///   - message: The commit message.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An `Error` if the file write operation failed.
+    /// - Throws: An `Error` if the file write operation failed, or an `NSError` if the tree
+    /// initialization failed.
     @discardableResult
     func createCommit(
         path    : String,
@@ -129,32 +130,28 @@ struct Repository
         
         XCTAssertOK(treeLookupResult)
         
-        
-        
-        // TODO: Replace with `GitSignature` once `git_commit_create()` has a binding, and remove `defer` block.
-        var signaturePointer: UnsafeMutablePointer<git_signature>? = nil
-        
-        defer
+        guard let treePointer: OpaquePointer = treePointer
+        else
         {
-            if signaturePointer != nil
-            {
-                gitSignatureFree(sig: signaturePointer)
-            }
+            throw NSError.create(
+                code:       Int(GIT_EUSER.rawValue),
+                message:    "The tree pointer was nil."
+            )
         }
         
         
         
-        let signatureNowResult: Int32 = git_signature_now(
-            &signaturePointer,
-            "Test User",
-            "test@example.com"
+        var signature = GitSignature()
+        
+        let signatureNowResult: Int32 = gitSignatureNow(
+            out:    &signature,
+            name:   "Test User",
+            email:  "test@example.com"
         )
         
         XCTAssertOK(signatureNowResult)
         
         
-        
-        var headOID = git_oid()
         
         var headCommitPointer: OpaquePointer? = nil
         
@@ -165,19 +162,22 @@ struct Repository
         
         
         
+        // TODO: Remove once `git_reference_name_to_id()` has a binding.
+        var cHeadOID = git_oid()
+        
         /// Get the current HEAD commit as the parent commit, if it exists.
         let referenceToNameToIDResult: Int32 = git_reference_name_to_id(
-            &headOID,
+            &cHeadOID,
             pointer,
             "HEAD"
         )
         
         if referenceToNameToIDResult == GIT_OK.rawValue
         {
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &headCommitPointer,
-                pointer,
-                &headOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &headCommitPointer,
+                repo:       pointer,
+                id:         GitOID(cValue: cHeadOID)
             )
             
             XCTAssertOK(commitLookupResult)
@@ -194,26 +194,26 @@ struct Repository
         
         
         
-        var commitOID = git_oid()
+        var commitOID = GitOID()
         
-        let commitCreateResult: Int32 = git_commit_create(
-            &commitOID,
-            pointer,
-            "HEAD",
-            signaturePointer,
-            signaturePointer,
-            nil,
-            message,
-            treePointer,
-            parentCommitPointers.count,
-            &parentCommitPointers
+        let commitCreateResult: Int32 = gitCommitCreate(
+            id:                 &commitOID,
+            repo:               pointer,
+            updateRef:          "HEAD",
+            author:             signature,
+            committer:          signature,
+            messageEncoding:    nil,
+            message:            message,
+            tree:               treePointer,
+            parentCount:        parentCommitPointers.count,
+            parents:            &parentCommitPointers
         )
         
         XCTAssertOK(commitCreateResult)
         
         
         
-        return GitOID(cValue: commitOID)
+        return commitOID
     }
     
     
@@ -236,12 +236,10 @@ struct Repository
         
         
         
-        var cCommitOID: git_oid = commitOID.cValue
-        
-        let commitLookupResult: Int32 = git_commit_lookup(
-            &commitPointer,
-            pointer,
-            &cCommitOID
+        let commitLookupResult: Int32 = gitCommitLookup(
+            commit:     &commitPointer,
+            repo:       pointer,
+            id:         commitOID
         )
         
         XCTAssertOK(commitLookupResult)
