@@ -58,12 +58,16 @@ internal extension String
         
         buffer.reserveCapacity(self.utf8.count + 1)
         
+        
+        
         if !self.isEmpty
         {
             buffer.append(contentsOf: self.utf8)
         }
         
         buffer.append(0)
+        
+        
         
         return buffer.withUnsafeMutableBufferPointer
         {
