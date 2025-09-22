@@ -39,8 +39,8 @@ final class TypesTests: XCTestCaseStopOnFail
             
             let signatureNowResult: Int32 = gitSignatureNow(
                 out:    &signature,
-                name:   "Test User",
-                email:  "test@example.com"
+                name:   Repository.commitAuthorName,
+                email:  Repository.commitAuthorEmail
             )
             
             XCTAssertOK(signatureNowResult)

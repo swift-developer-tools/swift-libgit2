@@ -30,6 +30,8 @@ struct Repository
     
     
     
+    static let commitAuthorName     : String    = "Test User"
+    static let commitAuthorEmail    : String    = "test@example.com"
     static let readmeFileName       : String    = "README.md"
     static let readmeFileContent    : String    = "# Hello World!"
     static let blameFileName        : String    = "blame.txt"
@@ -145,8 +147,8 @@ struct Repository
         
         let signatureNowResult: Int32 = gitSignatureNow(
             out:    &signature,
-            name:   "Test User",
-            email:  "test@example.com"
+            name:   Self.commitAuthorName,
+            email:  Self.commitAuthorEmail
         )
         
         XCTAssertOK(signatureNowResult)
