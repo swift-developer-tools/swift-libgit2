@@ -99,16 +99,20 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &commitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
-            XCTAssertNotNil(commitPointer)
+            
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                XCTFail("The commit pointer was nil.")
+                return
+            }
             
             
             
@@ -121,9 +125,9 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: Int32 = git_commit_tree(
-                &treePointer,
-                commitPointer
+            let commitTreeResult: Int32 = gitCommitTree(
+                out:        &treePointer,
+                commit:     commitPointer
             )
             
             XCTAssertOK(commitTreeResult)
@@ -280,15 +284,20 @@ extension ApplyTests
             
             
             
-            var cHeadOID: git_oid = headOID.cValue
-            
-            let commitLookupResult: Int32 = git_commit_lookup(
-                &commitPointer,
-                repository.pointer,
-                &cHeadOID
+            let commitLookupResult: Int32 = gitCommitLookup(
+                commit:     &commitPointer,
+                repo:       repository.pointer,
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
+            
+            guard let commitPointer: OpaquePointer = commitPointer
+            else
+            {
+                XCTFail("The commit pointer was nil.")
+                return
+            }
             
             
             
@@ -301,9 +310,9 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: Int32 = git_commit_tree(
-                &oldTreePointer,
-                commitPointer
+            let commitTreeResult: Int32 = gitCommitTree(
+                out:        &oldTreePointer,
+                commit:     commitPointer
             )
             
             XCTAssertOK(commitTreeResult)
