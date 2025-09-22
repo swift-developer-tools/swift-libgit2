@@ -16,8 +16,6 @@ import XCTest
 /// Blob-related testing utilities.
 enum Blob
 {
-    // MARK: - BlobCreationSource
-    
     /// The source from which to create a blob.
     enum BlobCreationSource
     {
@@ -46,8 +44,6 @@ enum Blob
     }
     
     
-    
-    // MARK: - createBlob()
     
     /// Creates a blob from the given source and returns its ID.
     /// - Parameters:
@@ -121,8 +117,6 @@ enum Blob
     }
     
     
-    
-    // MARK: - validateBlobContent()
     
     /// Checks whether a blob contains the given content.
     /// - Parameters:

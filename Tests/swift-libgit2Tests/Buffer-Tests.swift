@@ -15,8 +15,6 @@ import XCTest
 
 final class BufferTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitBuf()
-    
     func testGitBuf() throws
     {
         try Repository.withRepository

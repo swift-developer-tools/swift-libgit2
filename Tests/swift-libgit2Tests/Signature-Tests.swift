@@ -15,8 +15,6 @@ import XCTest
 
 final class SignatureTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitSignature()
-    
     func testGitSignature() throws
     {
         let signature = GitSignature()
@@ -27,8 +25,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureDefault()
     
     func testGitSignatureDefault() throws
     {
@@ -51,8 +47,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureDefaultFromBuffer()
     
     func testGitSignatureDefaultFromBuffer() throws
     {
@@ -125,8 +119,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureDefaultFromEnv()
     
     func testGitSignatureDefaultFromEnv() throws
     {
@@ -207,8 +199,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureNewAndDup()
     
     func testGitSignatureNewAndDup() throws
     {
@@ -311,8 +301,6 @@ final class SignatureTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitSignatureNow()
     
     func testGitSignatureNow() throws
     {

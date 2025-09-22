@@ -15,8 +15,6 @@ import XCTest
 
 final class TypesTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitOffT()
-    
     func testGitOffT() throws
     {
         let offset1 : GitOffT   = 1024
@@ -30,8 +28,6 @@ final class TypesTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitTime
     
     func testGitTime() throws
     {
@@ -68,8 +64,6 @@ final class TypesTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitTimeT
-    
     func testGitTimeT() throws
     {
         let timestamp1  : GitTimeT  = 946684800
@@ -83,8 +77,6 @@ final class TypesTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitWritestream
     
     func testGitWritestream() throws
     {

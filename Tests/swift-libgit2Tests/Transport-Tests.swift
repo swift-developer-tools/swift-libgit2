@@ -15,8 +15,6 @@ import XCTest
 
 final class TransportTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitTransportCB()
-    
     func testGitTransportCB() throws
     {
         let successCallback: GitTransportCB =
@@ -70,8 +68,6 @@ final class TransportTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitTransportMessageCB()
     
     func testGitTransportMessageCB() throws
     {

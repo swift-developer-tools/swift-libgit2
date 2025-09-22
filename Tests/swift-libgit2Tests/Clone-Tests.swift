@@ -15,8 +15,6 @@ import XCTest
 
 final class CloneTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitClone()
-    
     func testGitClone() throws
     {
         try Repository.withRepository
@@ -64,8 +62,6 @@ final class CloneTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCloneLocalT()
-    
     func testGitCloneLocalT() throws
     {
         XCTAssertEqual(GitCloneLocalT.gitCloneLocalAuto.rawValue, GIT_CLONE_LOCAL_AUTO.rawValue)
@@ -86,8 +82,6 @@ final class CloneTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCloneOptions()
     
     func testGitCloneOptions() throws
     {
@@ -128,8 +122,6 @@ final class CloneTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCloneWithCallbacks()
     
     func testGitCloneWithCallbacks() throws
     {
@@ -240,8 +232,6 @@ final class CloneTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCloneWithCheckoutBranch()
-    
     func testGitCloneWithCheckoutBranch() throws
     {
         try Repository.withRepository
@@ -327,8 +317,6 @@ final class CloneTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCloneWithInvalidOptions()
-    
     func testGitCloneWithInvalidOptions() throws
     {
         try Repository.withRepository
@@ -371,8 +359,6 @@ final class CloneTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCloneWithOptions()
     
     func testGitCloneWithOptions() throws
     {
@@ -439,10 +425,10 @@ final class CloneTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension CloneTests
 {
-    // MARK: - CloneCallbackData
-    
     private struct CloneCallbackData
     {
         var isRepositoryCreated : Bool  = false

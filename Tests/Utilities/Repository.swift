@@ -22,8 +22,6 @@ import XCTest
 /// to test bindings.
 struct Repository
 {
-    // MARK: - Properties
-    
     /// The URL of the repository.
     let url     : URL
     
@@ -45,8 +43,6 @@ struct Repository
     ]
     
     
-    
-    // MARK: - createCommit()
     
     /// Creates a commit with the given content and message.
     /// - Parameters:
@@ -222,8 +218,6 @@ struct Repository
     
     
     
-    // MARK: - resetToCommit()
-    
     /// Resets to the given commit.
     /// - Parameters:
     ///   - commitOID: The ID of the commit.
@@ -266,8 +260,6 @@ struct Repository
     
     
     
-    // MARK: - modifyFile()
-    
     /// Modifies the content of a file.
     /// - Parameters:
     ///   - path: The path to the file to modify. This will be appended to the repository's URL.
@@ -304,8 +296,6 @@ struct Repository
     
     
     
-    // MARK: - verifyFileContent()
-    
     /// Verifies the content of a file.
     /// - Parameters:
     ///   - path: The path to the file whose content should be verified. This will be appended to the
@@ -332,11 +322,11 @@ struct Repository
 
 
 
+// MARK: - Extensions
+
 /// Static methods related to ``Repository/withRepository(_:)``.
 extension Repository
 {
-    // MARK: - createBlameData()
-    
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
     /// - Throws: An `Error` if the file write operation failed.
@@ -393,8 +383,6 @@ extension Repository
     
     
     
-    // MARK: - createTemporaryDirectory()
-    
     /// Creates a temporary directory with the given name.
     /// - Parameter directoryName: The name of the directory.
     /// - Returns: The URL of the temporary directory.
@@ -417,8 +405,6 @@ extension Repository
     }
     
     
-    
-    // MARK: - withRepository()
     
     /// Calls the given closure with a `Repository` instance.
     /// - Parameter body: The closure to call.

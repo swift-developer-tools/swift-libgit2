@@ -14,8 +14,6 @@ import XCTest
 
 final class GlobalTests: XCTestCaseStopOnFail
 {
-    // MARK: - testLibgit2InitAndShutdown()
-    
     func testLibgit2InitAndShutdown() throws
     {
         let initResult: Int32 = gitLibgit2Init()
@@ -32,8 +30,6 @@ final class GlobalTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testMultipleLibgit2InitShutdown()
     
     func testMultipleLibgit2InitShutdown() throws
     {

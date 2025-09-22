@@ -15,8 +15,6 @@ import XCTest
 
 final class ApplyTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitApplyFlagsT()
-    
     func testGitApplyFlagsT() throws
     {
         XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.rawValue, GIT_APPLY_CHECK.rawValue)
@@ -37,8 +35,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyLocationT()
-    
     func testGitApplyLocationT() throws
     {
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.rawValue, GIT_APPLY_LOCATION_WORKDIR.rawValue)
@@ -48,8 +44,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyOptions()
     
     func testGitApplyOptions() throws
     {
@@ -88,8 +82,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyToTree()
     
     func testGitApplyToTree() throws
     {
@@ -181,8 +173,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyToBoth()
-    
     func testGitApplyToBoth() throws
     {
         try gitApplyFlow(
@@ -194,8 +184,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyToIndex()
     
     func testGitApplyToIndex() throws
     {
@@ -209,8 +197,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitApplyToWorkdir()
-    
     func testGitApplyToWorkdir() throws
     {
         try gitApplyFlow(
@@ -222,8 +208,6 @@ final class ApplyTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitApplyWithCheckFlag()
     
     func testGitApplyWithCheckFlag() throws
     {
@@ -238,10 +222,10 @@ final class ApplyTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension ApplyTests
 {
-    // MARK: - gitApplyFlow()
-
     /// The callback count for `GitApplyOptions`.
     private struct CallbackCounts
     {

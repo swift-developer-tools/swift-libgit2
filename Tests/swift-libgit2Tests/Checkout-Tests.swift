@@ -15,8 +15,6 @@ import XCTest
 
 final class CheckoutTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitCheckoutCallbacks()
-    
     func testGitCheckoutCallbacks() throws
     {
         try Repository.withRepository
@@ -168,8 +166,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutHEAD()
-    
     func testGitCheckoutHEAD() throws
     {
         try Repository.withRepository
@@ -241,8 +237,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutIndex()
     
     func testGitCheckoutIndex() throws
     {
@@ -337,8 +331,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutNotifyT()
-    
     func testGitCheckoutNotifyT() throws
     {
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyNone.rawValue, GIT_CHECKOUT_NOTIFY_NONE.rawValue)
@@ -364,8 +356,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutOptions()
     
     func testGitCheckoutOptions() throws
     {
@@ -465,8 +455,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCheckoutPerfData()
-    
     func testGitCheckoutPerfData() throws
     {
         var cPerfData = git_checkout_perfdata()
@@ -485,8 +473,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutStrategyT()
     
     func testGitCheckoutStrategyT() throws
     {
@@ -530,8 +516,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitCheckoutTree()
     
     func testGitCheckoutTree() throws
     {
@@ -642,10 +626,10 @@ final class CheckoutTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension CheckoutTests
 {
-    // MARK: - CheckoutCallbackData
-    
     private struct CheckoutCallbackData
     {
         var notifyCallCount     : Int                   = 0

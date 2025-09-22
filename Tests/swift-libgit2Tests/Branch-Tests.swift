@@ -15,8 +15,6 @@ import XCTest
 
 final class BranchTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitBranchIsValid()
-    
     func testGitBranchIsValid() throws
     {
         var isValid: Bool = false
@@ -60,8 +58,6 @@ final class BranchTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBranchOperationsAndIteration()
     
     func testGitBranchOperationsAndIteration() throws
     {
@@ -202,8 +198,6 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBranchProperties()
-    
     func testGitBranchProperties() throws
     {
         try Repository.withRepository
@@ -303,8 +297,6 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBranchRemoteOperations()
-    
     func testGitBranchRemoteOperations() throws
     {
         try Repository.withRepository
@@ -369,8 +361,6 @@ final class BranchTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBranchT()
     
     func testGitBranchT() throws
     {

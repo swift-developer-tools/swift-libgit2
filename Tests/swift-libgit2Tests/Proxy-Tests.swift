@@ -15,8 +15,6 @@ import XCTest
 
 final class ProxyTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitProxyOptions()
-    
     func testGitProxyOptions() throws
     {
         guard let proxyOptions = GitProxyOptions()
@@ -38,8 +36,6 @@ final class ProxyTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitProxyT()
-
     func testGitProxyT() throws
     {
         XCTAssertEqual(GitProxyT.gitProxyNone.rawValue, GIT_PROXY_NONE.rawValue)

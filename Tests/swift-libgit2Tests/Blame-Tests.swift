@@ -15,8 +15,6 @@ import XCTest
 
 final class BlameTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitBlameBuffer()
-    
     func testGitBlameBuffer() throws
     {
         try Repository.withRepository
@@ -67,8 +65,6 @@ final class BlameTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBlameFile()
     
     func testGitBlameFile() throws
     {
@@ -192,8 +188,6 @@ final class BlameTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitBlameFlagT()
-    
     func testGitBlameFlagT() throws
     {
         XCTAssertEqual(GitBlameFlagT.gitBlameNormal.rawValue, GIT_BLAME_NORMAL.rawValue)
@@ -220,8 +214,6 @@ final class BlameTests: XCTestCaseStopOnFail
     }
     
     
-    
-    // MARK: - testGitBlameOptions()
     
     func testGitBlameOptions() throws
     {

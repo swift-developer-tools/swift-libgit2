@@ -15,8 +15,6 @@ import XCTest
 
 final class CherrypickTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitCherrypick()
-    
     func testGitCherrypick() throws
     {
         try Repository.withRepository
@@ -123,8 +121,6 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCherrypickCommit()
-    
     func testGitCherrypickCommit() throws
     {
         try Repository.withRepository
@@ -214,8 +210,6 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitCherrypickOptions()
-    
     func testGitCherrypickOptions() throws
     {
         guard var cherrypickOptions = GitCherrypickOptions()
@@ -242,14 +236,14 @@ final class CherrypickTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 extension CherrypickTests
 {
     private static let mainBranchContent    : String    = "Main branch feature\nHello World\n"
     private static let featureBranchContent : String    = "Feature branch change\nHello World\nGoodbye World\n"
     
     
-    
-    // MARK: - setupCherrypickScenario()
     
     /// Creates a repository with branches suitable for cherry-picking.
     /// - Parameter repository: The repository in which to create the branches.

@@ -14,8 +14,6 @@ import XCTest
 
 final class StrarrayTests: XCTestCaseStopOnFail
 {
-    // MARK: - testGitStrarray()
-    
     func testGitStrarray() throws
     {
         let strings: [String] = ["hello", "world"]
@@ -72,16 +70,12 @@ final class StrarrayTests: XCTestCaseStopOnFail
     
     
     
-    // MARK: - testGitStrarrayDispose()
-    
     func testGitStrarrayDispose() throws
     {
         gitStrarrayDispose(array: nil)
     }
     
     
-    
-    // MARK: - testGitStrarrayNested()
     
     func testGitStrarrayNested() throws
     {

@@ -16,8 +16,6 @@ import XCTest
 /// Branch-related testing utilities.
 enum Branch
 {
-    // MARK: - createLocalBranch()
-    
     /// Creates a local branch from the HEAD commit.
     /// - Parameters:
     ///   - branchName: The branch name.
@@ -137,8 +135,6 @@ enum Branch
     
     
     
-    // MARK: - withExistingLocalBranchPointer()
-    
     /// Calls the given closure with a pointer to an existing local branch.
     /// - Parameters:
     ///   - branchName: The branch name.
@@ -175,8 +171,6 @@ enum Branch
     }
     
     
-    
-    // MARK: - withNewLocalBranchPointer()
     
     /// Calls the given closure with a pointer to a local branch created from the HEAD commit.
     /// - Parameters:
