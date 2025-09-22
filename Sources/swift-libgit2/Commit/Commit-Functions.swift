@@ -736,6 +736,7 @@ public func gitCommitCreate(
 /// - Parameters:
 ///   - id: The ID of the newly-created commit.
 ///   - repo: The repository in which to store the commit. The underlying type should be
+///   `git_repository`.
 ///   - message: The commit message.
 ///   - opts: The options for commit creation.
 /// - Returns: `0` on success, or an error code.
