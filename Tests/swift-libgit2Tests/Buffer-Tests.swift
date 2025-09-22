@@ -80,7 +80,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             

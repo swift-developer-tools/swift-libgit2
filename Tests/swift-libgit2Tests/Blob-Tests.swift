@@ -160,7 +160,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             
@@ -249,7 +249,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             
@@ -388,8 +388,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: originalBlobPointer)
-                gitBlobFree(blob: duplicatedBlobPointer)
+                Free.freeBlob(originalBlobPointer)
+                Free.freeBlob(duplicatedBlobPointer)
             }
             
             
@@ -500,7 +500,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBlobFree(blob: blobPointer)
+                Free.freeBlob(blobPointer)
             }
             
             
