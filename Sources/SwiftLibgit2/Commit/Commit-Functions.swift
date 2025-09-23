@@ -665,9 +665,8 @@ public func gitCommitExtractSignature(
 ///
 /// libgit2 provides a similar variadic function called
 /// [`git_commit_create_v()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_v.html).
-/// There is no binding for `git_commit_create_v()`, since it uses the `...` syntax for its
-/// variadic arguments, and Swift can only import C variadic functions that use a `va_list` for their
-/// arguments.
+/// There is no binding for `git_commit_create_v()`, since it uses C-style variadic arguments
+/// (`...`), and Swift can only import C variadic functions that use `va_list` for their arguments.
 ///
 /// ## C Equivalent
 ///
