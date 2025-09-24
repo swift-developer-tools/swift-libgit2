@@ -11,10 +11,10 @@ libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
 Swift bindings are provided for almost every API available in libgit2. Direct
 access to the libgit2 C library is also provided by the package. There are no
-Swift bindings for opaque structs, initialization functions and macros, or 
-variadic functions that do not use `va_list` for their arguments, but these may 
-be accessed by importing the C library. See the Usage section below for an 
-example of how to import and use either library.
+Swift bindings for opaque structs, initialization functions, initialization
+macros, and some variadic functions, but these may be accessed by importing 
+the C library. See the Usage section below for an example of how to import 
+and use either library.
 
 The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 
@@ -464,6 +464,69 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCommitCreateWithSignature(out:repo:commitContent:signature:signatureField:)``
 - ``gitCommitDup(out:source:)``
 - ``gitCommitArrayDispose(array:)``
+
+### Common Macros
+
+- ``GitPathListSeparator``
+- ``GitPathMax``
+
+### Common Enums
+
+- ``GitFeatureT``
+- ``GitLibgit2OptT``
+
+### Common Functions
+
+- ``gitLibgit2Version(major:minor:rev:)``
+- ``gitLibgit2Prerelease()``
+- ``gitLibgit2Features()``
+- ``gitLibgit2FeatureBackend(feature:)``
+- ``gitLibgit2OptGetMWindowSize(size:)``
+- ``gitLibgit2OptSetMWindowSize(size:)``
+- ``gitLibgit2OptGetMWindowMappedLimit(limit:)``
+- ``gitLibgit2OptSetMWindowMappedLimit(limit:)``
+- ``gitLibgit2OptGetSearchPath(level:buf:)``
+- ``gitLibgit2OptSetSearchPath(level:path:)``
+- ``gitLibgit2OptSetCacheObjectLimit(type:size:)``
+- ``gitLibgit2OptSetCacheMaxSize(maxStorageBytes:)``
+- ``gitLibgit2OptEnableCaching(enabled:)``
+- ``gitLibgit2OptGetCachedMemory(current:allowed:)``
+- ``gitLibgit2OptGetTemplatePath(out:)``
+- ``gitLibgit2OptSetTemplatePath(path:)``
+- ``gitLibgit2OptSetSSLCertLocations(file:path:)``
+- ``gitLibgit2OptSetUserAgent(userAgent:)``
+- ``gitLibgit2OptEnableStrictObjectCreation(enabled:)``
+- ``gitLibgit2OptEnableStrictSymbolicRefCreation(enabled:)``
+- ``gitLibgit2OptSetSSLCiphers(ciphers:)``
+- ``gitLibgit2OptGetUserAgent(out:)``
+- ``gitLibgit2OptEnableOFSDelta(enabled:)``
+- ``gitLibgit2OptEnableFSyncGitDir(enabled:)``
+- ``gitLibgit2OptGetWindowsShareMode(value:)``
+- ``gitLibgit2OptSetWindowsShareMode(value:)``
+- ``gitLibgit2OptEnableStrictHashVerification(enabled:)``
+- ``gitLibgit2OptSetAllocator(allocator:)``
+- ``gitLibgit2OptEnableUnsavedIndexSafety(enabled:)``
+- ``gitLibgit2OptGetPackMaxObjects(out:)``
+- ``gitLibgit2OptSetPackMaxObjects(objects:)``
+- ``gitLibgit2OptDisablePackKeepFileChecks(enabled:)``
+- ``gitLibgit2OptEnableHTTPExpectContinue(enabled:)``
+- ``gitLibgit2OptGetMWindowFileLimit(limit:)``
+- ``gitLibgit2OptSetMWindowFileLimit(limit:)``
+- ``gitLibgit2OptSetODBPackedPriority(priority:)``
+- ``gitLibgit2OptSetODBLoosePriority(priority:)``
+- ``gitLibgit2OptGetExtensions(out:)``
+- ``gitLibgit2OptSetExtensions(extensions:len:)``
+- ``gitLibgit2OptGetOwnerValidation(enabled:)``
+- ``gitLibgit2OptSetOwnerValidation(enabled:)``
+- ``gitLibgit2OptGetHomeDir(out:)``
+- ``gitLibgit2OptSetHomeDir(path:)``
+- ``gitLibgit2OptSetServerConnectTimeout(timeout:)``
+- ``gitLibgit2OptGetServerConnectTimeout(timeout:)``
+- ``gitLibgit2OptSetServerTimeout(timeout:)``
+- ``gitLibgit2OptGetServerTimeout(timeout:)``
+- ``gitLibgit2OptSetUserAgentProduct(userAgent:)``
+- ``gitLibgit2OptGetUserAgentProduct(out:)``
+- ``gitLibgit2OptAddSSLX509Cert(cert:)``
 
 ### Config Enums
 
