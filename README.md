@@ -34,7 +34,7 @@ memory management and calling conventions. This includes callbacks invoked by
 libgit2 internally, output parameters where libgit2 owns the returned memory, 
 and other cases where C types cannot be accurately represented in Swift.
 
-The Swift bindings for bit set C enums are represented as structs, but remain  
+The Swift bindings for bit set C enums are represented as structs, but remain 
 in their respective "Enums" documentation section to match libgit2's API 
 organization. The bindings for C enums with mutually exclusive values are 
 represented as standard Swift enums.
@@ -69,6 +69,12 @@ The macOS builds support both Apple Silicon and Intel.
 
 
 ## Usage
+
+swift-libgit2 
+[tests](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Tests/swift-libgit2Tests) 
+may be referenced for general usage and syntax examples. However, keep in mind 
+that these tests focus on validating binding behavior, not demonstrating 
+complete Git workflows or best practices.
 
 Below is a brief example showing how to import both the Swift and C libraries 
 into a Swift project, and then use them to initialize and shut down the 
