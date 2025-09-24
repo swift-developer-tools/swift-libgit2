@@ -465,6 +465,10 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCommitDup(out:source:)``
 - ``gitCommitArrayDispose(array:)``
 
+### Config Enums
+
+- ``GitConfigLevelT``
+
 ### Credential Enums
 
 - ``GitCredentialT``
