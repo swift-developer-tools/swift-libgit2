@@ -46,6 +46,21 @@ final class CommonTests: XCTestCaseStopOnFail
     
     func testGitFeatureT() throws
     {
+        XCTAssertEqual(GitFeatureT.gitFeatureThreads.rawValue, GIT_FEATURE_THREADS.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureHTTPS.rawValue, GIT_FEATURE_HTTPS.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureSSH.rawValue, GIT_FEATURE_SSH.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureNSEC.rawValue, GIT_FEATURE_NSEC.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureHTTPParser.rawValue, GIT_FEATURE_HTTP_PARSER.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureRegex.rawValue, GIT_FEATURE_REGEX.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureI18N.rawValue, GIT_FEATURE_I18N.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureAuthNTLM.rawValue, GIT_FEATURE_AUTH_NTLM.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureAuthNegotiate.rawValue, GIT_FEATURE_AUTH_NEGOTIATE.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureCompression.rawValue, GIT_FEATURE_COMPRESSION.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureSHA1.rawValue, GIT_FEATURE_SHA1.rawValue)
+        XCTAssertEqual(GitFeatureT.gitFeatureSHA256.rawValue, GIT_FEATURE_SHA256.rawValue)
+        
+        XCTAssertEqual(GitFeatureT(rawValue: 123).cValue.rawValue, 123)
+        
         XCTAssertEqual(GitFeatureT.gitFeatureThreads.cValue, GIT_FEATURE_THREADS)
         XCTAssertEqual(GitFeatureT.gitFeatureHTTPS.cValue, GIT_FEATURE_HTTPS)
         XCTAssertEqual(GitFeatureT.gitFeatureSSH.cValue, GIT_FEATURE_SSH)
@@ -58,8 +73,6 @@ final class CommonTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitFeatureT.gitFeatureCompression.cValue, GIT_FEATURE_COMPRESSION)
         XCTAssertEqual(GitFeatureT.gitFeatureSHA1.cValue, GIT_FEATURE_SHA1)
         XCTAssertEqual(GitFeatureT.gitFeatureSHA256.cValue, GIT_FEATURE_SHA256)
-        
-        XCTAssertEqual(GitFeatureT(rawValue: 123).cValue.rawValue, 123)
         
         
         
