@@ -42,3 +42,24 @@ func XCTAssertOK(
     
     XCTAssertEqual(result, GIT_OK.rawValue, message)
 }
+
+
+
+/// Asserts that the given libgit2 operation result code is not `GIT_OK`.
+/// - Parameter result: The libgit2 operation result code.
+func XCTAssertNotOK(
+    _ result: Int32
+)
+{
+    guard result != GIT_OK.rawValue
+    else
+    {
+        XCTFail("The result (\(result)) was not GIT_OK.")
+        return
+    }
+    
+    
+    
+    /// Clear the error before returning.
+    git_error_last()
+}

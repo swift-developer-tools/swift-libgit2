@@ -340,7 +340,16 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyUntracked.rawValue, GIT_CHECKOUT_NOTIFY_UNTRACKED.rawValue)
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyIgnored.rawValue, GIT_CHECKOUT_NOTIFY_IGNORED.rawValue)
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyAll.rawValue, GIT_CHECKOUT_NOTIFY_ALL.rawValue)
-        XCTAssertEqual(GitCheckoutNotifyT(rawValue: 123).rawValue, 123)
+        
+        XCTAssertEqual(GitCheckoutNotifyT(rawValue: 123).cValue.rawValue, 123)
+        
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyNone.cValue, GIT_CHECKOUT_NOTIFY_NONE)
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyConflict.cValue, GIT_CHECKOUT_NOTIFY_CONFLICT)
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyDirty.cValue, GIT_CHECKOUT_NOTIFY_DIRTY)
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyUpdated.cValue, GIT_CHECKOUT_NOTIFY_UPDATED)
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyUntracked.cValue, GIT_CHECKOUT_NOTIFY_UNTRACKED)
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyIgnored.cValue, GIT_CHECKOUT_NOTIFY_IGNORED)
+        XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyAll.cValue, GIT_CHECKOUT_NOTIFY_ALL)
         
         
         
@@ -500,7 +509,33 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutNone.rawValue, GIT_CHECKOUT_NONE.rawValue)
         XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateSubmodules.rawValue, GIT_CHECKOUT_UPDATE_SUBMODULES.rawValue)
         XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateSubmodulesIfChanged.rawValue, GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED.rawValue)
-        XCTAssertEqual(GitCheckoutStrategyT(rawValue: 123).rawValue, 123)
+        
+        XCTAssertEqual(GitCheckoutStrategyT(rawValue: 123).cValue.rawValue, 123)
+        
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutSafe.cValue, GIT_CHECKOUT_SAFE)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutForce.cValue, GIT_CHECKOUT_FORCE)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutRecreateMissing.cValue, GIT_CHECKOUT_RECREATE_MISSING)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutAllowConflicts.cValue, GIT_CHECKOUT_ALLOW_CONFLICTS)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutRemoveUntracked.cValue, GIT_CHECKOUT_REMOVE_UNTRACKED)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutRemoveIgnored.cValue, GIT_CHECKOUT_REMOVE_IGNORED)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateOnly.cValue, GIT_CHECKOUT_UPDATE_ONLY)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutDontUpdateIndex.cValue, GIT_CHECKOUT_DONT_UPDATE_INDEX)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutNoRefresh.cValue, GIT_CHECKOUT_NO_REFRESH)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutSkipUnmerged.cValue, GIT_CHECKOUT_SKIP_UNMERGED)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUseOurs.cValue, GIT_CHECKOUT_USE_OURS)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUseTheirs.cValue, GIT_CHECKOUT_USE_THEIRS)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutDisablePathspecMatch.cValue, GIT_CHECKOUT_DISABLE_PATHSPEC_MATCH)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutSkipLockedDirectories.cValue, GIT_CHECKOUT_SKIP_LOCKED_DIRECTORIES)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutDontOverwriteIgnored.cValue, GIT_CHECKOUT_DONT_OVERWRITE_IGNORED)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutConflictStyleMerge.cValue, GIT_CHECKOUT_CONFLICT_STYLE_MERGE)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutConflictStyleDiff3.cValue, GIT_CHECKOUT_CONFLICT_STYLE_DIFF3)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutDontRemoveExisting.cValue, GIT_CHECKOUT_DONT_REMOVE_EXISTING)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutDontWriteIndex.cValue, GIT_CHECKOUT_DONT_WRITE_INDEX)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutDryRun.cValue, GIT_CHECKOUT_DRY_RUN)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutConflictStyleZDiff3.cValue, GIT_CHECKOUT_CONFLICT_STYLE_ZDIFF3)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutNone.cValue, GIT_CHECKOUT_NONE)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateSubmodules.cValue, GIT_CHECKOUT_UPDATE_SUBMODULES)
+        XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateSubmodulesIfChanged.cValue, GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED)
         
         
         

@@ -11,10 +11,10 @@ libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
 Swift bindings are provided for almost every API available in libgit2. Direct
 access to the libgit2 C library is also provided by the package. There are no
-Swift bindings for opaque structs, initialization functions and macros, or 
-variadic functions that do not use `va_list` for their arguments, but these may 
-be accessed by importing the C library. See the Usage section below for an 
-example of how to import and use either library.
+Swift bindings for opaque structs, initialization functions, initialization
+macros, and some variadic functions, but these may be accessed by importing 
+the C library. See the Usage section below for an example of how to import 
+and use either library.
 
 The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 
@@ -34,9 +34,10 @@ memory management and calling conventions. This includes callbacks invoked by
 libgit2 internally, output parameters where libgit2 owns the returned memory, 
 and other cases where C types cannot be accurately represented in Swift.
 
-The Swift bindings for some C enums are represented as structs, but remain in 
-their respective "Enums" documentation section to match libgit2's API 
-organization.
+The Swift bindings for bit set C enums are represented as structs, but remain 
+in their respective "Enums" documentation section to match libgit2's API 
+organization. The bindings for C enums with mutually exclusive values are 
+represented as standard Swift enums.
 
 
 
@@ -68,6 +69,12 @@ The macOS builds support both Apple Silicon and Intel.
 
 
 ## Usage
+
+swift-libgit2 
+[tests](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Tests/swift-libgit2Tests) 
+may be referenced for general usage and syntax examples. However, keep in mind 
+that these tests focus on validating binding behavior, not demonstrating 
+complete Git workflows or best practices.
 
 Below is a brief example showing how to import both the Swift and C libraries 
 into a Swift project, and then use them to initialize and shut down the 

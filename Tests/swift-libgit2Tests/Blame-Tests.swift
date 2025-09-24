@@ -198,7 +198,17 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitBlameFlagT.gitBlameFirstParent.rawValue, GIT_BLAME_FIRST_PARENT.rawValue)
         XCTAssertEqual(GitBlameFlagT.gitBlameUseMailmap.rawValue, GIT_BLAME_USE_MAILMAP.rawValue)
         XCTAssertEqual(GitBlameFlagT.gitBlameIgnoreWhitespace.rawValue, GIT_BLAME_IGNORE_WHITESPACE.rawValue)
-        XCTAssertEqual(GitBlameFlagT(rawValue: 123).rawValue, 123)
+        
+        XCTAssertEqual(GitBlameFlagT(rawValue: 123).cValue.rawValue, 123)
+        
+        XCTAssertEqual(GitBlameFlagT.gitBlameNormal.cValue, GIT_BLAME_NORMAL)
+        XCTAssertEqual(GitBlameFlagT.gitBlameTrackCopiesSameFile.cValue, GIT_BLAME_TRACK_COPIES_SAME_FILE)
+        XCTAssertEqual(GitBlameFlagT.gitBlameTrackCopiesSameCommitMoves.cValue, GIT_BLAME_TRACK_COPIES_SAME_COMMIT_MOVES)
+        XCTAssertEqual(GitBlameFlagT.gitBlameTrackCopiesSameCommitCopies.cValue, GIT_BLAME_TRACK_COPIES_SAME_COMMIT_COPIES)
+        XCTAssertEqual(GitBlameFlagT.gitBlameTrackCopiesAnyCommitCopies.cValue, GIT_BLAME_TRACK_COPIES_ANY_COMMIT_COPIES)
+        XCTAssertEqual(GitBlameFlagT.gitBlameFirstParent.cValue, GIT_BLAME_FIRST_PARENT)
+        XCTAssertEqual(GitBlameFlagT.gitBlameUseMailmap.cValue, GIT_BLAME_USE_MAILMAP)
+        XCTAssertEqual(GitBlameFlagT.gitBlameIgnoreWhitespace.cValue, GIT_BLAME_IGNORE_WHITESPACE)
         
         
         

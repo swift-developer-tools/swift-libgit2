@@ -112,7 +112,7 @@ final class SignatureTests: XCTestCaseStopOnFail
             buf:    "Name invalid@example.com \(time) +0100"
         )
         
-        XCTAssertNotEqual(signatureFromBufferResult, GIT_OK.rawValue)
+        XCTAssertNotOK(signatureFromBufferResult)
         XCTAssertTrue(signature.name.isEmpty)
         XCTAssertTrue(signature.email.isEmpty)
         XCTAssertNotNil(signature.when)
@@ -220,7 +220,7 @@ final class SignatureTests: XCTestCaseStopOnFail
         )
         
         /// Signatures cannot have an empty name or email.
-        XCTAssertNotEqual(signatureNewResult, GIT_OK.rawValue)
+        XCTAssertNotOK(signatureNewResult)
         XCTAssertTrue(signature.name.isEmpty)
         XCTAssertTrue(signature.email.isEmpty)
         XCTAssertNotNil(signature.when)

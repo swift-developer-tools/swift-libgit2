@@ -317,7 +317,13 @@ final class BlobTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterNoSystemAttributes.rawValue, GIT_BLOB_FILTER_NO_SYSTEM_ATTRIBUTES.rawValue)
         XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterAttributesFromHEAD.rawValue, GIT_BLOB_FILTER_ATTRIBUTES_FROM_HEAD.rawValue)
         XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterAttributesFromCommit.rawValue, GIT_BLOB_FILTER_ATTRIBUTES_FROM_COMMIT.rawValue)
-        XCTAssertEqual(GitBlobFilterFlagT(rawValue: 123).rawValue, 123)
+        
+        XCTAssertEqual(GitBlobFilterFlagT(rawValue: 123).cValue.rawValue, 123)
+        
+        XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterCheckForBinary.cValue, GIT_BLOB_FILTER_CHECK_FOR_BINARY)
+        XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterNoSystemAttributes.cValue, GIT_BLOB_FILTER_NO_SYSTEM_ATTRIBUTES)
+        XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterAttributesFromHEAD.cValue, GIT_BLOB_FILTER_ATTRIBUTES_FROM_HEAD)
+        XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterAttributesFromCommit.cValue, GIT_BLOB_FILTER_ATTRIBUTES_FROM_COMMIT)
         
         
         
