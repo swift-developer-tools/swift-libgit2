@@ -34,9 +34,10 @@ memory management and calling conventions. This includes callbacks invoked by
 libgit2 internally, output parameters where libgit2 owns the returned memory, 
 and other cases where C types cannot be accurately represented in Swift.
 
-The Swift bindings for some C enums are represented as structs, but remain in 
-their respective "Enums" documentation section to match libgit2's API 
-organization.
+The Swift bindings for bit set C enums are represented as structs, but remain  
+in their respective "Enums" documentation section to match libgit2's API 
+organization. The bindings for C enums with mutually exclusive values are 
+represented as standard Swift enums.
 
 
 
