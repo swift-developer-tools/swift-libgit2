@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_object_t`](https://libgit2.org/docs/reference/main/object/git_object_t.html)
-public enum GitObjectT: Int32
+public enum GitObjectT: Int32, GitEnum
 {
     /// Any object.
     case gitObjectAny       = -2
@@ -59,7 +59,7 @@ public enum GitObjectT: Int32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_object_t
     {
         switch self

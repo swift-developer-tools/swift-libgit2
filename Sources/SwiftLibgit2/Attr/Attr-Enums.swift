@@ -73,7 +73,7 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
 /// ## C Equivalent
 ///
 /// [`git_attr_value_t`](https://libgit2.org/docs/reference/main/attr/git_attr_value_t.html)
-public enum GitAttrValueT: UInt32
+public enum GitAttrValueT: UInt32, GitEnum
 {
     /// The attribute has been left unspecified.
     case gitAttrValueUnspecified    = 0
@@ -107,7 +107,7 @@ public enum GitAttrValueT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_attr_value_t
     {
         switch self

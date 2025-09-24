@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_proxy_t`](https://libgit2.org/docs/reference/main/proxy/git_proxy_t.html)
-public enum GitProxyT: UInt32
+public enum GitProxyT: UInt32, GitEnum
 {
     /// Do not attempt to connect through a proxy.
     case gitProxyNone       = 0
@@ -46,7 +46,7 @@ public enum GitProxyT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_proxy_t
     {
         switch self

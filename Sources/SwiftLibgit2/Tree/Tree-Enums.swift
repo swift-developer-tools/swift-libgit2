@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_filemode_t`](https://libgit2.org/docs/reference/main/tree/git_filemode_t.html)
-public enum GitFileModeT: UInt16
+public enum GitFileModeT: UInt16, GitEnum
 {
     /// The unreadable file mode.
     case gitFileModeUnreadable      = 0
@@ -59,7 +59,7 @@ public enum GitFileModeT: UInt16
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_filemode_t
     {
         switch self

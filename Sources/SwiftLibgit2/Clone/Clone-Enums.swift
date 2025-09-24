@@ -22,7 +22,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_clone_local_t`](https://libgit2.org/docs/reference/main/clone/git_clone_local_t.html)
-public enum GitCloneLocalT: UInt32
+public enum GitCloneLocalT: UInt32, GitEnum
 {
     /// Bypass the Git-aware transport for local paths, but use a normal fetch for `file://` URLs.
     ///
@@ -60,7 +60,7 @@ public enum GitCloneLocalT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_clone_local_t
     {
         switch self

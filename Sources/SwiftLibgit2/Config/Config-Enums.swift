@@ -31,7 +31,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_level_t`](https://libgit2.org/docs/reference/main/config/git_config_level_t.html)
-public enum GitConfigLevelT: Int32
+public enum GitConfigLevelT: Int32, GitEnum
 {
     /// System-wide on Windows.
     ///
@@ -115,7 +115,7 @@ public enum GitConfigLevelT: Int32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_config_level_t
     {
         switch self

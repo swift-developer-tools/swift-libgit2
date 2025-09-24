@@ -21,7 +21,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_redirect_t`](https://libgit2.org/docs/reference/main/remote/git_remote_redirect_t.html)
-public enum GitRemoteRedirectT: UInt32
+public enum GitRemoteRedirectT: UInt32, GitEnum
 {
     /// Do not follow any off-site redirects at any stage of the fetch or push operation.
     case gitRemoteRedirectNone      = 0
@@ -56,7 +56,7 @@ public enum GitRemoteRedirectT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_remote_redirect_t
     {
         switch self
@@ -151,7 +151,7 @@ public struct GitRemoteUpdateFlags: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_remote_completion_t`](https://libgit2.org/docs/reference/main/remote/git_remote_completion_t.html)
-public enum GitRemoteCompletionT: UInt32
+public enum GitRemoteCompletionT: UInt32, GitEnum
 {
     /// Remote downloading has completed.
     case gitRemoteCompletionDownload    = 0
@@ -182,7 +182,7 @@ public enum GitRemoteCompletionT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_remote_completion_t
     {
         switch self
@@ -201,7 +201,7 @@ public enum GitRemoteCompletionT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_fetch_prune_t`](https://libgit2.org/docs/reference/main/remote/git_fetch_prune_t.html)
-public enum GitFetchPruneT: UInt32
+public enum GitFetchPruneT: UInt32, GitEnum
 {
     /// Use the setting from the configuration.
     case gitFetchPruneUnspecified   = 0
@@ -231,7 +231,7 @@ public enum GitFetchPruneT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_fetch_prune_t
     {
         switch self
@@ -250,7 +250,7 @@ public enum GitFetchPruneT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_remote_autotag_option_t`](https://libgit2.org/docs/reference/main/remote/git_remote_autotag_option_t.html)
-public enum GitRemoteAutoTagOptionT: UInt32
+public enum GitRemoteAutoTagOptionT: UInt32, GitEnum
 {
     /// Use the setting from the configuration.
     case gitRemoteDownloadTagsUnspecified   = 0
@@ -286,7 +286,7 @@ public enum GitRemoteAutoTagOptionT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_remote_autotag_option_t
     {
         switch self
@@ -306,7 +306,7 @@ public enum GitRemoteAutoTagOptionT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_fetch_depth_t`](https://libgit2.org/docs/reference/main/remote/git_fetch_depth_t.html)
-public enum GitFetchDepthT: UInt32
+public enum GitFetchDepthT: UInt32, GitEnum
 {
     /// Perform a full fetch operation.
     ///
@@ -336,7 +336,7 @@ public enum GitFetchDepthT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_fetch_depth_t
     {
         switch self

@@ -25,7 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_delta_t`](https://libgit2.org/docs/reference/main/diff/git_delta_t.html)
-public enum GitDeltaT: UInt32
+public enum GitDeltaT: UInt32, GitEnum
 {
     /// There are no changes.
     case gitDeltaUnmodified     = 0
@@ -87,7 +87,7 @@ public enum GitDeltaT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_delta_t
     {
         switch self

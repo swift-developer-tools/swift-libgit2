@@ -83,7 +83,7 @@ public struct GitMergeFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_merge_file_favor_t`](https://libgit2.org/docs/reference/main/merge/git_merge_file_favor_t.html)
-public enum GitMergeFileFavorT: UInt32
+public enum GitMergeFileFavorT: UInt32, GitEnum
 {
     /// When a region of a file is changed in both branches, a conflict will be recorded in the index so
     /// that the checkout operation can produce a merge file with conflict markers in the working directory.
@@ -127,7 +127,7 @@ public enum GitMergeFileFavorT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_merge_file_favor_t
     {
         switch self

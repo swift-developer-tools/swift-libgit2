@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_branch_t`](https://libgit2.org/docs/reference/main/branch/git_branch_t.html)
-public enum GitBranchT: UInt32
+public enum GitBranchT: UInt32, GitEnum
 {
     /// A local branch.
     case gitBranchLocal     = 1
@@ -46,7 +46,7 @@ public enum GitBranchT: UInt32
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_branch_t
     {
         switch self
