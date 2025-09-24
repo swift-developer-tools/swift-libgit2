@@ -47,7 +47,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_checkout_strategy_t`](https://libgit2.org/docs/reference/main/checkout/git_checkout_strategy_t.html)
-public struct GitCheckoutStrategyT: OptionSet, Sendable
+public struct GitCheckoutStrategyT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -177,6 +177,14 @@ public struct GitCheckoutStrategyT: OptionSet, Sendable
     ///
     /// This has not yet been implemented, but is reserved for future use.
     public static let gitCheckoutUpdateSubmodulesIfChanged  = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_checkout_strategy_t
+    {
+        return git_checkout_strategy_t(rawValue)
+    }
 }
 
 
@@ -197,7 +205,7 @@ public struct GitCheckoutStrategyT: OptionSet, Sendable
 /// ## C Equivalent
 ///
 /// [`git_checkout_notify_t`](https://libgit2.org/docs/reference/main/checkout/git_checkout_notify_t.html)
-public struct GitCheckoutNotifyT: OptionSet, Sendable
+public struct GitCheckoutNotifyT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -238,4 +246,12 @@ public struct GitCheckoutNotifyT: OptionSet, Sendable
     
     /// Send notifications for any file.
     public static let gitCheckoutNotifyAll          = GitCheckoutNotifyT(rawValue: GIT_CHECKOUT_NOTIFY_ALL.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_checkout_notify_t
+    {
+        return git_checkout_notify_t(rawValue)
+    }
 }

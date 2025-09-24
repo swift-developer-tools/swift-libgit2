@@ -81,15 +81,15 @@ public func gitApply(
         return git_apply(
             repo,
             diff,
-            git_apply_location_t(rawValue: location.rawValue),
+            location.cValue,
             nil
         )
     }
-           
+    
     return git_apply(
         repo,
         diff,
-        git_apply_location_t(rawValue: location.rawValue),
+        location.cValue,
         &cOptions
     )
 }

@@ -122,7 +122,7 @@ public enum GitDeltaT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_diff_flag_t`](https://libgit2.org/docs/reference/main/diff/git_diff_flag_t.html)
-public struct GitDiffFlagT: OptionSet, Sendable
+public struct GitDiffFlagT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -152,4 +152,12 @@ public struct GitDiffFlagT: OptionSet, Sendable
     
     /// The file size value is known to be correct.
     public static let gitDiffFlagValidSize  = GitDiffFlagT(rawValue: GIT_DIFF_FLAG_VALID_SIZE.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_diff_flag_t
+    {
+        return git_diff_flag_t(rawValue)
+    }
 }

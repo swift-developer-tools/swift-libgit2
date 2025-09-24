@@ -80,7 +80,7 @@ public enum GitCertT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_cert_ssh_t`](https://libgit2.org/docs/reference/main/cert/git_cert_ssh_t.html)
-public struct GitCertSSHT: OptionSet, Sendable
+public struct GitCertSSHT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -107,6 +107,14 @@ public struct GitCertSSHT: OptionSet, Sendable
     
     /// The raw host key is available.
     public static let gitCertSSHRaw     = GitCertSSHT(rawValue: GIT_CERT_SSH_RAW.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_cert_ssh_t
+    {
+        return git_cert_ssh_t(rawValue)
+    }
 }
 
 

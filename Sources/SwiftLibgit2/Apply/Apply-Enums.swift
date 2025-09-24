@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_flags_t`](https://libgit2.org/docs/reference/main/apply/git_apply_flags_t.html)
-public struct GitApplyFlagsT: OptionSet, Sendable
+public struct GitApplyFlagsT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -35,6 +35,14 @@ public struct GitApplyFlagsT: OptionSet, Sendable
     /// Do not actually make changes, just test that the patch applies.
     /// This is the equivalent of `git apply --check`.
     public static let gitApplyCheck = GitApplyFlagsT(rawValue: GIT_APPLY_CHECK.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_apply_flags_t
+    {
+        return git_apply_flags_t(rawValue)
+    }
 }
 
 
@@ -44,7 +52,7 @@ public struct GitApplyFlagsT: OptionSet, Sendable
 /// ## C Equivalent
 ///
 /// [`git_apply_location_t`](https://libgit2.org/docs/reference/main/apply/git_apply_location_t.html)
-public struct GitApplyLocationT: OptionSet, Sendable
+public struct GitApplyLocationT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -71,4 +79,12 @@ public struct GitApplyLocationT: OptionSet, Sendable
     /// Apply the patch to both the working directory and the index.
     /// This is the equivalent of `git apply --index`.
     public static let gitApplyLocationBoth     = GitApplyLocationT(rawValue: GIT_APPLY_LOCATION_BOTH.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_apply_location_t
+    {
+        return git_apply_location_t(rawValue)
+    }
 }

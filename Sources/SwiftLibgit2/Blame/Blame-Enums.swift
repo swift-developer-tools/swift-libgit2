@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_flag_t`](https://libgit2.org/docs/reference/main/blame/git_blame_flag_t.html)
-public struct GitBlameFlagT: OptionSet, Sendable
+public struct GitBlameFlagT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -90,4 +90,12 @@ public struct GitBlameFlagT: OptionSet, Sendable
     
     /// Ignore whitespace differences.
     public static let gitBlameIgnoreWhitespace              = GitBlameFlagT(rawValue: GIT_BLAME_IGNORE_WHITESPACE.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_blame_flag_t
+    {
+        return git_blame_flag_t(rawValue)
+    }
 }

@@ -192,6 +192,13 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertSSHT.gitCertSSHSHA256.rawValue, GIT_CERT_SSH_SHA256.rawValue)
         XCTAssertEqual(GitCertSSHT.gitCertSSHRaw.rawValue, GIT_CERT_SSH_RAW.rawValue)
         
+        XCTAssertEqual(GitCertSSHT(rawValue: 123).cValue.rawValue, 123)
+        
+        XCTAssertEqual(GitCertSSHT.gitCertSSHMD5.cValue, GIT_CERT_SSH_MD5)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHSHA1.cValue, GIT_CERT_SSH_SHA1)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHSHA256.cValue, GIT_CERT_SSH_SHA256)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHRaw.cValue, GIT_CERT_SSH_RAW)
+        
         
         
         let flags: GitCertSSHT =

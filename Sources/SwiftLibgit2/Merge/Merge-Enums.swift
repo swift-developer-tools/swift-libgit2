@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_merge_flag_t`](https://libgit2.org/docs/reference/main/merge/git_merge_flag_t.html)
-public struct GitMergeFlagT: OptionSet, Sendable
+public struct GitMergeFlagT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -66,6 +66,14 @@ public struct GitMergeFlagT: OptionSet, Sendable
     /// This flag will ensure that there are no conflicts. Any conflicting regions will keep conflict markers
     /// in the merge result.
     public static let gitMergeVirtualBase       = GitMergeFlagT(rawValue: GIT_MERGE_VIRTUAL_BASE.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_merge_flag_t
+    {
+        return git_merge_flag_t(rawValue)
+    }
 }
 
 
@@ -139,7 +147,7 @@ public enum GitMergeFileFavorT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_merge_file_flag_t`](https://libgit2.org/docs/reference/main/merge/git_merge_file_flag_t.html)
-public struct GitMergeFileFlagT: OptionSet, Sendable
+public struct GitMergeFileFlagT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -188,4 +196,12 @@ public struct GitMergeFileFlagT: OptionSet, Sendable
     /// Do not produce file conflicts when common regions have changed. Instead, keep the conflict
     /// markers in the file and accept that as the merge result.
     public static let gitMergeFileSAcceptConflicts          = GitMergeFileFlagT(rawValue: GIT_MERGE_FILE_ACCEPT_CONFLICTS.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_merge_file_flag_t
+    {
+        return git_merge_file_flag_t(rawValue)
+    }
 }

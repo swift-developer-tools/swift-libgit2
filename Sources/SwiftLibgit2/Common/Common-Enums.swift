@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_feature_t`](https://libgit2.org/docs/reference/main/common/git_feature_t.html)
-public struct GitFeatureT: OptionSet, Sendable
+public struct GitFeatureT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -87,7 +87,7 @@ public struct GitFeatureT: OptionSet, Sendable
     
     
     
-    /// The equivalent C enum value.
+    /// The equivalent C value.
     internal var cValue: git_feature_t
     {
         return git_feature_t(rawValue)

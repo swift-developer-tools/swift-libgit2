@@ -75,7 +75,7 @@ public enum GitRemoteRedirectT: UInt32
 /// ## C Equivalent
 ///
 /// [`git_remote_create_flags`](https://libgit2.org/docs/reference/main/remote/git_remote_create_flags.html)
-public struct GitRemoteCreateFlags: OptionSet, Sendable
+public struct GitRemoteCreateFlags: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -96,6 +96,14 @@ public struct GitRemoteCreateFlags: OptionSet, Sendable
     
     /// Do not build a fetchspec from the name if no fetchspec has been set.
     public static let gitRemoteCreateSkipDefaultFetchspec   = GitRemoteCreateFlags(rawValue: GIT_REMOTE_CREATE_SKIP_DEFAULT_FETCHSPEC.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_remote_create_flags
+    {
+        return git_remote_create_flags(rawValue)
+    }
 }
 
 
@@ -105,7 +113,7 @@ public struct GitRemoteCreateFlags: OptionSet, Sendable
 /// ## C Equivalent
 ///
 /// [`git_remote_update_flags`](https://libgit2.org/docs/reference/main/remote/git_remote_update_flags.html)
-public struct GitRemoteUpdateFlags: OptionSet, Sendable
+public struct GitRemoteUpdateFlags: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -126,6 +134,14 @@ public struct GitRemoteUpdateFlags: OptionSet, Sendable
     
     /// Report status updates even for references that have not changed.
     public static let gitRemoteUpdateReportUnchanged    = GitRemoteUpdateFlags(rawValue: GIT_REMOTE_UPDATE_REPORT_UNCHANGED.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_remote_update_flags
+    {
+        return git_remote_update_flags(rawValue)
+    }
 }
 
 

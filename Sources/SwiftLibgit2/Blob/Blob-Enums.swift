@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_flag_t`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_flag_t.html)
-public struct GitBlobFilterFlagT: OptionSet, Sendable
+public struct GitBlobFilterFlagT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -48,4 +48,12 @@ public struct GitBlobFilterFlagT: OptionSet, Sendable
     
     /// Filters will be loaded from `.gitattributes` in the specified commit.
     public static let gitBlobFilterAttributesFromCommit     = GitBlobFilterFlagT(rawValue: GIT_BLOB_FILTER_ATTRIBUTES_FROM_COMMIT.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_blob_filter_flag_t
+    {
+        return git_blob_filter_flag_t(rawValue)
+    }
 }

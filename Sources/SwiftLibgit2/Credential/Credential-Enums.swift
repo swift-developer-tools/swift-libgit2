@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_credential_t`](https://libgit2.org/docs/reference/main/credential/git_credential_t.html)
-public struct GitCredentialT: OptionSet, Sendable
+public struct GitCredentialT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -62,4 +62,12 @@ public struct GitCredentialT: OptionSet, Sendable
     /// Allows credentials to be read from memory instead of files. Note that because of differences in
     /// crypto backend support, this may not be functional.
     public static let gitCredentialSSHMemory            = GitCredentialT(rawValue: GIT_CREDENTIAL_SSH_MEMORY.rawValue)
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_credential_t
+    {
+        return git_credential_t(rawValue)
+    }
 }
