@@ -54,7 +54,7 @@ final class BufferTests: XCTestCaseStopOnFail
             )
             
             /// The operation should fail since there the reference is a local branch.
-            XCTAssertNotEqual(branchRemoteNameResult, GIT_OK.rawValue)
+            XCTAssertNotOK(branchRemoteNameResult)
             
             
             

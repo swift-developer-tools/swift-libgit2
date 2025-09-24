@@ -280,7 +280,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 )
                 
                 /// The operation should fail since there is no configured upstream.
-                XCTAssertNotEqual(branchUpstreamResult, GIT_OK.rawValue)
+                XCTAssertNotOK(branchUpstreamResult)
                 
                 
                 
@@ -290,7 +290,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 )
                 
                 /// The operation should fail since there is no configured remote.
-                XCTAssertNotEqual(branchSetUpstreamResult, GIT_OK.rawValue)
+                XCTAssertNotOK(branchSetUpstreamResult)
             }
         }
     }
@@ -323,7 +323,7 @@ final class BranchTests: XCTestCaseStopOnFail
             )
             
             /// The operation should fail since there the reference is a local branch.
-            XCTAssertNotEqual(branchRemoteNameResult, GIT_OK.rawValue)
+            XCTAssertNotOK(branchRemoteNameResult)
             
             
             
@@ -334,7 +334,7 @@ final class BranchTests: XCTestCaseStopOnFail
             )
             
             /// The operation should fail since there is no configured upstream.
-            XCTAssertNotEqual(branchUpstreamRemoteResult, GIT_OK.rawValue)
+            XCTAssertNotOK(branchUpstreamRemoteResult)
             
             
             
@@ -345,7 +345,7 @@ final class BranchTests: XCTestCaseStopOnFail
             )
             
             /// The operation should fail since there is no configured upstream.
-            XCTAssertNotEqual(branchUpstreamMergeResult, GIT_OK.rawValue)
+            XCTAssertNotOK(branchUpstreamMergeResult)
             
             
             
@@ -356,7 +356,7 @@ final class BranchTests: XCTestCaseStopOnFail
             )
             
             /// The operation should fail since there is no configured upstream.
-            XCTAssertNotEqual(branchUpstreamNameResult, GIT_OK.rawValue)
+            XCTAssertNotOK(branchUpstreamNameResult)
         }
     }
     
