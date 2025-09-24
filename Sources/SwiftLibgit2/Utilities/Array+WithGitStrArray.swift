@@ -47,7 +47,7 @@ internal extension Array where Element == String
         
         
         
-        return withArrayOfCStrings(self)
+        return self.withArrayOfCStrings
         {
             cStrings in
             

@@ -1017,7 +1017,7 @@ public func gitLibgit2OptSetExtensions(
     len         : Int
 ) -> Int32
 {
-    return withArrayOfImmutableCStrings(extensions)
+    return extensions.withArrayOfImmutableCStrings
     {
         cExtensions in
         

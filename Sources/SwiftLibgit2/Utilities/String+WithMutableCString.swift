@@ -49,7 +49,7 @@ internal extension String
     ///
     /// However, the current approach using a single buffer avoids heap allocation via `malloc()` and
     /// `free()` in `strdup()`. This approach is similar to the one used by the Swift standard library
-    /// in ``withArrayOfCStrings(args:body:)``.
+    /// in ``withArrayOfCStrings(_:)``.
     func withMutableCString<T>(
         _ body: (UnsafeMutablePointer<CChar>) -> T
     ) -> T

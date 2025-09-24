@@ -151,7 +151,7 @@ public func gitAttrGetMany(
     names       : [String]
 ) -> Int32
 {
-    return withArrayOfImmutableCStrings(names)
+    return names.withArrayOfImmutableCStrings
     {
         cNames in
             
@@ -194,7 +194,7 @@ public func gitAttrGetManyExt(
     names       : [String]
 ) -> Int32
 {
-    return withArrayOfImmutableCStrings(names)
+    return names.withArrayOfImmutableCStrings
     {
         cNames in
         
