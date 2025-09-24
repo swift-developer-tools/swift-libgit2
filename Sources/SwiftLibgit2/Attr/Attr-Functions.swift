@@ -107,8 +107,6 @@ public func gitAttrGetExt(
         )
     }
     
-    
-    
     return opts.withCValue
     {
         cOpts in
@@ -211,8 +209,6 @@ public func gitAttrGetManyExt(
             )
         }
         
-        
-        
         return opts.withCValue
         {
             cOpts in
@@ -297,8 +293,6 @@ public func gitAttrForEachExt(
             payload
         )
     }
-    
-    
     
     return opts.withCValue
     {

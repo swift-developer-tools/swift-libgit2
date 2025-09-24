@@ -50,8 +50,6 @@ public func gitCheckoutHEAD(
         )
     }
     
-    
-    
     return opts.withCValue
     {
         cOpts in
@@ -104,8 +102,6 @@ public func gitCheckoutIndex(
             nil
         )
     }
-    
-    
     
     return opts.withCValue
     {
@@ -161,8 +157,6 @@ public func gitCheckoutTree(
             nil
         )
     }
-    
-    
     
     return opts.withCValue
     {

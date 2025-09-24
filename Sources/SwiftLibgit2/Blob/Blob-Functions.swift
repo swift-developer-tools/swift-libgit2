@@ -205,8 +205,6 @@ public func gitBlobFilter(
         }
     }
     
-    
-    
     return opts.withCValue
     {
         cOpts in

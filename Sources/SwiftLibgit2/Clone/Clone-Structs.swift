@@ -149,10 +149,17 @@ public struct GitCloneOptions
         cloneOptions.remote_cb              = remoteCB
         cloneOptions.remote_cb_payload      = remoteCBPayload
         
-        return withComposedProperties(
-            &cloneOptions,
-            body
-        )
+        return checkoutBranch.withOptionalCString
+        {
+            cCheckoutBranch in
+            
+            cloneOptions.checkout_branch = cCheckoutBranch
+            
+            return withComposedProperties(
+                &cloneOptions,
+                body
+            )
+        }
     }
     
     
@@ -169,7 +176,6 @@ public struct GitCloneOptions
     /// This function composes the following optional properties:
     /// - ``checkoutOpts``
     /// - ``fetchOpts``
-    /// - ``checkoutBranch``
     ///
     /// The composition begins by calling ``withCheckoutOptions(_:_:)``.
     private func withComposedProperties<T>(
@@ -235,7 +241,7 @@ public struct GitCloneOptions
     
     
     /// Updates the given `git_clone_options` instance with the value of ``fetchOpts``,
-    /// then continues the composition by calling ``withCheckoutBranch(_:_:)``.
+    /// then finishes the composition by calling the given closure.
     /// - Parameters:
     ///   - cloneOptions: The options to update.
     ///   - body: The closure to call.
@@ -243,8 +249,7 @@ public struct GitCloneOptions
     ///
     /// ## Discussion
     ///
-    /// If ``fetchOpts`` is `nil`, this function will proceed directly to the next step in the
-    /// composition.
+    /// If ``fetchOpts`` is `nil`, this function will proceed directly to calling the given closure.
     ///
     /// If ``GitFetchOptions.withCValue(_:)`` fails, this function will call the given closure
     /// with `nil`.
@@ -256,10 +261,7 @@ public struct GitCloneOptions
         guard let fetchOpts: GitFetchOptions = fetchOpts
         else
         {
-            return withCheckoutBranch(
-                cloneOptions,
-                body
-            )
+            return body(cloneOptions)
         }
         
         return fetchOpts.withCValue
@@ -273,42 +275,6 @@ public struct GitCloneOptions
             }
             
             cloneOptions.pointee.fetch_opts = cFetchOpts.pointee
-            
-            return withCheckoutBranch(
-                cloneOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_clone_options` instance with the value of ``checkoutBranch``,
-    /// then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - cloneOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``checkoutBranch`` is `nil`, this function will proceed directly to calling the given closure.
-    private func withCheckoutBranch<T>(
-        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
-        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
-    ) -> T
-    {
-        guard let checkoutBranch: String = checkoutBranch
-        else
-        {
-            return body(cloneOptions)
-        }
-        
-        return checkoutBranch.withCString
-        {
-            cCheckoutBranch in
-            
-            cloneOptions.pointee.checkout_branch = cCheckoutBranch
             
             return body(cloneOptions)
         }

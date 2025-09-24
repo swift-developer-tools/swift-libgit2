@@ -161,13 +161,7 @@ public struct GitMergeOptions
         mergeOptions.file_favor         = fileFavor.cValue
         mergeOptions.file_flags         = fileFlags.rawValue
         
-        guard let defaultDriver: String = defaultDriver
-        else
-        {
-            return body(&mergeOptions)
-        }
-        
-        return defaultDriver.withCString
+        return defaultDriver.withOptionalCString
         {
             cDefaultDriver in
             

@@ -47,8 +47,6 @@ public func gitClone(
         )
     }
     
-    
-    
     return options.withCValue
     {
         cOptions in

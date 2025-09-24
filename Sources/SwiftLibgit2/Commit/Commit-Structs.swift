@@ -91,10 +91,17 @@ public struct GitCommitCreateOptions
         commitCreateOptions.version             = version
         commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.cValue)
         
-        return withComposedProperties(
-            &commitCreateOptions,
-            body
-        )
+        return messageEncoding.withOptionalCString
+        {
+            cMessageEncoding in
+            
+            commitCreateOptions.message_encoding = cMessageEncoding
+            
+            return withComposedProperties(
+                &commitCreateOptions,
+                body
+            )
+        }
     }
     
     
@@ -111,7 +118,6 @@ public struct GitCommitCreateOptions
     /// This function composes the following optional properties:
     /// - ``author``
     /// - ``committer``
-    /// - ``messageEncoding``
     ///
     /// The composition begins by calling ``withAuthor(_:_:)``.
     private func withComposedProperties<T>(
@@ -167,8 +173,7 @@ public struct GitCommitCreateOptions
     
     
     /// Updates the given `git_commit_create_options` instance with the value of
-    /// ``committer``, then continues the composition by calling
-    /// ``withMessageEncoding(_:_:)``.
+    /// ``committer``, then finishes the composition by calling the given closure.
     /// - Parameters:
     ///   - commitCreateOptions: The options to update.
     ///   - body: The closure to call.
@@ -176,7 +181,7 @@ public struct GitCommitCreateOptions
     ///
     /// ## Discussion
     ///
-    /// If ``committer`` is `nil`, this function will proceed directly to the next step in the composition.
+    /// If ``committer`` is `nil`, this function will proceed directly to calling the given closure.
     private func withCommitter<T>(
         _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
         _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
@@ -185,10 +190,7 @@ public struct GitCommitCreateOptions
         guard let committer: GitSignature = committer
         else
         {
-            return withMessageEncoding(
-                commitCreateOptions,
-                body
-            )
+            return body(commitCreateOptions)
         }
         
         return committer.withCValue
@@ -196,42 +198,6 @@ public struct GitCommitCreateOptions
             cCommitter in
             
             commitCreateOptions.pointee.committer = UnsafePointer(cCommitter)
-            
-            return withMessageEncoding(
-                commitCreateOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_commit_create_options` instance with the value of
-    /// ``messageEncoding``, then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``messageEncoding`` is `nil`, this function will proceed directly to calling the given closure.
-    private func withMessageEncoding<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        guard let messageEncoding: String = messageEncoding
-        else
-        {
-            return body(commitCreateOptions)
-        }
-        
-        return messageEncoding.withCString
-        {
-            cMessageEncoding in
-            
-            commitCreateOptions.pointee.message_encoding = cMessageEncoding
             
             return body(commitCreateOptions)
         }

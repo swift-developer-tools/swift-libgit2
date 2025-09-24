@@ -44,8 +44,6 @@ public func gitApplyToTree(
         )
     }
     
-    
-    
     return git_apply_to_tree(
         out,
         repo,
@@ -87,9 +85,7 @@ public func gitApply(
             nil
         )
     }
-    
-    
-            
+           
     return git_apply(
         repo,
         diff,

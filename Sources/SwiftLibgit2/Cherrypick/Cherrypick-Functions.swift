@@ -57,8 +57,6 @@ public func gitCherrypickCommit(
         )
     }
     
-    
-    
     return mergeOptions.withCValue
     {
         cMergeOptions in
@@ -113,8 +111,6 @@ public func gitCherrypick(
             nil
         )
     }
-    
-    
     
     return cherrypickOptions.withCValue
     {

@@ -128,13 +128,7 @@ public struct GitProxyOptions
         proxyOptions.certificate_check  = certificateCheck
         proxyOptions.payload            = payload
         
-        guard let url: String = url
-        else
-        {
-            return body(&proxyOptions)
-        }
-        
-        return url.withCString
+        return url.withOptionalCString
         {
             cUrl in
             

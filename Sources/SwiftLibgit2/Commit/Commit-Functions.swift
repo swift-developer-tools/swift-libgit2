@@ -602,19 +602,7 @@ public func gitCommitExtractSignature(
         {
             cSignedData in
             
-            guard let field: String = field
-            else
-            {
-                return git_commit_extract_signature(
-                    cSignature,
-                    cSignedData,
-                    repo,
-                    &cCommitID,
-                    nil
-                )
-            }
-            
-            return field.withCString
+            return field.withOptionalCString
             {
                 cField in
                 
@@ -686,43 +674,43 @@ public func gitCommitCreate(
 {
     var cID: git_oid = id.cValue
     
-    let commitCreateResult: Int32 = author.withCValue
+    let commitCreateResult: Int32 = updateRef.withOptionalCString
     {
-        cAuthor in
+        cUpdateRef in
         
-        return committer.withCValue
+        return author.withCValue
         {
-            cCommitter in
+            cAuthor in
             
-            return message.withCString
+            return committer.withCValue
             {
-                cMessage in
+                cCommitter in
                 
-                return withComposedCommitCreateProperties(
-                    updateRef,
-                    messageEncoding
-                )
+                return messageEncoding.withOptionalCString
                 {
-                    cUpdateRef, cMessageEncoding in
+                    cMessageEncoding in
                     
-                    return git_commit_create(
-                        &cID,
-                        repo,
-                        cUpdateRef,
-                        cAuthor,
-                        cCommitter,
-                        cMessageEncoding,
-                        cMessage,
-                        tree,
-                        parentCount,
-                        parents
-                    )
+                    return message.withCString
+                    {
+                        cMessage in
+                        
+                        return git_commit_create(
+                            &cID,
+                            repo,
+                            cUpdateRef,
+                            cAuthor,
+                            cCommitter,
+                            cMessageEncoding,
+                            cMessage,
+                            tree,
+                            parentCount,
+                            parents
+                        )
+                    }
                 }
             }
         }
     }
-    
-    
     
     id = GitOID(cValue: cID)
     
@@ -756,8 +744,6 @@ public func gitCommitCreateFromStage(
 {
     var cID: git_oid = id.cValue
     
-    
-    
     let commitCreateFromStageResult: Int32 = message.withCString
     {
         cMessage in
@@ -785,8 +771,6 @@ public func gitCommitCreateFromStage(
             )
         }
     }
-    
-    
     
     id = GitOID(cValue: cID)
     
@@ -837,31 +821,39 @@ public func gitCommitAmend(
 {
     var cID: git_oid = id.cValue
     
-    
-    
-    let commitAmendResult: Int32 = withComposedCommitAmendProperties(
-        updateRef,
-        author,
-        committer,
-        messageEncoding,
-        message
-    )
+    let commitAmendResult: Int32 = updateRef.withOptionalCString
     {
-        cUpdateRef, cAuthor, cCommitter, cMessageEncoding, cMessage in
+        cUpdateRef in
         
-        return git_commit_amend(
-            &cID,
-            commitToAmend,
-            cUpdateRef,
-            cAuthor,
-            cCommitter,
-            cMessageEncoding,
-            cMessage,
-            tree
-        )
+        return messageEncoding.withOptionalCString
+        {
+            cMessageEncoding in
+            
+            return message.withOptionalCString
+            {
+                cMessage in
+                
+                withComposedCommitAmendProperties(
+                    author,
+                    committer
+                )
+                {
+                    cAuthor, cCommitter in
+                    
+                    return git_commit_amend(
+                        &cID,
+                        commitToAmend,
+                        cUpdateRef,
+                        cAuthor,
+                        cCommitter,
+                        cMessageEncoding,
+                        cMessage,
+                        tree
+                    )
+                }
+            }
+        }
     }
-    
-    
     
     id = GitOID(cValue: cID)
     
@@ -926,23 +918,7 @@ public func gitCommitCreateBuffer(
                 {
                     cMessage in
                     
-                    guard let messageEncoding: String = messageEncoding
-                    else
-                    {
-                        return git_commit_create_buffer(
-                            cOut,
-                            repo,
-                            cAuthor,
-                            cCommitter,
-                            nil,
-                            cMessage,
-                            tree,
-                            parentCount,
-                            parents
-                        )
-                    }
-                    
-                    return messageEncoding.withCString
+                    return messageEncoding.withOptionalCString
                     {
                         cMessageEncoding in
                         
@@ -990,8 +966,6 @@ public func gitCommitCreateWithSignature(
 {
     var cOut: git_oid = out.cValue
     
-    
-    
     let commitCreateWithSignatureResult: Int32 = commitContent.withCString
     {
         cCommitContent in
@@ -1000,19 +974,7 @@ public func gitCommitCreateWithSignature(
         {
             cSignatureField in
             
-            guard let signature: String = signature
-            else
-            {
-                return git_commit_create_with_signature(
-                    &cOut,
-                    repo,
-                    cCommitContent,
-                    nil,
-                    cSignatureField
-                )
-            }
-            
-            return signature.withCString
+            return signature.withOptionalCString
             {
                 cSignature in
                 
@@ -1026,8 +988,6 @@ public func gitCommitCreateWithSignature(
             }
         }
     }
-    
-    
     
     out = GitOID(cValue: cOut)
     
@@ -1085,228 +1045,35 @@ public func gitCommitArrayDispose(
 // MARK: - Private
 
 /// Composes the optional properties of
-/// ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
-/// then calls the given closure with optional pointers to the C values.
-/// - Parameters:
-///   - updateRef: The name of the reference that will be updated to point to the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// This function composes the following optional properties:
-/// - `updateRef`
-/// - `messageEncoding`
-///
-/// The composition begins by calling ``withCommitCreateUpdateRef(_:_:_:)``.
-private func withComposedCommitCreateProperties<T>(
-    _   updateRef       : String?,
-    _   messageEncoding : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   messageEncoding : UnsafePointer<CChar>?
-    ) -> T
-) -> T
-{
-    return withCommitCreateUpdateRef(
-        updateRef,
-        messageEncoding,
-        body
-    )
-}
-
-
-
-/// Composes the value of `updateRef`, then continues the composition by calling
-/// ``withCommitCreateMessageEncoding(_:_:_:)``.
-/// - Parameters:
-///   - updateRef: The name of the reference that will be updated to point to the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `updateRef` is `nil`, this function will proceed directly to the next step in the composition.
-private func withCommitCreateUpdateRef<T>(
-    _   updateRef       : String?,
-    _   messageEncoding : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   messageEncoding : UnsafePointer<CChar>?
-    ) -> T
-) -> T
-{
-    guard let updateRef: String = updateRef
-    else
-    {
-        return withCommitCreateMessageEncoding(
-            nil,
-            messageEncoding,
-            body
-        )
-    }
-    
-    return updateRef.withCString
-    {
-        cUpdateRef in
-        
-        return withCommitCreateMessageEncoding(
-            cUpdateRef,
-            messageEncoding,
-            body
-        )
-    }
-}
-
-
-
-/// Composes the value of `messageEncoding`, then finishes the composition by calling the given closure.
-/// - Parameters:
-///   - cUpdateRef: The name of the reference that will be updated to point to the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `messageEncoding` is `nil`, this function will proceed directly to calling the given closure.
-private func withCommitCreateMessageEncoding<T>(
-    _   cUpdateRef      : UnsafePointer<CChar>?,
-    _   messageEncoding : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   messageEncoding : UnsafePointer<CChar>?
-    ) -> T
-) -> T
-{
-    guard let messageEncoding: String = messageEncoding
-    else
-    {
-        return body(
-            cUpdateRef,
-            nil
-        )
-    }
-    
-    return messageEncoding.withCString
-    {
-        cMessageEncoding in
-        
-        return body(
-            cUpdateRef,
-            cMessageEncoding
-        )
-    }
-}
-
-
-
-/// Composes the optional properties of
 /// ``gitCommitAmend(id:commitToAmend:updateRef:author:committer:messageEncoding:message:tree:)``,
 /// then calls the given closure with optional pointers to the C values.
 /// - Parameters:
-///   - updateRef: The name of the reference that will be updated to point to the commit.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - message: The commit message.
 ///   - body: The closure to call.
 /// - Returns: The return value of the given closure.
 ///
 /// ## Discussion
 ///
 /// This function composes the following optional properties:
-/// - `updateRef`
 /// - `author`
 /// - `committer`
-/// - `messageEncoding`
-/// - `message`
 ///
 /// The composition begins by calling ``withCommitAmendUpdateRef(_:_:_:_:_:_:)``.
 private func withComposedCommitAmendProperties<T>(
-    _   updateRef       : String?,
-    _   author          : GitSignature?,
-    _   committer       : GitSignature?,
-    _   messageEncoding : String?,
-    _   message         : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   author          : UnsafePointer<git_signature>?,
-        _   committer       : UnsafePointer<git_signature>?,
-        _   messageEncoding : UnsafePointer<CChar>?,
-        _   message         : UnsafePointer<CChar>?
+    _   author      : GitSignature?,
+    _   committer   : GitSignature?,
+    _   body        : (
+        _   author      : UnsafePointer<git_signature>?,
+        _   committer   : UnsafePointer<git_signature>?
     ) -> T
 ) -> T
 {
-    return withCommitAmendUpdateRef(
-        updateRef,
+    return withCommitAmendAuthor(
         author,
         committer,
-        messageEncoding,
-        message,
         body
     )
-}
-
-
-
-/// Composes the value of `updateRef`, then continues the composition by calling
-/// ``withCommitAmendAuthor(_:_:_:_:_:_:)``.
-/// - Parameters:
-///   - updateRef: The name of the reference that will be updated to point to the commit.
-///   - author: The author of the commit.
-///   - committer: The committer of the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - message: The commit message.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `updateRef` is `nil`, this function will proceed directly to the next step in the composition.
-private func withCommitAmendUpdateRef<T>(
-    _   updateRef       : String?,
-    _   author          : GitSignature?,
-    _   committer       : GitSignature?,
-    _   messageEncoding : String?,
-    _   message         : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   author          : UnsafePointer<git_signature>?,
-        _   committer       : UnsafePointer<git_signature>?,
-        _   messageEncoding : UnsafePointer<CChar>?,
-        _   message         : UnsafePointer<CChar>?
-    ) -> T
-) -> T
-{
-    guard let updateRef: String = updateRef
-    else
-    {
-        return withCommitAmendAuthor(
-            nil,
-            author,
-            committer,
-            messageEncoding,
-            message,
-            body
-        )
-    }
-    
-    return updateRef.withCString
-    {
-        cUpdateRef in
-        
-        return withCommitAmendAuthor(
-            cUpdateRef,
-            author,
-            committer,
-            messageEncoding,
-            message,
-            body
-        )
-    }
 }
 
 
@@ -1314,11 +1081,8 @@ private func withCommitAmendUpdateRef<T>(
 /// Composes the value of `author`, then continues the composition by calling
 /// ``withCommitAmendCommitter(_:_:_:_:_:_:)``.
 /// - Parameters:
-///   - cUpdateRef: The name of the reference that will be updated to point to the commit.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - message: The commit message.
 ///   - body: The closure to call.
 /// - Returns: The return value of the given closure.
 ///
@@ -1326,17 +1090,11 @@ private func withCommitAmendUpdateRef<T>(
 ///
 /// If `author` is `nil`, this function will proceed directly to the next step in the composition.
 private func withCommitAmendAuthor<T>(
-    _   cUpdateRef      : UnsafePointer<CChar>?,
-    _   author          : GitSignature?,
-    _   committer       : GitSignature?,
-    _   messageEncoding : String?,
-    _   message         : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   author          : UnsafePointer<git_signature>?,
-        _   committer       : UnsafePointer<git_signature>?,
-        _   messageEncoding : UnsafePointer<CChar>?,
-        _   message         : UnsafePointer<CChar>?
+    _   author      : GitSignature?,
+    _   committer   : GitSignature?,
+    _   body        : (
+        _   author      : UnsafePointer<git_signature>?,
+        _   committer   : UnsafePointer<git_signature>?
     ) -> T
 ) -> T
 {
@@ -1344,11 +1102,8 @@ private func withCommitAmendAuthor<T>(
     else
     {
         return withCommitAmendCommitter(
-            cUpdateRef,
             nil,
             committer,
-            messageEncoding,
-            message,
             body
         )
     }
@@ -1358,11 +1113,8 @@ private func withCommitAmendAuthor<T>(
         cAuthor in
         
         return withCommitAmendCommitter(
-            cUpdateRef,
             UnsafePointer(cAuthor),
             committer,
-            messageEncoding,
-            message,
             body
         )
     }
@@ -1370,45 +1122,31 @@ private func withCommitAmendAuthor<T>(
 
 
 
-/// Composes the value of `committer`, then continues the composition by calling
-/// ``withCommitAmendMessageEncoding(_:_:_:_:_:_:)``.
+/// Composes the value of `committer`, then finishes the composition by calling the given closure.
 /// - Parameters:
-///   - cUpdateRef: The name of the reference that will be updated to point to the commit.
 ///   - cAuthor: The author of the commit.
 ///   - committer: The committer of the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - message: The commit message.
 ///   - body: The closure to call.
 /// - Returns: The return value of the given closure.
 ///
 /// ## Discussion
 ///
-/// If `committer` is `nil`, this function will proceed directly to the next step in the composition.
+/// If `committer` is `nil`, this function will proceed directly to calling the given closure.
 private func withCommitAmendCommitter<T>(
-    _   cUpdateRef      : UnsafePointer<CChar>?,
-    _   cAuthor         : UnsafePointer<git_signature>?,
-    _   committer       : GitSignature?,
-    _   messageEncoding : String?,
-    _   message         : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   author          : UnsafePointer<git_signature>?,
-        _   committer       : UnsafePointer<git_signature>?,
-        _   messageEncoding : UnsafePointer<CChar>?,
-        _   message         : UnsafePointer<CChar>?
+    _   cAuthor     : UnsafePointer<git_signature>?,
+    _   committer   : GitSignature?,
+    _   body        : (
+        _   author      : UnsafePointer<git_signature>?,
+        _   committer   : UnsafePointer<git_signature>?
     ) -> T
 ) -> T
 {
     guard let committer: GitSignature = committer
     else
     {
-        return withCommitAmendMessageEncoding(
-            cUpdateRef,
+        return body(
             cAuthor,
-            nil,
-            messageEncoding,
-            message,
-            body
+            nil
         )
     }
     
@@ -1416,128 +1154,9 @@ private func withCommitAmendCommitter<T>(
     {
         cCommitter in
         
-        return withCommitAmendMessageEncoding(
-            cUpdateRef,
-            cAuthor,
-            UnsafePointer(cCommitter),
-            messageEncoding,
-            message,
-            body
-        )
-    }
-}
-
-
-
-/// Composes the value of `messageEncoding`, then continues the composition by calling
-/// ``withCommitAmendMessage(_:_:_:_:_:_:)``.
-/// - Parameters:
-///   - cUpdateRef: The name of the reference that will be updated to point to the commit.
-///   - cAuthor: The author of the commit.
-///   - cCommitter: The committer of the commit.
-///   - messageEncoding: The encoding of the commit message.
-///   - message: The commit message.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `messageEncoding` is `nil`, this function will proceed directly to the next step in the composition.
-private func withCommitAmendMessageEncoding<T>(
-    _   cUpdateRef      : UnsafePointer<CChar>?,
-    _   cAuthor         : UnsafePointer<git_signature>?,
-    _   cCommitter      : UnsafePointer<git_signature>?,
-    _   messageEncoding : String?,
-    _   message         : String?,
-    _   body            : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   author          : UnsafePointer<git_signature>?,
-        _   committer       : UnsafePointer<git_signature>?,
-        _   messageEncoding : UnsafePointer<CChar>?,
-        _   message         : UnsafePointer<CChar>?
-    ) -> T
-) -> T
-{
-    guard let messageEncoding: String = messageEncoding
-    else
-    {
-        return withCommitAmendMessage(
-            cUpdateRef,
-            cAuthor,
-            cCommitter,
-            nil,
-            message,
-            body
-        )
-    }
-    
-    return messageEncoding.withCString
-    {
-        cMessageEncoding in
-        
-        return withCommitAmendMessage(
-            cUpdateRef,
-            cAuthor,
-            cCommitter,
-            cMessageEncoding,
-            message,
-            body
-        )
-    }
-}
-
-
-
-/// Composes the value of `message`, then finishes the composition by calling the given closure.
-/// - Parameters:
-///   - cUpdateRef: The name of the reference that will be updated to point to the commit.
-///   - cAuthor: The author of the commit.
-///   - cCommitter: The committer of the commit.
-///   - cMessageEncoding: The encoding of the commit message.
-///   - message: The commit message.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `message` is `nil`, this function will proceed directly to calling the given closure.
-private func withCommitAmendMessage<T>(
-    _   cUpdateRef          : UnsafePointer<CChar>?,
-    _   cAuthor             : UnsafePointer<git_signature>?,
-    _   cCommitter          : UnsafePointer<git_signature>?,
-    _   cMessageEncoding    : UnsafePointer<CChar>?,
-    _   message             : String?,
-    _   body                : (
-        _   updateRef       : UnsafePointer<CChar>?,
-        _   author          : UnsafePointer<git_signature>?,
-        _   committer       : UnsafePointer<git_signature>?,
-        _   messageEncoding : UnsafePointer<CChar>?,
-        _   message         : UnsafePointer<CChar>?
-    ) -> T
-) -> T
-{
-    guard let message: String = message
-    else
-    {
         return body(
-            cUpdateRef,
             cAuthor,
-            cCommitter,
-            cMessageEncoding,
-            nil
-        )
-    }
-    
-    return message.withCString
-    {
-        cMessage in
-        
-        return body(
-            cUpdateRef,
-            cAuthor,
-            cCommitter,
-            cMessageEncoding,
-            cMessage
+            UnsafePointer(cCommitter)
         )
     }
 }

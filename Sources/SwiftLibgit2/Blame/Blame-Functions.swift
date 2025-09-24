@@ -230,8 +230,6 @@ public func gitBlameFile(
         )
     }
     
-    
-    
     return git_blame_file(
         out,
         repo,
@@ -279,8 +277,6 @@ public func gitBlameFile(
             nil
         )
     }
-    
-    
     
     return git_blame_file_from_buffer(
         out,
