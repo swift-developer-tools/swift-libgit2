@@ -511,6 +511,10 @@ swift-libgit2 includes the following compiled libraries:
 - ``GitMergeFileFavorT``
 - ``GitMergeFileFlagT``
 
+### Object Enums
+
+- ``GitObjectT``
+
 ### Object Aliases
 
 - ``GitObjectSizeT``
