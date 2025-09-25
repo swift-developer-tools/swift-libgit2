@@ -25,15 +25,15 @@ internal extension Array where Element == String
         _ body: (UnsafeMutablePointer<git_strarray>) -> T
     ) -> T
     {
-        var strarray = git_strarray()
+        var strArray = git_strarray()
         
         defer
         {
             if
-                strarray.count > 0,
-                strarray.strings != nil
+                strArray.count > 0,
+                strArray.strings != nil
             {
-                strarray.strings?.deallocate()
+                strArray.strings?.deallocate()
             }
         }
         
@@ -42,7 +42,7 @@ internal extension Array where Element == String
         guard !self.isEmpty
         else
         {
-            return body(&strarray)
+            return body(&strArray)
         }
         
         
@@ -60,10 +60,10 @@ internal extension Array where Element == String
                 pointers[index] = cString
             }
             
-            strarray.strings    = pointers
-            strarray.count      = cStrings.count
+            strArray.strings    = pointers
+            strArray.count      = cStrings.count
             
-            return body(&strarray)
+            return body(&strArray)
         }
     }
     
