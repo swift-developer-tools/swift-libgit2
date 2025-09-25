@@ -15,10 +15,18 @@ internal protocol GitOptionSet: OptionSet, Sendable where RawValue == UInt32
     
     /// Creates an instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
+    ///
+    /// ## Discussion
+    ///
+    /// This initializer should have a `public` access level.
     init(
         rawValue: UInt32
     )
     
     /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This computed property should have an `internal` access level.
     var cValue: T { get }
 }
