@@ -23,34 +23,38 @@ public struct GitAttrOptions
     /// ## Discussion
     ///
     /// The default value is ``gitAttrOptionsVersion``.
-    public var version      : UInt32
+    public var version      : UInt32                = gitAttrOptionsVersion
     
     /// The flags to use when querying the attributes.
-    public var flags        : GitAttrCheckFlagsT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is an empty option set.
+    public var flags        : GitAttrCheckFlagsT    = []
     
     /// The commit ID.
-    public var commitID     : GitOID?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var commitID     : GitOID?               = nil
     
     /// The commit to load attributes from when
     /// ``GitAttrCheckFlagsT/gitAttrCheckIncludeCommit`` is specified.
-    public var attrCommitID : GitOID?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `git_oid()`.
+    public var attrCommitID : GitOID?               = nil
     
     
     
-    /// Creates a ``GitAttrOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitAttrOptionsVersion``.
-    public init(
-        version: UInt32 = gitAttrOptionsVersion
-    )
-    {
-        /// libgit2 does not provide an initialization function for `git_attr_options`.
-        /// The C macro `GIT_ATTR_OPTIONS_INIT` would initialize all fields other than
-        /// `version` to `0` or `NULL`, so that approach is mirrored here.
-        self.version        = version
-        self.flags          = []
-        self.commitID       = nil
-        self.attrCommitID   = nil
-    }
+    /// Creates a ``GitAttrOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

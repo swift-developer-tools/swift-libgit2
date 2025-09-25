@@ -23,43 +23,45 @@ public struct GitApplyOptions
     /// ## Discussion
     ///
     /// The default value is ``gitApplyOptionsVersion``.
-    public var version : UInt32
+    public var version : UInt32                     = gitApplyOptionsVersion
     
     /// The callback that will be made per delta (file) when applying a patch.
-    public var deltaCB : GitApplyDeltaCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var deltaCB : GitApplyDeltaCB?           = nil
     
     /// The callback that will be made per hunk when applying a patch.
-    public var hunkCB  : GitApplyHunkCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var hunkCB  : GitApplyHunkCB?            = nil
     
     /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB`` and
     /// ``GitApplyOptions/hunkCB``.
-    public var payload : UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var payload : UnsafeMutableRawPointer?   = nil
     
     /// The flags to use when applying.
-    public var flags   : GitApplyFlagsT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is an empty option set.
+    public var flags   : GitApplyFlagsT             = []
     
     
     
-    /// Creates a ``GitApplyOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitApplyOptionsVersion``.
-    public init?(
-        version: UInt32 = gitApplyOptionsVersion
-    )
-    {
-        var applyOptions = git_apply_options()
-        
-        let applyOptionsInitResult: Int32 = git_apply_options_init(
-            &applyOptions,
-            version
-        )
-        
-        if applyOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: applyOptions)
-    }
+    /// Creates a ``GitApplyOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

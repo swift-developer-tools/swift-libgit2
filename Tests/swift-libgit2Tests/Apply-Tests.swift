@@ -55,28 +55,15 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyOptions() throws
     {
-        guard var applyOptions = GitApplyOptions()
-        else
-        {
-            XCTFail("The apply options were nil.")
-            return
-        }
+        var applyOptions = GitApplyOptions()
         
         XCTAssertEqual(applyOptions.version, gitApplyOptionsVersion)
         XCTAssertNil(applyOptions.deltaCB)
         XCTAssertNil(applyOptions.hunkCB)
         XCTAssertNil(applyOptions.payload)
-        XCTAssertEqual(applyOptions.flags.rawValue, 0)
+        XCTAssertEqual(applyOptions.flags, [])
         
         XCTAssertEqual(gitApplyOptionsVersion, UInt32(GIT_APPLY_OPTIONS_VERSION))
-        
-        
-        
-        applyOptions.flags = GitApplyFlagsT(rawValue: 123)
-        
-        XCTAssertEqual(applyOptions.flags, GitApplyFlagsT(rawValue: 123))
-        
-        
         
         applyOptions.flags =
         [
@@ -158,12 +145,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            guard let applyOptions = GitApplyOptions()
-            else
-            {
-                XCTFail("The apply options were nil.")
-                return
-            }
+            let applyOptions = GitApplyOptions()
             
             try Diff.withDiffPointer(in: repository)
             {
@@ -478,12 +460,7 @@ extension ApplyTests
             {
                 callbackCountsPointer in
                 
-                guard var applyOptions = GitApplyOptions()
-                else
-                {
-                    XCTFail("The apply options were nil.")
-                    return
-                }
+                var applyOptions = GitApplyOptions()
                 
                 applyOptions.deltaCB    = deltaCB
                 applyOptions.hunkCB     = hunkCB

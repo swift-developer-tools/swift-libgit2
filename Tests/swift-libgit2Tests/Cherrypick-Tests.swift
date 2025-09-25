@@ -77,23 +77,13 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            guard var checkoutOptions = GitCheckoutOptions()
-            else
-            {
-                XCTFail("The checkout options were nil.")
-                return
-            }
+            var checkoutOptions = GitCheckoutOptions()
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
             
             
-            guard var cherrypickOptions = GitCherrypickOptions()
-            else
-            {
-                XCTFail("The cherrypick options were nil.")
-                return
-            }
+            var cherrypickOptions = GitCherrypickOptions()
             
             cherrypickOptions.mainline      = 0
             cherrypickOptions.checkoutOpts  = checkoutOptions
@@ -206,25 +196,14 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     func testGitCherrypickOptions() throws
     {
-        guard var cherrypickOptions = GitCherrypickOptions()
-        else
-        {
-            XCTFail("The cherrypick options were nil.")
-            return
-        }
+        let cherrypickOptions = GitCherrypickOptions()
         
         XCTAssertEqual(cherrypickOptions.version, gitCherrypickOptionsVersion)
         XCTAssertEqual(cherrypickOptions.mainline, 0)
-        XCTAssertNotNil(cherrypickOptions.mergeOpts)
-        XCTAssertNotNil(cherrypickOptions.checkoutOpts)
+        XCTAssertNil(cherrypickOptions.mergeOpts)
+        XCTAssertNil(cherrypickOptions.checkoutOpts)
         
         XCTAssertEqual(gitCherrypickOptionsVersion, UInt32(GIT_CHERRYPICK_OPTIONS_VERSION))
-        
-        
-        
-        cherrypickOptions.mainline = 123
-        
-        XCTAssertEqual(cherrypickOptions.mainline, 123)
     }
 }
 

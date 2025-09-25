@@ -23,45 +23,40 @@ public struct GitBlobFilterOptions
     /// ## Discussion
     ///
     /// The default value is ``gitBlobFilterOptionsVersion``.
-    public var version      : UInt32
+    public var version      : UInt32                = gitBlobFilterOptionsVersion
     
     /// The flags to use during the blob filtering operation.
-    public var flags        : GitBlobFilterFlagT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitBlobFilterFlagT/gitBlobFilterCheckForBinary``.
+    public var flags        : GitBlobFilterFlagT    = .gitBlobFilterCheckForBinary
     
     /// The commit ID.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This property is unused, but is reserved for API compatibility.
-    public var commitID     : GitOID?
+    public var commitID     : GitOID?               = nil
     
     /// The commit from which to load attributes when
     /// ``GitBlobFilterFlagT/gitBlobFilterAttributesFromCommit`` is specified.
-    public var attrCommitID : GitOID?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `git_oid()`.
+    public var attrCommitID : GitOID?               = nil
     
     
     
-    /// Creates a ``GitBlobFilterOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitBlobFilterOptionsVersion``.
-    public init?(
-        version: UInt32 = gitBlobFilterOptionsVersion
-    )
-    {
-        var blobFilterOptions = git_blob_filter_options()
-        
-        let blobFilterOptionsInitResult: Int32 = git_blob_filter_options_init(
-            &blobFilterOptions,
-            version
-        )
-        
-        if blobFilterOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: blobFilterOptions)
-    }
+    /// Creates a ``GitBlobFilterOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

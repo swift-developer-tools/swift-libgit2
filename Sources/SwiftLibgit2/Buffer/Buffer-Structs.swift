@@ -31,6 +31,8 @@ public struct GitBuf
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// ``GitBuf/ptr`` points to the start of the buffer being returned. The buffer's length, in bytes,
     /// is specified by the ``GitBuf/size`` property. The buffer contains a null terminator at
     /// position `size + 1`.
@@ -46,10 +48,18 @@ public struct GitBuf
     public var ptr      : UnsafeMutablePointer<CChar>?
     
     /// This property is unused, but is reserved for API compatibility.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public var reserved : Int
     
     /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the null
     /// terminator.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public var size     : Int
     
     

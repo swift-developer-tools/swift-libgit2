@@ -56,123 +56,161 @@ public struct GitCheckoutOptions
     /// ## Discussion
     ///
     /// The default value is ``gitCheckoutOptionsVersion``.
-    public var version          : UInt32
+    public var version          : UInt32                    = gitCheckoutOptionsVersion
     
     /// The checkout strategy.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitCheckoutStrategyT/gitCheckoutSafe``.
-    public var checkoutStrategy : GitCheckoutStrategyT
+    public var checkoutStrategy : GitCheckoutStrategyT      = .gitCheckoutSafe
     
     /// Whether filters like CRLF conversion should be disabled.
-    public var disableFilters   : Bool
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `false`.
+    public var disableFilters   : Bool                      = false
     
     /// The directory mode.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0755`.
-    public var dirMode          : UInt32
+    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults to using `0o755`.
+    public var dirMode          : UInt32                    = 0
     
     /// The file mode.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0644` or `0755` as dictated by the blob.
-    public var fileMode         : UInt32
+    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults to using `0o644`
+    /// or `0o755`, as dictated by the blob.
+    public var fileMode         : UInt32                    = 0
     
     /// The flags controlling the file opening process.
     ///
     /// ## Discussion
     ///
-    /// The default value is `O_CREAT | O_TRUNC | O_WRONLY`.
-    public var fileOpenFlags    : Int32
+    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults to using
+    /// `O_CREAT | O_TRUNC | O_WRONLY`.
+    public var fileOpenFlags    : Int32                     = 0
     
     /// The flags controlling the behavior of checkout notifications.
-    public var notifyFlags      : GitCheckoutNotifyT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitCheckoutNotifyT/gitCheckoutNotifyNone``.
+    public var notifyFlags      : GitCheckoutNotifyT        = .gitCheckoutNotifyNone
     
     /// The callback for checkout notifications.
-    public var notifyCB         : GitCheckoutNotifyCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var notifyCB         : GitCheckoutNotifyCB?      = nil
     
     /// The caller-specified payload passed to ``notifyCB``.
-    public var notifyPayload    : UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var notifyPayload    : UnsafeMutableRawPointer?  = nil
     
     /// The callback for checkout progress.
-    public var progressCB       : GitCheckoutProgressCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var progressCB       : GitCheckoutProgressCB?    = nil
     
     /// The caller-specified payload passed to ``progressCB``.
-    public var progressPayload  : UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var progressPayload  : UnsafeMutableRawPointer?  = nil
     
     /// A list of wildmatch patterns or paths.
     ///
     /// ## Discussion
     ///
-    /// The default behavior is to process all paths. If an array of wildmatch patterns is provided,
-    /// those patterns will be used to determine which paths should be taken into account.
+    /// The default value is an empty array. If this is empty at runtime, libgit2 defaults to processing
+    /// all paths. If an array of wildmatch patterns is provided, those patterns will be used to determine
+    /// which paths should be taken into account.
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.
-    public var paths            : [String]
+    public var paths            : [String]                  = []
     
     /// The expected content of the working directory. The underlying type should be `git_tree`.
     ///
     /// ## Discussion
     ///
-    /// The default value is HEAD.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using HEAD.
     ///
     /// A checkout conflict will occur if the working directory does not match this baseline information.
-    public var baseline         : OpaquePointer?
+    public var baseline         : OpaquePointer?            = nil
     
     /// The expected content of the working directory, expressed as an index. The underlying type
     /// should be `git_index`.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    /// 
     /// This overrides ``baseline``.
-    public var baselineIndex    : OpaquePointer?
+    public var baselineIndex    : OpaquePointer?            = nil
     
     /// The alternative checkout path to the working directory.
-    public var targetDirectory  : String?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var targetDirectory  : String?                   = nil
     
     /// The name of the common ancestor side of conflicts.
-    public var ancestorLabel    : String?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var ancestorLabel    : String?                   = nil
     
     /// The name of the "our" side of conflicts.
-    public var ourLabel         : String?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var ourLabel         : String?                   = nil
     
     /// The name of the "theirr" side of conflicts.
-    public var theirLabel       : String?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var theirLabel       : String?                   = nil
     
     /// The callback for reporting checkout performance data.
-    public var perfDataCB       : GitCheckoutPerfDataCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var perfDataCB       : GitCheckoutPerfDataCB?    = nil
     
     /// The caller-specified payload passed to ``perfDataCB``.
-    public var perfDataPayload  : UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var perfDataPayload  : UnsafeMutableRawPointer?  = nil
     
     
     
-    /// Creates a ``GitCheckoutOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitCheckoutOptionsVersion``.
-    public init?(
-        version: UInt32 = gitCheckoutOptionsVersion
-    )
-    {
-        var checkoutOptions = git_checkout_options()
-        
-        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
-            &checkoutOptions,
-            version
-        )
-        
-        if checkoutOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: checkoutOptions)
-    }
+    /// Creates a ``GitCheckoutOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

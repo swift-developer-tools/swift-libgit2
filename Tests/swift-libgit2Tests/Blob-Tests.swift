@@ -291,12 +291,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            guard let blobFilterOptions = GitBlobFilterOptions()
-            else
-            {
-                XCTFail("The blob filter options were nil.")
-                return
-            }
+            let blobFilterOptions = GitBlobFilterOptions()
             
             blobFilterResult = gitBlobFilter(
                 out:        &buffer,
@@ -342,26 +337,14 @@ final class BlobTests: XCTestCaseStopOnFail
     
     func testGitBlobFilterOptions() throws
     {
-        guard var blobFilterOptions = GitBlobFilterOptions()
-        else
-        {
-            XCTFail("The blob filter options were nil.")
-            return
-        }
+        var blobFilterOptions = GitBlobFilterOptions()
         
         XCTAssertEqual(blobFilterOptions.version, gitBlobFilterOptionsVersion)
-        XCTAssertEqual(blobFilterOptions.flags, GitBlobFilterFlagT.gitBlobFilterCheckForBinary)
+        XCTAssertEqual(blobFilterOptions.flags, .gitBlobFilterCheckForBinary)
         XCTAssertNil(blobFilterOptions.commitID)
+        XCTAssertNil(blobFilterOptions.attrCommitID)
         
         XCTAssertEqual(gitBlobFilterOptionsVersion, UInt32(GIT_BLOB_FILTER_OPTIONS_VERSION))
-        
-        
-        
-        blobFilterOptions.flags = GitBlobFilterFlagT(rawValue: 123)
-        
-        XCTAssertEqual(blobFilterOptions.flags, GitBlobFilterFlagT(rawValue: 123))
-        
-        
         
         blobFilterOptions.flags =
         [

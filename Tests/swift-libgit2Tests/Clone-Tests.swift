@@ -85,18 +85,11 @@ final class CloneTests: XCTestCaseStopOnFail
     
     func testGitCloneOptions() throws
     {
-        guard var cloneOptions = GitCloneOptions()
-        else
-        {
-            XCTFail("The clone options were nil.")
-            return
-        }
-        
-        
+        let cloneOptions = GitCloneOptions()
         
         XCTAssertEqual(cloneOptions.version, gitCloneOptionsVersion)
-        XCTAssertNotNil(cloneOptions.checkoutOpts)
-        XCTAssertNotNil(cloneOptions.fetchOpts)
+        XCTAssertNil(cloneOptions.checkoutOpts)
+        XCTAssertNil(cloneOptions.fetchOpts)
         XCTAssertEqual(cloneOptions.bare, false)
         XCTAssertEqual(cloneOptions.local, .gitCloneLocalAuto)
         XCTAssertNil(cloneOptions.checkoutBranch)
@@ -106,19 +99,6 @@ final class CloneTests: XCTestCaseStopOnFail
         XCTAssertNil(cloneOptions.remoteCBPayload)
         
         XCTAssertEqual(gitCloneOptionsVersion, UInt32(GIT_CLONE_OPTIONS_VERSION))
-        
-        
-        cloneOptions.bare               = true
-        cloneOptions.local              = .gitCloneNoLocal
-        cloneOptions.checkoutBranch     = "main"
-        
-        XCTAssertEqual(cloneOptions.bare, true)
-        XCTAssertEqual(cloneOptions.local, .gitCloneNoLocal)
-        XCTAssertEqual(cloneOptions.checkoutBranch, "main")
-        
-        
-        
-        XCTAssertNil(GitCloneOptions(version: 123))
     }
     
     
@@ -198,12 +178,7 @@ final class CloneTests: XCTestCaseStopOnFail
             {
                 callbackDataPointer in
                 
-                guard var cloneOptions = GitCloneOptions()
-                else
-                {
-                    XCTFail("The clone options were nil.")
-                    return
-                }
+                var cloneOptions = GitCloneOptions()
                 
                 cloneOptions.repositoryCB           = repositoryCreateCallback
                 cloneOptions.repositoryCBPayload    = UnsafeMutableRawPointer(callbackDataPointer)
@@ -262,12 +237,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            guard var cloneOptions = GitCloneOptions()
-            else
-            {
-                XCTFail("The clone options were nil.")
-                return
-            }
+            var cloneOptions = GitCloneOptions()
             
             cloneOptions.checkoutBranch = testBranchName
             
@@ -335,12 +305,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            guard var cloneOptions = GitCloneOptions()
-            else
-            {
-                XCTFail("The clone options were nil.")
-                return
-            }
+            var cloneOptions = GitCloneOptions()
             
             cloneOptions.version = 123
             
@@ -378,12 +343,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            guard var cloneOptions = GitCloneOptions()
-            else
-            {
-                XCTFail("The clone options were nil.")
-                return
-            }
+            var cloneOptions = GitCloneOptions()
             
             cloneOptions.bare   = true
             cloneOptions.local  = .gitCloneLocal

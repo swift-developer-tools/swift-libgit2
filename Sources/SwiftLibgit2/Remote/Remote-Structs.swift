@@ -23,95 +23,132 @@ public struct GitRemoteCallbacks
     /// ## Discussion
     ///
     /// The default value is ``gitRemoteCallbacksVersion``.
-    public var version              : UInt32
+    public var version              : UInt32                            = gitRemoteCallbacksVersion
     
-    /// Textual progress from the remote.
+    /// The callback for messages received by the transport.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// Text sent over the progress side-band will be passed to this function. This is the "counting objects"
     /// output.
-    public var sidebandProgress     : GitTransportMessageCB?
+    public var sidebandProgress     : GitTransportMessageCB?            = nil
     
     /// The callback invoked when different parts of the download process are completed.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This callback is currently unused.
-    public var completion           : GitRemoteCompletionCB?
+    public var completion           : GitRemoteCompletionCB?            = nil
     
     /// The callback for credential acquisition.
-    public var credentials          : GitCredentialAcquireCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var credentials          : GitCredentialAcquireCB?           = nil
     
     /// The callback for the user's custom certificate checks.
-    public var certificateCheck     : GitTransportCertificateCheckCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var certificateCheck     : GitTransportCertificateCheckCB?   = nil
     
     /// The callback to report progress during the indexing process.
-    public var transferProgress     : GitIndexerProgressCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var transferProgress     : GitIndexerProgressCB?             = nil
     
     /// The callback invoked for local reference updates.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This is deprecated in libgit2 and will be removed in the next major release.
     /// Use ``updateRefs`` instead.
-    public var updateTips           : GitRemoteUpdateTipsCB?
+    public var updateTips           : GitRemoteUpdateTipsCB?            = nil
     
     /// The callback for progress notifications.
-    public var packProgress         : GitPackbuilderProgressCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var packProgress         : GitPackbuilderProgressCB?         = nil
     
     /// The callback to push network progress notifications.
-    public var pushTransferProgress : GitPushTransferProgressCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var pushTransferProgress : GitPushTransferProgressCB?        = nil
     
     /// The callback to inform of the update status from the remote.
-    public var pushUpdateReference  : GitPushUpdateReferenceCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var pushUpdateReference  : GitPushUpdateReferenceCB?         = nil
     
     /// The callback to inform of upcoming updates.
-    public var pushNegotation       : GitPushNegotiationCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var pushNegotation       : GitPushNegotiationCB?             = nil
     
     /// The callback to create a transport.
-    public var transport            : GitTransportCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var transport            : GitTransportCB?                   = nil
     
     /// The callback invoked immediately before attempting to connect to the given URL.
-    public var remoteReady          : GitRemoteReadyCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var remoteReady          : GitRemoteReadyCB?                 = nil
     
     /// The caller-specified payload passed to each callback in ``GitRemoteCallbacks``.
-    public var payload              : UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var payload              : UnsafeMutableRawPointer?          = nil
     
     /// The callback to resolve URLs before connecting to the remote.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This is deprecated in libgit2 and will be removed in the next major release.
     /// Use ``remoteReady`` instead.
-    public var resolveURL           : GitURLResolveCB?
+    public var resolveURL           : GitURLResolveCB?                  = nil
     
     /// The callback invoked for local reference updates.
-    public var updateRefs           : GitRemoteUpdateRefsCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var updateRefs           : GitRemoteUpdateRefsCB?            = nil
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitRemoteCallbacksVersion``.
-    public init?(
-        version: UInt32 = gitRemoteCallbacksVersion
-    )
-    {
-        var remoteCallbacks = git_remote_callbacks()
-        
-        let remoteInitCallbacksResult: Int32 = git_remote_init_callbacks(
-            &remoteCallbacks,
-            version
-        )
-        
-        if remoteInitCallbacksResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: remoteCallbacks)
-    }
+    /// Creates a ``GitRemoteCallbacks`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     
@@ -195,58 +232,70 @@ public struct GitFetchOptions
     /// ## Discussion
     ///
     /// The default value is ``gitFetchOptionsVersion``.
-    public var version          : UInt32
+    public var version          : UInt32                    = gitFetchOptionsVersion
     
     /// The callbacks invoked by the remote to inform the user about the progress of network operations.
-    public var callbacks        : GitRemoteCallbacks?
+    public var callbacks        : GitRemoteCallbacks?       = nil
     
     /// The acceptable prune settings when performing a fetch operation.
-    public var prune            : GitFetchPruneT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitFetchPruneT/gitFetchPruneUnspecified``.
+    public var prune            : GitFetchPruneT            = .gitFetchPruneUnspecified
     
     /// The flags controlling remote updates.
-    public var updateFetchHEAD  : GitRemoteUpdateFlags
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFetchHEAD``.
+    public var updateFetchHEAD  : GitRemoteUpdateFlags      = .gitRemoteUpdateFetchHEAD
     
     /// The automatic tag-following option used to determine which `--tags` option to use.
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsAuto``.
-    public var downloadTags     : GitRemoteAutoTagOptionT
+    /// The default value is
+    /// ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsAuto``.
+    public var downloadTags     : GitRemoteAutoTagOptionT   = .gitRemoteDownloadTagsAuto
     
     /// The options for connecting through a proxy.
-    public var proxyOpts        : GitProxyOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default proxy options.
+    public var proxyOpts        : GitProxyOptions?          = nil
     
     /// The shallowness of the fetch operation.
-    public var depth            : GitFetchDepthT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitFetchDepthT/gitFetchDepthFull``.
+    public var depth            : GitFetchDepthT            = .gitFetchDepthFull
     
-    /// Remote redirection settings.
-    public var followRedirects  : GitRemoteRedirectT
+    /// The remote redirection settings.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitRemoteRedirectT/gitRemoteRedirectNone``.
+    public var followRedirects  : GitRemoteRedirectT        = .gitRemoteRedirectNone
     
-    /// Extra headers for the fetch operation.
-    public var customHeaders    : [String]
+    /// The extra headers for the fetch operation.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is an empty array.
+    public var customHeaders    : [String]                  = []
     
     
     
-    /// Creates a ``GitFetchOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitFetchOptionsVersion``.
-    public init?(
-        version: UInt32 = gitFetchOptionsVersion
-    )
-    {
-        var fetchOptions = git_fetch_options()
-        
-        let fetchOptionsInitResult: Int32 = git_fetch_options_init(
-            &fetchOptions,
-            version
-        )
-        
-        if fetchOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: fetchOptions)
-    }
+    /// Creates a ``GitFetchOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

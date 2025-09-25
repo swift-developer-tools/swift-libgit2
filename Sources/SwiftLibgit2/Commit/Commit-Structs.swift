@@ -12,9 +12,9 @@ import Clibgit2
 
 
 /// The options for commit creation.
-///
+/// 
 /// ## C Equivalent
-///
+/// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
 public struct GitCommitCreateOptions
 {
@@ -23,42 +23,44 @@ public struct GitCommitCreateOptions
     /// ## Discussion
     ///
     /// The default value is ``gitCommitCreateOptionsVersion``.
-    public var version          : UInt32
+    public var version          : UInt32            = gitCommitCreateOptionsVersion
     
     /// Whether a commit with no changes from the prior commit (an empty commit) should be allowed.
-    public var allowEmptyCommit : Bool
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `false`.
+    public var allowEmptyCommit : Bool              = false
     
     /// The commit author.
-    public var author           : GitSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var author           : GitSignature?     = nil
     
     /// The committer.
-    public var committer        : GitSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var committer        : GitSignature?     = nil
     
     /// The encoding for the commit message.
     ///
     /// ## Discussion
     ///
-    /// The default value is UTF-8.
-    public var messageEncoding  : String?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using UTF-8.
+    public var messageEncoding  : String?           = nil
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitCommitCreateOptionsVersion``.
-    public init(
-        version: UInt32 = gitCommitCreateOptionsVersion
-    )
-    {
-        /// libgit2 does not provide an initialization function for `git_commit_create_options`.
-        /// The C macro `GIT_COMMIT_CREATE_OPTIONS_INIT` would initialize all fields other than
-        /// `version` to `0` or `NULL`, so that approach is mirrored here.
-        self.version            = version
-        self.allowEmptyCommit   = false
-        self.author             = nil
-        self.committer          = nil
-        self.messageEncoding    = nil
-    }
+    /// Creates a ``GitCommitCreateOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

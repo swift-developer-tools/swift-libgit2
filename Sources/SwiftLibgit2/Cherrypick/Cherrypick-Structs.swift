@@ -23,40 +23,39 @@ public struct GitCherrypickOptions
     /// ## Discussion
     ///
     /// The default value is ``gitCherrypickOptionsVersion``.
-    public var version      : UInt32
+    public var version      : UInt32                = gitCherrypickOptionsVersion
     
     /// The parent for merge commits.
-    public var mainline     : UInt32
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
+    public var mainline     : UInt32                = 0
     
     /// The options for the merge operation.
-    public var mergeOpts    : GitMergeOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default merge options.
+    public var mergeOpts    : GitMergeOptions?      = nil
     
     /// The options for the checkout operation.
-    public var checkoutOpts : GitCheckoutOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default checkout options.
+    public var checkoutOpts : GitCheckoutOptions?   = nil
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitCherrypickOptionsVersion``.
-    public init?(
-        version: UInt32 = gitCherrypickOptionsVersion
-    )
-    {
-        var cherrypickOptions = git_cherrypick_options()
-        
-        let cherrypickOptionsInitResult: Int32 = git_cherrypick_options_init(
-            &cherrypickOptions,
-            version
-        )
-        
-        if cherrypickOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: cherrypickOptions)
-    }
+    /// Creates a ``GitCherrypickOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

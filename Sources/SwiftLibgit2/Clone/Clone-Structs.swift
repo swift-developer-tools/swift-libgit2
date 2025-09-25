@@ -23,79 +23,90 @@ public struct GitCloneOptions
     /// ## Discussion
     ///
     /// The default value is ``gitCloneOptionsVersion``.
-    public var version              : UInt32
+    public var version              : UInt32                    = gitCloneOptionsVersion
     
     /// The options for the checkout operation.
-    public var checkoutOpts         : GitCheckoutOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default checkout options.
+    public var checkoutOpts         : GitCheckoutOptions?       = nil
     
     /// The options for the fetch operation, including callbacks.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default fetch options.
+    ///
     /// The callbacks are used for reporting fetch progress and for acquiring credentials in the event
     /// that they are needed.
-    public var fetchOpts            : GitFetchOptions?
+    public var fetchOpts            : GitFetchOptions?          = nil
     
     /// Whether a bare repository should be created.
-    public var bare                 : Bool
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `false`.
+    public var bare                 : Bool                      = false
     
-    /// The options for bypassing the Git-aware transport on clone.
-    public var local                : GitCloneLocalT
+    /// The option for bypassing the Git-aware transport on clone.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitCloneLocalT/gitCloneLocalAuto``.
+    public var local                : GitCloneLocalT            = .gitCloneLocalAuto
     
     /// The name of the branch to checkout.
     ///
     /// ## Discussion
     ///
-    /// Pass `nil` to use the remote's default branch.
-    public var checkoutBranch       : String?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// remote's default branch.
+    public var checkoutBranch       : String?                   = nil
     
     /// A callback used to create the new repository into which to clone.
     ///
     /// ## Discussion
     ///
-    /// If this is `nil`, then the ``bare`` property will be used to determine whether to create a
-    /// bare repository.
-    public var repositoryCB         : GitRepositoryCreateCB?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using ``bare``
+    /// property to determine whether to create a bare repository.
+    public var repositoryCB         : GitRepositoryCreateCB?    = nil
     
     /// The caller-specified payload passed to ``repositoryCB``.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This property will be ignored unless ``repositoryCB`` is not `nil`.
-    public var repositoryCBPayload  : UnsafeMutableRawPointer?
+    public var repositoryCBPayload  : UnsafeMutableRawPointer?  = nil
     
     /// A callback used to create the remote, prior to its being used to perform the clone operation.
-    public var remoteCB             : GitRemoteCreateCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var remoteCB             : GitRemoteCreateCB?        = nil
     
     /// The caller-specified payload passed to ``remoteCB``.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This property will be ignored unless ``remoteCB`` is not `nil`.
-    public var remoteCBPayload      : UnsafeMutableRawPointer?
+    public var remoteCBPayload      : UnsafeMutableRawPointer?  = nil
     
     
     
-    /// Creates a ``GitCloneOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitCloneOptionsVersion``.
-    public init?(
-        version: UInt32 = gitCloneOptionsVersion
-    )
-    {
-        var cloneOptions = git_clone_options()
-        
-        let cloneOptionsInitResult: Int32 = git_clone_options_init(
-            &cloneOptions,
-            version
-        )
-        
-        if cloneOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: cloneOptions)
-    }
+    /// Creates a ``GitCloneOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

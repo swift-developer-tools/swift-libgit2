@@ -81,12 +81,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             
             
-            guard let blameOptions = GitBlameOptions()
-            else
-            {
-                XCTFail("The blame options were nil.")
-                return
-            }
+            let blameOptions = GitBlameOptions()
             
             var blameFileResult: Int32 = gitBlameFile(
                 out:        &blamePointer,
@@ -227,28 +222,17 @@ final class BlameTests: XCTestCaseStopOnFail
     
     func testGitBlameOptions() throws
     {
-        guard var blameOptions = GitBlameOptions()
-        else
-        {
-            XCTFail("The blame options were nil.")
-            return
-        }
+        var blameOptions = GitBlameOptions()
         
         XCTAssertEqual(blameOptions.version, gitBlameOptionsVersion)
         XCTAssertEqual(blameOptions.flags, .gitBlameNormal)
         XCTAssertNil(blameOptions.minMatchCharacters)
+        XCTAssertNil(blameOptions.newestCommit)
+        XCTAssertNil(blameOptions.oldestCommit)
         XCTAssertNil(blameOptions.minLine)
         XCTAssertNil(blameOptions.maxLine)
         
         XCTAssertEqual(gitBlameOptionsVersion, UInt32(GIT_BLAME_OPTIONS_VERSION))
-        
-        
-        
-        blameOptions.flags = GitBlameFlagT(rawValue: 123)
-        
-        XCTAssertEqual(blameOptions.flags, GitBlameFlagT(rawValue: 123))
-        
-        
         
         blameOptions.flags =
         [

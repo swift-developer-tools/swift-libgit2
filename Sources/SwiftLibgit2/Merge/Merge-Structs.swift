@@ -23,10 +23,14 @@ public struct GitMergeOptions
     /// ## Discussion
     ///
     /// The default value is ``gitMergeOptionsVersion``.
-    public var version          : UInt32
+    public var version          : UInt32                            = gitMergeOptionsVersion
     
     /// The flags controlling the behavior of the merge operation.
-    public var flags            : GitMergeFlagT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitMergeFlagT/gitMergeFindRenames``.
+    public var flags            : GitMergeFlagT                     = .gitMergeFindRenames
     
     /// The similarity percentage beyond which a file should be treated as a rename.
     ///
@@ -37,7 +41,7 @@ public struct GitMergeOptions
     /// If ``GitMergeFlagT/gitMergeFindRenames`` is enabled, added files will be compared
     /// with deleted files to determine their similarity. Files that are more similar than the rename threshold
     /// (percentage-wise) will be treated as a rename.
-    public var renameThreshold  : UInt32
+    public var renameThreshold  : UInt32                            = 50
     
     /// Maximum similarity sources to examine for renames.
     ///
@@ -49,60 +53,55 @@ public struct GitMergeOptions
     /// detection will be aborted.
     ///
     /// This overrides the `merge.renameLimit` configuration value.
-    public var targetLimit      : UInt32
+    public var targetLimit      : UInt32                            = 200
     
     /// The pluggable similarity metric.
     ///
     /// ## Discussion
     ///
-    /// Pass `nil` to use the internal metric.
-    public var metric           : UnsafeMutablePointer<git_diff_similarity_metric>?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the internal metric.
+    public var metric           : UnsafeMutablePointer<
+                                    git_diff_similarity_metric>?    = nil
     
     /// The maximum number of times to merge common ancestors to build a virtual merge base when
     /// faced with criss-cross merges.
     ///
     /// ## Discussion
     ///
-    /// The default value is unlimited.
+    /// The default value is `0` (unlimited).
     ///
     /// When this limit is reached, the next ancestor will simply be used instead of attempting to merge it.
-    public var recursionLimit   : UInt32
+    public var recursionLimit   : UInt32                            = 0
     
     /// The default merge driver to be used when both sides of a merge have changed.
     ///
     /// ## Discussion
     ///
-    /// The default value is the `text` driver.
-    public var defaultDriver    : String?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the `text` driver.
+    public var defaultDriver    : String?                           = nil
     
     /// The flags controlling the handling of conflicting file regions during file-level merge operations.
-    public var fileFavor        : GitMergeFileFavorT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitMergeFileFavorT/gitMergeFileFavorNormal``.
+    public var fileFavor        : GitMergeFileFavorT                = .gitMergeFileFavorNormal
     
     /// The flags controlling the behavior of the file merging process.
-    public var fileFlags        : GitMergeFileFlagT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitMergeFileFlagT/gitMergeFileDefault``.
+    public var fileFlags        : GitMergeFileFlagT                 = .gitMergeFileDefault
     
     
     
-    /// Creates a ``GitMergeOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitMergeOptionsVersion``.
-    public init?(
-        version: UInt32 = gitMergeOptionsVersion
-    )
-    {
-        var mergeOptions = git_merge_options()
-        
-        let mergeOptionsInitResult: Int32 = git_merge_options_init(
-            &mergeOptions,
-            version
-        )
-        
-        if mergeOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: mergeOptions)
-    }
+    /// Creates a ``GitMergeOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     

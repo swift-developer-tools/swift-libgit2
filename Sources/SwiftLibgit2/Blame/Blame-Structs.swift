@@ -23,75 +23,68 @@ public struct GitBlameOptions
     /// ## Discussion
     ///
     /// The default value is ``gitBlameOptionsVersion``.
-    public var version              : UInt32
+    public var version              : UInt32            = gitBlameOptionsVersion
     
     /// The flags to use during the blame operation.
-    public var flags                : GitBlameFlagT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitBlameFlagT/gitBlameNormal``.
+    public var flags                : GitBlameFlagT     = .gitBlameNormal
     
     /// The lower bound on the number of alphanumeric characters that must be detected as
     /// moving/copying within a file for it to associate those lines with the parent commit.
     ///
     /// ## Discussion
     ///
-    /// The default value is `20`.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `20`.
     ///
     /// This value only takes effect if any of
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameFile``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitMoves``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitCopies``, or
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` are specified.
-    public var minMatchCharacters   : UInt16?
+    public var minMatchCharacters   : UInt16?           = nil
     
     /// The ID of the newest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is HEAD.
-    public var newestCommit         : GitOID
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using HEAD.
+    public var newestCommit         : GitOID?           = nil
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is the first commit encountered with a `NULL` parent.
-    public var oldestCommit         : GitOID
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the first
+    /// commit encountered with a `nil` parent.
+    public var oldestCommit         : GitOID?           = nil
     
     /// The first line in the file to blame.
     ///
     /// ## Discussion
     ///
-    /// The default value is `1` (line numbers are 1-indexed).
-    public var minLine              : Int?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `1` (line
+    /// numbers are 1-indexed).
+    public var minLine              : Int?              = nil
     
     /// The last line in the file to blame.
     ///
     /// ## Discussion
     ///
-    /// The default value is the last line of the file.
-    public var maxLine              : Int?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using last line
+    /// of the file.
+    public var maxLine              : Int?              = nil
     
     
     
-    /// Creates a ``GitBlameOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitBlameOptionsVersion``.
-    public init?(
-        version: UInt32 = gitBlameOptionsVersion
-    )
-    {
-        var blameOptions = git_blame_options()
-        
-        let blameOptionsInitResult: Int32 = git_blame_options_init(
-            &blameOptions,
-            version
-        )
-        
-        if blameOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: blameOptions)
-    }
+    /// Creates a ``GitBlameOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     
@@ -132,8 +125,8 @@ public struct GitBlameOptions
         }
         
         blameOptions.flags          = flags.rawValue
-        blameOptions.newest_commit  = newestCommit.cValue
-        blameOptions.oldest_commit  = oldestCommit.cValue
+        blameOptions.newest_commit  = newestCommit?.cValue ?? git_oid()
+        blameOptions.oldest_commit  = oldestCommit?.cValue ?? git_oid()
         
         if let minMatchCharacters: UInt16 = minMatchCharacters
         {
