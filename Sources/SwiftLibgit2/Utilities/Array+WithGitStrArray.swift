@@ -70,14 +70,14 @@ internal extension Array where Element == String
     
     
     /// Creates a `[String]` from a `git_strarray` instance.
-    /// - Parameter strarray: The `git_strarray` instance to convert.
+    /// - Parameter strArray: The `git_strarray` instance to convert.
     init(
-        _ strarray: git_strarray
+        _ strArray: git_strarray
     )
     {
         guard
-            strarray.count > 0,
-            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strarray.strings
+            strArray.count > 0,
+            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strArray.strings
         else
         {
             self = []
@@ -88,11 +88,11 @@ internal extension Array where Element == String
         
         var swiftStrings: [String] = []
         
-        swiftStrings.reserveCapacity(strarray.count)
+        swiftStrings.reserveCapacity(strArray.count)
         
         
         
-        for index in 0..<strarray.count
+        for index in 0..<strArray.count
         {
             if let swiftString = String(optionalCString: cStrings[index])
             {

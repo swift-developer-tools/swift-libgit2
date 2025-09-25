@@ -980,13 +980,13 @@ public func gitLibgit2OptGetExtensions(
     out: UnsafeMutablePointer<[String]>
 ) -> Int32
 {
-    var strarray = git_strarray()
+    var strArray = git_strarray()
     
-    let getExtensionsResult: Int32 = git_libgit2_opt_get_extensions(&strarray)
+    let getExtensionsResult: Int32 = git_libgit2_opt_get_extensions(&strArray)
     
-    out.pointee = Array(strarray)
+    out.pointee = Array(strArray)
     
-    gitStrArrayDispose(array: &strarray)
+    gitStrArrayDispose(array: &strArray)
     
     return getExtensionsResult
 }
