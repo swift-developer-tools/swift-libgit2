@@ -15,10 +15,18 @@ internal protocol GitEnum: RawRepresentable, Sendable where RawValue: FixedWidth
     
     /// Creates an instance from the equivalent C value.
     /// - Parameter cValue: The C value to use.
+    ///
+    /// ## Discussion
+    ///
+    /// This initializer should have an `internal` access level.
     init?(
         cValue: T
     )
     
     /// The equivalent C value.
+    ///
+    /// ## Discussion
+    ///
+    /// This computed property should have an `internal` access level.
     var cValue: T { get }
 }
