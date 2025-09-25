@@ -102,8 +102,8 @@ let cShutdownResult : Int32 = git_libgit2_shutdown()
 
 ### Error Handling
 
-Most Swift function bindings return an `Int32` libgit2 result code.
-A value of `0` represents success, while any negative value represents an error. 
+Most Swift function bindings return an `Int32` libgit2 result code. Generally, 
+a value of `0` represents success, while any negative value represents an error. 
 Handle errors gracefully before moving on to the next step of the process.
 
 ### Memory Management
@@ -131,9 +131,9 @@ to ensure thread-safe access to libgit2.
 ### Concurrency
 
 Some libgit2 APIs are asynchronous, but are not exposed as asynchronous. 
-Generally, any API which interacts with a remote repository will be 
-asynchronous. Since swift-libgit2 provides direct bindings to libgit2, no 
-Swift methods are asynchronous either. Consider using an appropriate 
+Generally, any API which interacts with a remote repository is asynchronous.
+Since swift-libgit2 provides direct bindings to libgit2, no Swift methods
+are asynchronous either. Consider using an appropriate 
 [concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) 
 API to handle these cases and other synchronous work which may be better 
 performed off the main thread.
