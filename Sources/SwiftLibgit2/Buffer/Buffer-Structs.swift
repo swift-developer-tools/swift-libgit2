@@ -45,14 +45,14 @@ public struct GitBuf
     ///
     /// In swift-libgit2, ``GitBuf/ptr`` uses Swift's optional type, where `nil` represents both
     /// the initial state and the disposed state for more idiomatic Swift.
-    public var ptr      : UnsafeMutablePointer<CChar>?
+    public internal(set) var ptr        : UnsafeMutablePointer<CChar>?
     
     /// This property is unused, but is reserved for API compatibility.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var reserved : Int
+    public internal(set) var reserved   : Int
     
     /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the null
     /// terminator.
@@ -60,7 +60,7 @@ public struct GitBuf
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var size     : Int
+    public internal(set) var size       : Int
     
     
     
