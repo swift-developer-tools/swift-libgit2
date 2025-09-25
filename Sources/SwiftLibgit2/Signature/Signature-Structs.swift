@@ -23,40 +23,38 @@ public struct GitSignature
     /// ## Discussion
     ///
     /// Angle brackets (`<` and `>`) are not allowed.
-    public private(set) var name    : String
+    public private(set) var name    : String = ""
     
     /// The email of the actor.
     ///
     /// ## Discussion
     ///
     /// Angle brackets (`<` and `>`) are not allowed.
-    public private(set) var email   : String
+    public private(set) var email   : String = ""
     
     /// The time when the action happened.
-    public private(set) var when    : GitTime
+    public private(set) var when    : GitTime = GitTime(cValue: git_time())
     
     
     
     /// Creates a ``GitSignature`` instance.
-    public init()
-    {
-        /// Direct initialization with `self.init(cValue: git_signature())` is not used
-        /// since the unitialized C struct contains `nil` pointers for the `name` and `email` fields.
-        self.name   = ""
-        self.email  = ""
-        self.when   = GitTime(cValue: git_time())
-    }
+    public init() { }
     
     
     
     /// Creates a ``GitSignature`` instance from a `git_signature` instance.
     /// - Parameter signature: The `git_signature` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default values of ``name`` and ``email`` are empty strings instead of `nil`
+    /// to ensure validation failures, since Git requires non-empty identity information.
+    /// Generally, neither of these should ever be `nil` when initializing from a `git_signature`
+    /// returned by libgit2.
     internal init(
         cValue signature: git_signature
     )
     {
-        /// Use empty strings for `nil` pointers to ensure validation failures, since Git requires
-        /// non-empty identity information. Generally, neither of these should ever be `nil`.
         self.name   = String(optionalCString: signature.name)   ?? ""
         self.email  = String(optionalCString: signature.email)  ?? ""
         self.when   = GitTime(cValue: signature.when)
