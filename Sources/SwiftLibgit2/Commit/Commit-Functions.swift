@@ -825,31 +825,33 @@ public func gitCommitAmend(
         {
             cUpdateRef in
             
-            return messageEncoding.withOptionalCString
+            return author.withOptionalCValue
             {
-                cMessageEncoding in
+                cAuthor in
                 
-                return message.withOptionalCString
+                return committer.withOptionalCValue
                 {
-                    cMessage in
+                    cCommitter in
                     
-                    withComposedCommitAmendProperties(
-                        author,
-                        committer
-                    )
+                    return messageEncoding.withOptionalCString
                     {
-                        cAuthor, cCommitter in
+                        cMessageEncoding in
                         
-                        return git_commit_amend(
-                            cID,
-                            commitToAmend,
-                            cUpdateRef,
-                            cAuthor,
-                            cCommitter,
-                            cMessageEncoding,
-                            cMessage,
-                            tree
-                        )
+                        return message.withOptionalCString
+                        {
+                            cMessage in
+                            
+                            return git_commit_amend(
+                                cID,
+                                commitToAmend,
+                                cUpdateRef,
+                                cAuthor,
+                                cCommitter,
+                                cMessageEncoding,
+                                cMessage,
+                                tree
+                            )
+                        }
                     }
                 }
             }
@@ -1034,125 +1036,4 @@ public func gitCommitArrayDispose(
 )
 {
     return git_commitarray_dispose(array)
-}
-
-
-
-// MARK: - Private
-
-/// Composes the optional properties of
-/// ``gitCommitAmend(id:commitToAmend:updateRef:author:committer:messageEncoding:message:tree:)``,
-/// then calls the given closure with optional pointers to the C values.
-/// - Parameters:
-///   - author: The author of the commit.
-///   - committer: The committer of the commit.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// This function composes the following optional properties:
-/// - `author`
-/// - `committer`
-///
-/// The composition begins by calling ``withCommitAmendUpdateRef(_:_:_:_:_:_:)``.
-private func withComposedCommitAmendProperties<T>(
-    _   author      : GitSignature?,
-    _   committer   : GitSignature?,
-    _   body        : (
-        _   author      : UnsafePointer<git_signature>?,
-        _   committer   : UnsafePointer<git_signature>?
-    ) -> T
-) -> T
-{
-    return withCommitAmendAuthor(
-        author,
-        committer,
-        body
-    )
-}
-
-
-
-/// Composes the value of `author`, then continues the composition by calling
-/// ``withCommitAmendCommitter(_:_:_:_:_:_:)``.
-/// - Parameters:
-///   - author: The author of the commit.
-///   - committer: The committer of the commit.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `author` is `nil`, this function will proceed directly to the next step in the composition.
-private func withCommitAmendAuthor<T>(
-    _   author      : GitSignature?,
-    _   committer   : GitSignature?,
-    _   body        : (
-        _   author      : UnsafePointer<git_signature>?,
-        _   committer   : UnsafePointer<git_signature>?
-    ) -> T
-) -> T
-{
-    guard let author: GitSignature = author
-    else
-    {
-        return withCommitAmendCommitter(
-            nil,
-            committer,
-            body
-        )
-    }
-    
-    return author.withCValue
-    {
-        cAuthor in
-        
-        return withCommitAmendCommitter(
-            UnsafePointer(cAuthor),
-            committer,
-            body
-        )
-    }
-}
-
-
-
-/// Composes the value of `committer`, then finishes the composition by calling the given closure.
-/// - Parameters:
-///   - cAuthor: The author of the commit.
-///   - committer: The committer of the commit.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `committer` is `nil`, this function will proceed directly to calling the given closure.
-private func withCommitAmendCommitter<T>(
-    _   cAuthor     : UnsafePointer<git_signature>?,
-    _   committer   : GitSignature?,
-    _   body        : (
-        _   author      : UnsafePointer<git_signature>?,
-        _   committer   : UnsafePointer<git_signature>?
-    ) -> T
-) -> T
-{
-    guard let committer: GitSignature = committer
-    else
-    {
-        return body(
-            cAuthor,
-            nil
-        )
-    }
-    
-    return committer.withCValue
-    {
-        cCommitter in
-        
-        return body(
-            cAuthor,
-            UnsafePointer(cCommitter)
-        )
-    }
 }
