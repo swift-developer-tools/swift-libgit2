@@ -153,7 +153,75 @@ public struct GitCertHostKey: GitStructReadOnly
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// Calls the given closure with a pointer to a `git_cert_hostkey` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_cert_hostkey>) -> T
+    ) -> T
+    {
+        var certHostKey = git_cert_hostkey()
+        
+        certHostKey.parent          = parent.cValue
+        certHostKey.type            = type.cValue
+        certHostKey.raw_type        = rawType.cValue
+        
+        
+        
+        hashMD5.withUnsafeBytes
+        {
+            bytes in
+            
+            _ = memcpy(
+                &certHostKey.hash_md5,
+                bytes.baseAddress,
+                min(bytes.count, Self.hashMD5Size)
+            )
+        }
+        
+        hashSHA1.withUnsafeBytes
+        {
+            bytes in
+            
+            _ = memcpy(
+                &certHostKey.hash_sha1,
+                bytes.baseAddress,
+                min(bytes.count, Self.hashSHA1Size)
+            )
+        }
+        
+        hashSHA256.withUnsafeBytes
+        {
+            bytes in
+            
+            _ = memcpy(
+                &certHostKey.hash_sha256,
+                bytes.baseAddress,
+                min(bytes.count, Self.hashSHA256Size)
+            )
+        }
+        
+        
+        
+        guard let hostKey: Data = hostKey
+        else
+        {
+            certHostKey.hostkey         = nil
+            certHostKey.hostkey_len     = 0
+            
+            return body(&certHostKey)
+        }
+        
+        return hostKey.withUnsafeBytes
+        {
+            bytes in
+            
+            certHostKey.hostkey         = bytes.baseAddress?.assumingMemoryBound(to: CChar.self)
+            certHostKey.hostkey_len     = bytes.count
+            
+            return body(&certHostKey)
+        }
+    }
 }
 
 
