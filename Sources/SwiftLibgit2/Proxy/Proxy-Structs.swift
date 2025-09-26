@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_proxy_options`](https://libgit2.org/docs/reference/main/proxy/git_proxy_options.html)
-public struct GitProxyOptions: GitStructMutable
+public struct GitProxyOptions: GitStructMutable, OptionalWithCConvertible
 {
     /// The version to use.
     ///

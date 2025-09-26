@@ -21,7 +21,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile: GitStructReadable
+public struct GitDiffFile: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The ID of the item.
     ///
@@ -152,7 +152,7 @@ public struct GitDiffFile: GitStructReadable
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta: GitStructReadable
+public struct GitDiffDelta: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -168,10 +168,10 @@ public struct GitDiffDelta: GitStructReadable
     public let nFiles       : UInt16
     
     /// The old version of the file.
-    public let oldFile      : GitDiffFile?
+    public let oldFile      : GitDiffFile
     
     /// The new version of the file.
-    public let newFile      : GitDiffFile?
+    public let newFile      : GitDiffFile
     
     
     
@@ -196,7 +196,36 @@ public struct GitDiffDelta: GitStructReadable
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// Calls the given closure with a pointer to a `git_diff_delta` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_diff_delta>) -> T
+    ) -> T
+    {
+        var diffDelta = git_diff_delta()
+        
+        diffDelta.status        = status.cValue
+        diffDelta.flags         = flags.rawValue
+        diffDelta.similarity    = similarity
+        diffDelta.nfiles        = nFiles
+        
+        return oldFile.withCValue
+        {
+            cOldFile in
+            
+            diffDelta.old_file = cOldFile.pointee
+            
+            return newFile.withCValue
+            {
+                cNewFile in
+                
+                diffDelta.new_file = cNewFile.pointee
+                
+                return body(&diffDelta)
+            }
+        }
+    }
 }
 
 

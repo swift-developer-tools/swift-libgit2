@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_time`](https://libgit2.org/docs/reference/main/types/git_time.html)
-public struct GitTime: GitStructReadable
+public struct GitTime: GitStructReadable, NonOptionalCConvertible
 {
     /// The UNIX timestamp in seconds.
     public let time     : GitTimeT

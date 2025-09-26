@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_callbacks`](https://libgit2.org/docs/reference/main/remote/git_remote_callbacks.html)
-public struct GitRemoteCallbacks: GitStructMutable
+public struct GitRemoteCallbacks: GitStructMutable, OptionalCConvertible
 {
     /// The version to use.
     ///
@@ -225,7 +225,7 @@ public struct GitRemoteCallbacks: GitStructMutable
 /// ## C Equivalent
 ///
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
-public struct GitFetchOptions: GitStructMutable
+public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
 {
     /// The version to use.
     ///

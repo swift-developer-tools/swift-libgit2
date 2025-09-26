@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cert`](https://libgit2.org/docs/reference/main/cert/git_cert.html)
-public struct GitCert: GitStructReadable
+public struct GitCert: GitStructReadable, NonOptionalCConvertible
 {
     /// The type of host certificate.
     public let certType: GitCertT
@@ -58,7 +58,7 @@ public struct GitCert: GitStructReadable
 /// ## C Equivalent
 ///
 /// [`git_cert_hostkey`](https://libgit2.org/docs/reference/main/cert/git_cert_hostkey.html)
-public struct GitCertHostKey: GitStructReadable
+public struct GitCertHostKey: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The parent certificate.
     public let parent       : GitCert
@@ -231,7 +231,7 @@ public struct GitCertHostKey: GitStructReadable
 /// ## C Equivalent
 ///
 /// [`git_cert_x509`](https://libgit2.org/docs/reference/main/cert/git_cert_x509.html)
-public struct GitCertX509: GitStructReadable
+public struct GitCertX509: GitStructReadable, NonOptionalCConvertible
 {
     /// The parent certificate.
     public let parent   : GitCert

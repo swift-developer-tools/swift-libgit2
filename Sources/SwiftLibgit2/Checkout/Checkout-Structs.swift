@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_checkout_perfdata`](https://libgit2.org/docs/reference/main/checkout/git_checkout_perfdata.html)
-public struct GitCheckoutPerfData: GitStructReadable
+public struct GitCheckoutPerfData: GitStructReadable, NonOptionalCConvertible
 {
     /// The number of times `mkdir` was called during the checkout operation.
     public let mkdirCalls   : Int
@@ -63,7 +63,7 @@ public struct GitCheckoutPerfData: GitStructReadable
 /// ## C Equivalent
 ///
 /// [`git_checkout_options`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options.html)
-public struct GitCheckoutOptions: GitStructMutable
+public struct GitCheckoutOptions: GitStructMutable, OptionalWithCConvertible
 {
     /// The version to use.
     ///

@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options.html)
-public struct GitBlobFilterOptions: GitStructMutable
+public struct GitBlobFilterOptions: GitStructMutable, OptionalWithCConvertible
 {
     /// The version to use.
     ///

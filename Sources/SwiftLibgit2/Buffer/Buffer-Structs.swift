@@ -25,7 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf: GitStructInternalMutable
+public struct GitBuf: GitStructInternalMutable, NonOptionalWithCConvertible
 {
     /// The buffer contents.
     ///
@@ -68,6 +68,25 @@ public struct GitBuf: GitStructInternalMutable
         self.ptr        = buf.ptr
         self.reserved   = buf.reserved
         self.size       = buf.size
+    }
+    
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_buf` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_buf>) -> T
+    ) -> T
+    {
+        var buffer = git_buf()
+        
+        buffer.ptr          = ptr
+        buffer.reserved     = reserved
+        buffer.size         = size
+        
+        return body(&buffer)
     }
     
     

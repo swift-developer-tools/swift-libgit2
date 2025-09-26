@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
-public struct GitApplyOptions: GitStructMutable
+public struct GitApplyOptions: GitStructMutable, OptionalCConvertible
 {
     /// The version to use.
     ///

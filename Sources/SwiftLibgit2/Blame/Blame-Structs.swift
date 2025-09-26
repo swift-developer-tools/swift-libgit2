@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions: GitStructMutable
+public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
 {
     /// The version to use.
     ///
@@ -154,7 +154,7 @@ public struct GitBlameOptions: GitStructMutable
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-public struct GitBlameHunk: GitStructReadable
+public struct GitBlameHunk: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
@@ -250,7 +250,66 @@ public struct GitBlameHunk: GitStructReadable
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// Calls the given closure with a pointer to a `git_blame_hunk` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blame_hunk>) -> T
+    ) -> T
+    {
+        var blameHunk = git_blame_hunk()
+        
+        blameHunk.lines_in_hunk             = linesInHunk
+        blameHunk.final_commit_id           = finalCommitID.cValue
+        blameHunk.final_start_line_number   = finalStartLineNumber
+        blameHunk.orig_commit_id            = origCommitID.cValue
+        blameHunk.orig_start_line_number    = origStartLineNumber
+        blameHunk.boundary                  = CChar(boundary.cValue)
+        
+        return finalSignature.withOptionalCValue
+        {
+            cFinalSignature in
+            
+            blameHunk.final_signature = cFinalSignature
+            
+            return finalCommitter.withOptionalCValue
+            {
+                cFinalCommitter in
+                
+                blameHunk.final_committer = cFinalCommitter
+                
+                return origPath.withOptionalCString
+                {
+                    cOrigPath in
+                    
+                    blameHunk.orig_path = cOrigPath
+                    
+                    return origSignature.withOptionalCValue
+                    {
+                        cOrigSignature in
+                        
+                        blameHunk.orig_signature = cOrigSignature
+                        
+                        return origCommitter.withOptionalCValue
+                        {
+                            cOrigCommitter in
+                            
+                            blameHunk.orig_committer = cOrigCommitter
+                            
+                            return summary.withOptionalCString
+                            {
+                                cSummary in
+                                
+                                blameHunk.summary = cSummary
+                                
+                                return body(&blameHunk)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -260,7 +319,7 @@ public struct GitBlameHunk: GitStructReadable
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: GitStructReadable
+public struct GitBlameLine: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The line content.
     public let ptr : String?
