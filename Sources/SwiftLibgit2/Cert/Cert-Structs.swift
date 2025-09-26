@@ -116,6 +116,17 @@ public struct GitCertHostKey: GitStructReadOnly
     
     
     
+    /// The size of ``hashMD5`` in bytes.
+    internal static let hashMD5Size     : Int   = 16
+    
+    /// The size of ``hashSHA1`` in bytes.
+    internal static let hashSHA1Size    : Int   = 20
+    
+    /// The size of ``hashSHA256`` in bytes.
+    internal static let hashSHA256Size  : Int   = 32
+    
+    
+    
     /// Creates a ``GitCertHostKey`` instance from a `git_cert_hostkey` instance.
     /// - Parameter certHostKey: The `git_cert_hostkey` instance to use.
     ///
@@ -132,9 +143,9 @@ public struct GitCertHostKey: GitStructReadOnly
         
         self.parent         = GitCert(cValue: certHostKey.parent)
         self.type           = GitCertSSHT(rawValue: certHostKey.type.rawValue)
-        self.hashMD5        = Data(bytes: &certHostKeyCopy.hash_md5, count: 16)
-        self.hashSHA1       = Data(bytes: &certHostKeyCopy.hash_sha1, count: 20)
-        self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: 32)
+        self.hashMD5        = Data(bytes: &certHostKeyCopy.hash_md5, count: Self.hashMD5Size)
+        self.hashSHA1       = Data(bytes: &certHostKeyCopy.hash_sha1, count: Self.hashSHA1Size)
+        self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: Self.hashSHA256Size)
         self.rawType        = GitCertSSHRawTypeT(cValue: certHostKey.raw_type) ?? .gitCertSSHRawTypeUnknown
         self.hostKey        = certHostKey.hostkey.map { Data(bytes: $0, count: certHostKey.hostkey_len) }
         self.hostKeyLen     = certHostKey.hostkey_len

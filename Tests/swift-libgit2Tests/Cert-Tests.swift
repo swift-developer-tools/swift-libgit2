@@ -97,21 +97,33 @@ final class CertTests: XCTestCaseStopOnFail
         {
             bytes in
             
-            _ = memcpy(&cCertHostKey.hash_md5, bytes.baseAddress, 16)
+            _ = memcpy(
+                &cCertHostKey.hash_md5,
+                bytes.baseAddress,
+                min(bytes.count, GitCertHostKey.hashMD5Size)
+            )
         }
         
         sha1Hash.withUnsafeBytes
         {
             bytes in
             
-            _ = memcpy(&cCertHostKey.hash_sha1, bytes.baseAddress, 20)
+            _ = memcpy(
+                &cCertHostKey.hash_sha1,
+                bytes.baseAddress,
+                min(bytes.count, GitCertHostKey.hashSHA1Size)
+            )
         }
         
         sha256Hash.withUnsafeBytes
         {
             bytes in
             
-            _ = memcpy(&cCertHostKey.hash_sha256, bytes.baseAddress, 32)
+            _ = memcpy(
+                &cCertHostKey.hash_sha256,
+                bytes.baseAddress,
+                min(bytes.count, GitCertHostKey.hashSHA256Size)
+            )
         }
         
         
