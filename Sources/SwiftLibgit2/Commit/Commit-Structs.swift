@@ -93,115 +93,27 @@ public struct GitCommitCreateOptions: GitStructMutable, NonOptionalWithCConverti
         commitCreateOptions.version             = version
         commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.cValue)
         
-        return messageEncoding.withOptionalCString
-        {
-            cMessageEncoding in
-            
-            commitCreateOptions.message_encoding = cMessageEncoding
-            
-            return withComposedProperties(
-                &commitCreateOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Composes the optional properties of ``GitCommitCreateOptions``, then calls the given
-    /// closure with a pointer to the updated `git_commit_create_options` instance.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// This function composes the following optional properties:
-    /// - ``author``
-    /// - ``committer``
-    ///
-    /// The composition begins by calling ``withAuthor(_:_:)``.
-    private func withComposedProperties<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        return withAuthor(
-            commitCreateOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Updates the given `git_commit_create_options` instance with the value of ``author``,
-    /// then continues the composition by calling ``withCommitter(_:_:)``.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``author`` is `nil`, this function will proceed directly to the next step in the composition.
-    private func withAuthor<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        guard let author: GitSignature = author
-        else
-        {
-            return withCommitter(
-                commitCreateOptions,
-                body
-            )
-        }
-        
-        return author.withCValue
+        return author.withOptionalCValue
         {
             cAuthor in
             
-            commitCreateOptions.pointee.author = UnsafePointer(cAuthor)
+            commitCreateOptions.author = UnsafePointer(cAuthor)
             
-            return withCommitter(
-                commitCreateOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_commit_create_options` instance with the value of
-    /// ``committer``, then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``committer`` is `nil`, this function will proceed directly to calling the given closure.
-    private func withCommitter<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        guard let committer: GitSignature = committer
-        else
-        {
-            return body(commitCreateOptions)
-        }
-        
-        return committer.withCValue
-        {
-            cCommitter in
-            
-            commitCreateOptions.pointee.committer = UnsafePointer(cCommitter)
-            
-            return body(commitCreateOptions)
+            return committer.withOptionalCValue
+            {
+                cCommitter in
+                
+                commitCreateOptions.committer = UnsafePointer(cCommitter)
+                
+                return messageEncoding.withOptionalCString
+                {
+                    cMessageEncoding in
+                    
+                    commitCreateOptions.message_encoding = cMessageEncoding
+                    
+                    return body(&commitCreateOptions)
+                }
+            }
         }
     }
 }
