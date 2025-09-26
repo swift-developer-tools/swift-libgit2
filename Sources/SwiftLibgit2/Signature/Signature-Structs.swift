@@ -97,7 +97,8 @@ public struct GitSignature: GitStructInternalMutable
     
     
     
-    /// Calls the given closure with a pointer to a pointer to a `git_signature` instance.
+    /// Calls the given closure with a pointer to a pointer to a `git_signature` instance, and
+    /// updates this ``GitSignature`` instance with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     ///
