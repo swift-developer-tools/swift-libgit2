@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// A sendable type that presents a mathematical set interface to a bit set.
+/// A sendable type that presents a mathematical set interface to a bitset.
 internal protocol GitOptionSet: NonOptionalCConvertible, OptionSet, Sendable
     where RawValue == UInt32
 {
