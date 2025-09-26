@@ -40,7 +40,15 @@ public struct GitCert: GitStructReadOnly
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// The equivalent C value.
+    internal var cValue: git_cert
+    {
+        var cert = git_cert()
+        
+        cert.cert_type = certType.cValue
+        
+        return cert
+    }
 }
 
 
