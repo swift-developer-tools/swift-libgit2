@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_oid`](https://libgit2.org/docs/reference/main/oid/git_oid.html)
-public struct GitOID: GitStructInternalReadWrite
+public struct GitOID: GitStructInternalMutable
 {
     /// The raw binary-formatted ID.
     public private(set) var id: Data = Data(count: Self.size)

@@ -21,7 +21,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile: GitStructReadOnly
+public struct GitDiffFile: GitStructReadable
 {
     /// The ID of the item.
     ///
@@ -152,7 +152,7 @@ public struct GitDiffFile: GitStructReadOnly
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta: GitStructReadOnly
+public struct GitDiffDelta: GitStructReadable
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT

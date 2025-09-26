@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions: GitStructReadWrite
+public struct GitBlameOptions: GitStructMutable
 {
     /// The version to use.
     ///
@@ -154,7 +154,7 @@ public struct GitBlameOptions: GitStructReadWrite
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-public struct GitBlameHunk: GitStructReadOnly
+public struct GitBlameHunk: GitStructReadable
 {
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
@@ -260,7 +260,7 @@ public struct GitBlameHunk: GitStructReadOnly
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: GitStructReadOnly
+public struct GitBlameLine: GitStructReadable
 {
     /// The line content.
     public let ptr : String?

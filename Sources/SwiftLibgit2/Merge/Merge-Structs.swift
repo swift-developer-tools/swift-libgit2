@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_merge_options`](https://libgit2.org/docs/reference/main/merge/git_merge_options.html)
-public struct GitMergeOptions: GitStructReadWrite
+public struct GitMergeOptions: GitStructMutable
 {
     /// The version to use.
     ///

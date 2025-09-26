@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_clone_options`](https://libgit2.org/docs/reference/main/clone/git_clone_options.html)
-public struct GitCloneOptions: GitStructReadWrite
+public struct GitCloneOptions: GitStructMutable
 {
     /// The version to use.
     ///
