@@ -41,21 +41,13 @@ public func gitCheckoutHEAD(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard let opts: GitCheckoutOptions = opts
-    else
-    {
-        return git_checkout_head(
-            repo,
-            nil
-        )
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         
-        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
-        else
+        if
+            opts != nil,
+            cOpts == nil
         {
             return GIT_EUSER.rawValue
         }
@@ -93,22 +85,13 @@ public func gitCheckoutIndex(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard let opts: GitCheckoutOptions = opts
-    else
-    {
-        return git_checkout_index(
-            repo,
-            index,
-            nil
-        )
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         
-        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
-        else
+        if
+            opts != nil,
+            cOpts == nil
         {
             return GIT_EUSER.rawValue
         }
@@ -148,22 +131,13 @@ public func gitCheckoutTree(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    guard let opts: GitCheckoutOptions = opts
-    else
-    {
-        return git_checkout_tree(
-            repo,
-            treeish,
-            nil
-        )
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         
-        guard let cOpts: UnsafeMutablePointer<git_checkout_options> = cOpts
-        else
+        if
+            opts != nil,
+            cOpts == nil
         {
             return GIT_EUSER.rawValue
         }
