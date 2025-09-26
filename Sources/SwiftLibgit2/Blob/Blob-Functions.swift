@@ -189,28 +189,13 @@ public func gitBlobFilter(
     opts    : GitBlobFilterOptions?
 ) -> Int32
 {
-    guard let opts: GitBlobFilterOptions = opts
-    else
-    {
-        return out.withMutatingCValue
-        {
-            cOut in
-            
-            return git_blob_filter(
-                cOut,
-                blob,
-                asPath,
-                nil
-            )
-        }
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         
-        guard let cOpts: UnsafeMutablePointer<git_blob_filter_options> = cOpts
-        else
+        if
+            opts != nil,
+            cOpts == nil
         {
             return GIT_EUSER.rawValue
         }
