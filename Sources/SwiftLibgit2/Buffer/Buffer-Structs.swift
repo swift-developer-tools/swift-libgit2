@@ -72,7 +72,8 @@ public struct GitBuf: GitStructInternalMutable
     
     
     
-    /// Calls the given closure with a pointer to a `git_buf` instance.
+    /// Calls the given closure with a pointer to a `git_buf` instance, and updates this ``GitBuf``
+    /// instance with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     internal mutating func withMutatingCValue<T>(
