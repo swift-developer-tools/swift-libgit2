@@ -21,7 +21,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile
+public struct GitDiffFile: GitStructReadOnly
 {
     /// The ID of the item.
     ///
@@ -78,6 +78,10 @@ public struct GitDiffFile
             default                                                 : self.mode = .gitFileModeUnreadable
         }
     }
+    
+    
+    
+    // TODO: cValue or withCValue(_:)
 }
 
 
@@ -125,7 +129,7 @@ public struct GitDiffFile
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta
+public struct GitDiffDelta: GitStructReadOnly
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -166,6 +170,10 @@ public struct GitDiffDelta
         self.oldFile        = GitDiffFile(cValue: diffDelta.old_file)
         self.newFile        = GitDiffFile(cValue: diffDelta.new_file)
     }
+    
+    
+    
+    // TODO: cValue or withCValue(_:)
 }
 
 
@@ -182,7 +190,7 @@ public struct GitDiffDelta
 /// ## C Equivalent
 ///
 /// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
-public struct GitDiffSimilarityMetric
+public struct GitDiffSimilarityMetric: GitStruct
 {
     /// The function to generate a signature for a file.
     public let fileSignature: @convention(c)

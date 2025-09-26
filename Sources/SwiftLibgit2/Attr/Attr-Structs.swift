@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_options`](https://libgit2.org/docs/reference/main/attr/git_attr_options.html)
-public struct GitAttrOptions
+public struct GitAttrOptions: GitStructReadWrite
 {
     /// The version to use.
     ///
@@ -55,6 +55,20 @@ public struct GitAttrOptions
     ///
     /// See the individual property documentation for specific default values.
     public init() { }
+    
+    
+    
+    /// Creates a ``GitAttrOptions`` instance from a `git_attr_options` instance.
+    /// - Parameter attrOptions: The `git_attr_options` instance to use.
+    internal init(
+        cValue attrOptions: git_attr_options
+    )
+    {
+        self.version        = attrOptions.version
+        self.flags          = GitAttrCheckFlagsT(rawValue: attrOptions.flags)
+        self.commitID       = GitOID(cValue: attrOptions.commit_id.pointee)
+        self.attrCommitID   = GitOID(cValue: attrOptions.attr_commit_id)
+    }
     
     
     

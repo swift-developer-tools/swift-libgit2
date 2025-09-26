@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cert`](https://libgit2.org/docs/reference/main/cert/git_cert.html)
-public struct GitCert
+public struct GitCert: GitStructReadOnly
 {
     /// The type of host certificate.
     public let certType: GitCertT
@@ -37,6 +37,10 @@ public struct GitCert
     {
         self.certType = GitCertT(cValue: cert.cert_type) ?? .gitCertNone
     }
+    
+    
+    
+    // TODO: cValue or withCValue(_:)
 }
 
 
@@ -46,7 +50,7 @@ public struct GitCert
 /// ## C Equivalent
 ///
 /// [`git_cert_hostkey`](https://libgit2.org/docs/reference/main/cert/git_cert_hostkey.html)
-public struct GitCertHostKey
+public struct GitCertHostKey: GitStructReadOnly
 {
     /// The parent certificate.
     public let parent       : GitCert
@@ -127,6 +131,10 @@ public struct GitCertHostKey
         self.hostKey        = certHostKey.hostkey.map { Data(bytes: $0, count: certHostKey.hostkey_len) }
         self.hostKeyLen     = certHostKey.hostkey_len
     }
+    
+    
+    
+    // TODO: cValue or withCValue(_:)
 }
 
 
@@ -136,7 +144,7 @@ public struct GitCertHostKey
 /// ## C Equivalent
 ///
 /// [`git_cert_x509`](https://libgit2.org/docs/reference/main/cert/git_cert_x509.html)
-public struct GitCertX509
+public struct GitCertX509: GitStructReadOnly
 {
     /// The parent certificate.
     public let parent   : GitCert
@@ -159,4 +167,8 @@ public struct GitCertX509
         self.data       = certX509.data
         self.len        = certX509.len
     }
+    
+    
+    
+    // TODO: cValue or withCValue(_:)
 }

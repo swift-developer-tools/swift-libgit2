@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions
+public struct GitCommitCreateOptions: GitStructReadWrite
 {
     /// The version to use.
     ///
@@ -219,11 +219,23 @@ public struct GitCommitCreateOptions
 /// ## C Equivalent
 ///
 /// [`git_commitarray`](https://libgit2.org/docs/reference/main/commit/git_commitarray.html)
-public struct GitCommitArray
+public struct GitCommitArray: GitStruct
 {
     /// The array of commits.
     public let commits  : [OpaquePointer]
     
     /// The number of commits in the array.
     public let count    : Int
+    
+    
+    
+    /// Creates a ``GitCommitArray`` instance from a `git_commitarray` instance.
+    /// - Parameter commitArray: The `git_commitarray` instance to use.
+    internal init(
+        cValue commitArray: git_commitarray
+    )
+    {
+        self.commits    = Array(commitArray)
+        self.count      = commitArray.count
+    }
 }

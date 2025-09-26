@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
-public struct GitApplyOptions
+public struct GitApplyOptions: GitStructReadWrite
 {
     /// The version to use.
     ///

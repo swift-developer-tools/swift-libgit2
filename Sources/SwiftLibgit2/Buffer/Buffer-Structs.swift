@@ -25,13 +25,11 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf
+public struct GitBuf: GitStructInternalReadWrite
 {
     /// The buffer contents.
     ///
     /// ## Discussion
-    ///
-    /// The default value is `nil`.
     ///
     /// ``GitBuf/ptr`` points to the start of the buffer being returned. The buffer's length, in bytes,
     /// is specified by the ``GitBuf/size`` property. The buffer contains a null terminator at
@@ -48,24 +46,29 @@ public struct GitBuf
     public internal(set) var ptr        : UnsafeMutablePointer<CChar>?  = nil
     
     /// This property is unused, but is reserved for API compatibility.
-    ///
-    /// ## Discussion
-    ///
-    /// The default value is `0`.
     public internal(set) var reserved   : Int                           = 0
     
     /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the null
     /// terminator.
-    ///
-    /// ## Discussion
-    ///
-    /// The default value is `0`.
     public internal(set) var size       : Int                           = 0
     
     
     
     /// Creates a ``GitBuf`` instance.
     public init() { }
+    
+    
+    
+    /// Creates a ``GitBuf`` instance from a `git_buf` instance.
+    /// - Parameter buf: The `git_buf` instance to use.
+    internal init(
+        cValue buf: git_buf
+    )
+    {
+        self.ptr        = buf.ptr
+        self.reserved   = buf.reserved
+        self.size       = buf.size
+    }
     
     
     

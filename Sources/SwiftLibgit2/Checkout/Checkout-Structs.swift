@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_checkout_perfdata`](https://libgit2.org/docs/reference/main/checkout/git_checkout_perfdata.html)
-public struct GitCheckoutPerfData
+public struct GitCheckoutPerfData: GitStructReadOnly
 {
     /// The number of times `mkdir` was called during the checkout operation.
     public let mkdirCalls   : Int
@@ -40,6 +40,11 @@ public struct GitCheckoutPerfData
         self.statCalls      = checkoutPerfData.stat_calls
         self.chmodCalls     = checkoutPerfData.chmod_calls
     }
+    
+    
+    
+    // TODO: cValue or withCValue(_:)
+    
 }
 
 
@@ -49,7 +54,7 @@ public struct GitCheckoutPerfData
 /// ## C Equivalent
 ///
 /// [`git_checkout_options`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options.html)
-public struct GitCheckoutOptions
+public struct GitCheckoutOptions: GitStructReadWrite
 {
     /// The version to use.
     ///

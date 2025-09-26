@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_options`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options.html)
-public struct GitCherrypickOptions
+public struct GitCherrypickOptions: GitStructReadWrite
 {
     /// The version to use.
     ///
