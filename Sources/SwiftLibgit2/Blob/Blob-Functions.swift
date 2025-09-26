@@ -249,17 +249,16 @@ public func gitBlobCreateFromWorkdir(
     relativePath    : String
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let blobCreateFromWorkdirResult: Int32 = git_blob_create_from_workdir(
-        &cID,
-        repo,
-        relativePath
-    )
-    
-    id = GitOID(cValue: cID)
-    
-    return blobCreateFromWorkdirResult
+    return id.withMutatingCValue
+    {
+        cID in
+        
+        return git_blob_create_from_workdir(
+            cID,
+            repo,
+            relativePath
+        )
+    }
 }
 
 
@@ -282,17 +281,16 @@ public func gitBlobCreateFromDisk(
     path    : String
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let blobCreateFromDiskResult: Int32 = git_blob_create_from_disk(
-        &cID,
-        repo,
-        path
-    )
-    
-    id = GitOID(cValue: cID)
-    
-    return blobCreateFromDiskResult
+    return id.withMutatingCValue
+    {
+        cID in
+        
+        return git_blob_create_from_disk(
+            cID,
+            repo,
+            path
+        )
+    }
 }
 
 
@@ -357,16 +355,15 @@ public func gitBlobCreateFromStreamCommit(
     stream  : UnsafeMutablePointer<git_writestream>
 ) -> Int32
 {
-    var cOut: git_oid = out.cValue
-    
-    let blobCreateFromStreamCommitResult: Int32 = git_blob_create_from_stream_commit(
-        &cOut,
-        stream
-    )
-    
-    out = GitOID(cValue: cOut)
-    
-    return blobCreateFromStreamCommitResult
+    return out.withMutatingCValue
+    {
+        cOut in
+        
+        return git_blob_create_from_stream_commit(
+            cOut,
+            stream
+        )
+    }
 }
 
 
@@ -390,18 +387,17 @@ public func gitBlobCreateFromBuffer(
     len     : Int
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let blobCreateFromBufferResult: Int32 = git_blob_create_from_buffer(
-        &cID,
-        repo,
-        buffer,
-        len
-    )
-    
-    id = GitOID(cValue: cID)
-    
-    return blobCreateFromBufferResult
+    return id.withMutatingCValue
+    {
+        cID in
+        
+        return git_blob_create_from_buffer(
+            cID,
+            repo,
+            buffer,
+            len
+        )
+    }
 }
 
 

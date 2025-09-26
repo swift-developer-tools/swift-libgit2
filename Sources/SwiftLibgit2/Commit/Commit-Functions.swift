@@ -672,49 +672,48 @@ public func gitCommitCreate(
     parents         : UnsafeMutablePointer<OpaquePointer?>?
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let commitCreateResult: Int32 = updateRef.withOptionalCString
+    return id.withMutatingCValue
     {
-        cUpdateRef in
+        cID in
         
-        return author.withCValue
+        return updateRef.withOptionalCString
         {
-            cAuthor in
+            cUpdateRef in
             
-            return committer.withCValue
+            return author.withCValue
             {
-                cCommitter in
+                cAuthor in
                 
-                return messageEncoding.withOptionalCString
+                return committer.withCValue
                 {
-                    cMessageEncoding in
+                    cCommitter in
                     
-                    return message.withCString
+                    return messageEncoding.withOptionalCString
                     {
-                        cMessage in
+                        cMessageEncoding in
                         
-                        return git_commit_create(
-                            &cID,
-                            repo,
-                            cUpdateRef,
-                            cAuthor,
-                            cCommitter,
-                            cMessageEncoding,
-                            cMessage,
-                            tree,
-                            parentCount,
-                            parents
-                        )
+                        return message.withCString
+                        {
+                            cMessage in
+                            
+                            return git_commit_create(
+                                cID,
+                                repo,
+                                cUpdateRef,
+                                cAuthor,
+                                cCommitter,
+                                cMessageEncoding,
+                                cMessage,
+                                tree,
+                                parentCount,
+                                parents
+                            )
+                        }
                     }
                 }
             }
         }
     }
-    
-    id = GitOID(cValue: cID)
-    
-    return commitCreateResult
 }
 
 
@@ -742,39 +741,38 @@ public func gitCommitCreateFromStage(
     opts    : GitCommitCreateOptions?
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let commitCreateFromStageResult: Int32 = message.withCString
+    return id.withMutatingCValue
     {
-        cMessage in
+        cID in
         
-        guard let opts: GitCommitCreateOptions = opts
-        else
+        return message.withCString
         {
-            return git_commit_create_from_stage(
-                &cID,
-                repo,
-                cMessage,
-                nil
-            )
-        }
-        
-        return opts.withCValue
-        {
-            cOpts in
+            cMessage in
             
-            return git_commit_create_from_stage(
-                &cID,
-                repo,
-                cMessage,
-                cOpts
-            )
+            guard let opts: GitCommitCreateOptions = opts
+            else
+            {
+                return git_commit_create_from_stage(
+                    cID,
+                    repo,
+                    cMessage,
+                    nil
+                )
+            }
+            
+            return opts.withCValue
+            {
+                cOpts in
+                
+                return git_commit_create_from_stage(
+                    cID,
+                    repo,
+                    cMessage,
+                    cOpts
+                )
+            }
         }
     }
-    
-    id = GitOID(cValue: cID)
-    
-    return commitCreateFromStageResult
 }
 
 
@@ -819,45 +817,44 @@ public func gitCommitAmend(
     tree            : OpaquePointer?
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let commitAmendResult: Int32 = updateRef.withOptionalCString
+    return id.withMutatingCValue
     {
-        cUpdateRef in
+        cID in
         
-        return messageEncoding.withOptionalCString
+        return updateRef.withOptionalCString
         {
-            cMessageEncoding in
+            cUpdateRef in
             
-            return message.withOptionalCString
+            return messageEncoding.withOptionalCString
             {
-                cMessage in
+                cMessageEncoding in
                 
-                withComposedCommitAmendProperties(
-                    author,
-                    committer
-                )
+                return message.withOptionalCString
                 {
-                    cAuthor, cCommitter in
+                    cMessage in
                     
-                    return git_commit_amend(
-                        &cID,
-                        commitToAmend,
-                        cUpdateRef,
-                        cAuthor,
-                        cCommitter,
-                        cMessageEncoding,
-                        cMessage,
-                        tree
+                    withComposedCommitAmendProperties(
+                        author,
+                        committer
                     )
+                    {
+                        cAuthor, cCommitter in
+                        
+                        return git_commit_amend(
+                            cID,
+                            commitToAmend,
+                            cUpdateRef,
+                            cAuthor,
+                            cCommitter,
+                            cMessageEncoding,
+                            cMessage,
+                            tree
+                        )
+                    }
                 }
             }
         }
     }
-    
-    id = GitOID(cValue: cID)
-    
-    return commitAmendResult
 }
 
 
@@ -964,34 +961,33 @@ public func gitCommitCreateWithSignature(
     signatureField  : String?
 ) -> Int32
 {
-    var cOut: git_oid = out.cValue
-    
-    let commitCreateWithSignatureResult: Int32 = commitContent.withCString
+    return out.withMutatingCValue
     {
-        cCommitContent in
+        cOut in
         
-        return (signatureField ?? "gpgsig").withCString
+        return commitContent.withCString
         {
-            cSignatureField in
+            cCommitContent in
             
-            return signature.withOptionalCString
+            return (signatureField ?? "gpgsig").withCString
             {
-                cSignature in
+                cSignatureField in
                 
-                return git_commit_create_with_signature(
-                    &cOut,
-                    repo,
-                    cCommitContent,
-                    cSignature,
-                    cSignatureField
-                )
+                return signature.withOptionalCString
+                {
+                    cSignature in
+                    
+                    return git_commit_create_with_signature(
+                        cOut,
+                        repo,
+                        cCommitContent,
+                        cSignature,
+                        cSignatureField
+                    )
+                }
             }
         }
     }
-    
-    out = GitOID(cValue: cOut)
-    
-    return commitCreateWithSignatureResult
 }
 
 
