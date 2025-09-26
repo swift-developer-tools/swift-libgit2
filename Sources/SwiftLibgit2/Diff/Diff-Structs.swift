@@ -81,7 +81,30 @@ public struct GitDiffFile: GitStructReadOnly
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// Calls the given closure with a pointer to a `git_diff_file` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_diff_file>) -> T
+    ) -> T
+    {
+        var diffFile = git_diff_file()
+        
+        diffFile.id         = id.cValue
+        diffFile.size       = size
+        diffFile.flags      = flags.rawValue
+        diffFile.mode       = mode.rawValue
+        diffFile.id_abbrev  = idAbbrev
+        
+        return path.withOptionalCString
+        {
+            cPath in
+            
+            diffFile.path = cPath
+            
+            return body(&diffFile)
+        }
+    }
 }
 
 
