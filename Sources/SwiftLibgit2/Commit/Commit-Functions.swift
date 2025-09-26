@@ -749,18 +749,7 @@ public func gitCommitCreateFromStage(
         {
             cMessage in
             
-            guard let opts: GitCommitCreateOptions = opts
-            else
-            {
-                return git_commit_create_from_stage(
-                    cID,
-                    repo,
-                    cMessage,
-                    nil
-                )
-            }
-            
-            return opts.withCValue
+            return opts.withOptionalCValue
             {
                 cOpts in
                 
