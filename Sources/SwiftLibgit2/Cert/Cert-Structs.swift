@@ -257,5 +257,15 @@ public struct GitCertX509: GitStructReadOnly
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// The equivalent C value.
+    internal var cValue: git_cert_x509
+    {
+        var certX509 = git_cert_x509()
+        
+        certX509.parent     = parent.cValue
+        certX509.data       = data
+        certX509.len        = len
+        
+        return certX509
+    }
 }
