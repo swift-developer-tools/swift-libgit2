@@ -282,5 +282,24 @@ public struct GitBlameLine: GitStructReadOnly
     
     
     
-    // TODO: cValue or withCValue(_:)
+    /// Calls the given closure with a pointer to a `git_blame_line` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blame_line>) -> T
+    ) -> T
+    {
+        var blameLine = git_blame_line()
+        
+        blameLine.len = len
+        
+        return ptr.withOptionalCString
+        {
+            cPtr in
+            
+            blameLine.ptr = cPtr
+            
+            return body(&blameLine)
+        }
+    }
 }
