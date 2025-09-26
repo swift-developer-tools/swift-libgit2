@@ -44,25 +44,13 @@ public func gitCherrypickCommit(
     mergeOptions        : GitMergeOptions?
 ) -> Int32
 {
-    guard let mergeOptions: GitMergeOptions = mergeOptions
-    else
-    {
-        return git_cherrypick_commit(
-            out,
-            repo,
-            cherrypickCommit,
-            ourCommit,
-            mainline,
-            nil
-        )
-    }
-    
-    return mergeOptions.withCValue
+    return mergeOptions.withOptionalCValue
     {
         cMergeOptions in
         
-        guard let cMergeOptions: UnsafeMutablePointer<git_merge_options> = cMergeOptions
-        else
+        if
+            mergeOptions != nil,
+            cMergeOptions == nil
         {
             return GIT_EUSER.rawValue
         }
@@ -102,22 +90,13 @@ public func gitCherrypick(
     cherrypickOptions   : GitCherrypickOptions?
 ) -> Int32
 {
-    guard let cherrypickOptions: GitCherrypickOptions = cherrypickOptions
-    else
-    {
-        return git_cherrypick(
-            repo,
-            commit,
-            nil
-        )
-    }
-    
-    return cherrypickOptions.withCValue
+    return cherrypickOptions.withOptionalCValue
     {
         cCherrypickOptions in
         
-        guard let cCherrypickOptions: UnsafeMutablePointer<git_cherrypick_options> = cCherrypickOptions
-        else
+        if
+            cherrypickOptions != nil,
+            cCherrypickOptions == nil
         {
             return GIT_EUSER.rawValue
         }
