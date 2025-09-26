@@ -12,8 +12,12 @@
 /// ## Discussion
 ///
 /// This protocol standardizes the implementation of Swift binding structs. All Swift binding structs should
-/// conform to one of the following protocols. The exception is Swift structs that act as bindings for C bit
+/// conform to one of the following protocols.The exception is Swift structs that act as bindings for C bit
 /// set enums. These Swift structs should conform to the ``GitOptionSet`` protocol instead.
+///
+/// The only structs that should conform directly to ``GitStruct`` are structs which are unused by other
+/// bindings, but exist for documentation purposes. ``GitStructReadOnly`` does not define any
+/// additional requirements other than those of ``GitStruct``, but exists for semantic purposes.
 ///
 /// ``GitStructReadOnly``:
 /// - Generally represents Git data.
@@ -36,9 +40,6 @@
 /// - Provides a `public init()` method that accepts no parameters.
 /// - Examples: ``GitCheckoutOptions`` and ``GitMergeOptions``.
 ///
-/// The only structs that may should directly to ``GitStruct`` are structs which are unused by other
-/// bindings, but exist for documentation purposes.
-///
 /// In addition to the requirements actually defined by this protocol, conforming structs should also follow the
 /// rules described above. These protocols cannot be more specific due to limitations of what Swift protocols
 /// can define, and also because the conforming structs have different requirements based on the C struct
@@ -48,46 +49,51 @@
 /// not definable through Swift protocols.
 ///
 /// Similarly, structs that conform to ``GitStructReadOnly``, ``GitStructInternalReadWrite``,
-/// or``GitStructReadWrite`` should implement one of the following:
+/// or ``GitStructReadWrite`` should implement one of the following approaches to converting
+/// the Swift struct to its C equivalent:
 ///
 /// ```swift
-/// internal var cValue: T
+/// internal var cValue: C
 ///
-/// internal func withCValue<R>(
-///     _ body: (UnsafeMutablePointer<T>) -> R
-/// ) -> R
-///
-/// internal func withMutatingCValue<R>(
-///     _ body: (UnsafeMutablePointer<T>) -> R
-/// ) -> R
+/// internal func withCValue<T>(
+///     _ body: (UnsafeMutablePointer<C>) -> T
+/// ) -> T
 /// ```
 ///
-/// Structs that conform directly to ``GitStruct`` should not implement any of these.
+/// Structs should implement these by conforming to one of the following protocols:
+/// - ``NonOptionalCConvertible``
+/// - ``OptionalCConvertible``
+/// - ``NonOptionalWithCConvertible``
+/// - ``OptionalWithCConvertible``
 ///
-/// Generally, structs that can be translated from Swift to C using only simple field assignment should
-/// implement the computed property, while structs that require memory management during translation
-/// should implement one or both of the functions.
+/// See the ``CConvertible`` documentation for more information.
 ///
-/// Structs that implement the functions may use `UnsafeMutablePointer<T>?` as the parameter of
-/// the `body` closure, if their translation involves the possibility of an error. Some structs like
-/// ``GitSignature`` may use `UnsafeMutablePointer<UnsafeMutablePointer<T>?>` as
-/// the parameter of the `body` closure in order to reduce caller overhead.
+/// Some structs may also need to implement an additional mutating method which is not defined by
+/// any protocol, since it is not commonly needed:
 ///
-/// A single protocol cannot define this level of variation, and multiple protocols would be less effective
-/// from a semantic standpoint.
-internal protocol GitStruct
+/// ```swift
+/// internal func withMutatingCValue<T>(
+///     _ body: (UnsafeMutablePointer<C>) -> T
+/// ) -> T
+/// ```
+///
+/// ``GitStruct`` does not directly conform to the convertible protocols due to the level of variation
+/// required by conforming structs. A single protocol cannot define this level of variation, and multiple
+/// protocols would be less effective from a semantic standpoint. Conforming structs should adopt one
+/// of the convertible protocols, unless they conform directly to ``GitStruct`` and are unused.
+internal protocol GitStruct: CConvertible
 {
-    /// The equivalent C value.
-    associatedtype T
+    /// The type of the equivalent C value.
+    associatedtype C
     
     /// Creates an instance from a C value.
     /// - Parameter cValue: The C value to use.
     ///
     /// ## Discussion
     ///
-    /// This initializer should have an `internal` access level.
+    /// This should have an `internal` access level.
     init(
-        cValue: T
+        cValue: C
     )
 }
 
@@ -103,7 +109,7 @@ internal protocol GitStructInternalReadWrite: GitStruct
     ///
     /// ## Discussion
     ///
-    /// This initializer should have a `public` access level and an empty body.
+    /// This should have a `public` access level and an empty body.
     init()
 }
 
@@ -115,6 +121,6 @@ internal protocol GitStructReadWrite: GitStruct
     ///
     /// ## Discussion
     ///
-    /// This initializer should have a `public` access level and an empty body.
+    /// This should have a `public` access level and an empty body.
     init()
 }
