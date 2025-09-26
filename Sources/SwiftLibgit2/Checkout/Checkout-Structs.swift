@@ -43,8 +43,17 @@ public struct GitCheckoutPerfData: GitStructReadOnly
     
     
     
-    // TODO: cValue or withCValue(_:)
-    
+    /// The equivalent C value.
+    internal var cValue: git_checkout_perfdata
+    {
+        var checkoutPerfData = git_checkout_perfdata()
+        
+        checkoutPerfData.mkdir_calls    = mkdirCalls
+        checkoutPerfData.stat_calls     = statCalls
+        checkoutPerfData.chmod_calls    = chmodCalls
+        
+        return checkoutPerfData
+    }
 }
 
 
