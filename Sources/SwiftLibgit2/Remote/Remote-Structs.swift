@@ -351,10 +351,7 @@ public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
             return body(nil)
         }
         
-        if let cCallbacks: git_remote_callbacks = callbacks?.cValue
-        {
-            fetchOptions.callbacks = cCallbacks
-        }
+        
         
         fetchOptions.prune              = prune.cValue
         fetchOptions.update_fetchhead   = updateFetchHEAD.rawValue
@@ -362,107 +359,28 @@ public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
         fetchOptions.depth              = Int32(depth.rawValue)
         fetchOptions.follow_redirects   = followRedirects.cValue
         
-        return withComposedProperties(
-            &fetchOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Composes the optional properties of ``GitFetchOptions``, then calls the given closure
-    /// with a pointer to the updated `git_fetch_options` instance.
-    /// - Parameters:
-    ///   - fetchOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// This function composes the following optional properties:
-    /// - ``proxyOpts``
-    /// - ``customHeaders``
-    ///
-    /// The composition begins by calling ``withProxyOptions(_:_:)``.
-    private func withComposedProperties<T>(
-        _   fetchOptions    : UnsafeMutablePointer<git_fetch_options>,
-        _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
-    ) -> T
-    {
-        return withProxyOptions(
-            fetchOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Updates the given `git_fetch_options` instance with the value of ``proxyOpts``,
-    /// then continues the composition by calling ``withCustomHeaders(_:_:)``.
-    /// - Parameters:
-    ///   - fetchOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``proxyOpts`` is `nil`, this function will proceed directly to the next step in the composition.
-    ///
-    /// If ``GitProxyOptions.withCValue(_:)`` fails, this function will call the given closure
-    /// with `nil`.
-    private func withProxyOptions<T>(
-        _   fetchOptions    : UnsafeMutablePointer<git_fetch_options>,
-        _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
-    ) -> T
-    {
-        guard let proxyOpts: GitProxyOptions = proxyOpts
-        else
+        if let cCallbacks: git_remote_callbacks = callbacks?.cValue
         {
-            return withCustomHeaders(
-                fetchOptions,
-                body
-            )
+            fetchOptions.callbacks = cCallbacks
         }
         
-        return proxyOpts.withCValue
+        return proxyOpts.withOptionalCValue
         {
             cProxyOpts in
             
-            guard let cProxyOpts: UnsafeMutablePointer<git_proxy_options> = cProxyOpts
-            else
+            if let cProxyOpts: UnsafeMutablePointer<git_proxy_options> = cProxyOpts
             {
-                return body(nil)
+                fetchOptions.proxy_opts = cProxyOpts.pointee
             }
             
-            fetchOptions.pointee.proxy_opts = cProxyOpts.pointee
-            
-            return withCustomHeaders(
-                fetchOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_fetch_options` instance with the value of ``customHeaders``,
-    /// then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - fetchOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    private func withCustomHeaders<T>(
-        _   fetchOptions    : UnsafeMutablePointer<git_fetch_options>,
-        _   body            : (UnsafeMutablePointer<git_fetch_options>?) -> T
-    ) -> T
-    {
-        return customHeaders.withGitStrArray
-        {
-            cCustomHeaders in
-            
-            fetchOptions.pointee.custom_headers = cCustomHeaders.pointee
-            
-            return body(fetchOptions)
+            return customHeaders.withGitStrArray
+            {
+                cCustomHeaders in
+                
+                fetchOptions.custom_headers = cCustomHeaders.pointee
+                
+                return body(&fetchOptions)
+            }
         }
     }
 }
