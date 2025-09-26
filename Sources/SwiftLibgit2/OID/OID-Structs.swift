@@ -60,7 +60,7 @@ public struct GitOID: GitStructInternalReadWrite
             _ = memcpy(
                 &oid.id,
                 bytes.baseAddress,
-                Self.size
+                min(bytes.count, Self.size)
             )
         }
         
