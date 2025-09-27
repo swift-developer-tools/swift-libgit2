@@ -252,15 +252,10 @@ public func gitLibgit2OptSetSearchPath(
     path    : String?
 ) -> Int32
 {
-    return path.withOptionalCString
-    {
-        cPath in
-        
-        return git_libgit2_opt_set_search_path(
-            level.rawValue,
-            cPath
-        )
-    }
+    return git_libgit2_opt_set_search_path(
+        level.rawValue,
+        path
+    )
 }
 
 
@@ -420,12 +415,7 @@ public func gitLibgit2OptSetTemplatePath(
     path: String?
 ) -> Int32
 {
-    return path.withOptionalCString
-    {
-        cPath in
-        
-        return git_libgit2_opt_set_template_path(cPath)
-    }
+    return git_libgit2_opt_set_template_path(path)
 }
 
 
@@ -453,20 +443,10 @@ public func gitLibgit2OptSetSSLCertLocations(
     path    : String?
 ) -> Int32
 {
-    return file.withOptionalCString
-    {
-        cFile in
-        
-        return path.withOptionalCString
-        {
-            cPath in
-            
-            return git_libgit2_opt_set_ssl_cert_locations(
-                cFile,
-                cPath
-            )
-        }
-    }
+    return git_libgit2_opt_set_ssl_cert_locations(
+        file,
+        path
+    )
 }
 
 
@@ -495,12 +475,7 @@ public func gitLibgit2OptSetUserAgent(
     userAgent: String?
 ) -> Int32
 {
-    return userAgent.withOptionalCString
-    {
-        cUserAgent in
-        
-        return git_libgit2_opt_set_user_agent(cUserAgent)
-    }
+    return git_libgit2_opt_set_user_agent(userAgent)
 }
 
 
@@ -1117,12 +1092,7 @@ public func gitLibgit2OptSetHomeDir(
     path: String?
 ) -> Int32
 {
-    return path.withOptionalCString
-    {
-        cPath in
-        
-        return git_libgit2_opt_set_homedir(cPath)
-    }
+    return git_libgit2_opt_set_homedir(path)
 }
 
 
@@ -1235,12 +1205,7 @@ public func gitLibgit2OptSetUserAgentProduct(
     userAgent: String?
 ) -> Int32
 {
-    return userAgent.withOptionalCString
-    {
-        cUserAgent in
-        
-        return git_libgit2_opt_set_user_agent_product(cUserAgent)
-    }
+    return git_libgit2_opt_set_user_agent_product(userAgent)
 }
 
 

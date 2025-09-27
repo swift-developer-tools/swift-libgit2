@@ -597,18 +597,13 @@ public func gitCommitExtractSignature(
         {
             cSignedData in
             
-            return field.withOptionalCString
-            {
-                cField in
-                
-                return git_commit_extract_signature(
-                    cSignature,
-                    cSignedData,
-                    repo,
-                    &cCommitID,
-                    cField
-                )
-            }
+            return git_commit_extract_signature(
+                cSignature,
+                cSignedData,
+                repo,
+                &cCommitID,
+                field
+            )
         }
     }
 }
@@ -671,36 +666,26 @@ public func gitCommitCreate(
     {
         cID in
         
-        return updateRef.withOptionalCString
+        return author.withCValue
         {
-            cUpdateRef in
+            cAuthor in
             
-            return author.withCValue
+            return committer.withCValue
             {
-                cAuthor in
+                cCommitter in
                 
-                return committer.withCValue
-                {
-                    cCommitter in
-                    
-                    return messageEncoding.withOptionalCString
-                    {
-                        cMessageEncoding in
-                        
-                        return git_commit_create(
-                            cID,
-                            repo,
-                            cUpdateRef,
-                            cAuthor,
-                            cCommitter,
-                            cMessageEncoding,
-                            message,
-                            tree,
-                            parentCount,
-                            parents
-                        )
-                    }
-                }
+                return git_commit_create(
+                    cID,
+                    repo,
+                    updateRef,
+                    cAuthor,
+                    cCommitter,
+                    messageEncoding,
+                    message,
+                    tree,
+                    parentCount,
+                    parents
+                )
             }
         }
     }
@@ -795,39 +780,24 @@ public func gitCommitAmend(
     {
         cID in
         
-        return updateRef.withOptionalCString
+        return author.withOptionalCValue
         {
-            cUpdateRef in
+            cAuthor in
             
-            return author.withOptionalCValue
+            return committer.withOptionalCValue
             {
-                cAuthor in
+                cCommitter in
                 
-                return committer.withOptionalCValue
-                {
-                    cCommitter in
-                    
-                    return messageEncoding.withOptionalCString
-                    {
-                        cMessageEncoding in
-                        
-                        return message.withOptionalCString
-                        {
-                            cMessage in
-                            
-                            return git_commit_amend(
-                                cID,
-                                commitToAmend,
-                                cUpdateRef,
-                                cAuthor,
-                                cCommitter,
-                                cMessageEncoding,
-                                cMessage,
-                                tree
-                            )
-                        }
-                    }
-                }
+                return git_commit_amend(
+                    cID,
+                    commitToAmend,
+                    updateRef,
+                    cAuthor,
+                    cCommitter,
+                    messageEncoding,
+                    message,
+                    tree
+                )
             }
         }
     }
@@ -887,22 +857,17 @@ public func gitCommitCreateBuffer(
             {
                 cCommitter in
                 
-                return messageEncoding.withOptionalCString
-                {
-                    cMessageEncoding in
-                    
-                    return git_commit_create_buffer(
-                        cOut,
-                        repo,
-                        cAuthor,
-                        cCommitter,
-                        cMessageEncoding,
-                        message,
-                        tree,
-                        parentCount,
-                        parents
-                    )
-                }
+                return git_commit_create_buffer(
+                    cOut,
+                    repo,
+                    cAuthor,
+                    cCommitter,
+                    messageEncoding,
+                    message,
+                    tree,
+                    parentCount,
+                    parents
+                )
             }
         }
     }
@@ -936,23 +901,13 @@ public func gitCommitCreateWithSignature(
     {
         cOut in
         
-        return signature.withOptionalCString
-        {
-            cSignature in
-            
-            return signatureField.withOptionalCString
-            {
-                cSignatureField in
-                
-                return git_commit_create_with_signature(
-                    cOut,
-                    repo,
-                    commitContent,
-                    cSignature,
-                    cSignatureField
-                )
-            }
-        }
+        return git_commit_create_with_signature(
+            cOut,
+            repo,
+            commitContent,
+            signature,
+            signatureField
+        )
     }
 }
 
