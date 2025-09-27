@@ -249,7 +249,7 @@ struct Repository
             "HEAD"
         )
         
-        if referenceToNameToIDResult == GIT_OK.rawValue
+        if isOK(referenceToNameToIDResult)
         {
             let commitLookupResult: Int32 = gitCommitLookup(
                 commit:     &headCommitPointer,
