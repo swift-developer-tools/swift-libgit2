@@ -80,7 +80,7 @@ public func gitBlobFree(
     blob: OpaquePointer?
 )
 {
-    return git_blob_free(blob)
+    git_blob_free(blob)
 }
 
 

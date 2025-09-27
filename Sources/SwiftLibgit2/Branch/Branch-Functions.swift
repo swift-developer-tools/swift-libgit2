@@ -188,7 +188,7 @@ public func gitBranchIteratorFree(
     iter: OpaquePointer?
 )
 {
-    return git_branch_iterator_free(iter)
+    git_branch_iterator_free(iter)
 }
 
 
