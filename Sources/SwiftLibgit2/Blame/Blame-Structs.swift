@@ -245,7 +245,7 @@ public struct GitBlameHunk: GitStructReadable, NonOptionalWithCConvertible
         self.origSignature          = GitSignature(cValue: blameHunk.orig_signature.pointee)
         self.origCommitter          = GitSignature(cValue: blameHunk.orig_committer.pointee)
         self.summary                = String(optionalCString: blameHunk.summary)
-        self.boundary               = blameHunk.boundary != 0
+        self.boundary               = Bool(blameHunk.boundary)
     }
     
     

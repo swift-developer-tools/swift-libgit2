@@ -119,7 +119,7 @@ public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
         self.version                = cloneOptions.version
         self.checkoutOpts           = GitCheckoutOptions(cValue: cloneOptions.checkout_opts)
         self.fetchOpts              = GitFetchOptions(cValue: cloneOptions.fetch_opts)
-        self.bare                   = cloneOptions.bare != 0
+        self.bare                   = Bool(cloneOptions.bare)
         self.local                  = GitCloneLocalT(cValue: cloneOptions.local) ?? .gitCloneLocal
         self.checkoutBranch         = String(optionalCString: cloneOptions.checkout_branch)
         self.repositoryCB           = cloneOptions.repository_cb

@@ -404,7 +404,7 @@ public func gitBlobIsBinary(
     blob: OpaquePointer
 ) -> Bool
 {
-    return git_blob_is_binary(blob) != 0
+    return Bool(git_blob_is_binary(blob))
 }
 
 
@@ -428,10 +428,7 @@ public func gitBlobDataIsBinary(
     len     : Int
 ) -> Bool
 {
-    return git_blob_data_is_binary(
-        data,
-        len
-    ) != 0
+    return Bool(git_blob_data_is_binary(data, len))
 }
 
 

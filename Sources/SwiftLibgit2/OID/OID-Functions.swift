@@ -33,5 +33,5 @@ public func gitOIDEqual(
         &cSecondOID
     )
     
-    return oidEqualResult != 0
+    return Bool(oidEqualResult)
 }
