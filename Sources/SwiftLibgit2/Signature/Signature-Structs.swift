@@ -110,40 +110,20 @@ public struct GitSignature: GitStructInternalMutable, NonOptionalWithCConvertibl
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<git_signature>?>) -> T
     ) -> T
     {
-        var signature: UnsafeMutablePointer<git_signature>? = nil
-        
-        defer
+        return withCValue
         {
-            if signature != nil
+            signature in
+            
+            var optionalSignature: UnsafeMutablePointer<git_signature>? = signature
+            
+            let result: T = body(&optionalSignature)
+            
+            if let finalSignature: UnsafeMutablePointer<git_signature> = optionalSignature
             {
-                gitSignatureFree(sig: signature)
+                self = GitSignature(cValue: finalSignature.pointee)
             }
-        }
-        
-        
-        
-        let result: T = body(&signature)
-        
-        guard let signature: UnsafeMutablePointer<git_signature> = signature
-        else
-        {
+            
             return result
         }
-        
-        if let intResult = result as? Int32
-        {
-            if intResult == GIT_OK.rawValue
-            {
-                self = GitSignature(cValue: signature.pointee)
-            }
-        }
-        else
-        {
-            self = GitSignature(cValue: signature.pointee)
-        }
-        
-        
-        
-        return result
     }
 }
