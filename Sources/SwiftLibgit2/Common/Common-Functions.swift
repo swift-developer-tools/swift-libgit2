@@ -575,12 +575,7 @@ public func gitLibgit2OptSetSSLCiphers(
     ciphers: String
 ) -> Int32
 {
-    return ciphers.withCString
-    {
-        cCiphers in
-        
-        return git_libgit2_opt_set_ssl_ciphers(cCiphers)
-    }
+    return git_libgit2_opt_set_ssl_ciphers(ciphers)
 }
 
 
