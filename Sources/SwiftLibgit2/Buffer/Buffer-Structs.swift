@@ -99,18 +99,17 @@ public struct GitBuf: GitStructInternalMutable, NonOptionalWithCConvertible
         _ body: (UnsafeMutablePointer<git_buf>) -> T
     ) -> T
     {
-        var buffer = git_buf()
-        
-        buffer.ptr          = ptr
-        buffer.reserved     = reserved
-        buffer.size         = size
-        
-        let result: T = body(&buffer)
-        
-        ptr        = buffer.ptr
-        reserved   = buffer.reserved
-        size       = buffer.size
-        
-        return result
+        return withCValue
+        {
+            buffer in
+            
+            let result: T = body(buffer)
+            
+            ptr        = buffer.pointee.ptr
+            reserved   = buffer.pointee.reserved
+            size       = buffer.pointee.size
+            
+            return result
+        }
     }
 }
