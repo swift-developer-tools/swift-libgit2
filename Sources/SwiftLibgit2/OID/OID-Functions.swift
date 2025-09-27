@@ -33,5 +33,5 @@ public func gitOIDEqual(
         &cSecondOID
     )
     
-    return oidEqualResult == 1
+    return oidEqualResult != 0
 }

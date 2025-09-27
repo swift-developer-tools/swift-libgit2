@@ -558,7 +558,7 @@ public func gitBranchIsValid(
         name
     )
     
-    valid.pointee = intValid == 1
+    valid.pointee = intValid != 0
     
     return branchNameIsValidResult
 }

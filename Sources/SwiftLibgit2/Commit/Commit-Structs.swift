@@ -73,7 +73,7 @@ public struct GitCommitCreateOptions: GitStructMutable, NonOptionalWithCConverti
     )
     {
         self.version            = commitCreateOptions.version
-        self.allowEmptyCommit   = commitCreateOptions.allow_empty_commit == 1
+        self.allowEmptyCommit   = commitCreateOptions.allow_empty_commit != 0
         self.author             = GitSignature(cValue: commitCreateOptions.author.pointee)
         self.committer          = GitSignature(cValue: commitCreateOptions.committer.pointee)
         self.messageEncoding    = String(optionalCString: commitCreateOptions.message_encoding)

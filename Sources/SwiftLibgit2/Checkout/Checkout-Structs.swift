@@ -236,7 +236,7 @@ public struct GitCheckoutOptions: GitStructMutable, OptionalWithCConvertible
     {
         self.version            = checkoutOptions.version
         self.checkoutStrategy   = GitCheckoutStrategyT(rawValue: checkoutOptions.checkout_strategy)
-        self.disableFilters     = checkoutOptions.disable_filters == 1
+        self.disableFilters     = checkoutOptions.disable_filters != 0
         self.dirMode            = checkoutOptions.dir_mode
         self.fileMode           = checkoutOptions.file_mode
         self.fileOpenFlags      = checkoutOptions.file_open_flags

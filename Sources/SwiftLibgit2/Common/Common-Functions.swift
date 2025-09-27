@@ -1045,7 +1045,7 @@ public func gitLibgit2OptGetOwnerValidation(
     
     let getOwnerValidationResult: Int32 = git_libgit2_opt_get_owner_validation(&intEnabled)
     
-    enabled.pointee = intEnabled == 1
+    enabled.pointee = intEnabled != 0
     
     return getOwnerValidationResult
 }
