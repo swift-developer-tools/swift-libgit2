@@ -17,6 +17,15 @@ final class CredentialTests: XCTestCaseStopOnFail
 {
     func testGitCredentialAcquireCB() throws
     {
+        var credentialPointer: UnsafeMutablePointer<git_credential>? = nil
+        
+        defer
+        {
+            Free.freeCredential(credentialPointer)
+        }
+        
+        
+        
         let credentialAcquireCB: GitCredentialAcquireCB =
         {
             out, url, usernameFromURL, allowedTypes, payload in
@@ -54,7 +63,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         let url         : String    = "https://example.com/test/repo.git"
-        let allowedType : UInt32    = GIT_CREDENTIAL_USERNAME.rawValue
+        let allowedType : UInt32    = GitCredentialT.gitCredentialUserPassPlaintext.rawValue
         
         var callbackData = CallbackData()
         
@@ -67,16 +76,6 @@ final class CredentialTests: XCTestCaseStopOnFail
             remoteCallbacks.credentials     = credentialAcquireCB
             remoteCallbacks.payload         = UnsafeMutableRawPointer(callbackDataPointer)
             
-            
-            
-            var credentialPointer: UnsafeMutablePointer<git_credential>? = nil
-            
-            defer
-            {
-                Free.freeCredential(credentialPointer)
-            }
-            
-            
             let callbackResult: Int32 = remoteCallbacks.credentials!(
                 &credentialPointer,
                 url,
@@ -86,9 +85,9 @@ final class CredentialTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(callbackResult)
-            XCTAssertNotNil(credentialPointer)
         }
         
+        XCTAssertNotNil(credentialPointer)
         XCTAssertEqual(callbackData.count, 1)
         XCTAssertNotNil(callbackData.url)
         XCTAssertEqual(callbackData.url, url)
