@@ -220,13 +220,9 @@ final class ApplyTests: XCTestCaseStopOnFail
 
 extension ApplyTests
 {
-    /// The callback count for `GitApplyOptions`.
     private struct CallbackCounts
     {
-        /// The number of times the delta callback was invoked.
         var deltaCount  : Int   = 0
-        
-        /// The number of times the hunk callback was invoked.
         var hunkCount   : Int   = 0
     }
 
@@ -480,8 +476,6 @@ extension ApplyTests
                 
                 XCTAssertOK(applyResult)
             }
-                    
-            
             
             XCTAssertGreaterThan(callbackCounts.deltaCount, 0)
             XCTAssertGreaterThan(callbackCounts.hunkCount, 0)

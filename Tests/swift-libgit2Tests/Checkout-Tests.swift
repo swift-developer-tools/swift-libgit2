@@ -135,8 +135,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 XCTAssertOK(checkoutResult)
             }
             
-            
-            
             XCTAssertGreaterThan(callbackData.notifyCallCount, 0)
             XCTAssertNotNil(callbackData.lastNotifyPath)
             XCTAssertEqual(callbackData.lastNotifyReason, .gitCheckoutNotifyUpdated)

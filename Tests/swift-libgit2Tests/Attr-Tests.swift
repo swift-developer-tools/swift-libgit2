@@ -581,8 +581,6 @@ extension AttrTests
                 }
             }
             
-            
-            
             XCTAssertGreaterThan(attributes.keys.count, 0)
             XCTAssertTrue(attributes.keys.contains("text"))
         }

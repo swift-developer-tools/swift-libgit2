@@ -198,8 +198,6 @@ final class CloneTests: XCTestCaseStopOnFail
                 XCTAssertNotNil(clonedRepositoryPointer)
             }
             
-            
-            
             XCTAssertTrue(callbackData.isRepositoryCreated)
             XCTAssertTrue(callbackData.isRemoteCreated)
         }
