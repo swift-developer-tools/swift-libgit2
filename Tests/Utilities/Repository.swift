@@ -164,7 +164,7 @@ struct Repository
             guard let commitPointer: OpaquePointer = commitPointer
             else
             {
-                throw NSError.create(
+                throw NSError.makeError(
                     code:       Int(GIT_EUSER.rawValue),
                     message:    "The staged commit pointer was nil."
                 )
@@ -229,7 +229,7 @@ struct Repository
         guard let treePointer: OpaquePointer = treePointer
         else
         {
-            throw NSError.create(
+            throw NSError.makeError(
                 code:       Int(GIT_EUSER.rawValue),
                 message:    "The tree pointer was nil."
             )

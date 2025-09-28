@@ -1288,7 +1288,7 @@ extension ConfigTests
         {
             XCTFail("The configuration pointer was nil.")
             
-            throw NSError.create(
+            throw NSError.makeError(
                 code:       Int(GIT_EUSER.rawValue),
                 message:    "The configuration pointer was nil."
             )

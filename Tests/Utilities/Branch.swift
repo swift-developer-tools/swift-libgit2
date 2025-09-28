@@ -75,7 +75,7 @@ enum Branch
             {
                 XCTFail("The annotated commit pointer was nil.")
                 
-                throw NSError.create(
+                throw NSError.makeError(
                     code:       Int(GIT_EUSER.rawValue),
                     message:    "The annotated commit pointer was nil."
                 )
@@ -108,7 +108,7 @@ enum Branch
             {
                 XCTFail("The  was nil.")
                 
-                throw NSError.create(
+                throw NSError.makeError(
                     code:       Int(GIT_EUSER.rawValue),
                     message:    "The HEAD commit pointer was nil."
                 )

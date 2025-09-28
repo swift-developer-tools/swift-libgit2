@@ -100,7 +100,7 @@ enum Diff
         guard let diffPointer: OpaquePointer = diffPointer
         else
         {
-            throw NSError.create(
+            throw NSError.makeError(
                 code:       Int(GIT_EUSER.rawValue),
                 message:    "The diff pointer was nil."
             )

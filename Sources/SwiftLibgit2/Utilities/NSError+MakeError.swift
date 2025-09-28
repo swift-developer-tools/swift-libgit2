@@ -18,7 +18,7 @@ internal extension NSError
     ///   - code: The error code.
     ///   - message: The localized description.
     /// - Returns: The created `NSError`.
-    static func create(
+    static func makeError(
         code    : Int,
         message : String
     ) -> NSError
