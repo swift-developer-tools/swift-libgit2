@@ -56,11 +56,6 @@ public struct GitCredentialT: GitOptionSet
     public static let gitCredentialUsername             = GitCredentialT(rawValue: GIT_CREDENTIAL_USERNAME.rawValue)
     
     /// An SSH key-based authentication request.
-    ///
-    /// ## Discussion
-    ///
-    /// Allows credentials to be read from memory instead of files. Note that because of differences in
-    /// crypto backend support, this may not be functional.
     public static let gitCredentialSSHMemory            = GitCredentialT(rawValue: GIT_CREDENTIAL_SSH_MEMORY.rawValue)
     
     
