@@ -11,7 +11,7 @@ import Clibgit2
 
 
 
-// TODO: Replace `git_config_set_writeorder()`, `git_config_open_default()`, `git_repository_config()` in documentation.
+// TODO: Replace `git_repository_config()` in documentation.
 /// The priority level of a configuration file.
 ///
 /// ## Discussion
@@ -23,9 +23,9 @@ import Clibgit2
 /// Callers can add custom configuration beginning at ``gitConfigLevelApp``.
 ///
 /// By default, writes occur in the highest priority level backend that is writable. This ordering can be
-/// overridden with `git_config_set_writeorder()`.
+/// overridden with ``gitConfigSetWriteOrder(cfg:levels:len:)``.
 ///
-/// `git_config_open_default()` and `git_repository_config()` honor those priority
+/// ``gitConfigOpenDefault(out:)`` and `git_repository_config()` honor those priority
 /// levels as well.
 ///
 /// ## C Equivalent
@@ -128,6 +128,75 @@ public enum GitConfigLevelT: Int32, GitEnum
             case .gitConfigLevelWorktree    : return GIT_CONFIG_LEVEL_WORKTREE
             case .gitConfigLevelApp         : return GIT_CONFIG_LEVEL_APP
             case .gitConfigHighestLevel     : return GIT_CONFIG_HIGHEST_LEVEL
+        }
+    }
+}
+
+
+
+/// The configuration variable mapping type.
+///
+/// ## Discussion
+///
+/// This defines the different types of values that can be matched when using configuration mapping
+/// functions. Each type determines how the configuration value should be interpreted during the mapping
+/// operation.
+///
+/// ## C Equivalent
+///
+/// [`git_configmap_t`](https://libgit2.org/docs/reference/main/config/git_configmap_t.html)
+public enum GitConfigMapT: UInt32, GitEnum
+{
+    /// The configuration variable matches boolean false values.
+    ///
+    /// ## Discussion
+    ///
+    /// Boolean false values include `false`, `FALSE`, `no`, `off`, `0`, and other similar values.
+    case gitConfigMapFalse      = 0
+    
+    /// The configuration variable matches boolean true values.
+    ///
+    /// ## Discussion
+    ///
+    /// Boolean true values include `true`, `TRUE`, `yes`, `on`, `1`, and other similar values.
+    case gitConfigMapTrue       = 1
+    
+    /// The configuration variable matches 32-bit signed integer values.
+    case gitConfigMapInt32      = 2
+    
+    /// The configuration variable matches case-insensitive string values.
+    case gitConfigMapString     = 3
+    
+    
+    
+    /// Creates a ``GitConfigMapT`` instance from a `git_configmap_t` instance.
+    /// - Parameter git_configmap_t: The `git_configmap_t` instance to use.
+    internal init?(
+        cValue configMap: git_configmap_t
+    )
+    {
+        switch configMap
+        {
+            case GIT_CONFIGMAP_FALSE    : self = .gitConfigMapFalse
+            case GIT_CONFIGMAP_TRUE     : self = .gitConfigMapTrue
+            case GIT_CONFIGMAP_INT32    : self = .gitConfigMapInt32
+            case GIT_CONFIGMAP_STRING   : self = .gitConfigMapString
+            default                     : return nil
+                
+        }
+    }
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_configmap_t
+    {
+        switch self
+        {
+            case .gitConfigMapFalse     : return GIT_CONFIGMAP_FALSE
+            case .gitConfigMapTrue      : return GIT_CONFIGMAP_TRUE
+            case .gitConfigMapInt32     : return GIT_CONFIGMAP_INT32
+            case .gitConfigMapString    : return GIT_CONFIGMAP_STRING
         }
     }
 }

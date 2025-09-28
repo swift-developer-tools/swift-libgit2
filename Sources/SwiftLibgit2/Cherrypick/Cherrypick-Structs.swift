@@ -16,47 +16,46 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_options`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options.html)
-public struct GitCherrypickOptions
+public struct GitCherrypickOptions: GitStructMutable, OptionalWithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitCherrypickOptionsVersion``.
-    public var version      : UInt32
+    public var version      : UInt32                = gitCherrypickOptionsVersion
     
     /// The parent for merge commits.
-    public var mainline     : UInt32
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
+    public var mainline     : UInt32                = 0
     
     /// The options for the merge operation.
-    public var mergeOpts    : GitMergeOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default merge options.
+    public var mergeOpts    : GitMergeOptions?      = nil
     
     /// The options for the checkout operation.
-    public var checkoutOpts : GitCheckoutOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default checkout options.
+    public var checkoutOpts : GitCheckoutOptions?   = nil
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitCherrypickOptionsVersion``.
-    public init?(
-        version: UInt32 = gitCherrypickOptionsVersion
-    )
-    {
-        var cherrypickOptions = git_cherrypick_options()
-        
-        let cherrypickOptionsInitResult: Int32 = git_cherrypick_options_init(
-            &cherrypickOptions,
-            version
-        )
-        
-        if cherrypickOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: cherrypickOptions)
-    }
+    /// Creates a ``GitCherrypickOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     
@@ -98,128 +97,30 @@ public struct GitCherrypickOptions
             return body(nil)
         }
         
+        
+        
         cherrypickOptions.mainline = mainline
         
-        return withComposedProperties(
-            &cherrypickOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Composes the optional properties of ``GitCherrypickOptions``, then calls the given
-    /// closure with a pointer to the updated `git_cherrypick_options` instance.
-    /// - Parameters:
-    ///   - cherrypickOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// This function composes the following optional properties:
-    /// - ``mergeOpts``
-    /// - ``checkoutOpts``
-    ///
-    /// The composition begins by calling ``withMergeOptions(_:_:)``.
-    private func withComposedProperties<T>(
-        _   cherrypickOptions   : UnsafeMutablePointer<git_cherrypick_options>,
-        _   body                : (UnsafeMutablePointer<git_cherrypick_options>?) -> T
-    ) -> T
-    {
-        return withMergeOptions(
-            cherrypickOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Updates the given `git_cherrypick_options` instance with the value of ``mergeOpts``,
-    /// then continues the composition by calling ``withCheckoutOptions(_:_:)``.
-    /// - Parameters:
-    ///   - cherrypickOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``mergeOpts`` is `nil`, this function will proceed directly to the next step in the composition.
-    ///
-    /// If ``GitMergeOptions.withCValue(_:)`` fails, this function will call the given closure
-    /// with `nil`.
-    private func withMergeOptions<T>(
-        _   cherrypickOptions   : UnsafeMutablePointer<git_cherrypick_options>,
-        _   body                : (UnsafeMutablePointer<git_cherrypick_options>?) -> T
-    ) -> T
-    {
-        guard let mergeOpts: GitMergeOptions = mergeOpts
-        else
-        {
-            return withCheckoutOptions(
-                cherrypickOptions,
-                body
-            )
-        }
-        
-        return mergeOpts.withCValue
+        return mergeOpts.withOptionalCValue
         {
             cMergeOpts in
             
-            guard let cMergeOpts: UnsafeMutablePointer<git_merge_options> = cMergeOpts
-            else
+            if let cMergeOpts: UnsafeMutablePointer<git_merge_options> = cMergeOpts
             {
-                return body(nil)
+                cherrypickOptions.merge_opts = cMergeOpts.pointee
             }
             
-            cherrypickOptions.pointee.merge_opts = cMergeOpts.pointee
-            
-            return withCheckoutOptions(
-                cherrypickOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_cherrypick_options` instance with the value of
-    /// ``checkoutOpts``, then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - cherrypickOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``checkoutOpts`` is `nil`, this function will proceed directly to calling the given closure.
-    ///
-    /// If ``GitCheckoutOptions.withCValue(_:)`` fails, this function will call the given closure
-    /// with `nil`.
-    private func withCheckoutOptions<T>(
-        _   cherrypickOptions   : UnsafeMutablePointer<git_cherrypick_options>,
-        _   body                : (UnsafeMutablePointer<git_cherrypick_options>?) -> T
-    ) -> T
-    {
-        guard let checkoutOpts: GitCheckoutOptions = checkoutOpts
-        else
-        {
-            return body(cherrypickOptions)
-        }
-        
-        return checkoutOpts.withCValue
-        {
-            cCheckoutOpts in
-            
-            guard let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
-            else
+            return checkoutOpts.withOptionalCValue
             {
-                return body(nil)
+                cCheckoutOpts in
+                
+                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
+                {
+                    cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
+                }
+                
+                return body(&cherrypickOptions)
             }
-            
-            cherrypickOptions.pointee.checkout_opts = cCheckoutOpts.pointee
-            
-            return body(cherrypickOptions)
         }
     }
 }

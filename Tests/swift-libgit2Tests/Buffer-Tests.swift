@@ -118,12 +118,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            guard let blobFilterOptions = GitBlobFilterOptions()
-            else
-            {
-                XCTFail("The blob filter options were nil.")
-                return
-            }
+            let blobFilterOptions = GitBlobFilterOptions()
             
             /// Test reuse behavior of the same buffer.
             blobFilterResult = gitBlobFilter(

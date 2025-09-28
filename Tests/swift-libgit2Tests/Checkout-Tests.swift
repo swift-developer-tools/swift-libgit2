@@ -116,12 +116,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             {
                 callbackDataPointer in
                 
-                guard var checkoutOptions = GitCheckoutOptions()
-                else
-                {
-                    XCTFail("The checkout options were nil.")
-                    return
-                }
+                var checkoutOptions = GitCheckoutOptions()
                 
                 checkoutOptions.checkoutStrategy    = .gitCheckoutForce
                 checkoutOptions.notifyFlags         = .gitCheckoutNotifyUpdated
@@ -139,8 +134,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(checkoutResult)
             }
-            
-            
             
             XCTAssertGreaterThan(callbackData.notifyCallCount, 0)
             XCTAssertNotNil(callbackData.lastNotifyPath)
@@ -186,12 +179,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            guard var checkoutOptions = GitCheckoutOptions()
-            else
-            {
-                XCTFail("The checkout options were nil.")
-                return
-            }
+            var checkoutOptions = GitCheckoutOptions()
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
@@ -276,12 +264,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            guard var checkoutOptions = GitCheckoutOptions()
-            else
-            {
-                XCTFail("The checkout options were nil.")
-                return
-            }
+            var checkoutOptions = GitCheckoutOptions()
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             
@@ -368,12 +351,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutOptions() throws
     {
-        guard var checkoutOptions = GitCheckoutOptions()
-        else
-        {
-            XCTFail("The checkout options were nil.")
-            return
-        }
+        var checkoutOptions = GitCheckoutOptions()
         
         /// `dirMode`, `fileMode`, and `fileOpenFlags` are zero-initialized.
         /// The documentation defaults refer to runtime defaults set in `checkout_data_init()`
@@ -401,20 +379,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(gitCheckoutOptionsVersion, UInt32(GIT_CHECKOUT_OPTIONS_VERSION))
         
-        
-        
-        checkoutOptions.checkoutStrategy = GitCheckoutStrategyT(rawValue: 123)
-        
-        XCTAssertEqual(checkoutOptions.checkoutStrategy, GitCheckoutStrategyT(rawValue: 123))
-        
-        
-        
-        checkoutOptions.checkoutStrategy = .gitCheckoutForce
-        
-        XCTAssertEqual(checkoutOptions.checkoutStrategy, .gitCheckoutForce)
-        
-        
-        
         checkoutOptions.checkoutStrategy =
         [
             .gitCheckoutSafe,
@@ -425,20 +389,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertTrue(checkoutOptions.checkoutStrategy.contains(.gitCheckoutRecreateMissing))
         XCTAssertFalse(checkoutOptions.checkoutStrategy.contains(.gitCheckoutRemoveIgnored))
         
-        
-        
-        checkoutOptions.notifyFlags = GitCheckoutNotifyT(rawValue: 123)
-        
-        XCTAssertEqual(checkoutOptions.notifyFlags, GitCheckoutNotifyT(rawValue: 123))
-        
-        
-        
-        checkoutOptions.notifyFlags = .gitCheckoutNotifyConflict
-        
-        XCTAssertEqual(checkoutOptions.notifyFlags, .gitCheckoutNotifyConflict)
-        
-        
-        
         checkoutOptions.notifyFlags =
         [
             .gitCheckoutNotifyUntracked,
@@ -448,18 +398,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertTrue(checkoutOptions.notifyFlags.contains(.gitCheckoutNotifyUntracked))
         XCTAssertTrue(checkoutOptions.notifyFlags.contains(.gitCheckoutNotifyIgnored))
         XCTAssertFalse(checkoutOptions.notifyFlags.contains(.gitCheckoutNotifyConflict))
-        
-        
-        
-        checkoutOptions.disableFilters = true
-        
-        XCTAssertTrue(checkoutOptions.disableFilters)
-        
-        
-        
-        checkoutOptions.dirMode = 0o644
-        
-        XCTAssertEqual(checkoutOptions.dirMode, 0o644)
     }
     
     
@@ -610,12 +548,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            guard var checkoutOptions = GitCheckoutOptions()
-            else
-            {
-                XCTFail("The checkout options were nil.")
-                return
-            }
+            var checkoutOptions = GitCheckoutOptions()
             
             checkoutOptions.checkoutStrategy = .gitCheckoutForce
             

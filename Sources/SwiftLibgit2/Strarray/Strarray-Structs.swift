@@ -22,11 +22,23 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_strarray`](https://libgit2.org/docs/reference/main/strarray/git_strarray.html)
-public struct GitStrArray
+public struct GitStrArray: GitStruct
 {
     /// The array of strings.
     public let strings  : [String]
     
     /// The number of strings in the array.
     public let count    : Int
+    
+    
+    
+    /// Creates a ``GitStrArray`` instance from a `git_strarray` instance.
+    /// - Parameter strArray: The `git_strarray` instance to use.
+    internal init(
+        cValue strArray: git_strarray
+    )
+    {
+        self.strings    = Array(strArray)
+        self.count      = strArray.count
+    }
 }

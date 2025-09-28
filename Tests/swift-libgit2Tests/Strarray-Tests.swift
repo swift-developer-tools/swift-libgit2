@@ -18,16 +18,6 @@ final class StrArrayTests: XCTestCaseStopOnFail
     {
         let strings: [String] = ["hello", "world"]
         
-        let strArray = GitStrArray(
-            strings:    strings,
-            count:      strings.count
-        )
-        
-        XCTAssertEqual(strArray.strings, strings)
-        XCTAssertEqual(strArray.count, strings.count)
-        
-        
-        
         strings.withGitStrArray
         {
             strArray in

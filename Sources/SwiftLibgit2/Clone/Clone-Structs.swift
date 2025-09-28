@@ -16,86 +16,97 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_clone_options`](https://libgit2.org/docs/reference/main/clone/git_clone_options.html)
-public struct GitCloneOptions
+public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitCloneOptionsVersion``.
-    public var version              : UInt32
+    public var version              : UInt32                    = gitCloneOptionsVersion
     
     /// The options for the checkout operation.
-    public var checkoutOpts         : GitCheckoutOptions?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default checkout options.
+    public var checkoutOpts         : GitCheckoutOptions?       = nil
     
     /// The options for the fetch operation, including callbacks.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// default fetch options.
+    ///
     /// The callbacks are used for reporting fetch progress and for acquiring credentials in the event
     /// that they are needed.
-    public var fetchOpts            : GitFetchOptions?
+    public var fetchOpts            : GitFetchOptions?          = nil
     
     /// Whether a bare repository should be created.
-    public var bare                 : Bool
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `false`.
+    public var bare                 : Bool                      = false
     
-    /// The options for bypassing the Git-aware transport on clone.
-    public var local                : GitCloneLocalT
+    /// The option for bypassing the Git-aware transport on clone.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitCloneLocalT/gitCloneLocalAuto``.
+    public var local                : GitCloneLocalT            = .gitCloneLocalAuto
     
     /// The name of the branch to checkout.
     ///
     /// ## Discussion
     ///
-    /// Pass `nil` to use the remote's default branch.
-    public var checkoutBranch       : String?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
+    /// remote's default branch.
+    public var checkoutBranch       : String?                   = nil
     
     /// A callback used to create the new repository into which to clone.
     ///
     /// ## Discussion
     ///
-    /// If this is `nil`, then the ``bare`` property will be used to determine whether to create a
-    /// bare repository.
-    public var repositoryCB         : GitRepositoryCreateCB?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using ``bare``
+    /// property to determine whether to create a bare repository.
+    public var repositoryCB         : GitRepositoryCreateCB?    = nil
     
     /// The caller-specified payload passed to ``repositoryCB``.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This property will be ignored unless ``repositoryCB`` is not `nil`.
-    public var repositoryCBPayload  : UnsafeMutableRawPointer?
+    public var repositoryCBPayload  : UnsafeMutableRawPointer?  = nil
     
     /// A callback used to create the remote, prior to its being used to perform the clone operation.
-    public var remoteCB             : GitRemoteCreateCB?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var remoteCB             : GitRemoteCreateCB?        = nil
     
     /// The caller-specified payload passed to ``remoteCB``.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// This property will be ignored unless ``remoteCB`` is not `nil`.
-    public var remoteCBPayload      : UnsafeMutableRawPointer?
+    public var remoteCBPayload      : UnsafeMutableRawPointer?  = nil
     
     
     
-    /// Creates a ``GitCloneOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitCloneOptionsVersion``.
-    public init?(
-        version: UInt32 = gitCloneOptionsVersion
-    )
-    {
-        var cloneOptions = git_clone_options()
-        
-        let cloneOptionsInitResult: Int32 = git_clone_options_init(
-            &cloneOptions,
-            version
-        )
-        
-        if cloneOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: cloneOptions)
-    }
+    /// Creates a ``GitCloneOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     
@@ -108,7 +119,7 @@ public struct GitCloneOptions
         self.version                = cloneOptions.version
         self.checkoutOpts           = GitCheckoutOptions(cValue: cloneOptions.checkout_opts)
         self.fetchOpts              = GitFetchOptions(cValue: cloneOptions.fetch_opts)
-        self.bare                   = cloneOptions.bare == 1
+        self.bare                   = Bool(cloneOptions.bare)
         self.local                  = GitCloneLocalT(cValue: cloneOptions.local) ?? .gitCloneLocal
         self.checkoutBranch         = String(optionalCString: cloneOptions.checkout_branch)
         self.repositoryCB           = cloneOptions.repository_cb
@@ -142,6 +153,8 @@ public struct GitCloneOptions
             return body(nil)
         }
         
+        
+        
         cloneOptions.bare                   = bare.cValue
         cloneOptions.local                  = local.cValue
         cloneOptions.repository_cb          = repositoryCB
@@ -155,128 +168,27 @@ public struct GitCloneOptions
             
             cloneOptions.checkout_branch = cCheckoutBranch
             
-            return withComposedProperties(
-                &cloneOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Composes the optional properties of ``GitCloneOptions``, then calls the given closure
-    /// with a pointer to the updated `git_clone_options` instance.
-    /// - Parameters:
-    ///   - cloneOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// This function composes the following optional properties:
-    /// - ``checkoutOpts``
-    /// - ``fetchOpts``
-    ///
-    /// The composition begins by calling ``withCheckoutOptions(_:_:)``.
-    private func withComposedProperties<T>(
-        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
-        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
-    ) -> T
-    {
-        return withCheckoutOptions(
-            cloneOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Updates the given `git_clone_options` instance with the value of ``checkoutOpts``,
-    /// then continues the composition by calling ``withFetchOptions(_:_:)``.
-    /// - Parameters:
-    ///   - cloneOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``checkoutOpts`` is `nil`, this function will proceed directly to the next step in the
-    /// composition.
-    ///
-    /// If ``GitCheckoutOptions.withCValue(_:)`` fails, this function will call the given closure
-    /// with `nil`.
-    private func withCheckoutOptions<T>(
-        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
-        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
-    ) -> T
-    {
-        guard let checkoutOpts: GitCheckoutOptions = checkoutOpts
-        else
-        {
-            return withFetchOptions(
-                cloneOptions,
-                body
-            )
-        }
-        
-        return checkoutOpts.withCValue
-        {
-            cCheckoutOpts in
-            
-            guard let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
-            else
+            return checkoutOpts.withOptionalCValue
             {
-                return body(nil)
+                cCheckoutOpts in
+                
+                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
+                {
+                    cloneOptions.checkout_opts = cCheckoutOpts.pointee
+                }
+                
+                return fetchOpts.withOptionalCValue
+                {
+                    cFetchOpts in
+                    
+                    if let cFetchOpts: UnsafeMutablePointer<git_fetch_options> = cFetchOpts
+                    {
+                        cloneOptions.fetch_opts = cFetchOpts.pointee
+                    }
+                    
+                    return body(&cloneOptions)
+                }
             }
-            
-            cloneOptions.pointee.checkout_opts = cCheckoutOpts.pointee
-            
-            return withFetchOptions(
-                cloneOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_clone_options` instance with the value of ``fetchOpts``,
-    /// then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - cloneOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``fetchOpts`` is `nil`, this function will proceed directly to calling the given closure.
-    ///
-    /// If ``GitFetchOptions.withCValue(_:)`` fails, this function will call the given closure
-    /// with `nil`.
-    private func withFetchOptions<T>(
-        _   cloneOptions    : UnsafeMutablePointer<git_clone_options>,
-        _   body            : (UnsafeMutablePointer<git_clone_options>?) -> T
-    ) -> T
-    {
-        guard let fetchOpts: GitFetchOptions = fetchOpts
-        else
-        {
-            return body(cloneOptions)
-        }
-        
-        return fetchOpts.withCValue
-        {
-            cFetchOpts in
-            
-            guard let cFetchOpts: UnsafeMutablePointer<git_fetch_options> = cFetchOpts
-            else
-            {
-                return body(nil)
-            }
-            
-            cloneOptions.pointee.fetch_opts = cFetchOpts.pointee
-            
-            return body(cloneOptions)
         }
     }
 }

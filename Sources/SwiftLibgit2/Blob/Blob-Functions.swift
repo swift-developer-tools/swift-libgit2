@@ -80,7 +80,7 @@ public func gitBlobFree(
     blob: OpaquePointer?
 )
 {
-    return git_blob_free(blob)
+    git_blob_free(blob)
 }
 
 
@@ -189,28 +189,13 @@ public func gitBlobFilter(
     opts    : GitBlobFilterOptions?
 ) -> Int32
 {
-    guard let opts: GitBlobFilterOptions = opts
-    else
-    {
-        return out.withMutatingCValue
-        {
-            cOut in
-            
-            return git_blob_filter(
-                cOut,
-                blob,
-                asPath,
-                nil
-            )
-        }
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         
-        guard let cOpts: UnsafeMutablePointer<git_blob_filter_options> = cOpts
-        else
+        if
+            opts != nil,
+            cOpts == nil
         {
             return GIT_EUSER.rawValue
         }
@@ -249,17 +234,16 @@ public func gitBlobCreateFromWorkdir(
     relativePath    : String
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let blobCreateFromWorkdirResult: Int32 = git_blob_create_from_workdir(
-        &cID,
-        repo,
-        relativePath
-    )
-    
-    id = GitOID(cValue: cID)
-    
-    return blobCreateFromWorkdirResult
+    return id.withMutatingCValue
+    {
+        cID in
+        
+        return git_blob_create_from_workdir(
+            cID,
+            repo,
+            relativePath
+        )
+    }
 }
 
 
@@ -282,17 +266,16 @@ public func gitBlobCreateFromDisk(
     path    : String
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let blobCreateFromDiskResult: Int32 = git_blob_create_from_disk(
-        &cID,
-        repo,
-        path
-    )
-    
-    id = GitOID(cValue: cID)
-    
-    return blobCreateFromDiskResult
+    return id.withMutatingCValue
+    {
+        cID in
+        
+        return git_blob_create_from_disk(
+            cID,
+            repo,
+            path
+        )
+    }
 }
 
 
@@ -357,16 +340,15 @@ public func gitBlobCreateFromStreamCommit(
     stream  : UnsafeMutablePointer<git_writestream>
 ) -> Int32
 {
-    var cOut: git_oid = out.cValue
-    
-    let blobCreateFromStreamCommitResult: Int32 = git_blob_create_from_stream_commit(
-        &cOut,
-        stream
-    )
-    
-    out = GitOID(cValue: cOut)
-    
-    return blobCreateFromStreamCommitResult
+    return out.withMutatingCValue
+    {
+        cOut in
+        
+        return git_blob_create_from_stream_commit(
+            cOut,
+            stream
+        )
+    }
 }
 
 
@@ -390,18 +372,17 @@ public func gitBlobCreateFromBuffer(
     len     : Int
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let blobCreateFromBufferResult: Int32 = git_blob_create_from_buffer(
-        &cID,
-        repo,
-        buffer,
-        len
-    )
-    
-    id = GitOID(cValue: cID)
-    
-    return blobCreateFromBufferResult
+    return id.withMutatingCValue
+    {
+        cID in
+        
+        return git_blob_create_from_buffer(
+            cID,
+            repo,
+            buffer,
+            len
+        )
+    }
 }
 
 
@@ -423,7 +404,7 @@ public func gitBlobIsBinary(
     blob: OpaquePointer
 ) -> Bool
 {
-    return git_blob_is_binary(blob) == 1
+    return Bool(git_blob_is_binary(blob))
 }
 
 
@@ -447,10 +428,7 @@ public func gitBlobDataIsBinary(
     len     : Int
 ) -> Bool
 {
-    return git_blob_data_is_binary(
-        data,
-        len
-    ) == 1
+    return Bool(git_blob_data_is_binary(data, len))
 }
 
 

@@ -188,7 +188,7 @@ public func gitBranchIteratorFree(
     iter: OpaquePointer?
 )
 {
-    return git_branch_iterator_free(iter)
+    git_branch_iterator_free(iter)
 }
 
 
@@ -558,7 +558,7 @@ public func gitBranchIsValid(
         name
     )
     
-    valid.pointee = intValid == 1
+    valid.pointee = Bool(intValid)
     
     return branchNameIsValidResult
 }

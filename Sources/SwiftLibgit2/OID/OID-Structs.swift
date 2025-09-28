@@ -17,21 +17,18 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_oid`](https://libgit2.org/docs/reference/main/oid/git_oid.html)
-public struct GitOID
+public struct GitOID: GitStructInternalMutable, NonOptionalCConvertible
 {
     /// The raw binary-formatted ID.
-    public private(set) var id: Data
+    public private(set) var id: Data = Data(count: Self.size)
     
     /// The size of a Git OID in bytes.
-    private static let size: Int = 20
+    internal static let size: Int = 20
     
     
     
     /// Creates a ``GitOID`` instance.
-    public init()
-    {
-        self.id = Data(count: Self.size)
-    }
+    public init() { }
     
     
     
@@ -63,10 +60,29 @@ public struct GitOID
             _ = memcpy(
                 &oid.id,
                 bytes.baseAddress,
-                Self.size
+                min(bytes.count, Self.size)
             )
         }
         
         return oid
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_oid` instance, and updates this ``GitOID``
+    /// instance with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<git_oid>) -> T
+    ) -> T
+    {
+        var oid = cValue
+        
+        let result: T = body(&oid)
+        
+        self = GitOID(cValue: oid)
+        
+        return result
     }
 }

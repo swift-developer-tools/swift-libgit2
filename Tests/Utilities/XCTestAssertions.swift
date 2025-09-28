@@ -18,13 +18,29 @@ import XCTest
 
 
 
+/// Checks if a libgit2 result code is `GIT_OK`, or is one of the given codes.
+/// - Parameters:
+///   - resultCode: The libgit2 result code.
+///   - includedCodes: The libgit2 result codes other than `GIT_OK` to consider successful.
+/// - Returns: Whether the libgit2 result code was `GIT_OK`, or was one of the given result codes.
+func isOK(
+    _           resultCode      : Int32,
+    including   includedCodes   : Set<Int32>    = []
+) -> Bool
+{
+    return resultCode == GIT_OK.rawValue
+           || includedCodes.contains(resultCode)
+}
+
+
+
 /// Asserts that the given libgit2 operation result code is `GIT_OK`.
 /// - Parameter result: The libgit2 operation result code.
 func XCTAssertOK(
     _ result: Int32
 )
 {
-    guard result != GIT_OK.rawValue
+    guard !isOK(result)
     else
     {
         return
@@ -51,10 +67,10 @@ func XCTAssertNotOK(
     _ result: Int32
 )
 {
-    guard result != GIT_OK.rawValue
+    guard !isOK(result)
     else
     {
-        XCTFail("The result (\(result)) was not GIT_OK.")
+        XCTFail("The result was GIT_OK.")
         return
     }
     

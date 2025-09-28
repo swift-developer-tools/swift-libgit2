@@ -34,7 +34,7 @@ memory management and calling conventions. This includes callbacks invoked by
 libgit2 internally, output parameters where libgit2 owns the returned memory, 
 and other cases where C types cannot be accurately represented in Swift.
 
-The Swift bindings for bit set C enums are represented as structs, but remain 
+The Swift bindings for bitset C enums are represented as structs, but remain 
 in their respective "Enums" documentation section to match libgit2's API 
 organization. The bindings for C enums with mutually exclusive values are 
 represented as standard Swift enums.
@@ -102,8 +102,8 @@ let cShutdownResult : Int32 = git_libgit2_shutdown()
 
 ### Error Handling
 
-Most Swift function bindings return an `Int32` libgit2 result code.
-A value of `0` represents success, while any negative value represents an error. 
+Most Swift function bindings return an `Int32` libgit2 result code. Generally, 
+a value of `0` represents success, while any negative value represents an error. 
 Handle errors gracefully before moving on to the next step of the process.
 
 ### Memory Management
@@ -131,9 +131,9 @@ to ensure thread-safe access to libgit2.
 ### Concurrency
 
 Some libgit2 APIs are asynchronous, but are not exposed as asynchronous. 
-Generally, any API which interacts with a remote repository will be 
-asynchronous. Since swift-libgit2 provides direct bindings to libgit2, no 
-Swift methods are asynchronous either. Consider using an appropriate 
+Generally, any API which interacts with a remote repository is asynchronous.
+Since swift-libgit2 provides direct bindings to libgit2, no Swift methods
+are asynchronous either. Consider using an appropriate 
 [concurrency](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/) 
 API to handle these cases and other synchronous work which may be better 
 performed off the main thread.
@@ -535,9 +535,66 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitLibgit2OptGetUserAgentProduct(out:)``
 - ``gitLibgit2OptAddSSLX509Cert(cert:)``
 
+### Config Structs
+
+- ``GitConfigEntry``
+- ``GitConfigMap``
+
 ### Config Enums
 
 - ``GitConfigLevelT``
+- ``GitConfigMapT``
+
+### Config Callbacks
+
+- ``GitConfigForEachCB``
+
+### Config Functions
+
+- ``gitConfigEntryFree(entry:)``
+- ``gitConfigFindGlobal(out:)``
+- ``gitConfigFindXDG(out:)``
+- ``gitConfigFindSystem(out:)``
+- ``gitConfigFindProgramData(out:)``
+- ``gitConfigOpenDefault(out:)``
+- ``gitConfigNew(out:)``
+- ``gitConfigAddFileOnDisk(cfg:path:level:repo:force:)``
+- ``gitConfigOpenOnDisk(out:path:)``
+- ``gitConfigOpenLevel(out:parent:level:)``
+- ``gitConfigOpenGlobal(out:config:)``
+- ``gitConfigSetWriteOrder(cfg:levels:len:)``
+- ``gitConfigSnapshot(out:config:)``
+- ``gitConfigFree(cfg:)``
+- ``gitConfigGetEntry(out:cfg:name:)``
+- ``gitConfigGetInt32(out:cfg:name:)``
+- ``gitConfigGetInt64(out:cfg:name:)``
+- ``gitConfigGetBool(out:cfg:name:)``
+- ``gitConfigGetPath(out:cfg:name:)``
+- ``gitConfigGetString(out:cfg:name:)``
+- ``gitConfigGetStringBuf(out:cfg:name:)``
+- ``gitConfigGetMultivarForEach(cfg:name:regExp:callback:payload:)``
+- ``gitConfigMultivarIteratorNew(out:cfg:name:regExp:)``
+- ``gitConfigNext(entry:iter:)``
+- ``gitConfigIteratorFree(iter:)``
+- ``gitConfigSetInt32(cfg:name:value:)``
+- ``gitConfigSetInt64(cfg:name:value:)``
+- ``gitConfigSetBool(cfg:name:value:)``
+- ``gitConfigSetString(cfg:name:value:)``
+- ``gitConfigSetMultivar(cfg:name:regExp:value:)``
+- ``gitConfigDeleteEntry(cfg:name:)``
+- ``gitConfigDeleteMultivar(cfg:name:regExp:)``
+- ``gitConfigForEach(cfg:callback:payload:)``
+- ``gitConfigIteratorNew(out:cfg:)``
+- ``gitConfigIteratorGlobNew(out:cfg:regExp:)``
+- ``gitConfigForEachMatch(cfg:regExp:callback:payload:)``
+- ``gitConfigGetMapped(out:cfg:name:maps:mapN:)``
+- ``gitConfigLookupMapValue(out:maps:mapN:value:)``
+- ``gitConfigParseBool(out:value:)``
+- ``gitConfigParseInt32(out:value:)``
+- ``gitConfigParseInt64(out:value:)``
+- ``gitConfigParsePath(out:value:)``
+- ``gitConfigBackendForEachMatch(backend:regExp:callback:payload:)``
+- ``gitConfigLock(tx:cfg:)``
 
 ### Credential Enums
 

@@ -25,7 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf
+public struct GitBuf: GitStructInternalMutable, NonOptionalWithCConvertible
 {
     /// The buffer contents.
     ///
@@ -43,34 +43,40 @@ public struct GitBuf
     ///
     /// In swift-libgit2, ``GitBuf/ptr`` uses Swift's optional type, where `nil` represents both
     /// the initial state and the disposed state for more idiomatic Swift.
-    public var ptr      : UnsafeMutablePointer<CChar>?
+    public internal(set) var ptr        : UnsafeMutablePointer<CChar>?  = nil
     
     /// This property is unused, but is reserved for API compatibility.
-    public var reserved : Int
+    public internal(set) var reserved   : Int                           = 0
     
     /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the null
     /// terminator.
-    public var size     : Int
+    public internal(set) var size       : Int                           = 0
     
     
     
     /// Creates a ``GitBuf`` instance.
-    public init()
+    public init() { }
+    
+    
+    
+    /// Creates a ``GitBuf`` instance from a `git_buf` instance.
+    /// - Parameter buf: The `git_buf` instance to use.
+    internal init(
+        cValue buf: git_buf
+    )
     {
-        /// libgit2 does not provide an initialization function for `git_buf`.
-        /// The C macro `GIT_BUF_INIT` would initialize all fields to `0` or `NULL`,
-        /// so that approach is mirrored here.
-        self.ptr        = nil
-        self.reserved   = 0
-        self.size       = 0
+        self.ptr        = buf.ptr
+        self.reserved   = buf.reserved
+        self.size       = buf.size
     }
+    
     
     
     
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    internal mutating func withMutatingCValue<T>(
+    internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_buf>) -> T
     ) -> T
     {
@@ -80,12 +86,30 @@ public struct GitBuf
         buffer.reserved     = reserved
         buffer.size         = size
         
-        let result: T = body(&buffer)
-        
-        ptr        = buffer.ptr
-        reserved   = buffer.reserved
-        size       = buffer.size
-        
-        return result
+        return body(&buffer)
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_buf` instance, and updates this ``GitBuf``
+    /// instance with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<git_buf>) -> T
+    ) -> T
+    {
+        return withCValue
+        {
+            buffer in
+            
+            let result: T = body(buffer)
+            
+            ptr        = buffer.pointee.ptr
+            reserved   = buffer.pointee.reserved
+            size       = buffer.pointee.size
+            
+            return result
+        }
     }
 }

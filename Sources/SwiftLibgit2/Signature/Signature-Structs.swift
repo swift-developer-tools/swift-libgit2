@@ -16,47 +16,45 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_signature`](https://libgit2.org/docs/reference/main/signature/git_signature.html)
-public struct GitSignature
+public struct GitSignature: GitStructInternalMutable, NonOptionalWithCConvertible
 {
     /// The full name of the actor.
     ///
     /// ## Discussion
     ///
     /// Angle brackets (`<` and `>`) are not allowed.
-    public private(set) var name    : String
+    public private(set) var name    : String = ""
     
     /// The email of the actor.
     ///
     /// ## Discussion
     ///
     /// Angle brackets (`<` and `>`) are not allowed.
-    public private(set) var email   : String
+    public private(set) var email   : String = ""
     
     /// The time when the action happened.
-    public private(set) var when    : GitTime
+    public private(set) var when    : GitTime = GitTime(cValue: git_time())
     
     
     
     /// Creates a ``GitSignature`` instance.
-    public init()
-    {
-        /// Direct initialization with `self.init(cValue: git_signature())` is not used
-        /// since the unitialized C struct contains `nil` pointers for the `name` and `email` fields.
-        self.name   = ""
-        self.email  = ""
-        self.when   = GitTime(cValue: git_time())
-    }
+    public init() { }
     
     
     
     /// Creates a ``GitSignature`` instance from a `git_signature` instance.
     /// - Parameter signature: The `git_signature` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The default values of ``name`` and ``email`` are empty strings instead of `nil`
+    /// to ensure validation failures, since Git requires non-empty identity information.
+    /// Generally, neither of these should ever be `nil` when initializing from a `git_signature`
+    /// returned by libgit2.
     internal init(
         cValue signature: git_signature
     )
     {
-        /// Use empty strings for `nil` pointers to ensure validation failures, since Git requires
-        /// non-empty identity information. Generally, neither of these should ever be `nil`.
         self.name   = String(optionalCString: signature.name)   ?? ""
         self.email  = String(optionalCString: signature.email)  ?? ""
         self.when   = GitTime(cValue: signature.when)
@@ -99,7 +97,8 @@ public struct GitSignature
     
     
     
-    /// Calls the given closure with a pointer to a pointer to a `git_signature` instance.
+    /// Calls the given closure with a pointer to a pointer to a `git_signature` instance, and
+    /// updates this ``GitSignature`` instance with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     ///
@@ -111,40 +110,20 @@ public struct GitSignature
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<git_signature>?>) -> T
     ) -> T
     {
-        var signature: UnsafeMutablePointer<git_signature>? = nil
-        
-        defer
+        return withCValue
         {
-            if signature != nil
+            signature in
+            
+            var optionalSignature: UnsafeMutablePointer<git_signature>? = signature
+            
+            let result: T = body(&optionalSignature)
+            
+            if let finalSignature: UnsafeMutablePointer<git_signature> = optionalSignature
             {
-                gitSignatureFree(sig: signature)
+                self = GitSignature(cValue: finalSignature.pointee)
             }
-        }
-        
-        
-        
-        let result: T = body(&signature)
-        
-        guard let signature: UnsafeMutablePointer<git_signature> = signature
-        else
-        {
+            
             return result
         }
-        
-        if let intResult = result as? Int32
-        {
-            if intResult == GIT_OK.rawValue
-            {
-                self = GitSignature(cValue: signature.pointee)
-            }
-        }
-        else
-        {
-            self = GitSignature(cValue: signature.pointee)
-        }
-        
-        
-        
-        return result
     }
 }

@@ -95,19 +95,7 @@ public func gitAttrGetExt(
     name        : String
 ) -> Int32
 {
-    guard let opts: GitAttrOptions = opts
-    else
-    {
-        return git_attr_get_ext(
-            valueOut,
-            repo,
-            nil,
-            path,
-            name
-        )
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         
@@ -196,20 +184,7 @@ public func gitAttrGetManyExt(
     {
         cNames in
         
-        guard let opts: GitAttrOptions = opts
-        else
-        {
-            return git_attr_get_many_ext(
-                valueOut,
-                repo,
-                nil,
-                path,
-                numAttr,
-                cNames
-            )
-        }
-        
-        return opts.withCValue
+        return opts.withOptionalCValue
         {
             cOpts in
             
@@ -282,19 +257,7 @@ public func gitAttrForEachExt(
     payload     : UnsafeMutableRawPointer?
 ) -> Int32
 {
-    guard let opts: GitAttrOptions = opts
-    else
-    {
-        return git_attr_foreach_ext(
-            repo,
-            nil,
-            path,
-            callback,
-            payload
-        )
-    }
-    
-    return opts.withCValue
+    return opts.withOptionalCValue
     {
         cOpts in
         

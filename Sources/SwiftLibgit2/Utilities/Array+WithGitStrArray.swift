@@ -25,15 +25,15 @@ internal extension Array where Element == String
         _ body: (UnsafeMutablePointer<git_strarray>) -> T
     ) -> T
     {
-        var strarray = git_strarray()
+        var strArray = git_strarray()
         
         defer
         {
             if
-                strarray.count > 0,
-                strarray.strings != nil
+                strArray.count > 0,
+                strArray.strings != nil
             {
-                strarray.strings?.deallocate()
+                strArray.strings?.deallocate()
             }
         }
         
@@ -42,7 +42,7 @@ internal extension Array where Element == String
         guard !self.isEmpty
         else
         {
-            return body(&strarray)
+            return body(&strArray)
         }
         
         
@@ -60,24 +60,24 @@ internal extension Array where Element == String
                 pointers[index] = cString
             }
             
-            strarray.strings    = pointers
-            strarray.count      = cStrings.count
+            strArray.strings    = pointers
+            strArray.count      = cStrings.count
             
-            return body(&strarray)
+            return body(&strArray)
         }
     }
     
     
     
     /// Creates a `[String]` from a `git_strarray` instance.
-    /// - Parameter strarray: The `git_strarray` instance to convert.
+    /// - Parameter strArray: The `git_strarray` instance to convert.
     init(
-        _ strarray: git_strarray
+        _ strArray: git_strarray
     )
     {
         guard
-            strarray.count > 0,
-            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strarray.strings
+            strArray.count > 0,
+            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strArray.strings
         else
         {
             self = []
@@ -88,11 +88,11 @@ internal extension Array where Element == String
         
         var swiftStrings: [String] = []
         
-        swiftStrings.reserveCapacity(strarray.count)
+        swiftStrings.reserveCapacity(strArray.count)
         
         
         
-        for index in 0..<strarray.count
+        for index in 0..<strArray.count
         {
             if let swiftString = String(optionalCString: cStrings[index])
             {

@@ -340,5 +340,5 @@ public func gitBlameFree(
     blame: OpaquePointer?
 )
 {
-    return git_blame_free(blame)
+    git_blame_free(blame)
 }

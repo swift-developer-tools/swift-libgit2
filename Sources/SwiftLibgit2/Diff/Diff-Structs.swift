@@ -21,7 +21,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile
+public struct GitDiffFile: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The ID of the item.
     ///
@@ -78,6 +78,33 @@ public struct GitDiffFile
             default                                                 : self.mode = .gitFileModeUnreadable
         }
     }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_diff_file` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_diff_file>) -> T
+    ) -> T
+    {
+        var diffFile = git_diff_file()
+        
+        diffFile.id         = id.cValue
+        diffFile.size       = size
+        diffFile.flags      = flags.rawValue
+        diffFile.mode       = mode.rawValue
+        diffFile.id_abbrev  = idAbbrev
+        
+        return path.withOptionalCString
+        {
+            cPath in
+            
+            diffFile.path = cPath
+            
+            return body(&diffFile)
+        }
+    }
 }
 
 
@@ -125,7 +152,7 @@ public struct GitDiffFile
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta
+public struct GitDiffDelta: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -141,10 +168,10 @@ public struct GitDiffDelta
     public let nFiles       : UInt16
     
     /// The old version of the file.
-    public let oldFile      : GitDiffFile?
+    public let oldFile      : GitDiffFile
     
     /// The new version of the file.
-    public let newFile      : GitDiffFile?
+    public let newFile      : GitDiffFile
     
     
     
@@ -166,6 +193,39 @@ public struct GitDiffDelta
         self.oldFile        = GitDiffFile(cValue: diffDelta.old_file)
         self.newFile        = GitDiffFile(cValue: diffDelta.new_file)
     }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_diff_delta` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_diff_delta>) -> T
+    ) -> T
+    {
+        var diffDelta = git_diff_delta()
+        
+        diffDelta.status        = status.cValue
+        diffDelta.flags         = flags.rawValue
+        diffDelta.similarity    = similarity
+        diffDelta.nfiles        = nFiles
+        
+        return oldFile.withCValue
+        {
+            cOldFile in
+            
+            diffDelta.old_file = cOldFile.pointee
+            
+            return newFile.withCValue
+            {
+                cNewFile in
+                
+                diffDelta.new_file = cNewFile.pointee
+                
+                return body(&diffDelta)
+            }
+        }
+    }
 }
 
 
@@ -182,7 +242,7 @@ public struct GitDiffDelta
 /// ## C Equivalent
 ///
 /// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
-public struct GitDiffSimilarityMetric
+public struct GitDiffSimilarityMetric: GitStruct
 {
     /// The function to generate a signature for a file.
     public let fileSignature: @convention(c)

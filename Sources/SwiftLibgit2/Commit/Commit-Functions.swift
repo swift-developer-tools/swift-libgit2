@@ -547,16 +547,11 @@ public func gitCommitHeaderField(
     {
         cOut in
         
-        return field.withCString
-        {
-            cField in
-            
-            return git_commit_header_field(
-                cOut,
-                commit,
-                cField
-            )
-        }
+        return git_commit_header_field(
+            cOut,
+            commit,
+            field
+        )
     }
 }
 
@@ -602,18 +597,13 @@ public func gitCommitExtractSignature(
         {
             cSignedData in
             
-            return field.withOptionalCString
-            {
-                cField in
-                
-                return git_commit_extract_signature(
-                    cSignature,
-                    cSignedData,
-                    repo,
-                    &cCommitID,
-                    cField
-                )
-            }
+            return git_commit_extract_signature(
+                cSignature,
+                cSignedData,
+                repo,
+                &cCommitID,
+                field
+            )
         }
     }
 }
@@ -672,11 +662,9 @@ public func gitCommitCreate(
     parents         : UnsafeMutablePointer<OpaquePointer?>?
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let commitCreateResult: Int32 = updateRef.withOptionalCString
+    return id.withMutatingCValue
     {
-        cUpdateRef in
+        cID in
         
         return author.withCValue
         {
@@ -686,35 +674,21 @@ public func gitCommitCreate(
             {
                 cCommitter in
                 
-                return messageEncoding.withOptionalCString
-                {
-                    cMessageEncoding in
-                    
-                    return message.withCString
-                    {
-                        cMessage in
-                        
-                        return git_commit_create(
-                            &cID,
-                            repo,
-                            cUpdateRef,
-                            cAuthor,
-                            cCommitter,
-                            cMessageEncoding,
-                            cMessage,
-                            tree,
-                            parentCount,
-                            parents
-                        )
-                    }
-                }
+                return git_commit_create(
+                    cID,
+                    repo,
+                    updateRef,
+                    cAuthor,
+                    cCommitter,
+                    messageEncoding,
+                    message,
+                    tree,
+                    parentCount,
+                    parents
+                )
             }
         }
     }
-    
-    id = GitOID(cValue: cID)
-    
-    return commitCreateResult
 }
 
 
@@ -742,39 +716,22 @@ public func gitCommitCreateFromStage(
     opts    : GitCommitCreateOptions?
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let commitCreateFromStageResult: Int32 = message.withCString
+    return id.withMutatingCValue
     {
-        cMessage in
+        cID in
         
-        guard let opts: GitCommitCreateOptions = opts
-        else
-        {
-            return git_commit_create_from_stage(
-                &cID,
-                repo,
-                cMessage,
-                nil
-            )
-        }
-        
-        return opts.withCValue
+        return opts.withOptionalCValue
         {
             cOpts in
             
             return git_commit_create_from_stage(
-                &cID,
+                cID,
                 repo,
-                cMessage,
+                message,
                 cOpts
             )
         }
     }
-    
-    id = GitOID(cValue: cID)
-    
-    return commitCreateFromStageResult
 }
 
 
@@ -819,45 +776,31 @@ public func gitCommitAmend(
     tree            : OpaquePointer?
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
-    
-    let commitAmendResult: Int32 = updateRef.withOptionalCString
+    return id.withMutatingCValue
     {
-        cUpdateRef in
+        cID in
         
-        return messageEncoding.withOptionalCString
+        return author.withOptionalCValue
         {
-            cMessageEncoding in
+            cAuthor in
             
-            return message.withOptionalCString
+            return committer.withOptionalCValue
             {
-                cMessage in
+                cCommitter in
                 
-                withComposedCommitAmendProperties(
-                    author,
-                    committer
+                return git_commit_amend(
+                    cID,
+                    commitToAmend,
+                    updateRef,
+                    cAuthor,
+                    cCommitter,
+                    messageEncoding,
+                    message,
+                    tree
                 )
-                {
-                    cAuthor, cCommitter in
-                    
-                    return git_commit_amend(
-                        &cID,
-                        commitToAmend,
-                        cUpdateRef,
-                        cAuthor,
-                        cCommitter,
-                        cMessageEncoding,
-                        cMessage,
-                        tree
-                    )
-                }
             }
         }
     }
-    
-    id = GitOID(cValue: cID)
-    
-    return commitAmendResult
 }
 
 
@@ -914,27 +857,17 @@ public func gitCommitCreateBuffer(
             {
                 cCommitter in
                 
-                return message.withCString
-                {
-                    cMessage in
-                    
-                    return messageEncoding.withOptionalCString
-                    {
-                        cMessageEncoding in
-                        
-                        return git_commit_create_buffer(
-                            cOut,
-                            repo,
-                            cAuthor,
-                            cCommitter,
-                            cMessageEncoding,
-                            cMessage,
-                            tree,
-                            parentCount,
-                            parents
-                        )
-                    }
-                }
+                return git_commit_create_buffer(
+                    cOut,
+                    repo,
+                    cAuthor,
+                    cCommitter,
+                    messageEncoding,
+                    message,
+                    tree,
+                    parentCount,
+                    parents
+                )
             }
         }
     }
@@ -964,34 +897,18 @@ public func gitCommitCreateWithSignature(
     signatureField  : String?
 ) -> Int32
 {
-    var cOut: git_oid = out.cValue
-    
-    let commitCreateWithSignatureResult: Int32 = commitContent.withCString
+    return out.withMutatingCValue
     {
-        cCommitContent in
+        cOut in
         
-        return (signatureField ?? "gpgsig").withCString
-        {
-            cSignatureField in
-            
-            return signature.withOptionalCString
-            {
-                cSignature in
-                
-                return git_commit_create_with_signature(
-                    &cOut,
-                    repo,
-                    cCommitContent,
-                    cSignature,
-                    cSignatureField
-                )
-            }
-        }
+        return git_commit_create_with_signature(
+            cOut,
+            repo,
+            commitContent,
+            signature,
+            signatureField
+        )
     }
-    
-    out = GitOID(cValue: cOut)
-    
-    return commitCreateWithSignatureResult
 }
 
 
@@ -1038,125 +955,4 @@ public func gitCommitArrayDispose(
 )
 {
     return git_commitarray_dispose(array)
-}
-
-
-
-// MARK: - Private
-
-/// Composes the optional properties of
-/// ``gitCommitAmend(id:commitToAmend:updateRef:author:committer:messageEncoding:message:tree:)``,
-/// then calls the given closure with optional pointers to the C values.
-/// - Parameters:
-///   - author: The author of the commit.
-///   - committer: The committer of the commit.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// This function composes the following optional properties:
-/// - `author`
-/// - `committer`
-///
-/// The composition begins by calling ``withCommitAmendUpdateRef(_:_:_:_:_:_:)``.
-private func withComposedCommitAmendProperties<T>(
-    _   author      : GitSignature?,
-    _   committer   : GitSignature?,
-    _   body        : (
-        _   author      : UnsafePointer<git_signature>?,
-        _   committer   : UnsafePointer<git_signature>?
-    ) -> T
-) -> T
-{
-    return withCommitAmendAuthor(
-        author,
-        committer,
-        body
-    )
-}
-
-
-
-/// Composes the value of `author`, then continues the composition by calling
-/// ``withCommitAmendCommitter(_:_:_:_:_:_:)``.
-/// - Parameters:
-///   - author: The author of the commit.
-///   - committer: The committer of the commit.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `author` is `nil`, this function will proceed directly to the next step in the composition.
-private func withCommitAmendAuthor<T>(
-    _   author      : GitSignature?,
-    _   committer   : GitSignature?,
-    _   body        : (
-        _   author      : UnsafePointer<git_signature>?,
-        _   committer   : UnsafePointer<git_signature>?
-    ) -> T
-) -> T
-{
-    guard let author: GitSignature = author
-    else
-    {
-        return withCommitAmendCommitter(
-            nil,
-            committer,
-            body
-        )
-    }
-    
-    return author.withCValue
-    {
-        cAuthor in
-        
-        return withCommitAmendCommitter(
-            UnsafePointer(cAuthor),
-            committer,
-            body
-        )
-    }
-}
-
-
-
-/// Composes the value of `committer`, then finishes the composition by calling the given closure.
-/// - Parameters:
-///   - cAuthor: The author of the commit.
-///   - committer: The committer of the commit.
-///   - body: The closure to call.
-/// - Returns: The return value of the given closure.
-///
-/// ## Discussion
-///
-/// If `committer` is `nil`, this function will proceed directly to calling the given closure.
-private func withCommitAmendCommitter<T>(
-    _   cAuthor     : UnsafePointer<git_signature>?,
-    _   committer   : GitSignature?,
-    _   body        : (
-        _   author      : UnsafePointer<git_signature>?,
-        _   committer   : UnsafePointer<git_signature>?
-    ) -> T
-) -> T
-{
-    guard let committer: GitSignature = committer
-    else
-    {
-        return body(
-            cAuthor,
-            nil
-        )
-    }
-    
-    return committer.withCValue
-    {
-        cCommitter in
-        
-        return body(
-            cAuthor,
-            UnsafePointer(cCommitter)
-        )
-    }
 }

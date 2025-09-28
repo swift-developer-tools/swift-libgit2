@@ -14,4 +14,40 @@ internal extension Bool
     {
         self ? 1 : 0
     }
+    
+    
+    
+    /// Creates a `Bool` from a signed 32-bit integer using the C convention that `0` is false and
+    /// anything else is `true`.
+    /// - Parameter cValue: The signed 32-bit integer to use.
+    init(
+        _ cValue: Int32
+    )
+    {
+        self = cValue != 0
+    }
+    
+    
+    
+    /// Creates a `Bool` from an unsigned 32-bit integer using the C convention that `0` is false and
+    /// anything else is `true`.
+    /// - Parameter cValue: The unsigned 32-bit integer to use.
+    init(
+        _ cValue: UInt32
+    )
+    {
+        self = cValue != 0
+    }
+    
+    
+    
+    /// Creates a `Bool` from a C character using the C convention that `0` is false and
+    /// anything else is `true`.
+    /// - Parameter cValue: The C character to use.
+    init(
+        _ cValue: CChar
+    )
+    {
+        self = cValue != 0
+    }
 }

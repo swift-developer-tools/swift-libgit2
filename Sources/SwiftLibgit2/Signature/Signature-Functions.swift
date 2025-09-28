@@ -39,23 +39,13 @@ public func gitSignatureNew(
     {
         cOut in
         
-        return name.withCString
-        {
-            cName in
-            
-            return email.withCString
-            {
-                cEmail in
-                
-                return git_signature_new(
-                    cOut,
-                    cName,
-                    cEmail,
-                    time,
-                    offset
-                )
-            }
-        }
+        return git_signature_new(
+            cOut,
+            name,
+            email,
+            time,
+            offset
+        )
     }
 }
 
@@ -85,21 +75,11 @@ public func gitSignatureNow(
     {
         cOut in
         
-        return name.withCString
-        {
-            cName in
-            
-            return email.withCString
-            {
-                cEmail in
-                
-                return git_signature_now(
-                    cOut,
-                    cName,
-                    cEmail
-                )
-            }
-        }
+        return git_signature_now(
+            cOut,
+            name,
+            email
+        )
     }
 }
 

@@ -87,6 +87,63 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a configuration object.
+    /// - Parameter config: The configuration object to free. The underlying type should be
+    /// `git_config`.
+    static func freeConfig(
+        _ config: OpaquePointer?
+    )
+    {
+        if config != nil
+        {
+            gitConfigFree(cfg: config)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a configuration backend object.
+    /// - Parameter configBackend: The configuration backend object to free.
+    static func freeConfigBackend(
+        _ configBackend: UnsafeMutablePointer<git_config_backend>?
+    )
+    {
+        if configBackend != nil
+        {
+            configBackend?.pointee.free(configBackend)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a configuration entry.
+    /// - Parameter configEntry: The configuration entry to free.
+    static func freeConfigEntry(
+        _ configEntry: UnsafeMutablePointer<git_config_entry>?
+    )
+    {
+        if configEntry != nil
+        {
+            gitConfigEntryFree(entry: configEntry)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a configuration iterator.
+    /// - Parameter configIterator: The configuration iterator to free
+    static func freeConfigIterator(
+        _ configIterator: UnsafeMutablePointer<git_config_iterator>?
+    )
+    {
+        if configIterator != nil
+        {
+            gitConfigIteratorFree(iter: configIterator)
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for a diff.
     /// - Parameter diff: The diff to free. The underlying type should be `git_diff`.
     static func freeDiff(
@@ -153,6 +210,21 @@ enum Free
         if repository != nil
         {
             git_repository_free(repository)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a transaction.
+    /// - Parameter transaction: The transaction to free. The underlying type should be
+    /// `git_transaction`.
+    static func freeTransaction(
+        _ transaction: OpaquePointer?
+    )
+    {
+        if transaction != nil
+        {
+            git_transaction_free(transaction)
         }
     }
     

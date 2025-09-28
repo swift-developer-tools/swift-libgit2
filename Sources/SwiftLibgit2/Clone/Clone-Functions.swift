@@ -36,23 +36,13 @@ public func gitClone(
     options     : GitCloneOptions?
 ) -> Int32
 {
-    guard let options: GitCloneOptions = options
-    else
-    {
-        return git_clone(
-            out,
-            url,
-            localPath,
-            nil
-        )
-    }
-    
-    return options.withCValue
+    return options.withOptionalCValue
     {
         cOptions in
         
-        guard let cOptions: UnsafeMutablePointer<git_clone_options> = cOptions
-        else
+        if
+            options != nil,
+            cOptions == nil
         {
             return GIT_EUSER.rawValue
         }

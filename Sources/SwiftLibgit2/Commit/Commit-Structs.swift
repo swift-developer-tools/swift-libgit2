@@ -12,53 +12,55 @@ import Clibgit2
 
 
 /// The options for commit creation.
-///
+/// 
 /// ## C Equivalent
-///
+/// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions
+public struct GitCommitCreateOptions: GitStructMutable, NonOptionalWithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitCommitCreateOptionsVersion``.
-    public var version          : UInt32
+    public var version          : UInt32            = gitCommitCreateOptionsVersion
     
     /// Whether a commit with no changes from the prior commit (an empty commit) should be allowed.
-    public var allowEmptyCommit : Bool
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `false`.
+    public var allowEmptyCommit : Bool              = false
     
     /// The commit author.
-    public var author           : GitSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var author           : GitSignature?     = nil
     
     /// The committer.
-    public var committer        : GitSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var committer        : GitSignature?     = nil
     
     /// The encoding for the commit message.
     ///
     /// ## Discussion
     ///
-    /// The default value is UTF-8.
-    public var messageEncoding  : String?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using UTF-8.
+    public var messageEncoding  : String?           = nil
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to
-    /// ``gitCommitCreateOptionsVersion``.
-    public init(
-        version: UInt32 = gitCommitCreateOptionsVersion
-    )
-    {
-        /// libgit2 does not provide an initialization function for `git_commit_create_options`.
-        /// The C macro `GIT_COMMIT_CREATE_OPTIONS_INIT` would initialize all fields other than
-        /// `version` to `0` or `NULL`, so that approach is mirrored here.
-        self.version            = version
-        self.allowEmptyCommit   = false
-        self.author             = nil
-        self.committer          = nil
-        self.messageEncoding    = nil
-    }
+    /// Creates a ``GitCommitCreateOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     
@@ -71,7 +73,7 @@ public struct GitCommitCreateOptions
     )
     {
         self.version            = commitCreateOptions.version
-        self.allowEmptyCommit   = commitCreateOptions.allow_empty_commit == 1
+        self.allowEmptyCommit   = Bool(commitCreateOptions.allow_empty_commit)
         self.author             = GitSignature(cValue: commitCreateOptions.author.pointee)
         self.committer          = GitSignature(cValue: commitCreateOptions.committer.pointee)
         self.messageEncoding    = String(optionalCString: commitCreateOptions.message_encoding)
@@ -91,115 +93,27 @@ public struct GitCommitCreateOptions
         commitCreateOptions.version             = version
         commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.cValue)
         
-        return messageEncoding.withOptionalCString
-        {
-            cMessageEncoding in
-            
-            commitCreateOptions.message_encoding = cMessageEncoding
-            
-            return withComposedProperties(
-                &commitCreateOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Composes the optional properties of ``GitCommitCreateOptions``, then calls the given
-    /// closure with a pointer to the updated `git_commit_create_options` instance.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// This function composes the following optional properties:
-    /// - ``author``
-    /// - ``committer``
-    ///
-    /// The composition begins by calling ``withAuthor(_:_:)``.
-    private func withComposedProperties<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        return withAuthor(
-            commitCreateOptions,
-            body
-        )
-    }
-    
-    
-    
-    /// Updates the given `git_commit_create_options` instance with the value of ``author``,
-    /// then continues the composition by calling ``withCommitter(_:_:)``.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``author`` is `nil`, this function will proceed directly to the next step in the composition.
-    private func withAuthor<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        guard let author: GitSignature = author
-        else
-        {
-            return withCommitter(
-                commitCreateOptions,
-                body
-            )
-        }
-        
-        return author.withCValue
+        return author.withOptionalCValue
         {
             cAuthor in
             
-            commitCreateOptions.pointee.author = UnsafePointer(cAuthor)
+            commitCreateOptions.author = UnsafePointer(cAuthor)
             
-            return withCommitter(
-                commitCreateOptions,
-                body
-            )
-        }
-    }
-    
-    
-    
-    /// Updates the given `git_commit_create_options` instance with the value of
-    /// ``committer``, then finishes the composition by calling the given closure.
-    /// - Parameters:
-    ///   - commitCreateOptions: The options to update.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// If ``committer`` is `nil`, this function will proceed directly to calling the given closure.
-    private func withCommitter<T>(
-        _   commitCreateOptions : UnsafeMutablePointer<git_commit_create_options>,
-        _   body                : (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
-    {
-        guard let committer: GitSignature = committer
-        else
-        {
-            return body(commitCreateOptions)
-        }
-        
-        return committer.withCValue
-        {
-            cCommitter in
-            
-            commitCreateOptions.pointee.committer = UnsafePointer(cCommitter)
-            
-            return body(commitCreateOptions)
+            return committer.withOptionalCValue
+            {
+                cCommitter in
+                
+                commitCreateOptions.committer = UnsafePointer(cCommitter)
+                
+                return messageEncoding.withOptionalCString
+                {
+                    cMessageEncoding in
+                    
+                    commitCreateOptions.message_encoding = cMessageEncoding
+                    
+                    return body(&commitCreateOptions)
+                }
+            }
         }
     }
 }
@@ -217,11 +131,23 @@ public struct GitCommitCreateOptions
 /// ## C Equivalent
 ///
 /// [`git_commitarray`](https://libgit2.org/docs/reference/main/commit/git_commitarray.html)
-public struct GitCommitArray
+public struct GitCommitArray: GitStruct
 {
     /// The array of commits.
     public let commits  : [OpaquePointer]
     
     /// The number of commits in the array.
     public let count    : Int
+    
+    
+    
+    /// Creates a ``GitCommitArray`` instance from a `git_commitarray` instance.
+    /// - Parameter commitArray: The `git_commitarray` instance to use.
+    internal init(
+        cValue commitArray: git_commitarray
+    )
+    {
+        self.commits    = Array(commitArray)
+        self.count      = commitArray.count
+    }
 }

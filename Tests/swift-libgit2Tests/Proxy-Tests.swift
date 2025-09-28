@@ -17,12 +17,7 @@ final class ProxyTests: XCTestCaseStopOnFail
 {
     func testGitProxyOptions() throws
     {
-        guard let proxyOptions = GitProxyOptions()
-        else
-        {
-            XCTFail("The proxy options were nil.")
-            return
-        }
+        let proxyOptions = GitProxyOptions()
         
         XCTAssertEqual(proxyOptions.version, gitProxyOptionsVersion)
         XCTAssertEqual(proxyOptions.type, .gitProxyNone)

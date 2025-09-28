@@ -46,6 +46,25 @@ struct Repository
     
     
     
+    /// The URL to the configuration file.
+    var configURL: URL
+    {
+        return url.appending(
+            path:           ".git/config",
+            directoryHint:  .notDirectory
+        )
+    }
+    
+    
+    
+    /// The absolute path to the configuration file.
+    var configPath: String
+    {
+        return configURL.path(percentEncoded: false)
+    }
+    
+    
+    
     /// Creates a commit with the given content and message.
     /// - Parameters:
     ///   - path: The path to the file to modify. This will be appended to the repository's URL.
@@ -249,7 +268,7 @@ struct Repository
             "HEAD"
         )
         
-        if referenceToNameToIDResult == GIT_OK.rawValue
+        if isOK(referenceToNameToIDResult)
         {
             let commitLookupResult: Int32 = gitCommitLookup(
                 commit:     &headCommitPointer,

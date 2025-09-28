@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cert`](https://libgit2.org/docs/reference/main/cert/git_cert.html)
-public struct GitCert
+public struct GitCert: GitStructReadable, NonOptionalCConvertible
 {
     /// The type of host certificate.
     public let certType: GitCertT
@@ -37,6 +37,18 @@ public struct GitCert
     {
         self.certType = GitCertT(cValue: cert.cert_type) ?? .gitCertNone
     }
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_cert
+    {
+        var cert = git_cert()
+        
+        cert.cert_type = certType.cValue
+        
+        return cert
+    }
 }
 
 
@@ -46,7 +58,7 @@ public struct GitCert
 /// ## C Equivalent
 ///
 /// [`git_cert_hostkey`](https://libgit2.org/docs/reference/main/cert/git_cert_hostkey.html)
-public struct GitCertHostKey
+public struct GitCertHostKey: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The parent certificate.
     public let parent       : GitCert
@@ -104,6 +116,17 @@ public struct GitCertHostKey
     
     
     
+    /// The size of ``hashMD5`` in bytes.
+    internal static let hashMD5Size     : Int   = 16
+    
+    /// The size of ``hashSHA1`` in bytes.
+    internal static let hashSHA1Size    : Int   = 20
+    
+    /// The size of ``hashSHA256`` in bytes.
+    internal static let hashSHA256Size  : Int   = 32
+    
+    
+    
     /// Creates a ``GitCertHostKey`` instance from a `git_cert_hostkey` instance.
     /// - Parameter certHostKey: The `git_cert_hostkey` instance to use.
     ///
@@ -120,12 +143,84 @@ public struct GitCertHostKey
         
         self.parent         = GitCert(cValue: certHostKey.parent)
         self.type           = GitCertSSHT(rawValue: certHostKey.type.rawValue)
-        self.hashMD5        = Data(bytes: &certHostKeyCopy.hash_md5, count: 16)
-        self.hashSHA1       = Data(bytes: &certHostKeyCopy.hash_sha1, count: 20)
-        self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: 32)
+        self.hashMD5        = Data(bytes: &certHostKeyCopy.hash_md5, count: Self.hashMD5Size)
+        self.hashSHA1       = Data(bytes: &certHostKeyCopy.hash_sha1, count: Self.hashSHA1Size)
+        self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: Self.hashSHA256Size)
         self.rawType        = GitCertSSHRawTypeT(cValue: certHostKey.raw_type) ?? .gitCertSSHRawTypeUnknown
         self.hostKey        = certHostKey.hostkey.map { Data(bytes: $0, count: certHostKey.hostkey_len) }
         self.hostKeyLen     = certHostKey.hostkey_len
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_cert_hostkey` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_cert_hostkey>) -> T
+    ) -> T
+    {
+        var certHostKey = git_cert_hostkey()
+        
+        certHostKey.parent          = parent.cValue
+        certHostKey.type            = type.cValue
+        certHostKey.raw_type        = rawType.cValue
+        
+        
+        
+        hashMD5.withUnsafeBytes
+        {
+            bytes in
+            
+            _ = memcpy(
+                &certHostKey.hash_md5,
+                bytes.baseAddress,
+                min(bytes.count, Self.hashMD5Size)
+            )
+        }
+        
+        hashSHA1.withUnsafeBytes
+        {
+            bytes in
+            
+            _ = memcpy(
+                &certHostKey.hash_sha1,
+                bytes.baseAddress,
+                min(bytes.count, Self.hashSHA1Size)
+            )
+        }
+        
+        hashSHA256.withUnsafeBytes
+        {
+            bytes in
+            
+            _ = memcpy(
+                &certHostKey.hash_sha256,
+                bytes.baseAddress,
+                min(bytes.count, Self.hashSHA256Size)
+            )
+        }
+        
+        
+        
+        guard let hostKey: Data = hostKey
+        else
+        {
+            certHostKey.hostkey         = nil
+            certHostKey.hostkey_len     = 0
+            
+            return body(&certHostKey)
+        }
+        
+        return hostKey.withUnsafeBytes
+        {
+            bytes in
+            
+            certHostKey.hostkey         = bytes.baseAddress?.assumingMemoryBound(to: CChar.self)
+            certHostKey.hostkey_len     = bytes.count
+            
+            return body(&certHostKey)
+        }
     }
 }
 
@@ -136,7 +231,7 @@ public struct GitCertHostKey
 /// ## C Equivalent
 ///
 /// [`git_cert_x509`](https://libgit2.org/docs/reference/main/cert/git_cert_x509.html)
-public struct GitCertX509
+public struct GitCertX509: GitStructReadable, NonOptionalCConvertible
 {
     /// The parent certificate.
     public let parent   : GitCert
@@ -158,5 +253,19 @@ public struct GitCertX509
         self.parent     = GitCert(cValue: certX509.parent)
         self.data       = certX509.data
         self.len        = certX509.len
+    }
+    
+    
+    
+    /// The equivalent C value.
+    internal var cValue: git_cert_x509
+    {
+        var certX509 = git_cert_x509()
+        
+        certX509.parent     = parent.cValue
+        certX509.data       = data
+        certX509.len        = len
+        
+        return certX509
     }
 }

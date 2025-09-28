@@ -16,82 +16,75 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions
+public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitBlameOptionsVersion``.
-    public var version              : UInt32
+    public var version              : UInt32            = gitBlameOptionsVersion
     
     /// The flags to use during the blame operation.
-    public var flags                : GitBlameFlagT
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitBlameFlagT/gitBlameNormal``.
+    public var flags                : GitBlameFlagT     = .gitBlameNormal
     
     /// The lower bound on the number of alphanumeric characters that must be detected as
     /// moving/copying within a file for it to associate those lines with the parent commit.
     ///
     /// ## Discussion
     ///
-    /// The default value is `20`.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `20`.
     ///
     /// This value only takes effect if any of
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameFile``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitMoves``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitCopies``, or
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` are specified.
-    public var minMatchCharacters   : UInt16?
+    public var minMatchCharacters   : UInt16?           = nil
     
     /// The ID of the newest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is HEAD.
-    public var newestCommit         : GitOID
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using HEAD.
+    public var newestCommit         : GitOID?           = nil
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is the first commit encountered with a `NULL` parent.
-    public var oldestCommit         : GitOID
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the first
+    /// commit encountered with a `nil` parent.
+    public var oldestCommit         : GitOID?           = nil
     
     /// The first line in the file to blame.
     ///
     /// ## Discussion
     ///
-    /// The default value is `1` (line numbers are 1-indexed).
-    public var minLine              : Int?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `1` (line
+    /// numbers are 1-indexed).
+    public var minLine              : Int?              = nil
     
     /// The last line in the file to blame.
     ///
     /// ## Discussion
     ///
-    /// The default value is the last line of the file.
-    public var maxLine              : Int?
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using last line
+    /// of the file.
+    public var maxLine              : Int?              = nil
     
     
     
-    /// Creates a ``GitBlameOptions`` instance from a version number.
-    /// - Parameter version: The version to use. Defaults to ``gitBlameOptionsVersion``.
-    public init?(
-        version: UInt32 = gitBlameOptionsVersion
-    )
-    {
-        var blameOptions = git_blame_options()
-        
-        let blameOptionsInitResult: Int32 = git_blame_options_init(
-            &blameOptions,
-            version
-        )
-        
-        if blameOptionsInitResult != GIT_OK.rawValue
-        {
-            return nil
-        }
-        
-        self.init(cValue: blameOptions)
-    }
+    /// Creates a ``GitBlameOptions`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
+    public init() { }
     
     
     
@@ -132,8 +125,8 @@ public struct GitBlameOptions
         }
         
         blameOptions.flags          = flags.rawValue
-        blameOptions.newest_commit  = newestCommit.cValue
-        blameOptions.oldest_commit  = oldestCommit.cValue
+        blameOptions.newest_commit  = newestCommit?.cValue ?? git_oid()
+        blameOptions.oldest_commit  = oldestCommit?.cValue ?? git_oid()
         
         if let minMatchCharacters: UInt16 = minMatchCharacters
         {
@@ -161,7 +154,7 @@ public struct GitBlameOptions
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-public struct GitBlameHunk
+public struct GitBlameHunk: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
@@ -252,7 +245,70 @@ public struct GitBlameHunk
         self.origSignature          = GitSignature(cValue: blameHunk.orig_signature.pointee)
         self.origCommitter          = GitSignature(cValue: blameHunk.orig_committer.pointee)
         self.summary                = String(optionalCString: blameHunk.summary)
-        self.boundary               = blameHunk.boundary == 1
+        self.boundary               = Bool(blameHunk.boundary)
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_blame_hunk` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blame_hunk>) -> T
+    ) -> T
+    {
+        var blameHunk = git_blame_hunk()
+        
+        blameHunk.lines_in_hunk             = linesInHunk
+        blameHunk.final_commit_id           = finalCommitID.cValue
+        blameHunk.final_start_line_number   = finalStartLineNumber
+        blameHunk.orig_commit_id            = origCommitID.cValue
+        blameHunk.orig_start_line_number    = origStartLineNumber
+        blameHunk.boundary                  = CChar(boundary.cValue)
+        
+        return finalSignature.withOptionalCValue
+        {
+            cFinalSignature in
+            
+            blameHunk.final_signature = cFinalSignature
+            
+            return finalCommitter.withOptionalCValue
+            {
+                cFinalCommitter in
+                
+                blameHunk.final_committer = cFinalCommitter
+                
+                return origPath.withOptionalCString
+                {
+                    cOrigPath in
+                    
+                    blameHunk.orig_path = cOrigPath
+                    
+                    return origSignature.withOptionalCValue
+                    {
+                        cOrigSignature in
+                        
+                        blameHunk.orig_signature = cOrigSignature
+                        
+                        return origCommitter.withOptionalCValue
+                        {
+                            cOrigCommitter in
+                            
+                            blameHunk.orig_committer = cOrigCommitter
+                            
+                            return summary.withOptionalCString
+                            {
+                                cSummary in
+                                
+                                blameHunk.summary = cSummary
+                                
+                                return body(&blameHunk)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -263,7 +319,7 @@ public struct GitBlameHunk
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine
+public struct GitBlameLine: GitStructReadable, NonOptionalWithCConvertible
 {
     /// The line content.
     public let ptr : String?
@@ -281,5 +337,28 @@ public struct GitBlameLine
     {
         self.ptr    = String(optionalCString: blameLine.ptr)
         self.len    = blameLine.len
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a `git_blame_line` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blame_line>) -> T
+    ) -> T
+    {
+        var blameLine = git_blame_line()
+        
+        blameLine.len = len
+        
+        return ptr.withOptionalCString
+        {
+            cPtr in
+            
+            blameLine.ptr = cPtr
+            
+            return body(&blameLine)
+        }
     }
 }

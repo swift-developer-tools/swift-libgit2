@@ -164,7 +164,7 @@ public struct GitMergeFileFlagT: GitOptionSet
     
     
     /// The default merge behavior.
-    public static let gitMergeFileMerge                     = GitMergeFileFlagT(rawValue: GIT_MERGE_FILE_DEFAULT.rawValue)
+    public static let gitMergeFileDefault                   = GitMergeFileFlagT(rawValue: GIT_MERGE_FILE_DEFAULT.rawValue)
     
     /// Create standard conflicted merge files.
     public static let gitMergeFileStyleMerge                = GitMergeFileFlagT(rawValue: GIT_MERGE_FILE_STYLE_MERGE.rawValue)

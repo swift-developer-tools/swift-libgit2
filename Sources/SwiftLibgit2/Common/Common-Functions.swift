@@ -252,15 +252,10 @@ public func gitLibgit2OptSetSearchPath(
     path    : String?
 ) -> Int32
 {
-    return path.withOptionalCString
-    {
-        cPath in
-        
-        return git_libgit2_opt_set_search_path(
-            level.rawValue,
-            cPath
-        )
-    }
+    return git_libgit2_opt_set_search_path(
+        level.rawValue,
+        path
+    )
 }
 
 
@@ -420,12 +415,7 @@ public func gitLibgit2OptSetTemplatePath(
     path: String?
 ) -> Int32
 {
-    return path.withOptionalCString
-    {
-        cPath in
-        
-        return git_libgit2_opt_set_template_path(cPath)
-    }
+    return git_libgit2_opt_set_template_path(path)
 }
 
 
@@ -453,20 +443,10 @@ public func gitLibgit2OptSetSSLCertLocations(
     path    : String?
 ) -> Int32
 {
-    return file.withOptionalCString
-    {
-        cFile in
-        
-        return path.withOptionalCString
-        {
-            cPath in
-            
-            return git_libgit2_opt_set_ssl_cert_locations(
-                cFile,
-                cPath
-            )
-        }
-    }
+    return git_libgit2_opt_set_ssl_cert_locations(
+        file,
+        path
+    )
 }
 
 
@@ -495,12 +475,7 @@ public func gitLibgit2OptSetUserAgent(
     userAgent: String?
 ) -> Int32
 {
-    return userAgent.withOptionalCString
-    {
-        cUserAgent in
-        
-        return git_libgit2_opt_set_user_agent(cUserAgent)
-    }
+    return git_libgit2_opt_set_user_agent(userAgent)
 }
 
 
@@ -575,12 +550,7 @@ public func gitLibgit2OptSetSSLCiphers(
     ciphers: String
 ) -> Int32
 {
-    return ciphers.withCString
-    {
-        cCiphers in
-        
-        return git_libgit2_opt_set_ssl_ciphers(cCiphers)
-    }
+    return git_libgit2_opt_set_ssl_ciphers(ciphers)
 }
 
 
@@ -980,13 +950,13 @@ public func gitLibgit2OptGetExtensions(
     out: UnsafeMutablePointer<[String]>
 ) -> Int32
 {
-    var strarray = git_strarray()
+    var strArray = git_strarray()
     
-    let getExtensionsResult: Int32 = git_libgit2_opt_get_extensions(&strarray)
+    let getExtensionsResult: Int32 = git_libgit2_opt_get_extensions(&strArray)
     
-    out.pointee = Array(strarray)
+    out.pointee = Array(strArray)
     
-    gitStrArrayDispose(array: &strarray)
+    gitStrArrayDispose(array: &strArray)
     
     return getExtensionsResult
 }
@@ -1050,7 +1020,7 @@ public func gitLibgit2OptGetOwnerValidation(
     
     let getOwnerValidationResult: Int32 = git_libgit2_opt_get_owner_validation(&intEnabled)
     
-    enabled.pointee = intEnabled == 1
+    enabled.pointee = Bool(intEnabled)
     
     return getOwnerValidationResult
 }
@@ -1122,12 +1092,7 @@ public func gitLibgit2OptSetHomeDir(
     path: String?
 ) -> Int32
 {
-    return path.withOptionalCString
-    {
-        cPath in
-        
-        return git_libgit2_opt_set_homedir(cPath)
-    }
+    return git_libgit2_opt_set_homedir(path)
 }
 
 
@@ -1240,12 +1205,7 @@ public func gitLibgit2OptSetUserAgentProduct(
     userAgent: String?
 ) -> Int32
 {
-    return userAgent.withOptionalCString
-    {
-        cUserAgent in
-        
-        return git_libgit2_opt_set_user_agent_product(cUserAgent)
-    }
+    return git_libgit2_opt_set_user_agent_product(userAgent)
 }
 
 

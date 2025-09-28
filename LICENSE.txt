@@ -1,3 +1,11 @@
+                                swift-libgit2
+                   Copyright (c) Margins Technologies LLC
+
+   The below license applies to all code in this repository, except where
+   otherwise noted. See the Licenses folder for third-party license terms.
+
+
+
                                 Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -199,9 +207,3 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-                                swift-libgit2
-                   Copyright (c) Margins Technologies LLC
-
-   This license applies to all code in this repository, except where
-   otherwise noted. See the Licenses folder for third-party license terms.

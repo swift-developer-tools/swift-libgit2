@@ -126,75 +126,87 @@ final class SignatureTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var authorSignature     : GitSignature?     = GitSignature()
-            var committerSignature  : GitSignature?     = GitSignature()
-            
-            let bothResult: Int32 = gitSignatureDefaultFromEnv(
-                authorOut:      &authorSignature,
-                committerOut:   &committerSignature,
-                repo:           repository.pointer
-            )
-            
-            XCTAssertOK(bothResult)
-            XCTAssertNotNil(authorSignature)
-            XCTAssertFalse(authorSignature!.name.isEmpty)
-            XCTAssertFalse(authorSignature!.email.isEmpty)
-            XCTAssertNotNil(authorSignature!.when)
-            XCTAssertNotNil(committerSignature)
-            XCTAssertFalse(committerSignature!.name.isEmpty)
-            XCTAssertFalse(committerSignature!.email.isEmpty)
-            XCTAssertNotNil(committerSignature!.when)
-            
-            
-            
-            authorSignature     = GitSignature()
-            committerSignature  = nil
-            
-            let authorOnlyResult: Int32 = gitSignatureDefaultFromEnv(
-                authorOut:      &authorSignature,
-                committerOut:   &committerSignature,
-                repo:           repository.pointer
-            )
-            
-            XCTAssertOK(authorOnlyResult)
-            XCTAssertNotNil(authorSignature)
-            XCTAssertFalse(authorSignature!.name.isEmpty)
-            XCTAssertFalse(authorSignature!.email.isEmpty)
-            XCTAssertNotNil(authorSignature!.when)
-            XCTAssertNil(committerSignature)
+            do
+            {
+                var authorSignature     : GitSignature?     = GitSignature()
+                var committerSignature  : GitSignature?     = GitSignature()
+                
+                let bothResult: Int32 = gitSignatureDefaultFromEnv(
+                    authorOut:      &authorSignature,
+                    committerOut:   &committerSignature,
+                    repo:           repository.pointer
+                )
+                
+                XCTAssertOK(bothResult)
+                XCTAssertNotNil(authorSignature)
+                XCTAssertFalse(authorSignature!.name.isEmpty)
+                XCTAssertFalse(authorSignature!.email.isEmpty)
+                XCTAssertNotNil(authorSignature!.when)
+                XCTAssertNotNil(committerSignature)
+                XCTAssertFalse(committerSignature!.name.isEmpty)
+                XCTAssertFalse(committerSignature!.email.isEmpty)
+                XCTAssertNotNil(committerSignature!.when)
+            }
             
             
             
-            authorSignature     = nil
-            committerSignature  = GitSignature()
+            do
+            {
+                var authorSignature     : GitSignature?     = GitSignature()
+                var committerSignature  : GitSignature?     = nil
+                
+                let authorOnlyResult: Int32 = gitSignatureDefaultFromEnv(
+                    authorOut:      &authorSignature,
+                    committerOut:   &committerSignature,
+                    repo:           repository.pointer
+                )
+                
+                XCTAssertOK(authorOnlyResult)
+                XCTAssertNotNil(authorSignature)
+                XCTAssertFalse(authorSignature!.name.isEmpty)
+                XCTAssertFalse(authorSignature!.email.isEmpty)
+                XCTAssertNotNil(authorSignature!.when)
+                XCTAssertNil(committerSignature)
+            }
             
-            let committerOnlyResult: Int32 = gitSignatureDefaultFromEnv(
-                authorOut:      &authorSignature,
-                committerOut:   &committerSignature,
-                repo:           repository.pointer
-            )
-            
-            XCTAssertOK(committerOnlyResult)
-            XCTAssertNil(authorSignature)
-            XCTAssertNotNil(committerSignature)
-            XCTAssertFalse(committerSignature!.name.isEmpty)
-            XCTAssertFalse(committerSignature!.email.isEmpty)
-            XCTAssertNotNil(committerSignature!.when)
             
             
+            do
+            {
+                var authorSignature     : GitSignature?     = nil
+                var committerSignature  : GitSignature?     = GitSignature()
+                
+                let committerOnlyResult: Int32 = gitSignatureDefaultFromEnv(
+                    authorOut:      &authorSignature,
+                    committerOut:   &committerSignature,
+                    repo:           repository.pointer
+                )
+                
+                XCTAssertOK(committerOnlyResult)
+                XCTAssertNil(authorSignature)
+                XCTAssertNotNil(committerSignature)
+                XCTAssertFalse(committerSignature!.name.isEmpty)
+                XCTAssertFalse(committerSignature!.email.isEmpty)
+                XCTAssertNotNil(committerSignature!.when)
+            }
             
-            authorSignature     = nil
-            committerSignature  = nil
             
-            let neitherResult: Int32 = gitSignatureDefaultFromEnv(
-                authorOut:      &authorSignature,
-                committerOut:   &committerSignature,
-                repo:           repository.pointer
-            )
             
-            XCTAssertEqual(neitherResult, GIT_EUSER.rawValue)
-            XCTAssertNil(authorSignature)
-            XCTAssertNil(committerSignature)
+            do
+            {
+                var authorSignature     : GitSignature?     = nil
+                var committerSignature  : GitSignature?     = nil
+                
+                let neitherResult: Int32 = gitSignatureDefaultFromEnv(
+                    authorOut:      &authorSignature,
+                    committerOut:   &committerSignature,
+                    repo:           repository.pointer
+                )
+                
+                XCTAssertEqual(neitherResult, GIT_EUSER.rawValue)
+                XCTAssertNil(authorSignature)
+                XCTAssertNil(committerSignature)
+            }
         }
     }
     

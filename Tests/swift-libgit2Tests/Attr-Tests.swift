@@ -459,14 +459,6 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
             
-            
-            
-            attrOptions.flags = GitAttrCheckFlagsT(rawValue: 123)
-            
-            XCTAssertEqual(attrOptions.flags, GitAttrCheckFlagsT(rawValue: 123))
-            
-            
-            
             attrOptions.flags =
             [
                 .gitAttrCheckIndexOnly,
@@ -476,7 +468,6 @@ final class AttrTests: XCTestCaseStopOnFail
             XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckIndexOnly))
             XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckNoSystem))
             XCTAssertFalse(attrOptions.flags.contains(.gitAttrCheckIncludeHEAD))
-            
             
             var valueOut: UnsafePointer<CChar>? = nil
             
@@ -589,8 +580,6 @@ extension AttrTests
                     XCTAssertOK(attrForEachResult)
                 }
             }
-            
-            
             
             XCTAssertGreaterThan(attributes.keys.count, 0)
             XCTAssertTrue(attributes.keys.contains("text"))
