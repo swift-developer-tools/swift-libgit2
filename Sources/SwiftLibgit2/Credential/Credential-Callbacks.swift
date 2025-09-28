@@ -16,7 +16,7 @@ import Clibgit2
 ///   - out: The pointer in which to store the resulting credential.
 ///   - url: The resource for which a credential is being demanded.
 ///   - usernameFromURL: The username that is embedded in a `user@host` remote URL.
-///   - allowedTypes: The credential types that may be returned. See ``GitCredentialT``.
+///   - allowedTypes: The allowed credential types. See ``GitCredentialT``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: A negative value if an error occurred, a positive value if no credential was acquired,
 /// or `0` on success.
