@@ -620,6 +620,14 @@ swift-libgit2 includes the following compiled libraries:
 - ``gitCredentialSSHKeyFromAgent(out:username:)``
 - ``gitCredentialSSHCustomNew(out:username:publicKey:publicKeyLen:signCallback:payload:)``
 
+### Credential Helpers Structs
+
+- ``GitCredentialUserPassPayload``
+
+### Credential Helpers Functions
+
+- ``gitCredentialUserPass(out:url:userFromURL:allowedTypes:payload:)``
+
 ### Diff Structs
 
 - ``GitDiffFile``
