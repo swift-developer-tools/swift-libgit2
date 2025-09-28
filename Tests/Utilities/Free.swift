@@ -131,7 +131,7 @@ enum Free
     
     
     /// Frees the memory allocated for a configuration iterator.
-    /// - Parameter configIterator: The configuration iterator to free
+    /// - Parameter configIterator: The configuration iterator to free.
     static func freeConfigIterator(
         _ configIterator: UnsafeMutablePointer<git_config_iterator>?
     )
@@ -139,6 +139,20 @@ enum Free
         if configIterator != nil
         {
             gitConfigIteratorFree(iter: configIterator)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for a credential.
+    /// - Parameter credential: The credential to free.
+    static func freeCredential(
+        _ credential: UnsafeMutablePointer<git_credential>?
+    )
+    {
+        if credential != nil
+        {
+            gitCredentialFree(cred: credential)
         }
     }
     
