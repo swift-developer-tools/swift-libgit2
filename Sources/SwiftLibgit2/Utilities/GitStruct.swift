@@ -12,8 +12,8 @@
 /// ## Discussion
 ///
 /// This protocol standardizes the implementation of Swift binding structs. All Swift binding structs should
-/// conform to one of the following protocols.The exception is Swift structs that act as bindings for C bit
-/// set enums. These Swift structs should conform to the ``GitOptionSet`` protocol instead.
+/// conform to one of the following protocols.The exception is Swift structs that act as bindings for C
+/// bitset enums. These Swift structs should conform to the ``GitOptionSet`` protocol instead.
 ///
 /// The only structs that should conform directly to ``GitStruct`` are structs which are unused by other
 /// bindings, but exist for documentation purposes. ``GitStructReadable`` does not define any
@@ -66,21 +66,41 @@
 /// - ``NonOptionalWithCConvertible``
 /// - ``OptionalWithCConvertible``
 ///
-/// See the ``CConvertible`` documentation for more information.
-///
-/// Some structs may also need to implement an additional mutating method which is not defined by
-/// any protocol, since it is not commonly needed:
-///
-/// ```swift
-/// internal func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<C>) -> T
-/// ) -> T
-/// ```
+/// The conversion approaches described above may also be return optional values. See the
+/// ``CConvertible`` documentation for more information.
 ///
 /// ``GitStruct`` does not directly conform to the convertible protocols due to the level of variation
 /// required by conforming structs. A single protocol cannot define this level of variation, and multiple
 /// protocols would be less effective from a semantic standpoint. Conforming structs should adopt one
 /// of the convertible protocols, unless they conform directly to ``GitStruct`` and are unused.
+///
+/// Some structs may also need to implement an additional mutating method:
+///
+/// ```swift
+/// internal func withMutatingCValue<T>(
+///     _ body: (UnsafeMutablePointer<C>) -> T
+/// ) -> T
+///
+/// internal func withMutatingCValue<T>(
+///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) -> T
+/// ) -> T
+/// ```
+///
+/// The first mutating method should be used when working with C functions that expect a parameter
+/// of the type `C *`, while the second mutating method should be used for `C **` parameters.
+/// The structs which current implement these methods are:
+///
+/// - `UnsafeMutablePointer<C>`:
+///     - ``GitBuf``
+///     - ``GitOID``
+///
+/// - `UnsafeMutablePointer<UnsafeMutablePointer<C>?>`:
+///     - ``GitConfigEntry``
+///     - ``GitSignature``
+///
+/// These structs are commonly used as `inout` parameters with function bindings.
+/// Currently, no protocol defines requirements for these mutating methods. If more binding structs
+/// implement this method, a new protocol should be created to standardize its implementation.
 internal protocol GitStruct: CConvertible
 {
     /// The type of the equivalent C value.
