@@ -72,7 +72,6 @@ public struct GitBuf: GitStructInternalMutable, WithThrowingCConvertible
     
     
     
-    
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
