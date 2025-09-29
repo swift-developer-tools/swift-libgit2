@@ -25,7 +25,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf: GitStructInternalMutable, WithCConvertible
+public struct GitBuf: GitStructInternalMutable, WithThrowingCConvertible
 {
     /// The buffer contents.
     ///
@@ -76,9 +76,10 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_buf>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_buf>) throws -> T
+    ) rethrows -> T
     {
         var buffer = git_buf()
         
@@ -86,7 +87,7 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
         buffer.reserved     = reserved
         buffer.size         = size
         
-        return body(&buffer)
+        return try body(&buffer)
     }
     
     
@@ -95,15 +96,16 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     /// instance with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
     internal mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<git_buf>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_buf>) throws -> T
+    ) rethrows -> T
     {
-        return withCValue
+        return try withCValue
         {
             buffer in
             
-            let result: T = body(buffer)
+            let result: T = try body(buffer)
             
             ptr        = buffer.pointee.ptr
             reserved   = buffer.pointee.reserved
