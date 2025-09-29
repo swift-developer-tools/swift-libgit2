@@ -39,13 +39,11 @@ enum Branch
         free        freeBranch  : Bool
     ) throws -> OpaquePointer?
     {
-        var headCommitPointer       : OpaquePointer?    = nil
         var annotatedCommitPointer  : OpaquePointer?    = nil
         var branchPointer           : OpaquePointer?    = nil
         
         defer
         {
-            Free.freeCommit(headCommitPointer)
             Free.freeAnnotatedCommit(annotatedCommitPointer)
             
             if freeBranch
@@ -56,12 +54,10 @@ enum Branch
         
         
         
-        let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-        
-        
-        
         if annotated
         {
+            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            
             let annotatedCommitLookup: Int32 = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
@@ -95,36 +91,20 @@ enum Branch
         }
         else
         {
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &headCommitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let headCommitPointer: OpaquePointer = headCommitPointer
-            else
+            try Commit.withHEADCommit(in: repository)
             {
-                XCTFail("The  was nil.")
-                
-                throw NSError.makeError(
-                    code:       Int(GIT_EUSER.rawValue),
-                    message:    "The HEAD commit pointer was nil."
+                commitPointer in
+
+                let branchCreateResult: Int32 = gitBranchCreate(
+                    out:            &branchPointer,
+                    repo:           repository.pointer,
+                    branchName:     branchName,
+                    target:         commitPointer,
+                    force:          force
                 )
+                
+                XCTAssertOK(branchCreateResult)
             }
-            
-            
-            
-            let branchCreateResult: Int32 = gitBranchCreate(
-                out:            &branchPointer,
-                repo:           repository.pointer,
-                branchName:     branchName,
-                target:         headCommitPointer,
-                force:          force
-            )
-            
-            XCTAssertOK(branchCreateResult)
         }
         
         

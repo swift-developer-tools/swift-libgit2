@@ -434,43 +434,25 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
-            var buffer          : GitBuf            = GitBuf()
-            var commitPointer   : OpaquePointer?    = nil
+            var buffer: GitBuf = GitBuf()
 
             defer
             {
                 gitBufDispose(buffer: &buffer)
-                Free.freeCommit(commitPointer)
             }
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
+            let commitHeaderFieldResult: Int32 = try Commit.withHEADCommit(in: repository)
             {
-                XCTFail("The commit pointer was nil.")
-                return
+                commitPointer in
+
+                return gitCommitHeaderField(
+                    out:        &buffer,
+                    commit:     commitPointer,
+                    field:      "tree"
+                )
             }
-            
-            
-            
-            let commitHeaderFieldResult: Int32 = gitCommitHeaderField(
-                out:        &buffer,
-                commit:     commitPointer,
-                field:      "tree"
-            )
             
             XCTAssertOK(commitHeaderFieldResult)
             XCTAssertNotNil(buffer.ptr)
@@ -629,58 +611,33 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
-            var commitPointer: OpaquePointer? = nil
-            
-            defer
+            try Commit.withHEADCommit(in: repository)
             {
-                Free.freeCommit(commitPointer)
+                commitPointer in
+                
+                var author      = GitSignature()
+                var committer   = GitSignature()
+                
+                
+                
+                let commitAuthorWithMailmapResult: Int32 = gitCommitAuthorWithMailmap(
+                    out:        &author,
+                    commit:     commitPointer,
+                    mailmap:    nil
+                )
+                
+                XCTAssertOK(commitAuthorWithMailmapResult)
+                
+                
+                
+                let commitCommitterWithMailmapResult: Int32 = gitCommitCommitterWithMailmap(
+                    out:        &committer,
+                    commit:     commitPointer,
+                    mailmap:    nil
+                )
+                
+                XCTAssertOK(commitCommitterWithMailmapResult)
             }
-            
-            
-            
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
-            {
-                XCTFail("The commit pointer was nil.")
-                return
-            }
-            
-            
-            
-            var author      = GitSignature()
-            var committer   = GitSignature()
-            
-            
-            
-            let commitAuthorWithMailmapResult: Int32 = gitCommitAuthorWithMailmap(
-                out:        &author,
-                commit:     commitPointer,
-                mailmap:    nil
-            )
-            
-            XCTAssertOK(commitAuthorWithMailmapResult)
-            
-            
-            
-            let commitCommitterWithMailmapResult: Int32 = gitCommitCommitterWithMailmap(
-                out:        &committer,
-                commit:     commitPointer,
-                mailmap:    nil
-            )
-            
-            XCTAssertOK(commitCommitterWithMailmapResult)
         }
     }
     
@@ -706,43 +663,25 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
-            var commitPointer           : OpaquePointer?    = nil
             var ancestorCommitPointer   : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeCommit(commitPointer)
                 Free.freeCommit(ancestorCommitPointer)
             }
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
+            let commitNthGenAncestorResult: Int32 = try Commit.withHEADCommit(in: repository)
             {
-                XCTFail("The commit pointer was nil.")
-                return
+                commitPointer in
+
+                return gitCommitNthGenAncestor(
+                    ancestor:   &ancestorCommitPointer,
+                    commit:     commitPointer,
+                    n:          2
+                )
             }
-            
-            
-            
-            let commitNthGenAncestorResult: Int32 = gitCommitNthGenAncestor(
-                ancestor:   &ancestorCommitPointer,
-                commit:     commitPointer,
-                n:          2
-            )
             
             XCTAssertOK(commitNthGenAncestorResult)
             XCTAssertNotNil(ancestorCommitPointer)
@@ -827,44 +766,19 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
-            var commitPointer: OpaquePointer? = nil
+            try Commit.withHEADCommit(in: repository)
+            {
+                commitPointer in
 
-            defer
-            {
-                Free.freeCommit(commitPointer)
+                guard let rawCommitHeader: String = gitCommitRawHeader(commit: commitPointer)
+                else
+                {
+                    XCTFail("The raw commit header was nil.")
+                    return
+                }
+                
+                XCTAssertTrue(rawCommitHeader.contains("tree"))
             }
-            
-            
-            
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
-            {
-                XCTFail("The commit pointer was nil.")
-                return
-            }
-            
-            
-            
-            guard let rawCommitHeader: String = gitCommitRawHeader(commit: commitPointer)
-            else
-            {
-                XCTFail("The raw commit header was nil.")
-                return
-            }
-            
-            XCTAssertTrue(rawCommitHeader.contains("tree"))
         }
     }
     
@@ -876,51 +790,33 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
-            var commitPointer   : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
+            var treePointer: OpaquePointer? = nil
             
             defer
             {
-                Free.freeCommit(commitPointer)
                 Free.freeTree(treePointer)
             }
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
+            try Commit.withHEADCommit(in: repository)
             {
-                XCTFail("The commit pointer was nil.")
-                return
+                commitPointer in
+
+                let treeOID: GitOID = gitCommitTreeID(commit: commitPointer)
+                
+                OID.assertOIDsNotEqual(treeOID, GitOID())
+                
+                
+                
+                let commitTreeResult: Int32 = gitCommitTree(
+                    out:        &treePointer,
+                    commit:     commitPointer
+                )
+                
+                XCTAssertOK(commitTreeResult)
+                XCTAssertNotNil(treePointer)
             }
-            
-            
-            
-            let treeOID: GitOID = gitCommitTreeID(commit: commitPointer)
-            
-            OID.assertOIDsNotEqual(treeOID, GitOID())
-            
-            
-            
-            let commitTreeResult: Int32 = gitCommitTree(
-                out:        &treePointer,
-                commit:     commitPointer
-            )
-            
-            XCTAssertOK(commitTreeResult)
-            XCTAssertNotNil(treePointer)
         }
     }
 }

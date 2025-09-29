@@ -496,39 +496,24 @@ final class CheckoutTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
-            var commitPointer   : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
+            var treePointer: OpaquePointer? = nil
             
             defer
             {
-                Free.freeCommit(commitPointer)
                 Free.freeTree(treePointer)
             }
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
+            let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
             {
-                XCTFail("The commit pointer was nil.")
-                return
+                commitPointer in
+                
+                return gitCommitTree(
+                    out:        &treePointer,
+                    commit:     commitPointer
+                )
             }
-            
-            
-            
-            let commitTreeResult: Int32 = gitCommitTree(
-                out:        &treePointer,
-                commit:     commitPointer
-            )
             
             XCTAssertOK(commitTreeResult)
             
