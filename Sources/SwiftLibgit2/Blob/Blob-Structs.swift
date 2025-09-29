@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options.html)
-public struct GitBlobFilterOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -78,13 +79,14 @@ public struct GitBlobFilterOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_blob_filter_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
     ///
     /// ## Discussion
     ///
     /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_blob_filter_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_blob_filter_options>) throws -> T
+    ) throws -> T
     {
         var blobFilterOptions = git_blob_filter_options()
         
@@ -95,30 +97,30 @@ public struct GitBlobFilterOptions: GitStructMutable, OptionalWithCConvertible
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
         
         blobFilterOptions.flags             = flags.rawValue
-        blobFilterOptions.attr_commit_id    = attrCommitID?.cValue ?? git_oid()
+        blobFilterOptions.attr_commit_id    = attrCommitID?.cValue() ?? git_oid()
         
         if let commitID: GitOID = commitID
         {
-            var cCommitID: git_oid = commitID.cValue
+            var cCommitID: git_oid = commitID.cValue()
             
-            return withUnsafeMutablePointer(to: &cCommitID)
+            return try withUnsafeMutablePointer(to: &cCommitID)
             {
                 commitIDPointer in
                 
                 blobFilterOptions.commit_id = commitIDPointer
                 
-                return body(&blobFilterOptions)
+                return try body(&blobFilterOptions)
             }
         }
         else
         {
             blobFilterOptions.commit_id = nil
             
-            return body(&blobFilterOptions)
+            return try body(&blobFilterOptions)
         }
     }
 }

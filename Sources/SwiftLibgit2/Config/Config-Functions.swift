@@ -222,9 +222,9 @@ public func gitConfigAddFileOnDisk(
     return git_config_add_file_ondisk(
         cfg,
         path,
-        level.cValue,
+        level.cValue(),
         repo,
-        force.cValue
+        force.cValue()
     )
 }
 
@@ -288,7 +288,7 @@ public func gitConfigOpenLevel(
     return git_config_open_level(
         out,
         parent,
-        level.cValue
+        level.cValue()
     )
 }
 
@@ -348,7 +348,7 @@ public func gitConfigSetWriteOrder(
     len     : Int
 ) -> Int32
 {
-    let cLevels: [git_config_level_t] = levels.map { $0.cValue }
+    let cLevels: [git_config_level_t] = levels.map { $0.cValue() }
     
     return cLevels.withUnsafeBufferPointer
     {
@@ -853,7 +853,7 @@ public func gitConfigSetBool(
     return git_config_set_bool(
         cfg,
         name,
-        value.cValue
+        value.cValue()
     )
 }
 

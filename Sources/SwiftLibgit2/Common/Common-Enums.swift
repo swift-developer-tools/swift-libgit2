@@ -87,8 +87,9 @@ public struct GitFeatureT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_feature_t
+    /// Converts the ``GitFeatureT`` instance into a `git_feature_t` instance.
+    /// - Returns: The `git_feature_t` instance.
+    internal func cValue() -> git_feature_t
     {
         return git_feature_t(rawValue)
     }
@@ -525,8 +526,9 @@ public enum GitLibgit2OptT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_libgit2_opt_t
+    /// Converts the ``GitLibgit2OptT`` instance into a `git_libgit2_opt_t` instance.
+    /// - Returns: The `git_libgit2_opt_t` instance.
+    internal func cValue() -> git_libgit2_opt_t
     {
         switch self
         {

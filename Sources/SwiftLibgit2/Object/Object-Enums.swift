@@ -59,8 +59,9 @@ public enum GitObjectT: Int32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_object_t
+    /// Converts the ``GitObjectT`` instance into a `git_object_t` instance.
+    /// - Returns: The `git_object_t` instance.
+    internal func cValue() -> git_object_t
     {
         switch self
         {

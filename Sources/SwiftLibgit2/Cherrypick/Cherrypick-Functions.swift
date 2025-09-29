@@ -29,8 +29,8 @@ import Clibgit2
 ///
 /// The returned index should be freed with `git_index_free()`.
 ///
-/// This function will return `GIT_EUSER` if `mergeOptions` was provided, but there was an error
-/// converting it to the equivalent C value.
+/// This function will return `GIT_EUSER` if `mergeOptions` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -44,25 +44,21 @@ public func gitCherrypickCommit(
     mergeOptions        : GitMergeOptions?
 ) -> Int32
 {
-    return mergeOptions.withOptionalCValue
+    return withCConversion
     {
-        cMergeOptions in
-        
-        if
-            mergeOptions != nil,
-            cMergeOptions == nil
+        return try mergeOptions.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
+            cMergeOptions in
+            
+            return git_cherrypick_commit(
+                out,
+                repo,
+                cherrypickCommit,
+                ourCommit,
+                mainline,
+                cMergeOptions
+            )
         }
-        
-        return git_cherrypick_commit(
-            out,
-            repo,
-            cherrypickCommit,
-            ourCommit,
-            mainline,
-            cMergeOptions
-        )
     }
 }
 
@@ -78,8 +74,8 @@ public func gitCherrypickCommit(
 ///
 /// ## Discussion
 ///
-/// This function will return `GIT_EUSER` if `cherrypickOptions` was provided, but there was an error
-/// converting it to the equivalent C value.
+/// This function will return `GIT_EUSER` if `cherrypickOptions` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -90,21 +86,17 @@ public func gitCherrypick(
     cherrypickOptions   : GitCherrypickOptions?
 ) -> Int32
 {
-    return cherrypickOptions.withOptionalCValue
+    return withCConversion
     {
-        cCherrypickOptions in
-        
-        if
-            cherrypickOptions != nil,
-            cCherrypickOptions == nil
+        return try cherrypickOptions.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
+            cCherrypickOptions in
+            
+            return git_cherrypick(
+                repo,
+                commit,
+                cCherrypickOptions
+            )
         }
-        
-        return git_cherrypick(
-            repo,
-            commit,
-            cCherrypickOptions
-        )
     }
 }

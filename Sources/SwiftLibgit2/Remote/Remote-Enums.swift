@@ -56,8 +56,10 @@ public enum GitRemoteRedirectT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_remote_redirect_t
+    /// Converts the ``GitRemoteRedirectT`` instance into a `git_remote_redirect_t`
+    /// instance.
+    /// - Returns: The `git_remote_redirect_t` instance.
+    internal func cValue() -> git_remote_redirect_t
     {
         switch self
         {
@@ -99,8 +101,10 @@ public struct GitRemoteCreateFlags: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_remote_create_flags
+    /// Converts the ``GitRemoteCreateFlags`` instance into a `git_remote_create_flags`
+    /// instance.
+    /// - Returns: The `git_remote_create_flags` instance.
+    internal func cValue() -> git_remote_create_flags
     {
         return git_remote_create_flags(rawValue)
     }
@@ -137,8 +141,10 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_remote_update_flags
+    /// Converts the ``GitRemoteUpdateFlags`` instance into a `git_remote_update_flags`
+    /// instance.
+    /// - Returns: The `git_remote_update_flags` instance.
+    internal func cValue() -> git_remote_update_flags
     {
         return git_remote_update_flags(rawValue)
     }
@@ -182,8 +188,10 @@ public enum GitRemoteCompletionT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_remote_completion_t
+    /// Converts the ``GitRemoteCompletionT`` instance into a `git_remote_completion_t`
+    /// instance.
+    /// - Returns: The `git_remote_completion_t` instance.
+    internal func cValue() -> git_remote_completion_t
     {
         switch self
         {
@@ -231,8 +239,10 @@ public enum GitFetchPruneT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_fetch_prune_t
+    /// Converts the ``GitFetchPruneT`` instance into a `git_fetch_prune_t`
+    /// instance.
+    /// - Returns: The `git_fetch_prune_t` instance.
+    internal func cValue() -> git_fetch_prune_t
     {
         switch self
         {
@@ -286,8 +296,10 @@ public enum GitRemoteAutoTagOptionT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_remote_autotag_option_t
+    /// Converts the ``GitRemoteAutoTagOptionT`` instance into a
+    /// `git_remote_autotag_option_t` instance.
+    /// - Returns: The `git_remote_autotag_option_t` instance.
+    internal func cValue() -> git_remote_autotag_option_t
     {
         switch self
         {
@@ -336,8 +348,9 @@ public enum GitFetchDepthT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_fetch_depth_t
+    /// Converts the ``GitFetchDepthT`` instance into a `git_fetch_depth_t` instance.
+    /// - Returns: The `git_fetch_depth_t` instance.
+    internal func cValue() -> git_fetch_depth_t
     {
         switch self
         {

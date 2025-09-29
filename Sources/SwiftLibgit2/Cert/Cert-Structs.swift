@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cert`](https://libgit2.org/docs/reference/main/cert/git_cert.html)
-public struct GitCert: GitStructReadable, NonOptionalCConvertible
+public struct GitCert: GitStructReadable, CConvertible
 {
     /// The type of host certificate.
     public let certType: GitCertT
@@ -40,12 +40,13 @@ public struct GitCert: GitStructReadable, NonOptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_cert
+    /// Converts the ``GitCert`` instance into a `git_cert` instance.
+    /// - Returns: The `git_cert` instance.
+    internal func cValue() -> git_cert
     {
         var cert = git_cert()
         
-        cert.cert_type = certType.cValue
+        cert.cert_type = certType.cValue()
         
         return cert
     }
@@ -58,7 +59,7 @@ public struct GitCert: GitStructReadable, NonOptionalCConvertible
 /// ## C Equivalent
 ///
 /// [`git_cert_hostkey`](https://libgit2.org/docs/reference/main/cert/git_cert_hostkey.html)
-public struct GitCertHostKey: GitStructReadable, NonOptionalWithCConvertible
+public struct GitCertHostKey: GitStructReadable, WithCConvertible
 {
     /// The parent certificate.
     public let parent       : GitCert
@@ -162,11 +163,9 @@ public struct GitCertHostKey: GitStructReadable, NonOptionalWithCConvertible
     {
         var certHostKey = git_cert_hostkey()
         
-        certHostKey.parent          = parent.cValue
-        certHostKey.type            = type.cValue
-        certHostKey.raw_type        = rawType.cValue
-        
-        
+        certHostKey.parent          = parent.cValue()
+        certHostKey.type            = type.cValue()
+        certHostKey.raw_type        = rawType.cValue()
         
         hashMD5.withUnsafeBytes
         {
@@ -201,8 +200,6 @@ public struct GitCertHostKey: GitStructReadable, NonOptionalWithCConvertible
             )
         }
         
-        
-        
         guard let hostKey: Data = hostKey
         else
         {
@@ -231,7 +228,7 @@ public struct GitCertHostKey: GitStructReadable, NonOptionalWithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_cert_x509`](https://libgit2.org/docs/reference/main/cert/git_cert_x509.html)
-public struct GitCertX509: GitStructReadable, NonOptionalCConvertible
+public struct GitCertX509: GitStructReadable, CConvertible
 {
     /// The parent certificate.
     public let parent   : GitCert
@@ -257,12 +254,13 @@ public struct GitCertX509: GitStructReadable, NonOptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_cert_x509
+    /// Converts the ``GitCertX509`` instance into a `git_cert_x509` instance.
+    /// - Returns: The `git_cert_x509` instance.
+    internal func cValue() -> git_cert_x509
     {
         var certX509 = git_cert_x509()
         
-        certX509.parent     = parent.cValue
+        certX509.parent     = parent.cValue()
         certX509.data       = data
         certX509.len        = len
         

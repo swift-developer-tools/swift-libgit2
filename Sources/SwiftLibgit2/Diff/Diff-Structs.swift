@@ -21,7 +21,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile: GitStructReadable, NonOptionalWithCConvertible
+public struct GitDiffFile: GitStructReadable, WithCConvertible
 {
     /// The ID of the item.
     ///
@@ -90,7 +90,7 @@ public struct GitDiffFile: GitStructReadable, NonOptionalWithCConvertible
     {
         var diffFile = git_diff_file()
         
-        diffFile.id         = id.cValue
+        diffFile.id         = id.cValue()
         diffFile.size       = size
         diffFile.flags      = flags.rawValue
         diffFile.mode       = mode.rawValue
@@ -152,7 +152,7 @@ public struct GitDiffFile: GitStructReadable, NonOptionalWithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta: GitStructReadable, NonOptionalWithCConvertible
+public struct GitDiffDelta: GitStructReadable, WithCConvertible
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -205,7 +205,7 @@ public struct GitDiffDelta: GitStructReadable, NonOptionalWithCConvertible
     {
         var diffDelta = git_diff_delta()
         
-        diffDelta.status        = status.cValue
+        diffDelta.status        = status.cValue()
         diffDelta.flags         = flags.rawValue
         diffDelta.similarity    = similarity
         diffDelta.nfiles        = nFiles

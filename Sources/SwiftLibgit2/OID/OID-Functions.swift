@@ -25,8 +25,8 @@ public func gitOIDEqual(
     b   : GitOID
 ) -> Bool
 {
-    var cFirstOID   : git_oid   = a.cValue
-    var cSecondOID  : git_oid   = b.cValue
+    var cFirstOID   : git_oid   = a.cValue()
+    var cSecondOID  : git_oid   = b.cValue()
     
     let oidEqualResult: Int32 = git_oid_equal(
         &cFirstOID,

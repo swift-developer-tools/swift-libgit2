@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_entry`](https://libgit2.org/docs/reference/main/config/git_config_entry.html)
-public struct GitConfigEntry: GitStructInternalMutable, NonOptionalWithCConvertible
+public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
 {
     /// The normalized name of the configuration entry.
     public private(set) var name            : String?           = nil
@@ -78,7 +78,7 @@ public struct GitConfigEntry: GitStructInternalMutable, NonOptionalWithCConverti
         var configEntry = git_config_entry()
         
         configEntry.include_depth   = includeDepth
-        configEntry.level           = level.cValue
+        configEntry.level           = level.cValue()
         
         return name.withOptionalCString
         {
@@ -153,7 +153,7 @@ public struct GitConfigEntry: GitStructInternalMutable, NonOptionalWithCConverti
 /// ## C Equivalent
 ///
 /// [`git_configmap`](https://libgit2.org/docs/reference/main/config/git_configmap.html)
-public struct GitConfigMap: GitStructMutable, NonOptionalWithCConvertible
+public struct GitConfigMap: GitStructMutable, WithCConvertible
 {
     /// The type of configuration value to match.
     ///
@@ -217,7 +217,7 @@ public struct GitConfigMap: GitStructMutable, NonOptionalWithCConvertible
     {
         var configMap = git_configmap()
         
-        configMap.type          = type.cValue
+        configMap.type          = type.cValue()
         configMap.map_value     = Int32(mapValue)
         
         return strMatch.withOptionalCString

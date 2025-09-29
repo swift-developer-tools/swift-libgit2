@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_callbacks`](https://libgit2.org/docs/reference/main/remote/git_remote_callbacks.html)
-public struct GitRemoteCallbacks: GitStructMutable, OptionalCConvertible
+public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -178,12 +179,10 @@ public struct GitRemoteCallbacks: GitStructMutable, OptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    ///
-    /// ## Discussion
-    ///
-    /// This value will be `nil` if the initialization failed.
-    internal var cValue: git_remote_callbacks?
+    /// Converts the ``GitRemoteCallbacks`` instance into a `git_remote_callbacks` instance.
+    /// - Returns: The `git_remote_callbacks` instance.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func cValue() throws -> git_remote_callbacks
     {
         var remoteCallbacks = git_remote_callbacks()
         
@@ -194,7 +193,7 @@ public struct GitRemoteCallbacks: GitStructMutable, OptionalCConvertible
         
         if remoteInitCallbacksResult != GIT_OK.rawValue
         {
-            return nil
+            throw NSError.makeCConversionError()
         }
         
         remoteCallbacks.version                 = version
@@ -225,7 +224,7 @@ public struct GitRemoteCallbacks: GitStructMutable, OptionalCConvertible
 /// ## C Equivalent
 ///
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
-public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitFetchOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -331,13 +330,10 @@ public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_fetch_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
+    /// - Throws: An `NSError` if initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_fetch_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_fetch_options>) throws -> T
+    ) throws -> T
     {
         var fetchOptions = git_fetch_options()
         
@@ -348,23 +344,21 @@ public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
         
         if fetchOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
         
-        
-        
-        fetchOptions.prune              = prune.cValue
+        fetchOptions.prune              = prune.cValue()
         fetchOptions.update_fetchhead   = updateFetchHEAD.rawValue
-        fetchOptions.download_tags      = downloadTags.cValue
+        fetchOptions.download_tags      = downloadTags.cValue()
         fetchOptions.depth              = Int32(depth.rawValue)
-        fetchOptions.follow_redirects   = followRedirects.cValue
+        fetchOptions.follow_redirects   = followRedirects.cValue()
         
-        if let cCallbacks: git_remote_callbacks = callbacks?.cValue
+        if let cCallbacks: git_remote_callbacks = try callbacks?.cValue()
         {
             fetchOptions.callbacks = cCallbacks
         }
         
-        return proxyOpts.withOptionalCValue
+        return try proxyOpts.withOptionalCValue
         {
             cProxyOpts in
             
@@ -373,13 +367,13 @@ public struct GitFetchOptions: GitStructMutable, OptionalWithCConvertible
                 fetchOptions.proxy_opts = cProxyOpts.pointee
             }
             
-            return customHeaders.withGitStrArray
+            return try customHeaders.withGitStrArray
             {
                 cCustomHeaders in
                 
                 fetchOptions.custom_headers = cCustomHeaders.pointee
                 
-                return body(&fetchOptions)
+                return try body(&fetchOptions)
             }
         }
     }

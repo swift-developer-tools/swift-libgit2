@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_time`](https://libgit2.org/docs/reference/main/types/git_time.html)
-public struct GitTime: GitStructReadable, NonOptionalCConvertible
+public struct GitTime: GitStructReadable, CConvertible
 {
     /// The UNIX timestamp in seconds.
     public let time     : GitTimeT
@@ -42,8 +42,9 @@ public struct GitTime: GitStructReadable, NonOptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_time
+    /// Converts the ``GitTime`` instance into a `git_time` instance.
+    /// - Returns: The `git_time` instance.
+    internal func cValue() -> git_time
     {
         var cTime = git_time()
         

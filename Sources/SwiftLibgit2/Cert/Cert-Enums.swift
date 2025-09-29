@@ -60,8 +60,9 @@ public enum GitCertT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_cert_t
+    /// Converts the ``GitCertT`` instance into a `git_cert_t` instance.
+    /// - Returns: The `git_cert_t` instance.
+    internal func cValue() -> git_cert_t
     {
         switch self
         {
@@ -110,8 +111,9 @@ public struct GitCertSSHT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_cert_ssh_t
+    /// Converts the ``GitCertSSHT`` instance into a `git_cert_ssh_t` instance.
+    /// - Returns: The `git_cert_ssh_t` instance.
+    internal func cValue() -> git_cert_ssh_t
     {
         return git_cert_ssh_t(rawValue)
     }
@@ -171,8 +173,9 @@ public enum GitCertSSHRawTypeT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_cert_ssh_raw_type_t
+    /// Converts the ``GitCertSSHRawTypeT`` instance into a `git_cert_ssh_raw_type_t` instance.
+    /// - Returns: The `git_cert_ssh_raw_type_t` instance.
+    internal func cValue() -> git_cert_ssh_raw_type_t
     {
         switch self
         {

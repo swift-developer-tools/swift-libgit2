@@ -38,9 +38,9 @@ final class ProxyTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitProxyT.gitProxySpecified.rawValue, GIT_PROXY_SPECIFIED.rawValue)
         XCTAssertNil(GitProxyT(rawValue: 123))
         
-        XCTAssertEqual(GitProxyT.gitProxyNone.cValue, GIT_PROXY_NONE)
-        XCTAssertEqual(GitProxyT.gitProxyAuto.cValue, GIT_PROXY_AUTO)
-        XCTAssertEqual(GitProxyT.gitProxySpecified.cValue, GIT_PROXY_SPECIFIED)
+        XCTAssertEqual(GitProxyT.gitProxyNone.cValue(), GIT_PROXY_NONE)
+        XCTAssertEqual(GitProxyT.gitProxyAuto.cValue(), GIT_PROXY_AUTO)
+        XCTAssertEqual(GitProxyT.gitProxySpecified.cValue(), GIT_PROXY_SPECIFIED)
         
         XCTAssertEqual(GitProxyT(cValue: GIT_PROXY_NONE), .gitProxyNone)
         XCTAssertEqual(GitProxyT(cValue: GIT_PROXY_AUTO), .gitProxyAuto)

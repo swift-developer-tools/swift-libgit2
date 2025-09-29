@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_clone_options`](https://libgit2.org/docs/reference/main/clone/git_clone_options.html)
-public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitCloneOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -133,13 +134,14 @@ public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_clone_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
     ///
     /// ## Discussion
     ///
     /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_clone_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_clone_options>) throws -> T
+    ) throws -> T
     {
         var cloneOptions = git_clone_options()
         
@@ -150,25 +152,23 @@ public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
         
         if cloneOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
         
-        
-        
-        cloneOptions.bare                   = bare.cValue
-        cloneOptions.local                  = local.cValue
+        cloneOptions.bare                   = bare.cValue()
+        cloneOptions.local                  = local.cValue()
         cloneOptions.repository_cb          = repositoryCB
         cloneOptions.repository_cb_payload  = repositoryCBPayload
         cloneOptions.remote_cb              = remoteCB
         cloneOptions.remote_cb_payload      = remoteCBPayload
         
-        return checkoutBranch.withOptionalCString
+        return try checkoutBranch.withOptionalCString
         {
             cCheckoutBranch in
             
             cloneOptions.checkout_branch = cCheckoutBranch
             
-            return checkoutOpts.withOptionalCValue
+            return try checkoutOpts.withOptionalCValue
             {
                 cCheckoutOpts in
                 
@@ -177,7 +177,7 @@ public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
                     cloneOptions.checkout_opts = cCheckoutOpts.pointee
                 }
                 
-                return fetchOpts.withOptionalCValue
+                return try fetchOpts.withOptionalCValue
                 {
                     cFetchOpts in
                     
@@ -186,7 +186,7 @@ public struct GitCloneOptions: GitStructMutable, OptionalWithCConvertible
                         cloneOptions.fetch_opts = cFetchOpts.pointee
                     }
                     
-                    return body(&cloneOptions)
+                    return try body(&cloneOptions)
                 }
             }
         }

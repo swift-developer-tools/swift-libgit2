@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions: GitStructMutable, NonOptionalWithCConvertible
+public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -91,7 +91,7 @@ public struct GitCommitCreateOptions: GitStructMutable, NonOptionalWithCConverti
         var commitCreateOptions = git_commit_create_options()
         
         commitCreateOptions.version             = version
-        commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.cValue)
+        commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.cValue())
         
         return author.withOptionalCValue
         {

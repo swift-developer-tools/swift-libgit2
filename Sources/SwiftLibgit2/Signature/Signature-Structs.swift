@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_signature`](https://libgit2.org/docs/reference/main/signature/git_signature.html)
-public struct GitSignature: GitStructInternalMutable, NonOptionalWithCConvertible
+public struct GitSignature: GitStructInternalMutable, WithCConvertible
 {
     /// The full name of the actor.
     ///
@@ -65,6 +65,7 @@ public struct GitSignature: GitStructInternalMutable, NonOptionalWithCConvertibl
     /// Calls the given closure with a pointer to a `git_signature` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
     ///
     /// ## Discussion
     ///
@@ -76,7 +77,7 @@ public struct GitSignature: GitStructInternalMutable, NonOptionalWithCConvertibl
     {
         var signature = git_signature()
         
-        signature.when = when.cValue
+        signature.when = when.cValue()
         
         return name.withMutableCString
         {

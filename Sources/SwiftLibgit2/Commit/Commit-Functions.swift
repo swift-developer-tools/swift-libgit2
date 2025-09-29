@@ -29,7 +29,7 @@ public func gitCommitLookup(
     id      : GitOID
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
+    var cID: git_oid = id.cValue()
     
     return git_commit_lookup(
         commit,
@@ -60,7 +60,7 @@ public func gitCommitLookupPrefix(
     len     : Int
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
+    var cID: git_oid = id.cValue()
     
     return git_commit_lookup_prefix(
         commit,
@@ -587,7 +587,7 @@ public func gitCommitExtractSignature(
     field       : String?
 ) -> Int32
 {
-    var cCommitID: git_oid = commitID.cValue
+    var cCommitID: git_oid = commitID.cValue()
     
     return signature.withMutatingCValue
     {

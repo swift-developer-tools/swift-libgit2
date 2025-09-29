@@ -19,9 +19,9 @@ final class ApplyTests: XCTestCaseStopOnFail
     {
         XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.rawValue, GIT_APPLY_CHECK.rawValue)
         
-        XCTAssertEqual(GitApplyFlagsT(rawValue: 123).cValue.rawValue, 123)
+        XCTAssertEqual(GitApplyFlagsT(rawValue: 123).cValue().rawValue, 123)
         
-        XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.cValue, GIT_APPLY_CHECK)
+        XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.cValue(), GIT_APPLY_CHECK)
         
         
         
@@ -44,11 +44,11 @@ final class ApplyTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.rawValue, GIT_APPLY_LOCATION_INDEX.rawValue)
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.rawValue, GIT_APPLY_LOCATION_BOTH.rawValue)
         
-        XCTAssertEqual(GitApplyLocationT(rawValue: 123).cValue.rawValue, 123)
+        XCTAssertEqual(GitApplyLocationT(rawValue: 123).cValue().rawValue, 123)
         
-        XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.cValue, GIT_APPLY_LOCATION_WORKDIR)
-        XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.cValue, GIT_APPLY_LOCATION_INDEX)
-        XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.cValue, GIT_APPLY_LOCATION_BOTH)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.cValue(), GIT_APPLY_LOCATION_WORKDIR)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.cValue(), GIT_APPLY_LOCATION_INDEX)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.cValue(), GIT_APPLY_LOCATION_BOTH)
     }
     
     

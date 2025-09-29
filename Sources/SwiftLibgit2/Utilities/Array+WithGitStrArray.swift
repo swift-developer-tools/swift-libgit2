@@ -16,14 +16,15 @@ internal extension Array where Element == String
     /// Calls the given closure with a pointer to a `git_strarray` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An error thrown by the given closure.
     ///
     /// ## Discussion
     ///
     /// `git_strarray_dispose()` cannot be used here, since that function is
     /// intended to free the strings of a `git_strarray` which was allocated by libgit2.
     func withGitStrArray<T>(
-        _ body: (UnsafeMutablePointer<git_strarray>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
+    ) rethrows -> T
     {
         var strArray = git_strarray()
         
@@ -42,12 +43,12 @@ internal extension Array where Element == String
         guard !self.isEmpty
         else
         {
-            return body(&strArray)
+            return try body(&strArray)
         }
         
         
         
-        return self.withArrayOfCStrings
+        return try self.withArrayOfCStrings
         {
             cStrings in
             
@@ -63,7 +64,7 @@ internal extension Array where Element == String
             strArray.strings    = pointers
             strArray.count      = cStrings.count
             
-            return body(&strArray)
+            return try body(&strArray)
         }
     }
     

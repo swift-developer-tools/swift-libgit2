@@ -26,6 +26,7 @@ internal extension String
     /// Calls the given closure with a mutable C string pointer.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
+    /// - Throws: An error thrown by the given closure.
     ///
     /// ## Discussion
     ///
@@ -51,8 +52,8 @@ internal extension String
     /// `free()` in `strdup()`. This approach is similar to the one used by the Swift standard library
     /// in ``withArrayOfCStrings(_:)``.
     func withMutableCString<T>(
-        _ body: (UnsafeMutablePointer<CChar>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<CChar>) throws -> T
+    ) rethrows -> T
     {
         var buffer: [UInt8] = []
         
@@ -69,7 +70,7 @@ internal extension String
         
         
         
-        return buffer.withUnsafeMutableBufferPointer
+        return try buffer.withUnsafeMutableBufferPointer
         {
             buffer in
             
@@ -77,7 +78,7 @@ internal extension String
             let mutableCString = UnsafeMutableRawPointer(buffer.baseAddress!)
                 .bindMemory(to: CChar.self, capacity: buffer.count)
             
-            return body(mutableCString)
+            return try body(mutableCString)
         }
     }
 }

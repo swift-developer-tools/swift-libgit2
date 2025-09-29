@@ -47,7 +47,7 @@ final class TypesTests: XCTestCaseStopOnFail
             
             
             
-            let cTime   : git_time  = signature.when.cValue
+            let cTime   : git_time  = signature.when.cValue()
             let gitTime : GitTime   = GitTime(cValue: cTime)
             
             XCTAssertGreaterThan(gitTime.time, 0)

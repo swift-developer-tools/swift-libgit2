@@ -16,7 +16,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_options`](https://libgit2.org/docs/reference/main/attr/git_attr_options.html)
-public struct GitAttrOptions: GitStructMutable, NonOptionalWithCConvertible
+public struct GitAttrOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -83,11 +83,11 @@ public struct GitAttrOptions: GitStructMutable, NonOptionalWithCConvertible
         
         attrOptions.version         = version
         attrOptions.flags           = flags.rawValue
-        attrOptions.attr_commit_id  = attrCommitID?.cValue ?? git_oid()
+        attrOptions.attr_commit_id  = attrCommitID?.cValue() ?? git_oid()
         
         if let commitID: GitOID = commitID
         {
-            var cCommitID: git_oid = commitID.cValue
+            var cCommitID: git_oid = commitID.cValue()
             
             return withUnsafeMutablePointer(to: &cCommitID)
             {

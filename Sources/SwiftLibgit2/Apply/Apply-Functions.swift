@@ -21,6 +21,11 @@ import Clibgit2
 ///   - options: The options for the apply operation.
 /// - Returns: `0` on success, or an error code.
 ///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `options` was provided, but it
+/// could not be converted to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_apply_to_tree()`](https://libgit2.org/docs/reference/main/apply/git_apply_to_tree.html)
@@ -32,25 +37,21 @@ public func gitApplyToTree(
     options     : GitApplyOptions?
 ) -> Int32
 {
-    guard var cOptions: git_apply_options = options?.cValue
-    else
+    return withCConversion
     {
-        return git_apply_to_tree(
-            out,
-            repo,
-            preimage,
-            diff,
-            nil
-        )
+        return try options.withOptionalCValue
+        {
+            cOptions in
+            
+            return git_apply_to_tree(
+                out,
+                repo,
+                preimage,
+                diff,
+                cOptions
+            )
+        }
     }
-    
-    return git_apply_to_tree(
-        out,
-        repo,
-        preimage,
-        diff,
-        &cOptions
-    )
 }
 
 
@@ -65,6 +66,11 @@ public func gitApplyToTree(
 ///   - options: The options for the apply operation.
 /// - Returns: `0` on success, or an error code.
 ///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `options` was provided, but it
+/// could not be converted to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_apply()`](https://libgit2.org/docs/reference/main/apply/git_apply.html)
@@ -75,21 +81,18 @@ public func gitApply(
     options     : GitApplyOptions?
 ) -> Int32
 {
-    guard var cOptions: git_apply_options = options?.cValue
-    else
+    return withCConversion
     {
-        return git_apply(
-            repo,
-            diff,
-            location.cValue,
-            nil
-        )
+        return try options.withOptionalCValue
+        {
+            cOptions in
+            
+            return git_apply(
+                repo,
+                diff,
+                location.cValue(),
+                cOptions
+            )
+        }
     }
-    
-    return git_apply(
-        repo,
-        diff,
-        location.cValue,
-        &cOptions
-    )
 }

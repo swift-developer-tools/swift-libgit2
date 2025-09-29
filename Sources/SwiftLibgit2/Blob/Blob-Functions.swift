@@ -28,7 +28,7 @@ public func gitBlobLookup(
     id      : GitOID
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
+    var cID: git_oid = id.cValue()
     
     return git_blob_lookup(
         blob,
@@ -58,7 +58,7 @@ public func gitBlobLookupPrefix(
     len     : Int
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
+    var cID: git_oid = id.cValue()
     
     return git_blob_lookup_prefix(
         blob,
@@ -176,8 +176,8 @@ public func gitBlobRawSize(
 /// content of the blob. In that case, be careful to either copy the buffer into memory not owned by the
 /// library, or to not free the blob until the buffer is no longer needed.
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
-/// to the equivalent C value.
+/// This function will return `GIT_EUSER` if `opts` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -189,27 +189,23 @@ public func gitBlobFilter(
     opts    : GitBlobFilterOptions?
 ) -> Int32
 {
-    return opts.withOptionalCValue
+    return withCConversion
     {
-        cOpts in
-        
-        if
-            opts != nil,
-            cOpts == nil
+        return try opts.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
-        }
-        
-        return out.withMutatingCValue
-        {
-            cOut in
+            cOpts in
             
-            return git_blob_filter(
-                cOut,
-                blob,
-                asPath,
-                cOpts
-            )
+            return out.withMutatingCValue
+            {
+                cOut in
+                
+                return git_blob_filter(
+                    cOut,
+                    blob,
+                    asPath,
+                    cOpts
+                )
+            }
         }
     }
 }

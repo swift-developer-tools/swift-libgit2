@@ -46,8 +46,9 @@ public enum GitBranchT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_branch_t
+    /// Converts the ``GitBranchT`` instance into a `git_branch_t` instance.
+    /// - Returns: The `git_branch_t` instance.
+    internal func cValue() -> git_branch_t
     {
         switch self
         {

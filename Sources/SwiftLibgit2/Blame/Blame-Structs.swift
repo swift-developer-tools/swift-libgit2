@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
+public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -105,12 +106,13 @@ public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    ///
-    /// ## Discussion
-    ///
-    /// This value will be `nil` if the initialization failed.
-    internal var cValue: git_blame_options?
+    /// Calls the given closure with a pointer to a `git_blame_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_blame_options>) throws -> T
+    ) throws -> T
     {
         var blameOptions = git_blame_options()
         
@@ -121,12 +123,12 @@ public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
         
         if blameOptionsInitResult != GIT_OK.rawValue
         {
-            return nil
+            throw NSError.makeCConversionError()
         }
         
         blameOptions.flags          = flags.rawValue
-        blameOptions.newest_commit  = newestCommit?.cValue ?? git_oid()
-        blameOptions.oldest_commit  = oldestCommit?.cValue ?? git_oid()
+        blameOptions.newest_commit  = newestCommit?.cValue() ?? git_oid()
+        blameOptions.oldest_commit  = oldestCommit?.cValue() ?? git_oid()
         
         if let minMatchCharacters: UInt16 = minMatchCharacters
         {
@@ -143,7 +145,7 @@ public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
             blameOptions.max_line = maxLine
         }
         
-        return blameOptions
+        return try body(&blameOptions)
     }
 }
 
@@ -154,7 +156,7 @@ public struct GitBlameOptions: GitStructMutable, OptionalCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-public struct GitBlameHunk: GitStructReadable, NonOptionalWithCConvertible
+public struct GitBlameHunk: GitStructReadable, WithCConvertible
 {
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
@@ -260,11 +262,11 @@ public struct GitBlameHunk: GitStructReadable, NonOptionalWithCConvertible
         var blameHunk = git_blame_hunk()
         
         blameHunk.lines_in_hunk             = linesInHunk
-        blameHunk.final_commit_id           = finalCommitID.cValue
+        blameHunk.final_commit_id           = finalCommitID.cValue()
         blameHunk.final_start_line_number   = finalStartLineNumber
-        blameHunk.orig_commit_id            = origCommitID.cValue
+        blameHunk.orig_commit_id            = origCommitID.cValue()
         blameHunk.orig_start_line_number    = origStartLineNumber
-        blameHunk.boundary                  = CChar(boundary.cValue)
+        blameHunk.boundary                  = CChar(boundary.cValue())
         
         return finalSignature.withOptionalCValue
         {
@@ -319,7 +321,7 @@ public struct GitBlameHunk: GitStructReadable, NonOptionalWithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: GitStructReadable, NonOptionalWithCConvertible
+public struct GitBlameLine: GitStructReadable, WithCConvertible
 {
     /// The line content.
     public let ptr : String?

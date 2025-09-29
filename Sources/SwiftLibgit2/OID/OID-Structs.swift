@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_oid`](https://libgit2.org/docs/reference/main/oid/git_oid.html)
-public struct GitOID: GitStructInternalMutable, NonOptionalCConvertible
+public struct GitOID: GitStructInternalMutable, CConvertible
 {
     /// The raw binary-formatted ID.
     public private(set) var id: Data = Data(count: Self.size)
@@ -48,8 +48,9 @@ public struct GitOID: GitStructInternalMutable, NonOptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_oid
+    /// Converts the ``GitOID`` instance into a `git_oid` instance.
+    /// - Returns: The `git_oid` instance.
+    internal func cValue() -> git_oid
     {
         var oid = git_oid()
         
@@ -77,7 +78,7 @@ public struct GitOID: GitStructInternalMutable, NonOptionalCConvertible
         _ body: (UnsafeMutablePointer<git_oid>) -> T
     ) -> T
     {
-        var oid = cValue
+        var oid = cValue()
         
         let result: T = body(&oid)
         

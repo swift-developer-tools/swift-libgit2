@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_options`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options.html)
-public struct GitCherrypickOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitCherrypickOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -77,13 +78,14 @@ public struct GitCherrypickOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_cherrypick_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if initialization failed.
     ///
     /// ## Discussion
     ///
     /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_cherrypick_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_cherrypick_options>) throws -> T
+    ) throws -> T
     {
         var cherrypickOptions = git_cherrypick_options()
         
@@ -94,14 +96,12 @@ public struct GitCherrypickOptions: GitStructMutable, OptionalWithCConvertible
         
         if cherrypickOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
-        
-        
         
         cherrypickOptions.mainline = mainline
         
-        return mergeOpts.withOptionalCValue
+        return try mergeOpts.withOptionalCValue
         {
             cMergeOpts in
             
@@ -110,7 +110,7 @@ public struct GitCherrypickOptions: GitStructMutable, OptionalWithCConvertible
                 cherrypickOptions.merge_opts = cMergeOpts.pointee
             }
             
-            return checkoutOpts.withOptionalCValue
+            return try checkoutOpts.withOptionalCValue
             {
                 cCheckoutOpts in
                 
@@ -119,7 +119,7 @@ public struct GitCherrypickOptions: GitStructMutable, OptionalWithCConvertible
                     cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
                 }
                 
-                return body(&cherrypickOptions)
+                return try body(&cherrypickOptions)
             }
         }
     }

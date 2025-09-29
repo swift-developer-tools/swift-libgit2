@@ -180,8 +180,10 @@ public struct GitCheckoutStrategyT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_checkout_strategy_t
+    /// Converts the ``GitCheckoutStrategyT`` instance into a `git_checkout_strategy_t`
+    /// instance.
+    /// - Returns: The `git_checkout_strategy_t` instance.
+    internal func cValue() -> git_checkout_strategy_t
     {
         return git_checkout_strategy_t(rawValue)
     }
@@ -249,8 +251,10 @@ public struct GitCheckoutNotifyT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_checkout_notify_t
+    /// Converts the ``GitCheckoutNotifyT`` instance into a `git_checkout_notify_t`
+    /// instance.
+    /// - Returns: The `git_checkout_notify_t` instance.
+    internal func cValue() -> git_checkout_notify_t
     {
         return git_checkout_notify_t(rawValue)
     }

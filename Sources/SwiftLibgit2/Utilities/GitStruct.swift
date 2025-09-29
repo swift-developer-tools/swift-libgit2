@@ -53,7 +53,7 @@
 /// converting the Swift struct to its C equivalent:
 ///
 /// ```swift
-/// internal var cValue: C
+/// internal func cValue() -> C
 ///
 /// internal func withCValue<T>(
 ///     _ body: (UnsafeMutablePointer<C>) -> T
@@ -61,29 +61,24 @@
 /// ```
 ///
 /// Structs should implement these by conforming to one of the following protocols:
-/// - ``NonOptionalCConvertible``
-/// - ``OptionalCConvertible``
-/// - ``NonOptionalWithCConvertible``
-/// - ``OptionalWithCConvertible``
 ///
-/// The conversion approaches described above may also be return optional values. See the
-/// ``CConvertible`` documentation for more information.
+/// - ``CConvertible`` (non-throwing, without memory management)
+/// - ``ThrowingCConvertible`` (throwing, without memory management)
+/// - ``WithCConvertible`` (non-throwing, with memory management)
+/// - ``WithThrowingCConvertible`` (throwing, with memory management)
 ///
-/// ``GitStruct`` does not directly conform to the convertible protocols due to the level of variation
+/// ``GitStruct`` does not directly conform to the C convertible protocols due to the level of variation
 /// required by conforming structs. A single protocol cannot define this level of variation, and multiple
 /// protocols would be less effective from a semantic standpoint. Conforming structs should adopt one
-/// of the convertible protocols, unless they conform directly to ``GitStruct`` and are unused.
+/// of the convertible protocols, unless they conform directly to ``GitStruct`` (and are unused by
+/// other bindings).
 ///
 /// Some structs may also need to implement an additional mutating method:
 ///
 /// ```swift
 /// internal func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<C>) -> T
-/// ) -> T
-///
-/// internal func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) -> T
-/// ) -> T
+///     _ body: (UnsafeMutablePointer<C>) throws -> T
+/// ) throws -> T
 /// ```
 ///
 /// The first mutating method should be used when working with C functions that expect a parameter
@@ -101,7 +96,7 @@
 /// These structs are commonly used as `inout` parameters with function bindings.
 /// Currently, no protocol defines requirements for these mutating methods. If more binding structs
 /// implement this method, a new protocol should be created to standardize its implementation.
-internal protocol GitStruct: CConvertible
+internal protocol GitStruct
 {
     /// The type of the equivalent C value.
     associatedtype C
