@@ -35,33 +35,6 @@ enum Diff
         
         
         
-        let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
-        var commitPointer   : OpaquePointer?    = nil
-        
-        defer
-        {
-            Free.freeCommit(commitPointer)
-        }
-        
-        
-        
-        let commitLookupResult: Int32 = gitCommitLookup(
-            commit:     &commitPointer,
-            repo:       repository.pointer,
-            id:         headOID
-        )
-        
-        XCTAssertOK(commitLookupResult)
-        
-        guard let commitPointer: OpaquePointer = commitPointer
-        else
-        {
-            XCTFail("The commit pointer was nil.")
-            return
-        }
-        
-        
-        
         var treePointer: OpaquePointer? = nil
         
         defer
@@ -71,10 +44,15 @@ enum Diff
         
         
         
-        let commitTreeResult: Int32 = gitCommitTree(
-            out:        &treePointer,
-            commit:     commitPointer
-        )
+        let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+        {
+            commitPointer in
+
+            return gitCommitTree(
+                out:        &treePointer,
+                commit:     commitPointer
+            )
+        }
         
         XCTAssertOK(commitTreeResult)
         XCTAssertNotNil(treePointer)
@@ -100,7 +78,7 @@ enum Diff
         guard let diffPointer: OpaquePointer = diffPointer
         else
         {
-            throw NSError.create(
+            throw NSError.makeError(
                 code:       Int(GIT_EUSER.rawValue),
                 message:    "The diff pointer was nil."
             )

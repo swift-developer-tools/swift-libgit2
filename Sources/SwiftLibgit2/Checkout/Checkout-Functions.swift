@@ -30,8 +30,8 @@ import Clibgit2
 /// Instead, checkout the target of the branch and then update HEAD using
 /// `git_repository_set_head()` to point to the checked-out branch.
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
-/// to the equivalent C value.
+/// This function will return `GIT_EUSER` if `opts` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -41,21 +41,17 @@ public func gitCheckoutHEAD(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    return opts.withOptionalCValue
+    return withCConversion
     {
-        cOpts in
-        
-        if
-            opts != nil,
-            cOpts == nil
+        return try opts.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
+            cOpts in
+            
+            return git_checkout_head(
+                repo,
+                cOpts
+            )
         }
-        
-        return git_checkout_head(
-            repo,
-            cOpts
-        )
     }
 }
 
@@ -73,8 +69,8 @@ public func gitCheckoutHEAD(
 ///
 /// ## Discussion
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
-/// to the equivalent C value.
+/// This function will return `GIT_EUSER` if `opts` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -85,22 +81,18 @@ public func gitCheckoutIndex(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    return opts.withOptionalCValue
+    return withCConversion
     {
-        cOpts in
-        
-        if
-            opts != nil,
-            cOpts == nil
+        return try opts.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
+            cOpts in
+            
+            return git_checkout_index(
+                repo,
+                index,
+                cOpts
+            )
         }
-        
-        return git_checkout_index(
-            repo,
-            index,
-            cOpts
-        )
     }
 }
 
@@ -119,8 +111,8 @@ public func gitCheckoutIndex(
 ///
 /// ## Discussion
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but there was an error converting it
-/// to the equivalent C value.
+/// This function will return `GIT_EUSER` if `opts` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -131,21 +123,17 @@ public func gitCheckoutTree(
     opts    : GitCheckoutOptions?
 ) -> Int32
 {
-    return opts.withOptionalCValue
+    return withCConversion
     {
-        cOpts in
-        
-        if
-            opts != nil,
-            cOpts == nil
+        return try opts.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
+            cOpts in
+            
+            return git_checkout_tree(
+                repo,
+                treeish,
+                cOpts
+            )
         }
-        
-        return git_checkout_tree(
-            repo,
-            treeish,
-            cOpts
-        )
     }
 }

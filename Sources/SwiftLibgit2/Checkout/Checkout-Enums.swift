@@ -180,8 +180,10 @@ public struct GitCheckoutStrategyT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_checkout_strategy_t
+    /// Converts the ``GitCheckoutStrategyT`` instance into a `git_checkout_strategy_t`
+    /// instance.
+    /// - Returns: The `git_checkout_strategy_t` instance.
+    internal func cValue() -> git_checkout_strategy_t
     {
         return git_checkout_strategy_t(rawValue)
     }
@@ -231,8 +233,9 @@ public struct GitCheckoutNotifyT: GitOptionSet
     ///
     /// ## Discussion
     ///
-    /// A file is considered "dirty" if it does not need an update, but no longer matches the baseline.
-    /// Core Git displays these files when the checkout operation runs, but will not stop the operation.
+    /// This notifies about files with uncommitted changes that would be overwritten by the checkout
+    /// operation. Core Git displays these files when the checkout operation runs, but will not stop the
+    /// operation.
     public static let gitCheckoutNotifyDirty        = GitCheckoutNotifyT(rawValue: GIT_CHECKOUT_NOTIFY_DIRTY.rawValue)
     
     /// Send notifications for any changed file.
@@ -249,8 +252,10 @@ public struct GitCheckoutNotifyT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_checkout_notify_t
+    /// Converts the ``GitCheckoutNotifyT`` instance into a `git_checkout_notify_t`
+    /// instance.
+    /// - Returns: The `git_checkout_notify_t` instance.
+    internal func cValue() -> git_checkout_notify_t
     {
         return git_checkout_notify_t(rawValue)
     }

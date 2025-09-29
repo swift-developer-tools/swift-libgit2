@@ -158,6 +158,21 @@ enum Free
     
     
     
+    /// Frees the memory allocated for a commit description.
+    /// - Parameter describeResult: The description to free. The underlying type should be
+    /// `git_describe_result`.
+    static func freeDescribeResult(
+        _ describeResult: OpaquePointer?
+    )
+    {
+        if describeResult != nil
+        {
+            gitDescribeResultFree(result: describeResult)
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for a diff.
     /// - Parameter diff: The diff to free. The underlying type should be `git_diff`.
     static func freeDiff(

@@ -60,8 +60,9 @@ public enum GitCloneLocalT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_clone_local_t
+    /// Converts the ``GitCloneLocalT`` instance into a `git_clone_local_t` instance.
+    /// - Returns: The `git_clone_local_t` instance.
+    internal func cValue() -> git_clone_local_t
     {
         switch self
         {

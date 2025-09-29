@@ -66,14 +66,15 @@ internal extension Array where Element == String
     /// Calls the given closure with an array of C string pointers created from an array of Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
+    /// - Throws: An error thrown by the given closure.
     func withArrayOfCStrings<T>(
-      _ body: ([UnsafeMutablePointer<CChar>?]) -> T
-    ) -> T
+      _ body: ([UnsafeMutablePointer<CChar>?]) throws -> T
+    ) rethrows -> T
     {
         guard !self.isEmpty
         else
         {
-            return body([nil])
+            return try body([nil])
         }
         
         
@@ -104,7 +105,7 @@ internal extension Array where Element == String
         
         
         
-        return argsBuffer.withUnsafeMutableBufferPointer
+        return try argsBuffer.withUnsafeMutableBufferPointer
         {
             argsBuffer in
             
@@ -118,7 +119,7 @@ internal extension Array where Element == String
             
             
             
-            return body(cStrings)
+            return try body(cStrings)
         }
     }
     
@@ -127,16 +128,17 @@ internal extension Array where Element == String
     /// Calls the given closure with an array of immutable C string pointers created from an array of Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
+    /// - Throws: An error thrown by the given closure.
     ///
     /// ## Discussion
     ///
-    /// Use this function over ``withArrayOfCStrings(_:)`` when working with C APIs
+    /// Use this function instead of ``withArrayOfCStrings(_:)`` when working with C APIs
     /// that expect `const char **` parameters.
     func withArrayOfImmutableCStrings<T>(
-        _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>) throws -> T
+    ) rethrows -> T
     {
-        return self.withArrayOfCStrings
+        return try self.withArrayOfCStrings
         {
             cStrings in
             
@@ -147,7 +149,7 @@ internal extension Array where Element == String
             
             
             
-            return immutableCStrings.withUnsafeBufferPointer
+            return try immutableCStrings.withUnsafeBufferPointer
             {
                 buffer in
                 
@@ -156,7 +158,7 @@ internal extension Array where Element == String
                     mutating: buffer.baseAddress!
                 )
                 
-                return body(pointer)
+                return try body(pointer)
             }
         }
     }

@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_checkout_perfdata`](https://libgit2.org/docs/reference/main/checkout/git_checkout_perfdata.html)
-public struct GitCheckoutPerfData: GitStructReadable, NonOptionalCConvertible
+public struct GitCheckoutPerfData: GitStructReadable, CConvertible
 {
     /// The number of times `mkdir` was called during the checkout operation.
     public let mkdirCalls   : Int
@@ -43,8 +44,10 @@ public struct GitCheckoutPerfData: GitStructReadable, NonOptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_checkout_perfdata
+    /// Converts the ``GitCheckoutPerfData`` instance into a `git_checkout_perfdata`
+    /// instance.
+    /// - Returns: The `git_checkout_perfdata` instance.
+    internal func cValue() -> git_checkout_perfdata
     {
         var checkoutPerfData = git_checkout_perfdata()
         
@@ -63,7 +66,7 @@ public struct GitCheckoutPerfData: GitStructReadable, NonOptionalCConvertible
 /// ## C Equivalent
 ///
 /// [`git_checkout_options`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options.html)
-public struct GitCheckoutOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitCheckoutOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -261,13 +264,14 @@ public struct GitCheckoutOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_checkout_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
     /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_checkout_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_checkout_options>) throws -> T
+    ) throws -> T
     {
         var checkoutOptions = git_checkout_options()
         
@@ -278,11 +282,11 @@ public struct GitCheckoutOptions: GitStructMutable, OptionalWithCConvertible
         
         if checkoutOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
         
         checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
-        checkoutOptions.disable_filters     = disableFilters.cValue
+        checkoutOptions.disable_filters     = disableFilters.cValue()
         checkoutOptions.dir_mode            = dirMode
         checkoutOptions.file_mode           = fileMode
         checkoutOptions.file_open_flags     = fileOpenFlags
@@ -296,37 +300,37 @@ public struct GitCheckoutOptions: GitStructMutable, OptionalWithCConvertible
         checkoutOptions.perfdata_cb         = perfDataCB
         checkoutOptions.perfdata_payload    = perfDataPayload
         
-        return paths.withGitStrArray
+        return try paths.withGitStrArray
         {
             cPaths in
             
             checkoutOptions.paths = cPaths.pointee
             
-            return targetDirectory.withOptionalCString
+            return try targetDirectory.withOptionalCString
             {
                 cTargetDirectory in
                 
                 checkoutOptions.target_directory = cTargetDirectory
                 
-                return ancestorLabel.withOptionalCString
+                return try ancestorLabel.withOptionalCString
                 {
                     cAncestorLabel in
                     
                     checkoutOptions.ancestor_label = cAncestorLabel
                     
-                    return ourLabel.withOptionalCString
+                    return try ourLabel.withOptionalCString
                     {
                         cOurLabel in
                         
                         checkoutOptions.our_label = cOurLabel
                         
-                        return theirLabel.withOptionalCString
+                        return try theirLabel.withOptionalCString
                         {
                             cTheirLabel in
                             
                             checkoutOptions.their_label = cTheirLabel
                             
-                            return body(&checkoutOptions)
+                            return try body(&checkoutOptions)
                         }
                     }
                 }

@@ -69,7 +69,7 @@ public func gitAnnotatedCommitFromFetchhead(
     id          : GitOID
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
+    var cID: git_oid = id.cValue()
     
     return git_annotated_commit_from_fetchhead(
         out,
@@ -110,7 +110,7 @@ public func gitAnnotatedCommitLookup(
     id      : GitOID
 ) -> Int32
 {
-    var cID: git_oid = id.cValue
+    var cID: git_oid = id.cValue()
     
     return git_annotated_commit_lookup(
         out,

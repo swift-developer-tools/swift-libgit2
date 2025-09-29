@@ -178,13 +178,13 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA521.rawValue, GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_521.rawValue)
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyED25519.rawValue, GIT_CERT_SSH_RAW_TYPE_KEY_ED25519.rawValue)
         
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeUnknown.cValue, GIT_CERT_SSH_RAW_TYPE_UNKNOWN)
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeRSA.cValue, GIT_CERT_SSH_RAW_TYPE_RSA)
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeDSS.cValue, GIT_CERT_SSH_RAW_TYPE_DSS)
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA256.cValue, GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_256)
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA384.cValue, GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_384)
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA521.cValue, GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_521)
-        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyED25519.cValue, GIT_CERT_SSH_RAW_TYPE_KEY_ED25519)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeUnknown.cValue(), GIT_CERT_SSH_RAW_TYPE_UNKNOWN)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeRSA.cValue(), GIT_CERT_SSH_RAW_TYPE_RSA)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeDSS.cValue(), GIT_CERT_SSH_RAW_TYPE_DSS)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA256.cValue(), GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_256)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA384.cValue(), GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_384)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA521.cValue(), GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_521)
+        XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyED25519.cValue(), GIT_CERT_SSH_RAW_TYPE_KEY_ED25519)
         
         XCTAssertEqual(GitCertSSHRawTypeT(cValue: GIT_CERT_SSH_RAW_TYPE_UNKNOWN), .gitCertSSHRawTypeUnknown)
         XCTAssertEqual(GitCertSSHRawTypeT(cValue: GIT_CERT_SSH_RAW_TYPE_RSA), .gitCertSSHRawTypeRSA)
@@ -204,12 +204,12 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertSSHT.gitCertSSHSHA256.rawValue, GIT_CERT_SSH_SHA256.rawValue)
         XCTAssertEqual(GitCertSSHT.gitCertSSHRaw.rawValue, GIT_CERT_SSH_RAW.rawValue)
         
-        XCTAssertEqual(GitCertSSHT(rawValue: 123).cValue.rawValue, 123)
+        XCTAssertEqual(GitCertSSHT(rawValue: 123).cValue().rawValue, 123)
         
-        XCTAssertEqual(GitCertSSHT.gitCertSSHMD5.cValue, GIT_CERT_SSH_MD5)
-        XCTAssertEqual(GitCertSSHT.gitCertSSHSHA1.cValue, GIT_CERT_SSH_SHA1)
-        XCTAssertEqual(GitCertSSHT.gitCertSSHSHA256.cValue, GIT_CERT_SSH_SHA256)
-        XCTAssertEqual(GitCertSSHT.gitCertSSHRaw.cValue, GIT_CERT_SSH_RAW)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHMD5.cValue(), GIT_CERT_SSH_MD5)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHSHA1.cValue(), GIT_CERT_SSH_SHA1)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHSHA256.cValue(), GIT_CERT_SSH_SHA256)
+        XCTAssertEqual(GitCertSSHT.gitCertSSHRaw.cValue(), GIT_CERT_SSH_RAW)
         
         
         
@@ -255,10 +255,10 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertT.gitCertHostKeyLibSSH2.rawValue, GIT_CERT_HOSTKEY_LIBSSH2.rawValue)
         XCTAssertEqual(GitCertT.gitCertStrArray.rawValue, GIT_CERT_STRARRAY.rawValue)
         
-        XCTAssertEqual(GitCertT.gitCertNone.cValue, GIT_CERT_NONE)
-        XCTAssertEqual(GitCertT.gitCertX509.cValue, GIT_CERT_X509)
-        XCTAssertEqual(GitCertT.gitCertHostKeyLibSSH2.cValue, GIT_CERT_HOSTKEY_LIBSSH2)
-        XCTAssertEqual(GitCertT.gitCertStrArray.cValue, GIT_CERT_STRARRAY)
+        XCTAssertEqual(GitCertT.gitCertNone.cValue(), GIT_CERT_NONE)
+        XCTAssertEqual(GitCertT.gitCertX509.cValue(), GIT_CERT_X509)
+        XCTAssertEqual(GitCertT.gitCertHostKeyLibSSH2.cValue(), GIT_CERT_HOSTKEY_LIBSSH2)
+        XCTAssertEqual(GitCertT.gitCertStrArray.cValue(), GIT_CERT_STRARRAY)
         
         XCTAssertEqual(GitCertT(cValue: GIT_CERT_NONE), .gitCertNone)
         XCTAssertEqual(GitCertT(cValue: GIT_CERT_X509), .gitCertX509)

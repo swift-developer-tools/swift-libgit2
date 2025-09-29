@@ -93,8 +93,9 @@ public struct GitBlameFlagT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_blame_flag_t
+    /// Converts the ``GitBlameFlagT`` instance into a `git_blame_flag_t` instance.
+    /// - Returns: The `git_blame_flag_t` instance.
+    internal func cValue() -> git_blame_flag_t
     {
         return git_blame_flag_t(rawValue)
     }

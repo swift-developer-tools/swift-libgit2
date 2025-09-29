@@ -94,7 +94,7 @@ public func gitLibgit2FeatureBackend(
     feature: GitFeatureT
 ) -> String?
 {
-    let featureBackend: UnsafePointer<CChar>? = git_libgit2_feature_backend(feature.cValue)
+    let featureBackend: UnsafePointer<CChar>? = git_libgit2_feature_backend(feature.cValue())
     
     return String(optionalCString: featureBackend)
 }
@@ -286,7 +286,7 @@ public func gitLibgit2OptSetCacheObjectLimit(
 ) -> Int32
 {
     return git_libgit2_opt_set_cache_object_limit(
-        type.cValue,
+        type.cValue(),
         size
     )
 }
@@ -339,7 +339,7 @@ public func gitLibgit2OptEnableCaching(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_caching(enabled.cValue)
+    return git_libgit2_opt_enable_caching(enabled.cValue())
 }
 
 
@@ -502,7 +502,7 @@ public func gitLibgit2OptEnableStrictObjectCreation(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_strict_object_creation(enabled.cValue)
+    return git_libgit2_opt_enable_strict_object_creation(enabled.cValue())
 }
 
 
@@ -529,7 +529,7 @@ public func gitLibgit2OptEnableStrictSymbolicRefCreation(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_strict_symbolic_ref_creation(enabled.cValue)
+    return git_libgit2_opt_enable_strict_symbolic_ref_creation(enabled.cValue())
 }
 
 
@@ -604,7 +604,7 @@ public func gitLibgit2OptEnableOFSDelta(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_ofs_delta(enabled.cValue)
+    return git_libgit2_opt_enable_ofs_delta(enabled.cValue())
 }
 
 
@@ -628,7 +628,7 @@ public func gitLibgit2OptEnableFSyncGitDir(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_fsync_gitdir(enabled.cValue)
+    return git_libgit2_opt_enable_fsync_gitdir(enabled.cValue())
 }
 
 
@@ -697,7 +697,7 @@ public func gitLibgit2OptEnableStrictHashVerification(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_strict_hash_verification(enabled.cValue)
+    return git_libgit2_opt_enable_strict_hash_verification(enabled.cValue())
 }
 
 
@@ -745,7 +745,7 @@ public func gitLibgit2OptEnableUnsavedIndexSafety(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_unsaved_index_safety(enabled.cValue)
+    return git_libgit2_opt_enable_unsaved_index_safety(enabled.cValue())
 }
 
 
@@ -814,7 +814,7 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_disable_pack_keep_file_checks(enabled.cValue)
+    return git_libgit2_opt_disable_pack_keep_file_checks(enabled.cValue())
 }
 
 
@@ -837,7 +837,7 @@ public func gitLibgit2OptEnableHTTPExpectContinue(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_enable_http_expect_continue(enabled.cValue)
+    return git_libgit2_opt_enable_http_expect_continue(enabled.cValue())
 }
 
 
@@ -1045,7 +1045,7 @@ public func gitLibgit2OptSetOwnerValidation(
     enabled: Bool
 ) -> Int32
 {
-    return git_libgit2_opt_set_owner_validation(enabled.cValue)
+    return git_libgit2_opt_set_owner_validation(enabled.cValue())
 }
 
 

@@ -23,8 +23,8 @@ import Clibgit2
 ///
 /// ## Discussion
 ///
-/// This function will return `GIT_EUSER` if `options` was provided, but there was an error converting it
-/// to the equivalent C value.
+/// This function will return `GIT_EUSER` if `options` was provided, but it
+/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -36,22 +36,17 @@ public func gitClone(
     options     : GitCloneOptions?
 ) -> Int32
 {
-    return options.withOptionalCValue
+    return withCConversion
     {
-        cOptions in
-        
-        if
-            options != nil,
-            cOptions == nil
+        return try options.withOptionalCValue
         {
-            return GIT_EUSER.rawValue
+            cOptions in
+            return git_clone(
+                out,
+                url,
+                localPath,
+                cOptions
+            )
         }
-        
-        return git_clone(
-            out,
-            url,
-            localPath,
-            cOptions
-        )
     }
 }

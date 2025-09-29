@@ -76,7 +76,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             let openBackendResult: Int32 = open(
                 configBackend,
-                GitConfigLevelT.gitConfigLevelLocal.cValue,
+                GitConfigLevelT.gitConfigLevelLocal.cValue(),
                 nil
             )
             
@@ -375,14 +375,14 @@ final class ConfigTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitConfigLevelT.gitConfigHighestLevel.rawValue, GIT_CONFIG_HIGHEST_LEVEL.rawValue)
         XCTAssertNil(GitConfigLevelT(rawValue: 123))
         
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelProgramData.cValue, GIT_CONFIG_LEVEL_PROGRAMDATA)
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelSystem.cValue, GIT_CONFIG_LEVEL_SYSTEM)
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelXDG.cValue, GIT_CONFIG_LEVEL_XDG)
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelGlobal.cValue, GIT_CONFIG_LEVEL_GLOBAL)
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelLocal.cValue, GIT_CONFIG_LEVEL_LOCAL)
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelWorktree.cValue, GIT_CONFIG_LEVEL_WORKTREE)
-        XCTAssertEqual(GitConfigLevelT.gitConfigLevelApp.cValue, GIT_CONFIG_LEVEL_APP)
-        XCTAssertEqual(GitConfigLevelT.gitConfigHighestLevel.cValue, GIT_CONFIG_HIGHEST_LEVEL)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelProgramData.cValue(), GIT_CONFIG_LEVEL_PROGRAMDATA)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelSystem.cValue(), GIT_CONFIG_LEVEL_SYSTEM)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelXDG.cValue(), GIT_CONFIG_LEVEL_XDG)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelGlobal.cValue(), GIT_CONFIG_LEVEL_GLOBAL)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelLocal.cValue(), GIT_CONFIG_LEVEL_LOCAL)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelWorktree.cValue(), GIT_CONFIG_LEVEL_WORKTREE)
+        XCTAssertEqual(GitConfigLevelT.gitConfigLevelApp.cValue(), GIT_CONFIG_LEVEL_APP)
+        XCTAssertEqual(GitConfigLevelT.gitConfigHighestLevel.cValue(), GIT_CONFIG_HIGHEST_LEVEL)
     }
     
     
@@ -529,10 +529,10 @@ final class ConfigTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitConfigMapT.gitConfigMapString.rawValue, GIT_CONFIGMAP_STRING.rawValue)
         XCTAssertNil(GitConfigMapT(rawValue: 123))
         
-        XCTAssertEqual(GitConfigMapT.gitConfigMapFalse.cValue, GIT_CONFIGMAP_FALSE)
-        XCTAssertEqual(GitConfigMapT.gitConfigMapTrue.cValue, GIT_CONFIGMAP_TRUE)
-        XCTAssertEqual(GitConfigMapT.gitConfigMapInt32.cValue, GIT_CONFIGMAP_INT32)
-        XCTAssertEqual(GitConfigMapT.gitConfigMapString.cValue, GIT_CONFIGMAP_STRING)
+        XCTAssertEqual(GitConfigMapT.gitConfigMapFalse.cValue(), GIT_CONFIGMAP_FALSE)
+        XCTAssertEqual(GitConfigMapT.gitConfigMapTrue.cValue(), GIT_CONFIGMAP_TRUE)
+        XCTAssertEqual(GitConfigMapT.gitConfigMapInt32.cValue(), GIT_CONFIGMAP_INT32)
+        XCTAssertEqual(GitConfigMapT.gitConfigMapString.cValue(), GIT_CONFIGMAP_STRING)
     }
     
     
@@ -1288,7 +1288,7 @@ extension ConfigTests
         {
             XCTFail("The configuration pointer was nil.")
             
-            throw NSError.create(
+            throw NSError.makeError(
                 code:       Int(GIT_EUSER.rawValue),
                 message:    "The configuration pointer was nil."
             )

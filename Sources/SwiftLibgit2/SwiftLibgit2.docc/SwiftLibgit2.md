@@ -628,6 +628,29 @@ swift-libgit2 includes the following compiled libraries:
 
 - ``gitCredentialUserPass(out:url:userFromURL:allowedTypes:payload:)``
 
+### Describe Structs
+
+- ``GitDescribeOptions``
+- ``GitDescribeFormatOptions``
+
+### Describe Macros
+
+- ``gitDescribeDefaultMaxCandidatesTags``
+- ``gitDescribeDefaultAbbreviatedSize``
+- ``gitDescribeOptionsVersion``
+- ``gitDescribeFormatOptionsVersion``
+
+### Describe Enums
+
+- ``GitDescribeStrategyT``
+
+### Describe Functions
+
+- ``gitDescribeCommit(result:committish:opts:)``
+- ``gitDescribeWorkdir(out:repo:opts:)``
+- ``gitDescribeFormat(out:result:opts:)``
+- ``gitDescribeResultFree(result:)``
+
 ### Diff Structs
 
 - ``GitDiffFile``

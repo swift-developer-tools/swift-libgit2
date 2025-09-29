@@ -115,8 +115,9 @@ public enum GitConfigLevelT: Int32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_config_level_t
+    /// Converts the ``GitConfigLevelT`` instance into a `git_config_level_t` instance.
+    /// - Returns: The `git_config_level_t` instance.
+    internal func cValue() -> git_config_level_t
     {
         switch self
         {
@@ -188,8 +189,9 @@ public enum GitConfigMapT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_configmap_t
+    /// Converts the ``GitConfigMapT`` instance into a `git_configmap_t` instance.
+    /// - Returns: The `git_configmap_t` instance.
+    internal func cValue() -> git_configmap_t
     {
         switch self
         {

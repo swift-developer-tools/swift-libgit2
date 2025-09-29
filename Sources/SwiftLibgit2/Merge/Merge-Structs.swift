@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_merge_options`](https://libgit2.org/docs/reference/main/merge/git_merge_options.html)
-public struct GitMergeOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitMergeOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -132,13 +133,10 @@ public struct GitMergeOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_merge_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_merge_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_merge_options>) throws -> T
+    ) throws -> T
     {
         var mergeOptions = git_merge_options()
         
@@ -149,7 +147,7 @@ public struct GitMergeOptions: GitStructMutable, OptionalWithCConvertible
         
         if mergeOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
         
         mergeOptions.flags              = flags.rawValue
@@ -157,16 +155,16 @@ public struct GitMergeOptions: GitStructMutable, OptionalWithCConvertible
         mergeOptions.target_limit       = targetLimit
         mergeOptions.metric             = metric
         mergeOptions.recursion_limit    = recursionLimit
-        mergeOptions.file_favor         = fileFavor.cValue
+        mergeOptions.file_favor         = fileFavor.cValue()
         mergeOptions.file_flags         = fileFlags.rawValue
         
-        return defaultDriver.withOptionalCString
+        return try defaultDriver.withOptionalCString
         {
             cDefaultDriver in
             
             mergeOptions.default_driver = cDefaultDriver
             
-            return body(&mergeOptions)
+            return try body(&mergeOptions)
         }
     }
 }

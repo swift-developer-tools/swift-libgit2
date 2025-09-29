@@ -46,8 +46,9 @@ public enum GitProxyT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_proxy_t
+    /// Converts the ``GitProxyT`` instance into a `git_proxy_t` instance.
+    /// - Returns: The `git_proxy_t` instance.
+    internal func cValue() -> git_proxy_t
     {
         switch self
         {

@@ -60,8 +60,9 @@ public struct GitCredentialT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_credential_t
+    /// Converts the ``GitCredentialT`` instance into a `git_credential_t` instance.
+    /// - Returns: The `git_credential_t` instance.
+    internal func cValue() -> git_credential_t
     {
         return git_credential_t(rawValue)
     }

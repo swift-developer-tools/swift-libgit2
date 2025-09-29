@@ -59,8 +59,9 @@ public enum GitFileModeT: UInt16, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_filemode_t
+    /// Converts the ``GitFileModeT`` instance into a `git_filemode_t` instance.
+    /// - Returns: The `git_filemode_t` instance.
+    internal func cValue() -> git_filemode_t
     {
         switch self
         {

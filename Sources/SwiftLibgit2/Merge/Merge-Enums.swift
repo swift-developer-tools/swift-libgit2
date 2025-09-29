@@ -69,8 +69,9 @@ public struct GitMergeFlagT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_merge_flag_t
+    /// Converts the ``GitMergeFlagT`` instance into a `git_merge_flag_t` instance.
+    /// - Returns: The `git_merge_flag_t` instance.
+    internal func cValue() -> git_merge_flag_t
     {
         return git_merge_flag_t(rawValue)
     }
@@ -127,8 +128,10 @@ public enum GitMergeFileFavorT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_merge_file_favor_t
+    /// Converts the ``GitMergeFileFavorT`` instance into a `git_merge_file_favor_t`
+    /// instance.
+    /// - Returns: The `git_merge_file_favor_t` instance.
+    internal func cValue() -> git_merge_file_favor_t
     {
         switch self
         {
@@ -199,8 +202,10 @@ public struct GitMergeFileFlagT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_merge_file_flag_t
+    /// Converts the ``GitMergeFileFlagT`` instance into a `git_merge_file_flag_t`
+    /// instance.
+    /// - Returns: The `git_merge_file_flag_t` instance.
+    internal func cValue() -> git_merge_file_flag_t
     {
         return git_merge_file_flag_t(rawValue)
     }

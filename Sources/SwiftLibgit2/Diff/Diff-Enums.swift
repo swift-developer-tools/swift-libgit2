@@ -87,8 +87,9 @@ public enum GitDeltaT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_delta_t
+    /// Converts the ``GitDeltaT`` instance into a `git_delta_t` instance.
+    /// - Returns: The `git_delta_t` instance.
+    internal func cValue() -> git_delta_t
     {
         switch self
         {
@@ -155,8 +156,9 @@ public struct GitDiffFlagT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_diff_flag_t
+    /// Converts the ``GitDiffFlagT`` instance into a `git_diff_flag_t` instance.
+    /// - Returns: The `git_diff_flag_t` instance.
+    internal func cValue() -> git_diff_flag_t
     {
         return git_diff_flag_t(rawValue)
     }

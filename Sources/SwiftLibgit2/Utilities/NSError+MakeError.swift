@@ -7,6 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+import Clibgit2
 import Foundation
 
 
@@ -18,7 +19,7 @@ internal extension NSError
     ///   - code: The error code.
     ///   - message: The localized description.
     /// - Returns: The created `NSError`.
-    static func create(
+    static func makeError(
         code    : Int,
         message : String
     ) -> NSError
@@ -27,6 +28,18 @@ internal extension NSError
             domain:     Bundle.main.bundleIdentifier ?? "swift-libgit2",
             code:       code,
             userInfo:   [NSLocalizedDescriptionKey: message]
+        )
+    }
+    
+    
+    
+    /// Creates an `NSError` related to a Swift-to-C conversion failure.
+    /// - Returns: The created `NSError`.
+    static func makeCConversionError() -> NSError
+    {
+        return makeError(
+            code:       Int(GIT_EUSER.rawValue),
+            message:    "Failed to convert Swift binding to C equivalent."
         )
     }
 }

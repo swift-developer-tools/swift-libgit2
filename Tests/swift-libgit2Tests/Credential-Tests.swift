@@ -326,15 +326,15 @@ final class CredentialTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCredentialT.gitCredentialUsername.rawValue, GIT_CREDENTIAL_USERNAME.rawValue)
         XCTAssertEqual(GitCredentialT.gitCredentialSSHMemory.rawValue, GIT_CREDENTIAL_SSH_MEMORY.rawValue)
         
-        XCTAssertEqual(GitCredentialT(rawValue: 123).cValue.rawValue, 123)
+        XCTAssertEqual(GitCredentialT(rawValue: 123).cValue().rawValue, 123)
         
-        XCTAssertEqual(GitCredentialT.gitCredentialUserPassPlaintext.cValue, GIT_CREDENTIAL_USERPASS_PLAINTEXT)
-        XCTAssertEqual(GitCredentialT.gitCredentialSSHKey.cValue, GIT_CREDENTIAL_SSH_KEY)
-        XCTAssertEqual(GitCredentialT.gitCredentialSSHCustom.cValue, GIT_CREDENTIAL_SSH_CUSTOM)
-        XCTAssertEqual(GitCredentialT.gitCredentialDefault.cValue, GIT_CREDENTIAL_DEFAULT)
-        XCTAssertEqual(GitCredentialT.gitCredentialSSHInteractive.cValue, GIT_CREDENTIAL_SSH_INTERACTIVE)
-        XCTAssertEqual(GitCredentialT.gitCredentialUsername.cValue, GIT_CREDENTIAL_USERNAME)
-        XCTAssertEqual(GitCredentialT.gitCredentialSSHMemory.cValue, GIT_CREDENTIAL_SSH_MEMORY)
+        XCTAssertEqual(GitCredentialT.gitCredentialUserPassPlaintext.cValue(), GIT_CREDENTIAL_USERPASS_PLAINTEXT)
+        XCTAssertEqual(GitCredentialT.gitCredentialSSHKey.cValue(), GIT_CREDENTIAL_SSH_KEY)
+        XCTAssertEqual(GitCredentialT.gitCredentialSSHCustom.cValue(), GIT_CREDENTIAL_SSH_CUSTOM)
+        XCTAssertEqual(GitCredentialT.gitCredentialDefault.cValue(), GIT_CREDENTIAL_DEFAULT)
+        XCTAssertEqual(GitCredentialT.gitCredentialSSHInteractive.cValue(), GIT_CREDENTIAL_SSH_INTERACTIVE)
+        XCTAssertEqual(GitCredentialT.gitCredentialUsername.cValue(), GIT_CREDENTIAL_USERNAME)
+        XCTAssertEqual(GitCredentialT.gitCredentialSSHMemory.cValue(), GIT_CREDENTIAL_SSH_MEMORY)
         
         
         

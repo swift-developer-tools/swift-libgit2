@@ -12,23 +12,24 @@ internal extension Optional where Wrapped == String
     /// Calls the given closure with an optional pointer to the contents of the string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An error thrown by the given closure.
     func withOptionalCString<T>(
-        _ body: (UnsafePointer<CChar>?) -> T
-    ) -> T
+        _ body: (UnsafePointer<CChar>?) throws -> T
+    ) rethrows -> T
     {
         switch self
         {
             case .none:
                 
-                return body(nil)
+                return try body(nil)
                 
             case .some(let wrapped):
                 
-                return wrapped.withCString
+                return try wrapped.withCString
                 {
                     cString in
                     
-                    return body(cString)
+                    return try body(cString)
                 }
         }
     }

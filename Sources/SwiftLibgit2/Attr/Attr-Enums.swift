@@ -107,8 +107,9 @@ public enum GitAttrValueT: UInt32, GitEnum
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_attr_value_t
+    /// Converts the ``GitAttrValueT`` instance into a `git_attr_value_t` instance.
+    /// - Returns: The `git_attr_value_t` instance.
+    internal func cValue() -> git_attr_value_t
     {
         switch self
         {

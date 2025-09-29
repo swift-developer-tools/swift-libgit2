@@ -51,8 +51,10 @@ public struct GitBlobFilterFlagT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_blob_filter_flag_t
+    /// Converts the ``GitBlobFilterFlagT`` instance into a `git_blob_filter_flag_t`
+    /// instance.
+    /// - Returns: The `git_blob_filter_flag_t` instance.
+    internal func cValue() -> git_blob_filter_flag_t
     {
         return git_blob_filter_flag_t(rawValue)
     }

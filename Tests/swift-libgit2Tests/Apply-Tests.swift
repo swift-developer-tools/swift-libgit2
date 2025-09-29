@@ -19,9 +19,9 @@ final class ApplyTests: XCTestCaseStopOnFail
     {
         XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.rawValue, GIT_APPLY_CHECK.rawValue)
         
-        XCTAssertEqual(GitApplyFlagsT(rawValue: 123).cValue.rawValue, 123)
+        XCTAssertEqual(GitApplyFlagsT(rawValue: 123).cValue().rawValue, 123)
         
-        XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.cValue, GIT_APPLY_CHECK)
+        XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.cValue(), GIT_APPLY_CHECK)
         
         
         
@@ -44,11 +44,11 @@ final class ApplyTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.rawValue, GIT_APPLY_LOCATION_INDEX.rawValue)
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.rawValue, GIT_APPLY_LOCATION_BOTH.rawValue)
         
-        XCTAssertEqual(GitApplyLocationT(rawValue: 123).cValue.rawValue, 123)
+        XCTAssertEqual(GitApplyLocationT(rawValue: 123).cValue().rawValue, 123)
         
-        XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.cValue, GIT_APPLY_LOCATION_WORKDIR)
-        XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.cValue, GIT_APPLY_LOCATION_INDEX)
-        XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.cValue, GIT_APPLY_LOCATION_BOTH)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.cValue(), GIT_APPLY_LOCATION_WORKDIR)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.cValue(), GIT_APPLY_LOCATION_INDEX)
+        XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.cValue(), GIT_APPLY_LOCATION_BOTH)
     }
     
     
@@ -84,33 +84,6 @@ final class ApplyTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID         : GitOID            = OID.getHEADCommitOID(in: repository)
-            var commitPointer   : OpaquePointer?    = nil
-            
-            defer
-            {
-                Free.freeCommit(commitPointer)
-            }
-            
-            
-            
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
-            {
-                XCTFail("The commit pointer was nil.")
-                return
-            }
-            
-            
-            
             var treePointer: OpaquePointer? = nil
             
             defer
@@ -120,10 +93,15 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: Int32 = gitCommitTree(
-                out:        &treePointer,
-                commit:     commitPointer
-            )
+            let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+            {
+                commitPointer in
+                
+                return gitCommitTree(
+                    out:        &treePointer,
+                    commit:     commitPointer
+                )
+            }
             
             XCTAssertOK(commitTreeResult)
             
@@ -257,36 +235,6 @@ extension ApplyTests
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
-            var commitPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                Free.freeCommit(commitPointer)
-            }
-            
-            
-            
-            let commitLookupResult: Int32 = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         headOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
-            {
-                XCTFail("The commit pointer was nil.")
-                return
-            }
-            
-            
-            
             var oldTreePointer: OpaquePointer? = nil
             
             defer
@@ -296,10 +244,15 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: Int32 = gitCommitTree(
-                out:        &oldTreePointer,
-                commit:     commitPointer
-            )
+            let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+            {
+                commitPointer in
+                
+                return gitCommitTree(
+                    out:        &oldTreePointer,
+                    commit:     commitPointer
+                )
+            }
             
             XCTAssertOK(commitTreeResult)
             
@@ -399,12 +352,17 @@ extension ApplyTests
             
             
             
-            let resetResult: Int32 = git_reset(
-                repository.pointer,
-                commitPointer,
-                GIT_RESET_HARD,
-                nil
-            )
+            let resetResult: Int32 = try Commit.withHEADCommit(in: repository)
+            {
+                commitPointer in
+                
+                return git_reset(
+                    repository.pointer,
+                    commitPointer,
+                    GIT_RESET_HARD,
+                    nil
+                )
+            }
             
             XCTAssertOK(resetResult)
             

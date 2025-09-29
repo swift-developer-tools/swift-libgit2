@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
-public struct GitApplyOptions: GitStructMutable, OptionalCConvertible
+public struct GitApplyOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -80,12 +81,13 @@ public struct GitApplyOptions: GitStructMutable, OptionalCConvertible
     
     
     
-    /// The equivalent C value.
-    ///
-    /// ## Discussion
-    ///
-    /// This value will be `nil` if the initialization failed.
-    internal var cValue: git_apply_options?
+    /// Calls the given closure with a pointer to a `git_apply_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_apply_options>) throws -> T
+    ) throws -> T
     {
         var applyOptions = git_apply_options()
         
@@ -96,7 +98,7 @@ public struct GitApplyOptions: GitStructMutable, OptionalCConvertible
         
         if applyOptionsInitResult != GIT_OK.rawValue
         {
-            return nil
+            throw NSError.makeCConversionError()
         }
         
         applyOptions.delta_cb   = deltaCB
@@ -104,6 +106,6 @@ public struct GitApplyOptions: GitStructMutable, OptionalCConvertible
         applyOptions.payload    = payload
         applyOptions.flags      = flags.rawValue
         
-        return applyOptions
+        return try body(&applyOptions)
     }
 }

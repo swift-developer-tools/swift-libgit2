@@ -45,7 +45,7 @@ public func gitBranchCreate(
         repo,
         branchName,
         target,
-        force.cValue
+        force.cValue()
     )
 }
 
@@ -86,7 +86,7 @@ public func gitBranchCreateFromAnnotated(
         repo,
         branchName,
         target,
-        force.cValue
+        force.cValue()
     )
 }
 
@@ -135,7 +135,7 @@ public func gitBranchIteratorNew(
     return git_branch_iterator_new(
         out,
         repo,
-        listFlags.cValue
+        listFlags.cValue()
     )
 }
 
@@ -157,7 +157,7 @@ public func gitBranchNext(
     iter    : OpaquePointer
 ) -> Int32
 {
-    var cOutType: git_branch_t = outType.cValue
+    var cOutType: git_branch_t = outType.cValue()
     
     let branchNextResult: Int32 = git_branch_next(
         out,
@@ -224,7 +224,7 @@ public func gitBranchMove(
         out,
         branch,
         newBranchName,
-        force.cValue
+        force.cValue()
     )
 }
 
@@ -258,7 +258,7 @@ public func gitBranchLookup(
         out,
         repo,
         branchName,
-        branchType.cValue
+        branchType.cValue()
     )
 }
 

@@ -209,6 +209,11 @@ public func gitBlameGetHunkByLine(
 ///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `options` was provided, but it
+/// could not be converted to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_blame_file()`](https://libgit2.org/docs/reference/main/blame/git_blame_file.html)
@@ -219,23 +224,20 @@ public func gitBlameFile(
     options : GitBlameOptions?
 ) -> Int32
 {
-    guard var cOptions: git_blame_options = options?.cValue
-    else
+    return withCConversion
     {
-        return git_blame_file(
-            out,
-            repo,
-            path,
-            nil
-        )
+        return try options.withOptionalCValue
+        {
+            cOptions in
+            
+            return git_blame_file(
+                out,
+                repo,
+                path,
+                cOptions
+            )
+        }
     }
-    
-    return git_blame_file(
-        out,
-        repo,
-        path,
-        &cOptions
-    )
 }
 
 
@@ -253,6 +255,11 @@ public func gitBlameFile(
 ///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
+/// ## Discussion
+///
+/// This function will return `GIT_EUSER` if `options` was provided, but it
+/// could not be converted to the equivalent C value.
+///
 /// ## C Equivalent
 ///
 /// [`git_blame_file_from_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_file_from_buffer.html)
@@ -265,27 +272,22 @@ public func gitBlameFile(
     options     : GitBlameOptions?
 ) -> Int32
 {
-    guard var cOptions: git_blame_options = options?.cValue
-    else
+    return withCConversion
     {
-        return git_blame_file_from_buffer(
-            out,
-            repo,
-            path,
-            contents,
-            contentsLen,
-            nil
-        )
+        return try options.withOptionalCValue
+        {
+            cOptions in
+            
+            return git_blame_file_from_buffer(
+                out,
+                repo,
+                path,
+                contents,
+                contentsLen,
+                cOptions
+            )
+        }
     }
-    
-    return git_blame_file_from_buffer(
-        out,
-        repo,
-        path,
-        contents,
-        contentsLen,
-        &cOptions
-    )
 }*/
 
 

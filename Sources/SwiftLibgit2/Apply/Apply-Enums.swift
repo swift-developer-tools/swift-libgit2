@@ -38,8 +38,9 @@ public struct GitApplyFlagsT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_apply_flags_t
+    /// Converts the ``GitApplyFlagsT`` instance into a `git_apply_flags_t` instance.
+    /// - Returns: The `git_apply_flags_t` instance.
+    internal func cValue() -> git_apply_flags_t
     {
         return git_apply_flags_t(rawValue)
     }
@@ -82,8 +83,9 @@ public struct GitApplyLocationT: GitOptionSet
     
     
     
-    /// The equivalent C value.
-    internal var cValue: git_apply_location_t
+    /// Converts the ``GitApplyLocationT`` instance into a `git_apply_location_t` instance.
+    /// - Returns: The `git_apply_location_t` instance.
+    internal func cValue() -> git_apply_location_t
     {
         return git_apply_location_t(rawValue)
     }

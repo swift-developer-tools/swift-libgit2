@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import Clibgit2
+import Foundation
 
 
 
@@ -16,7 +17,7 @@ import Clibgit2
 /// ## C Equivalent
 ///
 /// [`git_proxy_options`](https://libgit2.org/docs/reference/main/proxy/git_proxy_options.html)
-public struct GitProxyOptions: GitStructMutable, OptionalWithCConvertible
+public struct GitProxyOptions: GitStructMutable, WithThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -101,13 +102,10 @@ public struct GitProxyOptions: GitStructMutable, OptionalWithCConvertible
     /// Calls the given closure with a pointer to a `git_proxy_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_proxy_options>?) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_proxy_options>) throws -> T
+    ) throws -> T
     {
         var proxyOptions = git_proxy_options()
         
@@ -118,21 +116,21 @@ public struct GitProxyOptions: GitStructMutable, OptionalWithCConvertible
         
         if proxyOptionsInitResult != GIT_OK.rawValue
         {
-            return body(nil)
+            throw NSError.makeCConversionError()
         }
         
-        proxyOptions.type               = type.cValue
+        proxyOptions.type               = type.cValue()
         proxyOptions.credentials        = credentials
         proxyOptions.certificate_check  = certificateCheck
         proxyOptions.payload            = payload
         
-        return url.withOptionalCString
+        return try url.withOptionalCString
         {
             cUrl in
             
             proxyOptions.url = cUrl
             
-            return body(&proxyOptions)
+            return try body(&proxyOptions)
         }
     }
 }

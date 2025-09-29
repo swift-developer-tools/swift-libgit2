@@ -70,10 +70,10 @@ final class CloneTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCloneLocalT.gitCLoneLocalNoLinks.rawValue, GIT_CLONE_LOCAL_NO_LINKS.rawValue)
         XCTAssertNil(GitCloneLocalT(rawValue: 123))
         
-        XCTAssertEqual(GitCloneLocalT.gitCloneLocalAuto.cValue, GIT_CLONE_LOCAL_AUTO)
-        XCTAssertEqual(GitCloneLocalT.gitCloneLocal.cValue, GIT_CLONE_LOCAL)
-        XCTAssertEqual(GitCloneLocalT.gitCloneNoLocal.cValue, GIT_CLONE_NO_LOCAL)
-        XCTAssertEqual(GitCloneLocalT.gitCLoneLocalNoLinks.cValue, GIT_CLONE_LOCAL_NO_LINKS)
+        XCTAssertEqual(GitCloneLocalT.gitCloneLocalAuto.cValue(), GIT_CLONE_LOCAL_AUTO)
+        XCTAssertEqual(GitCloneLocalT.gitCloneLocal.cValue(), GIT_CLONE_LOCAL)
+        XCTAssertEqual(GitCloneLocalT.gitCloneNoLocal.cValue(), GIT_CLONE_NO_LOCAL)
+        XCTAssertEqual(GitCloneLocalT.gitCLoneLocalNoLinks.cValue(), GIT_CLONE_LOCAL_NO_LINKS)
         
         XCTAssertEqual(GitCloneLocalT(cValue: GIT_CLONE_LOCAL_AUTO), .gitCloneLocalAuto)
         XCTAssertEqual(GitCloneLocalT(cValue: GIT_CLONE_LOCAL), .gitCloneLocal)
