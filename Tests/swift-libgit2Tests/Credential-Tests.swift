@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 

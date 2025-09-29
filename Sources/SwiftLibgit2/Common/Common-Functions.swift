@@ -7,8 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
-import Clibgit2Opts
+import CLibgit2
+import CLibgit2Opts
 
 
 

@@ -31,7 +31,7 @@ let package = Package(
     [
         .package(
             name:   "swift-libgit2-base",
-            path:   "swift-libgit2-base"
+            path:   "../swift-libgit2-base"
         ),
         
         .package(
@@ -42,11 +42,11 @@ let package = Package(
     targets:
     [
         .target(
-            name: "Clibgit2Opts",
+            name: "CLibgit2Opts",
             dependencies:
             [
                 .product(
-                    name:       "Clibgit2",
+                    name:       "CLibgit2",
                     package:    "swift-libgit2-base"
                 )
             ]
@@ -56,9 +56,9 @@ let package = Package(
             name: "SwiftLibgit2",
             dependencies:
             [
-                "Clibgit2Opts",
+                "CLibgit2Opts",
                 .product(
-                    name:       "Clibgit2",
+                    name:       "CLibgit2",
                     package:    "swift-libgit2-base"
                 )
             ]

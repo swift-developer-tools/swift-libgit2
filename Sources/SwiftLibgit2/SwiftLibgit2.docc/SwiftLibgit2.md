@@ -85,7 +85,7 @@ global libgit2 state.
 import SwiftLibgit2
 
 // Import the C library.
-import Clibgit2
+import CLibgit2
 
 // Initialize and shut down the global libgit2 state using the Swift library.
 let swiftInitResult     : Int32 = gitLibgit2Init()
