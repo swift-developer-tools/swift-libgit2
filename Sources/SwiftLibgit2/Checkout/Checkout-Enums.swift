@@ -233,8 +233,9 @@ public struct GitCheckoutNotifyT: GitOptionSet
     ///
     /// ## Discussion
     ///
-    /// A file is considered "dirty" if it does not need an update, but no longer matches the baseline.
-    /// Core Git displays these files when the checkout operation runs, but will not stop the operation.
+    /// This notifies about files with uncommitted changes that would be overwritten by the checkout
+    /// operation. Core Git displays these files when the checkout operation runs, but will not stop the
+    /// operation.
     public static let gitCheckoutNotifyDirty        = GitCheckoutNotifyT(rawValue: GIT_CHECKOUT_NOTIFY_DIRTY.rawValue)
     
     /// Send notifications for any changed file.
