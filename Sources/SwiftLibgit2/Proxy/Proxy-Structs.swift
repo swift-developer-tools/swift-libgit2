@@ -102,7 +102,7 @@ public struct GitProxyOptions: GitStructMutable, WithThrowingCConvertible
     /// Calls the given closure with a pointer to a `git_proxy_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_proxy_options>) throws -> T
     ) throws -> T

@@ -76,7 +76,7 @@ public struct GitBuf: GitStructInternalMutable, WithThrowingCConvertible
     /// Calls the given closure with a pointer to a `git_buf` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_buf>) throws -> T
     ) rethrows -> T
@@ -96,7 +96,7 @@ public struct GitBuf: GitStructInternalMutable, WithThrowingCConvertible
     /// instance with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<git_buf>) throws -> T
     ) rethrows -> T

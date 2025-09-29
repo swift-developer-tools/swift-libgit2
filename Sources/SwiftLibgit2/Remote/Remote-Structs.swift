@@ -181,7 +181,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     
     /// Converts the ``GitRemoteCallbacks`` instance into a `git_remote_callbacks` instance.
     /// - Returns: The `git_remote_callbacks` instance.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func cValue() throws -> git_remote_callbacks
     {
         var remoteCallbacks = git_remote_callbacks()
@@ -330,7 +330,7 @@ public struct GitFetchOptions: GitStructMutable, WithThrowingCConvertible
     /// Calls the given closure with a pointer to a `git_fetch_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_fetch_options>) throws -> T
     ) throws -> T

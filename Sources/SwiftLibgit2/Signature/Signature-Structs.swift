@@ -65,7 +65,7 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_signature` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///

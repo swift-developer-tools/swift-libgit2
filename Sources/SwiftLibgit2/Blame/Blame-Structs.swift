@@ -109,7 +109,7 @@ public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
     /// Calls the given closure with a pointer to a `git_blame_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if initialization failed.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blame_options>) throws -> T
     ) throws -> T
