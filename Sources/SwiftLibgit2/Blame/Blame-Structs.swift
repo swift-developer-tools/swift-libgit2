@@ -38,14 +38,14 @@ public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `20`.
+    /// The default value is `20`.
     ///
     /// This value only takes effect if any of
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameFile``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitMoves``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitCopies``, or
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` are specified.
-    public var minMatchCharacters   : UInt16?           = nil
+    public var minMatchCharacters   : UInt16            = 20
     
     /// The ID of the newest commit to consider.
     ///
@@ -66,9 +66,8 @@ public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `1` (line
-    /// numbers are 1-indexed).
-    public var minLine              : Int?              = nil
+    /// The default value is `1` (line numbers are 1-indexed).
+    public var minLine              : Int               = 1
     
     /// The last line in the file to blame.
     ///
@@ -97,10 +96,10 @@ public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
     {
         self.version                = blameOptions.version
         self.flags                  = GitBlameFlagT(rawValue: blameOptions.flags)
-        self.minMatchCharacters     = nil
+        self.minMatchCharacters     = 20
         self.newestCommit           = GitOID(cValue: blameOptions.newest_commit)
         self.oldestCommit           = GitOID(cValue: blameOptions.oldest_commit)
-        self.minLine                = nil
+        self.minLine                = 1
         self.maxLine                = nil
     }
     
@@ -126,19 +125,11 @@ public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
             throw NSError.makeCConversionError()
         }
         
-        blameOptions.flags          = flags.rawValue
-        blameOptions.newest_commit  = newestCommit?.cValue() ?? git_oid()
-        blameOptions.oldest_commit  = oldestCommit?.cValue() ?? git_oid()
-        
-        if let minMatchCharacters: UInt16 = minMatchCharacters
-        {
-            blameOptions.min_match_characters = minMatchCharacters
-        }
-        
-        if let minLine: Int = minLine
-        {
-            blameOptions.min_line = minLine
-        }
+        blameOptions.flags                  = flags.rawValue
+        blameOptions.newest_commit          = newestCommit?.cValue() ?? git_oid()
+        blameOptions.oldest_commit          = oldestCommit?.cValue() ?? git_oid()
+        blameOptions.min_match_characters   = minMatchCharacters
+        blameOptions.min_line               = minLine
         
         if let maxLine: Int = maxLine
         {
