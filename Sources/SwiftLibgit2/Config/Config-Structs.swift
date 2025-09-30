@@ -113,7 +113,7 @@ public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_config_entry` instance, and updates this
+    /// Calls the given closure with a pointer to a `git_config_entry` instance, and updates the
     /// ``GitConfigEntry``  instance with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
