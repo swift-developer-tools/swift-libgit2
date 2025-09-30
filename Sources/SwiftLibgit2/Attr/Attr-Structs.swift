@@ -44,8 +44,8 @@ public struct GitAttrOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `git_oid()`.
-    public var attrCommitID : GitOID?               = nil
+    /// The default value is a zero-initialized OID.
+    public var attrCommitID : GitOID                = GitOID()
     
     
     
@@ -83,7 +83,7 @@ public struct GitAttrOptions: GitStructMutable, WithCConvertible
         
         attrOptions.version         = version
         attrOptions.flags           = flags.rawValue
-        attrOptions.attr_commit_id  = attrCommitID?.cValue() ?? git_oid()
+        attrOptions.attr_commit_id  = attrCommitID.cValue()
         
         if let commitID: GitOID = commitID
         {
