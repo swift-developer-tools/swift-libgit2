@@ -47,8 +47,8 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `git_oid()`.
-    public var attrCommitID : GitOID?               = nil
+    /// The default value is a zero-initialized OID.
+    public var attrCommitID : GitOID                = GitOID()
     
     
     
@@ -71,7 +71,7 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
         self.version        = UInt32(blobFilterOptions.version)
         self.flags          = GitBlobFilterFlagT(rawValue: blobFilterOptions.flags)
         self.commitID       = nil
-        self.attrCommitID   = nil
+        self.attrCommitID   = GitOID(cValue: blobFilterOptions.attr_commit_id)
     }
     
     
@@ -101,7 +101,7 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
         }
         
         blobFilterOptions.flags             = flags.rawValue
-        blobFilterOptions.attr_commit_id    = attrCommitID?.cValue() ?? git_oid()
+        blobFilterOptions.attr_commit_id    = attrCommitID.cValue()
         
         if let commitID: GitOID = commitID
         {

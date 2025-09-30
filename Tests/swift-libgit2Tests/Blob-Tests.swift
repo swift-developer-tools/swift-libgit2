@@ -342,7 +342,7 @@ final class BlobTests: XCTestCaseStopOnFail
         XCTAssertEqual(blobFilterOptions.version, gitBlobFilterOptionsVersion)
         XCTAssertEqual(blobFilterOptions.flags, .gitBlobFilterCheckForBinary)
         XCTAssertNil(blobFilterOptions.commitID)
-        XCTAssertNil(blobFilterOptions.attrCommitID)
+        OID.assertOIDsEqual(blobFilterOptions.attrCommitID, GitOID())
         
         XCTAssertEqual(gitBlobFilterOptionsVersion, UInt32(GIT_BLOB_FILTER_OPTIONS_VERSION))
         
