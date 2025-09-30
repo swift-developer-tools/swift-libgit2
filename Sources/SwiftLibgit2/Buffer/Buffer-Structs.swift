@@ -106,9 +106,7 @@ public struct GitBuf: GitStructInternalMutable, WithThrowingCConvertible
             
             let result: T = try body(buffer)
             
-            ptr        = buffer.pointee.ptr
-            reserved   = buffer.pointee.reserved
-            size       = buffer.pointee.size
+            self = GitBuf(cValue: buffer.pointee)
             
             return result
         }
