@@ -303,13 +303,13 @@ public struct GitFetchOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// If unexpected values are encountered, the following defaults are used:
-    /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``,
+    /// If unexpected values are encountered, the following defaults are used, although this should
+    /// never occur.
+    ///
+    /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``
     /// - ``downloadTags``: ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsUnspecified``
     /// - ``depth``: ``GitFetchDepthT/gitFetchDepthFull``
     /// - ``followRedirects``: ``GitRemoteRedirectT/gitRemoteRedirectInitial``
-    ///
-    /// This should never occur.
     internal init(
         cValue fetchOptions: git_fetch_options
     )
