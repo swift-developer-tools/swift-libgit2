@@ -200,7 +200,9 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
             )
         }
         
-        guard let hostKey: Data = hostKey
+        guard
+            let hostKey: Data = hostKey,
+            !hostKey.isEmpty
         else
         {
             certHostKey.hostkey         = nil
