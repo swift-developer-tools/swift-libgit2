@@ -312,10 +312,10 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: GitStructReadable, WithCConvertible
+public struct GitBlameLine: GitStructReadable, WithThrowingCConvertible
 {
     /// The line content.
-    public let ptr : String?
+    public let ptr : Data?
     
     /// The length of the line content.
     public let len : Int
@@ -328,7 +328,7 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
         cValue blameLine: git_blame_line
     )
     {
-        self.ptr    = String(optionalCString: blameLine.ptr)
+        self.ptr    = blameLine.ptr.map { Data(bytes: $0, count: blameLine.len) }
         self.len    = blameLine.len
     }
     
@@ -337,21 +337,38 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_blame_line` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_blame_line>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_blame_line>) throws -> T
+    ) rethrows -> T
     {
         var blameLine = git_blame_line()
         
-        blameLine.len = len
-        
-        return ptr.withOptionalCString
+        guard
+            let ptr: Data = ptr,
+            !ptr.isEmpty
+        else
         {
-            cPtr in
+            blameLine.ptr   = nil
+            blameLine.len   = 0
             
-            blameLine.ptr = cPtr
+            return try body(&blameLine)
+        }
+        
+        return try ptr.withUnsafeBytes
+        {
+            bytes in
             
-            return body(&blameLine)
+            guard let baseAddress: UnsafeRawPointer = bytes.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            blameLine.ptr   = baseAddress.assumingMemoryBound(to: CChar.self)
+            blameLine.len   = bytes.count
+            
+            return try body(&blameLine)
         }
     }
 }
