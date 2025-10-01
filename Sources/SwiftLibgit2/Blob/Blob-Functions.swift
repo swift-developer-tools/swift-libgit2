@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -410,15 +411,39 @@ public func gitBlobIsBinary(
 /// The heuristic used to guess whether file content is binary is taken from core Git and is the same
 /// mechanism used by ``gitBlobIsBinary(blob:)``, but only looks at raw data.
 ///
+/// - Note: This function will return `nil` if there was an error converting `data` to its C equivalent.
+///
 /// ## C Equivalent
 ///
 /// [`git_blob_data_is_binary()`](https://libgit2.org/docs/reference/main/blob/git_blob_data_is_binary.html)
 public func gitBlobDataIsBinary(
-    data    : String,
+    data    : Data,
     len     : Int
-) -> Bool
+) -> Bool?
 {
-    return Bool(git_blob_data_is_binary(data, len))
+    guard !data.isEmpty
+    else
+    {
+        /// Empty data is not binary.
+        return false
+    }
+    
+    return data.withUnsafeBytes
+    {
+        cData in
+        
+        guard let baseAddress: UnsafeRawPointer = cData.baseAddress
+        else
+        {
+            /// `baseAddress` should not be `nil` for non-empty data.
+            return nil
+        }
+        
+        return Bool(git_blob_data_is_binary(
+            baseAddress.assumingMemoryBound(to: CChar.self),
+            cData.count,
+        ))
+    }
 }
 
 

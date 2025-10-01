@@ -50,13 +50,13 @@ final class BlameTests: XCTestCaseStopOnFail
             
             
             
-            let bufferContent: String = "Buffer content\n"
+            let bufferContent = Data("Buffer content\n".utf8)
             
             let blameBufferResult: Int32 = gitBlameBuffer(
                 out:        &bufferBlamePointer,
                 base:       baseBlamePointer,
                 buffer:     bufferContent,
-                bufferLen:  bufferContent.utf8.count
+                bufferLen:  bufferContent.count
             )
             
             XCTAssertOK(blameBufferResult)

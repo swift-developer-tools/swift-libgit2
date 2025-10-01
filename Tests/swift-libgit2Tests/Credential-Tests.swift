@@ -142,7 +142,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let publicKey: String = "ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZ..."
+        let publicKey = Data("ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZ...".utf8)
         
         let credentialSSHCustomNewResult: Int32 = gitCredentialSSHCustomNew(
             out:            &credentialPointer,

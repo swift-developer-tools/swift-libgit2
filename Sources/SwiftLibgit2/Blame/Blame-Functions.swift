@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -257,7 +258,7 @@ public func gitBlameFile(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
     path        : String,
-    contents    : String,
+    contents    : Data,
     contentsLen : Int,
     options     : GitBlameOptions?
 ) -> Int32
@@ -268,14 +269,25 @@ public func gitBlameFile(
         {
             cOptions in
             
-            return git_blame_file_from_buffer(
-                out,
-                repo,
-                path,
-                contents,
-                contentsLen,
-                cOptions
-            )
+            return try contents.withUnsafeBytes
+            {
+                cContents in
+                
+                guard let baseAddress: UnsafeRawPointer = cContents.baseAddress
+                else
+                {
+                    throw NSError.makeCConversionError()
+                }
+                
+                return git_blame_file_from_buffer(
+                    out,
+                    repo,
+                    path,
+                    baseAddress.assumingMemoryBound(to: CChar.self),
+                    cContents.count,
+                    cOptions
+                )
+            }
         }
     }
 }*/
@@ -301,23 +313,37 @@ public func gitBlameFile(
 ///
 /// Lines that differ between the buffer and the committed version are marked as having a zero OID for
 /// their ``GitBlameHunk/finalCommitID``.
-///
+///∂
 /// ## C Equivalent
 ///
 /// [`git_blame_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_buffer.html)
 public func gitBlameBuffer(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     base        : OpaquePointer,
-    buffer      : String,
+    buffer      : Data,
     bufferLen   : Int
 ) -> Int32
 {
-    return git_blame_buffer(
-        out,
-        base,
-        buffer,
-        bufferLen
-    )
+    return withCConversion
+    {
+        return try buffer.withUnsafeBytes
+        {
+            cBuffer in
+            
+            guard let baseAddress: UnsafeRawPointer = cBuffer.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            return git_blame_buffer(
+                out,
+                base,
+                baseAddress.assumingMemoryBound(to: CChar.self),
+                cBuffer.count
+            )
+        }
+    }
 }
 
 

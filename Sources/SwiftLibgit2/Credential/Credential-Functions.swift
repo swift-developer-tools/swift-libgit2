@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -272,18 +273,32 @@ public func gitCredentialSSHKeyFromAgent(
 public func gitCredentialSSHCustomNew(
     out             : UnsafeMutablePointer<UnsafeMutablePointer<git_credential>?>,
     username        : String,
-    publicKey       : String,
+    publicKey       : Data,
     publicKeyLen    : Int,
     signCallback    : GitCredentialSignCB,
     payload         : UnsafeMutableRawPointer?
 ) -> Int32
 {
-    return git_credential_ssh_custom_new(
-        out,
-        username,
-        publicKey,
-        publicKeyLen,
-        signCallback,
-        payload
-    )
+    return withCConversion
+    {
+        return try publicKey.withUnsafeBytes
+        {
+            cPublicKey in
+            
+            guard let baseAddress: UnsafeRawPointer = cPublicKey.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            return git_credential_ssh_custom_new(
+                out,
+                username,
+                baseAddress.assumingMemoryBound(to: CChar.self),
+                cPublicKey.count,
+                signCallback,
+                payload
+            )
+        }
+    }
 }
