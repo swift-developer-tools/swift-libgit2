@@ -64,9 +64,15 @@ import Foundation
 ///
 /// ### Optional Receivers
 ///
-/// All convertible protocols include default implementations of ``withOptionalCValue(_:)``,
-/// which can be used to reduce overhead at call sites by eliminating the need to guard against optional
-/// structs when converting them to their C equivalents.
+/// ``WithCConvertible`` and ``WithThrowingCConvertible`` include default implementations
+/// of ``withOptionalCValue(_:)``, which can be used to reduce overhead at call sites by eliminating
+/// the need to guard against optional structs when converting them to their C equivalents.
+///
+/// ``CConvertible`` and ``ThrowingCConvertible`` do not provide equivalent optional handling
+/// extensions. These protocols are generally used by structs whose C values are passed directly to C
+/// functions (not as pointers), so the standard optional chaining syntax `object?.cValue()` is more
+/// appropriate. For cases where a pointer is needed, a simple `guard` statement provides clear control
+/// flow without adding protocol complexity for an uncommon use case.
 ///
 /// ### Preventing Silent Failure
 ///
