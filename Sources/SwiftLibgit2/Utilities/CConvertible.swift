@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// These protocols apply to types that can be converted to the equivalent C value.
+/// A type that can be converted to the equivalent C value.
 ///
 /// ## Discussion
 ///
@@ -37,8 +37,7 @@ import Foundation
 ///
 /// For example, other protocols like ``GitEnum`` and ``GitOptionSet`` conform to
 /// ``CConvertible``, but these use `init?(cValue:)` and `init(rawValue:)`, respectively.
-/// The `init(cValue:)` requirement is therefore defined by ``GitStruct``, which also conforms
-/// to ``CConvertible``.
+/// The `init(cValue:)` requirement is therefore defined by ``GitStruct``.
 ///
 /// ### Protocol Choice
 ///
