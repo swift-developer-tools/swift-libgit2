@@ -392,7 +392,7 @@ public func gitBranchUpstreamName(
 
 
 
-/// Checks if HEAD points to the given local branch.
+/// Checks whether HEAD points to the given local branch.
 /// - Parameter branch: The local branch. The underlying type should be `git_reference`.
 /// - Returns: `1` if HEAD points to the branch, `0` if HEAD does not point to the branch, or
 /// an error code.
@@ -409,7 +409,7 @@ public func gitBranchIsHEAD(
 
 
 
-/// Checks if any HEAD points to the given local branch.
+/// Checks whether any HEAD points to the given local branch.
 /// - Parameter branch: The local branch. The underlying type should be `git_reference`.
 /// - Returns: `1` if any HEAD points to the branch, `0` if no HEAD points to the branch, or
 /// an error code.

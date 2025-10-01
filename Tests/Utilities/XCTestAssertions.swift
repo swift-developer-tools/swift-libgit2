@@ -18,7 +18,7 @@ import XCTest
 
 
 
-/// Checks if a libgit2 result code is `GIT_OK`, or is one of the given codes.
+/// Checks whether a libgit2 result code is `GIT_OK`, or is one of the given codes.
 /// - Parameters:
 ///   - resultCode: The libgit2 result code.
 ///   - includedCodes: The libgit2 result codes other than `GIT_OK` to consider successful.
