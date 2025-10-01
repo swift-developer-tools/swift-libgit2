@@ -110,33 +110,6 @@ public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
             }
         }
     }
-    
-    
-    
-    /// Calls the given closure with a pointer to a `git_config_entry` instance, and updates the
-    /// ``GitConfigEntry``  instance with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    internal mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<git_config_entry>?>) -> T
-    ) -> T
-    {
-        return withCValue
-        {
-            configEntry in
-            
-            var optionalConfigEntry: UnsafeMutablePointer<git_config_entry>? = configEntry
-            
-            let result: T = body(&optionalConfigEntry)
-            
-            if let finalConfigEntry: UnsafeMutablePointer<git_config_entry> = optionalConfigEntry
-            {
-                self = GitConfigEntry(cValue: finalConfigEntry.pointee)
-            }
-            
-            return result
-        }
-    }
 }
 
 

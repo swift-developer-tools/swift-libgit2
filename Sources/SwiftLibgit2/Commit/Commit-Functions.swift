@@ -543,15 +543,18 @@ public func gitCommitHeaderField(
     field   : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_commit_header_field(
-            cOut,
-            commit,
-            field
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_commit_header_field(
+                cOut,
+                commit,
+                field
+            )
+        }
     }
 }
 
@@ -587,23 +590,26 @@ public func gitCommitExtractSignature(
     field       : String?
 ) -> Int32
 {
-    var cCommitID: git_oid = commitID.cValue()
-    
-    return signature.withMutatingCValue
+    return withCConversion
     {
-        cSignature in
+        var cCommitID: git_oid = commitID.cValue()
         
-        return signedData.withMutatingCValue
+        return try signature.withMutatingCValue
         {
-            cSignedData in
+            cSignature in
             
-            return git_commit_extract_signature(
-                cSignature,
-                cSignedData,
-                repo,
-                &cCommitID,
-                field
-            )
+            return try signedData.withMutatingCValue
+            {
+                cSignedData in
+                
+                return git_commit_extract_signature(
+                    cSignature,
+                    cSignedData,
+                    repo,
+                    &cCommitID,
+                    field
+                )
+            }
         }
     }
 }
@@ -845,29 +851,32 @@ public func gitCommitCreateBuffer(
     parents         : UnsafeMutablePointer<OpaquePointer?>?
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return author.withCValue
+        return try out.withMutatingCValue
         {
-            cAuthor in
+            cOut in
             
-            return committer.withCValue
+            return author.withCValue
             {
-                cCommitter in
+                cAuthor in
                 
-                return git_commit_create_buffer(
-                    cOut,
-                    repo,
-                    cAuthor,
-                    cCommitter,
-                    messageEncoding,
-                    message,
-                    tree,
-                    parentCount,
-                    parents
-                )
+                return committer.withCValue
+                {
+                    cCommitter in
+                    
+                    return git_commit_create_buffer(
+                        cOut,
+                        repo,
+                        cAuthor,
+                        cCommitter,
+                        messageEncoding,
+                        message,
+                        tree,
+                        parentCount,
+                        parents
+                    )
+                }
             }
         }
     }

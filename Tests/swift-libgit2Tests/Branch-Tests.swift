@@ -311,8 +311,8 @@ final class BranchTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
-            }
+                XCTAssertOK(gitBufDispose(buffer: &buffer)
+)            }
             
             
             

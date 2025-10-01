@@ -35,7 +35,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
             }
@@ -148,8 +148,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &extractedSignature)
-                gitBufDispose(buffer: &extractedSignedData)
+                XCTAssertOK(gitBufDispose(buffer: &extractedSignature))
+                XCTAssertOK(gitBufDispose(buffer: &extractedSignedData))
             }
             
             
@@ -438,7 +438,7 @@ final class CommitTests: XCTestCaseStopOnFail
 
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
             }
             
             

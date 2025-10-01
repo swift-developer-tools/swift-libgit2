@@ -210,14 +210,17 @@ public func gitLibgit2OptGetSearchPath(
     buf     : inout GitBuf
 ) -> Int32
 {
-    return buf.withMutatingCValue
+    return withCConversion
     {
-        cBuf in
-        
-        return git_libgit2_opt_get_search_path(
-            level.rawValue,
-            cBuf
-        )
+        return try buf.withMutatingCValue
+        {
+            cBuf in
+            
+            return git_libgit2_opt_get_search_path(
+                level.rawValue,
+                cBuf
+            )
+        }
     }
 }
 
@@ -389,11 +392,14 @@ public func gitLibgit2OptGetTemplatePath(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_libgit2_opt_get_template_path(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_libgit2_opt_get_template_path(cOut)
+        }
     }
 }
 
@@ -572,11 +578,14 @@ public func gitLibgit2OptGetUserAgent(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_libgit2_opt_get_user_agent(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_libgit2_opt_get_user_agent(cOut)
+        }
     }
 }
 
@@ -1066,11 +1075,14 @@ public func gitLibgit2OptGetHomeDir(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_libgit2_opt_get_homedir(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_libgit2_opt_get_homedir(cOut)
+        }
     }
 }
 
@@ -1227,11 +1239,14 @@ public func gitLibgit2OptGetUserAgentProduct(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_libgit2_opt_get_user_agent_product(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_libgit2_opt_get_user_agent_product(cOut)
+        }
     }
 }
 

@@ -118,7 +118,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         defer
         {
-            gitBufDispose(buffer: &buffer)
+            XCTAssertOK(gitBufDispose(buffer: &buffer))
         }
         
         
@@ -830,7 +830,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         defer
         {
-            gitBufDispose(buffer: &pathBuffer)
+            XCTAssertOK(gitBufDispose(buffer: &pathBuffer))
         }
         
         
@@ -961,7 +961,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    gitBufDispose(buffer: &stringBuffer)
+                    XCTAssertOK(gitBufDispose(buffer: &stringBuffer))
                 }
                 
                 
@@ -1087,7 +1087,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    gitBufDispose(buffer: &pathBuffer)
+                    XCTAssertOK(gitBufDispose(buffer: &pathBuffer))
                 }
                 
                 

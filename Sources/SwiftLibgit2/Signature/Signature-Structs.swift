@@ -95,36 +95,4 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
             }
         }
     }
-    
-    
-    
-    /// Calls the given closure with a pointer to a pointer to a `git_signature` instance, and
-    /// updates the ``GitSignature`` instance with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// Use this function when working with C APIs that allocate a new signature and expect
-    /// `git_signature **` parameters.
-    internal mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<git_signature>?>) -> T
-    ) -> T
-    {
-        return withCValue
-        {
-            signature in
-            
-            var optionalSignature: UnsafeMutablePointer<git_signature>? = signature
-            
-            let result: T = body(&optionalSignature)
-            
-            if let finalSignature: UnsafeMutablePointer<git_signature> = optionalSignature
-            {
-                self = GitSignature(cValue: finalSignature.pointee)
-            }
-            
-            return result
-        }
-    }
 }

@@ -50,11 +50,14 @@ public func gitConfigFindGlobal(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_find_global(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_find_global(cOut)
+        }
     }
 }
 
@@ -79,11 +82,14 @@ public func gitConfigFindXDG(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_find_xdg(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_find_xdg(cOut)
+        }
     }
 }
 
@@ -105,11 +111,14 @@ public func gitConfigFindSystem(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_find_system(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_find_system(cOut)
+        }
     }
 }
 
@@ -130,11 +139,14 @@ public func gitConfigFindProgramData(
     out: inout GitBuf
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_find_programdata(cOut)
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_find_programdata(cOut)
+        }
     }
 }
 
@@ -568,15 +580,18 @@ public func gitConfigGetPath(
     name    : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_get_path(
-            cOut,
-            cfg,
-            name
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_get_path(
+                cOut,
+                cfg,
+                name
+            )
+        }
     }
 }
 
@@ -642,15 +657,18 @@ public func gitConfigGetStringBuf(
     name    : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_get_string_buf(
-            cOut,
-            cfg,
-            name
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_get_string_buf(
+                cOut,
+                cfg,
+                name
+            )
+        }
     }
 }
 
@@ -1318,14 +1336,17 @@ public func gitConfigParsePath(
     value   : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_parse_path(
-            cOut,
-            value
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_parse_path(
+                cOut,
+                value
+            )
+        }
     }
 }
 

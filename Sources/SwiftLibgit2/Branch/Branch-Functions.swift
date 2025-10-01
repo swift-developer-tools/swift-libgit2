@@ -375,15 +375,18 @@ public func gitBranchUpstreamName(
     refName : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_branch_upstream_name(
-            cOut,
-            repo,
-            refName
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_branch_upstream_name(
+                cOut,
+                repo,
+                refName
+            )
+        }
     }
 }
 
@@ -453,15 +456,18 @@ public func gitBranchRemoteName(
     refName : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_branch_remote_name(
-            cOut,
-            repo,
-            refName
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_branch_remote_name(
+                cOut,
+                repo,
+                refName
+            )
+        }
     }
 }
 
@@ -488,15 +494,18 @@ public func gitBranchUpstreamRemote(
     refName : String
 ) -> Int32
 {
-    return buf.withMutatingCValue
+    return withCConversion
     {
-        cBuf in
-        
-        return git_branch_upstream_remote(
-            cBuf,
-            repo,
-            refName
-        )
+        return try buf.withMutatingCValue
+        {
+            cBuf in
+            
+            return git_branch_upstream_remote(
+                cBuf,
+                repo,
+                refName
+            )
+        }
     }
 }
 
@@ -523,15 +532,18 @@ public func gitBranchUpstreamMerge(
     refName : String
 ) -> Int32
 {
-    return buf.withMutatingCValue
+    return withCConversion
     {
-        cBuf in
-        
-        return git_branch_upstream_merge(
-            cBuf,
-            repo,
-            refName
-        )
+        return try buf.withMutatingCValue
+        {
+            cBuf in
+            
+            return git_branch_upstream_merge(
+                cBuf,
+                repo,
+                refName
+            )
+        }
     }
 }
 

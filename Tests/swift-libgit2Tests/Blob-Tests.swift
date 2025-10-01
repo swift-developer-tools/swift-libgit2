@@ -275,7 +275,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
             }
             
             

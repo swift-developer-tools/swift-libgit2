@@ -25,14 +25,14 @@ final class BufferTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 
                 XCTAssertNil(buffer.ptr)
                 XCTAssertEqual(buffer.reserved, 0)
                 XCTAssertEqual(buffer.size, 0)
                 
                 /// Test disposing the buffer again.
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 
                 XCTAssertNil(buffer.ptr)
                 XCTAssertEqual(buffer.reserved, 0)

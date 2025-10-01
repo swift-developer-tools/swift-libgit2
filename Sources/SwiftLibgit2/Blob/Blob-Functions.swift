@@ -195,7 +195,7 @@ public func gitBlobFilter(
         {
             cOpts in
             
-            return out.withMutatingCValue
+            return try out.withMutatingCValue
             {
                 cOut in
                 

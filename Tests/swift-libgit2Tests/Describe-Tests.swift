@@ -40,7 +40,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 Free.freeDescribeResult(describeResultPointer)
             }
             
@@ -107,7 +107,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 Free.freeDescribeResult(describeResultPointer)
             }
             
