@@ -109,7 +109,7 @@ public func gitBlobID(
 
 /// Gets the repository that contains the given blob.
 /// - Parameter blob: The blob. The underlying type should be `git_blob`.
-/// - Returns: The repository containing the blob.
+/// - Returns: The repository containing the given blob.
 ///
 /// ## C Equivalent
 ///
@@ -125,7 +125,7 @@ public func gitBlobOwner(
 
 /// Gets a read-only buffer containing the raw content of the given blob.
 /// - Parameter blob: The blob. The underlying type should be `git_blob`.
-/// - Returns: A read-only buffer containing the raw content of the blob.
+/// - Returns: A read-only buffer containing the raw content of the given blob.
 ///
 /// ## C Equivalent
 ///
