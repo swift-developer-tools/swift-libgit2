@@ -107,7 +107,7 @@ public func gitCommitID(
 
 /// Gets the repository that contains the given commit.
 /// - Parameter commit: The commit. The underlying type should be `git_commit`.
-/// - Returns: The repository that contains the commit.
+/// - Returns: The repository containing the commit.
 ///
 /// ## C Equivalent
 ///

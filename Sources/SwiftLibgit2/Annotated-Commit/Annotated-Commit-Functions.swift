@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
-///   - repo: The repository that contains the given reference. The underlying type should be
+///   - repo: The repository containing the given reference. The underlying type should be
 ///   `git_repository`.
 ///   - ref: The reference to use to lookup the  annotated commit. The underlying type should be
 ///   `git_reference`.
@@ -47,7 +47,7 @@ public func gitAnnotatedCommitFromRef(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
-///   - repo: The repository that contains the given commit. The underlying type should be
+///   - repo: The repository containing the given commit. The underlying type should be
 ///   `git_repository`.
 ///   - branchName: The name of the (remote) branch.
 ///   - remoteURL: The URL of the remote.
@@ -86,7 +86,7 @@ public func gitAnnotatedCommitFromFetchhead(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
-///   - repo: The repository that contains the given commit. The underlying type should be
+///   - repo: The repository containing the given commit. The underlying type should be
 ///   `git_repository`.
 ///   - id: The commit ID to lookup.
 /// - Returns: `0` on success, or an error code.
@@ -125,7 +125,7 @@ public func gitAnnotatedCommitLookup(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting annotated commit. The underlying type should be
 ///   `git_annotated_commit`.
-///   - repo: The repository that contains the given commit. The underlying type should be
+///   - repo: The repository containing the given commit. The underlying type should be
 ///   `git_repository`.
 ///   - revspec: The extended SHA syntax string to use to lookup the commit.
 /// - Returns: `0` on success, or an error code.

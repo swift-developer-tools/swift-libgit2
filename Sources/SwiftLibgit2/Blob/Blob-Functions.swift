@@ -109,7 +109,7 @@ public func gitBlobID(
 
 /// Gets the repository that contains the given blob.
 /// - Parameter blob: The blob. The underlying type should be `git_blob`.
-/// - Returns: The repository that contains the blob.
+/// - Returns: The repository containing the blob.
 ///
 /// ## C Equivalent
 ///
