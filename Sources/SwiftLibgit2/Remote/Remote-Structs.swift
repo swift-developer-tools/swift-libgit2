@@ -72,7 +72,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This is deprecated in libgit2 and will be removed in the next major release.
+    /// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
     /// Use ``updateRefs`` instead.
     public var updateTips           : GitRemoteUpdateTipsCB?            = nil
     
