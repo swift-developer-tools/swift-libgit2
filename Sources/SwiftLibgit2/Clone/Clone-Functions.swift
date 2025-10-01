@@ -21,11 +21,6 @@ import CLibgit2
 /// - Returns: `0` on success, a non-zero value returned by ``GitRemoteCreateCB`` or
 /// ``GitRepositoryCreateCB``, or an error code.
 ///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `options` was provided, but it
-/// could not be converted to the equivalent C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_clone()`](https://libgit2.org/docs/reference/main/clone/git_clone.html)

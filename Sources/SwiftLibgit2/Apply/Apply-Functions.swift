@@ -21,11 +21,6 @@ import CLibgit2
 ///   - options: The options for the apply operation.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `options` was provided, but it
-/// could not be converted to the equivalent C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_apply_to_tree()`](https://libgit2.org/docs/reference/main/apply/git_apply_to_tree.html)
@@ -65,11 +60,6 @@ public func gitApplyToTree(
 ///   - location: The location to apply (the working directory, the index, or both).
 ///   - options: The options for the apply operation.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `options` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///

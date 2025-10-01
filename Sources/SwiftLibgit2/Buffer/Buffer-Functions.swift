@@ -13,7 +13,7 @@ import CLibgit2
 
 /// Frees the memory pointed to by ``GitBuf/ptr``.
 /// - Parameter buffer: The buffer to free.
-/// - Returns: `0` on success, or an error value.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///

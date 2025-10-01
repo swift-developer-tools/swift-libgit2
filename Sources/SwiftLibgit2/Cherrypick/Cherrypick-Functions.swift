@@ -29,9 +29,6 @@ import CLibgit2
 ///
 /// The returned index should be freed with `git_index_free()`.
 ///
-/// This function will return `GIT_EUSER` if `mergeOptions` was provided, but it
-/// could not be converted to the equivalent C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_commit()`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_commit.html)
@@ -71,11 +68,6 @@ public func gitCherrypickCommit(
 ///   - commit: The commit to cherry-pick.
 ///   - cherrypickOptions: The options to use for the cherry-pick operation.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `cherrypickOptions` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///

@@ -209,11 +209,6 @@ public func gitBlameGetHunkByLine(
 ///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `options` was provided, but it
-/// could not be converted to the equivalent C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_blame_file()`](https://libgit2.org/docs/reference/main/blame/git_blame_file.html)
@@ -254,11 +249,6 @@ public func gitBlameFile(
 ///   - contentsLen: The length of the changes buffer.
 ///   - options: The options for the blame operation.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `options` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///

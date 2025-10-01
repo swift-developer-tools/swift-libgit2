@@ -348,9 +348,6 @@ public func gitConfigOpenGlobal(
 /// By default, the write ordering does not match the read ordering. For example, the worktree
 /// configuration is a high-priority for reading, but is not written to unless explicitly chosen.
 ///
-/// This function will return `GIT_EUSER` if there was an error converting `levels` to the equivalent
-/// C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_config_set_writeorder()`](https://libgit2.org/docs/reference/main/config/git_config_set_writeorder.html)

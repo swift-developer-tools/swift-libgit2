@@ -19,11 +19,6 @@ import CLibgit2
 ///   - opts: The options for describing the commit.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `opts` was provided, but it
-/// could not be converted to the equivalent C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_describe_commit()`](https://libgit2.org/docs/reference/main/describe/git_describe_commit.html)
@@ -64,9 +59,6 @@ public func gitDescribeCommit(
 /// A status check will be run after performing the describe operation on HEAD. The description will be
 /// considered dirity if there are any entries.
 ///
-/// This function will return `GIT_EUSER` if `opts` was provided, but it
-/// could not be converted to the equivalent C value.
-///
 /// ## C Equivalent
 ///
 /// [`git_describe_workdir()`](https://libgit2.org/docs/reference/main/describe/git_describe_workdir.html)
@@ -99,11 +91,6 @@ public func gitDescribeWorkdir(
 ///   - result: The commit description. The underlying type should be `git_describe_result`.
 ///   - opts: The options for formatting the commit description.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `opts` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
