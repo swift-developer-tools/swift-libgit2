@@ -603,10 +603,10 @@ public func gitConfigGetPath(
 ///
 /// ## Discussion
 ///
-/// This function can only be used on snapshot configuration objects.
-///
 /// All configuration files will be searched in the order of their defined level. A higher level means a higher
 /// priority. The first occurrence of the entry will be returned.
+///
+/// - Important: This function can only be used on snapshot configuration objects.
 ///
 /// ## C Equivalent
 ///
@@ -1004,7 +1004,7 @@ public func gitConfigDeleteMultivar(
 /// and the data pointer passed to this function. If the callback returns a non-zero value, the function will
 /// stop iterating and will return that value to the caller.
 ///
-/// The pointers passed to the callback are only valid as long as the iteration is ongoing.
+/// - Important: The pointers passed to the callback are valid only as long as the iteration is ongoing.
 ///
 /// ## C Equivalent
 ///

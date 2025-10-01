@@ -20,10 +20,6 @@ import CLibgit2
 ///   - offset: The timezone offset in minutes.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// If an error occurs, `out` will not be updated.
-///
 /// ## C Equivalent
 ///
 /// [`git_signature_new()`](https://libgit2.org/docs/reference/main/signature/git_signature_new.html)
@@ -58,10 +54,6 @@ public func gitSignatureNew(
 ///   - email: The email of the actor.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// If an error occurs, `out` will not be updated.
-///
 /// ## C Equivalent
 ///
 /// [`git_signature_now()`](https://libgit2.org/docs/reference/main/signature/git_signature_now.html)
@@ -94,8 +86,6 @@ public func gitSignatureNow(
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
-///
-/// If an error occurs, `authorOut` and `committerOut` will not be updated.
 ///
 /// At least one of `authorOut` or `committerOut` must not be `nil`. If both are `nil`,
 /// this function will return `GIT_EUSER`.
@@ -223,7 +213,7 @@ public func gitSignatureDefaultFromEnv(
 ///
 /// The return value will be `GIT_ENOTFOUND` if either `user.name` or `user.email` are not set.
 ///
-/// This function does not examine environment variables. It examines only the configuration files.
+/// - Note: This function does not examine environment variables. It examines only the configuration files.
 /// Use ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)`` to consider
 /// the environment variables.
 ///

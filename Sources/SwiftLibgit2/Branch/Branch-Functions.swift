@@ -242,7 +242,7 @@ public func gitBranchMove(
 ///
 /// ## Discussion
 ///
-/// The caller must free the generated reference using `git_reference_free()`.
+/// - Important: The caller must free the generated reference using `git_reference_free()`.
 ///
 /// ## C Equivalent
 ///
@@ -277,7 +277,7 @@ public func gitBranchLookup(
 /// This function checks that the given reference is actually a branch and, if it is a branch, returns the
 /// branch part of the reference name.
 ///
-/// Branches are references that exist in `refs/heads/` or `refs/remotes/`.
+/// - Note: Branches are references that exist in `refs/heads/` or `refs/remotes/`.
 ///
 /// ## C Equivalent
 ///

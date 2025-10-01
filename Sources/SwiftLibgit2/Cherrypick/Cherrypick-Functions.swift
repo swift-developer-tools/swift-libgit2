@@ -27,7 +27,7 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// The returned index should be freed with `git_index_free()`.
+/// - Important: The returned index should be freed with `git_index_free()`.
 ///
 /// ## C Equivalent
 ///

@@ -17,9 +17,8 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function must be called before any other libgit2 function in order to set up global state and threading.
-///
-/// This function may be called multiple times.
+/// This function must be called before any other libgit2 function in order to set up global state and threading,
+/// and may be called multiple times.
 ///
 /// ## C Equivalent
 ///

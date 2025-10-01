@@ -124,7 +124,7 @@ public func gitBlameLineByIndex(
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
 /// Use ``gitBlameHunkCount(blame:)`` instead.
 ///
 /// ## C Equivalent
@@ -147,7 +147,7 @@ public func gitBlameGetHunkCount(
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
 /// Use ``gitBlameHunkByIndex(blame:index:)`` instead.
 ///
 /// ## C Equivalent
@@ -177,7 +177,7 @@ public func gitBlameGetHunkByIndex(
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
 /// Use ``gitBlameHunkByLine(blame:lineNo:)`` instead.
 ///
 /// ## C Equivalent

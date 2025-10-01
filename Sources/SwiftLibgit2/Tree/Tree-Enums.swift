@@ -38,7 +38,6 @@ public enum GitFileModeT: UInt16, GitEnum
 
     
     
-    
     /// Creates a ``GitFileModeT`` instance from a `git_filemode_t` instance.
     /// - Parameter fileMode: The `git_filemode_t` instance to use.
     internal init?(

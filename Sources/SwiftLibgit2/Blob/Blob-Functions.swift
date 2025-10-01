@@ -294,12 +294,9 @@ public func gitBlobCreateFromDisk(
 /// Otherwise, if the size of the contents are known (and filtering isn't needed), use
 /// `git_odb_open_wstream()` instead.
 ///
-/// Do not manually close this stream. Instead, pass it to
+/// - Important: Do not manually close this stream. Instead, pass it to
 /// ``gitBlobCreateFromStreamCommit(out:stream:)`` to commit the write to the object
 /// database and get the object ID.
-///
-/// If the `hintPath` parameter is not `nil`, it will be used to determine which Git filters should be
-/// applied to the object before it is written to the object database.
 ///
 /// ## C Equivalent
 ///
@@ -435,7 +432,7 @@ public func gitBlobDataIsBinary(
 ///
 /// ## Discussion
 ///
-/// The copy of the blob must be freed by the caller, otherwise it will cause a memory leak.
+/// - Important: The copy of the blob must be freed by the caller, otherwise it will cause a memory leak.
 ///
 /// ## C Equivalent
 ///

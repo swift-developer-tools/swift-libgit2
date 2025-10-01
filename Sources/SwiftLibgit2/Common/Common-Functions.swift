@@ -107,7 +107,7 @@ public func gitLibgit2FeatureBackend(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -128,7 +128,7 @@ public func gitLibgit2OptGetMWindowSize(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -149,7 +149,7 @@ public func gitLibgit2OptSetMWindowSize(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -170,7 +170,7 @@ public func gitLibgit2OptGetMWindowMappedLimit(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -193,14 +193,14 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// `level` must be one of the following values:
 /// - ``GitConfigLevelT/gitConfigLevelProgramData``
 /// - ``GitConfigLevelT/gitConfigLevelSystem``
 /// - ``GitConfigLevelT/gitConfigLevelXDG``
 /// - ``GitConfigLevelT/gitConfigLevelGlobal``
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -234,9 +234,6 @@ public func gitLibgit2OptGetSearchPath(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// `level` must be one of the following values:
 /// - ``GitConfigLevelT/gitConfigLevelProgramData``
 /// - ``GitConfigLevelT/gitConfigLevelSystem``
@@ -245,7 +242,10 @@ public func gitLibgit2OptGetSearchPath(
 ///
 /// `path` lists the directories specified by ``GitPathListSeparator``. Pass `nil` to reset to
 /// the default, which is generally based on environment variables. Pass magic path `$PATH` to include
-/// the old value of the path (for example, for prepending or appending),
+/// the old value of the path (for example, for prepending or appending).
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -271,14 +271,14 @@ public func gitLibgit2OptSetSearchPath(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// Setting the limit to `0` means that the given type of object will not be cached.
 ///
 /// The default value is `0` for ``GitObjectT/gitObjectBlob`` and `4,000` for
 /// ``GitObjectT/gitObjectCommit``, ``GitObjectT/gitObjectTree``, and
 /// ``GitObjectT/gitObjectTag``.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -303,13 +303,13 @@ public func gitLibgit2OptSetCacheObjectLimit(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is 256 MB.
 ///
 /// Since this is a soft limit, libgit2 may briefly exceed it, but will start aggressively evicting objects
 /// from cache when that happens.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -329,11 +329,11 @@ public func gitLibgit2OptSetCacheMaxSize(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// Since caches are repository-specific, disabling the cache cannot immediately clear all cached objects,
 /// but each cache will be cleared on the next attempt to update anything in it.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -357,7 +357,7 @@ public func gitLibgit2OptEnableCaching(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -382,7 +382,7 @@ public func gitLibgit2OptGetCachedMemory(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -411,7 +411,7 @@ public func gitLibgit2OptGetTemplatePath(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -434,12 +434,12 @@ public func gitLibgit2OptSetTemplatePath(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// Either `file` or `path` may be `nil`, but both may not be `nil`.
 ///
 /// Calling ``gitLibgit2OptAddSSLX509Cert(cert:)`` may override the data in `path`.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -463,9 +463,6 @@ public func gitLibgit2OptSetSSLCertLocations(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The value can represent information about the product and its version. The default value is `libgit2`
 /// followed by the libgit2 version
 ///
@@ -473,6 +470,9 @@ public func gitLibgit2OptSetSSLCertLocations(
 ///
 /// Pass an empty string to not send any information in the comment section, or pass `nil` to restore
 /// the default value.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -493,13 +493,12 @@ public func gitLibgit2OptSetUserAgent(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
-/// For example, when this is enabled, the parent(s) and tree inputs will be validated when creating a
-/// new commit.
-///
 /// The default value is `true`.
+///
+/// When this is enabled, the parent(s) and tree inputs will be validated when creating a new commit.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -519,14 +518,14 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
+/// The default value is `true`.
 ///
 /// For example, `foobar` is not a valid ref, therefore `foobar` is not a valid target for a symbolic
 /// reference by default, whereas `refs/heads/foobar` is a valid target. Disabling this will bypass
 /// validation, so an arbitrary string such as `foobar` can be used for a symbolic reference target.
 ///
-/// The default value is `true`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -546,7 +545,7 @@ public func gitLibgit2OptEnableStrictSymbolicRefCreation(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -568,7 +567,7 @@ public func gitLibgit2OptSetSSLCiphers(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -598,13 +597,13 @@ public func gitLibgit2OptGetUserAgent(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
+/// The default value is `true`.
 ///
 /// Offset deltas store a delta base location as an offset into the packfile from the current location, which
 /// provides shorter encoding and smaller packfiles. Packfiles containing offset deltas can still be read.
 ///
-/// The default value is `true`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -625,10 +624,10 @@ public func gitLibgit2OptEnableOFSDelta(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is `false`.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -648,7 +647,7 @@ public func gitLibgit2OptEnableFSyncGitDir(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -669,12 +668,12 @@ public func gitLibgit2OptGetWindowsShareMode(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is `FILE_SHARE_READ | FILE_SHARE_WRITE`.
 ///
-/// This is ignored and unused on non-Windows platforms.
+/// - Note: This is ignored and unused on non-Windows platforms.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -694,10 +693,10 @@ public func gitLibgit2OptSetWindowsShareMode(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is `true`.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -717,11 +716,11 @@ public func gitLibgit2OptEnableStrictHashVerification(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The given allocator will then be used to make all memory allocations for libgit2 operations. Pass `nil`
 /// to restore the system default allocator.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -742,10 +741,10 @@ public func gitLibgit2OptSetAllocator(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is `true`.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -766,7 +765,7 @@ public func gitLibgit2OptEnableUnsavedIndexSafety(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -788,10 +787,10 @@ public func gitLibgit2OptGetPackMaxObjects(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// This option can be used to limit maximum memory usage when fetching from an untrusted remote.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -811,10 +810,10 @@ public func gitLibgit2OptSetPackMaxObjects(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// This option can be used to improve performance with remote file systems.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -834,10 +833,10 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
+/// - Note: This option is not available on Windows.
 ///
-/// This option is not available on Windows.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -857,7 +856,7 @@ public func gitLibgit2OptEnableHTTPExpectContinue(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -878,10 +877,10 @@ public func gitLibgit2OptGetMWindowFileLimit(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value (`0`) is unlimited.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -902,7 +901,7 @@ public func gitLibgit2OptSetMWindowFileLimit(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -924,7 +923,7 @@ public func gitLibgit2OptSetODBPackedPriority(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -945,12 +944,12 @@ public func gitLibgit2OptSetODBLoosePriority(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// This is the list of built-in extensions supported by libgit2 and custom extensions that have been added
 /// with ``gitLibgit2OptSetExtensions(extensions:len:)``. This function will not return
 /// extensions that have been negated.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -980,13 +979,13 @@ public func gitLibgit2OptGetExtensions(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// Extensions supported by libgit2 may be negated by prefixing them with an exclamation point.
 /// For example, passing `["!noop", "newext"]` as `extensions` indicates that the caller does
 /// not want to support repositories with the `noop` extension but does want to support repositories with
 /// the `newext` extension.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -1015,7 +1014,7 @@ public func gitLibgit2OptSetExtensions(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1042,10 +1041,10 @@ public func gitLibgit2OptGetOwnerValidation(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is `true`.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -1065,7 +1064,7 @@ public func gitLibgit2OptSetOwnerValidation(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1094,7 +1093,7 @@ public func gitLibgit2OptGetHomeDir(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1115,7 +1114,7 @@ public func gitLibgit2OptSetHomeDir(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1136,7 +1135,7 @@ public func gitLibgit2OptSetServerConnectTimeout(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1157,7 +1156,7 @@ public func gitLibgit2OptGetServerConnectTimeout(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1178,7 +1177,7 @@ public func gitLibgit2OptSetServerTimeout(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1199,9 +1198,6 @@ public func gitLibgit2OptGetServerTimeout(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// The default value is `git/2.0`, for compatibility with other Git clients.
 ///
 /// It is recommended to keep this as `git/<version>` for compatibility with servers that do
@@ -1209,6 +1205,9 @@ public func gitLibgit2OptGetServerTimeout(
 ///
 /// Pass an empty string to not send any information in the product section, or pass `nil` to restore
 /// the default value.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -1229,7 +1228,7 @@ public func gitLibgit2OptSetUserAgentProduct(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
 /// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
@@ -1258,11 +1257,11 @@ public func gitLibgit2OptGetUserAgentProduct(
 ///
 /// ## Discussion
 ///
-/// This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
-/// See ``GitLibgit2OptT`` for more information.
-///
 /// This certificate is only used by libgit2 invocations during the application lifetime and is not persisted to
 /// the disk. This certificate cannot be removed from the application once is has been added.
+///
+/// - Note: This function is a type-safe binding to the variadic function `git_libgit2_opts()`.
+/// See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///

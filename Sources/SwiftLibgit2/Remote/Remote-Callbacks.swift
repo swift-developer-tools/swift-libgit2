@@ -86,7 +86,7 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
 /// Use `git_remote_set_instance_url()` instead.
 ///
 /// ## C Equivalent
@@ -158,11 +158,11 @@ public typealias GitRemoteCompletionCB = @convention(c)
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
-/// Use ``GitRemoteUpdateRefsCB`` instead.
-///
 /// If this function and ``GitRemoteUpdateRefsCB`` are both provided to
 /// ``GitRemoteCallbacks``, then only ``GitRemoteUpdateRefsCB`` will be invoked.
+///
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
+/// Use ``GitRemoteUpdateRefsCB`` instead.
 ///
 /// ## C Equivalent
 ///

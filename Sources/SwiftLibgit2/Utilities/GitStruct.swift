@@ -94,11 +94,11 @@
 /// Some structs may also need to implement one of the following mutating methods:
 ///
 /// ```swift
-/// internal func withMutatingCValue<T>(
+/// internal mutating func withMutatingCValue<T>(
 ///     _ body: (UnsafeMutablePointer<C>) -> T
 /// ) -> T
 ///
-/// internal func withMutatingCValue<T>(
+/// internal mutating func withMutatingCValue<T>(
 ///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) -> T
 /// ) -> T
 /// ```

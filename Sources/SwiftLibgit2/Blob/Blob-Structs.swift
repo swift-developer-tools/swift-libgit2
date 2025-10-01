@@ -39,7 +39,7 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This property is unused, but is reserved for API compatibility.
+    /// - Note: This property is unused, but is reserved for API compatibility.
     public var commitID     : GitOID?               = nil
     
     /// The commit from which to load attributes when

@@ -134,9 +134,9 @@ public func gitAnnotatedCommitLookup(
 ///
 /// The resulting annotated commit must be freed with ``gitAnnotatedCommitFree(commit:)``.
 ///
-/// See `man gitrevisions`, or
-/// [http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions](http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions)
-/// for information on the syntax accepted
+/// - Note: See the
+/// [Git revisions documentation](http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions)
+/// for information on the accepted revspec syntax.
 ///
 /// ## C Equivalent
 ///

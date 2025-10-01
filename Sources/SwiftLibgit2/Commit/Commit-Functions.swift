@@ -302,10 +302,6 @@ public func gitCommitAuthor(
 ///   `git_mailmap`.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// If an error occurs, `out` will not be updated.
-///
 /// ## C Equivalent
 ///
 /// [`git_commit_committer_with_mailmap()`](https://libgit2.org/docs/reference/main/commit/git_commit_committer_with_mailmap.html)
@@ -337,10 +333,6 @@ public func gitCommitCommitterWithMailmap(
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type should be
 ///   `git_mailmap`.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// If an error occurs, `out` will not be updated.
 ///
 /// ## C Equivalent
 ///
@@ -645,9 +637,7 @@ public func gitCommitExtractSignature(
 ///
 /// `parents` may be `nil` if `parentCount` is `0`.
 ///
-/// ## Variadic Function
-///
-/// libgit2 provides a similar variadic function called
+/// - Note: libgit2 provides a similar variadic function called
 /// [`git_commit_create_v()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_v.html).
 /// There is no binding for `git_commit_create_v()`, since it uses C-style variadic arguments
 /// (`...`), and Swift can only import C variadic functions that use `va_list` for their arguments.
