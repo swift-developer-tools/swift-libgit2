@@ -80,10 +80,6 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blob_filter_options>) throws -> T
     ) throws -> T
