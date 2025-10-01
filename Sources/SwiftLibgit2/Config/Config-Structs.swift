@@ -240,11 +240,11 @@ internal extension Array where Element == GitConfigMap
         {
             return accumulatedMaps.withUnsafeBufferPointer
             {
-                bufferPointer in
+                accumulatedMapsBufferPointer in
                 
                 /// The base address should not be `nil` at this point, since the array is not empty.
                 /// No `guard` is necessary, since the alternative would be to call `body(nil)`.
-                return body(bufferPointer.baseAddress)
+                return body(accumulatedMapsBufferPointer.baseAddress)
             }
         }
         

@@ -56,12 +56,12 @@ public struct GitOID: GitStructInternalMutable, CConvertible
         
         id.withUnsafeBytes
         {
-            bytes in
+            cID in
             
             _ = memcpy(
                 &oid.id,
-                bytes.baseAddress,
-                min(bytes.count, Self.size)
+                cID.baseAddress,
+                min(cID.count, Self.size)
             )
         }
         

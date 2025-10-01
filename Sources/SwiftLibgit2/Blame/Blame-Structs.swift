@@ -357,16 +357,16 @@ public struct GitBlameLine: GitStructReadable, WithThrowingCConvertible
         
         return try ptr.withUnsafeBytes
         {
-            bytes in
+            cPtr in
             
-            guard let baseAddress: UnsafeRawPointer = bytes.baseAddress
+            guard let baseAddress: UnsafeRawPointer = cPtr.baseAddress
             else
             {
                 throw NSError.makeCConversionError()
             }
             
             blameLine.ptr   = baseAddress.assumingMemoryBound(to: CChar.self)
-            blameLine.len   = bytes.count
+            blameLine.len   = cPtr.count
             
             return try body(&blameLine)
         }

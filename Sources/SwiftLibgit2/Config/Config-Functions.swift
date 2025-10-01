@@ -361,9 +361,9 @@ public func gitConfigSetWriteOrder(
     
     return cLevels.withUnsafeBufferPointer
     {
-        bufferPointer in
+        levelsBufferPointer in
         
-        guard let baseAddress: UnsafePointer<git_config_level_t> = bufferPointer.baseAddress
+        guard let baseAddress: UnsafePointer<git_config_level_t> = levelsBufferPointer.baseAddress
         else
         {
             return GIT_EUSER.rawValue

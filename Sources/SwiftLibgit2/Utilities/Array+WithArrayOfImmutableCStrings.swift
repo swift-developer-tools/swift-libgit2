@@ -109,7 +109,7 @@ internal extension Array where Element == String
         {
             argsBuffer in
             
-            /// `baseAddress` should never be `nil` since the buffer will not be empty at this point.
+            /// `baseAddress` should not be `nil`, since the buffer will not be empty at this point.
             let pointer = UnsafeMutableRawPointer(argsBuffer.baseAddress!)
                 .bindMemory(to: CChar.self, capacity: argsBuffer.count)
             
@@ -151,11 +151,12 @@ internal extension Array where Element == String
             
             return try immutableCStrings.withUnsafeBufferPointer
             {
-                buffer in
+                immutableCStringsBuffer in
                 
-                /// `baseAddress` should never be `nil` since the buffer will not be empty at this point.
+                /// `baseAddress` should not be `nil`, since the buffer will not be empty at
+                /// this point.
                 let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(
-                    mutating: buffer.baseAddress!
+                    mutating: immutableCStringsBuffer.baseAddress!
                 )
                 
                 return try body(pointer)
