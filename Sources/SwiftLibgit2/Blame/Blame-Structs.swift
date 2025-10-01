@@ -340,7 +340,7 @@ public struct GitBlameLine: GitStructReadable, WithThrowingCConvertible
     /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blame_line>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var blameLine = git_blame_line()
         
