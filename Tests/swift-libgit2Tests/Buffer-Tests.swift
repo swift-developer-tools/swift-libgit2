@@ -45,6 +45,15 @@ final class BufferTests: XCTestCaseStopOnFail
             XCTAssertEqual(buffer.reserved, 0)
             XCTAssertEqual(buffer.size, 0)
             
+            buffer.withCValue
+            {
+                cBuffer in
+                
+                XCTAssertNil(cBuffer.pointee.ptr)
+                XCTAssertEqual(cBuffer.pointee.reserved, 0)
+                XCTAssertEqual(cBuffer.pointee.size, 0)
+            }
+            
             
             
             let branchRemoteNameResult: Int32 = gitBranchRemoteName(
@@ -116,6 +125,14 @@ final class BufferTests: XCTestCaseStopOnFail
             XCTAssertNotNil(buffer.ptr)
             XCTAssertGreaterThan(firstBufferSize, 0)
             
+            buffer.withCValue
+            {
+                cBuffer in
+                
+                XCTAssertNotNil(cBuffer.pointee.ptr)
+                XCTAssertEqual(cBuffer.pointee.size, firstBufferSize)
+            }
+            
             
             
             let blobFilterOptions = GitBlobFilterOptions()
@@ -146,6 +163,28 @@ final class BufferTests: XCTestCaseStopOnFail
             
             XCTAssertEqual(buffer.size, firstBufferSize)
             XCTAssertEqual(bufferContent, content)
+            
+            buffer.withCValue
+            {
+                cBuffer in
+                
+                guard let bufferPointer: UnsafeMutablePointer<CChar> = cBuffer.pointee.ptr
+                else
+                {
+                    XCTFail("The C buffer pointer was nil.")
+                    return
+                }
+                
+                guard let bufferContent = String(optionalCString: bufferPointer)
+                else
+                {
+                    XCTFail("The C buffer content was nil.")
+                    return
+                }
+                
+                XCTAssertEqual(cBuffer.pointee.size, firstBufferSize)
+                XCTAssertEqual(bufferContent, content)
+            }
         }
     }
 }
