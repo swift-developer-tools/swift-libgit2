@@ -611,7 +611,7 @@ public func gitCommitExtractSignature(
 // TODO: Replace `git_message_prettify()` in documentation.
 /// Creates a new commit in the given repository from a list of `git_object` pointers.
 /// - Parameters:
-///   - id: The ID of the newly-created commit.
+///   - id: The ``GitOID``instance in which to store the ID of the newly-created commit.
 ///   - repo: The repository in which to store the commit. The underlying type should be
 ///   `git_repository`.
 ///   - updateRef: The name of the reference that will be updated to point to the commit.
@@ -691,7 +691,7 @@ public func gitCommitCreate(
 
 /// Commits the staged changes in the repository.
 /// - Parameters:
-///   - id: The ID of the newly-created commit.
+///   - id: The ``GitOID``instance in which to store the ID of the newly-created commit.
 ///   - repo: The repository in which to store the commit. The underlying type should be
 ///   `git_repository`.
 ///   - message: The commit message.
@@ -734,7 +734,7 @@ public func gitCommitCreateFromStage(
 
 /// Amends an existing commit by replacing only non-`nil` values.
 /// - Parameters:
-///   - id: The ID of the newly-created commit.
+///   - id: The ``GitOID``instance in which to store the ID of the newly-created commit.
 ///   - commitToAmend: The commit to amend. The underlying type should be `git_commit`.
 ///   - updateRef: The name of the reference that will be updated to point to the commit.
 ///   - author: The author of the commit.
@@ -876,7 +876,7 @@ public func gitCommitCreateBuffer(
 
 /// Creates a commit from the given content and signature.
 /// - Parameters:
-///   - out: The ID of the newly-created commit
+///   - out: The ``GitOID``instance in which to store the ID of the newly-created commit
 ///   - repo: The repository in which to store the commit. The underlying type should be
 ///   `git_repository`.
 ///   - commitContent: The content of the unsigned commit.
