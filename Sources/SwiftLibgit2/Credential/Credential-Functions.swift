@@ -281,21 +281,28 @@ public func gitCredentialSSHCustomNew(
 {
     return withCConversion
     {
-        return try publicKey.withUnsafeBytes
+        guard !publicKey.isEmpty
+        else
         {
-            cPublicKey in
-            
-            guard let baseAddress: UnsafeRawPointer = cPublicKey.baseAddress
-            else
-            {
-                throw NSError.makeCConversionError()
-            }
+            return git_credential_ssh_custom_new(
+                out,
+                username,
+                nil,
+                0,
+                signCallback,
+                payload
+            )
+        }
+        
+        return try publicKey.withCBuffer
+        {
+            publicKeyBuffer, publicKeyBufferCount in
             
             return git_credential_ssh_custom_new(
                 out,
                 username,
-                baseAddress.assumingMemoryBound(to: CChar.self),
-                cPublicKey.count,
+                publicKeyBuffer,
+                publicKeyBufferCount,
                 signCallback,
                 payload
             )

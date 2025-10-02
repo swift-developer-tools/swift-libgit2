@@ -238,62 +238,6 @@ public func gitBlameFile(
 
 
 
-/// Gets the blame for a single file in the repository, using the given buffer contents as the uncommitted
-/// changes of the file (the working directory content).
-/// - Parameters:
-///   - out: The pointer that should receive the blame object. The underlying type should be
-///   `git_blame`.
-///   - repo: The repository whose history should be walked. The underlying type should be
-///   `git_repository`.
-///   - path: The path to the file to consider.
-///   - contents: The uncommitted changes.
-///   - contentsLen: The length of the changes buffer.
-///   - options: The options for the blame operation.
-/// - Returns: `0` on success, or an error code.
-///
-/// ## C Equivalent
-///
-/// [`git_blame_file_from_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_file_from_buffer.html)
-/*public func gitBlameFileFromBuffer(
-    out         : UnsafeMutablePointer<OpaquePointer?>,
-    repo        : OpaquePointer,
-    path        : String,
-    contents    : Data,
-    contentsLen : Int,
-    options     : GitBlameOptions?
-) -> Int32
-{
-    return withCConversion
-    {
-        return try options.withOptionalCValue
-        {
-            cOptions in
-            
-            return try contents.withUnsafeBytes
-            {
-                cContents in
-                
-                guard let baseAddress: UnsafeRawPointer = cContents.baseAddress
-                else
-                {
-                    throw NSError.makeCConversionError()
-                }
-                
-                return git_blame_file_from_buffer(
-                    out,
-                    repo,
-                    path,
-                    baseAddress.assumingMemoryBound(to: CChar.self),
-                    cContents.count,
-                    cOptions
-                )
-            }
-        }
-    }
-}*/
-
-
-
 /// Gets the blame data for a file that has been modified in memory.
 /// - Parameters:
 ///   - out: The pointer that should receive the blame object. The underlying type should be
@@ -313,7 +257,7 @@ public func gitBlameFile(
 ///
 /// Lines that differ between the buffer and the committed version are marked as having a zero OID for
 /// their ``GitBlameHunk/finalCommitID``.
-///∂
+///
 /// ## C Equivalent
 ///
 /// [`git_blame_buffer()`](https://libgit2.org/docs/reference/main/blame/git_blame_buffer.html)
@@ -326,21 +270,15 @@ public func gitBlameBuffer(
 {
     return withCConversion
     {
-        return try buffer.withUnsafeBytes
+        return try buffer.withCBuffer
         {
-            cBuffer in
-            
-            guard let baseAddress: UnsafeRawPointer = cBuffer.baseAddress
-            else
-            {
-                throw NSError.makeCConversionError()
-            }
+            cBuffer, cBufferCount in
             
             return git_blame_buffer(
                 out,
                 base,
-                baseAddress.assumingMemoryBound(to: CChar.self),
-                cBuffer.count
+                cBuffer,
+                cBufferCount
             )
         }
     }

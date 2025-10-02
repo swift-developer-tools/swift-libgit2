@@ -428,20 +428,13 @@ public func gitBlobDataIsBinary(
         return false
     }
     
-    return data.withUnsafeBytes
+    return try? data.withCBuffer
     {
-        cData in
-        
-        guard let baseAddress: UnsafeRawPointer = cData.baseAddress
-        else
-        {
-            /// `baseAddress` should not be `nil` for non-empty data.
-            return nil
-        }
+        dataBuffer, dataBufferCount in
         
         return Bool(git_blob_data_is_binary(
-            baseAddress.assumingMemoryBound(to: CChar.self),
-            cData.count,
+            dataBuffer,
+            dataBufferCount,
         ))
     }
 }

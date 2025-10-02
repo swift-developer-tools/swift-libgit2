@@ -344,29 +344,12 @@ public struct GitBlameLine: GitStructReadable, WithThrowingCConvertible
     {
         var blameLine = git_blame_line()
         
-        guard
-            let ptr: Data = ptr,
-            !ptr.isEmpty
-        else
+        return try ptr.withOptionalCBuffer
         {
-            blameLine.ptr   = nil
-            blameLine.len   = 0
+            ptrBuffer, ptrBufferCount in
             
-            return try body(&blameLine)
-        }
-        
-        return try ptr.withUnsafeBytes
-        {
-            cPtr in
-            
-            guard let baseAddress: UnsafeRawPointer = cPtr.baseAddress
-            else
-            {
-                throw NSError.makeCConversionError()
-            }
-            
-            blameLine.ptr   = baseAddress.assumingMemoryBound(to: CChar.self)
-            blameLine.len   = cPtr.count
+            blameLine.ptr   = ptrBuffer
+            blameLine.len   = ptrBufferCount
             
             return try body(&blameLine)
         }
