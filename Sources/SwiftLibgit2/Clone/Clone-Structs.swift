@@ -151,7 +151,7 @@ public struct GitCloneOptions: GitStructMutable, WithThrowingCConvertible
             throw NSError.makeCConversionError()
         }
         
-        cloneOptions.bare                   = bare.cValue()
+        cloneOptions.bare                   = bare.intValue
         cloneOptions.local                  = local.cValue()
         cloneOptions.repository_cb          = repositoryCB
         cloneOptions.repository_cb_payload  = repositoryCBPayload

@@ -10,7 +10,7 @@
 internal extension Bool
 {
     /// The equivalent C 32-bit signed integer value.
-    func cValue() -> Int32
+    var intValue: Int32
     {
         return self ? 1 : 0
     }
