@@ -212,7 +212,7 @@ public func gitBlobFilter(
 
 /// Reads a file from the working directory of the given repository and writes it to the object database.
 /// - Parameters:
-///   - id: The ``GitOID``instance in which to store ID of the written blob.
+///   - id: The ``GitOID`` instance in which to store ID of the written blob.
 ///   - repo: The repository where the blob should be written. The underlying type should be
 ///   `git_repository`. This repository may not be bare.
 ///   - relativePath: The path to the file from which the blob should be created, relative to the
@@ -245,7 +245,7 @@ public func gitBlobCreateFromWorkdir(
 /// Reads a file from the file system (not necessarily inside the working directory of the given repository)
 /// and writes it to the object database.
 /// - Parameters:
-///   - id: The ``GitOID``instance in which to store the ID of the written blob.
+///   - id: The ``GitOID`` instance in which to store the ID of the written blob.
 ///   - repo: The repository where the blob should be written. The underlying type should be
 ///   `git_repository`. This repository may be bare.
 ///   - path: The path to the file from which the blob should be created.
@@ -319,7 +319,7 @@ public func gitBlobCreateFromStream(
 
 /// Closes the given stream and finalizes writing the blob to the object database.
 /// - Parameters:
-///   - out: The ``GitOID``instance in which to store the ID of the new blob.
+///   - out: The ``GitOID`` instance in which to store the ID of the new blob.
 ///   - stream: The stream to close.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -346,7 +346,7 @@ public func gitBlobCreateFromStreamCommit(
 
 /// Writes an in-memory buffer to the object database as a blob.
 /// - Parameters:
-///   - id: The ``GitOID``instance in which to store the ID of the written blob.
+///   - id: The ``GitOID`` instance in which to store the ID of the written blob.
 ///   - repo: The repository where the blob should be written. The underlying type should be
 ///   `git_repository`.
 ///   - buffer: The data to be written into the blob.
