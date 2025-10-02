@@ -309,14 +309,20 @@ final class CertTests: XCTestCaseStopOnFail
         {
             bytes in
             
-            cCertX509.data  = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
+            let baseAddressPointer = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
+            
+            cCertX509.data  = baseAddressPointer
             cCertX509.len   = bytes.count
             
             let certX509 = GitCertX509(cValue: cCertX509)
             
             XCTAssertEqual(certX509.parent.certType, .gitCertX509)
-            XCTAssertEqual(certX509.data, UnsafeMutableRawPointer(mutating: bytes.baseAddress))
+            XCTAssertEqual(certX509.data, baseAddressPointer)
             XCTAssertEqual(certX509.len, data.count)
+            
+            XCTAssertEqual(GitCertT(cValue: certX509.cValue().parent.cert_type), .gitCertX509)
+            XCTAssertEqual(certX509.cValue().data, baseAddressPointer)
+            XCTAssertEqual(certX509.cValue().len, data.count)
         }
     }
     
