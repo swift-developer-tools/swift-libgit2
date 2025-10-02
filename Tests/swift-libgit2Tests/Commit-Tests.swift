@@ -424,6 +424,17 @@ final class CommitTests: XCTestCaseStopOnFail
         XCTAssertNil(commitCreateOptions.messageEncoding)
         
         XCTAssertEqual(gitCommitCreateOptionsVersion, UInt32(GIT_COMMIT_CREATE_OPTIONS_VERSION))
+        
+        try commitCreateOptions.withCValue
+        {
+            cCommitCreateOptions in
+            
+            XCTAssertEqual(cCommitCreateOptions.pointee.version, gitCommitCreateOptionsVersion)
+            XCTAssertFalse(Bool(cCommitCreateOptions.pointee.allow_empty_commit))
+            XCTAssertNil(cCommitCreateOptions.pointee.author)
+            XCTAssertNil(cCommitCreateOptions.pointee.committer)
+            XCTAssertNil(cCommitCreateOptions.pointee.message_encoding)
+        }
     }
     
     
