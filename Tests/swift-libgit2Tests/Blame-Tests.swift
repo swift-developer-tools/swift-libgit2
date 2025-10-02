@@ -133,8 +133,17 @@ final class BlameTests: XCTestCaseStopOnFail
             }
             
             XCTAssertGreaterThan(firstHunk.linesInHunk, 0)
-            XCTAssertGreaterThanOrEqual(firstHunk.finalStartLineNumber, 0)
-            XCTAssertGreaterThanOrEqual(firstHunk.origStartLineNumber, 0)
+            XCTAssertNotZeroOID(firstHunk.finalCommitID)
+            XCTAssertGreaterThan(firstHunk.finalStartLineNumber, 0)
+            XCTAssertNotNil(firstHunk.finalSignature)
+            XCTAssertNotNil(firstHunk.finalCommitter)
+            XCTAssertNotZeroOID(firstHunk.origCommitID)
+            XCTAssertNotNil(firstHunk.origPath)
+            XCTAssertGreaterThan(firstHunk.origStartLineNumber, 0)
+            XCTAssertNotNil(firstHunk.origSignature)
+            XCTAssertNotNil(firstHunk.origCommitter)
+            XCTAssertNotNil(firstHunk.summary)
+            XCTAssertFalse(firstHunk.boundary)
             
             
             
@@ -220,9 +229,27 @@ final class BlameTests: XCTestCaseStopOnFail
     
     
     
+    func testGitBlameLine() throws
+    {
+        let blameLine = GitBlameLine(cValue: git_blame_line())
+        
+        XCTAssertNil(blameLine.ptr)
+        XCTAssertEqual(blameLine.len, 0)
+        
+        try blameLine.withCValue
+        {
+            cBlameLine in
+            
+            XCTAssertNil(cBlameLine.pointee.ptr)
+            XCTAssertEqual(cBlameLine.pointee.len, 0)
+        }
+    }
+    
+    
+    
     func testGitBlameOptions() throws
     {
-        var blameOptions = GitBlameOptions()
+        let blameOptions = GitBlameOptions()
         
         XCTAssertEqual(blameOptions.version, gitBlameOptionsVersion)
         XCTAssertEqual(blameOptions.flags, .gitBlameNormal)
@@ -234,14 +261,17 @@ final class BlameTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(gitBlameOptionsVersion, UInt32(GIT_BLAME_OPTIONS_VERSION))
         
-        blameOptions.flags =
-        [
-            .gitBlameFirstParent,
-            .gitBlameUseMailmap
-        ]
-        
-        XCTAssertTrue(blameOptions.flags.contains(.gitBlameFirstParent))
-        XCTAssertTrue(blameOptions.flags.contains(.gitBlameUseMailmap))
-        XCTAssertFalse(blameOptions.flags.contains(.gitBlameIgnoreWhitespace))
+        try blameOptions.withCValue
+        {
+            cBlameOptions in
+            
+            XCTAssertEqual(cBlameOptions.pointee.version, gitBlameOptionsVersion)
+            XCTAssertEqual(GitBlameFlagT(rawValue: cBlameOptions.pointee.flags), .gitBlameNormal)
+            XCTAssertEqual(cBlameOptions.pointee.min_match_characters, 20)
+            XCTAssertZeroOID(GitOID(cValue: cBlameOptions.pointee.newest_commit))
+            XCTAssertZeroOID(GitOID(cValue: cBlameOptions.pointee.oldest_commit))
+            XCTAssertEqual(cBlameOptions.pointee.min_line, 1)
+            XCTAssertNotNil(cBlameOptions.pointee.max_line)
+        }
     }
 }

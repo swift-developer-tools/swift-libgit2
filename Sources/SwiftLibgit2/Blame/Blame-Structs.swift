@@ -223,6 +223,13 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     
     /// Creates a ``GitBlameHunk`` instance from a `git_blame_hunk` instance.
     /// - Parameter blameHunk: The `git_blame_hunk` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// - Warning: This initializer must not be called with a `git_blame_hunk` instance that
+    /// was not created by libgit2, unless the signature fields have been set to non-`nil` values.
+    /// Doing so will cause a crash when ``GitSignature.init(cValue:)`` tries to unwrap
+    /// the `nil` signature fields.
     internal init(
         cValue blameHunk: git_blame_hunk
     )
