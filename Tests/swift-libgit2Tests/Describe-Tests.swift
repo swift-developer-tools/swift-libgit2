@@ -175,6 +175,16 @@ final class DescribeTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(gitDescribeFormatOptionsVersion, UInt32(GIT_DESCRIBE_FORMAT_OPTIONS_VERSION))
         XCTAssertEqual(gitDescribeDefaultAbbreviatedSize, UInt32(GIT_DESCRIBE_DEFAULT_ABBREVIATED_SIZE))
+        
+        try describeFormatOptions.withCValue
+        {
+            cDescribeFormatOptions in
+            
+            XCTAssertEqual(cDescribeFormatOptions.pointee.version, gitDescribeFormatOptionsVersion)
+            XCTAssertEqual(cDescribeFormatOptions.pointee.abbreviated_size, gitDescribeDefaultAbbreviatedSize)
+            XCTAssertFalse(Bool(cDescribeFormatOptions.pointee.always_use_long_format))
+            XCTAssertNil(cDescribeFormatOptions.pointee.dirty_suffix)
+        }
     }
     
     
@@ -192,6 +202,18 @@ final class DescribeTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(gitDescribeOptionsVersion, UInt32(GIT_DESCRIBE_OPTIONS_VERSION))
         XCTAssertEqual(gitDescribeDefaultMaxCandidatesTags, UInt32(GIT_DESCRIBE_DEFAULT_MAX_CANDIDATES_TAGS))
+        
+        try describeOptions.withCValue
+        {
+            cDescribeOptions in
+            
+            XCTAssertEqual(cDescribeOptions.pointee.version, gitDescribeOptionsVersion)
+            XCTAssertEqual(cDescribeOptions.pointee.max_candidates_tags, gitDescribeDefaultMaxCandidatesTags)
+            XCTAssertEqual(GitDescribeStrategyT(rawValue: cDescribeOptions.pointee.describe_strategy), .gitDescribeDefault)
+            XCTAssertNil(cDescribeOptions.pointee.pattern)
+            XCTAssertFalse(Bool(cDescribeOptions.pointee.only_follow_first_parent))
+            XCTAssertFalse(Bool(cDescribeOptions.pointee.show_commit_oid_as_fallback))
+        }
     }
     
     
