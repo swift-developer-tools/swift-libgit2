@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_describe_options`](https://libgit2.org/docs/reference/main/describe/git_describe_options.html)
-public struct GitDescribeOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitDescribeOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -139,7 +139,7 @@ public struct GitDescribeOptions: GitStructMutable, WithThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_describe_format_options`](https://libgit2.org/docs/reference/main/describe/git_describe_format_options.html)
-public struct GitDescribeFormatOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

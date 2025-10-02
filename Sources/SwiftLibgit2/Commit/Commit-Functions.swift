@@ -311,15 +311,18 @@ public func gitCommitCommitterWithMailmap(
     mailmap : OpaquePointer?
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_commit_committer_with_mailmap(
-            cOut,
-            commit,
-            mailmap
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_commit_committer_with_mailmap(
+                cOut,
+                commit,
+                mailmap
+            )
+        }
     }
 }
 
@@ -343,15 +346,18 @@ public func gitCommitAuthorWithMailmap(
     mailmap : OpaquePointer?
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_commit_author_with_mailmap(
-            cOut,
-            commit,
-            mailmap
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_commit_author_with_mailmap(
+                cOut,
+                commit,
+                mailmap
+            )
+        }
     }
 }
 
@@ -712,20 +718,23 @@ public func gitCommitCreateFromStage(
     opts    : GitCommitCreateOptions?
 ) -> Int32
 {
-    return id.withMutatingCValue
+    return withCConversion
     {
-        cID in
-        
-        return opts.withOptionalCValue
+        return try id.withMutatingCValue
         {
-            cOpts in
+            cID in
             
-            return git_commit_create_from_stage(
-                cID,
-                repo,
-                message,
-                cOpts
-            )
+            return try opts.withOptionalCValue
+            {
+                cOpts in
+                
+                return git_commit_create_from_stage(
+                    cID,
+                    repo,
+                    message,
+                    cOpts
+                )
+            }
         }
     }
 }
@@ -772,28 +781,31 @@ public func gitCommitAmend(
     tree            : OpaquePointer?
 ) -> Int32
 {
-    return id.withMutatingCValue
+    return withCConversion
     {
-        cID in
-        
-        return author.withOptionalCValue
+        return try id.withMutatingCValue
         {
-            cAuthor in
+            cID in
             
-            return committer.withOptionalCValue
+            return try author.withOptionalCValue
             {
-                cCommitter in
+                cAuthor in
                 
-                return git_commit_amend(
-                    cID,
-                    commitToAmend,
-                    updateRef,
-                    cAuthor,
-                    cCommitter,
-                    messageEncoding,
-                    message,
-                    tree
-                )
+                return try committer.withOptionalCValue
+                {
+                    cCommitter in
+                    
+                    return git_commit_amend(
+                        cID,
+                        commitToAmend,
+                        updateRef,
+                        cAuthor,
+                        cCommitter,
+                        messageEncoding,
+                        message,
+                        tree
+                    )
+                }
             }
         }
     }

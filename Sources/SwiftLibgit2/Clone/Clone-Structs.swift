@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_clone_options`](https://libgit2.org/docs/reference/main/clone/git_clone_options.html)
-public struct GitCloneOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitCloneOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

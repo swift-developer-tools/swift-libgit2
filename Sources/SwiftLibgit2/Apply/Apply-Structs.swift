@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
-public struct GitApplyOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitApplyOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

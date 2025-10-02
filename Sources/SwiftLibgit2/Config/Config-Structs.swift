@@ -71,40 +71,41 @@ public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_config_entry` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_config_entry>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_config_entry>) throws -> T
+    ) rethrows -> T
     {
         var configEntry = git_config_entry()
         
         configEntry.include_depth   = includeDepth
         configEntry.level           = level.cValue()
         
-        return name.withOptionalCString
+        return try name.withOptionalCString
         {
             cName in
             
             configEntry.name = cName
             
-            return value.withOptionalCString
+            return try value.withOptionalCString
             {
                 cValue in
                 
                 configEntry.value = cValue
                 
-                return backendType.withOptionalCString
+                return try backendType.withOptionalCString
                 {
                     cBackendType in
                     
                     configEntry.backend_type = cBackendType
                     
-                    return originPath.withOptionalCString
+                    return try originPath.withOptionalCString
                     {
                         cOriginPath in
                         
                         configEntry.origin_path = cOriginPath
                         
-                        return body(&configEntry)
+                        return try body(&configEntry)
                     }
                 }
             }
@@ -184,22 +185,23 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_configmap` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_configmap>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_configmap>) throws -> T
+    ) rethrows -> T
     {
         var configMap = git_configmap()
         
         configMap.type          = type.cValue()
         configMap.map_value     = Int32(mapValue)
         
-        return strMatch.withOptionalCString
+        return try strMatch.withOptionalCString
         {
             cStrMatch in
             
             configMap.str_match = cStrMatch
             
-            return body(&configMap)
+            return try body(&configMap)
         }
     }
 }

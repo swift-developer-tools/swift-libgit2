@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitBlameOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -253,9 +253,10 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_blame_hunk` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_blame_hunk>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_blame_hunk>) throws -> T
+    ) throws -> T
     {
         var blameHunk = git_blame_hunk()
         
@@ -266,43 +267,43 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
         blameHunk.orig_start_line_number    = origStartLineNumber
         blameHunk.boundary                  = CChar(boundary.intValue)
         
-        return finalSignature.withOptionalCValue
+        return try finalSignature.withOptionalCValue
         {
             cFinalSignature in
             
             blameHunk.final_signature = cFinalSignature
             
-            return finalCommitter.withOptionalCValue
+            return try finalCommitter.withOptionalCValue
             {
                 cFinalCommitter in
                 
                 blameHunk.final_committer = cFinalCommitter
                 
-                return origPath.withOptionalCString
+                return try origPath.withOptionalCString
                 {
                     cOrigPath in
                     
                     blameHunk.orig_path = cOrigPath
                     
-                    return origSignature.withOptionalCValue
+                    return try origSignature.withOptionalCValue
                     {
                         cOrigSignature in
                         
                         blameHunk.orig_signature = cOrigSignature
                         
-                        return origCommitter.withOptionalCValue
+                        return try origCommitter.withOptionalCValue
                         {
                             cOrigCommitter in
                             
                             blameHunk.orig_committer = cOrigCommitter
                             
-                            return summary.withOptionalCString
+                            return try summary.withOptionalCString
                             {
                                 cSummary in
                                 
                                 blameHunk.summary = cSummary
                                 
-                                return body(&blameHunk)
+                                return try body(&blameHunk)
                             }
                         }
                     }
@@ -319,7 +320,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: GitStructReadable, WithThrowingCConvertible
+public struct GitBlameLine: GitStructReadable, WithCConvertible
 {
     /// The line content.
     public let ptr : Data?

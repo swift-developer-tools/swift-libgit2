@@ -157,9 +157,10 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_cert_hostkey` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_cert_hostkey>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_cert_hostkey>) throws -> T
+    ) rethrows -> T
     {
         var certHostKey = git_cert_hostkey()
         
@@ -208,17 +209,17 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
             certHostKey.hostkey         = nil
             certHostKey.hostkey_len     = 0
             
-            return body(&certHostKey)
+            return try body(&certHostKey)
         }
         
-        return hostKey.withUnsafeBytes
+        return try hostKey.withUnsafeBytes
         {
             cHostKey in
             
             certHostKey.hostkey         = cHostKey.baseAddress?.assumingMemoryBound(to: CChar.self)
             certHostKey.hostkey_len     = cHostKey.count
             
-            return body(&certHostKey)
+            return try body(&certHostKey)
         }
     }
 }

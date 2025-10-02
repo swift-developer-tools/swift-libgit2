@@ -82,8 +82,7 @@
 ///
 /// - ``CConvertible`` (non-throwing, without memory management)
 /// - ``ThrowingCConvertible`` (throwing, without memory management)
-/// - ``WithCConvertible`` (non-throwing, with memory management)
-/// - ``WithThrowingCConvertible`` (throwing, with memory management)
+/// - ``WithCConvertible`` (throwing, with memory management)
 ///
 /// ``GitStruct`` does not directly conform to the C convertible protocols due to the level of variation
 /// required by conforming structs. A single protocol cannot define this level of variation, and multiple
@@ -95,12 +94,12 @@
 ///
 /// ```swift
 /// internal mutating func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<C>) -> T
-/// ) -> T
+///     _ body: (UnsafeMutablePointer<C>) throws -> T
+/// ) rethrows -> T
 ///
 /// internal mutating func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) -> T
-/// ) -> T
+///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
+/// ) rethrows -> T
 /// ```
 ///
 /// The first mutating method should be used when working with C functions that expect a parameter
@@ -170,17 +169,18 @@ internal extension GitStructInternalMutable where Self: CConvertible
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<C>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<C>) throws -> T
+    ) rethrows -> T
     {
         var cValue: C = cValue()
         
-        return withUnsafeMutablePointer(to: &cValue)
+        return try withUnsafeMutablePointer(to: &cValue)
         {
             cValuePointer in
             
-            let result: T = body(cValuePointer)
+            let result: T = try body(cValuePointer)
             
             self = Self.init(cValue: cValuePointer.pointee)
             
@@ -194,19 +194,20 @@ internal extension GitStructInternalMutable where Self: CConvertible
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
+    ) rethrows -> T
     {
         var cValue: C = cValue()
         
-        return withUnsafeMutablePointer(to: &cValue)
+        return try withUnsafeMutablePointer(to: &cValue)
         {
             cValuePointer in
             
             var optionalCValuePointer: UnsafeMutablePointer<C>? = cValuePointer
             
-            let result: T = body(&optionalCValuePointer)
+            let result: T = try body(&optionalCValuePointer)
             
             if let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer
             {
@@ -283,60 +284,6 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
 /// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
 /// to ``GitStructInternalMutable`` and ``WithCConvertible``.
 internal extension GitStructInternalMutable where Self: WithCConvertible
-{
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
-    /// any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<C>) -> T
-    ) -> T
-    {
-        return withCValue
-        {
-            cValuePointer in
-            
-            let result: T = body(cValuePointer)
-            
-            self = Self.init(cValue: cValuePointer.pointee)
-            
-            return result
-        }
-    }
-    
-    
-    
-    /// Calls the given closure with a pointer to an optional pointer to a `C` instance, and updates the
-    /// receiver instance with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) -> T
-    ) -> T
-    {
-        return withCValue
-        {
-            cValuePointer in
-            
-            var optionalCValuePointer: UnsafeMutablePointer<C>? = cValuePointer
-            
-            let result: T = body(&optionalCValuePointer)
-            
-            if let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer
-            {
-                self = Self.init(cValue: finalCValuePointer.pointee)
-            }
-            
-            return result
-        }
-    }
-}
-
-
-
-/// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
-/// to ``GitStructInternalMutable`` and ``WithThrowingCConvertible``.
-internal extension GitStructInternalMutable where Self: WithThrowingCConvertible
 {
     /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
     /// any changes made by the closure.

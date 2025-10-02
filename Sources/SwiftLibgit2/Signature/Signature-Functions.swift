@@ -31,17 +31,20 @@ public func gitSignatureNew(
     offset  : Int32
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_new(
-            cOut,
-            name,
-            email,
-            time,
-            offset
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_new(
+                cOut,
+                name,
+                email,
+                time,
+                offset
+            )
+        }
     }
 }
 
@@ -63,15 +66,18 @@ public func gitSignatureNow(
     email   : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_now(
-            cOut,
-            name,
-            email
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_now(
+                cOut,
+                name,
+                email
+            )
+        }
     }
 }
 
@@ -225,14 +231,17 @@ public func gitSignatureDefault(
     repo    : OpaquePointer
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_default(
-            cOut,
-            repo
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_default(
+                cOut,
+                repo
+            )
+        }
     }
 }
 
@@ -258,14 +267,17 @@ public func gitSignatureFromBuffer(
     buf : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_from_buffer(
-            cOut,
-            buf
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_from_buffer(
+                cOut,
+                buf
+            )
+        }
     }
 }
 
@@ -289,18 +301,21 @@ public func gitSignatureDup(
     sig     : GitSignature
 ) -> Int32
 {
-    return dest.withMutatingCValue
+    return withCConversion
     {
-        cDest in
-        
-        return sig.withCValue
+        return try dest.withMutatingCValue
         {
-            cSig in
+            cDest in
             
-            return git_signature_dup(
-                cDest,
-                cSig
-            )
+            return sig.withCValue
+            {
+                cSig in
+                
+                return git_signature_dup(
+                    cDest,
+                    cSig
+                )
+            }
         }
     }
 }

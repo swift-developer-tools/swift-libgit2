@@ -224,7 +224,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
-public struct GitFetchOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitFetchOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

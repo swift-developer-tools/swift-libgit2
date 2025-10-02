@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_merge_options`](https://libgit2.org/docs/reference/main/merge/git_merge_options.html)
-public struct GitMergeOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitMergeOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

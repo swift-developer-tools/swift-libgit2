@@ -72,26 +72,26 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     /// Use this function when working with C APIs that work with existing signatures and expect
     /// `const git_signature *` parameters.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_signature>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_signature>) throws -> T
+    ) rethrows -> T
     {
         var signature = git_signature()
         
         signature.when = when.cValue()
         
-        return name.withMutableCString
+        return try name.withMutableCString
         {
             cName in
             
             signature.name = cName
             
-            return email.withMutableCString
+            return try email.withMutableCString
             {
                 cEmail in
                 
                 signature.email = cEmail
                 
-                return body(&signature)
+                return try body(&signature)
             }
         }
     }

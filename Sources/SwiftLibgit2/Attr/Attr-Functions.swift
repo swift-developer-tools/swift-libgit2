@@ -97,17 +97,20 @@ public func gitAttrGetExt(
     name        : String
 ) -> Int32
 {
-    return opts.withOptionalCValue
+    return withCConversion
     {
-        cOpts in
-        
-        return git_attr_get_ext(
-            valueOut,
-            repo,
-            cOpts,
-            path,
-            name
-        )
+        return try opts.withOptionalCValue
+        {
+            cOpts in
+            
+            return git_attr_get_ext(
+                valueOut,
+                repo,
+                cOpts,
+                path,
+                name
+            )
+        }
     }
 }
 
@@ -184,22 +187,25 @@ public func gitAttrGetManyExt(
     names       : [String]
 ) -> Int32
 {
-    return names.withArrayOfImmutableCStrings
+    return withCConversion
     {
-        cNames in
-        
-        return opts.withOptionalCValue
+        return try names.withArrayOfImmutableCStrings
         {
-            cOpts in
+            cNames in
             
-            return git_attr_get_many_ext(
-                valueOut,
-                repo,
-                cOpts,
-                path,
-                numAttr,
-                cNames
-            )
+            return try opts.withOptionalCValue
+            {
+                cOpts in
+                
+                return git_attr_get_many_ext(
+                    valueOut,
+                    repo,
+                    cOpts,
+                    path,
+                    numAttr,
+                    cNames
+                )
+            }
         }
     }
 }
@@ -263,17 +269,20 @@ public func gitAttrForEachExt(
     payload     : UnsafeMutableRawPointer?
 ) -> Int32
 {
-    return opts.withOptionalCValue
+    return withCConversion
     {
-        cOpts in
-        
-        return git_attr_foreach_ext(
-            repo,
-            cOpts,
-            path,
-            callback,
-            payload
-        )
+        return try opts.withOptionalCValue
+        {
+            cOpts in
+            
+            return git_attr_foreach_ext(
+                repo,
+                cOpts,
+                path,
+                callback,
+                payload
+            )
+        }
     }
 }
 

@@ -443,15 +443,18 @@ public func gitConfigGetEntry(
     name    : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_config_get_entry(
-            cOut,
-            cfg,
-            name
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_config_get_entry(
+                cOut,
+                cfg,
+                name
+            )
+        }
     }
 }
 
@@ -759,14 +762,17 @@ public func gitConfigNext(
     iter    : UnsafeMutablePointer<git_config_iterator>
 ) -> Int32
 {
-    return entry.withMutatingCValue
+    return withCConversion
     {
-        cEntry in
-        
-        return git_config_next(
-            cEntry,
-            iter
-        )
+        return try entry.withMutatingCValue
+        {
+            cEntry in
+            
+            return git_config_next(
+                cEntry,
+                iter
+            )
+        }
     }
 }
 
