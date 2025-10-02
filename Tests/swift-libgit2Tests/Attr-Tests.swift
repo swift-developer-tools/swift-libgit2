@@ -455,7 +455,7 @@ final class AttrTests: XCTestCaseStopOnFail
             XCTAssertEqual(attrOptions.version, gitAttrOptionsVersion)
             XCTAssertEqual(attrOptions.flags, [])
             XCTAssertNil(attrOptions.commitID)
-            OID.assertOIDsEqual(attrOptions.attrCommitID, GitOID())
+            XCTAssertZeroOID(attrOptions.attrCommitID)
             
             XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
             
@@ -466,7 +466,7 @@ final class AttrTests: XCTestCaseStopOnFail
                 XCTAssertEqual(cAttrOptions.pointee.version, gitAttrOptionsVersion)
                 XCTAssertEqual(cAttrOptions.pointee.flags, 0)
                 XCTAssertNil(cAttrOptions.pointee.commit_id)
-                OID.assertOIDsEqual(GitOID(cValue: cAttrOptions.pointee.attr_commit_id), GitOID())
+                XCTAssertZeroOID(GitOID(cValue: cAttrOptions.pointee.attr_commit_id))
             }
             
             var valueOut: UnsafePointer<CChar>? = nil

@@ -139,7 +139,7 @@ final class CommitTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(commitCreateWithSignatureResult)
-            OID.assertOIDsNotEqual(signedCommitOID, GitOID())
+            XCTAssertNotZeroOID(signedCommitOID)
             
             
             
@@ -518,7 +518,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             let retrievedOID: GitOID = gitCommitID(commit: commitPointer)
             
-            OID.assertOIDsEqual(retrievedOID, commitOID)
+            XCTAssertEqual(retrievedOID, commitOID)
             
             
             
@@ -754,7 +754,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 n:          0
             )
             
-            OID.assertOIDsNotEqual(parentCommitOID, commitOID)
+            XCTAssertNotEqual(parentCommitOID, commitOID)
         }
     }
     
@@ -805,7 +805,7 @@ final class CommitTests: XCTestCaseStopOnFail
 
                 let treeOID: GitOID = gitCommitTreeID(commit: commitPointer)
                 
-                OID.assertOIDsNotEqual(treeOID, GitOID())
+                XCTAssertNotZeroOID(treeOID)
                 
                 
                 
@@ -938,10 +938,10 @@ extension CommitTests
             {
                 let retrievedOID: GitOID = gitCommitID(commit: newCommitPointer)
                 
-                OID.assertOIDsEqual(retrievedOID, newCommitOID)
+                XCTAssertEqual(retrievedOID, newCommitOID)
             }
             
-            OID.assertOIDsNotEqual(newCommitOID, originalCommitOID)
+            XCTAssertNotEqual(newCommitOID, originalCommitOID)
             
             
             

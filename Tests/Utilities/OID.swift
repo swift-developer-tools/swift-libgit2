@@ -16,44 +16,6 @@ import XCTest
 /// OID-related testing utilities.
 enum OID
 {
-    /// Asserts that two OIDs are equal.
-    /// - Parameters:
-    ///   - oid1: The first OID.
-    ///   - oid2: The second OID.
-    static func assertOIDsEqual(
-        _ oid1  : GitOID,
-        _ oid2  : GitOID
-    )
-    {
-        let oidEqualResult: Bool = gitOIDEqual(
-            a:  oid1,
-            b:  oid2
-        )
-        
-        XCTAssertTrue(oidEqualResult)
-    }
-    
-    
-    
-    /// Asserts that two OIDs are not equal.
-    /// - Parameters:
-    ///   - oid1: The first OID.
-    ///   - oid2: The second OID.
-    static func assertOIDsNotEqual(
-        _ oid1  : GitOID,
-        _ oid2  : GitOID
-    )
-    {
-        let oidEqualResult: Bool = gitOIDEqual(
-            a:  oid1,
-            b:  oid2
-        )
-        
-        XCTAssertFalse(oidEqualResult)
-    }
-    
-    
-    
     /// Gets the HEAD commit OID.
     /// - Parameter repository: The repository on which the HEAD commit exists.
     /// - Returns: The HEAD commit OID.

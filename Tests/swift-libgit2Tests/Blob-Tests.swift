@@ -206,7 +206,7 @@ final class BlobTests: XCTestCaseStopOnFail
                 return
             }
             
-            OID.assertOIDsEqual(blobOID, blobID)
+            XCTAssertEqual(blobOID, blobID)
             
             
             
@@ -349,7 +349,7 @@ final class BlobTests: XCTestCaseStopOnFail
         XCTAssertEqual(blobFilterOptions.version, gitBlobFilterOptionsVersion)
         XCTAssertEqual(blobFilterOptions.flags, .gitBlobFilterCheckForBinary)
         XCTAssertNil(blobFilterOptions.commitID)
-        OID.assertOIDsEqual(blobFilterOptions.attrCommitID, GitOID())
+        XCTAssertZeroOID(blobFilterOptions.attrCommitID)
         
         XCTAssertEqual(gitBlobFilterOptionsVersion, UInt32(GIT_BLOB_FILTER_OPTIONS_VERSION))
         
@@ -432,7 +432,7 @@ final class BlobTests: XCTestCaseStopOnFail
                 return
             }
             
-            OID.assertOIDsEqual(originalBlobID, duplicatedBlobID)
+            XCTAssertEqual(originalBlobID, duplicatedBlobID)
             
             
             

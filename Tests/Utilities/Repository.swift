@@ -140,7 +140,7 @@ struct Repository
             )
             
             XCTAssertOK(commitCreateFromStageResult)
-            OID.assertOIDsNotEqual(commitOID, GitOID())
+            XCTAssertNotZeroOID(commitOID)
             
             
             
