@@ -27,6 +27,18 @@ final class ProxyTests: XCTestCaseStopOnFail
         XCTAssertNil(proxyOptions.payload)
         
         XCTAssertEqual(gitProxyOptionsVersion, UInt32(GIT_PROXY_OPTIONS_VERSION))
+        
+        try proxyOptions.withCValue
+        {
+            cProxyOptions in
+            
+            XCTAssertEqual(cProxyOptions.pointee.version, gitProxyOptionsVersion)
+            XCTAssertEqual(GitProxyT(cValue: cProxyOptions.pointee.type), .gitProxyNone)
+            XCTAssertNil(cProxyOptions.pointee.url)
+            XCTAssertNil(cProxyOptions.pointee.credentials)
+            XCTAssertNil(cProxyOptions.pointee.certificate_check)
+            XCTAssertNil(cProxyOptions.pointee.payload)
+        }
     }
     
     
