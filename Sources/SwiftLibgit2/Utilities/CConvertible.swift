@@ -231,7 +231,7 @@ internal extension Optional where Wrapped: WithCConvertible
 /// Calls the given closure within a `do`/`catch` block and returns `GIT_EUSER` if an error is thrown.
 /// - Parameter body: The closure to call.
 /// - Returns: The return value of the given closure, or the `code` property of a thrown `NSError`,
-/// or `GIT_EUSER` if any other thrown error.
+/// or `GIT_EUSER` for any other thrown error.
 internal func withCConversion(
     _ body: () throws -> Int32
 ) -> Int32
