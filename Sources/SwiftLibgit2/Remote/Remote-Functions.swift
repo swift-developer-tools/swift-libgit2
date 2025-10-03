@@ -35,3 +35,30 @@ public func gitRemoteInitCallbacks(
         version
     )
 }
+
+
+
+/// Initializes the given `git_fetch_options` instance.
+/// - Parameters:
+///   - opts: The `git_fetch_options` instance to initialize.
+///   - version: The version to use. Pass ``gitFetchOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_fetch_options` instances.
+/// ``GitFetchOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_fetch_options_init()`](https://libgit2.org/docs/reference/main/remote/git_fetch_options_init.html)
+public func gitFetchOptionsInit(
+    opts    : UnsafeMutablePointer<git_fetch_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_fetch_options_init(
+        opts,
+        version
+    )
+}

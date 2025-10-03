@@ -41,3 +41,4 @@ Remote repositories.
 ### Functions
 
 - ``gitRemoteInitCallbacks(opts:version:)``
+- ``gitFetchOptionsInit(opts:version:)``

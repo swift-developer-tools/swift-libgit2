@@ -337,9 +337,9 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     {
         var fetchOptions = git_fetch_options()
         
-        let fetchOptionsInitResult: Int32 = git_fetch_options_init(
-            &fetchOptions,
-            version
+        let fetchOptionsInitResult: Int32 = gitFetchOptionsInit(
+            opts:       &fetchOptions,
+            version:    version
         )
         
         if fetchOptionsInitResult != GIT_OK.rawValue
