@@ -15,3 +15,7 @@ TLS proxies.
 ### Enums
 
 - ``GitProxyT``
+
+### Functions
+
+- ``gitProxyOptionsInit(opts:version:)``
