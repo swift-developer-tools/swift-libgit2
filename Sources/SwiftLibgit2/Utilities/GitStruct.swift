@@ -165,7 +165,7 @@ internal protocol GitStructInternalMutable: GitStruct
 /// to ``GitStructInternalMutable`` and ``CConvertible``.
 internal extension GitStructInternalMutable where Self: CConvertible
 {
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
+    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
@@ -190,7 +190,7 @@ internal extension GitStructInternalMutable where Self: CConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
+    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
@@ -225,7 +225,7 @@ internal extension GitStructInternalMutable where Self: CConvertible
 /// to ``GitStructInternalMutable`` and ``ThrowingCConvertible``.
 internal extension GitStructInternalMutable where Self: ThrowingCConvertible
 {
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
+    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
@@ -250,7 +250,7 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
+    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
@@ -285,7 +285,7 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
 /// to ``GitStructInternalMutable`` and ``WithCConvertible``.
 internal extension GitStructInternalMutable where Self: WithCConvertible
 {
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver instance with
+    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
@@ -309,7 +309,7 @@ internal extension GitStructInternalMutable where Self: WithCConvertible
     
     
     /// Calls the given closure with a pointer to an optional pointer to a `C` instance, and updates the
-    /// receiver instance with any changes made by the closure.
+    /// receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

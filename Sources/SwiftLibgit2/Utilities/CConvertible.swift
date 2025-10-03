@@ -104,7 +104,7 @@ internal protocol CConvertible
     
     
     
-    /// Converts the receiver instance to the equivalent C value.
+    /// Converts the receiver to the equivalent C value.
     /// - Returns: The equivalent C value
     ///
     /// ## Discussion
@@ -124,7 +124,7 @@ internal protocol ThrowingCConvertible
     
     
     
-    /// Converts the receiver instance to the equivalent C value.
+    /// Converts the receiver to the equivalent C value.
     /// - Returns: The equivalent C value
     /// - Throws: An `NSError` if the conversion failed.
     ///
