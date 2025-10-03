@@ -1121,9 +1121,9 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffPatchIDOptions = git_diff_patchid_options()
         
-        let diffPatchIDOptionsInitResult: Int32 = git_diff_patchid_options_init(
-            &diffPatchIDOptions,
-            version
+        let diffPatchIDOptionsInitResult: Int32 = gitDiffPatchIDOptionsInit(
+            opts:       &diffPatchIDOptions,
+            version:    version
         )
         
         if diffPatchIDOptionsInitResult != GIT_OK.rawValue

@@ -1045,6 +1045,33 @@ public func gitDiffStatsFree(
 
 
 
+/// Initializes the given `git_diff_patchid_options` instance.
+/// - Parameters:
+///   - opts: The `git_diff_patchid_options` instance to initialize.
+///   - version: The version to use. Pass ``gitDiffPatchIDOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_diff_patchid_options` instances.
+/// ``GitDiffPatchIDOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_diff_patchid_options_init()`](https://libgit2.org/docs/reference/main/diff/git_diff_patchid_options_init.html)
+public func gitDiffPatchIDOptionsInit(
+    opts    : UnsafeMutablePointer<git_diff_patchid_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_diff_patchid_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Calculates the patch ID for the given patch, by summing the hash of the file diffs, and ignoring
 /// whitespace and line numbers.
 /// - Parameters:

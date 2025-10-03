@@ -77,4 +77,5 @@ Indicate the difference between two versions of the repository.
 - ``gitDiffStatsDeletions(stats:)``
 - ``gitDiffStatsToBuf(out:stats:format:width:)``
 - ``gitDiffStatsFree(stats:)``
+- ``gitDiffPatchIDOptionsInit(opts:version:)``
 - ``gitDiffPatchID(out:diff:opts:)``
