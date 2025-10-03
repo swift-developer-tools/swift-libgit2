@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_clone_options`](https://libgit2.org/docs/reference/main/clone/git_clone_options.html)
-public struct GitCloneOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitCloneOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -135,10 +135,6 @@ public struct GitCloneOptions: GitStructMutable, WithThrowingCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_clone_options>) throws -> T
     ) throws -> T
@@ -155,7 +151,7 @@ public struct GitCloneOptions: GitStructMutable, WithThrowingCConvertible
             throw NSError.makeCConversionError()
         }
         
-        cloneOptions.bare                   = bare.cValue()
+        cloneOptions.bare                   = bare.intValue
         cloneOptions.local                  = local.cValue()
         cloneOptions.repository_cb          = repositoryCB
         cloneOptions.repository_cb_payload  = repositoryCBPayload

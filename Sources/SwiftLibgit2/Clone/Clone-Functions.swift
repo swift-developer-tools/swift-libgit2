@@ -7,24 +7,19 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
 /// Clones a remote repository.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting repository. The underlying type should be
+///   - out: The pointer in which to store the resulting repository. The underlying type must be
 ///   `git_repository`.
 ///   - url: The URL of the remote to clone.
 ///   - localPath: The path to the local directory in which to clone.
 ///   - options: The options for the clone operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitRemoteCreateCB`` or
 /// ``GitRepositoryCreateCB``, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `options` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///

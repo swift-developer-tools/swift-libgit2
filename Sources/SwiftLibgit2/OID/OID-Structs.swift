@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -56,34 +56,15 @@ public struct GitOID: GitStructInternalMutable, CConvertible
         
         id.withUnsafeBytes
         {
-            bytes in
+            cID in
             
             _ = memcpy(
                 &oid.id,
-                bytes.baseAddress,
-                min(bytes.count, Self.size)
+                cID.baseAddress,
+                min(cID.count, Self.size)
             )
         }
         
         return oid
-    }
-    
-    
-    
-    /// Calls the given closure with a pointer to a `git_oid` instance, and updates this ``GitOID``
-    /// instance with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    internal mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<git_oid>) -> T
-    ) -> T
-    {
-        var oid = cValue()
-        
-        let result: T = body(&oid)
-        
-        self = GitOID(cValue: oid)
-        
-        return result
     }
 }

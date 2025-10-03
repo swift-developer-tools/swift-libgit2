@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -72,59 +72,27 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     /// Use this function when working with C APIs that work with existing signatures and expect
     /// `const git_signature *` parameters.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_signature>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_signature>) throws -> T
+    ) rethrows -> T
     {
         var signature = git_signature()
         
         signature.when = when.cValue()
         
-        return name.withMutableCString
+        return try name.withMutableCString
         {
             cName in
             
             signature.name = cName
             
-            return email.withMutableCString
+            return try email.withMutableCString
             {
                 cEmail in
                 
                 signature.email = cEmail
                 
-                return body(&signature)
+                return try body(&signature)
             }
-        }
-    }
-    
-    
-    
-    /// Calls the given closure with a pointer to a pointer to a `git_signature` instance, and
-    /// updates this ``GitSignature`` instance with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// Use this function when working with C APIs that allocate a new signature and expect
-    /// `git_signature **` parameters.
-    internal mutating func withMutatingCValue<T>(
-        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<git_signature>?>) -> T
-    ) -> T
-    {
-        return withCValue
-        {
-            signature in
-            
-            var optionalSignature: UnsafeMutablePointer<git_signature>? = signature
-            
-            let result: T = body(&optionalSignature)
-            
-            if let finalSignature: UnsafeMutablePointer<git_signature> = optionalSignature
-            {
-                self = GitSignature(cValue: finalSignature.pointee)
-            }
-            
-            return result
         }
     }
 }

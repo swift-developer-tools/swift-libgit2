@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -36,7 +36,6 @@ public enum GitFileModeT: UInt16, GitEnum
     /// The commit file mode.
     case gitFileModeCommit          = 0o160000
 
-    
     
     
     /// Creates a ``GitFileModeT`` instance from a `git_filemode_t` instance.

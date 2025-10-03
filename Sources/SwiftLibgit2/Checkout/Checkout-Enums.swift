@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -168,14 +168,14 @@ public struct GitCheckoutStrategyT: GitOptionSet
     ///
     /// ## Discussion
     ///
-    /// This has not yet been implemented, but is reserved for future use.
+    /// - Note: This has not yet been implemented, but is reserved for future use.
     public static let gitCheckoutUpdateSubmodules           = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_SUBMODULES.rawValue)
     
     /// Recursively checkout submodules with the same options, if HEAD moved in the super repository.
     ///
     /// ## Discussion
     ///
-    /// This has not yet been implemented, but is reserved for future use.
+    /// - Note: This has not yet been implemented, but is reserved for future use.
     public static let gitCheckoutUpdateSubmodulesIfChanged  = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED.rawValue)
     
     

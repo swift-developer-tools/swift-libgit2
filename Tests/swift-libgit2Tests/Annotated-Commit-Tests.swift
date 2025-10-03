@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -55,7 +55,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             let annotatedCommitOID: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
-            OID.assertOIDsEqual(headOID, annotatedCommitOID)
+            XCTAssertEqual(headOID, annotatedCommitOID)
         }
     }
     
@@ -217,7 +217,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             let annotatedCommitOID: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
-            OID.assertOIDsEqual(headOID, annotatedCommitOID)
+            XCTAssertEqual(headOID, annotatedCommitOID)
         }
     }
 }

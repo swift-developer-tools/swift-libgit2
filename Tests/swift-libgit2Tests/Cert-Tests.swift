@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -26,6 +26,7 @@ final class CertTests: XCTestCaseStopOnFail
         let cert = GitCert(cValue: cCert)
         
         XCTAssertEqual(cert.certType, .gitCertX509)
+        XCTAssertEqual(GitCertT(cValue: cert.cValue().cert_type), .gitCertX509)
         
         
         
@@ -34,6 +35,7 @@ final class CertTests: XCTestCaseStopOnFail
         let fallbackCert = GitCert(cValue: cCert)
         
         XCTAssertEqual(fallbackCert.certType, .gitCertNone)
+        XCTAssertEqual(GitCertT(cValue: fallbackCert.cValue().cert_type), .gitCertNone)
     }
     
     
@@ -128,6 +130,14 @@ final class CertTests: XCTestCaseStopOnFail
         
         
         
+        let expectedFlags: GitCertSSHT =
+        [
+            .gitCertSSHMD5,
+            .gitCertSSHSHA1,
+            .gitCertSSHSHA256,
+            .gitCertSSHRaw
+        ]
+        
         hostKeyData.withUnsafeBytes
         {
             bytes in
@@ -135,34 +145,37 @@ final class CertTests: XCTestCaseStopOnFail
             cCertHostKey.hostkey        = bytes.baseAddress?.assumingMemoryBound(to: CChar.self)
             cCertHostKey.hostkey_len    = bytes.count
             
-            
-            
             let certHostKey = GitCertHostKey(cValue: cCertHostKey)
             
             XCTAssertEqual(certHostKey.parent.certType, .gitCertHostKeyLibSSH2)
-            
-            
-            
-            let expectedFlags: GitCertSSHT =
-            [
-                .gitCertSSHMD5,
-                .gitCertSSHSHA1,
-                .gitCertSSHSHA256,
-                .gitCertSSHRaw
-            ]
-            
             XCTAssertEqual(certHostKey.type, expectedFlags)
-            
-            XCTAssertEqual(certHostKey.rawType, .gitCertSSHRawTypeRSA)
             XCTAssertEqual(certHostKey.hashMD5, md5Hash)
             XCTAssertEqual(certHostKey.hashSHA1, sha1Hash)
             XCTAssertEqual(certHostKey.hashSHA256, sha256Hash)
+            XCTAssertEqual(certHostKey.rawType, .gitCertSSHRawTypeRSA)
+            XCTAssertNotNil(certHostKey.hostKey)
             XCTAssertEqual(certHostKey.hostKeyLen, hostKeyData.count)
             
             XCTAssertTrue(certHostKey.type.contains(.gitCertSSHMD5))
             XCTAssertTrue(certHostKey.type.contains(.gitCertSSHSHA1))
             XCTAssertTrue(certHostKey.type.contains(.gitCertSSHSHA256))
             XCTAssertTrue(certHostKey.type.contains(.gitCertSSHRaw))
+            
+            certHostKey.withCValue
+            {
+                cCertHostKey in
+                
+                XCTAssertEqual(GitCertT(cValue: cCertHostKey.pointee.parent.cert_type), .gitCertHostKeyLibSSH2)
+                XCTAssertEqual(GitCertSSHT(rawValue: cCertHostKey.pointee.type.rawValue), expectedFlags)
+                XCTAssertEqual(GitCertSSHRawTypeT(cValue: cCertHostKey.pointee.raw_type), .gitCertSSHRawTypeRSA)
+                XCTAssertNotNil(cCertHostKey.pointee.hostkey)
+                XCTAssertEqual(cCertHostKey.pointee.hostkey_len, hostKeyData.count)
+                
+                XCTAssertTrue(cCertHostKey.pointee.type.rawValue & GitCertSSHT.gitCertSSHMD5.rawValue != 0)
+                XCTAssertTrue(cCertHostKey.pointee.type.rawValue & GitCertSSHT.gitCertSSHSHA1.rawValue != 0)
+                XCTAssertTrue(cCertHostKey.pointee.type.rawValue & GitCertSSHT.gitCertSSHSHA256.rawValue != 0)
+                XCTAssertTrue(cCertHostKey.pointee.type.rawValue & GitCertSSHT.gitCertSSHRaw.rawValue != 0)
+            }
         }
     }
     
@@ -296,14 +309,20 @@ final class CertTests: XCTestCaseStopOnFail
         {
             bytes in
             
-            cCertX509.data  = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
+            let baseAddressPointer = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
+            
+            cCertX509.data  = baseAddressPointer
             cCertX509.len   = bytes.count
             
             let certX509 = GitCertX509(cValue: cCertX509)
             
             XCTAssertEqual(certX509.parent.certType, .gitCertX509)
-            XCTAssertEqual(certX509.data, UnsafeMutableRawPointer(mutating: bytes.baseAddress))
+            XCTAssertEqual(certX509.data, baseAddressPointer)
             XCTAssertEqual(certX509.len, data.count)
+            
+            XCTAssertEqual(GitCertT(cValue: certX509.cValue().parent.cert_type), .gitCertX509)
+            XCTAssertEqual(certX509.cValue().data, baseAddressPointer)
+            XCTAssertEqual(certX509.cValue().len, data.count)
         }
     }
     

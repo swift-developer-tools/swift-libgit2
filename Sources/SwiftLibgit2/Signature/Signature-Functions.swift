@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -20,10 +20,6 @@ import Clibgit2
 ///   - offset: The timezone offset in minutes.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// If an error occurs, `out` will not be updated.
-///
 /// ## C Equivalent
 ///
 /// [`git_signature_new()`](https://libgit2.org/docs/reference/main/signature/git_signature_new.html)
@@ -35,17 +31,20 @@ public func gitSignatureNew(
     offset  : Int32
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_new(
-            cOut,
-            name,
-            email,
-            time,
-            offset
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_new(
+                cOut,
+                name,
+                email,
+                time,
+                offset
+            )
+        }
     }
 }
 
@@ -58,10 +57,6 @@ public func gitSignatureNew(
 ///   - email: The email of the actor.
 /// - Returns: `0` on success, or an error code.
 ///
-/// ## Discussion
-///
-/// If an error occurs, `out` will not be updated.
-///
 /// ## C Equivalent
 ///
 /// [`git_signature_now()`](https://libgit2.org/docs/reference/main/signature/git_signature_now.html)
@@ -71,15 +66,18 @@ public func gitSignatureNow(
     email   : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_now(
-            cOut,
-            name,
-            email
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_now(
+                cOut,
+                name,
+                email
+            )
+        }
     }
 }
 
@@ -90,12 +88,10 @@ public func gitSignatureNow(
 /// - Parameters:
 ///   - authorOut: The new author signature.
 ///   - committerOut: The new committer signature.
-///   - repo: The repository. The underlying type should be `git_repository`.
+///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
-///
-/// If an error occurs, `authorOut` and `committerOut` will not be updated.
 ///
 /// At least one of `authorOut` or `committerOut` must not be `nil`. If both are `nil`,
 /// this function will return `GIT_EUSER`.
@@ -213,7 +209,7 @@ public func gitSignatureDefaultFromEnv(
 /// Creates a new signature with the default user and a timestamp representing the current time.
 /// - Parameters:
 ///   - out: The new signature.
-///   - repo: The repository. The underlying type should be `git_repository`.
+///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
@@ -223,7 +219,7 @@ public func gitSignatureDefaultFromEnv(
 ///
 /// The return value will be `GIT_ENOTFOUND` if either `user.name` or `user.email` are not set.
 ///
-/// This function does not examine environment variables. It examines only the configuration files.
+/// - Note: This function does not examine environment variables. It examines only the configuration files.
 /// Use ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)`` to consider
 /// the environment variables.
 ///
@@ -235,14 +231,17 @@ public func gitSignatureDefault(
     repo    : OpaquePointer
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_default(
-            cOut,
-            repo
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_default(
+                cOut,
+                repo
+            )
+        }
     }
 }
 
@@ -268,14 +267,17 @@ public func gitSignatureFromBuffer(
     buf : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_signature_from_buffer(
-            cOut,
-            buf
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_signature_from_buffer(
+                cOut,
+                buf
+            )
+        }
     }
 }
 
@@ -299,18 +301,21 @@ public func gitSignatureDup(
     sig     : GitSignature
 ) -> Int32
 {
-    return dest.withMutatingCValue
+    return withCConversion
     {
-        cDest in
-        
-        return sig.withCValue
+        return try dest.withMutatingCValue
         {
-            cSig in
+            cDest in
             
-            return git_signature_dup(
-                cDest,
-                cSig
-            )
+            return sig.withCValue
+            {
+                cSig in
+                
+                return git_signature_dup(
+                    cDest,
+                    cSig
+                )
+            }
         }
     }
 }

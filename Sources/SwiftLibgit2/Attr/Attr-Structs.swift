@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -44,8 +44,8 @@ public struct GitAttrOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `git_oid()`.
-    public var attrCommitID : GitOID?               = nil
+    /// The default value is a zero-initialized OID.
+    public var attrCommitID : GitOID                = GitOID()
     
     
     
@@ -75,34 +75,35 @@ public struct GitAttrOptions: GitStructMutable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_attr_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_attr_options>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_attr_options>) throws -> T
+    ) rethrows -> T
     {
         var attrOptions = git_attr_options()
         
         attrOptions.version         = version
         attrOptions.flags           = flags.rawValue
-        attrOptions.attr_commit_id  = attrCommitID?.cValue() ?? git_oid()
+        attrOptions.attr_commit_id  = attrCommitID.cValue()
         
         if let commitID: GitOID = commitID
         {
             var cCommitID: git_oid = commitID.cValue()
             
-            return withUnsafeMutablePointer(to: &cCommitID)
+            return try withUnsafeMutablePointer(to: &cCommitID)
             {
                 commitIDPointer in
                 
                 attrOptions.commit_id = commitIDPointer
                 
-                return body(&attrOptions)
+                return try body(&attrOptions)
             }
         }
         else
         {
             attrOptions.commit_id = nil
             
-            return body(&attrOptions)
+            return try body(&attrOptions)
         }
     }
 }

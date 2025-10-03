@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -86,7 +86,7 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
 /// Use `git_remote_set_instance_url()` instead.
 ///
 /// ## C Equivalent
@@ -105,7 +105,7 @@ public typealias GitURLResolveCB = @convention(c)
 // TODO: Replace `git_direction` and `git_remote_set_instance_url()` in documentation.
 /// The callback invoked immediately before attempting to connect to the given URL.
 /// - Parameters:
-///   - remote: The remote to be connected. The underlying type should be `git_remote`.
+///   - remote: The remote to be connected. The underlying type must be `git_remote`.
 ///   - direction: The direction of the connection. See `git_direction`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
@@ -158,11 +158,11 @@ public typealias GitRemoteCompletionCB = @convention(c)
 ///
 /// ## Discussion
 ///
-/// This is deprecated in libgit2 and will be removed in the next major release.
-/// Use ``GitRemoteUpdateRefsCB`` instead.
-///
 /// If this function and ``GitRemoteUpdateRefsCB`` are both provided to
 /// ``GitRemoteCallbacks``, then only ``GitRemoteUpdateRefsCB`` will be invoked.
+///
+/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
+/// Use ``GitRemoteUpdateRefsCB`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -183,7 +183,7 @@ public typealias GitRemoteUpdateTipsCB = @convention(c)
 ///   - refname: The reference name specifying the remote reference that was updated.
 ///   - old_id: The old ID.
 ///   - id: The new ID.
-///   - refspec: The refspec to use. The underlying type should be `git_refspec`.
+///   - refspec: The refspec to use. The underlying type must be `git_refspec`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///

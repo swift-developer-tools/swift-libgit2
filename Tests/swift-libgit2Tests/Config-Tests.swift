@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -112,13 +112,39 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     
     
+    func testGitConfigEntry() throws
+    {
+        let configEntry = GitConfigEntry()
+        
+        XCTAssertNil(configEntry.name)
+        XCTAssertNil(configEntry.value)
+        XCTAssertNil(configEntry.backendType)
+        XCTAssertNil(configEntry.originPath)
+        XCTAssertEqual(configEntry.includeDepth, 0)
+        XCTAssertEqual(configEntry.level, .gitConfigLevelLocal)
+        
+        configEntry.withCValue
+        {
+            cConfigEntry in
+            
+            XCTAssertNil(cConfigEntry.pointee.name)
+            XCTAssertNil(cConfigEntry.pointee.value)
+            XCTAssertNil(cConfigEntry.pointee.backend_type)
+            XCTAssertNil(cConfigEntry.pointee.origin_path)
+            XCTAssertEqual(cConfigEntry.pointee.include_depth, 0)
+            XCTAssertEqual(GitConfigLevelT(cValue: cConfigEntry.pointee.level), .gitConfigLevelLocal)
+        }
+    }
+    
+    
+    
     func testGitConfigFindPaths() throws
     {
         var buffer = GitBuf()
         
         defer
         {
-            gitBufDispose(buffer: &buffer)
+            XCTAssertOK(gitBufDispose(buffer: &buffer))
         }
         
         
@@ -414,6 +440,26 @@ final class ConfigTests: XCTestCaseStopOnFail
                 XCTAssertOK(configLockResult)
                 XCTAssertNotNil(transactionPointer)
             }
+        }
+    }
+    
+    
+    
+    func testGitConfigMap() throws
+    {
+        let configMap = GitConfigMap()
+        
+        XCTAssertEqual(configMap.type, .gitConfigMapFalse)
+        XCTAssertNil(configMap.strMatch)
+        XCTAssertEqual(configMap.mapValue, 0)
+        
+        configMap.withCValue
+        {
+            cConfigMap in
+            
+            XCTAssertEqual(GitConfigMapT(cValue: cConfigMap.pointee.type), .gitConfigMapFalse)
+            XCTAssertNil(cConfigMap.pointee.str_match)
+            XCTAssertEqual(cConfigMap.pointee.map_value, 0)
         }
     }
     
@@ -830,7 +876,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         defer
         {
-            gitBufDispose(buffer: &pathBuffer)
+            XCTAssertOK(gitBufDispose(buffer: &pathBuffer))
         }
         
         
@@ -961,7 +1007,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    gitBufDispose(buffer: &stringBuffer)
+                    XCTAssertOK(gitBufDispose(buffer: &stringBuffer))
                 }
                 
                 
@@ -1087,7 +1133,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    gitBufDispose(buffer: &pathBuffer)
+                    XCTAssertOK(gitBufDispose(buffer: &pathBuffer))
                 }
                 
                 

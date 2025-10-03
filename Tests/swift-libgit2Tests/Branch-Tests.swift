@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -311,8 +311,8 @@ final class BranchTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
-            }
+                XCTAssertOK(gitBufDispose(buffer: &buffer)
+)            }
             
             
             

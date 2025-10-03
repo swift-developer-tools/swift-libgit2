@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -72,7 +72,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This is deprecated in libgit2 and will be removed in the next major release.
+    /// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
     /// Use ``updateRefs`` instead.
     public var updateTips           : GitRemoteUpdateTipsCB?            = nil
     
@@ -131,7 +131,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This is deprecated in libgit2 and will be removed in the next major release.
+    /// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
     /// Use ``remoteReady`` instead.
     public var resolveURL           : GitURLResolveCB?                  = nil
     
@@ -224,7 +224,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
-public struct GitFetchOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitFetchOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -303,13 +303,13 @@ public struct GitFetchOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// If unexpected values are encountered, the following defaults are used:
-    /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``,
+    /// If unexpected values are encountered, the following defaults are used, although this should
+    /// never occur.
+    ///
+    /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``
     /// - ``downloadTags``: ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsUnspecified``
     /// - ``depth``: ``GitFetchDepthT/gitFetchDepthFull``
     /// - ``followRedirects``: ``GitRemoteRedirectT/gitRemoteRedirectInitial``
-    ///
-    /// This should never occur.
     internal init(
         cValue fetchOptions: git_fetch_options
     )

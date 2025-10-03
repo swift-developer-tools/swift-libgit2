@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -84,34 +84,35 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_commit_create_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_commit_create_options>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_commit_create_options>) throws -> T
+    ) throws -> T
     {
         var commitCreateOptions = git_commit_create_options()
         
         commitCreateOptions.version             = version
-        commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.cValue())
+        commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.intValue)
         
-        return author.withOptionalCValue
+        return try author.withOptionalCValue
         {
             cAuthor in
             
             commitCreateOptions.author = UnsafePointer(cAuthor)
             
-            return committer.withOptionalCValue
+            return try committer.withOptionalCValue
             {
                 cCommitter in
                 
                 commitCreateOptions.committer = UnsafePointer(cCommitter)
                 
-                return messageEncoding.withOptionalCString
+                return try messageEncoding.withOptionalCString
                 {
                     cMessageEncoding in
                     
                     commitCreateOptions.message_encoding = cMessageEncoding
                     
-                    return body(&commitCreateOptions)
+                    return try body(&commitCreateOptions)
                 }
             }
         }

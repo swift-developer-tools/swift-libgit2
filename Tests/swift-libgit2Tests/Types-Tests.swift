@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -59,6 +59,16 @@ final class TypesTests: XCTestCaseStopOnFail
             
             XCTAssertGreaterThan(gitTime.time, currentTime - 3600)
             XCTAssertLessThanOrEqual(gitTime.time, currentTime + 60)
+            
+            let cGitTime: git_time = gitTime.cValue()
+            
+            XCTAssertGreaterThan(cGitTime.time, 0)
+            XCTAssertEqual(cGitTime.time, cTime.time)
+            XCTAssertEqual(cGitTime.offset, cTime.offset)
+            XCTAssertEqual(cGitTime.sign, cTime.sign)
+            
+            XCTAssertGreaterThan(cGitTime.time, currentTime - 3600)
+            XCTAssertLessThanOrEqual(cGitTime.time, currentTime + 60)
         }
     }
     

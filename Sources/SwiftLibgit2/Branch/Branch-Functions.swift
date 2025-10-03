@@ -7,19 +7,19 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
 /// Creates a new branch pointing at the given target commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting reference. The underlying type should be
+///   - out: The pointer in which to store the resulting reference. The underlying type must be
 ///   `git_reference`.
-///   - repo: The repository in which to create the branch. The underlying type should be
+///   - repo: The repository in which to create the branch. The underlying type must be
 ///   `git_repository`.
-///   - branchName: The branch name. The name will be validated for consistency and should
+///   - branchName: The branch name. The name will be validated for consistency and must
 ///   not conflict with an existing branch name.
-///   - target: The commit to which the branch should point. The underlying type should be
+///   - target: The commit to which the branch should point. The underlying type must be
 ///   `git_commit`. The commit must belong to the given repository.
 ///   - force: Whether to overwrite an existing branch.
 /// - Returns: `0` on success, or an error code.
@@ -45,7 +45,7 @@ public func gitBranchCreate(
         repo,
         branchName,
         target,
-        force.cValue()
+        force.intValue
     )
 }
 
@@ -53,13 +53,13 @@ public func gitBranchCreate(
 
 /// Creates a new branch pointing at the given target annotated commit.
 /// - Parameters:
-///   - refOut: The pointer in which to store the resulting reference. The underlying type should be
+///   - refOut: The pointer in which to store the resulting reference. The underlying type must be
 ///   `git_reference`.
-///   - repo: The repository in which to create the branch. The underlying type should be
+///   - repo: The repository in which to create the branch. The underlying type must be
 ///   `git_repository`.
-///   - branchName: The branch name. The name will be validated for consistency and should
+///   - branchName: The branch name. The name will be validated for consistency and must
 ///   not conflict with an existing branch name.
-///   - target: The commit to which the branch should point. The underlying type should be
+///   - target: The commit to which the branch should point. The underlying type must be
 ///   `git_annotated_commit`. The commit must belong to the given repository.
 ///   - force: Whether to overwrite an existing branch.
 /// - Returns: `0` on success, or an error code.
@@ -86,7 +86,7 @@ public func gitBranchCreateFromAnnotated(
         repo,
         branchName,
         target,
-        force.cValue()
+        force.intValue
     )
 }
 
@@ -95,12 +95,12 @@ public func gitBranchCreateFromAnnotated(
 // TODO: Replace `git_reference_free()` in documentation.
 
 /// Deletes an existing branch.
-/// - Parameter branch: The branch to delete. The underlying type should be `git_reference`.
+/// - Parameter branch: The branch to delete. The underlying type must be `git_reference`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
 ///
-/// If the deletion is successful, the given branch reference will no longer be valid and should be freed
+/// If the deletion is successful, the given branch reference will no longer be valid and must be freed
 /// immediately with `git_reference_free()`.
 ///
 /// ## C Equivalent
@@ -117,8 +117,8 @@ public func gitBranchDelete(
 
 /// Creates an iterator which loops over the requested branches.
 /// - Parameters:
-///   - out: The iterator. The underlying type should be `git_branch_iterator`.
-///   - repo: The repository in which the branches exist. The underlying type should be
+///   - out: The iterator. The underlying type must be `git_branch_iterator`.
+///   - repo: The repository in which the branches exist. The underlying type must be
 ///   `git_repository`.
 ///   - listFlags: The filtering flags for the branch listing.
 /// - Returns: `0` on success, or an error code.
@@ -143,9 +143,9 @@ public func gitBranchIteratorNew(
 
 /// Retrieves the next branch from the given branch iterator.
 /// - Parameters:
-///   - out: The branch. The underlying type should be `git_reference`.
+///   - out: The branch. The underlying type must be `git_reference`.
 ///   - outType: The type of branch.
-///   - iter: The branch iterator. The underlying type should be `git_branch_iterator`.
+///   - iter: The branch iterator. The underlying type must be `git_branch_iterator`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
@@ -178,7 +178,7 @@ public func gitBranchNext(
 
 
 /// Frees the memory allocated for a `git_branch_iterator` instance.
-/// - Parameter iter: The iterator to free. The underlying type should be
+/// - Parameter iter: The iterator to free. The underlying type must be
 /// `git_branch_iterator`.
 ///
 /// ## C Equivalent
@@ -197,9 +197,9 @@ public func gitBranchIteratorFree(
 
 /// Moves or renames the given local branch.
 /// - Parameters:
-///   - out: The new reference object for the updated name. The underlying type should be
+///   - out: The new reference object for the updated name. The underlying type must be
 ///   `git_reference`.
-///   - branch: The local branch. The underlying type should be `git_reference`.
+///   - branch: The local branch. The underlying type must be `git_reference`.
 ///   - newBranchName: The target name of the branch, once the move has been performed.
 ///   The name will be validated for consistency.
 ///   - force: Whether to overwrite an existing branch.
@@ -207,7 +207,7 @@ public func gitBranchIteratorFree(
 ///
 /// ## Discussion
 ///
-/// If the move is successful, the given branch reference will no longer be valid and should be freed
+/// If the move is successful, the given branch reference will no longer be valid and must be freed
 /// immediately with `git_reference_free()`.
 ///
 /// ## C Equivalent
@@ -224,7 +224,7 @@ public func gitBranchMove(
         out,
         branch,
         newBranchName,
-        force.cValue()
+        force.intValue
     )
 }
 
@@ -233,8 +233,8 @@ public func gitBranchMove(
 // TODO: Replace `git_reference_free()` in documentation.
 /// Looks up a branch by its name in the given repository.
 /// - Parameters:
-///   - out: The looked-up branch. The underlying type should be `git_reference`.
-///   - repo: The repository in which the branches exist. The underlying type should be
+///   - out: The looked-up branch. The underlying type must be `git_reference`.
+///   - repo: The repository in which the branches exist. The underlying type must be
 ///   `git_repository`.
 ///   - branchName: The branch name. The name will be validated for consistency.
 ///   - branchType: The branch type.
@@ -242,7 +242,7 @@ public func gitBranchMove(
 ///
 /// ## Discussion
 ///
-/// The caller must free the generated reference using `git_reference_free()`.
+/// - Important: The caller must free the generated reference using `git_reference_free()`.
 ///
 /// ## C Equivalent
 ///
@@ -266,9 +266,9 @@ public func gitBranchLookup(
 
 /// Gets the branch name from the given reference.
 /// - Parameters:
-///   - out: The abbreviated reference name. This memory is owned by `ref` and should not be
+///   - out: The abbreviated reference name. This memory is owned by `ref` and must not be
 ///   freed by the caller.
-///   - ref: A reference object, ideally pointing to a branch. The underlying type should be
+///   - ref: A reference object, ideally pointing to a branch. The underlying type must be
 ///   `git_reference`.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -277,7 +277,7 @@ public func gitBranchLookup(
 /// This function checks that the given reference is actually a branch and, if it is a branch, returns the
 /// branch part of the reference name.
 ///
-/// Branches are references that exist in `refs/heads/` or `refs/remotes/`.
+/// - Note: Branches are references that exist in `refs/heads/` or `refs/remotes/`.
 ///
 /// ## C Equivalent
 ///
@@ -297,9 +297,9 @@ public func gitBranchName(
 
 /// Gets the upstream of the given local branch.
 /// - Parameters:
-///   - out: The pointer in which to store the upstream. The underlying type should be
+///   - out: The pointer in which to store the upstream. The underlying type must be
 ///   `git_reference`.
-///   - ref: The local branch for which to get the upstream. The underlying type should be
+///   - ref: The local branch for which to get the upstream. The underlying type must be
 ///   `git_reference`.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -353,7 +353,7 @@ public func gitBranchSetUpstream(
 /// Gets the upstream name of the given local branch.
 /// - Parameters:
 ///   - out: The buffer into which the upstream name should be written.
-///   - repo: The repository in which the branches exist. The underlying type should be
+///   - repo: The repository in which the branches exist. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The branch name.
 /// - Returns: `0` on success, or an error code.
@@ -375,22 +375,25 @@ public func gitBranchUpstreamName(
     refName : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_branch_upstream_name(
-            cOut,
-            repo,
-            refName
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_branch_upstream_name(
+                cOut,
+                repo,
+                refName
+            )
+        }
     }
 }
 
 
 
-/// Checks if HEAD points to the given local branch.
-/// - Parameter branch: The local branch. The underlying type should be `git_reference`.
+/// Checks whether HEAD points to the given local branch.
+/// - Parameter branch: The local branch. The underlying type must be `git_reference`.
 /// - Returns: `1` if HEAD points to the branch, `0` if HEAD does not point to the branch, or
 /// an error code.
 ///
@@ -406,8 +409,8 @@ public func gitBranchIsHEAD(
 
 
 
-/// Checks if any HEAD points to the given local branch.
-/// - Parameter branch: The local branch. The underlying type should be `git_reference`.
+/// Checks whether any HEAD points to the given local branch.
+/// - Parameter branch: The local branch. The underlying type must be `git_reference`.
 /// - Returns: `1` if any HEAD points to the branch, `0` if no HEAD points to the branch, or
 /// an error code.
 ///
@@ -431,7 +434,7 @@ public func gitBranchIsCheckedOut(
 /// Gets the remote name of the given remote-tracking branch.
 /// - Parameters:
 ///   - out: The buffer into which the remote name should be written.
-///   - repo: The repository in which the branch exists. The underlying type should be
+///   - repo: The repository in which the branch exists. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The full reference name of the branch.
 /// - Returns: `0` on success, or an error code.
@@ -453,15 +456,18 @@ public func gitBranchRemoteName(
     refName : String
 ) -> Int32
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_branch_remote_name(
-            cOut,
-            repo,
-            refName
-        )
+        return try out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_branch_remote_name(
+                cOut,
+                repo,
+                refName
+            )
+        }
     }
 }
 
@@ -470,7 +476,7 @@ public func gitBranchRemoteName(
 /// Gets the upstream remote name of the given local branch.
 /// - Parameters:
 ///   - buf: The buffer into which the upstream remote name should be written.
-///   - repo: The repository in which the branch exists. The underlying type should be
+///   - repo: The repository in which the branch exists. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The full reference name of the branch.
 /// - Returns: `0` on success, or an error code.
@@ -488,15 +494,18 @@ public func gitBranchUpstreamRemote(
     refName : String
 ) -> Int32
 {
-    return buf.withMutatingCValue
+    return withCConversion
     {
-        cBuf in
-        
-        return git_branch_upstream_remote(
-            cBuf,
-            repo,
-            refName
-        )
+        return try buf.withMutatingCValue
+        {
+            cBuf in
+            
+            return git_branch_upstream_remote(
+                cBuf,
+                repo,
+                refName
+            )
+        }
     }
 }
 
@@ -505,7 +514,7 @@ public func gitBranchUpstreamRemote(
 /// Gets the upstream merge name of the given local branch.
 /// - Parameters:
 ///   - buf: The buffer into which the upstream merge name should be written.
-///   - repo: The repository in which the branch exists. The underlying type should be
+///   - repo: The repository in which the branch exists. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The full reference name of the branch.
 /// - Returns: `0` on success, or an error code.
@@ -523,15 +532,18 @@ public func gitBranchUpstreamMerge(
     refName : String
 ) -> Int32
 {
-    return buf.withMutatingCValue
+    return withCConversion
     {
-        cBuf in
-        
-        return git_branch_upstream_merge(
-            cBuf,
-            repo,
-            refName
-        )
+        return try buf.withMutatingCValue
+        {
+            cBuf in
+            
+            return git_branch_upstream_merge(
+                cBuf,
+                repo,
+                refName
+            )
+        }
     }
 }
 

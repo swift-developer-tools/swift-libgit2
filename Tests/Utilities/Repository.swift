@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 import XCTest
 @testable import SwiftLibgit2
@@ -140,7 +140,7 @@ struct Repository
             )
             
             XCTAssertOK(commitCreateFromStageResult)
-            OID.assertOIDsNotEqual(commitOID, GitOID())
+            XCTAssertNotZeroOID(commitOID)
             
             
             

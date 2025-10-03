@@ -16,7 +16,7 @@ internal protocol GitEnum: CConvertible, RawRepresentable, Sendable
     ///
     /// ## Discussion
     ///
-    /// This should have an `internal` access level.
+    /// This must have an `internal` access level.
     init?(
         cValue: C
     )

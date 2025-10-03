@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -35,7 +35,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
             }
@@ -139,7 +139,7 @@ final class CommitTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(commitCreateWithSignatureResult)
-            OID.assertOIDsNotEqual(signedCommitOID, GitOID())
+            XCTAssertNotZeroOID(signedCommitOID)
             
             
             
@@ -148,8 +148,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                gitBufDispose(buffer: &extractedSignature)
-                gitBufDispose(buffer: &extractedSignedData)
+                XCTAssertOK(gitBufDispose(buffer: &extractedSignature))
+                XCTAssertOK(gitBufDispose(buffer: &extractedSignedData))
             }
             
             
@@ -424,6 +424,17 @@ final class CommitTests: XCTestCaseStopOnFail
         XCTAssertNil(commitCreateOptions.messageEncoding)
         
         XCTAssertEqual(gitCommitCreateOptionsVersion, UInt32(GIT_COMMIT_CREATE_OPTIONS_VERSION))
+        
+        try commitCreateOptions.withCValue
+        {
+            cCommitCreateOptions in
+            
+            XCTAssertEqual(cCommitCreateOptions.pointee.version, gitCommitCreateOptionsVersion)
+            XCTAssertFalse(Bool(cCommitCreateOptions.pointee.allow_empty_commit))
+            XCTAssertNil(cCommitCreateOptions.pointee.author)
+            XCTAssertNil(cCommitCreateOptions.pointee.committer)
+            XCTAssertNil(cCommitCreateOptions.pointee.message_encoding)
+        }
     }
     
     
@@ -438,7 +449,7 @@ final class CommitTests: XCTestCaseStopOnFail
 
             defer
             {
-                gitBufDispose(buffer: &buffer)
+                XCTAssertOK(gitBufDispose(buffer: &buffer))
             }
             
             
@@ -518,7 +529,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             let retrievedOID: GitOID = gitCommitID(commit: commitPointer)
             
-            OID.assertOIDsEqual(retrievedOID, commitOID)
+            XCTAssertEqual(retrievedOID, commitOID)
             
             
             
@@ -754,7 +765,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 n:          0
             )
             
-            OID.assertOIDsNotEqual(parentCommitOID, commitOID)
+            XCTAssertNotEqual(parentCommitOID, commitOID)
         }
     }
     
@@ -805,7 +816,7 @@ final class CommitTests: XCTestCaseStopOnFail
 
                 let treeOID: GitOID = gitCommitTreeID(commit: commitPointer)
                 
-                OID.assertOIDsNotEqual(treeOID, GitOID())
+                XCTAssertNotZeroOID(treeOID)
                 
                 
                 
@@ -938,10 +949,10 @@ extension CommitTests
             {
                 let retrievedOID: GitOID = gitCommitID(commit: newCommitPointer)
                 
-                OID.assertOIDsEqual(retrievedOID, newCommitOID)
+                XCTAssertEqual(retrievedOID, newCommitOID)
             }
             
-            OID.assertOIDsNotEqual(newCommitOID, originalCommitOID)
+            XCTAssertNotEqual(newCommitOID, originalCommitOID)
             
             
             

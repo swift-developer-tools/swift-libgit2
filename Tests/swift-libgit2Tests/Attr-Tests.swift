@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -450,24 +450,24 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var attrOptions = GitAttrOptions()
+            let attrOptions = GitAttrOptions()
             
             XCTAssertEqual(attrOptions.version, gitAttrOptionsVersion)
             XCTAssertEqual(attrOptions.flags, [])
             XCTAssertNil(attrOptions.commitID)
-            XCTAssertNil(attrOptions.attrCommitID)
+            XCTAssertZeroOID(attrOptions.attrCommitID)
             
             XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
             
-            attrOptions.flags =
-            [
-                .gitAttrCheckIndexOnly,
-                .gitAttrCheckNoSystem
-            ]
-            
-            XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckIndexOnly))
-            XCTAssertTrue(attrOptions.flags.contains(.gitAttrCheckNoSystem))
-            XCTAssertFalse(attrOptions.flags.contains(.gitAttrCheckIncludeHEAD))
+            attrOptions.withCValue
+            {
+                cAttrOptions in
+                
+                XCTAssertEqual(cAttrOptions.pointee.version, gitAttrOptionsVersion)
+                XCTAssertEqual(cAttrOptions.pointee.flags, 0)
+                XCTAssertNil(cAttrOptions.pointee.commit_id)
+                XCTAssertZeroOID(GitOID(cValue: cAttrOptions.pointee.attr_commit_id))
+            }
             
             var valueOut: UnsafePointer<CChar>? = nil
             

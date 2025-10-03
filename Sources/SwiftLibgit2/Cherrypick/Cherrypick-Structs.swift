@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_options`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options.html)
-public struct GitCherrypickOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -79,10 +79,6 @@ public struct GitCherrypickOptions: GitStructMutable, WithThrowingCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_cherrypick_options>) throws -> T
     ) throws -> T

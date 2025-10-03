@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -157,9 +157,10 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     /// Calls the given closure with a pointer to a `git_cert_hostkey` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_cert_hostkey>) -> T
-    ) -> T
+        _ body: (UnsafeMutablePointer<git_cert_hostkey>) throws -> T
+    ) rethrows -> T
     {
         var certHostKey = git_cert_hostkey()
         
@@ -169,54 +170,56 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
         
         hashMD5.withUnsafeBytes
         {
-            bytes in
+            cHashMD5 in
             
             _ = memcpy(
                 &certHostKey.hash_md5,
-                bytes.baseAddress,
-                min(bytes.count, Self.hashMD5Size)
+                cHashMD5.baseAddress,
+                min(cHashMD5.count, Self.hashMD5Size)
             )
         }
         
         hashSHA1.withUnsafeBytes
         {
-            bytes in
+            cHashSHA1 in
             
             _ = memcpy(
                 &certHostKey.hash_sha1,
-                bytes.baseAddress,
-                min(bytes.count, Self.hashSHA1Size)
+                cHashSHA1.baseAddress,
+                min(cHashSHA1.count, Self.hashSHA1Size)
             )
         }
         
         hashSHA256.withUnsafeBytes
         {
-            bytes in
+            cHashSHA256 in
             
             _ = memcpy(
                 &certHostKey.hash_sha256,
-                bytes.baseAddress,
-                min(bytes.count, Self.hashSHA256Size)
+                cHashSHA256.baseAddress,
+                min(cHashSHA256.count, Self.hashSHA256Size)
             )
         }
         
-        guard let hostKey: Data = hostKey
+        guard
+            let hostKey: Data = hostKey,
+            !hostKey.isEmpty
         else
         {
             certHostKey.hostkey         = nil
             certHostKey.hostkey_len     = 0
             
-            return body(&certHostKey)
+            return try body(&certHostKey)
         }
         
-        return hostKey.withUnsafeBytes
+        return try hostKey.withUnsafeBytes
         {
-            bytes in
+            cHostKey in
             
-            certHostKey.hostkey         = bytes.baseAddress?.assumingMemoryBound(to: CChar.self)
-            certHostKey.hostkey_len     = bytes.count
+            certHostKey.hostkey         = cHostKey.baseAddress?.assumingMemoryBound(to: CChar.self)
+            certHostKey.hostkey_len     = cHostKey.count
             
-            return body(&certHostKey)
+            return try body(&certHostKey)
         }
     }
 }

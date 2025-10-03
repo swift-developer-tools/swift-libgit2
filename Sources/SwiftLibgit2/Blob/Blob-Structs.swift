@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options.html)
-public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -39,7 +39,7 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This property is unused, but is reserved for API compatibility.
+    /// - Note: This property is unused, but is reserved for API compatibility.
     public var commitID     : GitOID?               = nil
     
     /// The commit from which to load attributes when
@@ -47,8 +47,8 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using `git_oid()`.
-    public var attrCommitID : GitOID?               = nil
+    /// The default value is a zero-initialized OID.
+    public var attrCommitID : GitOID                = GitOID()
     
     
     
@@ -71,7 +71,7 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
         self.version        = UInt32(blobFilterOptions.version)
         self.flags          = GitBlobFilterFlagT(rawValue: blobFilterOptions.flags)
         self.commitID       = nil
-        self.attrCommitID   = nil
+        self.attrCommitID   = GitOID(cValue: blobFilterOptions.attr_commit_id)
     }
     
     
@@ -80,10 +80,6 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blob_filter_options>) throws -> T
     ) throws -> T
@@ -101,7 +97,7 @@ public struct GitBlobFilterOptions: GitStructMutable, WithThrowingCConvertible
         }
         
         blobFilterOptions.flags             = flags.rawValue
-        blobFilterOptions.attr_commit_id    = attrCommitID?.cValue() ?? git_oid()
+        blobFilterOptions.attr_commit_id    = attrCommitID.cValue()
         
         if let commitID: GitOID = commitID
         {

@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -351,7 +351,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutOptions() throws
     {
-        var checkoutOptions = GitCheckoutOptions()
+        let checkoutOptions = GitCheckoutOptions()
         
         /// `dirMode`, `fileMode`, and `fileOpenFlags` are zero-initialized.
         /// The documentation defaults refer to runtime defaults set in `checkout_data_init()`
@@ -379,25 +379,31 @@ final class CheckoutTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(gitCheckoutOptionsVersion, UInt32(GIT_CHECKOUT_OPTIONS_VERSION))
         
-        checkoutOptions.checkoutStrategy =
-        [
-            .gitCheckoutSafe,
-            .gitCheckoutRecreateMissing
-        ]
-        
-        XCTAssertTrue(checkoutOptions.checkoutStrategy.contains(.gitCheckoutSafe))
-        XCTAssertTrue(checkoutOptions.checkoutStrategy.contains(.gitCheckoutRecreateMissing))
-        XCTAssertFalse(checkoutOptions.checkoutStrategy.contains(.gitCheckoutRemoveIgnored))
-        
-        checkoutOptions.notifyFlags =
-        [
-            .gitCheckoutNotifyUntracked,
-            .gitCheckoutNotifyIgnored
-        ]
-        
-        XCTAssertTrue(checkoutOptions.notifyFlags.contains(.gitCheckoutNotifyUntracked))
-        XCTAssertTrue(checkoutOptions.notifyFlags.contains(.gitCheckoutNotifyIgnored))
-        XCTAssertFalse(checkoutOptions.notifyFlags.contains(.gitCheckoutNotifyConflict))
+        try checkoutOptions.withCValue
+        {
+            cCheckoutOptions in
+            
+            XCTAssertEqual(cCheckoutOptions.pointee.version, gitCheckoutOptionsVersion)
+            XCTAssertEqual(GitCheckoutStrategyT(rawValue: cCheckoutOptions.pointee.checkout_strategy), .gitCheckoutSafe)
+            XCTAssertFalse(Bool(cCheckoutOptions.pointee.disable_filters))
+            XCTAssertEqual(cCheckoutOptions.pointee.dir_mode, 0)
+            XCTAssertEqual(cCheckoutOptions.pointee.file_mode, 0)
+            XCTAssertEqual(cCheckoutOptions.pointee.file_open_flags, 0)
+            XCTAssertEqual(GitCheckoutNotifyT(rawValue: cCheckoutOptions.pointee.notify_flags), .gitCheckoutNotifyNone)
+            XCTAssertNil(cCheckoutOptions.pointee.notify_cb)
+            XCTAssertNil(cCheckoutOptions.pointee.notify_payload)
+            XCTAssertNil(cCheckoutOptions.pointee.progress_cb)
+            XCTAssertNil(cCheckoutOptions.pointee.progress_payload)
+            XCTAssertNotNil(Array(cCheckoutOptions.pointee.paths))
+            XCTAssertNil(cCheckoutOptions.pointee.baseline)
+            XCTAssertNil(cCheckoutOptions.pointee.baseline_index)
+            XCTAssertNil(cCheckoutOptions.pointee.target_directory)
+            XCTAssertNil(cCheckoutOptions.pointee.ancestor_label)
+            XCTAssertNil(cCheckoutOptions.pointee.our_label)
+            XCTAssertNil(cCheckoutOptions.pointee.their_label)
+            XCTAssertNil(cCheckoutOptions.pointee.perfdata_cb)
+            XCTAssertNil(cCheckoutOptions.pointee.perfdata_payload)
+        }
     }
     
     
@@ -417,6 +423,10 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertEqual(perfData.mkdirCalls, 1)
         XCTAssertEqual(perfData.statCalls, 2)
         XCTAssertEqual(perfData.chmodCalls, 3)
+        
+        XCTAssertEqual(perfData.cValue().mkdir_calls, 1)
+        XCTAssertEqual(perfData.cValue().stat_calls, 2)
+        XCTAssertEqual(perfData.cValue().chmod_calls, 3)
     }
     
     

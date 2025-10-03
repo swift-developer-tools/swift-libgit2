@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_proxy_options`](https://libgit2.org/docs/reference/main/proxy/git_proxy_options.html)
-public struct GitProxyOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitProxyOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

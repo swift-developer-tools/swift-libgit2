@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import Foundation
 
 
@@ -66,7 +66,7 @@ public struct GitCheckoutPerfData: GitStructReadable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_checkout_options`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options.html)
-public struct GitCheckoutOptions: GitStructMutable, WithThrowingCConvertible
+public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -159,7 +159,7 @@ public struct GitCheckoutOptions: GitStructMutable, WithThrowingCConvertible
     /// this as a simple list.
     public var paths            : [String]                  = []
     
-    /// The expected content of the working directory. The underlying type should be `git_tree`.
+    /// The expected content of the working directory. The underlying type must be `git_tree`.
     ///
     /// ## Discussion
     ///
@@ -169,7 +169,7 @@ public struct GitCheckoutOptions: GitStructMutable, WithThrowingCConvertible
     public var baseline         : OpaquePointer?            = nil
     
     /// The expected content of the working directory, expressed as an index. The underlying type
-    /// should be `git_index`.
+    /// must be `git_index`.
     ///
     /// ## Discussion
     ///
@@ -265,10 +265,6 @@ public struct GitCheckoutOptions: GitStructMutable, WithThrowingCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
-    ///
-    /// ## Discussion
-    ///
-    /// The pointer will be `nil` if the initialization failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_checkout_options>) throws -> T
     ) throws -> T
@@ -286,7 +282,7 @@ public struct GitCheckoutOptions: GitStructMutable, WithThrowingCConvertible
         }
         
         checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
-        checkoutOptions.disable_filters     = disableFilters.cValue()
+        checkoutOptions.disable_filters     = disableFilters.intValue
         checkoutOptions.dir_mode            = dirMode
         checkoutOptions.file_mode           = fileMode
         checkoutOptions.file_open_flags     = fileOpenFlags

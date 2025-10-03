@@ -1,0 +1,91 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import Foundation
+
+
+
+internal extension Data
+{
+    /// Calls the given closure with a pointer to a buffer and the length of that buffer.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Callers should ensure that the receiver is not empty before calling this method when:
+    ///
+    /// - Empty data has semantic meaning other than an error. For example, empty binary diff data
+    /// may represent no changes, and empty credential data may be valid.
+    /// - The receiver represents data returned by libgit2.
+    ///
+    /// In these cases, callers should handle the empty data by passing `nil` for the buffer and `0`
+    /// for the buffer count.
+    ///
+    /// Callers may call this method without checking whether the receiver is empty when:
+    ///
+    /// - The receiver represents user-provided data, where empty input is invalid.
+    /// - Empty data would cause undefined behavior in the C function.
+    ///
+    /// In these cases, the thrown error appropriately signals invalid input.
+    func withCBuffer<T>(
+        _ body: (UnsafePointer<CChar>, Int) throws -> T
+    ) throws -> T
+    {
+        return try self.withUnsafeBytes
+        {
+            bytes in
+            
+            guard let baseAddress: UnsafeRawPointer = bytes.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            return try body(
+                baseAddress.assumingMemoryBound(to: CChar.self),
+                bytes.count
+            )
+        }
+    }
+}
+
+
+
+internal extension Optional where Wrapped == Data
+{
+    /// Calls the given closure with an optional pointer to a buffer and the length of that buffer.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// When the receiver is `nil`, this method passes `nil` and `0` to the closure.
+    /// When the receiver contains data, it calls ``Data/withCBuffer(_:)`` on the wrapped value.
+    ///
+    /// - Important: See ``Data/withCBuffer(_:)`` for guidance on when to check for empty
+    /// data before calling this method.
+    func withOptionalCBuffer<T>(
+        _ body: (UnsafePointer<CChar>?, Int) throws -> T
+    ) throws -> T
+    {
+        switch self
+        {
+            case .none:
+                
+                return try body(nil, 0)
+                
+            case .some(let wrapped):
+                
+                return try wrapped.withCBuffer(body)
+        }
+    }
+}

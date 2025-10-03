@@ -74,7 +74,7 @@ internal extension String
         {
             buffer in
             
-            /// `baseAddress` should never be `nil` since the buffer will not be empty at this point.
+            /// `baseAddress` should not be `nil`, since the buffer will not be empty at this point.
             let mutableCString = UnsafeMutableRawPointer(buffer.baseAddress!)
                 .bindMemory(to: CChar.self, capacity: buffer.count)
             

@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -45,7 +45,7 @@ public struct GitBlameFlagT: GitOptionSet
     ///
     /// This is the equivalent of `git blame -M`.
     ///
-    /// This has not yet been implemented, but is reserved for future use.
+    /// - Note: This has not yet been implemented, but is reserved for future use.
     public static let gitBlameTrackCopiesSameFile           = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_SAME_FILE.rawValue)
     
     /// Track lines that have moved across files in the same commit.
@@ -54,7 +54,7 @@ public struct GitBlameFlagT: GitOptionSet
     ///
     /// This is the equivalent of `git blame -C`.
     ///
-    /// This has not yet been implemented, but is reserved for future use.
+    /// - Note: This has not yet been implemented, but is reserved for future use.
     public static let gitBlameTrackCopiesSameCommitMoves    = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_SAME_COMMIT_MOVES.rawValue)
     
     /// Track lines that have been copied from another file that exists in the same commit.
@@ -64,7 +64,7 @@ public struct GitBlameFlagT: GitOptionSet
     /// This is the equivalent of `git blame -CC`, and implies
     /// ``gitBlameTrackCopiesSameFile``.
     ///
-    /// This has not yet been implemented, but is reserved for future use.
+    /// - Note: This has not yet been implemented, but is reserved for future use.
     public static let gitBlameTrackCopiesSameCommitCopies   = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_SAME_COMMIT_COPIES.rawValue)
     
     /// Track lines that have been copied from another file that exists in any commit.
@@ -74,7 +74,7 @@ public struct GitBlameFlagT: GitOptionSet
     /// This is the equivalent of `git blame -CCC`, and implies
     /// ``gitBlameTrackCopiesSameCommitCopies``.
     ///
-    /// This has not yet been implemented, but is reserved for future use.
+    /// - Note: This has not yet been implemented, but is reserved for future use.
     public static let gitBlameTrackCopiesAnyCommitCopies    = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_ANY_COMMIT_COPIES.rawValue)
     
     /// Restrict the search of commits to those reachable by following only the first parents.

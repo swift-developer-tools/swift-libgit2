@@ -7,11 +7,11 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
-/// Checks if an attribute is set.
+/// Checks whether an attribute is set.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is set.
 ///
@@ -34,7 +34,7 @@ public func gitAttrIsTrue(
 
 
 
-/// Checks if an attribute is unset.
+/// Checks whether an attribute is unset.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is unset.
 ///
@@ -58,7 +58,7 @@ public func gitAttrIsFalse(
 
 
 
-/// Checks if an attribute is unspecified.
+/// Checks whether an attribute is unspecified.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is unspecified.
 ///
@@ -86,7 +86,7 @@ public func gitAttrIsUnspecified(
 
 
 
-/// Checks if an attribute is set to a value.
+/// Checks whether an attribute is set to a value.
 /// - Parameter attr: The attribute.
 /// - Returns: Whether the attribute is set to a value.
 ///

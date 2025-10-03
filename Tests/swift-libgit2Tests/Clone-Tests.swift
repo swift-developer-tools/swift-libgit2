@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -90,7 +90,7 @@ final class CloneTests: XCTestCaseStopOnFail
         XCTAssertEqual(cloneOptions.version, gitCloneOptionsVersion)
         XCTAssertNil(cloneOptions.checkoutOpts)
         XCTAssertNil(cloneOptions.fetchOpts)
-        XCTAssertEqual(cloneOptions.bare, false)
+        XCTAssertFalse(cloneOptions.bare)
         XCTAssertEqual(cloneOptions.local, .gitCloneLocalAuto)
         XCTAssertNil(cloneOptions.checkoutBranch)
         XCTAssertNil(cloneOptions.repositoryCB)
@@ -99,6 +99,22 @@ final class CloneTests: XCTestCaseStopOnFail
         XCTAssertNil(cloneOptions.remoteCBPayload)
         
         XCTAssertEqual(gitCloneOptionsVersion, UInt32(GIT_CLONE_OPTIONS_VERSION))
+        
+        try cloneOptions.withCValue
+        {
+            cCloneOptions in
+            
+            XCTAssertEqual(cCloneOptions.pointee.version, gitCloneOptionsVersion)
+            XCTAssertNotNil(cCloneOptions.pointee.checkout_opts)
+            XCTAssertNotNil(cCloneOptions.pointee.fetch_opts)
+            XCTAssertFalse(Bool(cCloneOptions.pointee.bare))
+            XCTAssertEqual(GitCloneLocalT(cValue: cCloneOptions.pointee.local), .gitCloneLocalAuto)
+            XCTAssertNil(cCloneOptions.pointee.checkout_branch)
+            XCTAssertNil(cCloneOptions.pointee.repository_cb)
+            XCTAssertNil(cCloneOptions.pointee.repository_cb_payload)
+            XCTAssertNil(cCloneOptions.pointee.remote_cb)
+            XCTAssertNil(cCloneOptions.pointee.remote_cb_payload)
+        }
     }
     
     

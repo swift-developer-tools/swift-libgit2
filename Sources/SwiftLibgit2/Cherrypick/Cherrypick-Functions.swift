@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -15,9 +15,9 @@ import Clibgit2
 /// Cherry-picks the given commit against the given "our" commit, and produces an index that reflects
 /// the result of the cherry-pick operation.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting index. The underlying type should be
+///   - out: The pointer in which to store the resulting index. The underlying type must be
 ///   `git_index`.
-///   - repo: The repository containing the given commits. The underlying type should be
+///   - repo: The repository containing the given commits. The underlying type must be
 ///   `git_repository`.
 ///   - cherrypickCommit: The commit to cherry-pick.
 ///   - ourCommit: The commit against which to cherry-pick (for example, HEAD).
@@ -27,10 +27,7 @@ import Clibgit2
 ///
 /// ## Discussion
 ///
-/// The returned index should be freed with `git_index_free()`.
-///
-/// This function will return `GIT_EUSER` if `mergeOptions` was provided, but it
-/// could not be converted to the equivalent C value.
+/// - Important: The returned index must be freed with `git_index_free()`.
 ///
 /// ## C Equivalent
 ///
@@ -66,16 +63,11 @@ public func gitCherrypickCommit(
 
 /// Cherry-picks the given commit, and produces changes in the index and working directory.
 /// - Parameters:
-///   - repo: The repository containing the given commit. The underlying type should be
+///   - repo: The repository containing the given commit. The underlying type must be
 ///   `git_repository`.
 ///   - commit: The commit to cherry-pick.
 ///   - cherrypickOptions: The options to use for the cherry-pick operation.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `cherrypickOptions` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///

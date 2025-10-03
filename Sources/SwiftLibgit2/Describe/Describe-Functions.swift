@@ -7,22 +7,17 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
 /// Describes the given commit.
 /// - Parameters:
 ///   - result: The pointer in which to store the resulting description. The underlying type
-///   should be `git_describe_result`.
-///   - committish: The commit to describe. The underlying type should be `git_object`.
+///   must be `git_describe_result`.
+///   - committish: The commit to describe. The underlying type must be `git_object`.
 ///   - opts: The options for describing the commit.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `opts` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -53,8 +48,8 @@ public func gitDescribeCommit(
 /// Describes the current commit and worktree.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting description. The underlying type
-///   should be `git_describe_result`.
-///   - repo: The repository in which the commit exists. The underlying type should be
+///   must be `git_describe_result`.
+///   - repo: The repository in which the commit exists. The underlying type must be
 ///   `git_repository`.
 ///   - opts: The options for describing the commit.
 /// - Returns: `0` on success, or an error code.
@@ -63,9 +58,6 @@ public func gitDescribeCommit(
 ///
 /// A status check will be run after performing the describe operation on HEAD. The description will be
 /// considered dirity if there are any entries.
-///
-/// This function will return `GIT_EUSER` if `opts` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -96,14 +88,9 @@ public func gitDescribeWorkdir(
 /// Writes the given commit description to a buffer.
 /// - Parameters:
 ///   - out: The buffer into which the description should be written.
-///   - result: The commit description. The underlying type should be `git_describe_result`.
+///   - result: The commit description. The underlying type must be `git_describe_result`.
 ///   - opts: The options for formatting the commit description.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will return `GIT_EUSER` if `opts` was provided, but it
-/// could not be converted to the equivalent C value.
 ///
 /// ## C Equivalent
 ///
@@ -137,7 +124,7 @@ public func gitDescribeFormat(
 
 
 /// Frees the memory allocated for a `git_describe_result`.
-/// - Parameter result: The description to free. The underlying type should be
+/// - Parameter result: The description to free. The underlying type must be
 /// `git_describe_result`.
 ///
 /// ## C Equivalent

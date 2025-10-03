@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 
 
 
@@ -51,9 +51,9 @@ public typealias GitCredentialAcquireCB = @convention(c)
 ///   - instruction: The authentication instruction.
 ///   - instructionLen: The length of the authentication instruction.
 ///   - numPrompts: The number of authentication prompts.
-///   - prompts: The authentication prompts. The underlying type should be
+///   - prompts: The authentication prompts. The underlying type must be
 ///   `LIBSSH2_USERAUTH_KBDINT_PROMPT`.
-///   - responses: The authentication responses. The underlying type should be
+///   - responses: The authentication responses. The underlying type must be
 ///   `LIBSSH2_USERAUTH_KBDINT_RESPONSE`.
 ///   - abstract: The libssh2 abstract authentication state.
 ///
@@ -76,7 +76,7 @@ public typealias GitCredentialSSHInteractiveCB = @convention(c)
 
 /// The callback for credential signing.
 /// - Parameters:
-///   - session: The libssh2 session. The underlying type should be `LIBSSH_SESSION`.
+///   - session: The libssh2 session. The underlying type must be `LIBSSH_SESSION`.
 ///   - sig: The signature.
 ///   - sigLen: The length of the signature.
 ///   - data: The credential data.

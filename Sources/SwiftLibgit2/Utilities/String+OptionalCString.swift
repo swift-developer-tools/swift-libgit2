@@ -10,7 +10,7 @@
 internal extension String
 {
     /// Creates a new string from the given optional C string pointer.
-    /// - Parameter optionalCString: The optional C string pointer.
+    /// - Parameter cString: The optional C string pointer.
     ///
     /// ## Discussion
     ///
@@ -21,10 +21,10 @@ internal extension String
     /// crashes if assumptions about non-`nil` strings prove to be incorrect, or if libgit2 behavior
     /// changes in subsequent versions.
     init?(
-        optionalCString: UnsafePointer<CChar>?
+        optionalCString cString: UnsafePointer<CChar>?
     )
     {
-        guard let cString: UnsafePointer<CChar> = optionalCString
+        guard let cString: UnsafePointer<CChar> = cString
         else
         {
             return nil

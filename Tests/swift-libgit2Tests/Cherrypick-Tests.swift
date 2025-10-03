@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Clibgit2
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -204,6 +204,16 @@ final class CherrypickTests: XCTestCaseStopOnFail
         XCTAssertNil(cherrypickOptions.checkoutOpts)
         
         XCTAssertEqual(gitCherrypickOptionsVersion, UInt32(GIT_CHERRYPICK_OPTIONS_VERSION))
+        
+        try cherrypickOptions.withCValue
+        {
+            cCherrypickOptions in
+            
+            XCTAssertEqual(cCherrypickOptions.pointee.version, gitCherrypickOptionsVersion)
+            XCTAssertEqual(cCherrypickOptions.pointee.mainline, 0)
+            XCTAssertNotNil(cCherrypickOptions.pointee.merge_opts)
+            XCTAssertNotNil(cCherrypickOptions.pointee.checkout_opts)
+        }
     }
 }
 
