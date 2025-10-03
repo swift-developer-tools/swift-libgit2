@@ -126,7 +126,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             let applyOptions = GitApplyOptions()
             
-            try Diff.withDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiffPointer(in: repository)
             {
                 diffPointer in
                 
@@ -334,12 +334,12 @@ extension ApplyTests
             
             
             
-            let diffTreeToTreeResult: Int32 = git_diff_tree_to_tree(
-                &diffPointer,
-                repository.pointer,
-                oldTreePointer,
-                newTreePointer,
-                nil
+            let diffTreeToTreeResult: Int32 = gitDiffTreeToTree(
+                diff:       &diffPointer,
+                repo:       repository.pointer,
+                oldTree:    oldTreePointer,
+                newTree:    newTreePointer,
+                opts:       nil
             )
             
             XCTAssertOK(diffTreeToTreeResult)

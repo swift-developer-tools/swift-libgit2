@@ -181,7 +181,22 @@ enum Free
     {
         if diff != nil
         {
-            git_diff_free(diff)
+            gitDiffFree(diff: diff)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for diff statistics.
+    /// - Parameter stats: The diff statistics to free. The underlying type should be
+    /// `git_diff_stats`.
+    static func freeDiffStats(
+        _ diffStats: OpaquePointer?
+    )
+    {
+        if diffStats != nil
+        {
+            gitDiffStatsFree(stats: diffStats)
         }
     }
     

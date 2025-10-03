@@ -17,13 +17,192 @@ import XCTest
 /// Diff-related testing utilities.
 enum Diff
 {
-    /// Calls the given closure with a pointer to a diff between HEAD and the working directory.
+    /// Asserts that the given diff meets certain expectations.
     /// - Parameters:
-    ///   - repository: The repository on which the diff should be created.
+    ///   - diffPointer: The diff to evaluate.
+    ///   - type: The type to evaluate.
+    ///
+    /// ## Discussion
+    ///
+    /// The following conditions are checked:
+    ///
+    /// - The diff is not `nil`.
+    /// - The diff has a non-zero number of deltas.
+    /// - The diff has a non-zero number of deltas of the given type, if a type was specified.
+    static func assertDiffChanges(
+        diffPointer : OpaquePointer?,
+        type        : GitDeltaT?        = nil
+    )
+    {
+        guard let diffPointer: OpaquePointer = diffPointer
+        else
+        {
+            XCTFail("The diff pointer was nil.")
+            return
+        }
+        
+        
+        
+        let deltas: Int = gitDiffNumDeltas(diff: diffPointer)
+        
+        XCTAssertGreaterThan(deltas, 0)
+        
+        
+        
+         _ = gitDiffIsSortedICase(diff: diffPointer)
+        
+        
+        
+        guard let type: GitDeltaT = type
+        else
+        {
+            return
+        }
+        
+        
+        
+        let deltasOfType: Int = gitDiffNumDeltasOfType(
+            diff:   diffPointer,
+            type:   type
+        )
+        
+        XCTAssertGreaterThan(deltasOfType, 0)
+        
+        
+        
+        guard let delta: GitDiffDelta = gitDiffGetDelta(diff: diffPointer, idx: 0)
+        else
+        {
+            XCTFail("The delta was nil.")
+            return
+        }
+        
+        XCTAssertEqual(delta.status, type)
+        XCTAssertNotNil(delta.oldFile.path)
+        XCTAssertNotNil(delta.newFile.path)
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a diff between two trees.
+    /// - Parameters:
+    ///   - repository: The repository in which the diff should be created.
+    ///   - oldCommitOID: The old commit ID.
+    ///   - newCommitOID: The new commit ID.
     ///   - body: The closure to call.
     /// - Throws: An `Error` thrown by the closure or if the write operation failed,
     /// or an `NSError` if the diff could not be created.
-    static func withDiffPointer(
+    static func withTreeToTreeDiffPointer(
+        in  repository  : Repository,
+        oldCommitOID    : GitOID,
+        newCommitOID    : GitOID,
+        _   body        : (OpaquePointer) throws -> Void
+    ) throws
+    {
+        var oldCommitPointer    : OpaquePointer?    = nil
+        var newCommitPointer    : OpaquePointer?    = nil
+        var oldTreePointer      : OpaquePointer?    = nil
+        var newTreePointer      : OpaquePointer?    = nil
+        var diffPointer         : OpaquePointer?    = nil
+        
+        defer
+        {
+            Free.freeCommit(oldCommitPointer)
+            Free.freeCommit(newCommitPointer)
+            Free.freeTree(oldTreePointer)
+            Free.freeTree(newTreePointer)
+            Free.freeDiff(diffPointer)
+        }
+        
+        
+        
+        let oldCommitLookupResult: Int32 = gitCommitLookup(
+            commit:     &oldCommitPointer,
+            repo:       repository.pointer,
+            id:         oldCommitOID
+        )
+        
+        XCTAssertOK(oldCommitLookupResult)
+        
+        guard let oldCommitPointer: OpaquePointer = oldCommitPointer
+        else
+        {
+            XCTFail("The old commit pointer was nil.")
+            return
+        }
+        
+        
+        
+        let newCommitLookupResult: Int32 = gitCommitLookup(
+            commit:     &newCommitPointer,
+            repo:       repository.pointer,
+            id:         newCommitOID
+        )
+        
+        XCTAssertOK(newCommitLookupResult)
+        
+        guard let newCommitPointer: OpaquePointer = newCommitPointer
+        else
+        {
+            XCTFail("The new commit pointer was nil.")
+            return
+        }
+        
+        
+        
+        let oldCommitTreeResult: Int32 = gitCommitTree(
+            out:        &oldTreePointer,
+            commit:     oldCommitPointer
+        )
+        
+        XCTAssertOK(oldCommitTreeResult)
+        XCTAssertNotNil(oldTreePointer)
+        
+        
+        
+        let newCommitTreeResult: Int32 = gitCommitTree(
+            out:        &newTreePointer,
+            commit:     newCommitPointer
+        )
+        
+        XCTAssertOK(newCommitTreeResult)
+        XCTAssertNotNil(newCommitPointer)
+        
+        
+        
+        let diffTreeToTreeResult: Int32 = gitDiffTreeToTree(
+            diff:       &diffPointer,
+            repo:       repository.pointer,
+            oldTree:    oldTreePointer,
+            newTree:    newTreePointer,
+            opts:       nil
+        )
+        
+        XCTAssertOK(diffTreeToTreeResult)
+        
+        guard let diffPointer: OpaquePointer = diffPointer
+        else
+        {
+            XCTFail("The diff pointer was nil.")
+            return
+        }
+        
+        
+        
+        assertDiffChanges(diffPointer: diffPointer)
+        
+        return try body(diffPointer)
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to a diff between HEAD and the working directory.
+    /// - Parameters:
+    ///   - repository: The repository in which the diff should be created.
+    ///   - body: The closure to call.
+    /// - Throws: An `Error` thrown by the closure or if the write operation failed,
+    /// or an `NSError` if the diff could not be created.
+    static func withTreeToWorkdirDiffPointer(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> Void
     ) throws
@@ -66,11 +245,13 @@ enum Diff
             Free.freeDiff(diffPointer)
         }
         
-        let diffTreeToWorkdirResult: Int32 = git_diff_tree_to_workdir(
-            &diffPointer,
-            repository.pointer,
-            treePointer,
-            nil
+        
+        
+        let diffTreeToWorkdirResult: Int32 = gitDiffTreeToWorkdir(
+            diff:       &diffPointer,
+            repo:       repository.pointer,
+            oldTree:    treePointer,
+            opts:       nil
         )
         
         XCTAssertOK(diffTreeToWorkdirResult)
@@ -85,6 +266,8 @@ enum Diff
         }
         
         
+        
+        assertDiffChanges(diffPointer: diffPointer)
         
         return try body(diffPointer)
     }
