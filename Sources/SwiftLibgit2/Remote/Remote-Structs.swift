@@ -186,9 +186,9 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     {
         var remoteCallbacks = git_remote_callbacks()
         
-        let remoteInitCallbacksResult: Int32 = git_remote_init_callbacks(
-            &remoteCallbacks,
-            version
+        let remoteInitCallbacksResult: Int32 = gitRemoteInitCallbacks(
+            opts:       &remoteCallbacks,
+            version:    version
         )
         
         if remoteInitCallbacksResult != GIT_OK.rawValue

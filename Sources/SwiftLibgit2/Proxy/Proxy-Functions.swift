@@ -14,7 +14,7 @@ import CLibgit2
 /// Initializes the given `git_proxy_options` instance.
 /// - Parameters:
 ///   - opts: The `git_proxy_options` instance to initialize.
-///   - version: The version to use. Pass ``gitProxtOptionsVersion``.
+///   - version: The version to use. Pass ``gitProxyOptionsVersion``.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
