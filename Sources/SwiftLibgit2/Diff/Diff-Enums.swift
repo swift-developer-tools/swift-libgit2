@@ -123,7 +123,7 @@ public struct GitDiffOptionT: GitOptionSet
     /// If the pathspec is set in the diff options, this flags indicates that the paths should be treated as
     /// literal paths instead of `fnmatch` patterns.
     ///
-    /// Each path in the list should be a full path to either a file or a directory. A trailing slash indicates
+    /// Each path in the list must be a full path to either a file or a directory. A trailing slash indicates
     /// that the path will only match a directory. If a directory is specified, all of its children will be included.
     public static let gitDiffDisablePathspecMatch           = GitDiffOptionT(rawValue: GIT_DIFF_DISABLE_PATHSPEC_MATCH.rawValue)
     
@@ -236,7 +236,7 @@ public struct GitDiffOptionT: GitOptionSet
 /// the ``GitDiffFile/flags`` property of ``GitDiffFile`` that represent the old and new
 /// sides of the delta.
 ///
-/// Values outside of the public supported range should be considered reserved for internal or future use.
+/// Values outside of the public supported range are reserved for internal or future use.
 ///
 /// ## C Equivalent
 ///

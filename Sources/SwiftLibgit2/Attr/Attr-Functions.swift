@@ -41,7 +41,7 @@ public func gitAttrValue(
 ///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
 ///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
 ///   this value.
-///   - repo: The repository containing the given path. The underlying type should be
+///   - repo: The repository containing the given path. The underlying type must be
 ///   `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
 ///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
@@ -77,7 +77,7 @@ public func gitAttrGet(
 ///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
 ///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
 ///   this value.
-///   - repo: The repository containing the given path. The underlying type should be
+///   - repo: The repository containing the given path. The underlying type must be
 ///   `git_repository`.
 ///   - opts: The options to use when querying the attributes.
 ///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
@@ -121,7 +121,7 @@ public func gitAttrGetExt(
 ///   - valueOut: An array of `numAttr` entries that should have string pointers written into it for the
 ///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
 ///   array itself if it was not allocated by the library).
-///   - repo: The repository containing the given path. The underlying type should be
+///   - repo: The repository containing the given path. The underlying type must be
 ///   `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
 ///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
@@ -165,7 +165,7 @@ public func gitAttrGetMany(
 ///   - valueOut: An array of `numAttr` entries that should have string pointers written into it for the
 ///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
 ///   array itself if it was not allocated by the library).
-///   - repo: The repository containing the given path. The underlying type should be
+///   - repo: The repository containing the given path. The underlying type must be
 ///   `git_repository`.
 ///   - opts: The options to use when querying the attributes.
 ///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
@@ -214,7 +214,7 @@ public func gitAttrGetManyExt(
 
 /// Loops over all the attributes for the given path.
 /// - Parameters:
-///   - repo: The repository containing the given path. The underlying type should be
+///   - repo: The repository containing the given path. The underlying type must be
 ///   `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
 ///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
@@ -248,7 +248,7 @@ public func gitAttrForEach(
 
 /// Loops over all the attributes for the given path, with extended options.
 /// - Parameters:
-///   - repo: The repository containing the given path. The underlying type should be
+///   - repo: The repository containing the given path. The underlying type must be
 ///   `git_repository`.
 ///   - opts: The options to use when querying the attributes.
 ///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
@@ -290,7 +290,7 @@ public func gitAttrForEachExt(
 
 /// Flushes the `.gitattributes` cache.
 /// - Parameter repo: The repository containing the `.gitattributes` cache.  The underlying
-/// type should be `git_repository`.
+/// type must be `git_repository`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
@@ -312,7 +312,7 @@ public func gitAttrCacheFlush(
 
 /// Adds a macro definition.
 /// - Parameters:
-///   - repo: The repository in which to add the macro. The underlying type should be
+///   - repo: The repository in which to add the macro. The underlying type must be
 ///   `git_repository`.
 ///   - name: The name of the macro.
 ///   - values: The value of the macro.

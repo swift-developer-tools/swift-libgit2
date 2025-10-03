@@ -15,7 +15,7 @@ import CLibgit2
 /// Updates files in the index and in the working tree to match the contenet of the commit
 /// pointed at by HEAD.
 /// - Parameters:
-///   - repo: The repository to check out. The underlying type should be `git_repository`.
+///   - repo: The repository to check out. The underlying type must be `git_repository`.
 ///   This repository may not be bare.
 ///   - opts: The options for the checkout operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
@@ -56,9 +56,9 @@ public func gitCheckoutHEAD(
 
 /// Updates files in the working tree to match the index.
 /// - Parameters:
-///   - repo: The repository to check out. The underlying type should be `git_repository`.
+///   - repo: The repository to check out. The underlying type must be `git_repository`.
 ///   This repository may not be bare.
-///   - index: The index to check out. The underlying type should be `git_index`.
+///   - index: The index to check out. The underlying type must be `git_index`.
 ///   Pass `nil` to use the repository index.
 ///   - opts: The options for the checkout operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
@@ -93,10 +93,10 @@ public func gitCheckoutIndex(
 /// Updates files in the index and working tree to match the content of the tree pointed at by the
 /// given tree-ish object.
 /// - Parameters:
-///   - repo: The repository to check out. The underlying type should be `git_repository`.
+///   - repo: The repository to check out. The underlying type must be `git_repository`.
 ///   This repository may not be bare.
 ///   - treeish: The commit, tag, or tree whose content will be used to update the working
-///   directory. The underlying type should be `git_object`. Pass `nil` to use HEAD.
+///   directory. The underlying type must be `git_object`. Pass `nil` to use HEAD.
 ///   - opts: The options for the checkout operation.
 /// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
 /// or an error code.

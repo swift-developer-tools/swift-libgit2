@@ -13,7 +13,7 @@ import CLibgit2
 
 /// Clones a remote repository.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting repository. The underlying type should be
+///   - out: The pointer in which to store the resulting repository. The underlying type must be
 ///   `git_repository`.
 ///   - url: The URL of the remote to clone.
 ///   - localPath: The path to the local directory in which to clone.

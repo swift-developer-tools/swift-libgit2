@@ -16,7 +16,7 @@ internal protocol GitOptionSet: CConvertible, OptionSet, Sendable
     ///
     /// ## Discussion
     ///
-    /// This should have a `public` access level.
+    /// This must have a `public` access level.
     init(
         rawValue: UInt32
     )

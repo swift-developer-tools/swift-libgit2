@@ -18,16 +18,16 @@
 ///
 /// ### Conforming Structs
 ///
-/// All Swift binding structs should conform to one of the following protocols:
+/// All Swift binding structs must conform to one of the following protocols:
 ///
 /// - ``GitStructReadable`` (read-only)
 /// - ``GitStructMutable`` (mutable)
 /// - ``GitStructInternalMutable`` (public read-only, internal mutable)
 ///
-/// The exception is Swift structs that act as bindings for C bitset enums. These Swift structs should conform
+/// The exception is Swift structs that act as bindings for C bitset enums. These Swift structs must conform
 /// to the ``GitOptionSet`` protocol instead.
 ///
-/// The only structs that should conform directly to ``GitStruct`` are structs which are unused by other
+/// The only structs that may conform directly to ``GitStruct`` are structs which are unused by other
 /// bindings, but exist for documentation purposes. ``GitStructReadable`` does not define any
 /// additional requirements other than those of ``GitStruct``, but exists for semantic purposes.
 ///
@@ -58,7 +58,7 @@
 ///
 /// ## Additional Requirements
 ///
-/// In addition to the requirements actually defined by this protocol, conforming structs should also follow the
+/// In addition to the requirements actually defined by this protocol, conforming structs must also follow the
 /// rules described above. These protocols cannot be more specific due to limitations of what Swift protocols
 /// can define, and also because the conforming structs have different requirements based on the C struct
 /// they are translating.
@@ -67,7 +67,7 @@
 /// not definable through Swift protocols.
 ///
 /// Similarly, structs that conform to ``GitStructReadable``, ``GitStructMutable``,
-/// or ``GitStructInternalMutable`` should implement one of the following approaches to
+/// or ``GitStructInternalMutable`` must implement one of the following approaches to
 /// converting the Swift struct to its C equivalent:
 ///
 /// ```swift
@@ -78,7 +78,7 @@
 /// ) -> T
 /// ```
 ///
-/// Structs should implement these by conforming to one of the following protocols:
+/// Structs must implement these by conforming to one of the following protocols:
 ///
 /// - ``CConvertible`` (non-throwing, without memory management)
 /// - ``ThrowingCConvertible`` (throwing, without memory management)
@@ -86,7 +86,7 @@
 ///
 /// ``GitStruct`` does not directly conform to the C convertible protocols due to the level of variation
 /// required by conforming structs. A single protocol cannot define this level of variation, and multiple
-/// protocols would be less effective from a semantic standpoint. Conforming structs should adopt one
+/// protocols would be less effective from a semantic standpoint. Conforming structs must adopt one
 /// of the convertible protocols, unless they conform directly to ``GitStruct`` (and are unused by
 /// other bindings).
 ///
@@ -102,8 +102,8 @@
 /// ) rethrows -> T
 /// ```
 ///
-/// The first mutating method should be used when working with C functions that expect a parameter
-/// of the type `C *`, while the second mutating method should be used for `C **` parameters.
+/// The first mutating method must be used when working with C functions that expect a parameter
+/// of the type `C *`, while the second mutating method must be used for `C **` parameters.
 /// The second mutating method uses an optional pointer since libgit2 may set the pointer to `nil`.
 ///
 /// The structs that use these mutating methods are commonly used as `inout` parameters.
@@ -118,7 +118,7 @@ internal protocol GitStruct
     ///
     /// ## Discussion
     ///
-    /// This should have an `internal` access level.
+    /// This must have an `internal` access level.
     init(
         cValue: C
     )
@@ -140,7 +140,7 @@ internal protocol GitStructMutable: GitStruct
     ///
     /// ## Discussion
     ///
-    /// This should have a `public` access level and an empty body.
+    /// This must have a `public` access level and an empty body.
     init()
 }
 
@@ -153,7 +153,7 @@ internal protocol GitStructInternalMutable: GitStruct
     ///
     /// ## Discussion
     ///
-    /// This should have a `public` access level and an empty body.
+    /// This must have a `public` access level and an empty body.
     init()
 }
 

@@ -88,7 +88,7 @@ public func gitSignatureNow(
 /// - Parameters:
 ///   - authorOut: The new author signature.
 ///   - committerOut: The new committer signature.
-///   - repo: The repository. The underlying type should be `git_repository`.
+///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
@@ -209,7 +209,7 @@ public func gitSignatureDefaultFromEnv(
 /// Creates a new signature with the default user and a timestamp representing the current time.
 /// - Parameters:
 ///   - out: The new signature.
-///   - repo: The repository. The underlying type should be `git_repository`.
+///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion

@@ -159,7 +159,7 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     /// this as a simple list.
     public var paths            : [String]                  = []
     
-    /// The expected content of the working directory. The underlying type should be `git_tree`.
+    /// The expected content of the working directory. The underlying type must be `git_tree`.
     ///
     /// ## Discussion
     ///
@@ -169,7 +169,7 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     public var baseline         : OpaquePointer?            = nil
     
     /// The expected content of the working directory, expressed as an index. The underlying type
-    /// should be `git_index`.
+    /// must be `git_index`.
     ///
     /// ## Discussion
     ///

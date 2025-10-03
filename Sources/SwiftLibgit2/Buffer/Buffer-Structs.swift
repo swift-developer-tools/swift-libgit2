@@ -17,7 +17,7 @@ import CLibgit2
 ///
 /// Sometimes libgit2 wants to return an allocated data buffer to the caller and have the caller take
 /// responsibility for freeing that memory. To make ownership clear in these cases, libgit2 uses ``GitBuf``
-/// to return this data. Callers should use ``gitBufDispose(buffer:)`` to free the memory.
+/// to return this data. Callers must use ``gitBufDispose(buffer:)`` to free the memory.
 ///
 /// A ``GitBuf`` contains a pointer to a null-terminated C string and the length of the string, in bytes.
 /// The length of the string does not include the null terminator.

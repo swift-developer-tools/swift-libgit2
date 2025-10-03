@@ -13,9 +13,9 @@ import CLibgit2
 
 /// Looks up a commit from a repository.
 /// - Parameters:
-///   - commit: The pointer in which to store the resulting commit. The underlying type should be
+///   - commit: The pointer in which to store the resulting commit. The underlying type must be
 ///   `git_commit`.
-///   - repo: The repository in which to look up the commit. The underlying type should be
+///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
 /// - Returns: `0` on success, or an error code.
@@ -42,9 +42,9 @@ public func gitCommitLookup(
 
 /// Looks up a commit from a repository, given a prefix of its identifier (short ID).
 /// - Parameters:
-///   - commit: The pointer in which to store the resulting commit. The underlying type should be
+///   - commit: The pointer in which to store the resulting commit. The underlying type must be
 ///   `git_commit`.
-///   - repo: The repository in which to look up the commit. The underlying type should be
+///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
 ///   - len: The length of the short ID.
@@ -73,7 +73,7 @@ public func gitCommitLookupPrefix(
 
 
 /// Frees the memory allocated for a `git_commit` instance.
-/// - Parameter commit: The commit to free. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit to free. The underlying type must be `git_commit`.
 ///
 /// ## C Equivalent
 ///
@@ -88,7 +88,7 @@ public func gitCommitFree(
 
 
 /// Gets the ID of the given commit.
-/// - Parameter commit: The commit.  The underlying type should be `git_commit`.
+/// - Parameter commit: The commit.  The underlying type must be `git_commit`.
 /// - Returns: The commit ID.
 ///
 /// ## C Equivalent
@@ -106,7 +106,7 @@ public func gitCommitID(
 
 
 /// Gets the repository that contains the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The repository containing the given commit.
 ///
 /// ## C Equivalent
@@ -122,7 +122,7 @@ public func gitCommitOwner(
 
 
 /// Gets the encoding of the message of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The encoding of the message of the given commit.
 ///
 /// ## C Equivalent
@@ -140,7 +140,7 @@ public func gitCommitMessageEncoding(
 
 
 /// Gets the message of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The message of the given commit.
 ///
 /// ## Discussion
@@ -162,7 +162,7 @@ public func gitCommitMessage(
 
 
 /// Gets the raw message of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The raw message of the given commit.
 ///
 /// ## C Equivalent
@@ -180,7 +180,7 @@ public func gitCommitMessageRaw(
 
 
 /// Gets the summary of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The summary of the given commit.
 ///
 /// ## Discussion
@@ -203,7 +203,7 @@ public func gitCommitSummary(
 
 
 /// Gets the body of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The body of the given commit.
 ///
 /// ## Discussion
@@ -226,7 +226,7 @@ public func gitCommitBody(
 
 
 /// Gets the time of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The time of the given commit.
 ///
 /// ## C Equivalent
@@ -242,7 +242,7 @@ public func gitCommitTime(
 
 
 /// Gets the timezone offset of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The timezone offset of the given commit.
 ///
 /// ## C Equivalent
@@ -258,7 +258,7 @@ public func gitCommitTimeOffset(
 
 
 /// Gets the committer of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The committer of the given commit.
 ///
 /// ## C Equivalent
@@ -276,7 +276,7 @@ public func gitCommitCommitter(
 
 
 /// Gets the author of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The author of the given commit.
 ///
 /// ## C Equivalent
@@ -297,8 +297,8 @@ public func gitCommitAuthor(
 /// canonical real names and email addresses.
 /// - Parameters:
 ///   - out: The resolved signature.
-///   - commit: The commit. The underlying type should be `git_commit`.
-///   - mailmap: The mailmap with which to resolve the signature. The underlying type should be
+///   - commit: The commit. The underlying type must be `git_commit`.
+///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -332,8 +332,8 @@ public func gitCommitCommitterWithMailmap(
 /// canonical real names and email addresses.
 /// - Parameters:
 ///   - out: The resolved signature.
-///   - commit: The commit. The underlying type should be `git_commit`.
-///   - mailmap: The mailmap with which to resolve the signature. The underlying type should be
+///   - commit: The commit. The underlying type must be `git_commit`.
+///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -364,7 +364,7 @@ public func gitCommitAuthorWithMailmap(
 
 
 /// Gets the raw text of the given commit's header.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The body of the given commit.
 ///
 /// ## C Equivalent
@@ -383,8 +383,8 @@ public func gitCommitRawHeader(
 
 /// Gets the tree pointed to by the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting tree. The underlying type should be `git_tree`.
-///   - commit:The commit. The underlying type should be `git_commit`.
+///   - out: The pointer in which to store the resulting tree. The underlying type must be `git_tree`.
+///   - commit:The commit. The underlying type must be `git_commit`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
@@ -404,7 +404,7 @@ public func gitCommitTree(
 
 
 /// Gets the ID of the tree pointed to by the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The ID of the tree pointed to by the given commit.
 ///
 /// ## Discussion
@@ -427,7 +427,7 @@ public func gitCommitTreeID(
 
 
 /// Gets the number of parents of the given commit.
-/// - Parameter commit: The commit. The underlying type should be `git_commit`.
+/// - Parameter commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: The number of parents of the given commit.
 ///
 /// ## C Equivalent
@@ -446,9 +446,9 @@ public func gitCommitParentCount(
 
 /// Gets the specified parent of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting parent commit. The underlying type should be
+///   - out: The pointer in which to store the resulting parent commit. The underlying type must be
 ///   `git_commit`.
-///   - commit: The commit. The underlying type should be `git_commit`.
+///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed position of the parent.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -472,7 +472,7 @@ public func gitCommitParent(
 
 /// Gets the ID of the specified parent of the given commit.
 /// - Parameters:
-///   - commit: The commit. The underlying type should be `git_commit`.
+///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed position of the parent.
 /// - Returns: The ID of the specified parent of the given commit.
 ///
@@ -498,8 +498,8 @@ public func gitCommitParentID(
 /// the first parents.
 /// - Parameters:
 ///   - ancestor: The pointer in which to store the resulting ancestor commit. The underlying type
-///   should be `git_commit`.
-///   - commit: The commit. The underlying type should be `git_commit`.
+///   must be `git_commit`.
+///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed generation.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -528,7 +528,7 @@ public func gitCommitNthGenAncestor(
 /// Gets the a header field from the given commit.
 /// - Parameters:
 ///   - out: The buffer into which the header field should be written.
-///   - commit: The commit in which to look. The underlying type should be `git_commit`.
+///   - commit: The commit in which to look. The underlying type must be `git_commit`.
 ///   - field: The header field to return.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -564,7 +564,7 @@ public func gitCommitHeaderField(
 ///   - signature: The buffer into which the signature block should be written.
 ///   - signedData: The buffer into which the signed data (the commit content less the signature
 ///   block) should be written.
-///   - repo: The repository in which the commit exists. The underlying type should be
+///   - repo: The repository in which the commit exists. The underlying type must be
 ///   `git_repository`.
 ///   - commitID: The commit from which to extract the data.
 ///   - field: The name of the header field containing the signature block. Pass `nil` to extract
@@ -618,18 +618,18 @@ public func gitCommitExtractSignature(
 /// Creates a new commit in the given repository from a list of `git_object` pointers.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the newly-created commit.
-///   - repo: The repository in which to store the commit. The underlying type should be
+///   - repo: The repository in which to store the commit. The underlying type must be
 ///   `git_repository`.
 ///   - updateRef: The name of the reference that will be updated to point to the commit.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
 ///   - messageEncoding: The encoding of the commit message.
 ///   - message: The commit message.
-///   - tree: The tree object that should be used as the tree for the commit. The underlying type should
+///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
 ///   be `git_tree`.
 ///   - parentCount: The number of parents of the commit.
-///   - parents: The parents of the commit. The underlying type should be an array of `git_commit`
-///   objects, of length `parentCount`. All the given commits should be owned by `repo`.
+///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
+///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
@@ -698,7 +698,7 @@ public func gitCommitCreate(
 /// Commits the staged changes in the repository.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the newly-created commit.
-///   - repo: The repository in which to store the commit. The underlying type should be
+///   - repo: The repository in which to store the commit. The underlying type must be
 ///   `git_repository`.
 ///   - message: The commit message.
 ///   - opts: The options for commit creation.
@@ -744,13 +744,13 @@ public func gitCommitCreateFromStage(
 /// Amends an existing commit by replacing only non-`nil` values.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the newly-created commit.
-///   - commitToAmend: The commit to amend. The underlying type should be `git_commit`.
+///   - commitToAmend: The commit to amend. The underlying type must be `git_commit`.
 ///   - updateRef: The name of the reference that will be updated to point to the commit.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
 ///   - messageEncoding: The encoding of the commit message.
 ///   - message: The commit message.
-///   - tree: The tree object that should be used as the tree for the commit. The underlying type should
+///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
 ///   be `git_tree`.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -816,17 +816,17 @@ public func gitCommitAmend(
 /// Creates a new commit in the given repository and writes it into a buffer.
 /// - Parameters:
 ///   - out: The buffer into which the commit content should be written.
-///   - repo: The repository in which to store the commit. The underlying type should be
+///   - repo: The repository in which to store the commit. The underlying type must be
 ///   `git_repository`.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
 ///   - messageEncoding: The encoding of the commit message.
 ///   - message: The commit message.
-///   - tree: The tree object that should be used as the tree for the commit. The underlying type should
+///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
 ///   be `git_tree`.
 ///   - parentCount: The number of parents of the commit.
-///   - parents: The parents of the commit. The underlying type should be an array of `git_commit`
-///   objects, of length `parentCount`. All the given commits should be owned by `repo`.
+///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
+///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## Discussion
@@ -889,7 +889,7 @@ public func gitCommitCreateBuffer(
 /// Creates a commit from the given content and signature.
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID of the newly-created commit
-///   - repo: The repository in which to store the commit. The underlying type should be
+///   - repo: The repository in which to store the commit. The underlying type must be
 ///   `git_repository`.
 ///   - commitContent: The content of the unsigned commit.
 ///   - signature: The signature to add to the commit.
@@ -926,9 +926,9 @@ public func gitCommitCreateWithSignature(
 
 /// Creates an in-memory copy of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting commit. The underlying type should be
+///   - out: The pointer in which to store the resulting commit. The underlying type must be
 ///   `git_commit`.
-///   - source: The original commit to copy. The underlying type should be `git_commit`.
+///   - source: The original commit to copy. The underlying type must be `git_commit`.
 /// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent

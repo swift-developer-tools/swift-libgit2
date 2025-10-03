@@ -96,7 +96,7 @@ internal extension String
     /// Use this to populate fixed-size C character array fields. The string content will be truncated
     /// if it exceeds `byteCount - 1`.
     ///
-    /// - Important: The destination buffer should have at least `byteCount` bytes of allocated
+    /// - Important: The destination buffer must have at least `byteCount` bytes of allocated
     /// memory. This method will zero the entire buffer before copying to ensure a clean state.
     func copyMemory(
         to cArray   : UnsafeMutablePointer<CChar>,
