@@ -22,6 +22,15 @@ final class SignatureTests: XCTestCaseStopOnFail
         XCTAssertTrue(signature.name.isEmpty)
         XCTAssertTrue(signature.email.isEmpty)
         XCTAssertNotNil(signature.when)
+        
+        signature.withCValue
+        {
+            cSignature in
+            
+            XCTAssertEqual(String(optionalCString: cSignature.pointee.name), "")
+            XCTAssertEqual(String(optionalCString: cSignature.pointee.email), "")
+            XCTAssertNotNil(cSignature.pointee.when)
+        }
     }
     
     
