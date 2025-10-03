@@ -403,9 +403,9 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     {
         var diffOptions = git_diff_options()
         
-        let diffOptionsInitResult: Int32 = git_diff_options_init(
-            &diffOptions,
-            version
+        let diffOptionsInitResult: Int32 = gitDiffOptionsInit(
+            opts:       &diffOptions,
+            version:    version
         )
         
         if diffOptionsInitResult != GIT_OK.rawValue

@@ -12,6 +12,33 @@ import Foundation
 
 
 
+/// Initializes the given `git_diff_options` instance.
+/// - Parameters:
+///   - opts: The `git_diff_options` instance to initialize.
+///   - version: The version to use. Pass ``gitDiffOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_diff_options` instances.
+/// ``GitDiffOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_diff_options_init()`](https://libgit2.org/docs/reference/main/diff/git_diff_options_init.html)
+public func gitDiffOptionsInit(
+    opts    : UnsafeMutablePointer<git_diff_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_diff_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Frees the memory allocated for a diff.
 /// - Parameter diff: The diff to free. The underlying type must be `git_diff`.
 ///
