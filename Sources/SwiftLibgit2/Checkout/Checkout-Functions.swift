@@ -11,6 +11,33 @@ import CLibgit2
 
 
 
+/// Initializes the given `git_checkout_options` instance.
+/// - Parameters:
+///   - opts: The `git_checkout_options` instance to initialize.
+///   - version: The version to use. Pass ``gitCheckoutOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_checkout_options` instances.
+/// ``GitCheckoutOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_checkout_options_init()`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options_init.html)
+public func gitCheckoutOptionsInit(
+    opts    : UnsafeMutablePointer<git_checkout_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_checkout_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 // TODO: Replace `git_repository_set_head()` in documentation.
 /// Updates files in the index and in the working tree to match the contenet of the commit
 /// pointed at by HEAD.
