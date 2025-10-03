@@ -20,6 +20,7 @@ Decorate individual lines in a file with the commit that introduced the changes.
 
 ### Functions
 
+- ``gitBlameOptionsInit(opts:version:)``
 - ``gitBlameLineCount(blame:)``
 - ``gitBlameHunkCount(blame:)``
 - ``gitBlameHunkByIndex(blame:index:)``
