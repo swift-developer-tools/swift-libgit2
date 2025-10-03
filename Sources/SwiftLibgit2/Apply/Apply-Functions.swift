@@ -11,9 +11,37 @@ import CLibgit2
 
 
 
+/// Initializes the given `git_apply_options` instance.
+/// - Parameters:
+///   - opts: The `git_apply_options` instance to initialize.
+///   - version: The version to use. Pass ``gitApplyOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_apply_options` instances.
+/// ``GitApplyOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_apply_options_init()`](https://libgit2.org/docs/reference/main/apply/git_apply_options_init.html)
+public func gitApplyOptionsInit(
+    opts    : UnsafeMutablePointer<git_apply_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_apply_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Applies a diff to a tree, and returns the resulting image as an index.
 /// - Parameters:
-///   - out: The postimage of the application. The underlying type must be `git_index`.
+///   - out: The pointer in which to store the resulting postimage of the application. The underlying
+///   type must be `git_index`.
 ///   - repo: The repository to apply. The underlying type must be `git_repository`.
 ///   - preimage: The tree to which the diff should be applied. The underlying type must be
 ///   `git_tree`.
