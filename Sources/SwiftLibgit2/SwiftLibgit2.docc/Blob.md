@@ -25,6 +25,7 @@ The raw data of a file in a repository.
 - ``gitBlobOwner(blob:)``
 - ``gitBlobRawContent(blob:)``
 - ``gitBlobRawSize(blob:)``
+- ``gitBlobFilterOptionsInit(opts:version:)``
 - ``gitBlobFilter(out:blob:asPath:opts:)``
 - ``gitBlobCreateFromWorkdir(id:repo:relativePath:)``
 - ``gitBlobCreateFromDisk(id:repo:path:)``

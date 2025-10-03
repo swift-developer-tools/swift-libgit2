@@ -86,9 +86,9 @@ public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
     {
         var blobFilterOptions = git_blob_filter_options()
         
-        let blobFilterOptionsInitResult: Int32 = git_blob_filter_options_init(
-            &blobFilterOptions,
-            version
+        let blobFilterOptionsInitResult: Int32 = gitBlobFilterOptionsInit(
+            opts:       &blobFilterOptions,
+            version:    version
         )
         
         if blobFilterOptionsInitResult != GIT_OK.rawValue

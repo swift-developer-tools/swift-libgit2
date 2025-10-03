@@ -38,6 +38,7 @@ public func gitBlameOptionsInit(
 }
 
 
+
 /// Gets the number of lines that exist in the blame.
 /// - Parameter blame: The blame to query. The underlying type must be `git_blame`.
 /// - Returns: The number of lines that exist in the blame.
