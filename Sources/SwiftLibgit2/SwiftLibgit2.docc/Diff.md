@@ -49,6 +49,7 @@ Indicate the difference between two versions of the repository.
 ### Functions
 
 - ``gitDiffOptionsInit(opts:version:)``
+- ``gitDiffFindOptionsInit(opts:version:)``
 - ``gitDiffFree(diff:)``
 - ``gitDiffTreeToTree(diff:repo:oldTree:newTree:opts:)``
 - ``gitDiffTreeToIndex(diff:repo:oldTree:index:opts:)``

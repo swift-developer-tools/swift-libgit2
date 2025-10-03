@@ -986,9 +986,9 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffFindOptions = git_diff_find_options()
         
-        let diffFindOptionsInitResult: Int32 = git_diff_find_options_init(
-            &diffFindOptions,
-            version
+        let diffFindOptionsInitResult: Int32 = gitDiffFindOptionsInit(
+            opts:       &diffFindOptions,
+            version:    version
         )
         
         if diffFindOptionsInitResult != GIT_OK.rawValue

@@ -39,6 +39,33 @@ public func gitDiffOptionsInit(
 
 
 
+/// Initializes the given `git_diff_find_options` instance.
+/// - Parameters:
+///   - opts: The `git_diff_find_options` instance to initialize.
+///   - version: The version to use. Pass ``gitDiffFindOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_diff_find_options` instances.
+/// ``GitDiffFindOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_diff_find_options_init()`](https://libgit2.org/docs/reference/main/diff/git_diff_find_options_init.html)
+public func gitDiffFindOptionsInit(
+    opts    : UnsafeMutablePointer<git_diff_find_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_diff_find_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Frees the memory allocated for a diff.
 /// - Parameter diff: The diff to free. The underlying type must be `git_diff`.
 ///
