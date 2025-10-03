@@ -23,4 +23,5 @@ Clone a remote repository to the local disk.
 
 ### Functions
 
+- ``gitCloneOptionsInit(opts:version:)``
 - ``gitClone(out:url:localPath:options:)``
