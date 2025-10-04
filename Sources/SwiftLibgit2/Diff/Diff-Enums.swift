@@ -730,7 +730,7 @@ public enum GitDiffFormatT: UInt32, GitEnum
 
 
 
-/// The diff statistics formatting options.
+/// The flags controlling the formatting of diff statistics.
 ///
 /// ## C Equivalent
 ///
