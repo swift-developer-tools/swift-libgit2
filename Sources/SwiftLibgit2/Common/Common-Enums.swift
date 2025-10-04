@@ -68,7 +68,7 @@ public struct GitFeatureT: GitOptionSet
     /// Kerberos (SPNEGO) authentication support over HTTPS.
     public static let gitFeatureAuthNegotiate   = GitFeatureT(rawValue: GIT_FEATURE_AUTH_NEGOTIATE.rawValue)
     
-    /// Zlib support.
+    /// ZLib support.
     ///
     /// ## Discussion
     ///
