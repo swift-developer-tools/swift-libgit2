@@ -31,6 +31,9 @@ import CLibgit2
 /// Despite its name, this enum represents both success and error codes. The ``GitErrorCode/gitOK``
 /// case indicates a successful operation, while all other cases represent various error conditions.
 ///
+/// Some libgit2 functions also return non-zero values from caller-provided callbacks. These callback
+/// return values will be wrapped in the ``GitErrorCode/gitUnknown(_:)`` case.
+///
 /// ## C Equivalent
 ///
 /// [`git_error_code`](https://libgit2.org/docs/reference/main/errors/git_error_code.html)
