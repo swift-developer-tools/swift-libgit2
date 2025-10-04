@@ -22,6 +22,8 @@ Describe a commit in reference to a tag.
 
 ### Functions
 
+- ``gitDescribeOptionsInit(opts:version:)``
+- ``gitDescribeFormatOptionsInit(opts:version:)``
 - ``gitDescribeCommit(result:committish:opts:)``
 - ``gitDescribeWorkdir(out:repo:opts:)``
 - ``gitDescribeFormat(out:result:opts:)``

@@ -271,9 +271,9 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     {
         var checkoutOptions = git_checkout_options()
         
-        let checkoutOptionsInitResult: Int32 = git_checkout_options_init(
-            &checkoutOptions,
-            version
+        let checkoutOptionsInitResult: Int32 = gitCheckoutOptionsInit(
+            opts:       &checkoutOptions,
+            version:    version
         )
         
         if checkoutOptionsInitResult != GIT_OK.rawValue

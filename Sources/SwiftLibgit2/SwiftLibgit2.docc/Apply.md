@@ -24,5 +24,6 @@ Apply patches to the index or working directory.
 
 ### Functions
 
+- ``gitApplyOptionsInit(opts:version:)``
 - ``gitApplyToTree(out:repo:preimage:diff:options:)``
 - ``gitApply(repo:diff:location:options:)``

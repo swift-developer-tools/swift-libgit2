@@ -15,5 +15,6 @@ directory.
 
 ### Functions
 
+- ``gitCherrypickOptionsInit(opts:version:)``
 - ``gitCherrypickCommit(out:repo:cherrypickCommit:ourCommit:mainline:mergeOptions:)``
 - ``gitCherrypick(repo:commit:cherrypickOptions:)``

@@ -91,9 +91,9 @@ public struct GitApplyOptions: GitStructMutable, WithCConvertible
     {
         var applyOptions = git_apply_options()
         
-        let applyOptionsInitResult: Int32 = git_apply_options_init(
-            &applyOptions,
-            version
+        let applyOptionsInitResult: Int32 = gitApplyOptionsInit(
+            opts:       &applyOptions,
+            version:    version
         )
         
         if applyOptionsInitResult != GIT_OK.rawValue

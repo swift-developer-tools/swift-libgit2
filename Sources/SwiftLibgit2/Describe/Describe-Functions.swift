@@ -11,6 +11,60 @@ import CLibgit2
 
 
 
+/// Initializes the given `git_describe_options` instance.
+/// - Parameters:
+///   - opts: The `git_describe_options` instance to initialize.
+///   - version: The version to use. Pass ``gitDescribeOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_describe_options` instances.
+/// ``GitDescribeOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_describe_options_init()`](https://libgit2.org/docs/reference/main/describe/git_describe_options_init.html)
+public func gitDescribeOptionsInit(
+    opts    : UnsafeMutablePointer<git_describe_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_describe_options_init(
+        opts,
+        version
+    )
+}
+
+
+
+/// Initializes the given `git_describe_format_options` instance.
+/// - Parameters:
+///   - opts: The `git_describe_format_options` instance to initialize.
+///   - version: The version to use. Pass ``gitDescribeFormatOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_describe_format_options` instances.
+/// ``GitDescribeFormatOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_describe_format_options_init()`](https://libgit2.org/docs/reference/main/describe/git_describe_format_options_init.html)
+public func gitDescribeFormatOptionsInit(
+    opts    : UnsafeMutablePointer<git_describe_format_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_describe_format_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Describes the given commit.
 /// - Parameters:
 ///   - result: The pointer in which to store the resulting description. The underlying type

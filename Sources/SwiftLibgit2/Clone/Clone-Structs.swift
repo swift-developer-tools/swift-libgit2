@@ -141,9 +141,9 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     {
         var cloneOptions = git_clone_options()
         
-        let cloneOptionsInitResult: Int32 = git_clone_options_init(
-            &cloneOptions,
-            version
+        let cloneOptionsInitResult: Int32 = gitCloneOptionsInit(
+            opts:       &cloneOptions,
+            version:    version
         )
         
         if cloneOptionsInitResult != GIT_OK.rawValue

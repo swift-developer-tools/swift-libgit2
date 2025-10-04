@@ -15,10 +15,9 @@ libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
 Swift bindings are provided for almost every API available in libgit2. Direct
 access to the libgit2 C library is also provided by the package. There are no
-Swift bindings for opaque structs, initialization functions, initialization
-macros, and some variadic functions, but these may be accessed by importing 
-the C library. See the Usage section below for an example of how to import 
-and use either library.
+Swift bindings for opaque structs, initialization macros, and some variadic 
+functions, but these may be accessed by importing the C library. See the Usage 
+section below for an example of how to import and use either library.
 
 The Swift bindings use the same signatures and parameter names as 
 their C equivalents, but are written using 

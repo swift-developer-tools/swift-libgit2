@@ -37,3 +37,8 @@ Remote repositories.
 - ``GitRemoteCompletionCB``
 - ``GitRemoteUpdateTipsCB``
 - ``GitRemoteUpdateRefsCB``
+
+### Functions
+
+- ``gitRemoteInitCallbacks(opts:version:)``
+- ``gitFetchOptionsInit(opts:version:)``

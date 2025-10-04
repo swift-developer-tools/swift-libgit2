@@ -17,3 +17,7 @@ Join two branches of a repository.
 - ``GitMergeFlagT``
 - ``GitMergeFileFavorT``
 - ``GitMergeFileFlagT``
+
+### Functions
+
+- ``gitMergeOptionsInit(opts:version:)``

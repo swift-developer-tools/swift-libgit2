@@ -403,9 +403,9 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     {
         var diffOptions = git_diff_options()
         
-        let diffOptionsInitResult: Int32 = git_diff_options_init(
-            &diffOptions,
-            version
+        let diffOptionsInitResult: Int32 = gitDiffOptionsInit(
+            opts:       &diffOptions,
+            version:    version
         )
         
         if diffOptionsInitResult != GIT_OK.rawValue
@@ -986,9 +986,9 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffFindOptions = git_diff_find_options()
         
-        let diffFindOptionsInitResult: Int32 = git_diff_find_options_init(
-            &diffFindOptions,
-            version
+        let diffFindOptionsInitResult: Int32 = gitDiffFindOptionsInit(
+            opts:       &diffFindOptions,
+            version:    version
         )
         
         if diffFindOptionsInitResult != GIT_OK.rawValue
@@ -1121,9 +1121,9 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffPatchIDOptions = git_diff_patchid_options()
         
-        let diffPatchIDOptionsInitResult: Int32 = git_diff_patchid_options_init(
-            &diffPatchIDOptions,
-            version
+        let diffPatchIDOptionsInitResult: Int32 = gitDiffPatchIDOptionsInit(
+            opts:       &diffPatchIDOptions,
+            version:    version
         )
         
         if diffPatchIDOptionsInitResult != GIT_OK.rawValue

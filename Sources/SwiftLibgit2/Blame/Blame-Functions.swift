@@ -12,6 +12,33 @@ import Foundation
 
 
 
+/// Initializes the given `git_blame_options` instance.
+/// - Parameters:
+///   - opts: The `git_blame_options` instance to initialize.
+///   - version: The version to use. Pass ``gitBlameOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_blame_options` instances.
+/// ``GitBlameOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_blame_options_init()`](https://libgit2.org/docs/reference/main/blame/git_blame_options_init.html)
+public func gitBlameOptionsInit(
+    opts    : UnsafeMutablePointer<git_blame_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_blame_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Gets the number of lines that exist in the blame.
 /// - Parameter blame: The blame to query. The underlying type must be `git_blame`.
 /// - Returns: The number of lines that exist in the blame.

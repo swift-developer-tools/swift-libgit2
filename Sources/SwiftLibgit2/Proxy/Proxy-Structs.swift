@@ -109,9 +109,9 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     {
         var proxyOptions = git_proxy_options()
         
-        let proxyOptionsInitResult: Int32 = git_proxy_options_init(
-            &proxyOptions,
-            version
+        let proxyOptionsInitResult: Int32 = gitProxyOptionsInit(
+            opts:       &proxyOptions,
+            version:    version
         )
         
         if proxyOptionsInitResult != GIT_OK.rawValue

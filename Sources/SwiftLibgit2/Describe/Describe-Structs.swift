@@ -106,9 +106,9 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
     {
         var describeOptions = git_describe_options()
         
-        let describeOptionsInitResult: Int32 = git_describe_options_init(
-            &describeOptions,
-            version
+        let describeOptionsInitResult: Int32 = gitDescribeOptionsInit(
+            opts:       &describeOptions,
+            version:    version
         )
         
         if describeOptionsInitResult != GIT_OK.rawValue
@@ -206,9 +206,9 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     {
         var describeFormatOptions = git_describe_format_options()
         
-        let describeFormatOptionsInitResult: Int32 = git_describe_format_options_init(
-            &describeFormatOptions,
-            version
+        let describeFormatOptionsInitResult: Int32 = gitDescribeFormatOptionsInit(
+            opts:       &describeFormatOptions,
+            version:    version
         )
         
         if describeFormatOptionsInitResult != GIT_OK.rawValue

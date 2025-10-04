@@ -11,6 +11,33 @@ import CLibgit2
 
 
 
+/// Initializes the given `git_cherrypick_options` instance.
+/// - Parameters:
+///   - opts: The `git_cherrypick_options` instance to initialize.
+///   - version: The version to use. Pass ``gitCherrypickOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_cherrypick_options` instances.
+/// ``GitCherrypickOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_cherrypick_options_init()`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options_init.html)
+public func gitCherrypickOptionsInit(
+    opts    : UnsafeMutablePointer<git_cherrypick_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_cherrypick_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 // TODO: Replace `git_index_free()` in documentation.
 /// Cherry-picks the given commit against the given "our" commit, and produces an index that reflects
 /// the result of the cherry-pick operation.

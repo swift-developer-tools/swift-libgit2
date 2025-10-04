@@ -27,6 +27,7 @@ index or commit.
 
 ### Functions
 
+- ``gitCheckoutOptionsInit(opts:version:)``
 - ``gitCheckoutHEAD(repo:opts:)``
 - ``gitCheckoutIndex(repo:index:opts:)``
 - ``gitCheckoutTree(repo:treeish:opts:)``

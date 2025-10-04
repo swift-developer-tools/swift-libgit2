@@ -85,9 +85,9 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
     {
         var cherrypickOptions = git_cherrypick_options()
         
-        let cherrypickOptionsInitResult: Int32 = git_cherrypick_options_init(
-            &cherrypickOptions,
-            version
+        let cherrypickOptionsInitResult: Int32 = gitCherrypickOptionsInit(
+            opts:       &cherrypickOptions,
+            version:    version
         )
         
         if cherrypickOptionsInitResult != GIT_OK.rawValue

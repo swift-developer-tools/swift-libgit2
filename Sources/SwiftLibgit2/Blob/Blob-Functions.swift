@@ -156,6 +156,33 @@ public func gitBlobRawSize(
 
 
 
+/// Initializes the given `git_blob_filter_options` instance.
+/// - Parameters:
+///   - opts: The `git_blob_filter_options` instance to initialize.
+///   - version: The version to use. Pass ``gitBlobFilterOptionsVersion``.
+/// - Returns: `0` on success, or an error code.
+///
+/// ## Discussion
+///
+/// This function is only needed when working directly with `git_blob_filter_options` instances.
+/// ``GitBlobFilterOptions`` instances do not need to be initialized this way.
+///
+/// ## C Equivalent
+///
+/// [`git_blob_filter_options_init()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options_init.html)
+public func gitBlobFilterOptionsInit(
+    opts    : UnsafeMutablePointer<git_blob_filter_options>,
+    version : UInt32
+) -> Int32
+{
+    return git_blob_filter_options_init(
+        opts,
+        version
+    )
+}
+
+
+
 /// Gets a buffer with the filtered content of the given blob.
 /// - Parameters:
 ///   - out: The buffer into which the filtered content should be written.

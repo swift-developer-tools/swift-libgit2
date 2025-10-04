@@ -140,9 +140,9 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     {
         var mergeOptions = git_merge_options()
         
-        let mergeOptionsInitResult: Int32 = git_merge_options_init(
-            &mergeOptions,
-            version
+        let mergeOptionsInitResult: Int32 = gitMergeOptionsInit(
+            opts:       &mergeOptions,
+            version:    version
         )
         
         if mergeOptionsInitResult != GIT_OK.rawValue

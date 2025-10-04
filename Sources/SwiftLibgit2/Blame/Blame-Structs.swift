@@ -115,9 +115,9 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     {
         var blameOptions = git_blame_options()
         
-        let blameOptionsInitResult: Int32 = git_blame_options_init(
-            &blameOptions,
-            version
+        let blameOptionsInitResult: Int32 = gitBlameOptionsInit(
+            opts:       &blameOptions,
+            version:    version
         )
         
         if blameOptionsInitResult != GIT_OK.rawValue
