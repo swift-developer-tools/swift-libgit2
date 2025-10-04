@@ -26,6 +26,11 @@ import CLibgit2
 
 /// Operation result codes.
 ///
+/// ## Discussion
+///
+/// Despite its name, this enum represents both success and error codes. The ``GitErrorCode/gitOK``
+/// case indicates a successful operation, while all other cases represent various error conditions.
+///
 /// ## C Equivalent
 ///
 /// [`git_error_code`](https://libgit2.org/docs/reference/main/errors/git_error_code.html)
