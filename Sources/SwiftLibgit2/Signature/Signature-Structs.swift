@@ -66,11 +66,6 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
-    ///
-    /// ## Discussion
-    ///
-    /// Use this function when working with C APIs that work with existing signatures and expect
-    /// `const git_signature *` parameters.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_signature>) throws -> T
     ) rethrows -> T
