@@ -117,14 +117,14 @@ final class AttrTests: XCTestCaseStopOnFail
     
     func testGitAttrForEach() throws
     {
-        try attrForEachFlow(options: nil)
+        try testGitAttrForEachFlow(options: nil)
     }
     
     
     
     func testGitAttrForEachExt() throws
     {
-        try attrForEachFlow(options: GitAttrOptions())
+        try testGitAttrForEachFlow(options: GitAttrOptions())
     }
     
     
@@ -514,7 +514,7 @@ extension AttrTests
     /// Tests looping over all the attributes in the given path, with or without extended options.
     /// - Parameter options: The options to use when querying the attributes.
     /// - Throws: An `Error` if repository initialization fails.
-    private func attrForEachFlow(
+    private func testGitAttrForEachFlow(
         options: GitAttrOptions?
     ) throws
     {
