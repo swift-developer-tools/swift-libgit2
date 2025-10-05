@@ -380,8 +380,7 @@ public func gitBranchSetUpstream(
 /// Gets the upstream name of the given local branch.
 /// - Parameters:
 ///   - out: The buffer into which the upstream name should be written.
-///   - repo: The repository in which the branches exist. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the branches. The underlying type must be `git_repository`.
 ///   - refName: The branch name.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -473,8 +472,7 @@ public func gitBranchIsCheckedOut(
 /// Gets the remote name of the given remote-tracking branch.
 /// - Parameters:
 ///   - out: The buffer into which the remote name should be written.
-///   - repo: The repository in which the branch exists. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the branch. The underlying type must be `git_repository`.
 ///   - refName: The full reference name of the branch.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -516,8 +514,7 @@ public func gitBranchRemoteName(
 /// Gets the upstream remote name of the given local branch.
 /// - Parameters:
 ///   - buf: The buffer into which the upstream remote name should be written.
-///   - repo: The repository in which the branch exists. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the branch. The underlying type must be `git_repository`.
 ///   - refName: The full reference name of the branch.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -554,8 +551,7 @@ public func gitBranchUpstreamRemote(
 /// Gets the upstream merge name of the given local branch.
 /// - Parameters:
 ///   - buf: The buffer into which the upstream merge name should be written.
-///   - repo: The repository in which the branch exists. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the branch. The underlying type must be `git_repository`.
 ///   - refName: The full reference name of the branch.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
