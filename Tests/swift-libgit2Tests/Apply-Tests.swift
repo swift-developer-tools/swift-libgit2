@@ -148,7 +148,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyToBoth() throws
     {
-        try gitApplyFlow(
+        try gitApply(
             location:       .gitApplyLocationBoth,
             flags:          nil,
             checkIndex:     true,
@@ -160,7 +160,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyToIndex() throws
     {
-        try gitApplyFlow(
+        try gitApply(
             location:       .gitApplyLocationIndex,
             flags:          nil,
             checkIndex:     true,
@@ -172,7 +172,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyToWorkdir() throws
     {
-        try gitApplyFlow(
+        try gitApply(
             location:       .gitApplyLocationWorkdir,
             flags:          nil,
             checkIndex:     false,
@@ -184,7 +184,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyWithCheckFlag() throws
     {
-        try gitApplyFlow(
+        try gitApply(
             location:       .gitApplyLocationWorkdir,
             flags:          .gitApplyCheck,
             checkIndex:     false,
@@ -229,7 +229,7 @@ extension ApplyTests
     /// 6. Check that both the delta and hunk callbacks were invoked.
     /// 7. Check that the final file content is correct.
     /// 8. Optionally check that the index contains staged changes.
-    private func gitApplyFlow(
+    private func gitApply(
         location        : GitApplyLocationT,
         flags           : GitApplyFlagsT?,
         checkIndex      : Bool,
