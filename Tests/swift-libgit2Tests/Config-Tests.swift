@@ -1307,7 +1307,7 @@ extension ConfigTests
     ///   - repository: The repository in which to create the configuration object.
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `Error` if the configuration creation failed.
+    /// - Throws: An error if the configuration creation failed.
     private func withConfigOnDisk<T>(
         in  repository  : Repository,
         _   body        : (OpaquePointer) -> T

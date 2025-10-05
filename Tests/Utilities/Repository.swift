@@ -75,7 +75,7 @@ struct Repository
     ///   a commit from staged changes.
     ///   - fromStage: Whether the commit should be created from staged changes.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An `Error` if the file write operation failed, or an `NSError` if the commit
+    /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
     /// or tree initialization failed.
     @discardableResult
     func createCommit(
@@ -361,7 +361,7 @@ struct Repository
     ///   - append: Whether the new content should be appended to the existing content.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
     /// - Returns: The URL to which the content was written.
-    /// - Throws: An `Error` if the file read or write operations failed.
+    /// - Throws: An error if the file read or write operations failed.
     @discardableResult
     func modifyFile(
         path            : String,
@@ -396,7 +396,7 @@ struct Repository
     ///   repository's URL.
     ///   - content: The expected content of the file.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
-    /// - Throws: An `Error` if the file read operation failed.
+    /// - Throws: An error if the file read operation failed.
     func verifyFileContent(
         path            : String,
         content         : String,
@@ -423,7 +423,7 @@ extension Repository
 {
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
-    /// - Throws: An `Error` if the file write operation failed.
+    /// - Throws: An error if the file write operation failed.
     private static func createBlameData(
         in repository: Repository
     ) throws
@@ -480,7 +480,7 @@ extension Repository
     /// Creates a temporary directory with the given name.
     /// - Parameter directoryName: The name of the directory.
     /// - Returns: The URL of the temporary directory.
-    /// - Throws: An `Error` if the directory creation failed.
+    /// - Throws: An error if the directory creation failed.
     static func createTemporaryDirectory(
         named directoryName: String
     ) throws -> URL
@@ -502,7 +502,7 @@ extension Repository
     
     /// Calls the given closure with a `Repository` instance.
     /// - Parameter body: The closure to call.
-    /// - Throws: An `Error` if the directory creation failed.
+    /// - Throws: An error if the directory creation failed.
     static func withRepository(
         _ body: (Repository) throws -> Void
     ) throws

@@ -214,7 +214,7 @@ extension ApplyTests
     ///   - flags: The flags to control the apply behavior.
     ///   - checkIndex: Whether to check that the index contains staged changes after applying.
     ///   - endContent: The expected file content after applying.
-    /// - Throws: An `Error` if a Git operation, write operation fails, or `GitApplyOptions`
+    /// - Throws: An error if a Git operation, write operation fails, or `GitApplyOptions`
     /// initialization fails.
     ///
     /// ## Discussion

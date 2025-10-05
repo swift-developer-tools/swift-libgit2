@@ -119,7 +119,7 @@ enum Branch
     ///   - branchName: The branch name.
     ///   - repository: The repository in which the branch exists.
     ///   - body: The closure to call.
-    /// - Throws: An `Error` thrown by the closure.
+    /// - Throws: An error thrown by the closure.
     static func withExistingLocalBranchPointer(
         named   branchName  : String,
         in      repository  : Repository,
@@ -158,7 +158,7 @@ enum Branch
     ///   - force: Whether to overwrite an existing branch.
     ///   - annotated: Whether the branch should be created from an annotated commit.
     ///   - body: The closure to call.
-    /// - Throws: An `Error` thrown by the closure, or an `NSError` if the branch could not
+    /// - Throws: An error thrown by the closure, or an `NSError` if the branch could not
     /// be created.
     static func withNewLocalBranchPointer(
         named       branchName  : String,
