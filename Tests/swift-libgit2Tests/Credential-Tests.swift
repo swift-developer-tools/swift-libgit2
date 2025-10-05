@@ -57,7 +57,7 @@ final class CredentialTests: XCTestCaseStopOnFail
             return gitCredentialUsernameNew(
                 out:        out,
                 username:   Repository.commitAuthorName
-            )
+            ).rawValue
         }
         
         
@@ -84,7 +84,7 @@ final class CredentialTests: XCTestCaseStopOnFail
                 remoteCallbacks.payload
             )
             
-            XCTAssertOK(callbackResult)
+            XCTAssertOK(GitErrorCode(rawValue: callbackResult))
         }
         
         XCTAssertNotNil(credentialPointer)
@@ -110,7 +110,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialDefaultNewResult: Int32 = gitCredentialDefaultNew(out: &credentialPointer)
+        let credentialDefaultNewResult: GitErrorCode = gitCredentialDefaultNew(out: &credentialPointer)
         
         XCTAssertOK(credentialDefaultNewResult)
         XCTAssertNotNil(credentialPointer)
@@ -137,14 +137,14 @@ final class CredentialTests: XCTestCaseStopOnFail
             /// This callback will be invoked by libssh2 during actual SSH authentication, so
             /// the payload cannot be used for standard testing.
             
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         
         
         let publicKey = Data("ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZ...".utf8)
         
-        let credentialSSHCustomNewResult: Int32 = gitCredentialSSHCustomNew(
+        let credentialSSHCustomNewResult: GitErrorCode = gitCredentialSSHCustomNew(
             out:            &credentialPointer,
             username:       Repository.commitAuthorName,
             publicKey:      publicKey,
@@ -185,7 +185,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialSSHInteractiveNewResult: Int32 = gitCredentialSSHInteractiveNew(
+        let credentialSSHInteractiveNewResult: GitErrorCode = gitCredentialSSHInteractiveNew(
             out:                &credentialPointer,
             username:           Repository.commitAuthorName,
             promptCallback:     credentialSSHInteractiveCB,
@@ -212,7 +212,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialSSHKeyFromAgentResult: Int32 = gitCredentialSSHKeyFromAgent(
+        let credentialSSHKeyFromAgentResult: GitErrorCode = gitCredentialSSHKeyFromAgent(
             out:        &credentialPointer,
             username:   Repository.commitAuthorName
         )
@@ -239,7 +239,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         let publicKey   : String    = "ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZ..."
         let privateKey  : String    = "-----BEGIN OPENSSH PRIVATE KEY-----\nABC"
         
-        var credentialSSHKeyMemoryNewResult: Int32 = gitCredentialSSHKeyMemoryNew(
+        var credentialSSHKeyMemoryNewResult: GitErrorCode = gitCredentialSSHKeyMemoryNew(
             out:            &credentialPointer,
             username:       Repository.commitAuthorName,
             publicKey:      publicKey,
@@ -283,7 +283,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        var credentialSSHKeyNewResult: Int32 = gitCredentialSSHKeyNew(
+        var credentialSSHKeyNewResult: GitErrorCode = gitCredentialSSHKeyNew(
             out:            &credentialPointer,
             username:       Repository.commitAuthorName,
             publicKey:      "",
@@ -362,7 +362,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialUsernameNewResult: Int32 = gitCredentialUsernameNew(
+        let credentialUsernameNewResult: GitErrorCode = gitCredentialUsernameNew(
             out:        &credentialPointer,
             username:   Repository.commitAuthorName
         )
@@ -386,7 +386,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialUserPassPlaintextNewResult: Int32 = gitCredentialUserPassPlaintextNew(
+        let credentialUserPassPlaintextNewResult: GitErrorCode = gitCredentialUserPassPlaintextNew(
             out:        &credentialPointer,
             username:   Repository.commitAuthorName,
             password:   "helloworld"

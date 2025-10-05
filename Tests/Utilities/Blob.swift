@@ -55,8 +55,8 @@ enum Blob
         from    source      : BlobCreationSource
     ) -> GitOID
     {
-        var blobOID             : GitOID    = GitOID()
-        var blobCreateResult    : Int32     = GIT_EUSER.rawValue
+        var blobOID             : GitOID        = GitOID()
+        var blobCreateResult    : GitErrorCode  = .gitEUser
         
         switch source
         {
@@ -95,7 +95,7 @@ enum Blob
                     else
                     {
                         XCTFail("The bytes count was zero.")
-                        return GIT_EUSER.rawValue
+                        return .gitEUser
                     }
                     
                     
@@ -138,7 +138,7 @@ enum Blob
         
         
         
-        let blobLookupResult: Int32 = gitBlobLookup(
+        let blobLookupResult: GitErrorCode = gitBlobLookup(
             blob:   &blobPointer,
             repo:   repository.pointer,
             id:     blobOID

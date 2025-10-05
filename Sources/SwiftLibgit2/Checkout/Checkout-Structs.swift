@@ -271,12 +271,12 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     {
         var checkoutOptions = git_checkout_options()
         
-        let checkoutOptionsInitResult: Int32 = gitCheckoutOptionsInit(
+        let checkoutOptionsInitResult: GitErrorCode = gitCheckoutOptionsInit(
             opts:       &checkoutOptions,
             version:    version
         )
         
-        if checkoutOptionsInitResult != GIT_OK.rawValue
+        if checkoutOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

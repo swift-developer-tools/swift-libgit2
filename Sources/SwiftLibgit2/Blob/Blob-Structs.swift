@@ -86,12 +86,12 @@ public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
     {
         var blobFilterOptions = git_blob_filter_options()
         
-        let blobFilterOptionsInitResult: Int32 = gitBlobFilterOptionsInit(
+        let blobFilterOptionsInitResult: GitErrorCode = gitBlobFilterOptionsInit(
             opts:       &blobFilterOptions,
             version:    version
         )
         
-        if blobFilterOptionsInitResult != GIT_OK.rawValue
+        if blobFilterOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

@@ -16,7 +16,7 @@ import CLibgit2
 ///   - out: The buffer into which the email patch should be written
 ///   - commit: The commit for which to create a patch. The underlying type must be `git_commit`. 
 ///   - opts: The options for formatting generated emails.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -29,7 +29,7 @@ public func gitEmailCreateFromCommit(
     out     : inout GitBuf,
     commit  : OpaquePointer,
     opts    : GitEmailCreateOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

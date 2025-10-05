@@ -403,12 +403,12 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     {
         var diffOptions = git_diff_options()
         
-        let diffOptionsInitResult: Int32 = gitDiffOptionsInit(
+        let diffOptionsInitResult: GitErrorCode = gitDiffOptionsInit(
             opts:       &diffOptions,
             version:    version
         )
         
-        if diffOptionsInitResult != GIT_OK.rawValue
+        if diffOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }
@@ -986,12 +986,12 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffFindOptions = git_diff_find_options()
         
-        let diffFindOptionsInitResult: Int32 = gitDiffFindOptionsInit(
+        let diffFindOptionsInitResult: GitErrorCode = gitDiffFindOptionsInit(
             opts:       &diffFindOptions,
             version:    version
         )
         
-        if diffFindOptionsInitResult != GIT_OK.rawValue
+        if diffFindOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }
@@ -1121,12 +1121,12 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffPatchIDOptions = git_diff_patchid_options()
         
-        let diffPatchIDOptionsInitResult: Int32 = gitDiffPatchIDOptionsInit(
+        let diffPatchIDOptionsInitResult: GitErrorCode = gitDiffPatchIDOptionsInit(
             opts:       &diffPatchIDOptions,
             version:    version
         )
         
-        if diffPatchIDOptionsInitResult != GIT_OK.rawValue
+        if diffPatchIDOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

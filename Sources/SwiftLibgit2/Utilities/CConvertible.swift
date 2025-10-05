@@ -89,7 +89,7 @@ import Foundation
 ///
 /// In order to reduce overhead and the chance of mistakes at call sites, an error is thrown only when
 /// conversion of a non-`nil` receiver fails. Callers are responsible for catching the error and returning
-/// `GIT_EUSER`. Callers should use ``withCConversion(_:)`` to do this automatically.
+/// ``GitErrorCode/gitEUser``. Callers should use ``withCConversion(_:)`` to do this.
 
 
 
@@ -228,24 +228,30 @@ internal extension Optional where Wrapped: WithCConvertible
 
 // MARK: - Utilities
 
-/// Calls the given closure within a `do`/`catch` block and returns `GIT_EUSER` if an error is thrown.
+/// Calls the given closure within a `do`/`catch` block and returns ``GitErrorCode/gitEUser``
+/// if an error is thrown.
 /// - Parameter body: The closure to call.
-/// - Returns: The return value of the given closure, or the `code` property of a thrown `NSError`,
-/// or `GIT_EUSER` for any other thrown error.
+/// - Returns: The return value of the given closure or the `code` property of a thrown `NSError`,
+/// converted to a ``GitErrorCode`` instance, or ``GitErrorCode/gitEUser`` for any other
+/// thrown error.
 internal func withCConversion(
     _ body: () throws -> Int32
-) -> Int32
+) -> GitErrorCode
 {
+    let result: Int32
+    
     do
     {
-        return try body()
+        result = try body()
     }
     catch let error as NSError
     {
-        return Int32(error.code)
+        result = Int32(error.code)
     }
     catch
     {
-        return GIT_EUSER.rawValue
+        result = GitErrorCode.gitEUser.rawValue
     }
+    
+    return GitErrorCode(rawValue: result)
 }

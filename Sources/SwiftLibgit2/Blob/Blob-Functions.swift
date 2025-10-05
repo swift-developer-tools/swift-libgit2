@@ -18,7 +18,7 @@ import Foundation
 ///   - repo: The repository to use when locating the blob. The underlying type must be
 ///   `git_repository`.
 ///   - id: The ID of the blob to locate.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -27,15 +27,18 @@ public func gitBlobLookup(
     blob    : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
     id      : GitOID
-) -> Int32
+) -> GitErrorCode
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_blob_lookup(
-        blob,
-        repo,
-        &cID
-    )
+    return withCConversion
+    {
+        var cID: git_oid = id.cValue()
+        
+        return git_blob_lookup(
+            blob,
+            repo,
+            &cID
+        )
+    }
 }
 
 
@@ -47,7 +50,7 @@ public func gitBlobLookup(
 ///   `git_repository`.
 ///   - id: The ID of the blob to locate.
 ///   - len: The length of the short ID.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -57,16 +60,19 @@ public func gitBlobLookupPrefix(
     repo    : OpaquePointer,
     id      : GitOID,
     len     : Int
-) -> Int32
+) -> GitErrorCode
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_blob_lookup_prefix(
-        blob,
-        repo,
-        &cID,
-        len
-    )
+    return withCConversion
+    {
+        var cID: git_oid = id.cValue()
+        
+        return git_blob_lookup_prefix(
+            blob,
+            repo,
+            &cID,
+            len
+        )
+    }
 }
 
 
@@ -160,7 +166,7 @@ public func gitBlobRawSize(
 /// - Parameters:
 ///   - opts: The `git_blob_filter_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitBlobFilterOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -173,12 +179,15 @@ public func gitBlobRawSize(
 public func gitBlobFilterOptionsInit(
     opts    : UnsafeMutablePointer<git_blob_filter_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_blob_filter_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_blob_filter_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -189,7 +198,7 @@ public func gitBlobFilterOptionsInit(
 ///   - blob: The blob. The underlying type must be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.
 ///   - opts: The options for the blob filtering operation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -212,7 +221,7 @@ public func gitBlobFilter(
     blob    : OpaquePointer,
     asPath  : String,
     opts    : GitBlobFilterOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -244,7 +253,7 @@ public func gitBlobFilter(
 ///   `git_repository`. This repository may not be bare.
 ///   - relativePath: The path to the file from which the blob should be created, relative to the
 ///   repository's working directory.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -253,17 +262,20 @@ public func gitBlobCreateFromWorkdir(
     id              : inout GitOID,
     repo            : OpaquePointer,
     relativePath    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return id.withMutatingCValue
+    return withCConversion
     {
-        cID in
-        
-        return git_blob_create_from_workdir(
-            cID,
-            repo,
-            relativePath
-        )
+        return id.withMutatingCValue
+        {
+            cID in
+            
+            return git_blob_create_from_workdir(
+                cID,
+                repo,
+                relativePath
+            )
+        }
     }
 }
 
@@ -276,7 +288,7 @@ public func gitBlobCreateFromWorkdir(
 ///   - repo: The repository where the blob should be written. The underlying type must be
 ///   `git_repository`. This repository may be bare.
 ///   - path: The path to the file from which the blob should be created.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -285,17 +297,20 @@ public func gitBlobCreateFromDisk(
     id      : inout GitOID,
     repo    : OpaquePointer,
     path    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return id.withMutatingCValue
+    return withCConversion
     {
-        cID in
-        
-        return git_blob_create_from_disk(
-            cID,
-            repo,
-            path
-        )
+        return id.withMutatingCValue
+        {
+            cID in
+            
+            return git_blob_create_from_disk(
+                cID,
+                repo,
+                path
+            )
+        }
     }
 }
 
@@ -309,7 +324,7 @@ public func gitBlobCreateFromDisk(
 ///   `git_repository`. This repository may be bare.
 ///   - hintPath: The path to use when selecting data filters to apply onto the content of the blob
 ///   to be created.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -333,13 +348,16 @@ public func gitBlobCreateFromStream(
     out         : UnsafeMutablePointer<UnsafeMutablePointer<git_writestream>?>,
     repo        : OpaquePointer,
     hintPath    : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_blob_create_from_stream(
-        out,
-        repo,
-        hintPath
-    )
+    return withCConversion
+    {
+        return git_blob_create_from_stream(
+            out,
+            repo,
+            hintPath
+        )
+    }
 }
 
 
@@ -348,7 +366,7 @@ public func gitBlobCreateFromStream(
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID of the new blob.
 ///   - stream: The stream to close.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -356,16 +374,19 @@ public func gitBlobCreateFromStream(
 public func gitBlobCreateFromStreamCommit(
     out     : inout GitOID,
     stream  : UnsafeMutablePointer<git_writestream>
-) -> Int32
+) -> GitErrorCode
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_blob_create_from_stream_commit(
-            cOut,
-            stream
-        )
+        return out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_blob_create_from_stream_commit(
+                cOut,
+                stream
+            )
+        }
     }
 }
 
@@ -378,7 +399,7 @@ public func gitBlobCreateFromStreamCommit(
 ///   `git_repository`.
 ///   - buffer: The data to be written into the blob.
 ///   - len: The length of the data.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -388,18 +409,21 @@ public func gitBlobCreateFromBuffer(
     repo    : OpaquePointer,
     buffer  : UnsafeRawPointer,
     len     : Int
-) -> Int32
+) -> GitErrorCode
 {
-    return id.withMutatingCValue
+    return withCConversion
     {
-        cID in
-        
-        return git_blob_create_from_buffer(
-            cID,
-            repo,
-            buffer,
-            len
-        )
+        return id.withMutatingCValue
+        {
+            cID in
+            
+            return git_blob_create_from_buffer(
+                cID,
+                repo,
+                buffer,
+                len
+            )
+        }
     }
 }
 
@@ -473,7 +497,7 @@ public func gitBlobDataIsBinary(
 ///   - out: The pointer that should receive the copy of the blob. The underlying type must be
 ///   `git_blob`.
 ///   - source: The original blob to copy. The underlying type must be `git_blob`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -485,10 +509,13 @@ public func gitBlobDataIsBinary(
 public func gitBlobDup(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     source  : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_blob_dup(
-        out,
-        source
-    )
+    return withCConversion
+    {
+        return git_blob_dup(
+            out,
+            source
+        )
+    }
 }

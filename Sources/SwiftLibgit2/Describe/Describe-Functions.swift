@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_describe_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDescribeOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,12 +28,15 @@ import CLibgit2
 public func gitDescribeOptionsInit(
     opts    : UnsafeMutablePointer<git_describe_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_describe_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_describe_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -42,7 +45,7 @@ public func gitDescribeOptionsInit(
 /// - Parameters:
 ///   - opts: The `git_describe_format_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDescribeFormatOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -55,12 +58,15 @@ public func gitDescribeOptionsInit(
 public func gitDescribeFormatOptionsInit(
     opts    : UnsafeMutablePointer<git_describe_format_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_describe_format_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_describe_format_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -71,7 +77,7 @@ public func gitDescribeFormatOptionsInit(
 ///   must be `git_describe_result`.
 ///   - committish: The commit to describe. The underlying type must be `git_object`.
 ///   - opts: The options for describing the commit.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -80,7 +86,7 @@ public func gitDescribeCommit(
     result      : UnsafeMutablePointer<OpaquePointer?>,
     committish  : OpaquePointer,
     opts        : GitDescribeOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -106,7 +112,7 @@ public func gitDescribeCommit(
 ///   - repo: The repository in which the commit exists. The underlying type must be
 ///   `git_repository`.
 ///   - opts: The options for describing the commit.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -120,7 +126,7 @@ public func gitDescribeWorkdir(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
     opts    : GitDescribeOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -144,7 +150,7 @@ public func gitDescribeWorkdir(
 ///   - out: The buffer into which the description should be written.
 ///   - result: The commit description. The underlying type must be `git_describe_result`.
 ///   - opts: The options for formatting the commit description.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -153,7 +159,7 @@ public func gitDescribeFormat(
     out     : inout GitBuf,
     result  : OpaquePointer,
     opts    : GitDescribeFormatOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

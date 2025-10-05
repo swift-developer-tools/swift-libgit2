@@ -106,12 +106,12 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
     {
         var describeOptions = git_describe_options()
         
-        let describeOptionsInitResult: Int32 = gitDescribeOptionsInit(
+        let describeOptionsInitResult: GitErrorCode = gitDescribeOptionsInit(
             opts:       &describeOptions,
             version:    version
         )
         
-        if describeOptionsInitResult != GIT_OK.rawValue
+        if describeOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }
@@ -206,12 +206,12 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     {
         var describeFormatOptions = git_describe_format_options()
         
-        let describeFormatOptionsInitResult: Int32 = gitDescribeFormatOptionsInit(
+        let describeFormatOptionsInitResult: GitErrorCode = gitDescribeFormatOptionsInit(
             opts:       &describeFormatOptions,
             version:    version
         )
         
-        if describeFormatOptionsInitResult != GIT_OK.rawValue
+        if describeFormatOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

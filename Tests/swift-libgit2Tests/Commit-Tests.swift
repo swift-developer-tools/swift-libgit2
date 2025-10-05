@@ -47,7 +47,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 repository.pointer
             )
             
-            XCTAssertOK(repositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
             
             
@@ -59,7 +59,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 indexPointer
             )
             
-            XCTAssertOK(indexWriteTreeResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
             
             
             
@@ -69,7 +69,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 &treeOID
             )
             
-            XCTAssertOK(treeLookupResult)
+            XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
             
             guard let treePointer: OpaquePointer = treePointer
             else
@@ -82,7 +82,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             var signature = GitSignature()
             
-            let signatureNowResult: Int32 = gitSignatureNow(
+            let signatureNowResult: GitErrorCode = gitSignatureNow(
                 out:    &signature,
                 name:   Repository.commitAuthorName,
                 email:  Repository.commitAuthorEmail
@@ -92,7 +92,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitCreateBufferResult: Int32 = gitCommitCreateBuffer(
+            let commitCreateBufferResult: GitErrorCode = gitCommitCreateBuffer(
                 out:                &buffer,
                 repo:               repository.pointer,
                 author:             signature,
@@ -130,7 +130,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             var signedCommitOID = GitOID()
             
-            let commitCreateWithSignatureResult: Int32 = gitCommitCreateWithSignature(
+            let commitCreateWithSignatureResult: GitErrorCode = gitCommitCreateWithSignature(
                 out:                &signedCommitOID,
                 repo:               repository.pointer,
                 commitContent:      commitContent,
@@ -154,7 +154,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitExtractSignatureResult: Int32 = gitCommitExtractSignature(
+            let commitExtractSignatureResult: GitErrorCode = gitCommitExtractSignature(
                 signature:      &extractedSignature,
                 signedData:     &extractedSignedData,
                 repo:           repository.pointer,
@@ -257,7 +257,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitLookup: Int32 = gitAnnotatedCommitLookup(
+            let annotatedCommitLookup: GitErrorCode = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
                 id:     branchCommitOID
@@ -278,7 +278,7 @@ final class CommitTests: XCTestCaseStopOnFail
                     UInt32(GIT_REBASE_OPTIONS_VERSION)
                 )
                 
-                XCTAssertOK(rebaseOptionsInitResult)
+                XCTAssertOK(GitErrorCode(rawValue: rebaseOptionsInitResult))
                 
                 rebaseOptions.commit_create_cb  = commitCreateCB
                 rebaseOptions.payload           = UnsafeMutableRawPointer(callbackDataPointer)
@@ -294,7 +294,7 @@ final class CommitTests: XCTestCaseStopOnFail
                     &rebaseOptions
                 )
                 
-                XCTAssertOK(rebaseInitResult)
+                XCTAssertOK(GitErrorCode(rawValue: rebaseInitResult))
                 
                 guard let rebasePointer: OpaquePointer = rebasePointer
                 else
@@ -314,7 +314,7 @@ final class CommitTests: XCTestCaseStopOnFail
                         rebasePointer
                     )
                     
-                    if rebaseNextResult == GIT_ITEROVER.rawValue
+                    if rebaseNextResult == GitErrorCode.gitIterOver.rawValue
                     {
                         break
                     }
@@ -323,7 +323,7 @@ final class CommitTests: XCTestCaseStopOnFail
                     
                     var signature = GitSignature()
                     
-                    let signatureNowResult: Int32 = gitSignatureNow(
+                    let signatureNowResult: GitErrorCode = gitSignatureNow(
                         out:    &signature,
                         name:   Repository.commitAuthorName,
                         email:  Repository.commitAuthorEmail
@@ -349,9 +349,9 @@ final class CommitTests: XCTestCaseStopOnFail
                             nil
                         )
                         
-                        if rebaseCommitResult != GIT_EAPPLIED.rawValue
+                        if rebaseCommitResult != GitErrorCode.gitEApplied.rawValue
                         {
-                            XCTAssertOK(rebaseCommitResult)
+                            XCTAssertOK(GitErrorCode(rawValue: rebaseCommitResult))
                         }
                     }
                 }
@@ -363,7 +363,7 @@ final class CommitTests: XCTestCaseStopOnFail
                     nil
                 )
                 
-                XCTAssertOK(rebaseFinishResult)
+                XCTAssertOK(GitErrorCode(rawValue: rebaseFinishResult))
             }
             
             XCTAssertGreaterThan(callbackData.callCount, 0)
@@ -378,7 +378,7 @@ final class CommitTests: XCTestCaseStopOnFail
     {
         var signature = GitSignature()
         
-        let signatureNowResult: Int32 = gitSignatureNow(
+        let signatureNowResult: GitErrorCode = gitSignatureNow(
             out:    &signature,
             name:   "Options User",
             email:  "options-user@example.com"
@@ -454,7 +454,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitHeaderFieldResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let commitHeaderFieldResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
 
@@ -499,7 +499,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
+            let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &commitPointer,
                 repo:       repository.pointer,
                 id:         commitOID
@@ -517,7 +517,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             var signature = GitSignature()
             
-            let signatureNowResult: Int32 = gitSignatureNow(
+            let signatureNowResult: GitErrorCode = gitSignatureNow(
                 out:    &signature,
                 name:   Repository.commitAuthorName,
                 email:  Repository.commitAuthorEmail
@@ -602,7 +602,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitLookupPrefixResult: Int32 = gitCommitLookupPrefix(
+            let commitLookupPrefixResult: GitErrorCode = gitCommitLookupPrefix(
                 commit:     &commitPointer,
                 repo:       repository.pointer,
                 id:         headOID,
@@ -631,7 +631,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 
                 
-                let commitAuthorWithMailmapResult: Int32 = gitCommitAuthorWithMailmap(
+                let commitAuthorWithMailmapResult: GitErrorCode = gitCommitAuthorWithMailmap(
                     out:        &author,
                     commit:     commitPointer,
                     mailmap:    nil
@@ -641,7 +641,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 
                 
-                let commitCommitterWithMailmapResult: Int32 = gitCommitCommitterWithMailmap(
+                let commitCommitterWithMailmapResult: GitErrorCode = gitCommitCommitterWithMailmap(
                     out:        &committer,
                     commit:     commitPointer,
                     mailmap:    nil
@@ -674,7 +674,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            var ancestorCommitPointer   : OpaquePointer?    = nil
+            var ancestorCommitPointer: OpaquePointer? = nil
             
             defer
             {
@@ -683,7 +683,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitNthGenAncestorResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let commitNthGenAncestorResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
 
@@ -726,7 +726,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
+            let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &commitPointer,
                 repo:       repository.pointer,
                 id:         commitOID
@@ -749,7 +749,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitParentResult: Int32 = gitCommitParent(
+            let commitParentResult: GitErrorCode = gitCommitParent(
                 out:        &parentCommmiPointer,
                 commit:     commitPointer,
                 n:          0
@@ -820,7 +820,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 
                 
-                let commitTreeResult: Int32 = gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
@@ -877,7 +877,7 @@ extension CommitTests
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
+            let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &originalCommitPointer,
                 repo:       repository.pointer,
                 id:         originalCommitOID
@@ -901,7 +901,7 @@ extension CommitTests
             
             if type == .amend
             {
-                let commitAmendResult: Int32 = gitCommitAmend(
+                let commitAmendResult: GitErrorCode = gitCommitAmend(
                     id:                 &newCommitOID,
                     commitToAmend:      originalCommitPointer,
                     updateRef:          "HEAD",
@@ -916,7 +916,7 @@ extension CommitTests
                 
                 
                 
-                let amendedCommitLookupResult: Int32 = gitCommitLookup(
+                let amendedCommitLookupResult: GitErrorCode = gitCommitLookup(
                     commit:     &newCommitPointer,
                     repo:       repository.pointer,
                     id:         newCommitOID
@@ -926,7 +926,7 @@ extension CommitTests
             }
             else
             {
-                let commitDupResult: Int32 = gitCommitDup(
+                let commitDupResult: GitErrorCode = gitCommitDup(
                     out:        &newCommitPointer,
                     source:     originalCommitPointer
                 )

@@ -70,7 +70,7 @@ final class EmailTests: XCTestCaseStopOnFail
             {
                 commitPointer in
                 
-                let emailCreateFromCommitResult: Int32 = gitEmailCreateFromCommit(
+                let emailCreateFromCommitResult: GitErrorCode = gitEmailCreateFromCommit(
                     out:        &buffer,
                     commit:     commitPointer,
                     opts:       emailCreateOptions

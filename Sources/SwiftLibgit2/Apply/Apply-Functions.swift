@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_apply_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitApplyOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,12 +28,15 @@ import CLibgit2
 public func gitApplyOptionsInit(
     opts    : UnsafeMutablePointer<git_apply_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_apply_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_apply_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -47,7 +50,7 @@ public func gitApplyOptionsInit(
 ///   `git_tree`.
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
 ///   - options: The options for the apply operation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -58,7 +61,7 @@ public func gitApplyToTree(
     preimage    : OpaquePointer,
     diff        : OpaquePointer,
     options     : GitApplyOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -87,7 +90,7 @@ public func gitApplyToTree(
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
 ///   - location: The location to apply (the working directory, the index, or both).
 ///   - options: The options for the apply operation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -97,7 +100,7 @@ public func gitApply(
     diff        : OpaquePointer,
     location    : GitApplyLocationT,
     options     : GitApplyOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

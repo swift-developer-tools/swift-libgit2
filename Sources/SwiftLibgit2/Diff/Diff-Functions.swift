@@ -16,7 +16,7 @@ import Foundation
 /// - Parameters:
 ///   - opts: The `git_diff_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -29,12 +29,15 @@ import Foundation
 public func gitDiffOptionsInit(
     opts    : UnsafeMutablePointer<git_diff_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_diff_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -43,7 +46,7 @@ public func gitDiffOptionsInit(
 /// - Parameters:
 ///   - opts: The `git_diff_find_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffFindOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -56,12 +59,15 @@ public func gitDiffOptionsInit(
 public func gitDiffFindOptionsInit(
     opts    : UnsafeMutablePointer<git_diff_find_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_find_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_diff_find_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -89,7 +95,7 @@ public func gitDiffFree(
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
 ///   - newTree: The new tree to use in the diff operation. The underlying type must be `git_tree`.
 ///   - opts: The options for the diff operation
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -106,7 +112,7 @@ public func gitDiffTreeToTree(
     oldTree : OpaquePointer?,
     newTree : OpaquePointer?,
     opts    : GitDiffOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -136,7 +142,7 @@ public func gitDiffTreeToTree(
 ///   - index: The index to use in the diff operation. The underlying type must be `git_index`.
 ///   Pass `nil` to use the repository index.
 ///   - opts: The options for the diff operation
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -155,7 +161,7 @@ public func gitDiffTreeToIndex(
     oldTree : OpaquePointer?,
     index   : OpaquePointer?,
     opts    : GitDiffOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -184,7 +190,7 @@ public func gitDiffTreeToIndex(
 ///   - index: The index to use in the diff operation. The underlying type must be `git_index`.
 ///   Pass `nil` to use the repository index.
 ///   - opts: The options for the diff operation
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -201,7 +207,7 @@ public func gitDiffIndexToWorkdir(
     repo    : OpaquePointer,
     index   : OpaquePointer?,
     opts    : GitDiffOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -228,7 +234,7 @@ public func gitDiffIndexToWorkdir(
 ///   `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
 ///   - opts: The options for the diff operation
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -250,7 +256,7 @@ public func gitDiffTreeToWorkdir(
     repo    : OpaquePointer,
     oldTree : OpaquePointer?,
     opts    : GitDiffOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -278,7 +284,7 @@ public func gitDiffTreeToWorkdir(
 ///   `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
 ///   - opts: The options for the diff operation
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -294,7 +300,7 @@ public func gitDiffTreeToWorkdirWithIndex(
     repo    : OpaquePointer,
     oldTree : OpaquePointer?,
     opts    : GitDiffOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -324,7 +330,7 @@ public func gitDiffTreeToWorkdirWithIndex(
 ///   - newIndex: The new index to use in the diff operation. The underlying type must be
 ///   `git_index`.
 ///   - opts: The options for the diff operation
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -335,7 +341,7 @@ public func gitDiffIndexToIndex(
     oldIndex    : OpaquePointer,
     newIndex    : OpaquePointer,
     opts        : GitDiffOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -359,7 +365,7 @@ public func gitDiffIndexToIndex(
 /// - Parameters:
 ///   - onto: The diff to merge into. The underlying type must be `git_diff`.
 ///   - from: The diff to merge. The underlying type must be `git_diff`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -374,12 +380,15 @@ public func gitDiffIndexToIndex(
 public func gitDiffMerge(
     onto    : OpaquePointer,
     from    : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_merge(
-        onto,
-        from
-    )
+    return withCConversion
+    {
+        return git_diff_merge(
+            onto,
+            from
+        )
+    }
 }
 
 
@@ -389,7 +398,7 @@ public func gitDiffMerge(
 /// - Parameters:
 ///   - diff: The diff to transform. The underlying type must be `git_diff`.
 ///   - options: The options for diff rename and copy detection.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -397,7 +406,7 @@ public func gitDiffMerge(
 public func gitDiffFindSimilar(
     diff    : OpaquePointer,
     options : GitDiffFindOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -520,7 +529,7 @@ public func gitDiffIsSortedICase(
 ///   - hunkCB: The callback invoked for each hunk in a diff.
 ///   - lineCB: The callback invoked for each line in a diff.
 ///   - payload: The caller-specified payload passed to the callbacks.
-/// - Returns: `0` on success, a non-zero callback return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -537,16 +546,19 @@ public func gitDiffForEach(
     hunkCB      : GitDiffHunkCB?,
     lineCB      : GitDiffLineCB?,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_foreach(
-        diff,
-        fileCB,
-        binaryCB,
-        hunkCB,
-        lineCB,
-        payload
-    )
+    return withCConversion
+    {
+        return git_diff_foreach(
+            diff,
+            fileCB,
+            binaryCB,
+            hunkCB,
+            lineCB,
+            payload
+        )
+    }
 }
 
 
@@ -580,7 +592,7 @@ public func gitDiffStatusChar(
 ///   - format: The possible diff data output formats.
 ///   - printCB: The callback invoked for each line in a diff.
 ///   - payload: The caller-specified payload passed to `printCB`.
-/// - Returns: `0` on success, a non-zero callback return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -590,14 +602,17 @@ public func gitDiffPrint(
     format  : GitDiffFormatT,
     printCB : GitDiffLineCB?,
     payload : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_print(
-        diff,
-        format.cValue(),
-        printCB,
-        payload
-    )
+    return withCConversion
+    {
+        return git_diff_print(
+            diff,
+            format.cValue(),
+            printCB,
+            payload
+        )
+    }
 }
 
 
@@ -607,7 +622,7 @@ public func gitDiffPrint(
 ///   - out: The buffer into which the formatted text should be written.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The possible diff data output formats.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -616,7 +631,7 @@ public func gitDiffToBuf(
     out     : inout GitBuf,
     diff    : OpaquePointer,
     format  : GitDiffFormatT
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -647,7 +662,7 @@ public func gitDiffToBuf(
 ///   - hunkCB: The callback invoked for each hunk in a diff.
 ///   - lineCB: The callback invoked for each line in a diff.
 ///   - payload: The caller-specified payload passed to the callbacks.
-/// - Returns: `0` on success, a non-zero callback return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -676,7 +691,7 @@ public func gitDiffBlobs(
     hunkCB      : GitDiffHunkCB?,
     lineCB      : GitDiffLineCB,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -724,7 +739,7 @@ public func gitDiffBlobs(
 ///   - hunkCB: The callback invoked for each hunk in a diff.
 ///   - lineCB: The callback invoked for each line in a diff.
 ///   - payload: The caller-specified payload passed to the callbacks.
-/// - Returns: `0` on success, a non-zero callback return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -747,7 +762,7 @@ public func gitDiffBlobToBuffer(
     hunkCB          : GitDiffHunkCB?,
     lineCB          : GitDiffLineCB,
     payload         : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -803,7 +818,7 @@ public func gitDiffBlobToBuffer(
 ///   - hunkCB: The callback invoked for each hunk in a diff.
 ///   - lineCB: The callback invoked for each line in a diff.
 ///   - payload: The caller-specified payload passed to the callbacks.
-/// - Returns: `0` on success, a non-zero callback return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -827,7 +842,7 @@ public func gitDiffBuffers(
     hunkCB          : GitDiffHunkCB?,
     lineCB          : GitDiffLineCB,
     payload         : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -880,7 +895,7 @@ public func gitDiffBuffers(
 ///   - out: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
 ///   - content: The contents of a patch file.
 ///   - contentLen: The length of `content`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -899,7 +914,7 @@ public func gitDiffFromBuffer(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     content     : Data,
     contentLen  : Int
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -923,7 +938,7 @@ public func gitDiffFromBuffer(
 ///   - out: The pointer in which to store the resulting diff statistics. The underlying type must be
 ///   `git_diff_stats`.
 ///   - diff: The diff to evaluate. The underlying type must be `git_diff`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -931,19 +946,22 @@ public func gitDiffFromBuffer(
 public func gitDiffGetStats(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     diff    : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_get_stats(
-        out,
-        diff
-    )
+    return withCConversion
+    {
+        return git_diff_get_stats(
+            out,
+            diff
+        )
+    }
 }
 
 
 
 /// Gets the total number of files changed in a diff.
 /// - Parameter stats: The diff statistics. The underlying type must be `git_diff_stats`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: The total number of files changed in a diff.
 ///
 /// ## C Equivalent
 ///
@@ -959,7 +977,7 @@ public func gitDiffStatsFilesChanged(
 
 /// Gets the total number of insertions in a diff.
 /// - Parameter stats: The diff statistics. The underlying type must be `git_diff_stats`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: The total number of insertions in a diff.
 ///
 /// ## C Equivalent
 ///
@@ -975,7 +993,7 @@ public func gitDiffStatsInsertions(
 
 /// Gets the total number of deletions in a diff.
 /// - Parameter stats: The diff statistics. The underlying type must be `git_diff_stats`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: The total number of deletions in a diff.
 ///
 /// ## C Equivalent
 ///
@@ -995,7 +1013,7 @@ public func gitDiffStatsDeletions(
 ///   - stats: The diff statistics. The underlying type must be `git_diff_stats`.
 ///   - format: The diff stats formatting options.
 ///   - width: The target width for output.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1010,7 +1028,7 @@ public func gitDiffStatsToBuf(
     stats   : OpaquePointer,
     format  : GitDiffStatsFormatT,
     width   : Int
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -1049,7 +1067,7 @@ public func gitDiffStatsFree(
 /// - Parameters:
 ///   - opts: The `git_diff_patchid_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffPatchIDOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1062,12 +1080,15 @@ public func gitDiffStatsFree(
 public func gitDiffPatchIDOptionsInit(
     opts    : UnsafeMutablePointer<git_diff_patchid_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_diff_patchid_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_diff_patchid_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -1078,7 +1099,7 @@ public func gitDiffPatchIDOptionsInit(
 ///   - out: The ``GitOID`` instance in which to store the patch ID.
 ///   - diff: The diff to evaluate. The underlying type must be `git_diff`.
 ///   - opts: The options for calculating the patch ID.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1094,7 +1115,7 @@ public func gitDiffPatchID(
     out     : inout GitOID,
     diff    : OpaquePointer,
     opts    : GitDiffPatchIDOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

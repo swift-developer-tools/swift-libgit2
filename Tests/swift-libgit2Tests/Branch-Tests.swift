@@ -19,7 +19,7 @@ final class BranchTests: XCTestCaseStopOnFail
     {
         var isValid: Bool = false
         
-        var branchIsValidResult: Int32 = gitBranchIsValid(
+        var branchIsValidResult: GitErrorCode = gitBranchIsValid(
             valid:  &isValid,
             name:   "feature/hello-world"
         )
@@ -96,7 +96,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchMoveResult: Int32 = gitBranchMove(
+                let branchMoveResult: GitErrorCode = gitBranchMove(
                     out:            &movedBranchPointer,
                     branch:         branchPointer,
                     newBranchName:  "feature/goodbye-world",
@@ -114,7 +114,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchDeleteResult: Int32 = gitBranchDelete(branch: movedBranchPointer)
+                let branchDeleteResult: GitErrorCode = gitBranchDelete(branch: movedBranchPointer)
                 
                 XCTAssertOK(branchDeleteResult)
             }
@@ -149,7 +149,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchIteratorNewResult: Int32 = gitBranchIteratorNew(
+                let branchIteratorNewResult: GitErrorCode = gitBranchIteratorNew(
                     out:        &branchIteratorPointer,
                     repo:       repository.pointer,
                     listFlags:  GitBranchT.gitBranchLocal
@@ -171,13 +171,13 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 while true
                 {
-                    let branchNextResult: Int32 = gitBranchNext(
+                    let branchNextResult: GitErrorCode = gitBranchNext(
                         out:        &branchPointer,
                         outType:    &branchType,
                         iter:       branchIteratorPointer
                     )
                     
-                    if branchNextResult == GIT_ITEROVER.rawValue
+                    if branchNextResult == .gitIterOver
                     {
                         break
                     }
@@ -228,7 +228,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 var branchNamePointer: UnsafePointer<CChar>? = nil
                 
-                let branchNameResult: Int32 = gitBranchName(
+                let branchNameResult: GitErrorCode = gitBranchName(
                     out:    &branchNamePointer,
                     ref:    branchPointer
                 )
@@ -253,15 +253,25 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchIsHEADResult: Int32 = gitBranchIsHEAD(branch: branchPointer)
+                guard let branchIsHEADResult: Bool = gitBranchIsHEAD(branch: branchPointer)
+                else
+                {
+                    XCTFail("The branch-is-HEAD result was nil.")
+                    return
+                }
                 
-                XCTAssertEqual(branchIsHEADResult, 0)
+                XCTAssertFalse(branchIsHEADResult)
                 
                 
                 
-                let branchIsCheckedOutResult: Int32 = gitBranchIsCheckedOut(branch: branchPointer)
+                guard let branchIsCheckedOutResult: Bool = gitBranchIsCheckedOut(branch: branchPointer)
+                else
+                {
+                    XCTFail("The branch-is-checked-out result was nil.")
+                    return
+                }
                 
-                XCTAssertEqual(branchIsCheckedOutResult, 0)
+                XCTAssertFalse(branchIsCheckedOutResult)
                 
                 
                 
@@ -274,7 +284,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchUpstreamResult: Int32 = gitBranchUpstream(
+                let branchUpstreamResult: GitErrorCode = gitBranchUpstream(
                     out:    &upstreamPointer,
                     ref:    branchPointer
                 )
@@ -284,7 +294,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchSetUpstreamResult: Int32 = gitBranchSetUpstream(
+                let branchSetUpstreamResult: GitErrorCode = gitBranchSetUpstream(
                     branch:         branchPointer,
                     branchName:     "origin/main"
                 )
@@ -316,7 +326,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            let branchRemoteNameResult: Int32 = gitBranchRemoteName(
+            let branchRemoteNameResult: GitErrorCode = gitBranchRemoteName(
                 out:        &buffer,
                 repo:       repository.pointer,
                 refName:    referenceName
@@ -327,7 +337,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            let branchUpstreamRemoteResult: Int32 = gitBranchUpstreamRemote(
+            let branchUpstreamRemoteResult: GitErrorCode = gitBranchUpstreamRemote(
                 buf:        &buffer,
                 repo:       repository.pointer,
                 refName:    referenceName
@@ -338,7 +348,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            let branchUpstreamMergeResult: Int32 = gitBranchUpstreamMerge(
+            let branchUpstreamMergeResult: GitErrorCode = gitBranchUpstreamMerge(
                 buf:        &buffer,
                 repo:       repository.pointer,
                 refName:    referenceName
@@ -349,7 +359,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            let branchUpstreamNameResult: Int32 = gitBranchUpstreamName(
+            let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
                 out:        &buffer,
                 repo:       repository.pointer,
                 refName:    referenceName

@@ -116,7 +116,7 @@ enum Diff
         
         
         
-        let oldCommitLookupResult: Int32 = gitCommitLookup(
+        let oldCommitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &oldCommitPointer,
             repo:       repository.pointer,
             id:         oldCommitOID
@@ -133,7 +133,7 @@ enum Diff
         
         
         
-        let newCommitLookupResult: Int32 = gitCommitLookup(
+        let newCommitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &newCommitPointer,
             repo:       repository.pointer,
             id:         newCommitOID
@@ -150,7 +150,7 @@ enum Diff
         
         
         
-        let oldCommitTreeResult: Int32 = gitCommitTree(
+        let oldCommitTreeResult: GitErrorCode = gitCommitTree(
             out:        &oldTreePointer,
             commit:     oldCommitPointer
         )
@@ -160,7 +160,7 @@ enum Diff
         
         
         
-        let newCommitTreeResult: Int32 = gitCommitTree(
+        let newCommitTreeResult: GitErrorCode = gitCommitTree(
             out:        &newTreePointer,
             commit:     newCommitPointer
         )
@@ -170,7 +170,7 @@ enum Diff
         
         
         
-        let diffTreeToTreeResult: Int32 = gitDiffTreeToTree(
+        let diffTreeToTreeResult: GitErrorCode = gitDiffTreeToTree(
             diff:       &diffPointer,
             repo:       repository.pointer,
             oldTree:    oldTreePointer,
@@ -223,7 +223,7 @@ enum Diff
         
         
         
-        let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+        let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
         {
             commitPointer in
 
@@ -247,7 +247,7 @@ enum Diff
         
         
         
-        let diffTreeToWorkdirResult: Int32 = gitDiffTreeToWorkdir(
+        let diffTreeToWorkdirResult: GitErrorCode = gitDiffTreeToWorkdir(
             diff:       &diffPointer,
             repo:       repository.pointer,
             oldTree:    treePointer,
@@ -260,7 +260,7 @@ enum Diff
         else
         {
             throw NSError.makeError(
-                code:       Int(GIT_EUSER.rawValue),
+                code:       Int(GitErrorCode.gitEUser.rawValue),
                 message:    "The diff pointer was nil."
             )
         }

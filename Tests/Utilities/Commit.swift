@@ -41,7 +41,7 @@ enum Commit
         
         
         
-        let commitLookupResult: Int32 = gitCommitLookup(
+        let commitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &commitPointer,
             repo:       repository.pointer,
             id:         headOID
@@ -55,7 +55,7 @@ enum Commit
             XCTFail("The commit pointer was nil.")
             
             throw NSError.makeError(
-                code:       Int(GIT_EUSER.rawValue),
+                code:       Int(GitErrorCode.gitEUser.rawValue),
                 message:    "The commit pointer was nil."
             )
         }

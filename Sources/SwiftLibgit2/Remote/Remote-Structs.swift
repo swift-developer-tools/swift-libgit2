@@ -186,12 +186,12 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     {
         var remoteCallbacks = git_remote_callbacks()
         
-        let remoteInitCallbacksResult: Int32 = gitRemoteInitCallbacks(
+        let remoteInitCallbacksResult: GitErrorCode = gitRemoteInitCallbacks(
             opts:       &remoteCallbacks,
             version:    version
         )
         
-        if remoteInitCallbacksResult != GIT_OK.rawValue
+        if remoteInitCallbacksResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }
@@ -337,12 +337,12 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     {
         var fetchOptions = git_fetch_options()
         
-        let fetchOptionsInitResult: Int32 = gitFetchOptionsInit(
+        let fetchOptionsInitResult: GitErrorCode = gitFetchOptionsInit(
             opts:       &fetchOptions,
             version:    version
         )
         
-        if fetchOptionsInitResult != GIT_OK.rawValue
+        if fetchOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

@@ -14,7 +14,7 @@ import XCTest
 
 
 /// Operations in these tests may succeed or fail depending on the environment.
-/// `XCTAssertOK(_:)` is not used to check operation results when this is the case.
+/// ``XCTAssertOK(_:)`` is not used to check operation results when this is the case.
 final class ConfigTests: XCTestCaseStopOnFail
 {
     func testGitConfigBackendForEachMatch() throws
@@ -51,7 +51,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertOK(configBackendFromStringResult)
+            XCTAssertOK(GitErrorCode(rawValue: configBackendFromStringResult))
             
             guard let configBackend: UnsafeMutablePointer<git_config_backend> = configBackend
             else
@@ -80,7 +80,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertOK(openBackendResult)
+            XCTAssertOK(GitErrorCode(rawValue: openBackendResult))
             
             
             
@@ -90,7 +90,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             {
                 callbackDataPointer in
                 
-                let configForEachResult: Int32 = gitConfigBackendForEachMatch(
+                let configForEachResult: GitErrorCode = gitConfigBackendForEachMatch(
                     backend:    configBackend,
                     regExp:     "backend.*",
                     callback:   Self.configForEachCB,
@@ -171,7 +171,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 for index in 0..<testValueCount
                 {
-                    let configSetStringResult: Int32 = gitConfigSetString(
+                    let configSetStringResult: GitErrorCode = gitConfigSetString(
                         cfg:    configPointer,
                         name:   "test.iter\(index)",
                         value:  "value\(index)"
@@ -188,7 +188,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 {
                     callbackDataPointer in
                     
-                    let configForEachResult: Int32 = gitConfigForEach(
+                    let configForEachResult: GitErrorCode = gitConfigForEach(
                         cfg:        configPointer,
                         callback:   Self.configForEachCB,
                         payload:    callbackDataPointer
@@ -207,7 +207,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 {
                     callbackDataPointer in
                     
-                    let configForEachMatchResult: Int32 = gitConfigForEachMatch(
+                    let configForEachMatchResult: GitErrorCode = gitConfigForEachMatch(
                         cfg:        configPointer,
                         regExp:     "test.*",
                         callback:   Self.configForEachCB,
@@ -231,7 +231,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configIteratorNewResult: Int32 = gitConfigIteratorNew(
+                let configIteratorNewResult: GitErrorCode = gitConfigIteratorNew(
                     out:    &configIterator,
                     cfg:    configPointer
                 )
@@ -252,12 +252,12 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 while true
                 {
-                    let configNextResult: Int32 = gitConfigNext(
+                    let configNextResult: GitErrorCode = gitConfigNext(
                         entry:  &configEntry,
                         iter:   configIterator
                     )
                     
-                    if configNextResult == GIT_ITEROVER.rawValue
+                    if configNextResult == .gitIterOver
                     {
                         break
                     }
@@ -280,7 +280,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configIteratorGlobNewResult: Int32 = gitConfigIteratorGlobNew(
+                let configIteratorGlobNewResult: GitErrorCode = gitConfigIteratorGlobNew(
                     out:        &configGlobIterator,
                     cfg:        configPointer,
                     regExp:     "test.*"
@@ -301,12 +301,12 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 while true
                 {
-                    let configNextResult: Int32 = gitConfigNext(
+                    let configNextResult: GitErrorCode = gitConfigNext(
                         entry:  &configEntry,
                         iter:   configGlobIterator
                     )
                     
-                    if configNextResult == GIT_ITEROVER.rawValue
+                    if configNextResult == .gitIterOver
                     {
                         break
                     }
@@ -348,7 +348,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             
             
-            let configOpenDefaultResult: Int32 = gitConfigOpenDefault(out: &parentConfigPointer)
+            let configOpenDefaultResult: GitErrorCode = gitConfigOpenDefault(out: &parentConfigPointer)
             
             guard
                 isOK(configOpenDefaultResult),
@@ -362,7 +362,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             
             
-            let configOpenLevelResult: Int32 = gitConfigOpenLevel(
+            let configOpenLevelResult: GitErrorCode = gitConfigOpenLevel(
                 out:        &levelConfigPointer,
                 parent:     parentConfigPointer,
                 level:      .gitConfigLevelGlobal
@@ -375,7 +375,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             
             
-            let configOpenGlobalResult: Int32 = gitConfigOpenGlobal(
+            let configOpenGlobalResult: GitErrorCode = gitConfigOpenGlobal(
                 out:        &globalConfigPointer,
                 config:     parentConfigPointer
             )
@@ -432,7 +432,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configLockResult: Int32 = gitConfigLock(
+                let configLockResult: GitErrorCode = gitConfigLock(
                     tx:     &transactionPointer,
                     cfg:    configPointer
                 )
@@ -502,7 +502,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             {
                 configPointer in
                 
-                let configSetBoolResult: Int32 = gitConfigSetBool(
+                let configSetBoolResult: GitErrorCode = gitConfigSetBool(
                     cfg:    configPointer,
                     name:   "map.bool",
                     value:  true
@@ -514,7 +514,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var mappedValue: Int32 = -1
                 
-                let configGetMappedBoolResult: Int32 = gitConfigGetMapped(
+                let configGetMappedBoolResult: GitErrorCode = gitConfigGetMapped(
                     out:    &mappedValue,
                     cfg:    configPointer,
                     name:   "map.bool",
@@ -527,7 +527,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configSetStringResult: Int32 = gitConfigSetString(
+                let configSetStringResult: GitErrorCode = gitConfigSetString(
                     cfg:    configPointer,
                     name:   "map.string",
                     value:  "custom"
@@ -537,7 +537,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configGetMappedStringResult: Int32 = gitConfigGetMapped(
+                let configGetMappedStringResult: GitErrorCode = gitConfigGetMapped(
                     out:    &mappedValue,
                     cfg:    configPointer,
                     name:   "map.string",
@@ -552,7 +552,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var lookupValue: Int32 = -1
                 
-                let configLookupMapValueResult: Int32 = gitConfigLookupMapValue(
+                let configLookupMapValueResult: GitErrorCode = gitConfigLookupMapValue(
                     out:    &lookupValue,
                     maps:   configMaps,
                     mapN:   configMaps.count,
@@ -598,7 +598,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 for index in 0..<testValueCount
                 {
-                    var configSetMultivarResult: Int32 = gitConfigSetMultivar(
+                    var configSetMultivarResult: GitErrorCode = gitConfigSetMultivar(
                         cfg:        configPointer,
                         name:       multivarName,
                         regExp:     "",
@@ -609,7 +609,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                     
                     
                     
-                    let configDeleteMultivarResult: Int32 = gitConfigDeleteMultivar(
+                    let configDeleteMultivarResult: GitErrorCode = gitConfigDeleteMultivar(
                         cfg:        configPointer,
                         name:       multivarName,
                         regExp:     "test.multivar*"
@@ -637,7 +637,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 {
                     callbackDataPointer in
                     
-                    let configGetMultivarForEachResult: Int32 = gitConfigGetMultivarForEach(
+                    let configGetMultivarForEachResult: GitErrorCode = gitConfigGetMultivarForEach(
                         cfg:        configPointer,
                         name:       multivarName,
                         regExp:     nil,
@@ -667,7 +667,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configMultivarIteratorNewResult: Int32 = gitConfigMultivarIteratorNew(
+                let configMultivarIteratorNewResult: GitErrorCode = gitConfigMultivarIteratorNew(
                     out:        &configIterator,
                     cfg:        configPointer,
                     name:       multivarName,
@@ -690,12 +690,12 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 while true
                 {
-                    let configNextResult: Int32 = gitConfigNext(
+                    let configNextResult: GitErrorCode = gitConfigNext(
                         entry:  &configEntry,
                         iter:   configIterator
                     )
                     
-                    if configNextResult == GIT_ITEROVER.rawValue
+                    if configNextResult == .gitIterOver
                     {
                         break
                     }
@@ -728,7 +728,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        let configNewResult: Int32 = gitConfigNew(out: &configPointer)
+        let configNewResult: GitErrorCode = gitConfigNew(out: &configPointer)
         
         XCTAssertOK(configNewResult)
         XCTAssertNotNil(configPointer)
@@ -747,7 +747,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        let configOpenDefaultResult: Int32 = gitConfigOpenDefault(out: &configPointer)
+        let configOpenDefaultResult: GitErrorCode = gitConfigOpenDefault(out: &configPointer)
         
         if isOK(configOpenDefaultResult)
         {
@@ -776,7 +776,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configNewResult: Int32 = gitConfigNew(out: &newConfigPointer)
+                let configNewResult: GitErrorCode = gitConfigNew(out: &newConfigPointer)
                 
                 XCTAssertOK(configNewResult)
                 
@@ -789,7 +789,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configAddFileOnDiskResult: Int32 = gitConfigAddFileOnDisk(
+                let configAddFileOnDiskResult: GitErrorCode = gitConfigAddFileOnDisk(
                     cfg:    newConfigPointer,
                     path:   repository.configPath,
                     level:  .gitConfigLevelLocal,
@@ -808,7 +808,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     {
         var boolResult: Bool = false
         
-        let configParseTrueResult: Int32 = gitConfigParseBool(
+        let configParseTrueResult: GitErrorCode = gitConfigParseBool(
             out:    &boolResult,
             value:  "yes"
         )
@@ -818,7 +818,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        let configParseFalseResult: Int32 = gitConfigParseBool(
+        let configParseFalseResult: GitErrorCode = gitConfigParseBool(
             out:    &boolResult,
             value:  "no"
         )
@@ -830,7 +830,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         var int32Result: Int32 = 0
         
-        let configParseInt32Result: Int32 = gitConfigParseInt32(
+        let configParseInt32Result: GitErrorCode = gitConfigParseInt32(
             out:    &int32Result,
             value:  "123"
         )
@@ -840,7 +840,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        let configParseInt32SuffixResult: Int32 = gitConfigParseInt32(
+        let configParseInt32SuffixResult: GitErrorCode = gitConfigParseInt32(
             out:    &int32Result,
             value:  "1k"
         )
@@ -852,7 +852,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         var int64Result: Int64 = 0
         
-        let configParseInt64Result: Int32 = gitConfigParseInt64(
+        let configParseInt64Result: GitErrorCode = gitConfigParseInt64(
             out:    &int64Result,
             value:  "123"
         )
@@ -862,7 +862,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        let configParseInt64SuffixResult: Int32 = gitConfigParseInt64(
+        let configParseInt64SuffixResult: GitErrorCode = gitConfigParseInt64(
             out:    &int64Result,
             value:  "1k"
         )
@@ -881,7 +881,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        let configParsePathResult: Int32 = gitConfigParsePath(
+        let configParsePathResult: GitErrorCode = gitConfigParsePath(
             out:    &pathBuffer,
             value:  "~/test"
         )
@@ -922,7 +922,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 let stringExpectedValue : String    = "hello world"
                 let stringName          : String    = "test.string"
                 
-                var configSetStringResult: Int32 = gitConfigSetString(
+                var configSetStringResult: GitErrorCode = gitConfigSetString(
                     cfg:    configPointer,
                     name:   stringName,
                     value:  stringExpectedValue
@@ -932,7 +932,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configDeleteEntryResult: Int32 = gitConfigDeleteEntry(
+                let configDeleteEntryResult: GitErrorCode = gitConfigDeleteEntry(
                     cfg:    configPointer,
                     name:   stringName
                 )
@@ -943,7 +943,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var configEntry = GitConfigEntry()
                 
-                var configGetEntryResult: Int32 = gitConfigGetEntry(
+                var configGetEntryResult: GitErrorCode = gitConfigGetEntry(
                     out:    &configEntry,
                     cfg:    configPointer,
                     name:   stringName
@@ -992,13 +992,13 @@ final class ConfigTests: XCTestCaseStopOnFail
                     }
                 }
                 
-                configGetEntryResult = git_config_get_entry(
+                let cConfigGetEntryResult: Int32 = git_config_get_entry(
                     &cConfigEntry,
                     configPointer,
                     stringName
                 )
                 
-                XCTAssertOK(configGetEntryResult)
+                XCTAssertOK(GitErrorCode(rawValue: cConfigGetEntryResult))
                 XCTAssertNotNil(cConfigEntry)
                 
                 
@@ -1012,7 +1012,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configGetStringBufResult: Int32 = gitConfigGetStringBuf(
+                let configGetStringBufResult: GitErrorCode = gitConfigGetStringBuf(
                     out:    &stringBuffer,
                     cfg:    configPointer,
                     name:   stringName
@@ -1041,7 +1041,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 let int32ExpectedValue  : Int32     = 123
                 let int32Name           : String    = "test.int32"
                 
-                let configSetInt32Result: Int32 = gitConfigSetInt32(
+                let configSetInt32Result: GitErrorCode = gitConfigSetInt32(
                     cfg:    configPointer,
                     name:   int32Name,
                     value:  int32ExpectedValue
@@ -1053,7 +1053,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var int32Value: Int32 = 0
                 
-                let configGetInt32Result: Int32 = gitConfigGetInt32(
+                let configGetInt32Result: GitErrorCode = gitConfigGetInt32(
                     out:    &int32Value,
                     cfg:    configPointer,
                     name:   int32Name
@@ -1067,7 +1067,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 let int64ExpectedValue  : Int64     = 1234567891234567890
                 let int64Name           : String    = "test.int64"
                 
-                let configSetInt64Result: Int32 = gitConfigSetInt64(
+                let configSetInt64Result: GitErrorCode = gitConfigSetInt64(
                     cfg:    configPointer,
                     name:   int64Name,
                     value:  int64ExpectedValue
@@ -1079,7 +1079,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var int64Value: Int64 = 0
                 
-                let configGetInt64Result: Int32 = gitConfigGetInt64(
+                let configGetInt64Result: GitErrorCode = gitConfigGetInt64(
                     out:    &int64Value,
                     cfg:    configPointer,
                     name:   int64Name
@@ -1093,7 +1093,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 let boolExpectedValue   : Bool      = true
                 let boolName            : String    = "test.bool"
                 
-                let configSetBoolResult: Int32 = gitConfigSetBool(
+                let configSetBoolResult: GitErrorCode = gitConfigSetBool(
                     cfg:    configPointer,
                     name:   boolName,
                     value:  boolExpectedValue
@@ -1105,7 +1105,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var boolValue: Bool = false
                 
-                let configGetBoolResult: Int32 = gitConfigGetBool(
+                let configGetBoolResult: GitErrorCode = gitConfigGetBool(
                     out:    &boolValue,
                     cfg:    configPointer,
                     name:   boolName
@@ -1119,7 +1119,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 let pathExpectedValue   : String    = "~/Documents"
                 let pathName            : String    = "test.path"
                 
-                let configSetPathResult: Int32 = gitConfigSetString(
+                let configSetPathResult: GitErrorCode = gitConfigSetString(
                     cfg:    configPointer,
                     name:   pathName,
                     value:  pathExpectedValue
@@ -1138,7 +1138,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configGetPathResult: Int32 = gitConfigGetPath(
+                let configGetPathResult: GitErrorCode = gitConfigGetPath(
                     out:    &pathBuffer,
                     cfg:    configPointer,
                     name:   pathName
@@ -1191,7 +1191,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 let stringExpectedValue : String    = "hello world"
                 let stringName          : String    = "test.string"
                 
-                let configSetStringResult: Int32 = gitConfigSetString(
+                let configSetStringResult: GitErrorCode = gitConfigSetString(
                     cfg:    configPointer,
                     name:   stringName,
                     value:  stringExpectedValue
@@ -1201,7 +1201,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configSnapshotResult: Int32 = gitConfigSnapshot(
+                let configSnapshotResult: GitErrorCode = gitConfigSnapshot(
                     out:        &snapshotPointer,
                     config:     configPointer
                 )
@@ -1219,7 +1219,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 var stringValue: String? = nil
                 
-                let invalidConfigGetStringResult: Int32 = gitConfigGetString(
+                let invalidConfigGetStringResult: GitErrorCode = gitConfigGetString(
                     out:    &stringValue,
                     cfg:    configPointer,
                     name:   stringName
@@ -1232,7 +1232,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 stringValue = nil
                 
-                let configGetStringResult: Int32 = gitConfigGetString(
+                let configGetStringResult: GitErrorCode = gitConfigGetString(
                     out:    &stringValue,
                     cfg:    snapshotPointer,
                     name:   stringName
@@ -1244,7 +1244,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let configSetWriteOrderResult: Int32 = gitConfigSetWriteOrder(
+                let configSetWriteOrderResult: GitErrorCode = gitConfigSetWriteOrder(
                     cfg:        configPointer,
                     levels:     [.gitConfigLevelLocal, .gitConfigLevelGlobal],
                     len:        2
@@ -1282,7 +1282,7 @@ extension ConfigTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1297,7 +1297,7 @@ extension ConfigTests
             payloadPointer.pointee.values.append("\(name)=\(value)")
         }
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
     
     
@@ -1322,7 +1322,7 @@ extension ConfigTests
         
         
         
-        let configOpenOnDiskResult: Int32 = gitConfigOpenOnDisk(
+        let configOpenOnDiskResult: GitErrorCode = gitConfigOpenOnDisk(
             out:    &configPointer,
             path:   repository.configPath
         )
@@ -1335,7 +1335,7 @@ extension ConfigTests
             XCTFail("The configuration pointer was nil.")
             
             throw NSError.makeError(
-                code:       Int(GIT_EUSER.rawValue),
+                code:       Int(GitErrorCode.gitEUser.rawValue),
                 message:    "The configuration pointer was nil."
             )
         }

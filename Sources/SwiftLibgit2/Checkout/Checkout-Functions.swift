@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_checkout_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitCheckoutOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,12 +28,15 @@ import CLibgit2
 public func gitCheckoutOptionsInit(
     opts    : UnsafeMutablePointer<git_checkout_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_checkout_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_checkout_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -45,8 +48,7 @@ public func gitCheckoutOptionsInit(
 ///   - repo: The repository to check out. The underlying type must be `git_repository`.
 ///   This repository may not be bare.
 ///   - opts: The options for the checkout operation.
-/// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
-/// or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -63,7 +65,7 @@ public func gitCheckoutOptionsInit(
 public func gitCheckoutHEAD(
     repo    : OpaquePointer,
     opts    : GitCheckoutOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -88,8 +90,7 @@ public func gitCheckoutHEAD(
 ///   - index: The index to check out. The underlying type must be `git_index`.
 ///   Pass `nil` to use the repository index.
 ///   - opts: The options for the checkout operation.
-/// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
-/// or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -98,7 +99,7 @@ public func gitCheckoutIndex(
     repo    : OpaquePointer,
     index   : OpaquePointer?,
     opts    : GitCheckoutOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -125,8 +126,7 @@ public func gitCheckoutIndex(
 ///   - treeish: The commit, tag, or tree whose content will be used to update the working
 ///   directory. The underlying type must be `git_object`. Pass `nil` to use HEAD.
 ///   - opts: The options for the checkout operation.
-/// - Returns: `0` on success, a non-zero value returned by ``GitCheckoutNotifyCB``,
-/// or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -135,7 +135,7 @@ public func gitCheckoutTree(
     repo    : OpaquePointer,
     treeish : OpaquePointer?,
     opts    : GitCheckoutOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

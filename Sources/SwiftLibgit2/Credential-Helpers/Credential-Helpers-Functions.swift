@@ -18,7 +18,7 @@ import CLibgit2
 ///   - userFromURL: The username that is embedded in a `user@host` remote URL.
 ///   - allowedTypes: The allowed credential types.
 ///   - payload: The payload provided by the caller.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -35,13 +35,16 @@ public func gitCredentialUserPass(
     userFromURL     : String?,
     allowedTypes    : GitCredentialT,
     payload         : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_userpass(
-        out,
-        url,
-        userFromURL,
-        allowedTypes.rawValue,
-        payload
-    )
+    return withCConversion
+    {
+        return git_credential_userpass(
+            out,
+            url,
+            userFromURL,
+            allowedTypes.rawValue,
+            payload
+        )
+    }
 }

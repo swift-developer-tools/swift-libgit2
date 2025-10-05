@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_cherrypick_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitCherrypickOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,12 +28,15 @@ import CLibgit2
 public func gitCherrypickOptionsInit(
     opts    : UnsafeMutablePointer<git_cherrypick_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_cherrypick_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_cherrypick_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -50,7 +53,7 @@ public func gitCherrypickOptionsInit(
 ///   - ourCommit: The commit against which to cherry-pick (for example, HEAD).
 ///   - mainline: The parent of the commit to cherry-pick, if it is a merge.
 ///   - mergeOptions: The options to use for the merge operation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -66,7 +69,7 @@ public func gitCherrypickCommit(
     ourCommit           : OpaquePointer,
     mainline            : UInt32,
     mergeOptions        : GitMergeOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -94,7 +97,7 @@ public func gitCherrypickCommit(
 ///   `git_repository`.
 ///   - commit: The commit to cherry-pick.
 ///   - cherrypickOptions: The options to use for the cherry-pick operation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -103,7 +106,7 @@ public func gitCherrypick(
     repo                : OpaquePointer,
     commit              : OpaquePointer,
     cherrypickOptions   : GitCherrypickOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

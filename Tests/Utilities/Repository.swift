@@ -109,7 +109,7 @@ struct Repository
             pointer
         )
         
-        XCTAssertOK(repositoryIndexResult)
+        XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
         
         
         
@@ -118,13 +118,13 @@ struct Repository
             path
         )
         
-        XCTAssertOK(indexAddBypathResult)
+        XCTAssertOK(GitErrorCode(rawValue: indexAddBypathResult))
         
         
         
         let indexWriteResult: Int32 = git_index_write(indexPointer)
         
-        XCTAssertOK(indexWriteResult)
+        XCTAssertOK(GitErrorCode(rawValue: indexWriteResult))
         
         
         
@@ -132,7 +132,7 @@ struct Repository
         {
             var commitOID = GitOID()
             
-            let commitCreateFromStageResult: Int32 = gitCommitCreateFromStage(
+            let commitCreateFromStageResult: GitErrorCode = gitCommitCreateFromStage(
                 id:         &commitOID,
                 repo:       pointer,
                 message:    "Commit from stage",
@@ -153,7 +153,7 @@ struct Repository
             
             
             
-            let commitLookupResult: Int32 = gitCommitLookup(
+            let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &commitPointer,
                 repo:       pointer,
                 id:         commitOID
@@ -165,7 +165,7 @@ struct Repository
             else
             {
                 throw NSError.makeError(
-                    code:       Int(GIT_EUSER.rawValue),
+                    code:       Int(GitErrorCode.gitEUser.rawValue),
                     message:    "The staged commit pointer was nil."
                 )
             }
@@ -205,7 +205,7 @@ struct Repository
             indexPointer
         )
         
-        XCTAssertOK(indexWriteTreeResult)
+        XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
         
         
         
@@ -224,13 +224,13 @@ struct Repository
             &treeOID
         )
         
-        XCTAssertOK(treeLookupResult)
+        XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
         
         guard let treePointer: OpaquePointer = treePointer
         else
         {
             throw NSError.makeError(
-                code:       Int(GIT_EUSER.rawValue),
+                code:       Int(GitErrorCode.gitEUser.rawValue),
                 message:    "The tree pointer was nil."
             )
         }
@@ -239,7 +239,7 @@ struct Repository
         
         var signature = GitSignature()
         
-        let signatureNowResult: Int32 = gitSignatureNow(
+        let signatureNowResult: GitErrorCode = gitSignatureNow(
             out:    &signature,
             name:   Self.commitAuthorName,
             email:  Self.commitAuthorEmail
@@ -268,9 +268,9 @@ struct Repository
             "HEAD"
         )
         
-        if isOK(referenceToNameToIDResult)
+        if isOK(GitErrorCode(rawValue: referenceToNameToIDResult))
         {
-            let commitLookupResult: Int32 = gitCommitLookup(
+            let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &headCommitPointer,
                 repo:       pointer,
                 id:         GitOID(cValue: cHeadOID)
@@ -292,7 +292,7 @@ struct Repository
         
         var commitOID = GitOID()
         
-        let commitCreateResult: Int32 = gitCommitCreate(
+        let commitCreateResult: GitErrorCode = gitCommitCreate(
             id:                 &commitOID,
             repo:               pointer,
             updateRef:          "HEAD",
@@ -332,7 +332,7 @@ struct Repository
         
         
         
-        let commitLookupResult: Int32 = gitCommitLookup(
+        let commitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &commitPointer,
             repo:       pointer,
             id:         commitOID
@@ -349,7 +349,7 @@ struct Repository
             nil
         )
         
-        XCTAssertOK(resetResult)
+        XCTAssertOK(GitErrorCode(rawValue: resetResult))
     }
     
     
@@ -525,7 +525,7 @@ extension Repository
             0
         )
         
-        XCTAssertOK(repositoryInitResult)
+        XCTAssertOK(GitErrorCode(rawValue: repositoryInitResult))
         
         guard let repositoryPointer: OpaquePointer = repositoryPointer
         else

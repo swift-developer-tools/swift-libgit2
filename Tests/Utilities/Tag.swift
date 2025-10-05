@@ -30,7 +30,7 @@ enum Tag
     {
         var signature = GitSignature()
         
-        let signatureNowResult: Int32 = gitSignatureNow(
+        let signatureNowResult: GitErrorCode = gitSignatureNow(
             out:    &signature,
             name:   Repository.commitAuthorName,
             email:  Repository.commitAuthorEmail
@@ -61,7 +61,7 @@ enum Tag
                     0
                 )
                 
-                XCTAssertOK(tagCreateResult)
+                XCTAssertOK(GitErrorCode(rawValue: tagCreateResult))
             }
         }
     }

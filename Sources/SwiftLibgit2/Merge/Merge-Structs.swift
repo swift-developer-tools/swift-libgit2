@@ -140,12 +140,12 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     {
         var mergeOptions = git_merge_options()
         
-        let mergeOptionsInitResult: Int32 = gitMergeOptionsInit(
+        let mergeOptionsInitResult: GitErrorCode = gitMergeOptionsInit(
             opts:       &mergeOptions,
             version:    version
         )
         
-        if mergeOptionsInitResult != GIT_OK.rawValue
+        if mergeOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

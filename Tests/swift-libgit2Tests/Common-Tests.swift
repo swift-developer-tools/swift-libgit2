@@ -31,8 +31,8 @@ final class CommonTests: XCTestCaseStopOnFail
     
     func testGitLibgitFeatures() throws
     {
-        let features             : Int32    = gitLibgit2Features()
-        let featuresSecondCall   : Int32    = gitLibgit2Features()
+        let features            = Int32(gitLibgit2Features().rawValue)
+        let featuresSecondCall  = Int32(gitLibgit2Features().rawValue)
         
         XCTAssertEqual(features, featuresSecondCall)
         XCTAssertGreaterThanOrEqual(features, 0)
@@ -291,7 +291,7 @@ final class CommonTests: XCTestCaseStopOnFail
         var minor       : Int32    = -1
         var revision    : Int32    = -1
         
-        let libgit2VersionResult: Int32 = gitLibgit2Version(
+        let libgit2VersionResult: GitErrorCode = gitLibgit2Version(
             major:  &major,
             minor:  &minor,
             rev:    &revision

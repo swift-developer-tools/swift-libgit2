@@ -31,7 +31,7 @@ enum OID
             "HEAD"
         )
         
-        XCTAssertOK(referenceNameToIDResult)
+        XCTAssertOK(GitErrorCode(rawValue: referenceNameToIDResult))
         
         return GitOID(cValue: headOID)
     }

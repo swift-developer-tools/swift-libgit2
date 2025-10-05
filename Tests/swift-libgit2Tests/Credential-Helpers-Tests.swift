@@ -46,7 +46,7 @@ final class CredentialHelpersTests: XCTestCaseStopOnFail
                 userFromURL:    String(cString: userFromURL),
                 allowedTypes:   GitCredentialT(rawValue: allowedTypes),
                 payload:        payload
-            )
+            ).rawValue
         }
         
         
@@ -89,7 +89,7 @@ final class CredentialHelpersTests: XCTestCaseStopOnFail
                         remoteCallbacks.payload
                     )
                     
-                    XCTAssertOK(callbackResult)
+                    XCTAssertOK(GitErrorCode(rawValue: callbackResult))
                 }
             }
         }

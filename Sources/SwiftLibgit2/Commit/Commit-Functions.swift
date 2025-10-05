@@ -18,7 +18,7 @@ import CLibgit2
 ///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -27,15 +27,18 @@ public func gitCommitLookup(
     commit  : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
     id      : GitOID
-) -> Int32
+) -> GitErrorCode
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_commit_lookup(
-        commit,
-        repo,
-        &cID
-    )
+    return withCConversion
+    {
+        var cID: git_oid = id.cValue()
+        
+        return git_commit_lookup(
+            commit,
+            repo,
+            &cID
+        )
+    }
 }
 
 
@@ -48,7 +51,7 @@ public func gitCommitLookup(
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
 ///   - len: The length of the short ID.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -58,16 +61,19 @@ public func gitCommitLookupPrefix(
     repo    : OpaquePointer,
     id      : GitOID,
     len     : Int
-) -> Int32
+) -> GitErrorCode
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_commit_lookup_prefix(
-        commit,
-        repo,
-        &cID,
-        len
-    )
+    return withCConversion
+    {
+        var cID: git_oid = id.cValue()
+        
+        return git_commit_lookup_prefix(
+            commit,
+            repo,
+            &cID,
+            len
+        )
+    }
 }
 
 
@@ -300,7 +306,7 @@ public func gitCommitAuthor(
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -309,7 +315,7 @@ public func gitCommitCommitterWithMailmap(
     out     : inout GitSignature,
     commit  : OpaquePointer,
     mailmap : OpaquePointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -335,7 +341,7 @@ public func gitCommitCommitterWithMailmap(
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -344,7 +350,7 @@ public func gitCommitAuthorWithMailmap(
     out     : inout GitSignature,
     commit  : OpaquePointer,
     mailmap : OpaquePointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -385,7 +391,7 @@ public func gitCommitRawHeader(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting tree. The underlying type must be `git_tree`.
 ///   - commit:The commit. The underlying type must be `git_commit`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -393,12 +399,15 @@ public func gitCommitRawHeader(
 public func gitCommitTree(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     commit  : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_commit_tree(
-        out,
-        commit
-    )
+    return withCConversion
+    {
+        return git_commit_tree(
+            out,
+            commit
+        )
+    }
 }
 
 
@@ -450,7 +459,7 @@ public func gitCommitParentCount(
 ///   `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed position of the parent.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -459,13 +468,16 @@ public func gitCommitParent(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     commit  : OpaquePointer,
     n       : UInt
-) -> Int32
+) -> GitErrorCode
 {
-    return git_commit_parent(
-        out,
-        commit,
-        UInt32(n)
-    )
+    return withCConversion
+    {
+        return git_commit_parent(
+            out,
+            commit,
+            UInt32(n)
+        )
+    }
 }
 
 
@@ -501,7 +513,7 @@ public func gitCommitParentID(
 ///   must be `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed generation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -514,13 +526,16 @@ public func gitCommitNthGenAncestor(
     ancestor    : UnsafeMutablePointer<OpaquePointer?>,
     commit      : OpaquePointer,
     n           : UInt
-) -> Int32
+) -> GitErrorCode
 {
-    return git_commit_nth_gen_ancestor(
-        ancestor,
-        commit,
-        UInt32(n)
-    )
+    return withCConversion
+    {
+        return git_commit_nth_gen_ancestor(
+            ancestor,
+            commit,
+            UInt32(n)
+        )
+    }
 }
 
 
@@ -530,7 +545,7 @@ public func gitCommitNthGenAncestor(
 ///   - out: The buffer into which the header field should be written.
 ///   - commit: The commit in which to look. The underlying type must be `git_commit`.
 ///   - field: The header field to return.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -539,7 +554,7 @@ public func gitCommitHeaderField(
     out     : inout GitBuf,
     commit  : OpaquePointer,
     field   : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -558,7 +573,6 @@ public func gitCommitHeaderField(
 
 
 
-// TODO: Replace `GIT_ERROR_INVALID` and `GIT_ERROR_OBJECT` in documentation.
 /// Extracts the signature from a commit.
 /// - Parameters:
 ///   - signature: The buffer into which the signature block should be written.
@@ -569,13 +583,13 @@ public func gitCommitHeaderField(
 ///   - commitID: The commit from which to extract the data.
 ///   - field: The name of the header field containing the signature block. Pass `nil` to extract
 ///   `gpgsig`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// If `commitID` is not the ID of a commit, the error class will be `GIT_ERROR_INVALID`.
+/// If `commitID` is not the ID of a commit, the error class will be ``GitErrorT/gitErrorInvalid``.
 ///
-/// If the commit does not have a signature, the error class will be `GIT_ERROR_OBJECT`.
+/// If the commit does not have a signature, the error class will be ``GitErrorT/gitErrorObject``.
 ///
 /// ## C Equivalent
 ///
@@ -586,7 +600,7 @@ public func gitCommitExtractSignature(
     repo        : OpaquePointer,
     commitID    : GitOID,
     field       : String?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -630,7 +644,7 @@ public func gitCommitExtractSignature(
 ///   - parentCount: The number of parents of the commit.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
 ///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -662,32 +676,35 @@ public func gitCommitCreate(
     tree            : OpaquePointer,
     parentCount     : Int,
     parents         : UnsafeMutablePointer<OpaquePointer?>?
-) -> Int32
+) -> GitErrorCode
 {
-    return id.withMutatingCValue
+    return withCConversion
     {
-        cID in
-        
-        return author.withCValue
+        return id.withMutatingCValue
         {
-            cAuthor in
+            cID in
             
-            return committer.withCValue
+            return author.withCValue
             {
-                cCommitter in
+                cAuthor in
                 
-                return git_commit_create(
-                    cID,
-                    repo,
-                    updateRef,
-                    cAuthor,
-                    cCommitter,
-                    messageEncoding,
-                    message,
-                    tree,
-                    parentCount,
-                    parents
-                )
+                return committer.withCValue
+                {
+                    cCommitter in
+                    
+                    return git_commit_create(
+                        cID,
+                        repo,
+                        updateRef,
+                        cAuthor,
+                        cCommitter,
+                        messageEncoding,
+                        message,
+                        tree,
+                        parentCount,
+                        parents
+                    )
+                }
             }
         }
     }
@@ -702,7 +719,7 @@ public func gitCommitCreate(
 ///   `git_repository`.
 ///   - message: The commit message.
 ///   - opts: The options for commit creation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -716,7 +733,7 @@ public func gitCommitCreateFromStage(
     repo    : OpaquePointer,
     message : String,
     opts    : GitCommitCreateOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -752,7 +769,7 @@ public func gitCommitCreateFromStage(
 ///   - message: The commit message.
 ///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
 ///   be `git_tree`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -779,7 +796,7 @@ public func gitCommitAmend(
     messageEncoding : String?,
     message         : String?,
     tree            : OpaquePointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -827,7 +844,7 @@ public func gitCommitAmend(
 ///   - parentCount: The number of parents of the commit.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
 ///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -851,7 +868,7 @@ public func gitCommitCreateBuffer(
     tree            : OpaquePointer,
     parentCount     : Int,
     parents         : UnsafeMutablePointer<OpaquePointer?>?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -895,7 +912,7 @@ public func gitCommitCreateBuffer(
 ///   - signature: The signature to add to the commit.
 ///   - signatureField: The header field which should contain the signature. Pass `nil` to use
 ///   `gpgsig`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -906,19 +923,22 @@ public func gitCommitCreateWithSignature(
     commitContent   : String,
     signature       : String?,
     signatureField  : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return out.withMutatingCValue
+    return withCConversion
     {
-        cOut in
-        
-        return git_commit_create_with_signature(
-            cOut,
-            repo,
-            commitContent,
-            signature,
-            signatureField
-        )
+        return out.withMutatingCValue
+        {
+            cOut in
+            
+            return git_commit_create_with_signature(
+                cOut,
+                repo,
+                commitContent,
+                signature,
+                signatureField
+            )
+        }
     }
 }
 
@@ -929,7 +949,7 @@ public func gitCommitCreateWithSignature(
 ///   - out: The pointer in which to store the resulting commit. The underlying type must be
 ///   `git_commit`.
 ///   - source: The original commit to copy. The underlying type must be `git_commit`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -937,12 +957,15 @@ public func gitCommitCreateWithSignature(
 public func gitCommitDup(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     source  : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_commit_dup(
-        out,
-        source
-    )
+    return withCConversion
+    {
+        return git_commit_dup(
+            out,
+            source
+        )
+    }
 }
 
 

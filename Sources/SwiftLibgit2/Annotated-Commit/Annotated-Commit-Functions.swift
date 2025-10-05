@@ -19,7 +19,7 @@ import CLibgit2
 ///   `git_repository`.
 ///   - ref: The reference to use to lookup the  annotated commit. The underlying type must be
 ///   `git_reference`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -32,13 +32,16 @@ public func gitAnnotatedCommitFromRef(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
     ref     : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_annotated_commit_from_ref(
-        out,
-        repo,
-        ref
-    )
+    return withCConversion
+    {
+        return git_annotated_commit_from_ref(
+            out,
+            repo,
+            ref
+        )
+    }
 }
 
 
@@ -52,7 +55,7 @@ public func gitAnnotatedCommitFromRef(
 ///   - branchName: The name of the (remote) branch.
 ///   - remoteURL: The URL of the remote.
 ///   - id: The commit ID of the remote branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -67,17 +70,20 @@ public func gitAnnotatedCommitFromFetchhead(
     branchName  : String,
     remoteURL   : String,
     id          : GitOID
-) -> Int32
+) -> GitErrorCode
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_annotated_commit_from_fetchhead(
-        out,
-        repo,
-        branchName,
-        remoteURL,
-        &cID
-    )
+    return withCConversion
+    {
+        var cID: git_oid = id.cValue()
+        
+        return git_annotated_commit_from_fetchhead(
+            out,
+            repo,
+            branchName,
+            remoteURL,
+            &cID
+        )
+    }
 }
 
 
@@ -89,7 +95,7 @@ public func gitAnnotatedCommitFromFetchhead(
 ///   - repo: The repository containing the given commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID to lookup.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -108,15 +114,18 @@ public func gitAnnotatedCommitLookup(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
     id      : GitOID
-) -> Int32
+) -> GitErrorCode
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_annotated_commit_lookup(
-        out,
-        repo,
-        &cID
-    )
+    return withCConversion
+    {
+        var cID: git_oid = id.cValue()
+        
+        return git_annotated_commit_lookup(
+            out,
+            repo,
+            &cID
+        )
+    }
 }
 
 
@@ -128,7 +137,7 @@ public func gitAnnotatedCommitLookup(
 ///   - repo: The repository containing the given commit. The underlying type must be
 ///   `git_repository`.
 ///   - revspec: The extended SHA syntax string to use to lookup the commit.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -145,13 +154,16 @@ public func gitAnnotatedCommitFromRevspec(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     repo    : OpaquePointer,
     revspec : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_annotated_commit_from_revspec(
-        out,
-        repo,
-        revspec
-    )
+    return withCConversion
+    {
+        return git_annotated_commit_from_revspec(
+            out,
+            repo,
+            revspec
+        )
+    }
 }
 
 

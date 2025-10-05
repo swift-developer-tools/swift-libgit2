@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_clone_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitCloneOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,12 +28,15 @@ import CLibgit2
 public func gitCloneOptionsInit(
     opts    : UnsafeMutablePointer<git_clone_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_clone_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_clone_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -45,8 +48,7 @@ public func gitCloneOptionsInit(
 ///   - url: The URL of the remote to clone.
 ///   - localPath: The path to the local directory in which to clone.
 ///   - options: The options for the clone operation.
-/// - Returns: `0` on success, a non-zero value returned by ``GitRemoteCreateCB`` or
-/// ``GitRepositoryCreateCB``, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -56,7 +58,7 @@ public func gitClone(
     url         : String,
     localPath   : String,
     options     : GitCloneOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

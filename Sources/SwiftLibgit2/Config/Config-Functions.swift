@@ -33,7 +33,7 @@ public func gitConfigEntryFree(
 
 /// Locates the path to the global configuration file.
 /// - Parameter out: The buffer into which the path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -48,7 +48,7 @@ public func gitConfigEntryFree(
 /// [`git_config_find_global()`](https://libgit2.org/docs/reference/main/config/git_config_find_global.html)
 public func gitConfigFindGlobal(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -65,7 +65,7 @@ public func gitConfigFindGlobal(
 
 /// Locates the path to the global XDG-compatible configuration file.
 /// - Parameter out: The buffer into which the path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -80,7 +80,7 @@ public func gitConfigFindGlobal(
 /// [`git_config_find_xdg()`](https://libgit2.org/docs/reference/main/config/git_config_find_xdg.html)
 public func gitConfigFindXDG(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -97,7 +97,7 @@ public func gitConfigFindXDG(
 
 /// Locates the path to the system configuration file.
 /// - Parameter out: The buffer into which the path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -109,7 +109,7 @@ public func gitConfigFindXDG(
 /// [`git_config_find_system()`](https://libgit2.org/docs/reference/main/config/git_config_find_system.html)
 public func gitConfigFindSystem(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -126,7 +126,7 @@ public func gitConfigFindSystem(
 
 /// Locates the path to the ProgramData configuration file.
 /// - Parameter out: The buffer into which the path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -137,7 +137,7 @@ public func gitConfigFindSystem(
 /// [`git_config_find_programdata()`](https://libgit2.org/docs/reference/main/config/git_config_find_programdata.html)
 public func gitConfigFindProgramData(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -155,7 +155,7 @@ public func gitConfigFindProgramData(
 /// Opens the global, XDG, and system configuration files.
 /// - Parameter out: The pointer in which to store the resulting configuration object. The underlying
 /// type must be `git_config`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -168,9 +168,12 @@ public func gitConfigFindProgramData(
 /// [`git_config_open_default()`](https://libgit2.org/docs/reference/main/config/git_config_open_default.html)
 public func gitConfigOpenDefault(
     out: UnsafeMutablePointer<OpaquePointer?>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_open_default(out)
+    return withCConversion
+    {
+        return git_config_open_default(out)
+    }
 }
 
 
@@ -178,7 +181,7 @@ public func gitConfigOpenDefault(
 /// Allocates a new configuration object.
 /// - Parameter out: The pointer in which to store the resulting configuration object. The underlying
 /// type must be `git_config`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -189,9 +192,12 @@ public func gitConfigOpenDefault(
 /// [`git_config_new()`](https://libgit2.org/docs/reference/main/config/git_config_new.html)
 public func gitConfigNew(
     out: UnsafeMutablePointer<OpaquePointer?>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_new(out)
+    return withCConversion
+    {
+        return git_config_new(out)
+    }
 }
 
 
@@ -205,7 +211,7 @@ public func gitConfigNew(
 ///   - repo: The optional repository to allow parsing of conditional includes. The underlying type
 ///   must be `git_repository`.
 ///   - force: Whether the configuration file should be replaced at the given priority level.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -229,15 +235,18 @@ public func gitConfigAddFileOnDisk(
     level   : GitConfigLevelT,
     repo    : OpaquePointer?,
     force   : Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_add_file_ondisk(
-        cfg,
-        path,
-        level.cValue(),
-        repo,
-        force.intValue
-    )
+    return withCConversion
+    {
+        return git_config_add_file_ondisk(
+            cfg,
+            path,
+            level.cValue(),
+            repo,
+            force.intValue
+        )
+    }
 }
 
 
@@ -247,7 +256,7 @@ public func gitConfigAddFileOnDisk(
 ///   - out: The pointer in which to store the resulting configuration object. The underlying type
 ///   must be `git_config`.
 ///   - path: The path to the on-disk file to open.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -261,12 +270,15 @@ public func gitConfigAddFileOnDisk(
 public func gitConfigOpenOnDisk(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     path    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_open_ondisk(
-        out,
-        path
-    )
+    return withCConversion
+    {
+        return git_config_open_ondisk(
+            out,
+            path
+        )
+    }
 }
 
 
@@ -278,7 +290,7 @@ public func gitConfigOpenOnDisk(
 ///   - parent: The multi-level configuration object to search for the given level. The underlying type
 ///   must be `git_config`.
 ///   - level: The configuration level for which to search.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -295,13 +307,16 @@ public func gitConfigOpenLevel(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     parent  : OpaquePointer,
     level   : GitConfigLevelT
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_open_level(
-        out,
-        parent,
-        level.cValue()
-    )
+    return withCConversion
+    {
+        return git_config_open_level(
+            out,
+            parent,
+            level.cValue()
+        )
+    }
 }
 
 
@@ -311,7 +326,7 @@ public func gitConfigOpenLevel(
 ///   - out: The pointer in which to store the resulting configuration object. The underlying type
 ///   must be `git_config`.
 ///   - config: The configuration object to search.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -325,12 +340,15 @@ public func gitConfigOpenLevel(
 public func gitConfigOpenGlobal(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     config  : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_open_global(
-        out,
-        config
-    )
+    return withCConversion
+    {
+        return git_config_open_global(
+            out,
+            config
+        )
+    }
 }
 
 
@@ -341,7 +359,7 @@ public func gitConfigOpenGlobal(
 ///   be `git_config`.
 ///   - levels: The ordering of levels for writing.
 ///   - len: The length of `levels`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -355,28 +373,31 @@ public func gitConfigSetWriteOrder(
     cfg     : OpaquePointer,
     levels  : [GitConfigLevelT],
     len     : Int
-) -> Int32
+) -> GitErrorCode
 {
-    let cLevels: [git_config_level_t] = levels.map { $0.cValue() }
-    
-    return cLevels.withUnsafeBufferPointer
+    return withCConversion
     {
-        levelsBufferPointer in
+        let cLevels: [git_config_level_t] = levels.map { $0.cValue() }
         
-        guard let baseAddress: UnsafePointer<git_config_level_t> = levelsBufferPointer.baseAddress
-        else
+        return cLevels.withUnsafeBufferPointer
         {
-            return GIT_EUSER.rawValue
+            levelsBufferPointer in
+            
+            guard let baseAddress: UnsafePointer<git_config_level_t> = levelsBufferPointer.baseAddress
+            else
+            {
+                return GitErrorCode.gitEUser.rawValue
+            }
+            
+            let mutableBaseAddress: UnsafeMutablePointer<git_config_level_t>
+                = UnsafeMutablePointer(mutating: baseAddress)
+            
+            return git_config_set_writeorder(
+                cfg,
+                mutableBaseAddress,
+                cLevels.count
+            )
         }
-        
-        let mutableBaseAddress: UnsafeMutablePointer<git_config_level_t>
-            = UnsafeMutablePointer(mutating: baseAddress)
-        
-        return git_config_set_writeorder(
-            cfg,
-            mutableBaseAddress,
-            cLevels.count
-        )
     }
 }
 
@@ -387,7 +408,7 @@ public func gitConfigSetWriteOrder(
 ///   - out: The pointer in which to store the resulting configuration object. The underlying type
 ///   must be `git_config`.
 ///   - config: The configuration object to snapshot.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -402,12 +423,15 @@ public func gitConfigSetWriteOrder(
 public func gitConfigSnapshot(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     config  : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_snapshot(
-        out,
-        config
-    )
+    return withCConversion
+    {
+        return git_config_snapshot(
+            out,
+            config
+        )
+    }
 }
 
 
@@ -432,7 +456,7 @@ public func gitConfigFree(
 ///   - out: The configuration entry object to update.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -441,7 +465,7 @@ public func gitConfigGetEntry(
     out     : inout GitConfigEntry,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -465,7 +489,7 @@ public func gitConfigGetEntry(
 ///   - out: The pointer in which to store the resulting integer.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -479,13 +503,16 @@ public func gitConfigGetInt32(
     out     : UnsafeMutablePointer<Int32>,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_get_int32(
-        out,
-        cfg,
-        name
-    )
+    return withCConversion
+    {
+        return git_config_get_int32(
+            out,
+            cfg,
+            name
+        )
+    }
 }
 
 
@@ -495,7 +522,7 @@ public func gitConfigGetInt32(
 ///   - out: The pointer in which to store the resulting integer.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -509,13 +536,16 @@ public func gitConfigGetInt64(
     out     : UnsafeMutablePointer<Int64>,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_get_int64(
-        out,
-        cfg,
-        name
-    )
+    return withCConversion
+    {
+        return git_config_get_int64(
+            out,
+            cfg,
+            name
+        )
+    }
 }
 
 
@@ -525,7 +555,7 @@ public func gitConfigGetInt64(
 ///   - out: The pointer in which to store the resulting boolean.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -539,19 +569,22 @@ public func gitConfigGetBool(
     out     : UnsafeMutablePointer<Bool>,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
-    var intOut: Int32 = 0
-    
-    let configGetBoolResult: Int32 = git_config_get_bool(
-        &intOut,
-        cfg,
-        name
-    )
-    
-    out.pointee = Bool(intOut)
-    
-    return configGetBoolResult
+    return withCConversion
+    {
+        var intOut: Int32 = 0
+        
+        let configGetBoolResult: Int32 = git_config_get_bool(
+            &intOut,
+            cfg,
+            name
+        )
+        
+        out.pointee = Bool(intOut)
+        
+        return configGetBoolResult
+    }
 }
 
 
@@ -561,7 +594,7 @@ public func gitConfigGetBool(
 ///   - out: The buffer into which the path should be written.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -578,7 +611,7 @@ public func gitConfigGetPath(
     out     : inout GitBuf,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -602,7 +635,7 @@ public func gitConfigGetPath(
 ///   - out: The pointer in which to store the resulting string.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -618,20 +651,23 @@ public func gitConfigGetString(
     out     : UnsafeMutablePointer<String?>,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
-    /// The string is owned by the configuration object and must not be freed by the caller.
-    var cOut: UnsafePointer<CChar>? = nil
-    
-    let configGetStringResult: Int32 = git_config_get_string(
-        &cOut,
-        cfg,
-        name
-    )
-    
-    out.pointee = String(optionalCString: cOut)
-    
-    return configGetStringResult
+    return withCConversion
+    {
+        /// The string is owned by the configuration object and must not be freed by the caller.
+        var cOut: UnsafePointer<CChar>? = nil
+        
+        let configGetStringResult: Int32 = git_config_get_string(
+            &cOut,
+            cfg,
+            name
+        )
+        
+        out.pointee = String(optionalCString: cOut)
+        
+        return configGetStringResult
+    }
 }
 
 
@@ -641,7 +677,7 @@ public func gitConfigGetString(
 ///   - out: The buffer into which the string should be written.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -655,7 +691,7 @@ public func gitConfigGetStringBuf(
     out     : inout GitBuf,
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -681,7 +717,7 @@ public func gitConfigGetStringBuf(
 ///   - regExp: The regular expression used to filter values.
 ///   - callback: The callback to invoke on each value of the multivar.
 ///   - payload: The caller-specified payload passed to `callback`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -697,15 +733,18 @@ public func gitConfigGetMultivarForEach(
     regExp      : String?,
     callback    : GitConfigForEachCB,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_get_multivar_foreach(
-        cfg,
-        name,
-        regExp,
-        callback,
-        payload
-    )
+    return withCConversion
+    {
+        return git_config_get_multivar_foreach(
+            cfg,
+            name,
+            regExp,
+            callback,
+            payload
+        )
+    }
 }
 
 
@@ -716,7 +755,7 @@ public func gitConfigGetMultivarForEach(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 ///   - regExp: The regular expression used to filter values.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -731,14 +770,17 @@ public func gitConfigMultivarIteratorNew(
     cfg     : OpaquePointer,
     name    : String,
     regExp  : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_multivar_iterator_new(
-        out,
-        cfg,
-        name,
-        regExp
-    )
+    return withCConversion
+    {
+        return git_config_multivar_iterator_new(
+            out,
+            cfg,
+            name,
+            regExp
+        )
+    }
 }
 
 
@@ -747,7 +789,7 @@ public func gitConfigMultivarIteratorNew(
 /// - Parameters:
 ///   - entry: The configuration entry object to update.
 ///   - iter: The iterator to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -760,7 +802,7 @@ public func gitConfigMultivarIteratorNew(
 public func gitConfigNext(
     entry   : inout GitConfigEntry,
     iter    : UnsafeMutablePointer<git_config_iterator>
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -798,7 +840,7 @@ public func gitConfigIteratorFree(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 ///   - value: The integer to store.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -811,13 +853,16 @@ public func gitConfigSetInt32(
     cfg     : OpaquePointer,
     name    : String,
     value   : Int32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_set_int32(
-        cfg,
-        name,
-        value
-    )
+    return withCConversion
+    {
+        return git_config_set_int32(
+            cfg,
+            name,
+            value
+        )
+    }
 }
 
 
@@ -827,7 +872,7 @@ public func gitConfigSetInt32(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 ///   - value: The integer to store.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -840,13 +885,16 @@ public func gitConfigSetInt64(
     cfg     : OpaquePointer,
     name    : String,
     value   : Int64
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_set_int64(
-        cfg,
-        name,
-        value
-    )
+    return withCConversion
+    {
+        return git_config_set_int64(
+            cfg,
+            name,
+            value
+        )
+    }
 }
 
 
@@ -856,7 +904,7 @@ public func gitConfigSetInt64(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 ///   - value: The boolean to store.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -869,13 +917,16 @@ public func gitConfigSetBool(
     cfg     : OpaquePointer,
     name    : String,
     value   : Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_set_bool(
-        cfg,
-        name,
-        value.intValue
-    )
+    return withCConversion
+    {
+        return git_config_set_bool(
+            cfg,
+            name,
+            value.intValue
+        )
+    }
 }
 
 
@@ -885,7 +936,7 @@ public func gitConfigSetBool(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 ///   - value: The string to store.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -898,13 +949,16 @@ public func gitConfigSetString(
     cfg     : OpaquePointer,
     name    : String,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_set_string(
-        cfg,
-        name,
-        value
-    )
+    return withCConversion
+    {
+        return git_config_set_string(
+            cfg,
+            name,
+            value
+        )
+    }
 }
 
 
@@ -915,7 +969,7 @@ public func gitConfigSetString(
 ///   - name: The name of the configuration variable.
 ///   - regExp: The regular expression indicating which values to replace.
 ///   - value: The string to store.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -929,14 +983,17 @@ public func gitConfigSetMultivar(
     name    : String,
     regExp  : String,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_set_multivar(
-        cfg,
-        name,
-        regExp,
-        value
-    )
+    return withCConversion
+    {
+        return git_config_set_multivar(
+            cfg,
+            name,
+            regExp,
+            value
+        )
+    }
 }
 
 
@@ -945,7 +1002,7 @@ public func gitConfigSetMultivar(
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -958,12 +1015,15 @@ public func gitConfigSetMultivar(
 public func gitConfigDeleteEntry(
     cfg     : OpaquePointer,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_delete_entry(
-        cfg,
-        name
-    )
+    return withCConversion
+    {
+        return git_config_delete_entry(
+            cfg,
+            name
+        )
+    }
 }
 
 
@@ -973,7 +1033,7 @@ public func gitConfigDeleteEntry(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 ///   - regExp: The regular expression indicating which values to delete.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -986,13 +1046,16 @@ public func gitConfigDeleteMultivar(
     cfg     : OpaquePointer,
     name    : String,
     regExp  : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_delete_multivar(
-        cfg,
-        name,
-        regExp
-    )
+    return withCConversion
+    {
+        return git_config_delete_multivar(
+            cfg,
+            name,
+            regExp
+        )
+    }
 }
 
 
@@ -1002,7 +1065,7 @@ public func gitConfigDeleteMultivar(
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - callback: The callback to invoke on each variable.
 ///   - payload: The caller-specified payload passed to `callback`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1019,13 +1082,16 @@ public func gitConfigForEach(
     cfg         : OpaquePointer,
     callback    : GitConfigForEachCB,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_foreach(
-        cfg,
-        callback,
-        payload
-    )
+    return withCConversion
+    {
+        return git_config_foreach(
+            cfg,
+            callback,
+            payload
+        )
+    }
 }
 
 
@@ -1034,7 +1100,7 @@ public func gitConfigForEach(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1047,12 +1113,15 @@ public func gitConfigForEach(
 public func gitConfigIteratorNew(
     out : UnsafeMutablePointer<UnsafeMutablePointer<git_config_iterator>?>,
     cfg : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_iterator_new(
-        out,
-        cfg
-    )
+    return withCConversion
+    {
+        return git_config_iterator_new(
+            out,
+            cfg
+        )
+    }
 }
 
 
@@ -1062,7 +1131,7 @@ public func gitConfigIteratorNew(
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - regExp: The regular expression used to match the configuration names.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1079,13 +1148,16 @@ public func gitConfigIteratorGlobNew(
     out     : UnsafeMutablePointer<UnsafeMutablePointer<git_config_iterator>?>,
     cfg     : OpaquePointer,
     regExp  : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_iterator_glob_new(
-        out,
-        cfg,
-        regExp
-    )
+    return withCConversion
+    {
+        return git_config_iterator_glob_new(
+            out,
+            cfg,
+            regExp
+        )
+    }
 }
 
 
@@ -1096,7 +1168,7 @@ public func gitConfigIteratorGlobNew(
 ///   - regExp: The regular expression used to match the configuration names.
 ///   - callback: The callback to invoke on each variable.
 ///   - payload: The caller-specified payload passed to `callback`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1114,14 +1186,17 @@ public func gitConfigForEachMatch(
     regExp      : String?,
     callback    : GitConfigForEachCB,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_foreach_match(
-        cfg,
-        regExp,
-        callback,
-        payload
-    )
+    return withCConversion
+    {
+        return git_config_foreach_match(
+            cfg,
+            regExp,
+            callback,
+            payload
+        )
+    }
 }
 
 
@@ -1133,7 +1208,7 @@ public func gitConfigForEachMatch(
 ///   - name: The name of the configuration variable.
 ///   - maps: The configuration map objects specifying the possible mappings.
 ///   - mapN: The length of `maps`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1169,19 +1244,22 @@ public func gitConfigGetMapped(
     name    : String,
     maps    : [GitConfigMap],
     mapN    : Int
-) -> Int32
+) -> GitErrorCode
 {
-    return maps.withCValues
+    return withCConversion
     {
-        cMaps in
-        
-        return git_config_get_mapped(
-            out,
-            cfg,
-            name,
-            cMaps,
-            mapN
-        )
+        return maps.withCValues
+        {
+            cMaps in
+            
+            return git_config_get_mapped(
+                out,
+                cfg,
+                name,
+                cMaps,
+                mapN
+            )
+        }
     }
 }
 
@@ -1193,7 +1271,7 @@ public func gitConfigGetMapped(
 ///   - maps: The configuration map objects specifying the possible mappings.
 ///   - mapN: The length of `maps`.
 ///   - value: The value to parse.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1203,18 +1281,21 @@ public func gitConfigLookupMapValue(
     maps    : [GitConfigMap],
     mapN    : Int,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
-    return maps.withCValues
+    return withCConversion
     {
-        cMaps in
-        
-        return git_config_lookup_map_value(
-            out,
-            cMaps,
-            mapN,
-            value
-        )
+        return maps.withCValues
+        {
+            cMaps in
+            
+            return git_config_lookup_map_value(
+                out,
+                cMaps,
+                mapN,
+                value
+            )
+        }
     }
 }
 
@@ -1224,7 +1305,7 @@ public func gitConfigLookupMapValue(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting boolean.
 ///   - value: The value to parse.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1238,18 +1319,21 @@ public func gitConfigLookupMapValue(
 public func gitConfigParseBool(
     out     : UnsafeMutablePointer<Bool>,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
-    var intOut: Int32 = 0
-    
-    let configParseBoolResult: Int32 = git_config_parse_bool(
-        &intOut,
-        value
-    )
-    
-    out.pointee = Bool(intOut)
-    
-    return configParseBoolResult
+    return withCConversion
+    {
+        var intOut: Int32 = 0
+        
+        let configParseBoolResult: Int32 = git_config_parse_bool(
+            &intOut,
+            value
+        )
+        
+        out.pointee = Bool(intOut)
+        
+        return configParseBoolResult
+    }
 }
 
 
@@ -1258,7 +1342,7 @@ public func gitConfigParseBool(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - value: The value to parse.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1276,12 +1360,15 @@ public func gitConfigParseBool(
 public func gitConfigParseInt32(
     out     : UnsafeMutablePointer<Int32>,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_parse_int32(
-        out,
-        value
-    )
+    return withCConversion
+    {
+        return git_config_parse_int32(
+            out,
+            value
+        )
+    }
 }
 
 
@@ -1290,7 +1377,7 @@ public func gitConfigParseInt32(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - value: The value to parse.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1308,12 +1395,15 @@ public func gitConfigParseInt32(
 public func gitConfigParseInt64(
     out     : UnsafeMutablePointer<Int64>,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_parse_int64(
-        out,
-        value
-    )
+    return withCConversion
+    {
+        return git_config_parse_int64(
+            out,
+            value
+        )
+    }
 }
 
 
@@ -1322,7 +1412,7 @@ public func gitConfigParseInt64(
 /// - Parameters:
 ///   - out: The buffer into which the path should be written.
 ///   - value: The value to parse.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1337,7 +1427,7 @@ public func gitConfigParseInt64(
 public func gitConfigParsePath(
     out     : inout GitBuf,
     value   : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -1361,7 +1451,7 @@ public func gitConfigParsePath(
 ///   - regExp: The regular expression used to match the configuration names.
 ///   - callback: The callback to invoke on each variable.
 ///   - payload: The caller-specified payload passed to `callback`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1379,14 +1469,17 @@ public func gitConfigBackendForEachMatch(
     regExp      : String?,
     callback    : GitConfigForEachCB,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_backend_foreach_match(
-        backend,
-        regExp,
-        callback,
-        payload
-    )
+    return withCConversion
+    {
+        return git_config_backend_foreach_match(
+            backend,
+            regExp,
+            callback,
+            payload
+        )
+    }
 }
 
 
@@ -1397,7 +1490,7 @@ public func gitConfigBackendForEachMatch(
 ///   - tx: The pointer in which to store the resulting transaction. The underlying value must be
 ///   `git_transaction`.
 ///   - cfg: The configuration object to lock. The underlying value must be `git_config`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1414,10 +1507,13 @@ public func gitConfigBackendForEachMatch(
 public func gitConfigLock(
     tx  : UnsafeMutablePointer<OpaquePointer?>,
     cfg : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_config_lock(
-        tx,
-        cfg
-    )
+    return withCConversion
+    {
+        return git_config_lock(
+            tx,
+            cfg
+        )
+    }
 }

@@ -132,7 +132,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let oldBlobLookupResult: Int32 = gitBlobLookup(
+            let oldBlobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &oldBlobPointer,
                 repo:   repository.pointer,
                 id:     oldBlobOID
@@ -141,7 +141,7 @@ final class DiffTests: XCTestCaseStopOnFail
             XCTAssertOK(oldBlobLookupResult)
             XCTAssertNotNil(oldBlobPointer)
             
-            let newBlobLookupResult: Int32 = gitBlobLookup(
+            let newBlobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &newBlobPointer,
                 repo:   repository.pointer,
                 id:     newBlobOID
@@ -163,7 +163,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 diffOptions.notifyCB    = Self.notifyCB
                 diffOptions.progressCB  = Self.progressCB
                 
-                let diffBlobsResult: Int32 = gitDiffBlobs(
+                let diffBlobsResult: GitErrorCode = gitDiffBlobs(
                     oldBlob:    oldBlobPointer,
                     oldAsPath:  "old.txt",
                     newBlob:     newBlobPointer,
@@ -212,7 +212,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 from:   .buffer(data: Data("Blob content".utf8))
             )
             
-            let blobLookupResult: Int32 = gitBlobLookup(
+            let blobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
                 id:     blobOID
@@ -234,7 +234,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 diffOptions.notifyCB    = Self.notifyCB
                 diffOptions.progressCB  = Self.progressCB
                 
-                let diffBlobToBufferResult: Int32 = gitDiffBlobToBuffer(
+                let diffBlobToBufferResult: GitErrorCode = gitDiffBlobToBuffer(
                     oldBlob:        blobPointer,
                     oldAsPath:      "blob.txt",
                     buffer:         bufferData,
@@ -280,7 +280,7 @@ final class DiffTests: XCTestCaseStopOnFail
             diffOptions.notifyCB    = Self.notifyCB
             diffOptions.progressCB  = Self.progressCB
             
-            let diffBuffersResult: Int32 = gitDiffBuffers(
+            let diffBuffersResult: GitErrorCode = gitDiffBuffers(
                 oldBuffer:          oldBufferData,
                 oldBufferLen:       oldBufferData.count,
                 oldBufferAsPath:    "old.txt",
@@ -438,7 +438,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 repository.pointer
             )
             
-            XCTAssertOK(repositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
             
             
@@ -447,7 +447,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 "original.txt"
             )
             
-            XCTAssertOK(indexRemoveByPathResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexRemoveByPathResult))
             
             
             
@@ -456,7 +456,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 "renamed.txt"
             )
             
-            XCTAssertOK(indexAddByPathResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexAddByPathResult))
             
             
             
@@ -464,7 +464,7 @@ final class DiffTests: XCTestCaseStopOnFail
             {
                 commitPointer in
                 
-                let commitTreeResult: Int32 = gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
@@ -475,7 +475,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffIndexToIndexResult: Int32 = gitDiffTreeToIndex(
+            let diffIndexToIndexResult: GitErrorCode = gitDiffTreeToIndex(
                 diff:       &diffPointer,
                 repo:       repository.pointer,
                 oldTree:    treePointer,
@@ -500,7 +500,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffFindSimilarResult: Int32 = gitDiffFindSimilar(
+            let diffFindSimilarResult: GitErrorCode = gitDiffFindSimilar(
                 diff:       diffPointer,
                 options:    diffFindOptions
             )
@@ -616,7 +616,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 {
                     callbackDataPointer in
                     
-                    let diffForEachResult: Int32 = gitDiffForEach(
+                    let diffForEachResult: GitErrorCode = gitDiffForEach(
                         diff:       diffPointer,
                         fileCB:     Self.fileCB,
                         binaryCB:   Self.binaryCB,
@@ -686,7 +686,7 @@ final class DiffTests: XCTestCaseStopOnFail
         
         
         
-        let diffFromBufferResult: Int32 = gitDiffFromBuffer(
+        let diffFromBufferResult: GitErrorCode = gitDiffFromBuffer(
             out:            &diffPointer,
             content:        patchData,
             contentLen:     patchData.count
@@ -717,7 +717,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                let diffGetStatsResult: Int32 = gitDiffGetStats(
+                let diffGetStatsResult: GitErrorCode = gitDiffGetStats(
                     out:    &diffStatsPointer,
                     diff:   diffPointer
                 )
@@ -760,7 +760,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                let diffStatsToBufResult: Int32 = gitDiffStatsToBuf(
+                let diffStatsToBufResult: GitErrorCode = gitDiffStatsToBuf(
                     out:        &buffer,
                     stats:      diffStatsPointer,
                     format:     .gitDiffStatsFull,
@@ -829,7 +829,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 repository.pointer
             )
             
-            XCTAssertOK(oldRepositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: oldRepositoryIndexResult))
             
             guard let oldIndexPointer: OpaquePointer = oldIndexPointer
             else
@@ -852,13 +852,13 @@ final class DiffTests: XCTestCaseStopOnFail
                 "index-test.txt"
             )
             
-            XCTAssertOK(oldIndexAddByPathResult)
+            XCTAssertOK(GitErrorCode(rawValue: oldIndexAddByPathResult))
             
             
             
             let indexWriteResult: Int32 = git_index_write(oldIndexPointer)
             
-            XCTAssertOK(indexWriteResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexWriteResult))
             
             
             
@@ -867,7 +867,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 repository.pointer
             )
             
-            XCTAssertOK(newRepositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: newRepositoryIndexResult))
             
             guard let newIndexPointer: OpaquePointer = newIndexPointer
             else
@@ -890,11 +890,11 @@ final class DiffTests: XCTestCaseStopOnFail
                 "another-file.txt"
             )
             
-            XCTAssertOK(newIndexAddByPathResult)
+            XCTAssertOK(GitErrorCode(rawValue: newIndexAddByPathResult))
             
             
             
-            let diffIndexToIndexResult: Int32 = gitDiffIndexToIndex(
+            let diffIndexToIndexResult: GitErrorCode = gitDiffIndexToIndex(
                 diff:       &diffPointer,
                 repo:       repository.pointer,
                 oldIndex:   oldIndexPointer,
@@ -931,7 +931,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffIndexToWorkdirResult: Int32 = gitDiffIndexToWorkdir(
+            let diffIndexToWorkdirResult: GitErrorCode = gitDiffIndexToWorkdir(
                 diff:   &diffPointer,
                 repo:   repository.pointer,
                 index:  nil,
@@ -1047,7 +1047,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 {
                     secondToThirdDiffPointer in
                     
-                    let diffMergeResult: Int32 = gitDiffMerge(
+                    let diffMergeResult: GitErrorCode = gitDiffMerge(
                         onto:   firstToSecondDiffPointer,
                         from:   secondToThirdDiffPointer
                     )
@@ -1215,7 +1215,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 var patchID = GitOID()
                 
-                let diffPatchIDResult: Int32 = gitDiffPatchID(
+                let diffPatchIDResult: GitErrorCode = gitDiffPatchID(
                     out:    &patchID,
                     diff:   diffPointer,
                     opts:   nil
@@ -1260,7 +1260,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 {
                     callbackDataPointer in
                     
-                    let diffPrintResult: Int32 = gitDiffPrint(
+                    let diffPrintResult: GitErrorCode = gitDiffPrint(
                         diff:       diffPointer,
                         format:     .gitDiffFormatRaw,
                         printCB:    Self.lineCB,
@@ -1283,7 +1283,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                let diffToBufResult: Int32 = gitDiffToBuf(
+                let diffToBufResult: GitErrorCode = gitDiffToBuf(
                     out:        &buffer,
                     diff:       diffPointer,
                     format:     .gitDiffFormatPatch
@@ -1387,7 +1387,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 repository.pointer
             )
             
-            XCTAssertOK(repositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             XCTAssertNotNil(indexPointer)
             
             
@@ -1397,7 +1397,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 "staged.txt"
             )
             
-            XCTAssertOK(indexAddByPathResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexAddByPathResult))
             
             
             
@@ -1405,7 +1405,7 @@ final class DiffTests: XCTestCaseStopOnFail
             {
                 commitPointer in
                 
-                let commitTreeResult: Int32 = gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
@@ -1416,7 +1416,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffTreeToIndexResult: Int32 = gitDiffTreeToIndex(
+            let diffTreeToIndexResult: GitErrorCode = gitDiffTreeToIndex(
                 diff:       &diffPointer,
                 repo:       repository.pointer,
                 oldTree:    treePointer,
@@ -1499,7 +1499,7 @@ final class DiffTests: XCTestCaseStopOnFail
             {
                 commitPointer in
                 
-                let commitTreeResult: Int32 = gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
@@ -1510,7 +1510,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffTreeToWorkdirWithIndexResult: Int32 = gitDiffTreeToWorkdirWithIndex(
+            let diffTreeToWorkdirWithIndexResult: GitErrorCode = gitDiffTreeToWorkdirWithIndex(
                 diff:       &diffPointer,
                 repo:       repository.pointer,
                 oldTree:    treePointer,
@@ -1548,7 +1548,7 @@ extension DiffTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1556,7 +1556,7 @@ extension DiffTests
         
         payloadPointer.pointee.binaryCount += 1
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
     
     
@@ -1568,7 +1568,7 @@ extension DiffTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1576,7 +1576,7 @@ extension DiffTests
         
         payloadPointer.pointee.fileCount += 1
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
     
     
@@ -1588,7 +1588,7 @@ extension DiffTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1596,7 +1596,7 @@ extension DiffTests
         
         payloadPointer.pointee.hunkCount += 1
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
     
     
@@ -1608,7 +1608,7 @@ extension DiffTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1616,7 +1616,7 @@ extension DiffTests
         
         payloadPointer.pointee.lineCount += 1
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
     
     
@@ -1628,7 +1628,7 @@ extension DiffTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1636,7 +1636,7 @@ extension DiffTests
         
         payloadPointer.pointee.progressCount += 1
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
     
     
@@ -1648,7 +1648,7 @@ extension DiffTests
         guard let payload: UnsafeMutableRawPointer = payload
         else
         {
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1656,6 +1656,6 @@ extension DiffTests
         
         payloadPointer.pointee.notifyCount += 1
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
 }

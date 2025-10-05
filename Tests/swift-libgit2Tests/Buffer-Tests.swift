@@ -56,7 +56,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            let branchRemoteNameResult: Int32 = gitBranchRemoteName(
+            let branchRemoteNameResult: GitErrorCode = gitBranchRemoteName(
                 out:        &buffer,
                 repo:       repository.pointer,
                 refName:    "refs/heads/main"
@@ -94,7 +94,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            let blobLookupResult: Int32 = gitBlobLookup(
+            let blobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
                 id:     blobOID
@@ -111,7 +111,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             
             
-            var blobFilterResult: Int32 = gitBlobFilter(
+            var blobFilterResult: GitErrorCode = gitBlobFilter(
                 out:        &buffer,
                 blob:       blobPointer,
                 asPath:     Repository.readmeFileName,

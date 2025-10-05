@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_proxy_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitProxyOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,10 +28,13 @@ import CLibgit2
 public func gitProxyOptionsInit(
     opts    : UnsafeMutablePointer<git_proxy_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_proxy_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_proxy_options_init(
+            opts,
+            version
+        )
+    }
 }

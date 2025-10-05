@@ -22,7 +22,7 @@ import CLibgit2
 ///   - target: The commit to which the branch should point. The underlying type must be
 ///   `git_commit`. The commit must belong to the given repository.
 ///   - force: Whether to overwrite an existing branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -38,15 +38,18 @@ public func gitBranchCreate(
     branchName  : String,
     target      : OpaquePointer,
     force       : Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_create(
-        out,
-        repo,
-        branchName,
-        target,
-        force.intValue
-    )
+    return withCConversion
+    {
+        return git_branch_create(
+            out,
+            repo,
+            branchName,
+            target,
+            force.intValue
+        )
+    }
 }
 
 
@@ -62,7 +65,7 @@ public func gitBranchCreate(
 ///   - target: The commit to which the branch should point. The underlying type must be
 ///   `git_annotated_commit`. The commit must belong to the given repository.
 ///   - force: Whether to overwrite an existing branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -79,24 +82,26 @@ public func gitBranchCreateFromAnnotated(
     branchName  : String,
     target      : OpaquePointer,
     force       : Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_create_from_annotated(
-        refOut,
-        repo,
-        branchName,
-        target,
-        force.intValue
-    )
+    return withCConversion
+    {
+        return git_branch_create_from_annotated(
+            refOut,
+            repo,
+            branchName,
+            target,
+            force.intValue
+        )
+    }
 }
 
 
 
 // TODO: Replace `git_reference_free()` in documentation.
-
 /// Deletes an existing branch.
 /// - Parameter branch: The branch to delete. The underlying type must be `git_reference`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -108,9 +113,12 @@ public func gitBranchCreateFromAnnotated(
 /// [`git_branch_delete()`](https://libgit2.org/docs/reference/main/branch/git_branch_delete.html)
 public func gitBranchDelete(
     branch: OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_delete(branch)
+    return withCConversion
+    {
+        return git_branch_delete(branch)
+    }
 }
 
 
@@ -121,7 +129,7 @@ public func gitBranchDelete(
 ///   - repo: The repository in which the branches exist. The underlying type must be
 ///   `git_repository`.
 ///   - listFlags: The filtering flags for the branch listing.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -130,13 +138,16 @@ public func gitBranchIteratorNew(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repo        : OpaquePointer,
     listFlags   : GitBranchT
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_iterator_new(
-        out,
-        repo,
-        listFlags.cValue()
-    )
+    return withCConversion
+    {
+        return git_branch_iterator_new(
+            out,
+            repo,
+            listFlags.cValue()
+        )
+    }
 }
 
 
@@ -146,7 +157,7 @@ public func gitBranchIteratorNew(
 ///   - out: The branch. The underlying type must be `git_reference`.
 ///   - outType: The type of branch.
 ///   - iter: The branch iterator. The underlying type must be `git_branch_iterator`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -155,24 +166,27 @@ public func gitBranchNext(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     outType : inout GitBranchT,
     iter    : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    var cOutType: git_branch_t = outType.cValue()
-    
-    let branchNextResult: Int32 = git_branch_next(
-        out,
-        &cOutType,
-        iter
-    )
-    
-    if
-        branchNextResult == GIT_OK.rawValue,
-        let swiftOutType = GitBranchT(cValue: cOutType)
+    return withCConversion
     {
-        outType = swiftOutType
+        var cOutType: git_branch_t = outType.cValue()
+        
+        let branchNextResult: Int32 = git_branch_next(
+            out,
+            &cOutType,
+            iter
+        )
+        
+        if
+            branchNextResult == GitErrorCode.gitOK.rawValue,
+            let swiftOutType = GitBranchT(cValue: cOutType)
+        {
+            outType = swiftOutType
+        }
+        
+        return branchNextResult
     }
-    
-    return branchNextResult
 }
 
 
@@ -194,7 +208,6 @@ public func gitBranchIteratorFree(
 
 
 // TODO: Replace `git_reference_free()` in documentation.
-
 /// Moves or renames the given local branch.
 /// - Parameters:
 ///   - out: The new reference object for the updated name. The underlying type must be
@@ -203,7 +216,7 @@ public func gitBranchIteratorFree(
 ///   - newBranchName: The target name of the branch, once the move has been performed.
 ///   The name will be validated for consistency.
 ///   - force: Whether to overwrite an existing branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -218,14 +231,17 @@ public func gitBranchMove(
     branch          : OpaquePointer,
     newBranchName   : String,
     force           : Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_move(
-        out,
-        branch,
-        newBranchName,
-        force.intValue
-    )
+    return withCConversion
+    {
+        return git_branch_move(
+            out,
+            branch,
+            newBranchName,
+            force.intValue
+        )
+    }
 }
 
 
@@ -238,7 +254,7 @@ public func gitBranchMove(
 ///   `git_repository`.
 ///   - branchName: The branch name. The name will be validated for consistency.
 ///   - branchType: The branch type.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -252,14 +268,17 @@ public func gitBranchLookup(
     repo        : OpaquePointer,
     branchName  : String,
     branchType  : GitBranchT
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_lookup(
-        out,
-        repo,
-        branchName,
-        branchType.cValue()
-    )
+    return withCConversion
+    {
+        return git_branch_lookup(
+            out,
+            repo,
+            branchName,
+            branchType.cValue()
+        )
+    }
 }
 
 
@@ -270,7 +289,7 @@ public func gitBranchLookup(
 ///   freed by the caller.
 ///   - ref: A reference object, ideally pointing to a branch. The underlying type must be
 ///   `git_reference`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -285,12 +304,15 @@ public func gitBranchLookup(
 public func gitBranchName(
     out : UnsafeMutablePointer<UnsafePointer<CChar>?>,
     ref : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_name(
-        out,
-        ref
-    )
+    return withCConversion
+    {
+        return git_branch_name(
+            out,
+            ref
+        )
+    }
 }
 
 
@@ -301,7 +323,7 @@ public func gitBranchName(
 ///   `git_reference`.
 ///   - ref: The local branch for which to get the upstream. The underlying type must be
 ///   `git_reference`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -313,12 +335,15 @@ public func gitBranchName(
 public func gitBranchUpstream(
     out : UnsafeMutablePointer<OpaquePointer?>,
     ref : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_upstream(
-        out,
-        ref
-    )
+    return withCConversion
+    {
+        return git_branch_upstream(
+            out,
+            ref
+        )
+    }
 }
 
 
@@ -328,7 +353,7 @@ public func gitBranchUpstream(
 ///   - branch: The branch whose upstream should be set.
 ///   - branchName: The name of the remote-tracking or local branch to set as the upstream branch.
 ///   Pass `nil` to unset the upstream information.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -340,12 +365,15 @@ public func gitBranchUpstream(
 public func gitBranchSetUpstream(
     branch      : OpaquePointer,
     branchName  : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_branch_set_upstream(
-        branch,
-        branchName
-    )
+    return withCConversion
+    {
+        return git_branch_set_upstream(
+            branch,
+            branchName
+        )
+    }
 }
 
 
@@ -356,7 +384,7 @@ public func gitBranchSetUpstream(
 ///   - repo: The repository in which the branches exist. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The branch name.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -373,7 +401,7 @@ public func gitBranchUpstreamName(
     out     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -394,39 +422,57 @@ public func gitBranchUpstreamName(
 
 /// Checks whether HEAD points to the given local branch.
 /// - Parameter branch: The local branch. The underlying type must be `git_reference`.
-/// - Returns: `1` if HEAD points to the branch, `0` if HEAD does not point to the branch, or
-/// an error code.
+/// - Returns: Whether HEAD points to the given local branch.
+///
+/// ## Discussion
+///
+/// - Note: This function will return `nil` if there was an error checking the branch.
 ///
 /// ## C Equivalent
 ///
 /// [`git_branch_is_head()`](https://libgit2.org/docs/reference/main/branch/git_branch_is_head.html)
 public func gitBranchIsHEAD(
     branch: OpaquePointer
-) -> Int32
+) -> Bool?
 {
-    return git_branch_is_head(branch)
+    let branchIsHead: Int32 = git_branch_is_head(branch)
+    
+    if branchIsHead < 0
+    {
+        return nil
+    }
+    
+    return Bool(branchIsHead)
 }
 
 
 
 /// Checks whether any HEAD points to the given local branch.
 /// - Parameter branch: The local branch. The underlying type must be `git_reference`.
-/// - Returns: `1` if any HEAD points to the branch, `0` if no HEAD points to the branch, or
-/// an error code.
+/// - Returns: Whether any HEAD points to the given local branch.
 ///
 /// ## Discussion
 ///
 /// This function iterates over all known linked repositories (usually in the form of worktrees) to determine
 /// whether any HEAD points to the branch.
 ///
+/// - Note: This function will return `nil` if there was an error checking the branch.
+///
 /// ## C Equivalent
 ///
 /// [`git_branch_is_checked_out()`](https://libgit2.org/docs/reference/main/branch/git_branch_is_checked_out.html)
 public func gitBranchIsCheckedOut(
     branch: OpaquePointer
-) -> Int32
+) -> Bool?
 {
-    return git_branch_is_checked_out(branch)
+    let branchIsCheckedOut: Int32 = git_branch_is_checked_out(branch)
+    
+    if branchIsCheckedOut < 0
+    {
+        return nil
+    }
+    
+    return Bool(branchIsCheckedOut)
 }
 
 
@@ -437,7 +483,7 @@ public func gitBranchIsCheckedOut(
 ///   - repo: The repository in which the branch exists. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The full reference name of the branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -445,7 +491,8 @@ public func gitBranchIsCheckedOut(
 ///
 /// For example, `refs/remotes/test/main` has a remote name of `test`.
 ///
-/// If refspecs from multiple remotes match, the error code returned will be `GIT_EAMBIGUOUS`.
+/// If refspecs from multiple remotes match, the returned error code will be
+/// ``GitErrorCode/gitEAmbiguous``.
 ///
 /// ## C Equivalent
 ///
@@ -454,7 +501,7 @@ public func gitBranchRemoteName(
     out     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -479,7 +526,7 @@ public func gitBranchRemoteName(
 ///   - repo: The repository in which the branch exists. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The full reference name of the branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -492,7 +539,7 @@ public func gitBranchUpstreamRemote(
     buf     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -517,7 +564,7 @@ public func gitBranchUpstreamRemote(
 ///   - repo: The repository in which the branch exists. The underlying type must be
 ///   `git_repository`.
 ///   - refName: The full reference name of the branch.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -530,7 +577,7 @@ public func gitBranchUpstreamMerge(
     buf     : inout GitBuf,
     repo    : OpaquePointer,
     refName : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -553,7 +600,7 @@ public func gitBranchUpstreamMerge(
 /// - Parameters:
 ///   - valid: The pointer in which to store the resulting boolean.
 ///   - name: The branch name.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -561,16 +608,19 @@ public func gitBranchUpstreamMerge(
 public func gitBranchIsValid(
     valid   : UnsafeMutablePointer<Bool>,
     name    : String
-) -> Int32
+) -> GitErrorCode
 {
-    var intValid: Int32 = 0
-    
-    let branchNameIsValidResult: Int32 = git_branch_name_is_valid(
-        &intValid,
-        name
-    )
-    
-    valid.pointee = Bool(intValid)
-    
-    return branchNameIsValidResult
+    return withCConversion
+    {
+        var intValid: Int32 = 0
+        
+        let branchNameIsValidResult: Int32 = git_branch_name_is_valid(
+            &intValid,
+            name
+        )
+        
+        valid.pointee = Bool(intValid)
+        
+        return branchNameIsValidResult
+    }
 }

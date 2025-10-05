@@ -58,7 +58,7 @@ enum Branch
         {
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
-            let annotatedCommitLookup: Int32 = gitAnnotatedCommitLookup(
+            let annotatedCommitLookup: GitErrorCode = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
                 id:     headOID
@@ -72,14 +72,14 @@ enum Branch
                 XCTFail("The annotated commit pointer was nil.")
                 
                 throw NSError.makeError(
-                    code:       Int(GIT_EUSER.rawValue),
+                    code:       Int(GitErrorCode.gitEUser.rawValue),
                     message:    "The annotated commit pointer was nil."
                 )
             }
             
             
             
-            let branchCreateFromAnnotatedResult: Int32 = gitBranchCreateFromAnnotated(
+            let branchCreateFromAnnotatedResult: GitErrorCode = gitBranchCreateFromAnnotated(
                 refOut:         &branchPointer,
                 repo:           repository.pointer,
                 branchName:     branchName,
@@ -95,7 +95,7 @@ enum Branch
             {
                 commitPointer in
 
-                let branchCreateResult: Int32 = gitBranchCreate(
+                let branchCreateResult: GitErrorCode = gitBranchCreate(
                     out:            &branchPointer,
                     repo:           repository.pointer,
                     branchName:     branchName,
@@ -135,7 +135,7 @@ enum Branch
         
         
         
-        let branchLookupResult: Int32 = gitBranchLookup(
+        let branchLookupResult: GitErrorCode = gitBranchLookup(
             out:            &branchPointer,
             repo:           repository.pointer,
             branchName:     branchName,

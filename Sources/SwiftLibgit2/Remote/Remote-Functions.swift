@@ -15,7 +15,7 @@ import CLibgit2
 /// - Parameters:
 ///   - opts: The `git_remote_callbacks` instance to initialize.
 ///   - version: The version to use. Pass ``gitRemoteCallbacksVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -28,12 +28,15 @@ import CLibgit2
 public func gitRemoteInitCallbacks(
     opts    : UnsafeMutablePointer<git_remote_callbacks>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_remote_init_callbacks(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_remote_init_callbacks(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -42,7 +45,7 @@ public func gitRemoteInitCallbacks(
 /// - Parameters:
 ///   - opts: The `git_fetch_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitFetchOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -55,10 +58,13 @@ public func gitRemoteInitCallbacks(
 public func gitFetchOptionsInit(
     opts    : UnsafeMutablePointer<git_fetch_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_fetch_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_fetch_options_init(
+            opts,
+            version
+        )
+    }
 }

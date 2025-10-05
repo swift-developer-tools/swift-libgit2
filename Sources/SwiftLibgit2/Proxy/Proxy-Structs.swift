@@ -109,12 +109,12 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     {
         var proxyOptions = git_proxy_options()
         
-        let proxyOptionsInitResult: Int32 = gitProxyOptionsInit(
+        let proxyOptionsInitResult: GitErrorCode = gitProxyOptionsInit(
             opts:       &proxyOptions,
             version:    version
         )
         
-        if proxyOptionsInitResult != GIT_OK.rawValue
+        if proxyOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

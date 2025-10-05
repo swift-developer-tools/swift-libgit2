@@ -141,12 +141,12 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     {
         var cloneOptions = git_clone_options()
         
-        let cloneOptionsInitResult: Int32 = gitCloneOptionsInit(
+        let cloneOptionsInitResult: GitErrorCode = gitCloneOptionsInit(
             opts:       &cloneOptions,
             version:    version
         )
         
-        if cloneOptionsInitResult != GIT_OK.rawValue
+        if cloneOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }
