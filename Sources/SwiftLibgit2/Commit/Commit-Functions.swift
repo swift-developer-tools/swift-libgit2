@@ -578,8 +578,7 @@ public func gitCommitHeaderField(
 ///   - signature: The buffer into which the signature block should be written.
 ///   - signedData: The buffer into which the signed data (the commit content less the signature
 ///   block) should be written.
-///   - repo: The repository in which the commit exists. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
 ///   - commitID: The commit from which to extract the data.
 ///   - field: The name of the header field containing the signature block. Pass `nil` to extract
 ///   `gpgsig`.

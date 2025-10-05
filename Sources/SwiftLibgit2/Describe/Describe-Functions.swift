@@ -109,8 +109,7 @@ public func gitDescribeCommit(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting description. The underlying type
 ///   must be `git_describe_result`.
-///   - repo: The repository in which the commit exists. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
 ///   - opts: The options for describing the commit.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
