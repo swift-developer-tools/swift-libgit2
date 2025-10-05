@@ -454,7 +454,7 @@ public func gitBlobIsBinary(
 /// Checks whether the given content is most likely binary.
 /// - Parameters:
 ///   - data: The blob data to analyze.
-///   - len: The length of the data.
+///   - len: The length `data`.
 /// - Returns: Whether the given content is most likely binary.
 ///
 /// ## Discussion

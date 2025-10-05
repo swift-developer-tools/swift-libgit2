@@ -279,7 +279,7 @@ public func gitCredentialSSHKeyFromAgent(
 ///   - out: The pointer in which to store the resulting credential.
 ///   - username: The username of the credential.
 ///   - publicKey: The public key of the credential.
-///   - publicKeyLen: The length of the public key of the credential.
+///   - publicKeyLen: The length of `publicKey`.
 ///   - signCallback: The callback invoked to sign the data during the authentication challenge.
 ///   - payload: The caller-specified payload passed to `signCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
