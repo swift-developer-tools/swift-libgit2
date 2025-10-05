@@ -135,8 +135,8 @@ public func gitFilterListContains(
 /// - Parameters:
 ///   - out: The buffer into which the filtered content should be written.
 ///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
-///   - in: The buffer containing the data to filter.
-///   - inLen: The length of `in`.
+///   - input: The buffer containing the data to filter.
+///   - inputLen: The length of `in`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -297,7 +297,7 @@ public func gitFilterListStreamBuffer(
 ///
 /// ## C Equivalent
 ///
-/// [`git_filter_list_apply_to_file()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_file.html)
+/// [`git_filter_list_stream_file()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_stream_file.html)
 public func gitFilterListStreamFile(
     filters : OpaquePointer?,
     repo    : OpaquePointer,
