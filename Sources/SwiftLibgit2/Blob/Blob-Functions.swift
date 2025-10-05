@@ -455,14 +455,12 @@ public func gitBlobIsBinary(
 /// - Parameters:
 ///   - data: The blob data to analyze.
 ///   - len: The length `data`.
-/// - Returns: Whether the given content is most likely binary.
+/// - Returns: Whether the given content is most likely binary, or `nil` if there was an error.
 ///
 /// ## Discussion
 ///
 /// The heuristic used to guess whether file content is binary is taken from core Git and is the same
 /// mechanism used by ``gitBlobIsBinary(blob:)``, but only looks at raw data.
-///
-/// - Note: This function will return `nil` if there was an error converting `data` to its C equivalent.
 ///
 /// ## C Equivalent
 ///
