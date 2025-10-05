@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// Frees the memory allocated for a `git_config_entry`.
+/// Frees the memory allocated for the given `git_config_entry` instance.
 /// - Parameter entry: The entry to free.
 ///
 /// ## Discussion
@@ -436,7 +436,7 @@ public func gitConfigSnapshot(
 
 
 
-/// Frees the memory allocated for a configuration object and its associated files.
+/// Frees the memory allocated for the given `git_config` instance.
 /// - Parameter cfg: The configuration object to free. The underlying type must be `git_config`.
 ///
 /// ## C Equivalent
@@ -820,7 +820,7 @@ public func gitConfigNext(
 
 
 
-/// Frees the memory allocated for a `git_config_iterator`.
+/// Frees the memory allocated for the given `git_config_iterator`  instance.
 /// - Parameter iter: The iterator to free.
 ///
 /// ## C Equivalent

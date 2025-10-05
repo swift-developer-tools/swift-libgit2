@@ -78,7 +78,7 @@ public func gitCommitLookupPrefix(
 
 
 
-/// Frees the memory allocated for a `git_commit` instance.
+/// Frees the memory allocated for the given `git_commit` instance.
 /// - Parameter commit: The commit to free. The underlying type must be `git_commit`.
 ///
 /// ## C Equivalent

@@ -15,7 +15,7 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for an annotated commit.
+    /// Frees the memory allocated for the given `annotatedCommit` instance.
     /// - Parameter annotatedCommit: The annotated commit to free. The underlying type
     /// must be `git_annotated_commit`
     static func freeAnnotatedCommit(
@@ -30,7 +30,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a blame.
+    /// Frees the memory allocated for the given `git_blame` instance.
     /// - Parameter blame: The blame to free. The underlying type must be `git_blame`.
     static func freeBlame(
         _ blame: OpaquePointer?
@@ -44,7 +44,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a blob.
+    /// Frees the memory allocated for the given `git_blob` instance.
     /// - Parameter blob: The blob to free. The underlying type must be `git_blob`.
     static func freeBlob(
         _ blob: OpaquePointer?
@@ -58,7 +58,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a branch iterator.
+    /// Frees the memory allocated for the given `git_branch_iterator` instance.
     /// - Parameter branchIterator: The branch iterator to free. The underlying type must
     /// be `git_branch_iterator`.
     static func freeBranchIterator(
@@ -73,7 +73,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a commit.
+    /// Frees the memory allocated for the given `git_commit` instance.
     /// - Parameter commit: The commit to free. The underlying type must be `git_commit`.
     static func freeCommit(
         _ commit: OpaquePointer?
@@ -87,7 +87,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a configuration object.
+    /// Frees the memory allocated for the given `git_config` instance.
     /// - Parameter config: The configuration object to free. The underlying type must be
     /// `git_config`.
     static func freeConfig(
@@ -102,7 +102,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a configuration backend object.
+    /// Frees the memory allocated for the given `git_config_backend` instance.
     /// - Parameter configBackend: The configuration backend object to free.
     static func freeConfigBackend(
         _ configBackend: UnsafeMutablePointer<git_config_backend>?
@@ -116,7 +116,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a configuration entry.
+    /// Frees the memory allocated for the given `git_config_entry` instance.
     /// - Parameter configEntry: The configuration entry to free.
     static func freeConfigEntry(
         _ configEntry: UnsafeMutablePointer<git_config_entry>?
@@ -130,7 +130,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a configuration iterator.
+    /// Frees the memory allocated for the given `git_config_iterator` instance.
     /// - Parameter configIterator: The configuration iterator to free.
     static func freeConfigIterator(
         _ configIterator: UnsafeMutablePointer<git_config_iterator>?
@@ -144,7 +144,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a credential.
+    /// Frees the memory allocated for the given `git_credential` instance.
     /// - Parameter credential: The credential to free.
     static func freeCredential(
         _ credential: UnsafeMutablePointer<git_credential>?
@@ -158,7 +158,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a commit description.
+    /// Frees the memory allocated for the given `git_describe_result` instance.
     /// - Parameter describeResult: The description to free. The underlying type must be
     /// `git_describe_result`.
     static func freeDescribeResult(
@@ -173,7 +173,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a diff.
+    /// Frees the memory allocated for the given `git_diff` instance.
     /// - Parameter diff: The diff to free. The underlying type must be `git_diff`.
     static func freeDiff(
         _ diff: OpaquePointer?
@@ -187,7 +187,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for diff statistics.
+    /// Frees the memory allocated for the given `git_diff_stats` instance.
     /// - Parameter stats: The diff statistics to free. The underlying type must be
     /// `git_diff_stats`.
     static func freeDiffStats(
@@ -202,7 +202,22 @@ enum Free
     
     
     
-    /// Frees the memory allocated for an index.
+    /// Frees the memory allocated for the given `git_filter_list` instance.
+    /// - Parameter filterList: The filter list to free. The underlying type must be
+    /// `git_filter_list`.
+    static func freeFilterList(
+        _ filterList: OpaquePointer?
+    )
+    {
+        if filterList != nil
+        {
+            gitFilterListFree(filters: filterList)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for the given `git_index` instance.
     /// - Parameter index: The index to free. The underlying type must be  `git_index`.
     static func freeIndex(
         _ index: OpaquePointer?
@@ -216,7 +231,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a rebase.
+    /// Frees the memory allocated for the given `git_rebase` instance.
     /// - Parameter rebase: The rebase to free. The underlying type must be `git_rebase`.
     static func freeRebase(
         _ rebase: OpaquePointer?
@@ -229,7 +244,7 @@ enum Free
     }
     
     
-    /// Frees the memory allocated for a reference.
+    /// Frees the memory allocated for the given `git_reference` instance.
     /// - Parameter reference: The reference to free. The underlying type must be
     /// `git_reference`.
     static func freeReference(
@@ -244,7 +259,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a repository.
+    /// Frees the memory allocated for the given `git_repository` instance.
     /// - Parameter repository: The repository to free. The underlying type must be
     /// `git_repository`.
     static func freeRepository(
@@ -259,7 +274,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a transaction.
+    /// Frees the memory allocated for the given `git_transaction` instance.
     /// - Parameter transaction: The transaction to free. The underlying type must be
     /// `git_transaction`.
     static func freeTransaction(
@@ -274,7 +289,7 @@ enum Free
     
     
     
-    /// Frees the memory allocated for a tree.
+    /// Frees the memory allocated for the given `git_tree` instance.
     /// - Parameter tree: The tree to free. The underlying type must be `git_tree`.
     static func freeTree(
         _ tree: OpaquePointer?

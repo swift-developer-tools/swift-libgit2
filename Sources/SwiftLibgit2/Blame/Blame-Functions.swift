@@ -273,10 +273,9 @@ public func gitBlameFile(
 ///   - out: The pointer that should receive the blame object. The underlying type must be
 ///   `git_blame`.
 ///   - base: The cached blame from the history of the file.  The underlying type must be
-///   `git_blame`. This is usually the output from
-///   ``gitBlameFile(out:repo:path:options:)``.
+///   `git_blame`. This is usually the output from ``gitBlameFile(out:repo:path:options:)``.
 ///   - buffer: The possibly-modified content of the file.
-///   - bufferLen: The number of valid bytes in the buffer.
+///   - bufferLen: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -316,7 +315,7 @@ public func gitBlameBuffer(
 
 
 
-/// Frees the memory allocated for a `git_blame` instance.
+/// Frees the memory allocated for the given `git_blame` instance.
 /// - Parameter blame: The blame to free. The underlying type must be `git_blame`.
 ///
 /// ## C Equivalent

@@ -148,7 +148,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyToBoth() throws
     {
-        try gitApplyFlow(
+        try testGitApplyFlow(
             location:       .gitApplyLocationBoth,
             flags:          nil,
             checkIndex:     true,
@@ -160,7 +160,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyToIndex() throws
     {
-        try gitApplyFlow(
+        try testGitApplyFlow(
             location:       .gitApplyLocationIndex,
             flags:          nil,
             checkIndex:     true,
@@ -172,7 +172,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyToWorkdir() throws
     {
-        try gitApplyFlow(
+        try testGitApplyFlow(
             location:       .gitApplyLocationWorkdir,
             flags:          nil,
             checkIndex:     false,
@@ -184,7 +184,7 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     func testGitApplyWithCheckFlag() throws
     {
-        try gitApplyFlow(
+        try testGitApplyFlow(
             location:       .gitApplyLocationWorkdir,
             flags:          .gitApplyCheck,
             checkIndex:     false,
@@ -204,10 +204,22 @@ extension ApplyTests
         var deltaCount  : Int   = 0
         var hunkCount   : Int   = 0
     }
-
-
-
+    
+    
+    
     /// Tests `git apply` functionality by creating a diff and applying it with the given options.
+    ///
+    /// - Parameters:
+    ///   - location: The target location for applying the diff (the working directory, the index, or both).
+    ///   - flags: The flags to control the apply behavior.
+    ///   - checkIndex: Whether to check that the index contains staged changes after applying.
+    ///   - endContent: The expected file content after applying.
+    /// - Throws: An error if a Git operation, write operation fails, or `GitApplyOptions`
+    /// initialization fails.
+    ///
+    /// ## Discussion
+    ///
+    /// The test is performed by following these steps:
     ///
     /// 1. Create a modified version of the repository's `README.md` file.
     /// 2. Stage the modification to create a new tree state.
@@ -217,15 +229,7 @@ extension ApplyTests
     /// 6. Check that both the delta and hunk callbacks were invoked.
     /// 7. Check that the final file content is correct.
     /// 8. Optionally check that the index contains staged changes.
-    ///
-    /// - Parameters:
-    ///   - location: The target location for applying the diff (the working directory, the index, or both).
-    ///   - flags: The flags to control the apply behavior.
-    ///   - checkIndex: Whether to check that the index contains staged changes after applying.
-    ///   - endContent: The expected file content after applying.
-    /// - Throws: An `Error` if a Git operation, write operation fails, or `GitApplyOptions`
-    /// initialization fails.
-    private func gitApplyFlow(
+    private func testGitApplyFlow(
         location        : GitApplyLocationT,
         flags           : GitApplyFlagsT?,
         checkIndex      : Bool,
