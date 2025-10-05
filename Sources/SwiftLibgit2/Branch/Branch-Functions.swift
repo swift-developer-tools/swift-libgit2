@@ -191,9 +191,8 @@ public func gitBranchNext(
 
 
 
-/// Frees the memory allocated for a `git_branch_iterator` instance.
-/// - Parameter iter: The iterator to free. The underlying type must be
-/// `git_branch_iterator`.
+/// Frees the memory allocated for the given `git_branch_iterator` instance.
+/// - Parameter iter: The iterator to free. The underlying type must be `git_branch_iterator`.
 ///
 /// ## C Equivalent
 ///

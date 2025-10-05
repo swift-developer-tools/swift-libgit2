@@ -315,7 +315,7 @@ public func gitBlameBuffer(
 
 
 
-/// Frees the memory allocated for a `git_blame` instance.
+/// Frees the memory allocated for the given `git_blame` instance.
 /// - Parameter blame: The blame to free. The underlying type must be `git_blame`.
 ///
 /// ## C Equivalent

@@ -326,7 +326,7 @@ public func gitSignatureDup(
 
 
 
-/// Frees an existing signature.
+/// Frees the memory allocated for the given `git_signature` instance.
 /// - Parameter sig: The signature to free.
 ///
 /// ## Discussion

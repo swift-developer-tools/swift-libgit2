@@ -72,7 +72,7 @@ public func gitDiffFindOptionsInit(
 
 
 
-/// Frees the memory allocated for a diff.
+/// Frees the memory allocated for the given `git_diff` instance.
 /// - Parameter diff: The diff to free. The underlying type must be `git_diff`.
 ///
 /// ## C Equivalent
@@ -1048,7 +1048,7 @@ public func gitDiffStatsToBuf(
 
 
 
-/// Frees the memory allocated for diff statistics.
+/// Frees the memory allocated for the given `git_diff_stats` instance.
 /// - Parameter stats: The diff statistics to free. The underlying type must be `git_diff_stats`.
 ///
 /// ## C Equivalent

@@ -206,7 +206,7 @@ public func gitAnnotatedCommitRef(
 
 
 
-/// Frees the memory allocated for an annotated commit.
+/// Frees the memory allocated for the given `git_annotated_commit` instance.
 /// - Parameter commit: The annotated commit to free. The underlying type must be
 /// `git_annotated_commit`.
 ///

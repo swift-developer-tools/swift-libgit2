@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// Frees the memory allocated for a `git_credential`.
+/// Frees the memory allocated for the given `git_credential` instance.
 /// - Parameter cred: The entry to free.
 ///
 /// ## Discussion

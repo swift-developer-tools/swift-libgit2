@@ -77,7 +77,7 @@ public func gitBlobLookupPrefix(
 
 
 
-/// Frees the memory allocated for a `git_blob` instance.
+/// Frees the memory allocated for the given `git_blob` instance.
 /// - Parameter blob: The blob to free. The underlying type must be `git_blob`.
 ///
 /// ## C Equivalent

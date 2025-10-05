@@ -183,7 +183,7 @@ public func gitDescribeFormat(
 
 
 
-/// Frees the memory allocated for a `git_describe_result`.
+/// Frees the memory allocated for the given `git_describe_result` instance.
 /// - Parameter result: The description to free. The underlying type must be
 /// `git_describe_result`.
 ///
