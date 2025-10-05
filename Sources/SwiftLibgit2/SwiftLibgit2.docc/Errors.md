@@ -16,4 +16,3 @@ Error information and management.
 ### Functions
 
 - ``gitErrorLast()``
-

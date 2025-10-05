@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The current version for ``GitFilterOptionsVersion``.
+/// The current version for ``GitFilterOptions``.
 ///
 /// ## C Equivalent
 ///
