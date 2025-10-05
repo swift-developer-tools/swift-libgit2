@@ -17,7 +17,7 @@ import CLibgit2Opts
 ///   - major: The pointer in which to store the major version number.
 ///   - minor: The pointer in which to store the minor version number
 ///   - rev: The pointer in which to store the revision (patch) number
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -26,13 +26,16 @@ public func gitLibgit2Version(
     major   : UnsafeMutablePointer<Int32>,
     minor   : UnsafeMutablePointer<Int32>,
     rev     : UnsafeMutablePointer<Int32>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_version(
-        major,
-        minor,
-        rev
-    )
+    return withCConversion
+    {
+        return git_libgit2_version(
+            major,
+            minor,
+            rev
+        )
+    }
 }
 
 
@@ -59,14 +62,23 @@ public func gitLibgit2Prerelease() -> String?
 
 
 /// Gets the compile-time options of libgit2.
-/// - Returns: A combination of ``GitFeatureT`` values.
+/// - Returns: A ``GitFeatureT`` instance.
 ///
 /// ## C Equivalent
 ///
 /// [`git_libgit2_features()`](https://libgit2.org/docs/reference/main/common/git_libgit2_features.html)
-public func gitLibgit2Features() -> Int32
+public func gitLibgit2Features() -> GitFeatureT
 {
-    return git_libgit2_features()
+    let features: Int32 = git_libgit2_features()
+    
+    guard features >= 0
+    else
+    {
+        /// `features` should never be negative.
+        return GitFeatureT(rawValue: 0)
+    }
+    
+    return GitFeatureT(rawValue: UInt32(features))
 }
 
 
@@ -103,7 +115,7 @@ public func gitLibgit2FeatureBackend(
 
 /// Gets the maximum `mmap()` window size.
 /// - Parameter size: The pointer in which to store the window size value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -115,16 +127,19 @@ public func gitLibgit2FeatureBackend(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetMWindowSize(
     size: UnsafeMutablePointer<Int>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_mwindow_size(size)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_mwindow_size(size)
+    }
 }
 
 
 
 /// Sets the maximum `mmap()` window size.
 /// - Parameter size: The window size.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -136,16 +151,19 @@ public func gitLibgit2OptGetMWindowSize(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetMWindowSize(
     size: Int
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_mwindow_size(size)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_mwindow_size(size)
+    }
 }
 
 
 
 /// Gets the maximum memory that will be mapped in total by libgit2.
 /// - Parameter limit: The pointer in which to store the maximum memory value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -157,16 +175,19 @@ public func gitLibgit2OptSetMWindowSize(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetMWindowMappedLimit(
     limit: UnsafeMutablePointer<Int>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_mwindow_mapped_limit(limit)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_mwindow_mapped_limit(limit)
+    }
 }
 
 
 
 /// Sets the maximum amount of memory that can be mapped in total by libgit2.
 /// - Parameter limit: The maximum memory value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -178,9 +199,12 @@ public func gitLibgit2OptGetMWindowMappedLimit(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetMWindowMappedLimit(
     limit: Int
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_mwindow_mapped_limit(limit)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_mwindow_mapped_limit(limit)
+    }
 }
 
 
@@ -189,7 +213,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// - Parameters:
 ///   - level: The priority level of the configuration data.
 ///   - buf: The buffer into which the search path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -208,7 +232,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 public func gitLibgit2OptGetSearchPath(
     level   : GitConfigLevelT,
     buf     : inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -230,7 +254,7 @@ public func gitLibgit2OptGetSearchPath(
 /// - Parameters:
 ///   - level: The priority level of the configuration data.
 ///   - path: The search path.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -253,12 +277,15 @@ public func gitLibgit2OptGetSearchPath(
 public func gitLibgit2OptSetSearchPath(
     level   : GitConfigLevelT,
     path    : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_search_path(
-        level.rawValue,
-        path
-    )
+    return withCConversion
+    {
+        return git_libgit2_opt_set_search_path(
+            level.rawValue,
+            path
+        )
+    }
 }
 
 
@@ -267,7 +294,7 @@ public func gitLibgit2OptSetSearchPath(
 /// - Parameters:
 ///   - type: The basic type of the object.
 ///   - size: The maximum data size for the given type of object.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -286,12 +313,15 @@ public func gitLibgit2OptSetSearchPath(
 public func gitLibgit2OptSetCacheObjectLimit(
     type    : GitObjectT,
     size    : Int
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_cache_object_limit(
-        type.cValue(),
-        size
-    )
+    return withCConversion
+    {
+        return git_libgit2_opt_set_cache_object_limit(
+            type.cValue(),
+            size
+        )
+    }
 }
 
 
@@ -299,7 +329,7 @@ public func gitLibgit2OptSetCacheObjectLimit(
 /// Sets the maximum total data size that will be cached in memory across all repositories before
 /// libgit2 starts evicting objects from the cache.
 /// - Parameter maxStorageBytes: The maximum total data size.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -316,16 +346,19 @@ public func gitLibgit2OptSetCacheObjectLimit(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetCacheMaxSize(
     maxStorageBytes: Int
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_cache_max_size(maxStorageBytes)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_cache_max_size(maxStorageBytes)
+    }
 }
 
 
 
 /// Enables or disable caching completely.
 /// - Parameter enabled: Whether caching should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -340,9 +373,12 @@ public func gitLibgit2OptSetCacheMaxSize(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableCaching(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_caching(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_caching(enabled.intValue)
+    }
 }
 
 
@@ -353,7 +389,7 @@ public func gitLibgit2OptEnableCaching(
 ///   - current: The pointer in which to store the current number of bytes in the cache.
 ///   - allowed: The pointer in which to store the maximum number of bytes that would be allowed
 ///   in the cache.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -366,19 +402,22 @@ public func gitLibgit2OptEnableCaching(
 public func gitLibgit2OptGetCachedMemory(
     current : UnsafeMutablePointer<Int>,
     allowed : UnsafeMutablePointer<Int>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_cached_memory(
-        current,
-        allowed
-    )
+    return withCConversion
+    {
+        return git_libgit2_opt_get_cached_memory(
+            current,
+            allowed
+        )
+    }
 }
 
 
 
 /// Gets the default template path.
 /// - Parameter out: The buffer into which the template path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -390,7 +429,7 @@ public func gitLibgit2OptGetCachedMemory(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetTemplatePath(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -407,7 +446,7 @@ public func gitLibgit2OptGetTemplatePath(
 
 /// Sets the default template path.
 /// - Parameter path: The template path.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -419,9 +458,12 @@ public func gitLibgit2OptGetTemplatePath(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetTemplatePath(
     path: String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_template_path(path)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_template_path(path)
+    }
 }
 
 
@@ -430,7 +472,7 @@ public func gitLibgit2OptSetTemplatePath(
 /// - Parameters:
 ///   - file: The location of a file containing several certificates concatenated together.
 ///   - path: The location of a directory holding several certificates, one per file.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -447,19 +489,22 @@ public func gitLibgit2OptSetTemplatePath(
 public func gitLibgit2OptSetSSLCertLocations(
     file    : String?,
     path    : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_ssl_cert_locations(
-        file,
-        path
-    )
+    return withCConversion
+    {
+        return git_libgit2_opt_set_ssl_cert_locations(
+            file,
+            path
+        )
+    }
 }
 
 
 
 /// Sets the value of the comment section of the User-Agent header.
 /// - Parameter userAgent: The comment section of the User-Agent header.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -479,9 +524,12 @@ public func gitLibgit2OptSetSSLCertLocations(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetUserAgent(
     userAgent: String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_user_agent(userAgent)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_user_agent(userAgent)
+    }
 }
 
 
@@ -489,7 +537,7 @@ public func gitLibgit2OptSetUserAgent(
 /// Enables strict input validation when creating new objects to ensure that all inputs to the new objects
 /// are valid.
 /// - Parameter enabled: Whether strict object creation should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -505,16 +553,19 @@ public func gitLibgit2OptSetUserAgent(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableStrictObjectCreation(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_strict_object_creation(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_strict_object_creation(enabled.intValue)
+    }
 }
 
 
 
 /// Enables validation of the target of a symbolic reference during creation.
 /// - Parameter enabled: Whether strict symbolic reference creation should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -532,16 +583,19 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableStrictSymbolicRefCreation(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_strict_symbolic_ref_creation(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_strict_symbolic_ref_creation(enabled.intValue)
+    }
 }
 
 
 
 /// Sets the SSL ciphers use for HTTPS connections.
 /// - Parameter ciphers: The SSL ciphers.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -553,9 +607,12 @@ public func gitLibgit2OptEnableStrictSymbolicRefCreation(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetSSLCiphers(
     ciphers: String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_ssl_ciphers(ciphers)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_ssl_ciphers(ciphers)
+    }
 }
 
 
@@ -563,7 +620,7 @@ public func gitLibgit2OptSetSSLCiphers(
 /// Gets the value of the comment section of the User-Agent header.
 /// - Parameter out: The buffer into which the comment section of the User-Agent header should
 /// be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -575,7 +632,7 @@ public func gitLibgit2OptSetSSLCiphers(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetUserAgent(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -593,7 +650,7 @@ public func gitLibgit2OptGetUserAgent(
 /// Enables or disables the use of offset deltas when creating packfiles, and the negotiation of them
 /// when talking to a remote server.
 /// - Parameter enabled: Whether offset deltas should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -610,9 +667,12 @@ public func gitLibgit2OptGetUserAgent(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableOFSDelta(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_ofs_delta(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_ofs_delta(enabled.intValue)
+    }
 }
 
 
@@ -620,7 +680,7 @@ public func gitLibgit2OptEnableOFSDelta(
 /// Enables synchronized writes of files in the Git directory using `fsync` (or the platform equivalent) to
 /// ensure that new object data is written to permanent storage, not simply cached.
 /// - Parameter enabled: Whether synchronized writes of files in the Git directory should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -634,16 +694,19 @@ public func gitLibgit2OptEnableOFSDelta(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableFSyncGitDir(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_fsync_gitdir(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_fsync_gitdir(enabled.intValue)
+    }
 }
 
 
 
 /// Gets the share mode used when opening files on Windows.
 /// - Parameter value: The pointer in which to store the share mode value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -655,16 +718,19 @@ public func gitLibgit2OptEnableFSyncGitDir(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetWindowsShareMode(
     value: UnsafeMutablePointer<UInt>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_windows_sharemode(value)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_windows_sharemode(value)
+    }
 }
 
 
 
 /// Sets the share mode used when opening files on Windows.
 /// - Parameter value: The share mode value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -680,16 +746,19 @@ public func gitLibgit2OptGetWindowsShareMode(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetWindowsShareMode(
     value: UInt
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_windows_sharemode(value)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_windows_sharemode(value)
+    }
 }
 
 
 
 /// Enables strict verification of object hash sums when reading objects from disk.
 /// - Parameter enabled: Whether strict hash verification should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -703,16 +772,19 @@ public func gitLibgit2OptSetWindowsShareMode(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableStrictHashVerification(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_strict_hash_verification(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_strict_hash_verification(enabled.intValue)
+    }
 }
 
 
 
 /// Sets the memory allocator to a different memory allocator.
 /// - Parameter allocator: The memory allocator to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -727,9 +799,12 @@ public func gitLibgit2OptEnableStrictHashVerification(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetAllocator(
     allocator: UnsafeMutablePointer<git_allocator>?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_allocator(allocator)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_allocator(allocator)
+    }
 }
 
 
@@ -737,7 +812,7 @@ public func gitLibgit2OptSetAllocator(
 /// Ensures that there are no unsaved changes in the index before beginning any operation that
 /// reloads the index from disk (for example, the checkout operation).
 /// - Parameter enabled: Whether unsaved index safety should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -751,9 +826,12 @@ public func gitLibgit2OptSetAllocator(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableUnsavedIndexSafety(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_unsaved_index_safety(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_unsaved_index_safety(enabled.intValue)
+    }
 }
 
 
@@ -761,7 +839,7 @@ public func gitLibgit2OptEnableUnsavedIndexSafety(
 /// Gets the maximum number of objects libgit2 will allow in a pack file when downloading a packfile from
 /// a remote.
 /// - Parameter out: The pointer in which to store the maximum number of objects.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -773,9 +851,12 @@ public func gitLibgit2OptEnableUnsavedIndexSafety(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetPackMaxObjects(
     out: UnsafeMutablePointer<Int>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_pack_max_objects(out)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_pack_max_objects(out)
+    }
 }
 
 
@@ -783,7 +864,7 @@ public func gitLibgit2OptGetPackMaxObjects(
 /// Sets the maximum number of objects libgit2 will allow in a pack file when downloading a packfile from
 /// a remote.
 /// - Parameter objects: The maximum number of objects to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -797,16 +878,19 @@ public func gitLibgit2OptGetPackMaxObjects(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetPackMaxObjects(
     objects: Int
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_pack_max_objects(objects)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_pack_max_objects(objects)
+    }
 }
 
 
 
 /// Skips `.keep` file existence checks when accessing packfiles.
 /// - Parameter enabled: Whether `.keep` file existence checks should be disabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -820,16 +904,19 @@ public func gitLibgit2OptSetPackMaxObjects(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptDisablePackKeepFileChecks(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_disable_pack_keep_file_checks(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_disable_pack_keep_file_checks(enabled.intValue)
+    }
 }
 
 
 
 /// Uses `expect`/`continue` when connecting to a server using NTLM or Negotiate authentication.
 /// - Parameter enabled: Whether HTTP `expect`/`continue` should be enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -843,16 +930,19 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptEnableHTTPExpectContinue(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_enable_http_expect_continue(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_enable_http_expect_continue(enabled.intValue)
+    }
 }
 
 
 
 /// Gets the maximum number of files that will be mapped at any time by libgit2.
 /// - Parameter limit: The pointer in which to store the maximum number of files.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -864,16 +954,19 @@ public func gitLibgit2OptEnableHTTPExpectContinue(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetMWindowFileLimit(
     limit: UnsafeMutablePointer<Int>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_mwindow_file_limit(limit)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_mwindow_file_limit(limit)
+    }
 }
 
 
 
 /// Sets the maximum number of files that will be mapped at any time by libgit2.
 /// - Parameter limit: The maximum number of files.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -887,9 +980,12 @@ public func gitLibgit2OptGetMWindowFileLimit(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetMWindowFileLimit(
     limit: Int
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_mwindow_file_limit(limit)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_mwindow_file_limit(limit)
+    }
 }
 
 
@@ -897,7 +993,7 @@ public func gitLibgit2OptSetMWindowFileLimit(
 /// Overrides the default priority of the packed object database backend, which is added when default
 /// backends are assigned to a repository.
 /// - Parameter priority: The priority level to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -909,9 +1005,12 @@ public func gitLibgit2OptSetMWindowFileLimit(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetODBPackedPriority(
     priority: Int32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_odb_packed_priority(priority)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_odb_packed_priority(priority)
+    }
 }
 
 
@@ -919,7 +1018,7 @@ public func gitLibgit2OptSetODBPackedPriority(
 /// Overrides the default priority of the loose object database backend, which is added when default
 /// backends are assigned to a repository.
 /// - Parameter priority: The priority level to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -931,16 +1030,19 @@ public func gitLibgit2OptSetODBPackedPriority(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetODBLoosePriority(
     priority: Int32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_odb_loose_priority(priority)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_odb_loose_priority(priority)
+    }
 }
 
 
 
 /// Gets the list of supported Git extensions.
 /// - Parameter out: The pointer in which to store the list of supported Git extensions.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -956,17 +1058,20 @@ public func gitLibgit2OptSetODBLoosePriority(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetExtensions(
     out: UnsafeMutablePointer<[String]>
-) -> Int32
+) -> GitErrorCode
 {
-    var strArray = git_strarray()
-    
-    let getExtensionsResult: Int32 = git_libgit2_opt_get_extensions(&strArray)
-    
-    out.pointee = Array(strArray)
-    
-    gitStrArrayDispose(array: &strArray)
-    
-    return getExtensionsResult
+    return withCConversion
+    {
+        var strArray = git_strarray()
+        
+        let getExtensionsResult: Int32 = git_libgit2_opt_get_extensions(&strArray)
+        
+        out.pointee = Array(strArray)
+        
+        gitStrArrayDispose(array: &strArray)
+        
+        return getExtensionsResult
+    }
 }
 
 
@@ -975,7 +1080,7 @@ public func gitLibgit2OptGetExtensions(
 /// - Parameters:
 ///   - extensions: The Git extensions to use.
 ///   - len: The length of `extensions`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -993,16 +1098,19 @@ public func gitLibgit2OptGetExtensions(
 public func gitLibgit2OptSetExtensions(
     extensions  : [String],
     len         : Int
-) -> Int32
+) -> GitErrorCode
 {
-    return extensions.withArrayOfImmutableCStrings
+    return withCConversion
     {
-        cExtensions in
-        
-        return git_libgit2_opt_set_extensions(
-            cExtensions,
-            len
-        )
+        return extensions.withArrayOfImmutableCStrings
+        {
+            cExtensions in
+            
+            return git_libgit2_opt_set_extensions(
+                cExtensions,
+                len
+            )
+        }
     }
 }
 
@@ -1010,7 +1118,7 @@ public func gitLibgit2OptSetExtensions(
 
 /// Gets the owner validation setting for repository directories.
 /// - Parameter enabled: The pointer in which to store the owner validation setting.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1022,22 +1130,25 @@ public func gitLibgit2OptSetExtensions(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetOwnerValidation(
     enabled: UnsafeMutablePointer<Bool>
-) -> Int32
+) -> GitErrorCode
 {
-    var intEnabled: Int32 = 0
-    
-    let getOwnerValidationResult: Int32 = git_libgit2_opt_get_owner_validation(&intEnabled)
-    
-    enabled.pointee = Bool(intEnabled)
-    
-    return getOwnerValidationResult
+    return withCConversion
+    {
+        var intEnabled: Int32 = 0
+        
+        let getOwnerValidationResult: Int32 = git_libgit2_opt_get_owner_validation(&intEnabled)
+        
+        enabled.pointee = Bool(intEnabled)
+        
+        return getOwnerValidationResult
+    }
 }
 
 
 
 /// Sets the owner validation setting for repository directories.
 /// - Parameter enabled: Whether owner validation is enabled.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1051,16 +1162,19 @@ public func gitLibgit2OptGetOwnerValidation(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetOwnerValidation(
     enabled: Bool
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_owner_validation(enabled.intValue)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_owner_validation(enabled.intValue)
+    }
 }
 
 
 
 /// Gets the current user's home directory to be used for file lookups.
 /// - Parameter out: The buffer into which the home directory path should be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1072,7 +1186,7 @@ public func gitLibgit2OptSetOwnerValidation(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetHomeDir(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -1089,7 +1203,7 @@ public func gitLibgit2OptGetHomeDir(
 
 /// Sets the current user's home directory to be used for file lookups.
 /// - Parameter path: The path to the home directory.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1101,16 +1215,19 @@ public func gitLibgit2OptGetHomeDir(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetHomeDir(
     path: String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_homedir(path)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_homedir(path)
+    }
 }
 
 
 
 /// Sets the timeout (in milliseconds) to attempt connections to a remote server.
 /// - Parameter timeout: The timeout to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1122,16 +1239,19 @@ public func gitLibgit2OptSetHomeDir(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetServerConnectTimeout(
     timeout: Int32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_server_connect_timeout(timeout)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_server_connect_timeout(timeout)
+    }
 }
 
 
 
 /// Gets the timeout (in milliseconds) to attempt connections to a remote server.
 /// - Parameter timeout: The pointer in which to store the timeout value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1143,16 +1263,19 @@ public func gitLibgit2OptSetServerConnectTimeout(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetServerConnectTimeout(
     timeout: UnsafeMutablePointer<Int32>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_server_connect_timeout(timeout)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_server_connect_timeout(timeout)
+    }
 }
 
 
 
 /// Sets the timeout (in milliseconds) for reading from and writing to a remote server.
 /// - Parameter timeout: The timeout to use.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1164,16 +1287,19 @@ public func gitLibgit2OptGetServerConnectTimeout(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetServerTimeout(
     timeout: Int32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_server_timeout(timeout)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_server_timeout(timeout)
+    }
 }
 
 
 
 /// Gets the timeout (in milliseconds) for reading from and writing to a remote server.
 /// - Parameter timeout: The pointer in which to store the timeout value.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1185,16 +1311,19 @@ public func gitLibgit2OptSetServerTimeout(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetServerTimeout(
     timeout: UnsafeMutablePointer<Int32>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_get_server_timeout(timeout)
+    return withCConversion
+    {
+        return git_libgit2_opt_get_server_timeout(timeout)
+    }
 }
 
 
 
 /// Sets the value of the product portion of the User-Agent header.
 /// - Parameter userAgent: The product section of the User-Agent header.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1214,9 +1343,12 @@ public func gitLibgit2OptGetServerTimeout(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptSetUserAgentProduct(
     userAgent: String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_set_user_agent_product(userAgent)
+    return withCConversion
+    {
+        return git_libgit2_opt_set_user_agent_product(userAgent)
+    }
 }
 
 
@@ -1224,7 +1356,7 @@ public func gitLibgit2OptSetUserAgentProduct(
 /// Gets the value of the product section of the User-Agent header.
 /// - Parameter out: The buffer into which the product section of the User-Agent header should
 /// be written.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1236,7 +1368,7 @@ public func gitLibgit2OptSetUserAgentProduct(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetUserAgentProduct(
     out: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -1253,7 +1385,7 @@ public func gitLibgit2OptGetUserAgentProduct(
 
 /// Adds a raw X.509 certificate into the SSL certifications store.
 /// - Parameter cert: The raw X.509 certificate to add into the SSL certifications store.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -1268,7 +1400,10 @@ public func gitLibgit2OptGetUserAgentProduct(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptAddSSLX509Cert(
     cert: UnsafeRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_libgit2_opt_add_ssl_x509_cert(cert)
+    return withCConversion
+    {
+        return git_libgit2_opt_add_ssl_x509_cert(cert)
+    }
 }

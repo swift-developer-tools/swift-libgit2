@@ -43,7 +43,7 @@ final class SignatureTests: XCTestCaseStopOnFail
             
             var signature = GitSignature()
             
-            let signatureDefaultResult: Int32 = gitSignatureDefault(
+            let signatureDefaultResult: GitErrorCode = gitSignatureDefault(
                 out:    &signature,
                 repo:   repository.pointer
             )
@@ -66,7 +66,7 @@ final class SignatureTests: XCTestCaseStopOnFail
         let time    : GitTimeT  = 946684800
         let offset  : Int32     = 120
         
-        var signatureFromBufferResult: Int32 = gitSignatureFromBuffer(
+        var signatureFromBufferResult: GitErrorCode = gitSignatureFromBuffer(
             out:    &signature,
             buf:    "\(name) <\(email)> \(time) +0200"
         )
@@ -140,7 +140,7 @@ final class SignatureTests: XCTestCaseStopOnFail
                 var authorSignature     : GitSignature?     = GitSignature()
                 var committerSignature  : GitSignature?     = GitSignature()
                 
-                let bothResult: Int32 = gitSignatureDefaultFromEnv(
+                let bothResult: GitErrorCode = gitSignatureDefaultFromEnv(
                     authorOut:      &authorSignature,
                     committerOut:   &committerSignature,
                     repo:           repository.pointer
@@ -164,7 +164,7 @@ final class SignatureTests: XCTestCaseStopOnFail
                 var authorSignature     : GitSignature?     = GitSignature()
                 var committerSignature  : GitSignature?     = nil
                 
-                let authorOnlyResult: Int32 = gitSignatureDefaultFromEnv(
+                let authorOnlyResult: GitErrorCode = gitSignatureDefaultFromEnv(
                     authorOut:      &authorSignature,
                     committerOut:   &committerSignature,
                     repo:           repository.pointer
@@ -185,7 +185,7 @@ final class SignatureTests: XCTestCaseStopOnFail
                 var authorSignature     : GitSignature?     = nil
                 var committerSignature  : GitSignature?     = GitSignature()
                 
-                let committerOnlyResult: Int32 = gitSignatureDefaultFromEnv(
+                let committerOnlyResult: GitErrorCode = gitSignatureDefaultFromEnv(
                     authorOut:      &authorSignature,
                     committerOut:   &committerSignature,
                     repo:           repository.pointer
@@ -206,13 +206,13 @@ final class SignatureTests: XCTestCaseStopOnFail
                 var authorSignature     : GitSignature?     = nil
                 var committerSignature  : GitSignature?     = nil
                 
-                let neitherResult: Int32 = gitSignatureDefaultFromEnv(
+                let neitherResult: GitErrorCode = gitSignatureDefaultFromEnv(
                     authorOut:      &authorSignature,
                     committerOut:   &committerSignature,
                     repo:           repository.pointer
                 )
                 
-                XCTAssertEqual(neitherResult, GIT_EUSER.rawValue)
+                XCTAssertEqual(neitherResult, .gitEUser)
                 XCTAssertNil(authorSignature)
                 XCTAssertNil(committerSignature)
             }
@@ -232,7 +232,7 @@ final class SignatureTests: XCTestCaseStopOnFail
         
         
         
-        var signatureNewResult: Int32 = gitSignatureNew(
+        var signatureNewResult: GitErrorCode = gitSignatureNew(
             out:        &signature,
             name:       "",
             email:      "",
@@ -304,7 +304,7 @@ final class SignatureTests: XCTestCaseStopOnFail
         
         var duplicatedSignature = GitSignature()
         
-        let signatureDupResult: Int32 = gitSignatureDup(
+        let signatureDupResult: GitErrorCode = gitSignatureDup(
             dest:   &duplicatedSignature,
             sig:    signature
         )
@@ -331,7 +331,7 @@ final class SignatureTests: XCTestCaseStopOnFail
         let email       : String        = Repository.commitAuthorEmail
         let beforeTime  : TimeInterval  = Date().timeIntervalSince1970
         
-        let signatureNowResult: Int32 = gitSignatureNow(
+        let signatureNowResult: GitErrorCode = gitSignatureNow(
             out:    &signature,
             name:   name,
             email:  email

@@ -37,7 +37,7 @@ final class TypesTests: XCTestCaseStopOnFail
             
             var signature = GitSignature()
             
-            let signatureNowResult: Int32 = gitSignatureNow(
+            let signatureNowResult: GitErrorCode = gitSignatureNow(
                 out:    &signature,
                 name:   Repository.commitAuthorName,
                 email:  Repository.commitAuthorEmail
@@ -96,7 +96,7 @@ final class TypesTests: XCTestCaseStopOnFail
             
             var streamPointer: UnsafeMutablePointer<git_writestream>? = nil
             
-            let blobCreateFromStreamResult: Int32 = gitBlobCreateFromStream(
+            let blobCreateFromStreamResult: GitErrorCode = gitBlobCreateFromStream(
                 out:        &streamPointer,
                 repo:       repository.pointer,
                 hintPath:   nil
@@ -134,13 +134,13 @@ final class TypesTests: XCTestCaseStopOnFail
                 )
             }
             
-            XCTAssertOK(writeResult)
+            XCTAssertOK(GitErrorCode(rawValue: writeResult))
             
             
             
             var blobOID = GitOID()
             
-            let blobCreateFromStreamCommitResult: Int32 = gitBlobCreateFromStreamCommit(
+            let blobCreateFromStreamCommitResult: GitErrorCode = gitBlobCreateFromStreamCommit(
                 out:        &blobOID,
                 stream:     streamPointer
             )

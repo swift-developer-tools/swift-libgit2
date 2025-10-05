@@ -33,4 +33,31 @@ internal extension Optional where Wrapped == String
                 }
         }
     }
+    
+    
+    
+    /// Calls the given closure with an optional mutable pointer to the contents of the string.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error thrown by the given closure.
+    func withOptionalMutableCString<T>(
+        _ body: (UnsafeMutablePointer<CChar>?) throws -> T
+    ) rethrows -> T
+    {
+        switch self
+        {
+            case .none:
+                
+                return try body(nil)
+                
+            case .some(let wrapped):
+                
+                return try wrapped.withMutableCString
+                {
+                    cString in
+                    
+                    return try body(cString)
+                }
+        }
+    }
 }

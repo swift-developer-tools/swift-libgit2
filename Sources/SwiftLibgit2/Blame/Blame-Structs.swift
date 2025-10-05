@@ -115,12 +115,12 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     {
         var blameOptions = git_blame_options()
         
-        let blameOptionsInitResult: Int32 = gitBlameOptionsInit(
+        let blameOptionsInitResult: GitErrorCode = gitBlameOptionsInit(
             opts:       &blameOptions,
             version:    version
         )
         
-        if blameOptionsInitResult != GIT_OK.rawValue
+        if blameOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

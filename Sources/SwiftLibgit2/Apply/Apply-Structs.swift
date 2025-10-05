@@ -91,12 +91,12 @@ public struct GitApplyOptions: GitStructMutable, WithCConvertible
     {
         var applyOptions = git_apply_options()
         
-        let applyOptionsInitResult: Int32 = gitApplyOptionsInit(
+        let applyOptionsInitResult: GitErrorCode = gitApplyOptionsInit(
             opts:       &applyOptions,
             version:    version
         )
         
-        if applyOptionsInitResult != GIT_OK.rawValue
+        if applyOptionsInitResult != .gitOK
         {
             throw NSError.makeCConversionError()
         }

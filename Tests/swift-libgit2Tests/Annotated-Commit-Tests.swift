@@ -34,7 +34,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitFromFetchheadResult: Int32 = gitAnnotatedCommitFromFetchhead(
+            let annotatedCommitFromFetchheadResult: GitErrorCode = gitAnnotatedCommitFromFetchhead(
                 out:            &annotatedCommitPointer,
                 repo:           repository.pointer,
                 branchName:     "main",
@@ -82,7 +82,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
                 "HEAD"
             )
             
-            XCTAssertOK(referenceLookupResult)
+            XCTAssertOK(GitErrorCode(rawValue: referenceLookupResult))
             
             guard let headReferencePointer: OpaquePointer = headReferencePointer
             else
@@ -102,7 +102,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitFromRefResult: Int32 = gitAnnotatedCommitFromRef(
+            let annotatedCommitFromRefResult: GitErrorCode = gitAnnotatedCommitFromRef(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
                 ref:    headReferencePointer
@@ -151,7 +151,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitFromRevspecResult: Int32 = gitAnnotatedCommitFromRevspec(
+            let annotatedCommitFromRevspecResult: GitErrorCode = gitAnnotatedCommitFromRevspec(
                 out:        &annotatedCommitPointer,
                 repo:       repository.pointer,
                 revspec:    "HEAD"
@@ -198,7 +198,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitLookupResult: Int32 = gitAnnotatedCommitLookup(
+            let annotatedCommitLookupResult: GitErrorCode = gitAnnotatedCommitLookup(
                 out:    &annotatedCommitPointer,
                 repo:   repository.pointer,
                 id:     headOID

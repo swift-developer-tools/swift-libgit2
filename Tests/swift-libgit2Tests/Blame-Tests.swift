@@ -32,7 +32,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             
             
-            let blameFileResult: Int32 = gitBlameFile(
+            let blameFileResult: GitErrorCode = gitBlameFile(
                 out:        &baseBlamePointer,
                 repo:       repository.pointer,
                 path:       Repository.blameFileName,
@@ -52,7 +52,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             let bufferContent = Data("Buffer content\n".utf8)
             
-            let blameBufferResult: Int32 = gitBlameBuffer(
+            let blameBufferResult: GitErrorCode = gitBlameBuffer(
                 out:        &bufferBlamePointer,
                 base:       baseBlamePointer,
                 buffer:     bufferContent,
@@ -83,7 +83,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             let blameOptions = GitBlameOptions()
             
-            var blameFileResult: Int32 = gitBlameFile(
+            var blameFileResult: GitErrorCode = gitBlameFile(
                 out:        &blamePointer,
                 repo:       repository.pointer,
                 path:       Repository.blameFileName,

@@ -44,8 +44,8 @@ public struct GitMergeFlagT: GitOptionSet
     ///
     /// ## Discussion
     ///
-    /// If a conflict occurs, the merge operation will fail with `GIT_EMERGECONFLICT` and no index
-    /// will be returned.
+    /// If a conflict occurs, the merge operation will fail with ``GitErrorCode/gitEMergeConflict``,
+    /// and no index will be returned.
     public static let gitMergeFailOnConflict    = GitMergeFlagT(rawValue: GIT_MERGE_FAIL_ON_CONFLICT.rawValue)
     
     /// Do not write the `REUC` extension on the generated index.

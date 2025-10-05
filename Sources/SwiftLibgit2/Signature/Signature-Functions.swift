@@ -18,7 +18,7 @@ import CLibgit2
 ///   - email: The email of the actor.
 ///   - time: The UNIX timestamp in seconds.
 ///   - offset: The timezone offset in minutes.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -29,7 +29,7 @@ public func gitSignatureNew(
     email   : String,
     time    : GitTimeT,
     offset  : Int32
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -55,7 +55,7 @@ public func gitSignatureNew(
 ///   - out: The new signature.
 ///   - name: The name of the actor.
 ///   - email: The email of the actor.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -64,7 +64,7 @@ public func gitSignatureNow(
     out     : inout GitSignature,
     name    : String,
     email   : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -89,12 +89,12 @@ public func gitSignatureNow(
 ///   - authorOut: The new author signature.
 ///   - committerOut: The new committer signature.
 ///   - repo: The repository. The underlying type must be `git_repository`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
 /// At least one of `authorOut` or `committerOut` must not be `nil`. If both are `nil`,
-/// this function will return `GIT_EUSER`.
+/// this function will return ``GitErrorCode/gitEUser``.
 ///
 /// If `authorOut` is not `nil`, it will be populated with the author information.
 /// The `GIT_AUTHOR_NAME` and `GIT_AUTHOR_EMAIL` environment variables will be honored.
@@ -111,8 +111,8 @@ public func gitSignatureNow(
 /// If neither `GIT_AUTHOR_DATE` nor `GIT_COMMITTER_DATE` are set, both timestamps will be set
 /// to the same time.
 ///
-/// The return value will be `GIT_ENOTFOUND` if either `user.name` or `user.email `are not
-/// set, and there is no fallback from an environment variable.
+/// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name` or
+/// `user.email `are not set, and there is no fallback from an environment variable.
 ///
 /// ## C Equivalent
 ///
@@ -121,87 +121,90 @@ public func gitSignatureDefaultFromEnv(
     authorOut       : inout GitSignature?,
     committerOut    : inout GitSignature?,
     repo            : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    guard
-        authorOut != nil
-        || committerOut != nil
-    else
+    return withCConversion
     {
-        return GIT_EUSER.rawValue
-    }
-    
-    
-    
-    var author      : UnsafeMutablePointer<git_signature>?  = nil
-    var committer   : UnsafeMutablePointer<git_signature>?  = nil
-    
-    defer
-    {
-        if author != nil
+        guard
+            authorOut != nil
+            || committerOut != nil
+        else
         {
-            gitSignatureFree(sig: author)
+            return GitErrorCode.gitEUser.rawValue
         }
         
-        if committer != nil
+        
+        
+        var author      : UnsafeMutablePointer<git_signature>?  = nil
+        var committer   : UnsafeMutablePointer<git_signature>?  = nil
+        
+        defer
         {
-            gitSignatureFree(sig: committer)
-        }
-    }
-    
-    
-    
-    let signatureDefaultFromEnvResult: Int32
-    
-    switch (authorOut != nil, committerOut != nil)
-    {
-        case (true, true):
+            if author != nil
+            {
+                gitSignatureFree(sig: author)
+            }
             
-            signatureDefaultFromEnvResult = git_signature_default_from_env(
-                &author,
-                &committer,
-                repo
-            )
-            
-        case (true, false):
-            
-            signatureDefaultFromEnvResult = git_signature_default_from_env(
-                &author,
-                nil,
-                repo
-            )
-            
-        case (false, true):
-            
-            signatureDefaultFromEnvResult = git_signature_default_from_env(
-                nil,
-                &committer,
-                repo
-            )
-            
-        case (false, false):
-            
-            return GIT_EUSER.rawValue
-    }
-    
-    
-    
-    if signatureDefaultFromEnvResult == GIT_OK.rawValue
-    {
-        if let authorSignature: git_signature = author?.pointee
-        {
-            authorOut = GitSignature(cValue: authorSignature)
+            if committer != nil
+            {
+                gitSignatureFree(sig: committer)
+            }
         }
         
-        if let committerSignature: git_signature = committer?.pointee
+        
+        
+        let signatureDefaultFromEnvResult: Int32
+        
+        switch (authorOut != nil, committerOut != nil)
         {
-            committerOut = GitSignature(cValue: committerSignature)
+            case (true, true):
+                
+                signatureDefaultFromEnvResult = git_signature_default_from_env(
+                    &author,
+                    &committer,
+                    repo
+                )
+                
+            case (true, false):
+                
+                signatureDefaultFromEnvResult = git_signature_default_from_env(
+                    &author,
+                    nil,
+                    repo
+                )
+                
+            case (false, true):
+                
+                signatureDefaultFromEnvResult = git_signature_default_from_env(
+                    nil,
+                    &committer,
+                    repo
+                )
+                
+            case (false, false):
+                
+                return GitErrorCode.gitEUser.rawValue
         }
+        
+        
+        
+        if signatureDefaultFromEnvResult == GitErrorCode.gitOK.rawValue
+        {
+            if let authorSignature: git_signature = author?.pointee
+            {
+                authorOut = GitSignature(cValue: authorSignature)
+            }
+            
+            if let committerSignature: git_signature = committer?.pointee
+            {
+                committerOut = GitSignature(cValue: committerSignature)
+            }
+        }
+        
+        
+        
+        return signatureDefaultFromEnvResult
     }
-    
-    
-    
-    return signatureDefaultFromEnvResult
 }
 
 
@@ -210,14 +213,15 @@ public func gitSignatureDefaultFromEnv(
 /// - Parameters:
 ///   - out: The new signature.
 ///   - repo: The repository. The underlying type must be `git_repository`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
 /// This function looks up the `user.name` and `user.email` from the configuration, uses the
 /// current time as the timestamp, and creates a new signature based on that information.
 ///
-/// The return value will be `GIT_ENOTFOUND` if either `user.name` or `user.email` are not set.
+/// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name` or
+/// `user.email` are not set.
 ///
 /// - Note: This function does not examine environment variables. It examines only the configuration files.
 /// Use ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)`` to consider
@@ -229,7 +233,7 @@ public func gitSignatureDefaultFromEnv(
 public func gitSignatureDefault(
     out     : inout GitSignature,
     repo    : OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -251,7 +255,7 @@ public func gitSignatureDefault(
 /// - Parameters:
 ///   - out: The new signature.
 ///   - buf: The signature string.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -265,7 +269,7 @@ public func gitSignatureDefault(
 public func gitSignatureFromBuffer(
     out : inout GitSignature,
     buf : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -287,7 +291,7 @@ public func gitSignatureFromBuffer(
 /// - Parameters:
 ///   - dest: The new signature.
 ///   - sig: The signature to duplicate.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -299,7 +303,7 @@ public func gitSignatureFromBuffer(
 public func gitSignatureDup(
     dest    : inout GitSignature,
     sig     : GitSignature
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

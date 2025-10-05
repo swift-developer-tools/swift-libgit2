@@ -34,7 +34,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let featureCommitLookupResult: Int32 = gitCommitLookup(
+            let featureCommitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &featureCommitPointer,
                 repo:       repository.pointer,
                 id:         featureCommitOID
@@ -51,7 +51,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let cherrypickResult: Int32 = gitCherrypick(
+            let cherrypickResult: GitErrorCode = gitCherrypick(
                 repo:               repository.pointer,
                 commit:             featureCommitPointer,
                 cherrypickOptions:  nil
@@ -90,7 +90,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let cherrypickWithOptionsResult: Int32 = gitCherrypick(
+            let cherrypickWithOptionsResult: GitErrorCode = gitCherrypick(
                 repo:               repository.pointer,
                 commit:             featureCommitPointer,
                 cherrypickOptions:  cherrypickOptions
@@ -132,7 +132,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let mainCommitLookupResult: Int32 = gitCommitLookup(
+            let mainCommitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &mainCommitPointer,
                 repo:       repository.pointer,
                 id:         mainCommitOID
@@ -149,7 +149,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let featureCommitLookupResult: Int32 = gitCommitLookup(
+            let featureCommitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &featureCommitPointer,
                 repo:       repository.pointer,
                 id:         featureCommitOID
@@ -166,7 +166,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let cherrypickCommitResult: Int32 = gitCherrypickCommit(
+            let cherrypickCommitResult: GitErrorCode = gitCherrypickCommit(
                 out:                &indexPointer,
                 repo:               repository.pointer,
                 cherrypickCommit:   featureCommitPointer,
@@ -252,7 +252,7 @@ extension CherrypickTests
         {
             branchPointer in
             
-            let checkoutTreeResult: Int32 = gitCheckoutTree(
+            let checkoutTreeResult: GitErrorCode = gitCheckoutTree(
                 repo:       repository.pointer,
                 treeish:    nil,
                 opts:       nil
@@ -268,7 +268,7 @@ extension CherrypickTests
             "refs/heads/feature"
         )
         
-        XCTAssertOK(repositorySetHEADFeatureResult)
+        XCTAssertOK(GitErrorCode(rawValue: repositorySetHEADFeatureResult))
         
         
         
@@ -292,7 +292,7 @@ extension CherrypickTests
         
         
         
-        let commitLookupResult: Int32 = gitCommitLookup(
+        let commitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &headCommitPointer,
             repo:       repository.pointer,
             id:         headOID
@@ -307,7 +307,7 @@ extension CherrypickTests
             repository.pointer
         )
         
-        XCTAssertOK(repositoryHEADResult)
+        XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
         
         
         
@@ -317,7 +317,7 @@ extension CherrypickTests
             XCTFail("The branch name was nil.")
             
             throw NSError.makeError(
-                code:       Int(GIT_EUSER.rawValue),
+                code:       Int(GitErrorCode.gitEUser.rawValue),
                 message:    "The branch name was nil."
             )
         }
@@ -329,7 +329,7 @@ extension CherrypickTests
             referenceName
         )
         
-        XCTAssertOK(repositorySetHEADResult)
+        XCTAssertOK(GitErrorCode(rawValue: repositorySetHEADResult))
         
         
         

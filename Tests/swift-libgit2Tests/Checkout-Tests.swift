@@ -47,7 +47,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
-                    return GIT_OK.rawValue
+                    return GitErrorCode.gitOK.rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CheckoutCallbackData>
@@ -61,7 +61,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                     payloadPointer.pointee.lastNotifyPath = path
                 }
                 
-                return GIT_OK.rawValue
+                return GitErrorCode.gitOK.rawValue
             }
             
             
@@ -127,7 +127,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 checkoutOptions.perfDataCB          = perfDataCB
                 checkoutOptions.perfDataPayload     = UnsafeMutableRawPointer(callbackDataPointer)
                 
-                let checkoutResult: Int32 = gitCheckoutHEAD(
+                let checkoutResult: GitErrorCode = gitCheckoutHEAD(
                     repo:   repository.pointer,
                     opts:   checkoutOptions
                 )
@@ -185,7 +185,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutHEADResult: Int32 = gitCheckoutHEAD(
+            var checkoutHEADResult: GitErrorCode = gitCheckoutHEAD(
                 repo:   repository.pointer,
                 opts:   checkoutOptions
             )
@@ -246,7 +246,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 repository.pointer
             )
             
-            XCTAssertOK(repositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
             
             
@@ -270,7 +270,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutIndexResult: Int32 = gitCheckoutIndex(
+            var checkoutIndexResult: GitErrorCode = gitCheckoutIndex(
                 repo:   repository.pointer,
                 index:  indexPointer,
                 opts:   checkoutOptions
@@ -515,7 +515,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -549,7 +549,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var checkoutTreeResult: Int32 = gitCheckoutTree(
+            var checkoutTreeResult: GitErrorCode = gitCheckoutTree(
                 repo:       repository.pointer,
                 treeish:    treePointer,
                 opts:       checkoutOptions

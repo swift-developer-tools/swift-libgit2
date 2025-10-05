@@ -48,7 +48,7 @@ public func gitAttrValue(
 ///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
 ///   file (not a directory).
 ///   - name: The name of the attribute to look up.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -59,15 +59,18 @@ public func gitAttrGet(
     flags       : GitAttrCheckFlagsT,
     path        : String,
     name        : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_attr_get(
-        valueOut,
-        repo,
-        flags.rawValue,
-        path,
-        name
-    )
+    return withCConversion
+    {
+        return git_attr_get(
+            valueOut,
+            repo,
+            flags.rawValue,
+            path,
+            name
+        )
+    }
 }
 
 
@@ -84,7 +87,7 @@ public func gitAttrGet(
 ///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
 ///   file (not a directory).
 ///   - name: The name of the attribute to look up.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -95,7 +98,7 @@ public func gitAttrGetExt(
     opts        : GitAttrOptions?,
     path        : String,
     name        : String
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -129,7 +132,7 @@ public func gitAttrGetExt(
 ///   file (not a directory).
 ///   - numAttr: The number of attributes to look up.
 ///   - names: An array of `numAttr` entries containing attribute names.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -141,20 +144,23 @@ public func gitAttrGetMany(
     path        : String,
     numAttr     : Int,
     names       : [String]
-) -> Int32
+) -> GitErrorCode
 {
-    return names.withArrayOfImmutableCStrings
+    return withCConversion
     {
-        cNames in
-            
-        return git_attr_get_many(
-            valueOut,
-            repo,
-            flags.rawValue,
-            path,
-            numAttr,
-            cNames
-        )
+        return names.withArrayOfImmutableCStrings
+        {
+            cNames in
+                
+            return git_attr_get_many(
+                valueOut,
+                repo,
+                flags.rawValue,
+                path,
+                numAttr,
+                cNames
+            )
+        }
     }
 }
 
@@ -173,7 +179,7 @@ public func gitAttrGetMany(
 ///   file (not a directory).
 ///   - numAttr: The number of attributes to look up.
 ///   - names: An array of `numAttr` entries containing attribute names.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -185,7 +191,7 @@ public func gitAttrGetManyExt(
     path        : String,
     numAttr     : Int,
     names       : [String]
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -222,7 +228,7 @@ public func gitAttrGetManyExt(
 ///   file (not a directory).
 ///   - callback: The function to invoke on each attribute name and value.
 ///   - payload: The caller-specified payload passed to `callback`.
-/// - Returns: `0` on success, a non-zero `callback` return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -233,15 +239,18 @@ public func gitAttrForEach(
     path        : String,
     callback    : GitAttrForEachCB?,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_attr_foreach(
-        repo,
-        flags.rawValue,
-        path,
-        callback,
-        payload
-    )
+    return withCConversion
+    {
+        return git_attr_foreach(
+            repo,
+            flags.rawValue,
+            path,
+            callback,
+            payload
+        )
+    }
 }
 
 
@@ -256,7 +265,7 @@ public func gitAttrForEach(
 ///   file (not a directory).
 ///   - callback: The function to invoke on each attribute name and value.
 ///   - payload: The caller-specified payload passed to `callback`.
-/// - Returns: `0` on success, a non-zero `callback` return value, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -267,7 +276,7 @@ public func gitAttrForEachExt(
     path        : String,
     callback    : GitAttrForEachCB?,
     payload     : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -291,7 +300,7 @@ public func gitAttrForEachExt(
 /// Flushes the `.gitattributes` cache.
 /// - Parameter repo: The repository containing the `.gitattributes` cache.  The underlying
 /// type must be `git_repository`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -303,9 +312,12 @@ public func gitAttrForEachExt(
 /// [`git_attr_cache_flush()`](https://libgit2.org/docs/reference/main/attr/git_attr_cache_flush.html)
 public func gitAttrCacheFlush(
     repo: OpaquePointer
-) -> Int32
+) -> GitErrorCode
 {
-    return git_attr_cache_flush(repo)
+    return withCConversion
+    {
+        return git_attr_cache_flush(repo)
+    }
 }
 
 
@@ -316,7 +328,7 @@ public func gitAttrCacheFlush(
 ///   `git_repository`.
 ///   - name: The name of the macro.
 ///   - values: The value of the macro.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -340,11 +352,14 @@ public func gitAttrAddMacro(
     repo    : OpaquePointer,
     name    : String,
     values  : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_attr_add_macro(
-        repo,
-        name,
-        values
-    )
+    return withCConversion
+    {
+        return git_attr_add_macro(
+            repo,
+            name,
+            values
+        )
+    }
 }

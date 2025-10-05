@@ -33,7 +33,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            let cloneResult: Int32 = gitClone(
+            let cloneResult: GitErrorCode = gitClone(
                 out:        &clonedRepositoryPointer,
                 url:        repository.url.path,
                 localPath:  clonedRepositoryURL.path,
@@ -147,7 +147,7 @@ final class CloneTests: XCTestCaseStopOnFail
                 else
                 {
                     XCTFail("The payload was nil.")
-                    return GIT_EUSER.rawValue
+                    return GitErrorCode.gitEUser.rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CloneCallbackData>
@@ -172,7 +172,7 @@ final class CloneTests: XCTestCaseStopOnFail
                 else
                 {
                     XCTFail("The payload was nil.")
-                    return GIT_EUSER.rawValue
+                    return GitErrorCode.gitEUser.rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CloneCallbackData>
@@ -203,7 +203,7 @@ final class CloneTests: XCTestCaseStopOnFail
                 
                 
                 
-                let cloneResult: Int32 = gitClone(
+                let cloneResult: GitErrorCode = gitClone(
                     out:        &clonedRepositoryPointer,
                     url:        repository.url.path,
                     localPath:  clonedRepositoryURL.path,
@@ -257,7 +257,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            let cloneResult: Int32 = gitClone(
+            let cloneResult: GitErrorCode = gitClone(
                 out:        &clonedRepositoryPointer,
                 url:        repository.url.path,
                 localPath:  clonedRepositoryURL.path,
@@ -283,7 +283,7 @@ final class CloneTests: XCTestCaseStopOnFail
                 clonedRepositoryPointer
             )
             
-            XCTAssertOK(repositoryHEADResult)
+            XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
             XCTAssertNotNil(headReferencePointer)
             
             
@@ -325,14 +325,14 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            let cloneResult: Int32 = gitClone(
+            let cloneResult: GitErrorCode = gitClone(
                 out:        &clonedRepositoryPointer,
                 url:        repository.url.path,
                 localPath:  clonedRepositoryURL.path,
                 options:    cloneOptions
             )
             
-            XCTAssertEqual(cloneResult, GIT_EUSER.rawValue)
+            XCTAssertEqual(cloneResult, .gitEUser)
             XCTAssertNil(clonedRepositoryPointer)
         }
     }
@@ -364,7 +364,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            let cloneResult: Int32 = gitClone(
+            let cloneResult: GitErrorCode = gitClone(
                 out:        &clonedRepositoryPointer,
                 url:        repository.url.path,
                 localPath:  clonedRepositoryURL.path,

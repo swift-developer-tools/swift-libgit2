@@ -25,7 +25,7 @@ final class TransportTests: XCTestCaseStopOnFail
             XCTAssertNil(owner)
             XCTAssertNil(payload)
             
-            return GIT_OK.rawValue
+            return GitErrorCode.gitOK.rawValue
         }
         
         let errorCallback: GitTransportCB =

@@ -94,7 +94,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -130,7 +130,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             {
                 diffPointer in
                 
-                let applyToTreeResult: Int32 = gitApplyToTree(
+                let applyToTreeResult: GitErrorCode = gitApplyToTree(
                     out:        &indexPointer,
                     repo:       repository.pointer,
                     preimage:   treePointer,
@@ -245,7 +245,7 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -282,7 +282,7 @@ extension ApplyTests
                 repository.pointer
             )
             
-            XCTAssertOK(repositoryIndexResult)
+            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
             
             
@@ -291,7 +291,7 @@ extension ApplyTests
                 Repository.readmeFileName
             )
             
-            XCTAssertOK(indexAddBypathResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexAddBypathResult))
             
             
             
@@ -302,7 +302,7 @@ extension ApplyTests
                 indexPointer
             )
             
-            XCTAssertOK(indexWriteTreeResult)
+            XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
             
             
             
@@ -321,7 +321,7 @@ extension ApplyTests
                 &newTreeOID
             )
             
-            XCTAssertOK(treeLookupResult)
+            XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
             
             
             
@@ -334,7 +334,7 @@ extension ApplyTests
             
             
             
-            let diffTreeToTreeResult: Int32 = gitDiffTreeToTree(
+            let diffTreeToTreeResult: GitErrorCode = gitDiffTreeToTree(
                 diff:       &diffPointer,
                 repo:       repository.pointer,
                 oldTree:    oldTreePointer,
@@ -365,7 +365,7 @@ extension ApplyTests
                 )
             }
             
-            XCTAssertOK(resetResult)
+            XCTAssertOK(GitErrorCode(rawValue: resetResult))
             
             
             
@@ -378,7 +378,7 @@ extension ApplyTests
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
-                    return GIT_OK.rawValue
+                    return GitErrorCode.gitOK.rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackCounts>
@@ -386,7 +386,7 @@ extension ApplyTests
                 
                 payloadPointer.pointee.deltaCount += 1
                 
-                return GIT_OK.rawValue
+                return GitErrorCode.gitOK.rawValue
             }
             
             
@@ -398,7 +398,7 @@ extension ApplyTests
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
-                    return GIT_OK.rawValue
+                    return GitErrorCode.gitOK.rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackCounts>
@@ -406,7 +406,7 @@ extension ApplyTests
                 
                 payloadPointer.pointee.hunkCount += 1
                 
-                return GIT_OK.rawValue
+                return GitErrorCode.gitOK.rawValue
             }
             
             
@@ -426,7 +426,7 @@ extension ApplyTests
                     applyOptions.flags = flags
                 }
                 
-                let applyResult: Int32 = gitApply(
+                let applyResult: GitErrorCode = gitApply(
                     repo:       repository.pointer,
                     diff:       diffPointer,
                     location:   location,
@@ -458,7 +458,7 @@ extension ApplyTests
                     Repository.readmeFileName
                 )
                 
-                XCTAssertOK(statusFileResult)
+                XCTAssertOK(GitErrorCode(rawValue: statusFileResult))
                 
                 /// The file should have staged changes in the index.
                 XCTAssertTrue((statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0)

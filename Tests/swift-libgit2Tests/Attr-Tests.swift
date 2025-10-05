@@ -21,7 +21,7 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let attrAddMacroResult: Int32 = gitAttrAddMacro(
+            let attrAddMacroResult: GitErrorCode = gitAttrAddMacro(
                 repo:       repository.pointer,
                 name:       "testmacro",
                 values:     "text eol=crlf"
@@ -46,7 +46,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             var valueOut: UnsafePointer<CChar>? = nil
             
-            let attrGetResult: Int32 = gitAttrGet(
+            let attrGetResult: GitErrorCode = gitAttrGet(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
                 flags:      .gitAttrCheckFileThenIndex,
@@ -67,7 +67,7 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let attrCacheFlushResult: Int32 = gitAttrCacheFlush(repo: repository.pointer)
+            let attrCacheFlushResult: GitErrorCode = gitAttrCacheFlush(repo: repository.pointer)
             
             XCTAssertOK(attrCacheFlushResult)
             
@@ -75,7 +75,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             var valueOut: UnsafePointer<CChar>? = nil
             
-            let attrGetResult: Int32 = gitAttrGet(
+            let attrGetResult: GitErrorCode = gitAttrGet(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
                 flags:      .gitAttrCheckFileThenIndex,
@@ -137,7 +137,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             var valueOut: UnsafePointer<CChar>? = nil
             
-            let attrGetExtResult: Int32 = gitAttrGetExt(
+            let attrGetExtResult: GitErrorCode = gitAttrGetExt(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
                 opts:       GitAttrOptions(),
@@ -175,7 +175,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let attrGetManyResult: Int32 = gitAttrGetMany(
+            let attrGetManyResult: GitErrorCode = gitAttrGetMany(
                 valueOut:   valueOut,
                 repo:       repository.pointer,
                 flags:      .gitAttrCheckFileThenIndex,
@@ -241,7 +241,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let attrGetManyExtResult: Int32 = gitAttrGetManyExt(
+            let attrGetManyExtResult: GitErrorCode = gitAttrGetManyExt(
                 valueOut:   valueOut,
                 repo:       repository.pointer,
                 opts:       GitAttrOptions(),
@@ -300,7 +300,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let attrGetManyResult: Int32 = gitAttrGetMany(
+            let attrGetManyResult: GitErrorCode = gitAttrGetMany(
                 valueOut:   valueOut,
                 repo:       repository.pointer,
                 flags:      .gitAttrCheckFileThenIndex,
@@ -344,7 +344,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let attrGetManyExtResult: Int32 = gitAttrGetManyExt(
+            let attrGetManyExtResult: GitErrorCode = gitAttrGetManyExt(
                 valueOut:   valueOut,
                 repo:       repository.pointer,
                 opts:       GitAttrOptions(),
@@ -374,7 +374,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             var valueOut: UnsafePointer<CChar>? = nil
             
-            var attrGetResult: Int32 = gitAttrGet(
+            var attrGetResult: GitErrorCode = gitAttrGet(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
                 flags:      .gitAttrCheckFileThenIndex,
@@ -471,7 +471,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             var valueOut: UnsafePointer<CChar>? = nil
             
-            let attrGetExtResult: Int32 = gitAttrGetExt(
+            let attrGetExtResult: GitErrorCode = gitAttrGetExt(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
                 opts:       attrOptions,
@@ -534,7 +534,7 @@ extension AttrTests
                     let cPayload    : UnsafeMutableRawPointer   = cPayload
                 else
                 {
-                    return GIT_OK.rawValue
+                    return GitErrorCode.gitOK.rawValue
                 }
                 
                 
@@ -546,7 +546,7 @@ extension AttrTests
                 
                 
                 
-                return GIT_OK.rawValue
+                return GitErrorCode.gitOK.rawValue
             }
             
             
@@ -557,7 +557,7 @@ extension AttrTests
                 
                 if let options: GitAttrOptions = options
                 {
-                    let attrForEachExtResult: Int32 = gitAttrForEachExt(
+                    let attrForEachExtResult: GitErrorCode = gitAttrForEachExt(
                         repo:       repository.pointer,
                         opts:       options,
                         path:       "test.txt",
@@ -569,7 +569,7 @@ extension AttrTests
                 }
                 else
                 {
-                    let attrForEachResult: Int32 = gitAttrForEach(
+                    let attrForEachResult: GitErrorCode = gitAttrForEach(
                         repo:       repository.pointer,
                         flags:      .gitAttrCheckFileThenIndex,
                         path:       "test.txt",

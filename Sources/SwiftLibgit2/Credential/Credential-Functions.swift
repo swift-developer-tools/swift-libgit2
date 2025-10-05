@@ -67,7 +67,7 @@ public func gitCredentialGetUsername(
 ///   - out: The pointer in which to store the resulting credential.
 ///   - username: The username of the credential.
 ///   - password: The password of the credentials.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -80,29 +80,35 @@ public func gitCredentialUserPassPlaintextNew(
     out         : UnsafeMutablePointer<UnsafeMutablePointer<git_credential>?>,
     username    : String,
     password    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_userpass_plaintext_new(
-        out,
-        username,
-        password
-    )
+    return withCConversion
+    {
+        return git_credential_userpass_plaintext_new(
+            out,
+            username,
+            password
+        )
+    }
 }
 
 
 
 /// Creates a default credential usable with Negotiate mechanisms like NTLM or Kerberos authentication.
 /// - Parameter out: The pointer in which to store the resulting credential.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
 /// [`git_credential_default_new()`](https://libgit2.org/docs/reference/main/credential/git_credential_default_new.html)
 public func gitCredentialDefaultNew(
     out: UnsafeMutablePointer<UnsafeMutablePointer<git_credential>?>
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_default_new(out)
+    return withCConversion
+    {
+        return git_credential_default_new(out)
+    }
 }
 
 
@@ -111,7 +117,7 @@ public func gitCredentialDefaultNew(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting credential.
 ///   - username: The username of the credential.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -119,12 +125,15 @@ public func gitCredentialDefaultNew(
 public func gitCredentialUsernameNew(
     out         : UnsafeMutablePointer<UnsafeMutablePointer<git_credential>?>,
     username    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_username_new(
-        out,
-        username
-    )
+    return withCConversion
+    {
+        return git_credential_username_new(
+            out,
+            username
+        )
+    }
 }
 
 
@@ -136,7 +145,7 @@ public func gitCredentialUsernameNew(
 ///   - publicKey: The path to the public key of the credential.
 ///   - privateKey: The path to the private key of the credential.
 ///   - passphrase: The passphrase of the credential.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -151,15 +160,18 @@ public func gitCredentialSSHKeyNew(
     publicKey   : String,
     privateKey  : String,
     passphrase  : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_ssh_key_new(
-        out,
-        username,
-        publicKey,
-        privateKey,
-        passphrase
-    )
+    return withCConversion
+    {
+        return git_credential_ssh_key_new(
+            out,
+            username,
+            publicKey,
+            privateKey,
+            passphrase
+        )
+    }
 }
 
 
@@ -171,7 +183,7 @@ public func gitCredentialSSHKeyNew(
 ///   - publicKey: The public key of the credential.
 ///   - privateKey: The private key of the credential.
 ///   - passphrase: The passphrase of the credential.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -182,15 +194,18 @@ public func gitCredentialSSHKeyMemoryNew(
     publicKey   : String,
     privateKey  : String,
     passphrase  : String?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_ssh_key_memory_new(
-        out,
-        username,
-        publicKey,
-        privateKey,
-        passphrase
-    )
+    return withCConversion
+    {
+        return git_credential_ssh_key_memory_new(
+            out,
+            username,
+            publicKey,
+            privateKey,
+            passphrase
+        )
+    }
 }
 
 
@@ -201,7 +216,7 @@ public func gitCredentialSSHKeyMemoryNew(
 ///   - username: The username of the credential.
 ///   - promptCallback: The callback invoked for authentication prompts.
 ///   - payload: The caller-specified payload passed to `promptCallback`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -215,14 +230,17 @@ public func gitCredentialSSHInteractiveNew(
     username        : String,
     promptCallback  : GitCredentialSSHInteractiveCB?,
     payload         : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_ssh_interactive_new(
-        out,
-        username,
-        promptCallback,
-        payload
-    )
+    return withCConversion
+    {
+        return git_credential_ssh_interactive_new(
+            out,
+            username,
+            promptCallback,
+            payload
+        )
+    }
 }
 
 
@@ -231,7 +249,7 @@ public func gitCredentialSSHInteractiveNew(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting credential.
 ///   - username: The username of the credential.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -243,12 +261,15 @@ public func gitCredentialSSHInteractiveNew(
 public func gitCredentialSSHKeyFromAgent(
     out         : UnsafeMutablePointer<UnsafeMutablePointer<git_credential>?>,
     username    : String
-) -> Int32
+) -> GitErrorCode
 {
-    return git_credential_ssh_key_from_agent(
-        out,
-        username
-    )
+    return withCConversion
+    {
+        return git_credential_ssh_key_from_agent(
+            out,
+            username
+        )
+    }
 }
 
 
@@ -261,7 +282,7 @@ public func gitCredentialSSHKeyFromAgent(
 ///   - publicKeyLen: The length of the public key of the credential.
 ///   - signCallback: The callback invoked to sign the data during the authentication challenge.
 ///   - payload: The caller-specified payload passed to `signCallback`.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -277,7 +298,7 @@ public func gitCredentialSSHCustomNew(
     publicKeyLen    : Int,
     signCallback    : GitCredentialSignCB,
     payload         : UnsafeMutableRawPointer?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

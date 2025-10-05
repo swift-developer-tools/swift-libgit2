@@ -85,7 +85,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             var streamPointer: UnsafeMutablePointer<git_writestream>? = nil
             
-            let blobCreateFromStreamResult: Int32 = gitBlobCreateFromStream(
+            let blobCreateFromStreamResult: GitErrorCode = gitBlobCreateFromStream(
                 out:        &streamPointer,
                 repo:       repository.pointer,
                 hintPath:   "test.txt"
@@ -124,7 +124,7 @@ final class BlobTests: XCTestCaseStopOnFail
                 )
             }
             
-            XCTAssertOK(writeResult)
+            XCTAssertOK(GitErrorCode(rawValue: writeResult))
             
             
             
@@ -165,7 +165,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobLookupResult: Int32 = gitBlobLookup(
+            let blobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
                 id:     blobOID
@@ -175,7 +175,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobLookupPrefixResult: Int32 = gitBlobLookupPrefix(
+            let blobLookupPrefixResult: GitErrorCode = gitBlobLookupPrefix(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
                 id:     blobOID,
@@ -261,7 +261,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobLookupResult: Int32 = gitBlobLookup(
+            let blobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
                 id:     blobOID
@@ -287,7 +287,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobFilterResult: Int32 = gitBlobFilter(
+            var blobFilterResult: GitErrorCode = gitBlobFilter(
                 out:        &buffer,
                 blob:       blobPointer,
                 asPath:     Repository.readmeFileName,
@@ -390,7 +390,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobLookupResult: Int32 = gitBlobLookup(
+            let blobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &originalBlobPointer,
                 repo:   repository.pointer,
                 id:     blobOID
@@ -407,7 +407,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobDupResult: Int32 = gitBlobDup(
+            let blobDupResult: GitErrorCode = gitBlobDup(
                 out:        &duplicatedBlobPointer,
                 source:     originalBlobPointer
             )
@@ -465,7 +465,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobCreateFromBufferResult: Int32 = data.withUnsafeBytes
+            let blobCreateFromBufferResult: GitErrorCode = data.withUnsafeBytes
             {
                 bytes in
                 
@@ -475,7 +475,7 @@ final class BlobTests: XCTestCaseStopOnFail
                 else
                 {
                     XCTFail("The bytes count was zero.")
-                    return GIT_EUSER.rawValue
+                    return .gitEUser
                 }
                 
                 
@@ -501,7 +501,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobLookupResult: Int32 = gitBlobLookup(
+            let blobLookupResult: GitErrorCode = gitBlobLookup(
                 blob:   &blobPointer,
                 repo:   repository.pointer,
                 id:     blobOID

@@ -46,7 +46,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeCommitResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let describeCommitResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -68,7 +68,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeFormatResult: Int32 = gitDescribeFormat(
+            let describeFormatResult: GitErrorCode = gitDescribeFormat(
                 out:        &buffer,
                 result:     describeResultPointer,
                 opts:       nil
@@ -120,7 +120,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeCommitResult: Int32 = try Commit.withHEADCommit(in: repository)
+            let describeCommitResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -150,7 +150,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeFormatResult: Int32 = gitDescribeFormat(
+            let describeFormatResult: GitErrorCode = gitDescribeFormat(
                 out:        &buffer,
                 result:     describeResultPointer,
                 opts:       describeFormatOptions
@@ -264,7 +264,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeWorkdirResult: Int32 = gitDescribeWorkdir(
+            let describeWorkdirResult: GitErrorCode = gitDescribeWorkdir(
                 out:    &describeResultPointer,
                 repo:   repository.pointer,
                 opts:   nil
@@ -312,7 +312,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeWorkdirResult: Int32 = gitDescribeWorkdir(
+            let describeWorkdirResult: GitErrorCode = gitDescribeWorkdir(
                 out:    &describeResultPointer,
                 repo:   repository.pointer,
                 opts:   describeOptions

@@ -16,7 +16,7 @@ import Foundation
 /// - Parameters:
 ///   - opts: The `git_blame_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitBlameOptionsVersion``.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -29,12 +29,15 @@ import Foundation
 public func gitBlameOptionsInit(
     opts    : UnsafeMutablePointer<git_blame_options>,
     version : UInt32
-) -> Int32
+) -> GitErrorCode
 {
-    return git_blame_options_init(
-        opts,
-        version
-    )
+    return withCConversion
+    {
+        return git_blame_options_init(
+            opts,
+            version
+        )
+    }
 }
 
 
@@ -235,7 +238,7 @@ public func gitBlameGetHunkByLine(
 ///   `git_repository`.
 ///   - path: The path to the file to consider.
 ///   - options: The options for the blame operation.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -245,7 +248,7 @@ public func gitBlameFile(
     repo    : OpaquePointer,
     path    : String,
     options : GitBlameOptions?
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -274,7 +277,7 @@ public func gitBlameFile(
 ///   ``gitBlameFile(out:repo:path:options:)``.
 ///   - buffer: The possibly-modified content of the file.
 ///   - bufferLen: The number of valid bytes in the buffer.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -293,7 +296,7 @@ public func gitBlameBuffer(
     base        : OpaquePointer,
     buffer      : Data,
     bufferLen   : Int
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {

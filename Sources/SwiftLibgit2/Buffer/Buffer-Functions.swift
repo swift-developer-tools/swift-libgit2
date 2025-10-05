@@ -13,7 +13,7 @@ import CLibgit2
 
 /// Frees the memory pointed to by ``GitBuf/ptr``.
 /// - Parameter buffer: The buffer to free.
-/// - Returns: `0` on success, or an error code.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
@@ -25,7 +25,7 @@ import CLibgit2
 /// [`git_buf_dispose()`](https://libgit2.org/docs/reference/main/buffer/git_buf_dispose.html)
 public func gitBufDispose(
     buffer: inout GitBuf
-) -> Int32
+) -> GitErrorCode
 {
     return withCConversion
     {
@@ -48,6 +48,6 @@ public func gitBufDispose(
         buffer.reserved     = 0
         buffer.size         = 0
         
-        return GIT_OK.rawValue
+        return GitErrorCode.gitOK.rawValue
     }
 }
