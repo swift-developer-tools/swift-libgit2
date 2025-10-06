@@ -232,8 +232,7 @@ public func gitBlameGetHunkByLine(
 
 /// Gets the blame for a single file in the repository.
 /// - Parameters:
-///   - out: The pointer that should receive the blame object. The underlying type must be
-///   `git_blame`.
+///   - out: The pointer in which to store the blame. The underlying type must be `git_blame`.
 ///   - repo: The repository whose history should be walked. The underlying type must be
 ///   `git_repository`.
 ///   - path: The path to the file to consider.
@@ -270,8 +269,7 @@ public func gitBlameFile(
 
 /// Gets the blame data for a file that has been modified in memory.
 /// - Parameters:
-///   - out: The pointer that should receive the blame object. The underlying type must be
-///   `git_blame`.
+///   - out: The pointer in which to store the blame. The underlying type must be `git_blame`.
 ///   - base: The cached blame from the history of the file.  The underlying type must be
 ///   `git_blame`. This is usually the output from ``gitBlameFile(out:repo:path:options:)``.
 ///   - buffer: The possibly-modified content of the file.

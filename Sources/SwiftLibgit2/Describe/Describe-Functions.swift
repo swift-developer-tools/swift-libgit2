@@ -73,8 +73,8 @@ public func gitDescribeFormatOptionsInit(
 
 /// Describes the given commit.
 /// - Parameters:
-///   - result: The pointer in which to store the resulting description. The underlying type
-///   must be `git_describe_result`.
+///   - result: The pointer in which to store the description. The underlying type must be
+///   `git_describe_result`.
 ///   - committish: The commit to describe. The underlying type must be `git_object`.
 ///   - opts: The options for describing the commit.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -107,8 +107,8 @@ public func gitDescribeCommit(
 
 /// Describes the current commit and worktree.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting description. The underlying type
-///   must be `git_describe_result`.
+///   - out: The pointer in which to store the description. The underlying type must be 
+///   `git_describe_result`.
 ///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
 ///   - opts: The options for describing the commit.
 /// - Returns: A ``GitErrorCode`` instance.

@@ -45,8 +45,7 @@ public func gitCherrypickOptionsInit(
 /// Cherry-picks the given commit against the given "our" commit, and produces an index that reflects
 /// the result of the cherry-pick operation.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting index. The underlying type must be
-///   `git_index`.
+///   - out: The pointer in which to store the index. The underlying type must be `git_index`.
 ///   - repo: The repository containing the given commits. The underlying type must be
 ///   `git_repository`.
 ///   - cherrypickCommit: The commit to cherry-pick.

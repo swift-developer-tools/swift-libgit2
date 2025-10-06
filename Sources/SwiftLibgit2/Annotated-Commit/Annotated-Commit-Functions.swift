@@ -13,7 +13,7 @@ import CLibgit2
 
 /// Creates an annotated commit from the given reference.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting annotated commit. The underlying type must be
+///   - out: The pointer in which to store the annotated commit. The underlying type must be
 ///   `git_annotated_commit`.
 ///   - repo: The repository containing the given reference. The underlying type must be
 ///   `git_repository`.
@@ -48,7 +48,7 @@ public func gitAnnotatedCommitFromRef(
 
 /// Creates an annotated commit from the given fetch head data.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting annotated commit. The underlying type must be
+///   - out: The pointer in which to store the annotated commit. The underlying type must be
 ///   `git_annotated_commit`.
 ///   - repo: The repository containing the given commit. The underlying type must be
 ///   `git_repository`.
@@ -90,7 +90,7 @@ public func gitAnnotatedCommitFromFetchhead(
 
 /// Creates an annotated commit from the given commit ID.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting annotated commit. The underlying type must be
+///   - out: The pointer in which to store the annotated commit. The underlying type must be
 ///   `git_annotated_commit`.
 ///   - repo: The repository containing the given commit. The underlying type must be
 ///   `git_repository`.
@@ -132,7 +132,7 @@ public func gitAnnotatedCommitLookup(
 
 /// Creates an annotated commit from a revision string.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting annotated commit. The underlying type must be
+///   - out: The pointer in which to store the annotated commit. The underlying type must be
 ///   `git_annotated_commit`.
 ///   - repo: The repository containing the given commit. The underlying type must be
 ///   `git_repository`.

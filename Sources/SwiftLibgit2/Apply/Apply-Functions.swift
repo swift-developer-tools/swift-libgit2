@@ -43,7 +43,7 @@ public func gitApplyOptionsInit(
 
 /// Applies a diff to a tree, and returns the resulting image as an index.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting postimage of the application. The underlying
+///   - out: The pointer in which to store the postimage of the application. The underlying
 ///   type must be `git_index`.
 ///   - repo: The repository to apply. The underlying type must be `git_repository`.
 ///   - preimage: The tree to which the diff should be applied. The underlying type must be

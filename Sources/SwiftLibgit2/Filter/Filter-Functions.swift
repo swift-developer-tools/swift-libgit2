@@ -14,10 +14,9 @@ import Foundation
 
 /// Loads the filter list for the given path.
 /// - Parameters:
-///   - filters: The pointer in which to store the resulting filter list. The underlying type must be
+///   - filters: The pointer in which to store the filter list. The underlying type must be
 ///   `git_filter_list`.
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given path. The underlying type must be `git_repository`.
 ///   - blob: The blob to which the filter should be applied. The underlying type must be `git_blob`.
 ///   - path: The relative path to the file to filter.
 ///   - mode: The filtering direction.
@@ -58,10 +57,9 @@ public func gitFilterListLoad(
 
 /// Loads the filter list for the given path.
 /// - Parameters:
-///   - filters: The pointer in which to store the resulting filter list. The underlying type must be
+///   - filters: The pointer in which to store the filter list. The underlying type must be
 ///   `git_filter_list`.
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given path. The underlying type must be `git_repository`.
 ///   - blob: The blob to which the filter should be applied. The underlying type must be `git_blob`.
 ///   - path: The relative path to the file to filter.
 ///   - mode: The filtering direction.

@@ -14,7 +14,7 @@ import Foundation
 
 /// Looks up a blob from a repository.
 /// - Parameters:
-///   - blob: The pointer that should receive the blob. The underlying type must be `git_blob`.
+///   - blob: The pointer in which to store the blob. The underlying type must be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type must be
 ///   `git_repository`.
 ///   - id: The ID of the blob to locate.
@@ -45,7 +45,7 @@ public func gitBlobLookup(
 
 /// Looks up a blob from a repository, given a prefix of its identifier (short ID).
 /// - Parameters:
-///   - blob: The pointer that should receive the blob. The underlying type must be `git_blob`.
+///   - blob: The pointer in which to store the blob. The underlying type must be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type must be
 ///   `git_repository`.
 ///   - id: The ID of the blob to locate.
@@ -492,8 +492,7 @@ public func gitBlobDataIsBinary(
 
 /// Creates an in-memory copy of the given blob.
 /// - Parameters:
-///   - out: The pointer that should receive the copy of the blob. The underlying type must be
-///   `git_blob`.
+///   - out: The pointer in which to store a copy of the blob. The underlying type must be `git_blob`.
 ///   - source: The original blob to copy. The underlying type must be `git_blob`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

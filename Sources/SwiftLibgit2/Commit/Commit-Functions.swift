@@ -13,8 +13,7 @@ import CLibgit2
 
 /// Looks up a commit from a repository.
 /// - Parameters:
-///   - commit: The pointer in which to store the resulting commit. The underlying type must be
-///   `git_commit`.
+///   - commit: The pointer in which to store the commit. The underlying type must be `git_commit`.
 ///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
@@ -45,8 +44,7 @@ public func gitCommitLookup(
 
 /// Looks up a commit from a repository, given a prefix of its identifier (short ID).
 /// - Parameters:
-///   - commit: The pointer in which to store the resulting commit. The underlying type must be
-///   `git_commit`.
+///   - commit: The pointer in which to store the commit. The underlying type must be `git_commit`.
 ///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
@@ -389,8 +387,8 @@ public func gitCommitRawHeader(
 
 /// Gets the tree pointed to by the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting tree. The underlying type must be `git_tree`.
-///   - commit:The commit. The underlying type must be `git_commit`.
+///   - out: The pointer in which to store the tree. The underlying type must be `git_tree`.
+///   - commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -455,7 +453,7 @@ public func gitCommitParentCount(
 
 /// Gets the specified parent of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting parent commit. The underlying type must be
+///   - out: The pointer in which to store the parent commit. The underlying type must be
 ///   `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed position of the parent.
@@ -509,7 +507,7 @@ public func gitCommitParentID(
 /// Gets the commit that is the n<sup>th</sup> generation ancestor of the given commit, following only
 /// the first parents.
 /// - Parameters:
-///   - ancestor: The pointer in which to store the resulting ancestor commit. The underlying type
+///   - ancestor: The pointer in which to store the ancestor commit. The underlying type
 ///   must be `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed generation.
@@ -642,7 +640,7 @@ public func gitCommitExtractSignature(
 ///   be `git_tree`.
 ///   - parentCount: The number of parents of the commit.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
-///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
+///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -842,7 +840,7 @@ public func gitCommitAmend(
 ///   be `git_tree`.
 ///   - parentCount: The number of parents of the commit.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
-///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
+///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -945,8 +943,7 @@ public func gitCommitCreateWithSignature(
 
 /// Creates an in-memory copy of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting commit. The underlying type must be
-///   `git_commit`.
+///   - out: The pointer in which to store the commit. The underlying type must be `git_commit`.
 ///   - source: The original commit to copy. The underlying type must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
