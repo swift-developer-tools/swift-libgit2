@@ -100,11 +100,15 @@
 /// internal mutating func withMutatingCValue<T>(
 ///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
 /// ) rethrows -> T
+///
+/// internal mutating func withMutatingCValue<T>(
+///     _ body: (UnsafeMutablePointer<UnsafePointer<C>?>) throws -> T
+/// ) throws -> T
 /// ```
 ///
-/// The first mutating method must be used when working with C functions that expect a parameter
-/// of the type `C *`, while the second mutating method must be used for `C **` parameters.
-/// The second mutating method uses an optional pointer since libgit2 may set the pointer to `nil`.
+/// The methods are designed for use with C functions that expect parameters of the type `C *`,
+/// `C **`, and `const C **`, respectively. The second and third methods use an optional pointer,
+/// since libgit2 may set the pointer to `nil`.
 ///
 /// The structs that use these mutating methods are commonly used as `inout` parameters.
 /// ``GitStructInternalMutable`` provides default implementations of both methods.
@@ -165,11 +169,15 @@ internal protocol GitStructInternalMutable: GitStruct
 /// to ``GitStructInternalMutable`` and ``CConvertible``.
 internal extension GitStructInternalMutable where Self: CConvertible
 {
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
+    /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C *`.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<C>) throws -> T
     ) rethrows -> T
@@ -190,11 +198,15 @@ internal extension GitStructInternalMutable where Self: CConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
-    /// any changes made by the closure.
+    /// Calls the given closure with a mutable pointer to an optional mutable pointer to a `C` instance,
+    /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C **`.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) rethrows -> T
@@ -216,6 +228,33 @@ internal extension GitStructInternalMutable where Self: CConvertible
             
             return result
         }
+    }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to an optional pointer to a `C` instance, and
+    /// updates the receiver with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `const C **`.
+    mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<UnsafePointer<C>?>) throws -> T
+    ) rethrows -> T
+    {
+        var optionalCValuePointer: UnsafePointer<C>? = nil
+        
+        let result: T = try body(&optionalCValuePointer)
+        
+        if let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+        {
+            self = Self.init(cValue: finalCValuePointer.pointee)
+        }
+        
+        return result
     }
 }
 
@@ -225,11 +264,15 @@ internal extension GitStructInternalMutable where Self: CConvertible
 /// to ``GitStructInternalMutable`` and ``ThrowingCConvertible``.
 internal extension GitStructInternalMutable where Self: ThrowingCConvertible
 {
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
+    /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C *`.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<C>) throws -> T
     ) throws -> T
@@ -250,11 +293,15 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
-    /// any changes made by the closure.
+    /// Calls the given closure with a mutable pointer to an optional mutable pointer to a `C` instance,
+    /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C **`.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) throws -> T
@@ -276,6 +323,33 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
             
             return result
         }
+    }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to an optional pointer to a `C` instance, and
+    /// updates the receiver with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `const C **`.
+    mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<UnsafePointer<C>?>) throws -> T
+    ) rethrows -> T
+    {
+        var optionalCValuePointer: UnsafePointer<C>? = nil
+        
+        let result: T = try body(&optionalCValuePointer)
+        
+        if let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+        {
+            self = Self.init(cValue: finalCValuePointer.pointee)
+        }
+        
+        return result
     }
 }
 
@@ -285,11 +359,15 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
 /// to ``GitStructInternalMutable`` and ``WithCConvertible``.
 internal extension GitStructInternalMutable where Self: WithCConvertible
 {
-    /// Calls the given closure with a pointer to a `C` instance, and updates the receiver with
+    /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C *`.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<C>) throws -> T
     ) throws -> T
@@ -308,11 +386,15 @@ internal extension GitStructInternalMutable where Self: WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to an optional pointer to a `C` instance, and updates the
-    /// receiver with any changes made by the closure.
+    /// Calls the given closure with a mutable pointer to an optional mutable pointer to a `C` instance,
+    /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C **`.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) throws -> T
@@ -332,5 +414,32 @@ internal extension GitStructInternalMutable where Self: WithCConvertible
             
             return result
         }
+    }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to an optional pointer to a `C` instance, and
+    /// updates the receiver with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `const C **`.
+    mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<UnsafePointer<C>?>) throws -> T
+    ) rethrows -> T
+    {
+        var optionalCValuePointer: UnsafePointer<C>? = nil
+        
+        let result: T = try body(&optionalCValuePointer)
+        
+        if let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+        {
+            self = Self.init(cValue: finalCValuePointer.pointee)
+        }
+        
+        return result
     }
 }
