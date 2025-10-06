@@ -619,7 +619,7 @@ public func gitDiffPrint(
 
 /// Writes the complete formatted text from the given diff into the given buffer.
 /// - Parameters:
-///   - out: The buffer into which the formatted text should be written.
+///   - out: The ``GitBuf`` instance into which the formatted text should be written.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The possible diff data output formats.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -1009,7 +1009,7 @@ public func gitDiffStatsDeletions(
 
 /// Writes the given diff statistics into the given buffer.
 /// - Parameters:
-///   - out: The buffer into which the given diff statistics should be written.
+///   - out: The ``GitBuf`` instance into which the given diff statistics should be written.
 ///   - stats: The diff statistics. The underlying type must be `git_diff_stats`.
 ///   - format: The diff stats formatting options.
 ///   - width: The target width for output.

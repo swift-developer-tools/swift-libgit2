@@ -542,7 +542,7 @@ public func gitCommitNthGenAncestor(
 
 /// Gets the a header field from the given commit.
 /// - Parameters:
-///   - out: The buffer into which the header field should be written.
+///   - out: The ``GitBuf`` instance into which the header field should be written.
 ///   - commit: The commit in which to look. The underlying type must be `git_commit`.
 ///   - field: The header field to return.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -575,9 +575,9 @@ public func gitCommitHeaderField(
 
 /// Extracts the signature from a commit.
 /// - Parameters:
-///   - signature: The buffer into which the signature block should be written.
-///   - signedData: The buffer into which the signed data (the commit content less the signature
-///   block) should be written.
+///   - signature: The ``GitBuf`` instance into which the signature block should be written.
+///   - signedData: The ``GitBuf`` instance into which the signed data (the commit content less
+///   the signature block) should be written.
 ///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
 ///   - commitID: The commit from which to extract the data.
 ///   - field: The name of the header field containing the signature block. Pass `nil` to extract
@@ -831,7 +831,7 @@ public func gitCommitAmend(
 
 /// Creates a new commit in the given repository and writes it into a buffer.
 /// - Parameters:
-///   - out: The buffer into which the commit content should be written.
+///   - out: The ``GitBuf`` instance into which the commit content should be written.
 ///   - repo: The repository in which to store the commit. The underlying type must be
 ///   `git_repository`.
 ///   - author: The author of the commit.

@@ -146,7 +146,7 @@ public func gitDescribeWorkdir(
 
 /// Writes the given commit description to a buffer.
 /// - Parameters:
-///   - out: The buffer into which the description should be written.
+///   - out: The ``GitBuf`` instance into which the description should be written.
 ///   - result: The commit description. The underlying type must be `git_describe_result`.
 ///   - opts: The options for formatting the commit description.
 /// - Returns: A ``GitErrorCode`` instance.

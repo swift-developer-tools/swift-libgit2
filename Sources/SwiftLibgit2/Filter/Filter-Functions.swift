@@ -133,10 +133,10 @@ public func gitFilterListContains(
 
 /// Applies the given filter list to the given data buffer.
 /// - Parameters:
-///   - out: The buffer into which the filtered content should be written.
+///   - out: The ``GitBuf`` instance into which the filtered content should be written.
 ///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
 ///   - input: The buffer containing the data to filter.
-///   - inputLen: The length of `in`.
+///   - inputLen: The length of `input`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -174,7 +174,7 @@ public func gitFilterListApplyToBuffer(
 
 /// Applies the given filter list to the contents of the specified on-disk file.
 /// - Parameters:
-///   - out: The buffer into which the filtered content should be written.
+///   - out: The ``GitBuf`` instance into which the filtered content should be written.
 ///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
 ///   - repo: The repository containing the specified file. The underlying type must be
 ///   `git_repository`.
@@ -215,7 +215,7 @@ public func gitFilterListApplyToFile(
 
 /// Applies the given filter list to the contents of the given blob.
 /// - Parameters:
-///   - out: The buffer into which the filtered content should be written.
+///   - out: The ``GitBuf`` instance into which the filtered content should be written.
 ///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
 ///   - blob: The blob to filter. The underlying type must be `git_blob`.
 /// - Returns: A ``GitErrorCode`` instance.

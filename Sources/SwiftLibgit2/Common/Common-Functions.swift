@@ -212,7 +212,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// Gets the search path for the given level of configuration data.
 /// - Parameters:
 ///   - level: The priority level of the configuration data.
-///   - buf: The buffer into which the search path should be written.
+///   - buf: The ``GitBuf`` instance into which the search path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -416,7 +416,7 @@ public func gitLibgit2OptGetCachedMemory(
 
 
 /// Gets the default template path.
-/// - Parameter out: The buffer into which the template path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the template path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -618,8 +618,8 @@ public func gitLibgit2OptSetSSLCiphers(
 
 
 /// Gets the value of the comment section of the User-Agent header.
-/// - Parameter out: The buffer into which the comment section of the User-Agent header should
-/// be written.
+/// - Parameter out: The ``GitBuf`` instance into which the comment section of the User-Agent
+/// header should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1173,7 +1173,7 @@ public func gitLibgit2OptSetOwnerValidation(
 
 
 /// Gets the current user's home directory to be used for file lookups.
-/// - Parameter out: The buffer into which the home directory path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the home directory path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1354,8 +1354,8 @@ public func gitLibgit2OptSetUserAgentProduct(
 
 
 /// Gets the value of the product section of the User-Agent header.
-/// - Parameter out: The buffer into which the product section of the User-Agent header should
-/// be written.
+/// - Parameter out: The ``GitBuf`` instance into which the product section of the User-Agent
+/// header should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

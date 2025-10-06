@@ -32,7 +32,7 @@ public func gitConfigEntryFree(
 
 
 /// Locates the path to the global configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -64,7 +64,7 @@ public func gitConfigFindGlobal(
 
 
 /// Locates the path to the global XDG-compatible configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -96,7 +96,7 @@ public func gitConfigFindXDG(
 
 
 /// Locates the path to the system configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -125,7 +125,7 @@ public func gitConfigFindSystem(
 
 
 /// Locates the path to the ProgramData configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -591,7 +591,7 @@ public func gitConfigGetBool(
 
 /// Gets the value of a path configuration variable.
 /// - Parameters:
-///   - out: The buffer into which the path should be written.
+///   - out: The ``GitBuf`` instance into which the path should be written.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -674,7 +674,7 @@ public func gitConfigGetString(
 
 /// Gets the value of a string configuration variable.
 /// - Parameters:
-///   - out: The buffer into which the string should be written.
+///   - out: The ``GitBuf`` instance into which the string should be written.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -1410,7 +1410,7 @@ public func gitConfigParseInt64(
 
 /// Parses a string value as a path.
 /// - Parameters:
-///   - out: The buffer into which the path should be written.
+///   - out: The ``GitBuf`` instance into which the path should be written.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
