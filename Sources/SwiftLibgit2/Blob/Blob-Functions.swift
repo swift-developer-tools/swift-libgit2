@@ -248,7 +248,7 @@ public func gitBlobFilter(
 
 /// Reads a file from the working directory of the given repository and writes it to the object database.
 /// - Parameters:
-///   - id: The ``GitOID`` instance in which to store ID of the written blob.
+///   - id: The ``GitOID`` instance in which to store the ID of the written blob.
 ///   - repo: The repository where the blob should be written. The underlying type must be
 ///   `git_repository`. This repository may not be bare.
 ///   - relativePath: The path to the file from which the blob should be created, relative to the
