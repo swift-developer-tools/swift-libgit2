@@ -185,21 +185,21 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var targetDirectory  : String?                   = nil
     
-    /// The name of the common ancestor side of conflicts.
+    /// The name of the common ancestor of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var ancestorLabel    : String?                   = nil
     
-    /// The name of the "our" side of conflicts.
+    /// The name of "our" side of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var ourLabel         : String?                   = nil
     
-    /// The name of the "theirr" side of conflicts.
+    /// The name of "their" side of conflicts.
     ///
     /// ## Discussion
     ///
