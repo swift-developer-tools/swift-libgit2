@@ -817,7 +817,7 @@ public func gitConfigNext(
 
 
 /// Frees the memory allocated for the given `git_config_iterator`  instance.
-/// - Parameter iter: The iterator to free.
+/// - Parameter iter: The configuration iterator to free.
 ///
 /// ## C Equivalent
 ///
