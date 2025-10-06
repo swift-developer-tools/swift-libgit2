@@ -453,7 +453,7 @@ public func gitConfigFree(
 
 /// Gets the configuration entry of a configuration variable.
 /// - Parameters:
-///   - out: The configuration entry object to update.
+///   - out: The ``GitConfigEntry`` instance in which to store the configuration entry.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -787,7 +787,7 @@ public func gitConfigMultivarIteratorNew(
 
 /// Gets the current entry and advances the iterator.
 /// - Parameters:
-///   - entry: The configuration entry object to update.
+///   - entry: The ``GitConfigEntry`` instance in which to store the configuration entry.
 ///   - iter: The iterator to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
