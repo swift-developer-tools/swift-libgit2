@@ -153,11 +153,11 @@ public func gitBranchIteratorNew(
 
 
 
-/// Retrieves the next branch from the given branch iterator.
+/// Gets the next branch from the given branch iterator.
 /// - Parameters:
 ///   - out: The pointer in which to store the branch. The underlying type must be `git_reference`.
 ///   - outType: The ``GitBranchT`` instance in which to store the branch type.
-///   - iter: The branch iterator. The underlying type must be `git_branch_iterator`.
+///   - iter: The branch iterator to use. The underlying type must be `git_branch_iterator`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

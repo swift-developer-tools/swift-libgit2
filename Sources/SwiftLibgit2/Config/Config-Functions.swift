@@ -781,10 +781,10 @@ public func gitConfigMultivarIteratorNew(
 
 
 
-/// Gets the current entry and advances the iterator.
+/// Gets the next configuration entry from the given configuration iterator.
 /// - Parameters:
 ///   - entry: The ``GitConfigEntry`` instance in which to store the configuration entry.
-///   - iter: The iterator to use.
+///   - iter: The configuration iterator to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
