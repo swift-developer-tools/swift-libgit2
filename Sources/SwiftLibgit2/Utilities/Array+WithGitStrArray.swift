@@ -13,7 +13,7 @@ import CLibgit2
 
 internal extension Array where Element == String
 {
-    /// Calls the given closure with a pointer to a `git_strarray` instance.
+    /// Calls the given closure with a mutable pointer to a `git_strarray` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error thrown by the given closure.

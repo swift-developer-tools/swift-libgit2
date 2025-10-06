@@ -81,7 +81,7 @@ public struct GitApplyOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_apply_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_apply_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

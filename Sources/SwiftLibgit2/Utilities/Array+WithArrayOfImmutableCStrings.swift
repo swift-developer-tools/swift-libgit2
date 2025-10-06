@@ -63,7 +63,8 @@ internal func scan<S: Sequence, U>(
 
 internal extension Array where Element == String
 {
-    /// Calls the given closure with an array of C string pointers created from an array of Swift strings.
+    /// Calls the given closure with an array of mutable C string pointers created from an array of
+    /// Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
     /// - Throws: An error thrown by the given closure.

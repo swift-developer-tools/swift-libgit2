@@ -82,7 +82,7 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_diff_file` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_file` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -197,7 +197,7 @@ public struct GitDiffDelta: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_diff_delta` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_delta` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -393,7 +393,7 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_diff_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -491,7 +491,7 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_diff_binary_file` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_binary_file` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -579,7 +579,7 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_diff_binary` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_binary` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -757,7 +757,7 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_diff_line` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_line` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

@@ -105,7 +105,7 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_blame_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_blame_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -250,7 +250,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_blame_hunk` instance.
+    /// Calls the given closure with a mutable pointer to a `git_blame_hunk` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -342,7 +342,7 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_blame_line` instance.
+    /// Calls the given closure with a mutable pointer to a `git_blame_line` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
