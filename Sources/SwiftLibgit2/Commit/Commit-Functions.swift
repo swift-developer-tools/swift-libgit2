@@ -302,7 +302,7 @@ public func gitCommitAuthor(
 /// Gets the committer of the given commit, using the mailmap to map names and email addresses to
 /// canonical real names and email addresses.
 /// - Parameters:
-///   - out: The resolved signature.
+///   - out: The ``GitSignature`` instance in which to store the resolved signature.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
@@ -337,7 +337,7 @@ public func gitCommitCommitterWithMailmap(
 /// Gets the author of the given commit, using the mailmap to map names and email addresses to
 /// canonical real names and email addresses.
 /// - Parameters:
-///   - out: The resolved signature.
+///   - out: The ``GitSignature`` instance in which to store the resolved signature.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
