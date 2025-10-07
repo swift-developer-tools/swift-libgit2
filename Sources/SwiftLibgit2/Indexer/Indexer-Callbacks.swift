@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback to report progress during the indexing process.
+/// The callback to report progress during the indexing operation.
 /// - Parameters:
 ///   - stats: The state of the transfer.
 ///   - payload: The payload provided by the caller.
