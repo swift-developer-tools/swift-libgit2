@@ -225,7 +225,37 @@ enum Free
     {
         if index != nil
         {
-            git_index_free(index)
+            gitIndexFree(index: index)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for the given `git_index_conflict_iterator` instance.
+    /// - Parameter iterator: The index conflict iterator to free. The underlying type must be
+    /// `git_index_conflict_iterator`.
+    static func freeIndexConflictIterator(
+        _ iterator: OpaquePointer?
+    )
+    {
+        if iterator != nil
+        {
+            gitIndexConflictIteratorFree(iterator: iterator)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for the given `git_index_iterator` instance.
+    /// - Parameter iterator: The index iterator to free. The underlying type must be
+    /// `git_index_iterator`.
+    static func freeIndexIterator(
+        _ iterator: OpaquePointer?
+    )
+    {
+        if iterator != nil
+        {
+            gitIndexIteratorFree(iterator: iterator)
         }
     }
     
