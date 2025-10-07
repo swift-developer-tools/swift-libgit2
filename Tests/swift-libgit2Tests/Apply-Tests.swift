@@ -288,25 +288,32 @@ extension ApplyTests
             
             XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
+            guard let indexPointer: OpaquePointer = indexPointer
+            else
+            {
+                XCTFail("The index pointer was nil.")
+                return
+            }
             
             
-            let indexAddBypathResult: Int32 = git_index_add_bypath(
-                indexPointer,
-                Repository.readmeFileName
+            
+            let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   Repository.readmeFileName
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexAddBypathResult))
+            XCTAssertOK(indexAddBypathResult)
             
             
             
-            var newTreeOID = git_oid()
+            var newTreeOID = GitOID()
             
-            let indexWriteTreeResult: Int32 = git_index_write_tree(
-                &newTreeOID,
-                indexPointer
+            let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+                out:    &newTreeOID,
+                index:  indexPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
+            XCTAssertOK(indexWriteTreeResult)
             
             
             
@@ -319,10 +326,13 @@ extension ApplyTests
             
             
             
+            // TODO: Replace once `git_tree_lookup()` has a binding.
+            var cNewTreeOID: git_oid = newTreeOID.cValue()
+            
             let treeLookupResult: Int32 = git_tree_lookup(
                 &newTreePointer,
                 repository.pointer,
-                &newTreeOID
+                &cNewTreeOID
             )
             
             XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))

@@ -111,20 +111,29 @@ struct Repository
         
         XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
         
+        guard let indexPointer: OpaquePointer = indexPointer
+        else
+        {
+            throw NSError.makeError(
+                code:       Int(GitErrorCode.gitEUser.rawValue),
+                message:    "The index pointer was nil."
+            )
+        }
         
         
-        let indexAddBypathResult: Int32 = git_index_add_bypath(
-            indexPointer,
-            path
+        
+        let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
+            index:  indexPointer,
+            path:   path
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: indexAddBypathResult))
+        XCTAssertOK(indexAddBypathResult)
         
         
         
-        let indexWriteResult: Int32 = git_index_write(indexPointer)
+        let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
         
-        XCTAssertOK(GitErrorCode(rawValue: indexWriteResult))
+        XCTAssertOK(indexWriteResult)
         
         
         
@@ -198,14 +207,14 @@ struct Repository
         
         
         
-        var treeOID = git_oid()
+        var treeOID = GitOID()
         
-        let indexWriteTreeResult: Int32 = git_index_write_tree(
-            &treeOID,
-            indexPointer
+        let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+            out:    &treeOID,
+            index:  indexPointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
+        XCTAssertOK(indexWriteTreeResult)
         
         
         
@@ -218,10 +227,13 @@ struct Repository
         
         
         
+        // TODO: Remove once `git_tree_lookup()` has a binding.
+        var cTreeOID: git_oid = treeOID.cValue()
+        
         let treeLookupResult: Int32 = git_tree_lookup(
             &treePointer,
             pointer,
-            &treeOID
+            &cTreeOID
         )
         
         XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))

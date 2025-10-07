@@ -49,24 +49,33 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
+            guard let indexPointer: OpaquePointer = indexPointer
+            else
+            {
+                XCTFail("The index pointer was nil.")
+                return
+            }
             
             
-            // TODO: Replace once `git_index_write_tree()` and `git_tree_lookup()` have bindings.
-            var treeOID = git_oid()
             
-            let indexWriteTreeResult: Int32 = git_index_write_tree(
-                &treeOID,
-                indexPointer
+            var treeOID = GitOID()
+            
+            let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+                out:    &treeOID,
+                index:  indexPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
+            XCTAssertOK(indexWriteTreeResult)
             
             
+            
+            // TODO: Remove once `git_tree_lookup()` has a binding.
+            var cTreeOID: git_oid = treeOID.cValue()
             
             let treeLookupResult: Int32 = git_tree_lookup(
                 &treePointer,
                 repository.pointer,
-                &treeOID
+                &cTreeOID
             )
             
             XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))

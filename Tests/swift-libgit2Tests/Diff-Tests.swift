@@ -440,23 +440,30 @@ final class DiffTests: XCTestCaseStopOnFail
             
             XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
             
+            guard let indexPointer: OpaquePointer = indexPointer
+            else
+            {
+                XCTFail("The index pointer was nil.")
+                return
+            }
             
             
-            let indexRemoveByPathResult: Int32 = git_index_remove_bypath(
-                indexPointer,
-                "original.txt"
+            
+            let indexRemoveByPathResult: GitErrorCode = gitIndexRemoveByPath(
+                index:  indexPointer,
+                path:   "original.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexRemoveByPathResult))
+            XCTAssertOK(indexRemoveByPathResult)
             
             
             
-            let indexAddByPathResult: Int32 = git_index_add_bypath(
-                indexPointer,
-                "renamed.txt"
+            let indexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   "renamed.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexAddByPathResult))
+            XCTAssertOK(indexAddByPathResult)
             
             
             
@@ -847,18 +854,18 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let oldIndexAddByPathResult: Int32 = git_index_add_bypath(
-                oldIndexPointer,
-                "index-test.txt"
+            let oldIndexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  oldIndexPointer,
+                path:   "index-test.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: oldIndexAddByPathResult))
+            XCTAssertOK(oldIndexAddByPathResult)
             
             
             
-            let indexWriteResult: Int32 = git_index_write(oldIndexPointer)
+            let indexWriteResult: GitErrorCode = gitIndexWrite(index: oldIndexPointer)
             
-            XCTAssertOK(GitErrorCode(rawValue: indexWriteResult))
+            XCTAssertOK(indexWriteResult)
             
             
             
@@ -885,12 +892,12 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let newIndexAddByPathResult: Int32 = git_index_add_bypath(
-                newIndexPointer,
-                "another-file.txt"
+            let newIndexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  newIndexPointer,
+                path:   "another-file.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: newIndexAddByPathResult))
+            XCTAssertOK(newIndexAddByPathResult)
             
             
             
@@ -1388,16 +1395,22 @@ final class DiffTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            XCTAssertNotNil(indexPointer)
+            
+            guard let indexPointer: OpaquePointer = indexPointer
+            else
+            {
+                XCTFail("The index pointer was nil.")
+                return
+            }
             
             
             
-            let indexAddByPathResult: Int32 = git_index_add_bypath(
-                indexPointer,
-                "staged.txt"
+            let indexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   "staged.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexAddByPathResult))
+            XCTAssertOK(indexAddByPathResult)
             
             
             
