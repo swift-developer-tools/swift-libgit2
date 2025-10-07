@@ -195,10 +195,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             try repository.createCommit(
                 path:       "other.txt",

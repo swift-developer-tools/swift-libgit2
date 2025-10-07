@@ -983,10 +983,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 message:    "First commit"
             )
             
-            repository.resetToCommit(
-                commitOID:  firstCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: firstCommitOID)
             
             let secondCommitOID: GitOID = try repository.createCommit(
                 path:       "second.txt",

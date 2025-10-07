@@ -329,10 +329,10 @@ struct Repository
     /// Resets to the given commit.
     /// - Parameters:
     ///   - commitOID: The ID of the commit.
-    ///   - resetType: The reset type.
-    func resetToCommit(
-        commitOID   : GitOID,
-        resetType   : git_reset_t
+    ///   - resetType: The type of reset to perform. The default value is `GIT_RESET_HARD`.
+    func reset(
+        to      commitOID   : GitOID,
+        type    resetType   : git_reset_t   = GIT_RESET_HARD
     )
     {
         var commitPointer: OpaquePointer? = nil

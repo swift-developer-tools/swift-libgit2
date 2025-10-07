@@ -70,10 +70,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
-            repository.resetToCommit(
-                commitOID:  headOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: headOID)
             
             
             

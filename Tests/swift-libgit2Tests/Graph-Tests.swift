@@ -35,10 +35,7 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             
             
@@ -191,10 +188,7 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             
             
@@ -206,10 +200,7 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             
             
