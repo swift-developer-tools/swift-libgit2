@@ -275,6 +275,20 @@ enum Free
     
     
     
+    /// Frees the memory allocated for the given `git_mailmap` instance.
+    /// - Parameter mailmap: The mailmap to free. The underlying type must be `git_mailmap`.
+    static func freeMailmap(
+        _ mailmap: OpaquePointer?
+    )
+    {
+        if mailmap != nil
+        {
+            gitMailmapFree(mm: mailmap)
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for the given `git_odb` instance.
     /// - Parameter odb: The object database to free. The underlying type must be  `git_odb`.
     static func freeODB(
