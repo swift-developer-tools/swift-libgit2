@@ -27,9 +27,9 @@ final class DescribeTests: XCTestCaseStopOnFail
                 message:    "Hello World!"
             )
             
-            try repository.createCommit(
-                path:       "feature.txt",
-                content:    "New feature",
+            try repository.commit(
+                "New feature",
+                toFile:     "feature.txt",
                 message:    "Add feature"
             )
             
@@ -94,9 +94,9 @@ final class DescribeTests: XCTestCaseStopOnFail
                 message:    "Hello World!"
             )
             
-            try repository.createCommit(
-                path:       "feature.txt",
-                content:    "New feature",
+            try repository.commit(
+                "New feature",
+                toFile:     "feature.txt",
                 message:    "Add feature"
             )
             

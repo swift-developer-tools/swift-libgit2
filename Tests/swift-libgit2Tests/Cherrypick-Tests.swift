@@ -232,9 +232,9 @@ extension CherrypickTests
         in repository: Repository
     ) throws -> (GitOID, GitOID)
     {
-        let mainCommitOID: GitOID = try repository.createCommit(
-            path:       "feature.txt",
-            content:    CherrypickTests.mainBranchContent,
+        let mainCommitOID: GitOID = try repository.commit(
+            CherrypickTests.mainBranchContent,
+            toFile:     "feature.txt",
             message:    "Add feature on main branch"
         )
         
@@ -269,9 +269,9 @@ extension CherrypickTests
         
         
         
-        let featureCommitOID: GitOID = try repository.createCommit(
-            path:       "feature.txt",
-            content:    CherrypickTests.featureBranchContent,
+        let featureCommitOID: GitOID = try repository.commit(
+            CherrypickTests.featureBranchContent,
+            toFile:     "feature.txt",
             message:    "Add feature branch changes"
         )
         

@@ -65,36 +65,79 @@ struct Repository
     
     
     
-    /// Creates a commit with the given content and message.
+    
+    /// Commits changes to the specified file with the given content and message.
     /// - Parameters:
-    ///   - path: The path to the file to modify. This will be appended to the repository's URL.
     ///   - content: The new content of the file.
-    ///   - append: Whether the new content should be appended to the existing content.
+    ///   - path: The path to the file to modify, relative to the repository's root.
     ///   - message: The commit message.
-    ///   - options: The options for commit creation. The options are only used when creating
-    ///   a commit from staged changes.
-    ///   - fromStage: Whether the commit should be created from staged changes.
+    ///   - appending: Whether the new content should be appended to the existing content.
     /// - Returns: The ID of the created commit.
     /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
     /// or tree initialization failed.
     @discardableResult
-    func createCommit(
-        path        : String,
-        content     : String,
-        append      : Bool                      = false,
+    func commit(
+        _ content   : String,
+        toFile path : String,
         message     : String,
-        options     : GitCommitCreateOptions?   = nil,
-        fromStage   : Bool                      = false
+        appending   : Bool      = false
     ) throws -> GitOID
     {
         try modifyFile(
             path:       path,
             content:    content,
-            append:     append
+            append:     appending
         )
         
-        
-        
+        return try _commit(
+            message:    message,
+            options:    nil,
+            fromStage:  false,
+            path:       path
+        )
+    }
+    
+    
+    
+    /// Commits the staged changes with the given message.
+    /// - Parameters:
+    ///   - message: The commit message.
+    ///   - options: The options for commit creation.
+    /// - Returns: The ID of the created commit.
+    /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
+    /// or tree initialization failed.
+    @discardableResult
+    func commitStaged(
+        message : String,
+        options : GitCommitCreateOptions?   = nil
+    ) throws -> GitOID
+    {
+        return try _commit(
+            message:    message,
+            options:    options,
+            fromStage:  true
+        )
+    }
+    
+    
+    
+    /// Creates a commit with the given content and message.
+    /// - Parameters:
+    ///   - message: The commit message.
+    ///   - options: The options for commit creation.
+    ///   - fromStage: Whether the commit should be created from staged changes.
+    ///   - path: The path to the file to modify. This will be appended to the repository's URL.
+    /// - Returns: The ID of the created commit.
+    /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
+    /// or tree initialization failed.
+    @discardableResult
+    private func _commit(
+        message     : String,
+        options     : GitCommitCreateOptions?   = nil,
+        fromStage   : Bool,
+        path        : String?                   = nil
+    ) throws -> GitOID
+    {
         var indexPointer: OpaquePointer? = nil
         
         defer
@@ -122,18 +165,21 @@ struct Repository
         
         
         
-        let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
-            index:  indexPointer,
-            path:   path
-        )
-        
-        XCTAssertOK(indexAddBypathResult)
-        
-        
-        
-        let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
-        
-        XCTAssertOK(indexWriteResult)
+        if let path: String = path
+        {
+            let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   path
+            )
+            
+            XCTAssertOK(indexAddBypathResult)
+            
+            
+            
+            let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
+            
+            XCTAssertOK(indexWriteResult)
+        }
         
         
         
@@ -144,7 +190,7 @@ struct Repository
             let commitCreateFromStageResult: GitErrorCode = gitCommitCreateFromStage(
                 id:         &commitOID,
                 repo:       pointer,
-                message:    "Commit from stage",
+                message:    message,
                 opts:       options
             )
             
@@ -470,9 +516,9 @@ extension Repository
         3: Even more content
         """
         
-        try repository.createCommit(
-            path:       blameFileName,
-            content:    initialContent,
+        try repository.commit(
+            initialContent,
+            toFile:     blameFileName,
             message:    "Add blame file"
         )
         
@@ -486,9 +532,9 @@ extension Repository
         4: Added in second commit
         """
         
-        try repository.createCommit(
-            path:       blameFileName,
-            content:    modifiedContent,
+        try repository.commit(
+            modifiedContent,
+            toFile:     blameFileName,
             message:    "Modify blame file"
         )
         
@@ -503,9 +549,9 @@ extension Repository
         5: Added in third commit
         """
         
-        try repository.createCommit(
-            path:       blameFileName,
-            content:    finalContent,
+        try repository.commit(
+            finalContent,
+            toFile:     blameFileName,
             message:    "Final blame file update"
         )
     }
@@ -576,9 +622,9 @@ extension Repository
         
         
         
-        try repository.createCommit(
-            path:       readmeFileName,
-            content:    readmeFileContent,
+        try repository.commit(
+            readmeFileContent,
+            toFile:     readmeFileName,
             message:    "Initial commit"
         )
         
