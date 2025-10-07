@@ -21,7 +21,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_PATH_LIST_SEPARATOR`](https://libgit2.org/docs/reference/main/common/GIT_PATH_LIST_SEPARATOR.html)
-public let GitPathListSeparator: String = ":"
+public let gitPathListSeparator: String = ":"
 
 
 
@@ -30,4 +30,4 @@ public let GitPathListSeparator: String = ":"
 /// ## C Equivalent
 ///
 /// [`GIT_PATH_MAX`](https://libgit2.org/docs/reference/main/common/GIT_PATH_MAX.html)
-public let GitPathMax: Int32 = 4096
+public let gitPathMax: Int32 = 4096

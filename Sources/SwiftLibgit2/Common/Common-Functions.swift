@@ -264,7 +264,7 @@ public func gitLibgit2OptGetSearchPath(
 /// - ``GitConfigLevelT/gitConfigLevelXDG``
 /// - ``GitConfigLevelT/gitConfigLevelGlobal``
 ///
-/// `path` lists the directories specified by ``GitPathListSeparator``. Pass `nil` to reset to
+/// `path` lists the directories specified by ``gitPathListSeparator``. Pass `nil` to reset to
 /// the default, which is generally based on environment variables. Pass magic path `$PATH` to include
 /// the old value of the path (for example, for prepending or appending).
 ///
