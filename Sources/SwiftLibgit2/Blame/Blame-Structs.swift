@@ -352,7 +352,18 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
     {
         var blameLine = git_blame_line()
         
-        return try ptr.withOptionalCBuffer
+        guard
+            let ptr: Data = ptr,
+            !ptr.isEmpty
+        else
+        {
+            blameLine.ptr   = nil
+            blameLine.len   = 0
+            
+            return try body(&blameLine)
+        }
+        
+        return try ptr.withCBuffer
         {
             ptrBuffer, ptrBufferCount in
             
