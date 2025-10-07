@@ -111,7 +111,7 @@
 /// since libgit2 may set the pointer to `nil`.
 ///
 /// The structs that use these mutating methods are commonly used as `inout` parameters.
-/// ``GitStructInternalMutable`` provides default implementations of both methods.
+/// ``GitStruct`` provides default implementations of all three methods.
 internal protocol GitStruct
 {
     /// The type of the equivalent C value.
@@ -167,7 +167,7 @@ internal protocol GitStructInternalMutable: GitStruct
 
 /// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
 /// to ``GitStructInternalMutable`` and ``CConvertible``.
-internal extension GitStructInternalMutable where Self: CConvertible
+internal extension GitStruct where Self: CConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
@@ -262,7 +262,7 @@ internal extension GitStructInternalMutable where Self: CConvertible
 
 /// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
 /// to ``GitStructInternalMutable`` and ``ThrowingCConvertible``.
-internal extension GitStructInternalMutable where Self: ThrowingCConvertible
+internal extension GitStruct where Self: ThrowingCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
@@ -357,7 +357,7 @@ internal extension GitStructInternalMutable where Self: ThrowingCConvertible
 
 /// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
 /// to ``GitStructInternalMutable`` and ``WithCConvertible``.
-internal extension GitStructInternalMutable where Self: WithCConvertible
+internal extension GitStruct where Self: WithCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
     /// any changes made by the closure.
