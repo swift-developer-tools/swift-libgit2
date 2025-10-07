@@ -236,9 +236,9 @@ extension ApplyTests
         endContent      : String
     ) throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
             var oldTreePointer: OpaquePointer? = nil
             
@@ -269,31 +269,6 @@ extension ApplyTests
                 path:       Repository.readmeFileName,
                 content:    modifiedContent
             )
-            
-            
-            
-            var indexPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                Free.freeIndex(indexPointer)
-            }
-            
-            
-            
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            
-            guard let indexPointer: OpaquePointer = indexPointer
-            else
-            {
-                XCTFail("The index pointer was nil.")
-                return
-            }
             
             
             

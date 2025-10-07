@@ -25,35 +25,17 @@ final class CommitTests: XCTestCaseStopOnFail
     
     func testGitCommitCreateBufferWithSignatureAndExtract() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
-            var buffer          : GitBuf            = GitBuf()
-            var indexPointer    : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
+            var buffer      : GitBuf            = GitBuf()
+            var treePointer : OpaquePointer?    = nil
             
             defer
             {
                 XCTAssertOK(gitBufDispose(buffer: &buffer))
-                Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
-            }
-            
-            
-            
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            
-            guard let indexPointer: OpaquePointer = indexPointer
-            else
-            {
-                XCTFail("The index pointer was nil.")
-                return
             }
             
             

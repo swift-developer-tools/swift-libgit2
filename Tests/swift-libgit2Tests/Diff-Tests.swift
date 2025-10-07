@@ -391,9 +391,9 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffFindSimilar() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
             try repository.createCommit(
                 path:       "original.txt",
@@ -420,31 +420,13 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            var indexPointer    : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
-            var diffPointer     : OpaquePointer?    = nil
+            var treePointer : OpaquePointer?    = nil
+            var diffPointer : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
                 Free.freeDiff(diffPointer)
-            }
-            
-            
-            
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            
-            guard let indexPointer: OpaquePointer = indexPointer
-            else
-            {
-                XCTFail("The index pointer was nil.")
-                return
             }
             
             
@@ -814,35 +796,17 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffIndexToIndex() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, oldIndexPointer in
             
-            var oldIndexPointer : OpaquePointer?    = nil
             var newIndexPointer : OpaquePointer?    = nil
             var diffPointer     : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeIndex(oldIndexPointer)
                 Free.freeIndex(newIndexPointer)
                 Free.freeDiff(diffPointer)
-            }
-            
-            
-            
-            let oldRepositoryIndexResult: Int32 = git_repository_index(
-                &oldIndexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: oldRepositoryIndexResult))
-            
-            guard let oldIndexPointer: OpaquePointer = oldIndexPointer
-            else
-            {
-                XCTFail("The old index pointer was nil.")
-                return
             }
             
             
@@ -1365,9 +1329,9 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffTreeToIndex() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
             try repository.modifyFile(
                 path:       "staged.txt",
@@ -1376,31 +1340,13 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            var indexPointer    : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
-            var diffPointer     : OpaquePointer?    = nil
+            var treePointer : OpaquePointer?    = nil
+            var diffPointer : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
                 Free.freeDiff(diffPointer)
-            }
-            
-            
-            
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            
-            guard let indexPointer: OpaquePointer = indexPointer
-            else
-            {
-                XCTFail("The index pointer was nil.")
-                return
             }
             
             
