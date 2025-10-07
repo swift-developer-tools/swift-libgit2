@@ -65,7 +65,6 @@ struct Repository
     
     
     
-    
     /// Commits changes to the specified file with the given content and message.
     /// - Parameters:
     ///   - content: The new content of the file.
@@ -419,7 +418,7 @@ struct Repository
     /// - Throws: An error if the directory creation operation failed.
     @discardableResult
     func createDirectory(
-        named path: String
+        at path: String
     ) throws -> URL
     {
         let fileURL: URL = url.appending(

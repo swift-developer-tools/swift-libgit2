@@ -1496,7 +1496,7 @@ final class IndexTests: XCTestCaseStopOnFail
             let file1Path       : String    = "\(directoryPath)/file1.txt"
             let file2Path       : String    = "\(directoryPath)/file2.txt"
             
-            try repository.createDirectory(named: "subdirectory")
+            try repository.createDirectory(at: "subdirectory")
             
             try repository.modifyFile(
                 path:       file1Path,
