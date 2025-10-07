@@ -17,8 +17,8 @@ internal extension Bool
     
     
     
-    /// Creates a `Bool` from a signed 32-bit integer using the C convention that `0` is false and
-    /// anything else is `true`.
+    /// Creates a `Bool` from a signed 32-bit integer using the C convention that `0` is `false`
+    /// and anything else is `true`.
     /// - Parameter cValue: The signed 32-bit integer to use.
     init(
         _ cValue: Int32
@@ -29,8 +29,20 @@ internal extension Bool
     
     
     
-    /// Creates a `Bool` from an unsigned 32-bit integer using the C convention that `0` is false and
-    /// anything else is `true`.
+    /// Creates a `Bool` from an unsigned 8-bit integer using the C convention that `0` is `false`
+    /// and anything else is `true`.
+    /// - Parameter cValue: The unsigned 8-bit integer to use.
+    init(
+        _ cValue: UInt8
+    )
+    {
+        self = cValue != 0
+    }
+    
+    
+    
+    /// Creates a `Bool` from an unsigned 32-bit integer using the C convention that `0` is `false`
+    /// and anything else is `true`.
     /// - Parameter cValue: The unsigned 32-bit integer to use.
     init(
         _ cValue: UInt32
@@ -41,8 +53,8 @@ internal extension Bool
     
     
     
-    /// Creates a `Bool` from a C character using the C convention that `0` is false and
-    /// anything else is `true`.
+    /// Creates a `Bool` from a C character using the C convention that `0` is `false`
+    /// and anything else is `true`.
     /// - Parameter cValue: The C character to use.
     init(
         _ cValue: CChar
