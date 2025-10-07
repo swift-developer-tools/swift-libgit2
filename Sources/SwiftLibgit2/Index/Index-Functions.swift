@@ -1022,7 +1022,7 @@ public func gitIndexFind(
 /// - Parameters:
 ///   - atPos: The pointer in which to store the position of the index entry.
 ///   - index: The index to search. The underlying type must be `git_index`.
-///   - path: The prefix for which to search.
+///   - prefix: The prefix for which to search.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
