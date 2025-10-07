@@ -44,7 +44,7 @@ public struct GitFilterOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized OID.
+    /// The default value is a zero-initialized ``GitOID`` instance.
     public var attrCommitID : GitOID            = GitOID()
     
     
