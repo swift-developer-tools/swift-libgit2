@@ -85,28 +85,19 @@ enum Blob
                 
             case .buffer(let data):
                 
-                blobCreateResult = data.withUnsafeBytes
+                let withCBufferResult: GitErrorCode? = try? data.withCBuffer
                 {
-                    bytes in
-                    
-                    guard
-                        let baseAddress: UnsafeRawPointer = bytes.baseAddress,
-                        bytes.count > 0
-                    else
-                    {
-                        XCTFail("The bytes count was zero.")
-                        return .gitEUser
-                    }
-                    
-                    
+                    dataBuffer, dataBufferCount in
                     
                     return gitBlobCreateFromBuffer(
                         id:         &blobOID,
                         repo:       repository.pointer,
-                        buffer:     baseAddress,
-                        len:        bytes.count
+                        buffer:     dataBuffer,
+                        len:        dataBufferCount
                     )
                 }
+                
+                blobCreateResult = withCBufferResult ?? .gitEUser
         }
         
         

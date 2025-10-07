@@ -113,14 +113,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let writeResult: Int32 = data.withUnsafeBytes
+            let writeResult: Int32 = try data.withCBuffer
             {
-                bytes in
+                dataBuffer, dataBufferCount in
                 
                 return streamPointer.pointee.write(
                     streamPointer,
-                    bytes.baseAddress?.assumingMemoryBound(to: CChar.self),
-                    bytes.count
+                    dataBuffer,
+                    dataBufferCount
                 )
             }
             
@@ -465,26 +465,15 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobCreateFromBufferResult: GitErrorCode = data.withUnsafeBytes
+            let blobCreateFromBufferResult: GitErrorCode = try data.withCBuffer
             {
-                bytes in
-                
-                guard
-                    let baseAddress: UnsafeRawPointer = bytes.baseAddress,
-                    bytes.count > 0
-                else
-                {
-                    XCTFail("The bytes count was zero.")
-                    return .gitEUser
-                }
-                
-                
+                dataBuffer, dataBufferCount in
                 
                 return gitBlobCreateFromBuffer(
                     id:         &blobOID,
                     repo:       repository.pointer,
-                    buffer:     baseAddress,
-                    len:        bytes.count
+                    buffer:     dataBuffer,
+                    len:        dataBufferCount
                 )
             }
             
