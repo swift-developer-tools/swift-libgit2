@@ -497,9 +497,6 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
         
         diffBinaryFile.type = type.cValue()
         
-        /// Check that `data` is not empty before converting it to a buffer, which would
-        /// throw an error since `baseAddress` will be `nil` for empty data. In this case,
-        /// empty data may be valid.
         guard
             let data: Data = data,
             !data.isEmpty
