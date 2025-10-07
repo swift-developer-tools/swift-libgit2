@@ -964,7 +964,7 @@ public func gitIndexRemoveAll(
 ///
 /// ## C Equivalent
 ///
-/// [`git_index_add_all()`](https://libgit2.org/docs/reference/main/index/git_index_add_all.html)
+/// [`git_index_update_all()`](https://libgit2.org/docs/reference/main/index/git_index_update_all.html)
 public func gitIndexUpdateAll(
     index       : OpaquePointer,
     pathspec    : [String],
