@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_CHECKOUT_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/checkout/GIT_CHECKOUT_OPTIONS_VERSION.html)
-public let gitCheckoutOptionsVersion: UInt32 = UInt32(GIT_CHECKOUT_OPTIONS_VERSION)
+public let gitCheckoutOptionsVersion: UInt32 = 1

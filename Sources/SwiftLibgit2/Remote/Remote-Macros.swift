@@ -17,7 +17,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_REMOTE_CREATE_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/remote/GIT_REMOTE_CREATE_OPTIONS_VERSION.html)
-public let gitRemoteCreateOptionsVersion: UInt32 = UInt32(GIT_REMOTE_CREATE_OPTIONS_VERSION)
+public let gitRemoteCreateOptionsVersion: UInt32 = 1
 
 
 
@@ -26,17 +26,16 @@ public let gitRemoteCreateOptionsVersion: UInt32 = UInt32(GIT_REMOTE_CREATE_OPTI
 /// ## C Equivalent
 ///
 /// [`GIT_REMOTE_CALLBACKS_VERSION`](https://libgit2.org/docs/reference/main/remote/GIT_REMOTE_CALLBACKS_VERSION.html)
-public let gitRemoteCallbacksVersion: UInt32 = UInt32(GIT_REMOTE_CALLBACKS_VERSION)
+public let gitRemoteCallbacksVersion: UInt32 = 1
 
 
 
-// TODO: Replace `git_fetch_options` in documentation.
-/// The current version for `git_fetch_options`.
+/// The current version for ``GitFetchOptions``.
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_FETCH_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/remote/GIT_FETCH_OPTIONS_VERSION.html)
-public let gitFetchOptionsVersion: UInt32 = UInt32(GIT_FETCH_OPTIONS_VERSION)
+public let gitFetchOptionsVersion: UInt32 = 1
 
 
 
@@ -46,7 +45,7 @@ public let gitFetchOptionsVersion: UInt32 = UInt32(GIT_FETCH_OPTIONS_VERSION)
 /// ## C Equivalent
 ///
 /// [`GIT_PUSH_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/remote/GIT_PUSH_OPTIONS_VERSION.html)
-public let gitPushOptionsVersion: UInt32 = UInt32(GIT_PUSH_OPTIONS_VERSION)
+public let gitPushOptionsVersion: UInt32 = 1
 
 
 
@@ -56,4 +55,4 @@ public let gitPushOptionsVersion: UInt32 = UInt32(GIT_PUSH_OPTIONS_VERSION)
 /// ## C Equivalent
 ///
 /// [`GIT_REMOTE_CONNECT_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/remote/GIT_REMOTE_CONNECT_OPTIONS_VERSION.html)
-public let gitRemoteConnectOptionsVersion: UInt32 = UInt32(GIT_REMOTE_CONNECT_OPTIONS_VERSION)
+public let gitRemoteConnectOptionsVersion: UInt32 = 1

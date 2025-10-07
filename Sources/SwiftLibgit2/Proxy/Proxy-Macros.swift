@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_PROXY_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/proxy/GIT_PROXY_OPTIONS_VERSION.html)
-public let gitProxyOptionsVersion: UInt32 = UInt32(GIT_PROXY_OPTIONS_VERSION)
+public let gitProxyOptionsVersion: UInt32 = 1

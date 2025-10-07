@@ -30,4 +30,4 @@ public let GitPathListSeparator: String = ":"
 /// ## C Equivalent
 ///
 /// [`GIT_PATH_MAX`](https://libgit2.org/docs/reference/main/common/GIT_PATH_MAX.html)
-public let GitPathMax: Int32 = GIT_PATH_MAX
+public let GitPathMax: Int32 = 4096

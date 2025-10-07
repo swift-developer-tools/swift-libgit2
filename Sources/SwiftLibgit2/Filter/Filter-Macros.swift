@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_FILTER_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/filter/GIT_FILTER_OPTIONS_VERSION.html)
-public let gitFilterOptionsVersion: UInt32 = UInt32(GIT_FILTER_OPTIONS_VERSION)
+public let gitFilterOptionsVersion: UInt32 = 1

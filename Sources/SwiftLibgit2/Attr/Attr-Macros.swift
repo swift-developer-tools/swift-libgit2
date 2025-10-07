@@ -114,4 +114,4 @@ public func gitAttrHasValue(
 /// ## C Equivalent
 ///
 /// [`GIT_ATTR_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_OPTIONS_VERSION.html)
-public let gitAttrOptionsVersion: UInt32 = UInt32(GIT_ATTR_OPTIONS_VERSION)
+public let gitAttrOptionsVersion: UInt32 = 1

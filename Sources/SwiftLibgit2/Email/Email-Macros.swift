@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_EMAIL_CREATE_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/email/GIT_EMAIL_CREATE_OPTIONS_VERSION.html)
-public let gitEmailCreateOptionsVersion: UInt32 = UInt32(GIT_EMAIL_CREATE_OPTIONS_VERSION)
+public let gitEmailCreateOptionsVersion: UInt32 = 1

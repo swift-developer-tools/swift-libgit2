@@ -851,7 +851,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexEntryNameMask() throws
     {
-        XCTAssertEqual(gitIndexEntryNameMask, GIT_INDEX_ENTRY_NAMEMASK)
+        XCTAssertEqual(gitIndexEntryNameMask, UInt32(GIT_INDEX_ENTRY_NAMEMASK))
     }
     
     
@@ -893,7 +893,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexEntryStageMask() throws
     {
-        XCTAssertEqual(gitIndexEntryStageMask, GIT_INDEX_ENTRY_STAGEMASK)
+        XCTAssertEqual(gitIndexEntryStageMask, UInt32(GIT_INDEX_ENTRY_STAGEMASK))
     }
     
     

@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_COMMIT_CREATE_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/commit/GIT_COMMIT_CREATE_OPTIONS_VERSION.html)
-public let gitCommitCreateOptionsVersion: UInt32 = UInt32(GIT_COMMIT_CREATE_OPTIONS_VERSION)
+public let gitCommitCreateOptionsVersion: UInt32 = 1
