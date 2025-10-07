@@ -249,8 +249,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             )
             
             try repository.modifyFile(
-                path:       "dirty.txt",
-                content:    "Uncommitted changes"
+                at:     "dirty.txt",
+                with:   "Uncommitted changes"
             )
             
             
@@ -290,8 +290,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             )
             
             try repository.modifyFile(
-                path:       "dirty.txt",
-                content:    "Uncommitted changes"
+                at:     "dirty.txt",
+                with:   "Uncommitted changes"
             )
             
             

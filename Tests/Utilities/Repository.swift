@@ -76,16 +76,16 @@ struct Repository
     /// or tree initialization failed.
     @discardableResult
     func commit(
-        _ content   : String,
-        toFile path : String,
-        message     : String,
-        appending   : Bool      = false
+        _           content : String,
+        toFile      path    : String,
+        message             : String,
+        appending           : Bool      = false
     ) throws -> GitOID
     {
         try modifyFile(
-            path:       path,
-            content:    content,
-            append:     appending
+            at:         path,
+            with:       content,
+            appending:  appending
         )
         
         return try _commit(
@@ -440,14 +440,14 @@ struct Repository
     /// - Parameters:
     ///   - path: The path to the file to modify. This will be appended to the repository's URL.
     ///   - content: The new content of the file. This is ignored when creating a directory.
-    ///   - append: Whether the new content should be appended to the existing content.
+    ///   - appending: Whether the new content should be appended to the existing content.
     /// - Returns: The URL to which the content was written.
     /// - Throws: An error if the file read or write operations failed.
     @discardableResult
     func modifyFile(
-        path    : String,
-        content : String,
-        append  : Bool      = false
+        at          path    : String,
+        with        content : String,
+        appending           : Bool      = false
     ) throws -> URL
     {
         let fileURL: URL = url.appending(
@@ -457,7 +457,7 @@ struct Repository
         
         var writeContent: String = content
         
-        if append
+        if appending
         {
             let existingContent = try String(contentsOf: fileURL)
             writeContent += existingContent

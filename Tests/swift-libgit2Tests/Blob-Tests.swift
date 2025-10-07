@@ -56,8 +56,8 @@ final class BlobTests: XCTestCaseStopOnFail
             let fileContent: String = "Hello World!"
             
             let fileURL: URL = try repository.modifyFile(
-                path:       "test.txt",
-                content:    fileContent
+                at:     "test.txt",
+                with:   fileContent
             )
             
             

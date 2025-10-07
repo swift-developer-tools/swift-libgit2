@@ -245,8 +245,8 @@ extension FilterTests
     ) throws -> URL
     {
         let fileURL: URL = try repository.modifyFile(
-            path:       Self.fileName,
-            content:    Self.fileContent
+            at:     Self.fileName,
+            with:   Self.fileContent
         )
         
         

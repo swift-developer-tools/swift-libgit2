@@ -812,8 +812,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                path:       "index-test.txt",
-                content:    "Index test content"
+                at:     "index-test.txt",
+                with:   "Index test content"
             )
             
             
@@ -850,8 +850,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                path:       "another-file.txt",
-                content:    "Another file content"
+                at:     "another-file.txt",
+                with:   "Another file content"
             )
             
             
@@ -887,8 +887,8 @@ final class DiffTests: XCTestCaseStopOnFail
             repository in
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    "Modified content"
+                at:     Repository.readmeFileName,
+                with:   "Modified content"
             )
             
             
@@ -1331,8 +1331,8 @@ final class DiffTests: XCTestCaseStopOnFail
             repository, indexPointer in
             
             try repository.modifyFile(
-                path:       "staged.txt",
-                content:    "Staged content"
+                at:     "staged.txt",
+                with:   "Staged content"
             )
             
             
@@ -1434,8 +1434,8 @@ final class DiffTests: XCTestCaseStopOnFail
             repository in
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    "Modified content"
+                at:     Repository.readmeFileName,
+                with:   "Modified content"
             )
             
             

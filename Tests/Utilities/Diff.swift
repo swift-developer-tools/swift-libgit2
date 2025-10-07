@@ -208,8 +208,8 @@ enum Diff
     ) throws
     {
         try repository.modifyFile(
-            path:       Repository.readmeFileName,
-            content:    "\(Repository.readmeFileContent) Goodbye World!"
+            at:     Repository.readmeFileName,
+            with:   "\(Repository.readmeFileContent) Goodbye World!"
         )
         
         

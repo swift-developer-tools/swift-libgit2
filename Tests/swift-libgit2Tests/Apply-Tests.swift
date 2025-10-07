@@ -266,8 +266,8 @@ extension ApplyTests
             let modifiedContent: String = "\(Repository.readmeFileContent) Goodbye World!"
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    modifiedContent
+                at:     Repository.readmeFileName,
+                with:   modifiedContent
             )
             
             
