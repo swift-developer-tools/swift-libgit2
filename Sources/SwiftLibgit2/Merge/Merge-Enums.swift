@@ -32,8 +32,8 @@ public struct GitMergeFlagT: GitOptionSet
     
     
     
-    /// Detect renames that occur between the common ancestor and the "ours" side, or the common
-    /// ancestor and the "theirs" side.
+    /// Detect renames that occur between the common ancestor and "our" side, or the common
+    /// ancestor and "their" side.
     ///
     /// ## Discussion
     ///
@@ -94,12 +94,12 @@ public enum GitMergeFileFavorT: UInt32, GitEnum
     /// This is the default value.
     case gitMergeFileFavorNormal    = 0
     
-    /// When a region of a file is changed in both branches, the file created in the index will contain the
-    /// "ours" side of any conflicting region. The index will not record a conflict.
+    /// When a region of a file is changed in both branches, the file created in the index will contain
+    /// "our" side of any conflicting region. The index will not record a conflict.
     case gitMergeFileFavorOurs      = 1
     
-    /// When a region of a file is changed in both branches, the file created in the index will contain the
-    /// "theirs" side of any conflicting region. The index will not record a conflict.
+    /// When a region of a file is changed in both branches, the file created in the index will contain
+    /// "their" side of any conflicting region. The index will not record a conflict.
     case gitMergeFileFavorTheirs    = 2
     
     /// When a region of a file is changed in both branches, the file created in the index will contain each

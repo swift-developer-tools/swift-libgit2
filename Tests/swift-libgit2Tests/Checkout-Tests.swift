@@ -228,26 +228,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutIndex() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
-            
-            var indexPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                Free.freeIndex(indexPointer)
-            }
-            
-            
-            
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            
+            repository, indexPointer in
             
             
             let content: String = "Modified content for index checkout."

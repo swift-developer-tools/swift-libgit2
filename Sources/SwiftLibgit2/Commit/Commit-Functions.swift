@@ -13,8 +13,7 @@ import CLibgit2
 
 /// Looks up a commit from a repository.
 /// - Parameters:
-///   - commit: The pointer in which to store the resulting commit. The underlying type must be
-///   `git_commit`.
+///   - commit: The pointer in which to store the commit. The underlying type must be `git_commit`.
 ///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
@@ -45,8 +44,7 @@ public func gitCommitLookup(
 
 /// Looks up a commit from a repository, given a prefix of its identifier (short ID).
 /// - Parameters:
-///   - commit: The pointer in which to store the resulting commit. The underlying type must be
-///   `git_commit`.
+///   - commit: The pointer in which to store the commit. The underlying type must be `git_commit`.
 ///   - repo: The repository in which to look up the commit. The underlying type must be
 ///   `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
@@ -302,7 +300,7 @@ public func gitCommitAuthor(
 /// Gets the committer of the given commit, using the mailmap to map names and email addresses to
 /// canonical real names and email addresses.
 /// - Parameters:
-///   - out: The resolved signature.
+///   - out: The ``GitSignature`` instance in which to store the resolved signature.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
@@ -337,7 +335,7 @@ public func gitCommitCommitterWithMailmap(
 /// Gets the author of the given commit, using the mailmap to map names and email addresses to
 /// canonical real names and email addresses.
 /// - Parameters:
-///   - out: The resolved signature.
+///   - out: The ``GitSignature`` instance in which to store the resolved signature.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
 ///   `git_mailmap`.
@@ -389,8 +387,8 @@ public func gitCommitRawHeader(
 
 /// Gets the tree pointed to by the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting tree. The underlying type must be `git_tree`.
-///   - commit:The commit. The underlying type must be `git_commit`.
+///   - out: The pointer in which to store the tree. The underlying type must be `git_tree`.
+///   - commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -455,7 +453,7 @@ public func gitCommitParentCount(
 
 /// Gets the specified parent of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting parent commit. The underlying type must be
+///   - out: The pointer in which to store the parent commit. The underlying type must be
 ///   `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed position of the parent.
@@ -509,7 +507,7 @@ public func gitCommitParentID(
 /// Gets the commit that is the n<sup>th</sup> generation ancestor of the given commit, following only
 /// the first parents.
 /// - Parameters:
-///   - ancestor: The pointer in which to store the resulting ancestor commit. The underlying type
+///   - ancestor: The pointer in which to store the ancestor commit. The underlying type
 ///   must be `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed generation.
@@ -542,7 +540,7 @@ public func gitCommitNthGenAncestor(
 
 /// Gets the a header field from the given commit.
 /// - Parameters:
-///   - out: The buffer into which the header field should be written.
+///   - out: The ``GitBuf`` instance into which the header field should be written.
 ///   - commit: The commit in which to look. The underlying type must be `git_commit`.
 ///   - field: The header field to return.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -575,9 +573,9 @@ public func gitCommitHeaderField(
 
 /// Extracts the signature from a commit.
 /// - Parameters:
-///   - signature: The buffer into which the signature block should be written.
-///   - signedData: The buffer into which the signed data (the commit content less the signature
-///   block) should be written.
+///   - signature: The ``GitBuf`` instance into which the signature block should be written.
+///   - signedData: The ``GitBuf`` instance into which the signed data (the commit content less
+///   the signature block) should be written.
 ///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
 ///   - commitID: The commit from which to extract the data.
 ///   - field: The name of the header field containing the signature block. Pass `nil` to extract
@@ -642,7 +640,7 @@ public func gitCommitExtractSignature(
 ///   be `git_tree`.
 ///   - parentCount: The number of parents of the commit.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
-///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
+///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -831,7 +829,7 @@ public func gitCommitAmend(
 
 /// Creates a new commit in the given repository and writes it into a buffer.
 /// - Parameters:
-///   - out: The buffer into which the commit content should be written.
+///   - out: The ``GitBuf`` instance into which the commit content should be written.
 ///   - repo: The repository in which to store the commit. The underlying type must be
 ///   `git_repository`.
 ///   - author: The author of the commit.
@@ -842,7 +840,7 @@ public func gitCommitAmend(
 ///   be `git_tree`.
 ///   - parentCount: The number of parents of the commit.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
-///   objects, of length `parentCount`. All the given commits must be owned by `repo`.
+///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -945,8 +943,7 @@ public func gitCommitCreateWithSignature(
 
 /// Creates an in-memory copy of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting commit. The underlying type must be
-///   `git_commit`.
+///   - out: The pointer in which to store the commit. The underlying type must be `git_commit`.
 ///   - source: The original commit to copy. The underlying type must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

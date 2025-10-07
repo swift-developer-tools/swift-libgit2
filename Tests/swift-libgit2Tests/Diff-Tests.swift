@@ -391,9 +391,9 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffFindSimilar() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
             try repository.createCommit(
                 path:       "original.txt",
@@ -420,43 +420,32 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            var indexPointer    : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
-            var diffPointer     : OpaquePointer?    = nil
+            var treePointer : OpaquePointer?    = nil
+            var diffPointer : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
                 Free.freeDiff(diffPointer)
             }
             
             
             
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
+            let indexRemoveByPathResult: GitErrorCode = gitIndexRemoveByPath(
+                index:  indexPointer,
+                path:   "original.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+            XCTAssertOK(indexRemoveByPathResult)
             
             
             
-            let indexRemoveByPathResult: Int32 = git_index_remove_bypath(
-                indexPointer,
-                "original.txt"
+            let indexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   "renamed.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexRemoveByPathResult))
-            
-            
-            
-            let indexAddByPathResult: Int32 = git_index_add_bypath(
-                indexPointer,
-                "renamed.txt"
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: indexAddByPathResult))
+            XCTAssertOK(indexAddByPathResult)
             
             
             
@@ -807,35 +796,17 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffIndexToIndex() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, oldIndexPointer in
             
-            var oldIndexPointer : OpaquePointer?    = nil
             var newIndexPointer : OpaquePointer?    = nil
             var diffPointer     : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeIndex(oldIndexPointer)
                 Free.freeIndex(newIndexPointer)
                 Free.freeDiff(diffPointer)
-            }
-            
-            
-            
-            let oldRepositoryIndexResult: Int32 = git_repository_index(
-                &oldIndexPointer,
-                repository.pointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: oldRepositoryIndexResult))
-            
-            guard let oldIndexPointer: OpaquePointer = oldIndexPointer
-            else
-            {
-                XCTFail("The old index pointer was nil.")
-                return
             }
             
             
@@ -847,18 +818,18 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let oldIndexAddByPathResult: Int32 = git_index_add_bypath(
-                oldIndexPointer,
-                "index-test.txt"
+            let oldIndexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  oldIndexPointer,
+                path:   "index-test.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: oldIndexAddByPathResult))
+            XCTAssertOK(oldIndexAddByPathResult)
             
             
             
-            let indexWriteResult: Int32 = git_index_write(oldIndexPointer)
+            let indexWriteResult: GitErrorCode = gitIndexWrite(index: oldIndexPointer)
             
-            XCTAssertOK(GitErrorCode(rawValue: indexWriteResult))
+            XCTAssertOK(indexWriteResult)
             
             
             
@@ -885,12 +856,12 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let newIndexAddByPathResult: Int32 = git_index_add_bypath(
-                newIndexPointer,
-                "another-file.txt"
+            let newIndexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  newIndexPointer,
+                path:   "another-file.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: newIndexAddByPathResult))
+            XCTAssertOK(newIndexAddByPathResult)
             
             
             
@@ -1358,9 +1329,9 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffTreeToIndex() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
             try repository.modifyFile(
                 path:       "staged.txt",
@@ -1369,35 +1340,23 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            var indexPointer    : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
-            var diffPointer     : OpaquePointer?    = nil
+            var treePointer : OpaquePointer?    = nil
+            var diffPointer : OpaquePointer?    = nil
             
             defer
             {
-                Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
                 Free.freeDiff(diffPointer)
             }
             
             
             
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
+            let indexAddByPathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   "staged.txt"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
-            XCTAssertNotNil(indexPointer)
-            
-            
-            
-            let indexAddByPathResult: Int32 = git_index_add_bypath(
-                indexPointer,
-                "staged.txt"
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: indexAddByPathResult))
+            XCTAssertOK(indexAddByPathResult)
             
             
             

@@ -41,12 +41,10 @@ public func gitCherrypickOptionsInit(
 
 
 
-// TODO: Replace `git_index_free()` in documentation.
 /// Cherry-picks the given commit against the given "our" commit, and produces an index that reflects
 /// the result of the cherry-pick operation.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting index. The underlying type must be
-///   `git_index`.
+///   - out: The pointer in which to store the index. The underlying type must be `git_index`.
 ///   - repo: The repository containing the given commits. The underlying type must be
 ///   `git_repository`.
 ///   - cherrypickCommit: The commit to cherry-pick.
@@ -54,10 +52,6 @@ public func gitCherrypickOptionsInit(
 ///   - mainline: The parent of the commit to cherry-pick, if it is a merge.
 ///   - mergeOptions: The options to use for the merge operation.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: The returned index must be freed with `git_index_free()`.
 ///
 /// ## C Equivalent
 ///

@@ -13,7 +13,7 @@ import CLibgit2
 
 /// Creates a new signature.
 /// - Parameters:
-///   - out: The new signature.
+///   - out: The ``GitSignature`` instance in which to store the new signature.
 ///   - name: The name of the actor.
 ///   - email: The email of the actor.
 ///   - time: The UNIX timestamp in seconds.
@@ -52,7 +52,7 @@ public func gitSignatureNew(
 
 /// Creates a new signature with a timestamp representing the current time.
 /// - Parameters:
-///   - out: The new signature.
+///   - out: The ``GitSignature`` instance in which to store the new signature.
 ///   - name: The name of the actor.
 ///   - email: The email of the actor.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -86,8 +86,9 @@ public func gitSignatureNow(
 /// Creates new author and/or committer signatures with default information based on the configuration
 /// and environment variables.
 /// - Parameters:
-///   - authorOut: The new author signature.
-///   - committerOut: The new committer signature.
+///   - authorOut: The ``GitSignature`` instance in which to store the new author signature.
+///   - committerOut: The ``GitSignature`` instance in which to store the new committer
+///   signature.
 ///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -211,7 +212,7 @@ public func gitSignatureDefaultFromEnv(
 
 /// Creates a new signature with the default user and a timestamp representing the current time.
 /// - Parameters:
-///   - out: The new signature.
+///   - out: The ``GitSignature`` instance in which to store the new signature.
 ///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -253,7 +254,7 @@ public func gitSignatureDefault(
 
 /// Creates a new signature by parsing the given buffer.
 /// - Parameters:
-///   - out: The new signature.
+///   - out: The ``GitSignature`` instance in which to store the new signature.
 ///   - buf: The signature string.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -289,7 +290,7 @@ public func gitSignatureFromBuffer(
 
 /// Creates a copy of an existing signature.
 /// - Parameters:
-///   - dest: The new signature.
+///   - dest: The ``GitSignature`` instance in which to store the new signature.
 ///   - sig: The signature to duplicate.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

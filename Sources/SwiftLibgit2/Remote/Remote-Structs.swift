@@ -327,7 +327,7 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_fetch_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_fetch_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

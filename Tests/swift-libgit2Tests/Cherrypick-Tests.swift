@@ -186,7 +186,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let indexEntryCountResult: Int = git_index_entrycount(indexPointer)
+            let indexEntryCountResult: Int = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertGreaterThan(indexEntryCountResult, 0)
         }

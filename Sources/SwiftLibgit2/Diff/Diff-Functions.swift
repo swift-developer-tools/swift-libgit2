@@ -89,7 +89,7 @@ public func gitDiffFree(
 
 /// Creates a diff with the difference between the given trees.
 /// - Parameters:
-///   - diff: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
+///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
 ///   - repo: The repository containing the given trees. The underlying type must be
 ///   `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
@@ -135,7 +135,7 @@ public func gitDiffTreeToTree(
 
 /// Creates a diff between the given tree and index.
 /// - Parameters:
-///   - diff: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
+///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
 ///   - repo: The repository containing the given tree and index. The underlying type must be
 ///   `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
@@ -184,7 +184,7 @@ public func gitDiffTreeToIndex(
 
 /// Creates a diff between the given index and the working directory.
 /// - Parameters:
-///   - diff: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
+///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
 ///   - repo: The repository containing the given index and the working directory. The underlying type
 ///   must be `git_repository`.
 ///   - index: The index to use in the diff operation. The underlying type must be `git_index`.
@@ -229,7 +229,7 @@ public func gitDiffIndexToWorkdir(
 
 /// Creates a diff between the given tree and the working directory.
 /// - Parameters:
-///   - diff: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
+///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
 ///   - repo: The repository containing the given tree. The underlying type must be
 ///   `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
@@ -279,9 +279,8 @@ public func gitDiffTreeToWorkdir(
 /// Creates a diff between the given tree and the working directory, using index data to account for staged
 /// deletes, tracked files, and other changes.
 /// - Parameters:
-///   - diff: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given tree. The underlying type must be
-///   `git_repository`.
+///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
+///   - repo: The repository containing the given tree. The underlying type must be `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
@@ -322,13 +321,11 @@ public func gitDiffTreeToWorkdirWithIndex(
 
 /// Creates a diff between the given indices.
 /// - Parameters:
-///   - diff: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
+///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
 ///   - repo: The repository containing the given indices. The underlying type must be
 ///   `git_repository`.
-///   - oldIndex: The old index to use in the diff operation. The underlying type must be
-///   `git_index`.
-///   - newIndex: The new index to use in the diff operation. The underlying type must be
-///   `git_index`.
+///   - oldIndex: The old index to use in the diff operation. The underlying type must be `git_index`.
+///   - newIndex: The new index to use in the diff operation. The underlying type must be `git_index`.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -619,7 +616,7 @@ public func gitDiffPrint(
 
 /// Writes the complete formatted text from the given diff into the given buffer.
 /// - Parameters:
-///   - out: The buffer into which the formatted text should be written.
+///   - out: The ``GitBuf`` instance into which the formatted text should be written.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The possible diff data output formats.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -892,7 +889,7 @@ public func gitDiffBuffers(
 
 /// Writes the given contents of a patch file into a diff.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting diff. The underlying type must be `git_diff`.
+///   - out: The pointer in which to store the diff. The underlying type must be `git_diff`.
 ///   - content: The contents of a patch file.
 ///   - contentLen: The length of `content`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -935,7 +932,7 @@ public func gitDiffFromBuffer(
 
 /// Accumulates diff statistics for all patches.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting diff statistics. The underlying type must be
+///   - out: The pointer in which to store the diff statistics. The underlying type must be
 ///   `git_diff_stats`.
 ///   - diff: The diff to evaluate. The underlying type must be `git_diff`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -1009,7 +1006,7 @@ public func gitDiffStatsDeletions(
 
 /// Writes the given diff statistics into the given buffer.
 /// - Parameters:
-///   - out: The buffer into which the given diff statistics should be written.
+///   - out: The ``GitBuf`` instance into which the given diff statistics should be written.
 ///   - stats: The diff statistics. The underlying type must be `git_diff_stats`.
 ///   - format: The diff stats formatting options.
 ///   - width: The target width for output.

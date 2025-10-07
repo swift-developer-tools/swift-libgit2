@@ -236,9 +236,9 @@ extension ApplyTests
         endContent      : String
     ) throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
             var oldTreePointer: OpaquePointer? = nil
             
@@ -272,41 +272,23 @@ extension ApplyTests
             
             
             
-            var indexPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                Free.freeIndex(indexPointer)
-            }
-            
-            
-            
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
+            let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   Repository.readmeFileName
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+            XCTAssertOK(indexAddBypathResult)
             
             
             
-            let indexAddBypathResult: Int32 = git_index_add_bypath(
-                indexPointer,
-                Repository.readmeFileName
+            var newTreeOID = GitOID()
+            
+            let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+                out:    &newTreeOID,
+                index:  indexPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: indexAddBypathResult))
-            
-            
-            
-            var newTreeOID = git_oid()
-            
-            let indexWriteTreeResult: Int32 = git_index_write_tree(
-                &newTreeOID,
-                indexPointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
+            XCTAssertOK(indexWriteTreeResult)
             
             
             
@@ -319,10 +301,13 @@ extension ApplyTests
             
             
             
+            // TODO: Replace once `git_tree_lookup()` has a binding.
+            var cNewTreeOID: git_oid = newTreeOID.cValue()
+            
             let treeLookupResult: Int32 = git_tree_lookup(
                 &newTreePointer,
                 repository.pointer,
-                &newTreeOID
+                &cNewTreeOID
             )
             
             XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))

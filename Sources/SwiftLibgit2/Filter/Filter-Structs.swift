@@ -44,7 +44,7 @@ public struct GitFilterOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized OID.
+    /// The default value is a zero-initialized ``GitOID`` instance.
     public var attrCommitID : GitOID            = GitOID()
     
     
@@ -73,7 +73,7 @@ public struct GitFilterOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a pointer to a `git_filter_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_filter_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

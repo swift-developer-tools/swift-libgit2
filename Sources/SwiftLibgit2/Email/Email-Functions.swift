@@ -13,8 +13,8 @@ import CLibgit2
 
 /// Creates a diff from the given commit in `mbox` format to send via email.
 /// - Parameters:
-///   - out: The buffer into which the email patch should be written
-///   - commit: The commit for which to create a patch. The underlying type must be `git_commit`. 
+///   - out: The ``GitBuf`` instance into which the email patch should be written.
+///   - commit: The commit for which to create a patch. The underlying type must be `git_commit`.
 ///   - opts: The options for formatting generated emails.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

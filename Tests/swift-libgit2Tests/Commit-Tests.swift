@@ -25,48 +25,39 @@ final class CommitTests: XCTestCaseStopOnFail
     
     func testGitCommitCreateBufferWithSignatureAndExtract() throws
     {
-        try Repository.withRepository
+        try Repository.withRepositoryAndIndexPointer
         {
-            repository in
+            repository, indexPointer in
             
-            var buffer          : GitBuf            = GitBuf()
-            var indexPointer    : OpaquePointer?    = nil
-            var treePointer     : OpaquePointer?    = nil
+            var buffer      : GitBuf            = GitBuf()
+            var treePointer : OpaquePointer?    = nil
             
             defer
             {
                 XCTAssertOK(gitBufDispose(buffer: &buffer))
-                Free.freeIndex(indexPointer)
                 Free.freeTree(treePointer)
             }
             
             
             
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
+            var treeOID = GitOID()
+            
+            let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+                out:    &treeOID,
+                index:  indexPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+            XCTAssertOK(indexWriteTreeResult)
             
             
             
-            // TODO: Replace once `git_index_write_tree()` and `git_tree_lookup()` have bindings.
-            var treeOID = git_oid()
-            
-            let indexWriteTreeResult: Int32 = git_index_write_tree(
-                &treeOID,
-                indexPointer
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
-            
-            
+            // TODO: Remove once `git_tree_lookup()` has a binding.
+            var cTreeOID: git_oid = treeOID.cValue()
             
             let treeLookupResult: Int32 = git_tree_lookup(
                 &treePointer,
                 repository.pointer,
-                &treeOID
+                &cTreeOID
             )
             
             XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))

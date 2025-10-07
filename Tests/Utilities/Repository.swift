@@ -111,20 +111,29 @@ struct Repository
         
         XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
         
+        guard let indexPointer: OpaquePointer = indexPointer
+        else
+        {
+            throw NSError.makeError(
+                code:       Int(GitErrorCode.gitEUser.rawValue),
+                message:    "The index pointer was nil."
+            )
+        }
         
         
-        let indexAddBypathResult: Int32 = git_index_add_bypath(
-            indexPointer,
-            path
+        
+        let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
+            index:  indexPointer,
+            path:   path
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: indexAddBypathResult))
+        XCTAssertOK(indexAddBypathResult)
         
         
         
-        let indexWriteResult: Int32 = git_index_write(indexPointer)
+        let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
         
-        XCTAssertOK(GitErrorCode(rawValue: indexWriteResult))
+        XCTAssertOK(indexWriteResult)
         
         
         
@@ -198,14 +207,14 @@ struct Repository
         
         
         
-        var treeOID = git_oid()
+        var treeOID = GitOID()
         
-        let indexWriteTreeResult: Int32 = git_index_write_tree(
-            &treeOID,
-            indexPointer
+        let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+            out:    &treeOID,
+            index:  indexPointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: indexWriteTreeResult))
+        XCTAssertOK(indexWriteTreeResult)
         
         
         
@@ -218,10 +227,13 @@ struct Repository
         
         
         
+        // TODO: Remove once `git_tree_lookup()` has a binding.
+        var cTreeOID: git_oid = treeOID.cValue()
+        
         let treeLookupResult: Int32 = git_tree_lookup(
             &treePointer,
             pointer,
-            &treeOID
+            &cTreeOID
         )
         
         XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
@@ -357,7 +369,7 @@ struct Repository
     /// Modifies the content of a file.
     /// - Parameters:
     ///   - path: The path to the file to modify. This will be appended to the repository's URL.
-    ///   - content: The new content of the file.
+    ///   - content: The new content of the file. This is ignored when creating a directory.
     ///   - append: Whether the new content should be appended to the existing content.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
     /// - Returns: The URL to which the content was written.
@@ -374,6 +386,20 @@ struct Repository
             path:           path,
             directoryHint:  directoryHint
         )
+        
+        
+        
+        if directoryHint == .isDirectory
+        {
+            try FileManager.default.createDirectory(
+                at:                             fileURL,
+                withIntermediateDirectories:    true
+            )
+            
+            return fileURL
+        }
+        
+        
         
         var writeContent: String = content
         
@@ -583,5 +609,53 @@ extension Repository
         
         
         return try body(repository)
+    }
+    
+    
+    
+    /// Calls the given closure with a `Repository` instance and a pointer to the repository's index.
+    /// - Parameter body: The closure to call.
+    /// - Throws: An error if the directory creation failed, or an `NSError` if the index pointer
+    /// could not be created.
+    static func withRepositoryAndIndexPointer(
+        _ body: (Repository, OpaquePointer) throws -> Void
+    ) throws
+    {
+        try withRepository
+        {
+            repository in
+            
+            var indexPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                Free.freeIndex(indexPointer)
+            }
+            
+            
+            
+            let repositoryIndexResult: Int32 = git_repository_index(
+                &indexPointer,
+                repository.pointer
+            )
+            
+            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+            
+            guard let indexPointer: OpaquePointer = indexPointer
+            else
+            {
+                throw NSError.makeError(
+                    code:       Int(GitErrorCode.gitEUser.rawValue),
+                    message:    "The index pointer was nil."
+                )
+            }
+            
+            
+            
+            return try body(
+                repository,
+                indexPointer
+            )
+        }
     }
 }

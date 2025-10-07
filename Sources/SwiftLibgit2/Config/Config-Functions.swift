@@ -32,7 +32,7 @@ public func gitConfigEntryFree(
 
 
 /// Locates the path to the global configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -64,7 +64,7 @@ public func gitConfigFindGlobal(
 
 
 /// Locates the path to the global XDG-compatible configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -96,7 +96,7 @@ public func gitConfigFindXDG(
 
 
 /// Locates the path to the system configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -125,7 +125,7 @@ public func gitConfigFindSystem(
 
 
 /// Locates the path to the ProgramData configuration file.
-/// - Parameter out: The buffer into which the path should be written.
+/// - Parameter out: The ``GitBuf`` instance into which the path should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -153,8 +153,8 @@ public func gitConfigFindProgramData(
 
 
 /// Opens the global, XDG, and system configuration files.
-/// - Parameter out: The pointer in which to store the resulting configuration object. The underlying
-/// type must be `git_config`.
+/// - Parameter out: The pointer in which to store the configuration. The underlying type must be
+/// `git_config`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -179,8 +179,8 @@ public func gitConfigOpenDefault(
 
 
 /// Allocates a new configuration object.
-/// - Parameter out: The pointer in which to store the resulting configuration object. The underlying
-/// type must be `git_config`.
+/// - Parameter out: The pointer in which to store the configuration. The underlying type must be
+/// `git_config`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -253,8 +253,7 @@ public func gitConfigAddFileOnDisk(
 
 /// Creates a new configuration object containing a single on-disk file.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting configuration object. The underlying type
-///   must be `git_config`.
+///   - out: The pointer in which to store the configuration. The underlying type must be `git_config`.
 ///   - path: The path to the on-disk file to open.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -285,8 +284,7 @@ public func gitConfigOpenOnDisk(
 
 /// Builds a single-level focused configuration object from a multi-level configuration object.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting configuration object. The underlying type
-///   must be `git_config`.
+///   - out: The pointer in which to store the configuration. The underlying type must be `git_config`.
 ///   - parent: The multi-level configuration object to search for the given level. The underlying type
 ///   must be `git_config`.
 ///   - level: The configuration level for which to search.
@@ -323,8 +321,7 @@ public func gitConfigOpenLevel(
 
 /// Opens the global/XDG configuration file according to Git's rules.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting configuration object. The underlying type
-///   must be `git_config`.
+///   - out: The pointer in which to store the configuration. The underlying type must be `git_config`.
 ///   - config: The configuration object to search.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -405,8 +402,7 @@ public func gitConfigSetWriteOrder(
 
 /// Creates a snapshot of the configuration.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting configuration object. The underlying type
-///   must be `git_config`.
+///   - out: The pointer in which to store the configuration. The underlying type must be `git_config`.
 ///   - config: The configuration object to snapshot.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -453,7 +449,7 @@ public func gitConfigFree(
 
 /// Gets the configuration entry of a configuration variable.
 /// - Parameters:
-///   - out: The configuration entry object to update.
+///   - out: The ``GitConfigEntry`` instance in which to store the configuration entry.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -591,7 +587,7 @@ public func gitConfigGetBool(
 
 /// Gets the value of a path configuration variable.
 /// - Parameters:
-///   - out: The buffer into which the path should be written.
+///   - out: The ``GitBuf`` instance into which the path should be written.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -674,7 +670,7 @@ public func gitConfigGetString(
 
 /// Gets the value of a string configuration variable.
 /// - Parameters:
-///   - out: The buffer into which the string should be written.
+///   - out: The ``GitBuf`` instance into which the string should be written.
 ///   - cfg: The configuration object to search. The underlying type must be `git_config`.
 ///   - name: The name of the configuration variable.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -785,10 +781,10 @@ public func gitConfigMultivarIteratorNew(
 
 
 
-/// Gets the current entry and advances the iterator.
+/// Gets the next configuration entry from the given configuration iterator.
 /// - Parameters:
-///   - entry: The configuration entry object to update.
-///   - iter: The iterator to use.
+///   - entry: The ``GitConfigEntry`` instance in which to store the configuration entry.
+///   - iter: The configuration iterator to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -821,7 +817,7 @@ public func gitConfigNext(
 
 
 /// Frees the memory allocated for the given `git_config_iterator`  instance.
-/// - Parameter iter: The iterator to free.
+/// - Parameter iter: The configuration iterator to free.
 ///
 /// ## C Equivalent
 ///
@@ -1410,7 +1406,7 @@ public func gitConfigParseInt64(
 
 /// Parses a string value as a path.
 /// - Parameters:
-///   - out: The buffer into which the path should be written.
+///   - out: The ``GitBuf`` instance into which the path should be written.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1487,7 +1483,7 @@ public func gitConfigBackendForEachMatch(
 // TODO: Replace `git_transaction_commit()` in documentation.
 /// Locks the configuration backend with the highest priority.
 /// - Parameters:
-///   - tx: The pointer in which to store the resulting transaction. The underlying value must be
+///   - tx: The pointer in which to store the transaction. The underlying value must be
 ///   `git_transaction`.
 ///   - cfg: The configuration object to lock. The underlying value must be `git_config`.
 /// - Returns: A ``GitErrorCode`` instance.

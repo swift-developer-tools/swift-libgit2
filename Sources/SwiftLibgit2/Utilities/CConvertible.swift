@@ -145,7 +145,7 @@ internal protocol WithCConvertible
     
     
     
-    /// Calls the given closure with a non-optional pointer to the equivalent C value.
+    /// Calls the given closure with a mutable pointer to the equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -159,7 +159,7 @@ internal protocol WithCConvertible
     
     
     
-    /// Calls the given closure with an optional pointer to the equivalent C value.
+    /// Calls the given closure with an optional mutable pointer to the equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -180,7 +180,7 @@ internal protocol WithCConvertible
 /// to ``WithCConvertible``.
 internal extension WithCConvertible
 {
-    /// Calls the given closure with an optional pointer to the equivalent C value.
+    /// Calls the given closure with an optional mutable pointer to the equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -203,7 +203,7 @@ internal extension WithCConvertible
 /// to ``WithCConvertible``.
 internal extension Optional where Wrapped: WithCConvertible
 {
-    /// Calls the given closure with an optional pointer to the equivalent C value.
+    /// Calls the given closure with an optional mutable pointer to the equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
