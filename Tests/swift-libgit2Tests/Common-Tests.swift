@@ -302,4 +302,11 @@ final class CommonTests: XCTestCaseStopOnFail
         XCTAssertGreaterThanOrEqual(minor, 0)
         XCTAssertGreaterThanOrEqual(revision, 0)
     }
+    
+    
+    
+    func testGitPathMax() throws
+    {
+        XCTAssertEqual(gitPathMax, GIT_PATH_MAX)
+    }
 }
