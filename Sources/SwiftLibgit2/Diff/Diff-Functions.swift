@@ -917,12 +917,12 @@ public func gitDiffFromBuffer(
     {
         return try content.withCBuffer
         {
-            contentBuffer, contentBufferCount in
+            cContent, cContentCount in
             
             return git_diff_from_buffer(
                 out,
-                contentBuffer,
-                contentBufferCount
+                cContent,
+                cContentCount
             )
         }
     }

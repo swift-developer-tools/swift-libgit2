@@ -115,12 +115,12 @@ final class BlobTests: XCTestCaseStopOnFail
             
             let writeResult: Int32 = try data.withCBuffer
             {
-                dataBuffer, dataBufferCount in
+                cData, cDataCount in
                 
                 return streamPointer.pointee.write(
                     streamPointer,
-                    dataBuffer,
-                    dataBufferCount
+                    cData,
+                    cDataCount
                 )
             }
             
@@ -467,13 +467,13 @@ final class BlobTests: XCTestCaseStopOnFail
             
             let blobCreateFromBufferResult: GitErrorCode = try data.withCBuffer
             {
-                dataBuffer, dataBufferCount in
+                cData, cDataCount in
                 
                 return gitBlobCreateFromBuffer(
                     id:         &blobOID,
                     repo:       repository.pointer,
-                    buffer:     dataBuffer,
-                    len:        dataBufferCount
+                    buffer:     cData,
+                    len:        cDataCount
                 )
             }
             

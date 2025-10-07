@@ -479,11 +479,11 @@ public func gitBlobDataIsBinary(
     
     return try? data.withCBuffer
     {
-        dataBuffer, dataBufferCount in
+        cData, cDataCount in
         
         return Bool(git_blob_data_is_binary(
-            dataBuffer,
-            dataBufferCount,
+            cData,
+            cDataCount,
         ))
     }
 }

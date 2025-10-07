@@ -511,10 +511,10 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
         
         return try data.withCBuffer
         {
-            dataBuffer, dataBufferCount in
+            cData, cDataCount in
             
-            diffBinaryFile.data         = dataBuffer
-            diffBinaryFile.datalen      = dataBufferCount
+            diffBinaryFile.data         = cData
+            diffBinaryFile.datalen      = cDataCount
             diffBinaryFile.inflatedlen  = inflatedLen
             
             return try body(&diffBinaryFile)
@@ -777,10 +777,10 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
         
         return try content.withCBuffer
         {
-            contentBuffer, contentBufferCount in
+            cContent, cContentCount in
             
-            diffLine.content_len    = contentBufferCount
-            diffLine.content        = contentBuffer
+            diffLine.content_len    = cContentCount
+            diffLine.content        = cContent
             
             return try body(&diffLine)
         }

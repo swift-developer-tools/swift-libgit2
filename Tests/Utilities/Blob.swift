@@ -87,13 +87,13 @@ enum Blob
                 
                 let withCBufferResult: GitErrorCode? = try? data.withCBuffer
                 {
-                    dataBuffer, dataBufferCount in
+                    cData, cDataCount in
                     
                     return gitBlobCreateFromBuffer(
                         id:         &blobOID,
                         repo:       repository.pointer,
-                        buffer:     dataBuffer,
-                        len:        dataBufferCount
+                        buffer:     cData,
+                        len:        cDataCount
                     )
                 }
                 

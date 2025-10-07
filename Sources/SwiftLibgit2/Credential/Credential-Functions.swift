@@ -317,13 +317,13 @@ public func gitCredentialSSHCustomNew(
         
         return try publicKey.withCBuffer
         {
-            publicKeyBuffer, publicKeyBufferCount in
+            cPublicKey, cPublicKeyCount in
             
             return git_credential_ssh_custom_new(
                 out,
                 username,
-                publicKeyBuffer,
-                publicKeyBufferCount,
+                cPublicKey,
+                cPublicKeyCount,
                 signCallback,
                 payload
             )

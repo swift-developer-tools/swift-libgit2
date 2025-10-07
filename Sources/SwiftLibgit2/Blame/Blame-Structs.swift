@@ -365,10 +365,10 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
         
         return try ptr.withCBuffer
         {
-            ptrBuffer, ptrBufferCount in
+            cPtr, cPtrCount in
             
-            blameLine.ptr   = ptrBuffer
-            blameLine.len   = ptrBufferCount
+            blameLine.ptr   = cPtr
+            blameLine.len   = cPtrCount
             
             return try body(&blameLine)
         }
