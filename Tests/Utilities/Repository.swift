@@ -366,40 +366,49 @@ struct Repository
     
     
     
+    /// Creates a directory at the given path in the repository.
+    /// - Parameter path: The path to the directory to create. This will be appended to the
+    /// repository's URL.
+    /// - Returns: The URL of the created directory.
+    /// - Throws: An error if the directory creation operation failed.
+    @discardableResult
+    func createDirectory(
+        named path: String
+    ) throws -> URL
+    {
+        let fileURL: URL = url.appending(
+            path:           path,
+            directoryHint:  .isDirectory
+        )
+        
+        try FileManager.default.createDirectory(
+            at:                             fileURL,
+            withIntermediateDirectories:    true
+        )
+        
+        return fileURL
+    }
+    
+    
+    
     /// Modifies the content of a file.
     /// - Parameters:
     ///   - path: The path to the file to modify. This will be appended to the repository's URL.
     ///   - content: The new content of the file. This is ignored when creating a directory.
     ///   - append: Whether the new content should be appended to the existing content.
-    ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
     /// - Returns: The URL to which the content was written.
     /// - Throws: An error if the file read or write operations failed.
     @discardableResult
     func modifyFile(
-        path            : String,
-        content         : String,
-        append          : Bool                  = false,
-        directoryHint   : URL.DirectoryHint     = .notDirectory
+        path    : String,
+        content : String,
+        append  : Bool      = false
     ) throws -> URL
     {
         let fileURL: URL = url.appending(
             path:           path,
-            directoryHint:  directoryHint
+            directoryHint:  .notDirectory
         )
-        
-        
-        
-        if directoryHint == .isDirectory
-        {
-            try FileManager.default.createDirectory(
-                at:                             fileURL,
-                withIntermediateDirectories:    true
-            )
-            
-            return fileURL
-        }
-        
-        
         
         var writeContent: String = content
         

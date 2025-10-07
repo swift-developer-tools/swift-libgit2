@@ -246,6 +246,20 @@ enum Free
     
     
     
+    /// Frees the memory allocated for the given `git_indexer` instance.
+    /// - Parameter indexer: The indexer to free. The underlying type must be  `git_indexer`.
+    static func freeIndexer(
+        _ indexer: OpaquePointer?
+    )
+    {
+        if indexer != nil
+        {
+            gitIndexerFree(idx: indexer)
+        }
+    }
+    
+    
+    
     /// Frees the memory allocated for the given `git_index_iterator` instance.
     /// - Parameter iterator: The index iterator to free. The underlying type must be
     /// `git_index_iterator`.
@@ -256,6 +270,35 @@ enum Free
         if iterator != nil
         {
             gitIndexIteratorFree(iterator: iterator)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for the given `git_odb` instance.
+    /// - Parameter odb: The object database to free. The underlying type must be  `git_odb`.
+    static func freeODB(
+        _ odb: OpaquePointer?
+    )
+    {
+        if odb != nil
+        {
+            git_odb_free(odb)
+        }
+    }
+    
+    
+    
+    /// Frees the memory allocated for the given `git_packbuilder` instance.
+    /// - Parameter packBuilder: The pack builder to free. The underlying type must be
+    /// `git_packbuilder`.
+    static func freePackBuilder(
+        _ packBuilder: OpaquePointer?
+    )
+    {
+        if packBuilder != nil
+        {
+            git_packbuilder_free(packBuilder)
         }
     }
     
@@ -272,6 +315,7 @@ enum Free
             git_rebase_free(rebase)
         }
     }
+    
     
     
     /// Frees the memory allocated for the given `git_reference` instance.

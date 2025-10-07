@@ -57,6 +57,11 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     
     /// Creates a ``GitDiffFile`` instance from a `git_diff_file` instance.
     /// - Parameter diffFile: The `git_diff_file` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// ``mode`` defaults to ``GitFileModeT/gitFileModeUnreadable`` if an unexpected
+    /// value is encountered, although this should never occur.
     internal init(
         cValue diffFile: git_diff_file
     )
@@ -64,20 +69,9 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
         self.id         = GitOID(cValue: diffFile.id)
         self.path       = String(optionalCString: diffFile.path)
         self.size       = diffFile.size
+        self.mode       = GitFileModeT(rawValue: diffFile.mode) ?? .gitFileModeUnreadable
         self.flags      = GitDiffFlagT(rawValue: diffFile.flags)
         self.idAbbrev   = diffFile.id_abbrev
-        
-        // TODO: If this becomes a common pattern, `GitFileModeT` should handle it.
-        switch diffFile.mode
-        {
-            case GitFileModeT.gitFileModeUnreadable.rawValue        : self.mode = .gitFileModeUnreadable
-            case GitFileModeT.gitFileModeTree.rawValue              : self.mode = .gitFileModeTree
-            case GitFileModeT.gitFileModeBlob.rawValue              : self.mode = .gitFileModeBlob
-            case GitFileModeT.gitFileModeBlobExecutable.rawValue    : self.mode = .gitFileModeBlobExecutable
-            case GitFileModeT.gitFileModeLink.rawValue              : self.mode = .gitFileModeLink
-            case GitFileModeT.gitFileModeCommit.rawValue            : self.mode = .gitFileModeCommit
-            default                                                 : self.mode = .gitFileModeUnreadable
-        }
     }
     
     
@@ -503,9 +497,6 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
         
         diffBinaryFile.type = type.cValue()
         
-        /// Check that `data` is not empty before converting it to a buffer, which would
-        /// throw an error since `baseAddress` will be `nil` for empty data. In this case,
-        /// empty data may be valid.
         guard
             let data: Data = data,
             !data.isEmpty
