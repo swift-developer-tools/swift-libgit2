@@ -172,9 +172,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 with:   content
             )
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
             
             
@@ -194,9 +194,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    Repository.readmeFileContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     Repository.readmeFileContent
             )
             
             try repository.modifyFile(
@@ -217,9 +217,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
         }
     }
@@ -240,9 +240,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 with:   content
             )
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
             
             
@@ -263,9 +263,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    Repository.readmeFileContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     Repository.readmeFileContent
             )
             
             try repository.modifyFile(
@@ -288,9 +288,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
         }
     }
@@ -519,9 +519,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 with:   content
             )
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
             
             
@@ -542,9 +542,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    Repository.readmeFileContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     Repository.readmeFileContent
             )
             
             try repository.modifyFile(
@@ -567,9 +567,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
         }
     }

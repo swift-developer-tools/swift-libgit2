@@ -430,9 +430,9 @@ extension ApplyTests
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    endContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     endContent
             )
             
             

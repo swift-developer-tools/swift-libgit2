@@ -470,17 +470,17 @@ struct Repository
     
     
     
-    /// Verifies the content of a file.
+    /// Asserts that the contents of the specified file are equal to the given value.
     /// - Parameters:
     ///   - path: The path to the file whose content should be verified. This will be appended to the
     ///   repository's URL.
     ///   - content: The expected content of the file.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
     /// - Throws: An error if the file read operation failed.
-    func verifyFileContent(
-        path            : String,
-        content         : String,
-        directoryHint   : URL.DirectoryHint     = .notDirectory
+    func assertFileContent(
+        at              path    : String,
+        equals          content : String,
+        directoryHint           : URL.DirectoryHint     = .notDirectory
     ) throws
     {
         let fileURL: URL = url.appending(
