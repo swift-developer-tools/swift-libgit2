@@ -32,14 +32,14 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                path:       ".gitattributes",
-                content:    "*.macro testmacro\n",
-                append:     true
+                at:         ".gitattributes",
+                with:       "*.macro testmacro\n",
+                appending:  true
             )
             
             try repository.modifyFile(
-                path:       "test.macro",
-                content:    "Macro test file"
+                at:     "test.macro",
+                with:   "Macro test file"
             )
             
             

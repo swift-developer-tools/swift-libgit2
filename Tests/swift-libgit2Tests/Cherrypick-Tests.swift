@@ -61,19 +61,16 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       "feature.txt",
-                content:    CherrypickTests.featureBranchContent
+            try repository.assertFileContent(
+                at:         "feature.txt",
+                equals:     CherrypickTests.featureBranchContent
             )
             
             
             
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
-            repository.resetToCommit(
-                commitOID:  headOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: headOID)
             
             
             
@@ -100,9 +97,9 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       "feature.txt",
-                content:    CherrypickTests.featureBranchContent
+            try repository.assertFileContent(
+                at:         "feature.txt",
+                equals:     CherrypickTests.featureBranchContent
             )
         }
     }
@@ -235,9 +232,9 @@ extension CherrypickTests
         in repository: Repository
     ) throws -> (GitOID, GitOID)
     {
-        let mainCommitOID: GitOID = try repository.createCommit(
-            path:       "feature.txt",
-            content:    CherrypickTests.mainBranchContent,
+        let mainCommitOID: GitOID = try repository.commit(
+            CherrypickTests.mainBranchContent,
+            toFile:     "feature.txt",
             message:    "Add feature on main branch"
         )
         
@@ -272,9 +269,9 @@ extension CherrypickTests
         
         
         
-        let featureCommitOID: GitOID = try repository.createCommit(
-            path:       "feature.txt",
-            content:    CherrypickTests.featureBranchContent,
+        let featureCommitOID: GitOID = try repository.commit(
+            CherrypickTests.featureBranchContent,
+            toFile:     "feature.txt",
             message:    "Add feature branch changes"
         )
         

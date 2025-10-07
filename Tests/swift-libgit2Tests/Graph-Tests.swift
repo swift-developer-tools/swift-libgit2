@@ -21,36 +21,33 @@ final class GraphTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let baseCommitOID: GitOID = try repository.createCommit(
-                path:       "base.txt",
-                content:    "Base content",
+            let baseCommitOID: GitOID = try repository.commit(
+                "Base content",
+                toFile:     "base.txt",
                 message:    "Base commit"
             )
             
-            let firstCommitOID: GitOID = try repository.createCommit(
-                path:       "branch1.txt",
-                content:    "Branch1 content",
+            let firstCommitOID: GitOID = try repository.commit(
+                "Branch1 content",
+                toFile:     "branch1.txt",
                 message:    "Branch1 commit"
             )
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             
             
-            let secondCommitOID: GitOID = try repository.createCommit(
-                path:       "branch2.txt",
-                content:    "Branch2 content",
+            let secondCommitOID: GitOID = try repository.commit(
+                "Branch2 content",
+                toFile:     "branch2.txt",
                 message:    "Branch2 commit"
             )
             
-            try repository.createCommit(
-                path:       "branch2-second.txt",
-                content:    "Branch2 second content",
+            try repository.commit(
+                "Branch2 second content",
+                toFile:     "branch2-second.txt",
                 message:    "Branch2 second commit"
             )
             
@@ -81,21 +78,21 @@ final class GraphTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let firstCommitOID: GitOID = try repository.createCommit(
-                path:       "first.txt",
-                content:    "First content",
+            let firstCommitOID: GitOID = try repository.commit(
+                "First content",
+                toFile:     "first.txt",
                 message:    "First commit"
             )
             
-            let secondCommitOID: GitOID = try repository.createCommit(
-                path:       "second.txt",
-                content:    "Second content",
+            let secondCommitOID: GitOID = try repository.commit(
+                "Second content",
+                toFile:     "second.txt",
                 message:    "Second commit"
             )
             
-            let thirdCommitOID: GitOID = try repository.createCommit(
-                path:       "third.txt",
-                content:    "Third content",
+            let thirdCommitOID: GitOID = try repository.commit(
+                "Third content",
+                toFile:     "third.txt",
                 message:    "Third commit"
             )
             
@@ -177,45 +174,39 @@ final class GraphTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let baseCommitOID: GitOID = try repository.createCommit(
-                path:       "base.txt",
-                content:    "Base content",
+            let baseCommitOID: GitOID = try repository.commit(
+                "Base content",
+                toFile:     "base.txt",
                 message:    "Base commit"
             )
             
-            let firstCommitOID: GitOID = try repository.createCommit(
-                path:       "branch1.txt",
-                content:    "Branch1 content",
+            let firstCommitOID: GitOID = try repository.commit(
+                "Branch1 content",
+                toFile:     "branch1.txt",
                 message:    "Branch1 commit"
             )
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             
             
-            let secondCommitOID: GitOID = try repository.createCommit(
-                path:       "branch2.txt",
-                content:    "Branch2 content",
+            let secondCommitOID: GitOID = try repository.commit(
+                "Branch2 content",
+                toFile:     "branch2.txt",
                 message:    "Branch2 commit"
             )
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
             
             
-            let thirdCommitOID: GitOID = try repository.createCommit(
-                path:       "branch3.txt",
-                content:    "Branch3 content",
+            let thirdCommitOID: GitOID = try repository.commit(
+                "Branch3 content",
+                toFile:     "branch3.txt",
                 message:    "Branch3 commit"
             )
             

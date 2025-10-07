@@ -395,9 +395,9 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            try repository.createCommit(
-                path:       "original.txt",
-                content:    "Original content",
+            try repository.commit(
+                "Original content",
+                toFile:     "original.txt",
                 message:    "Add original file"
             )
             
@@ -812,8 +812,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                path:       "index-test.txt",
-                content:    "Index test content"
+                at:     "index-test.txt",
+                with:   "Index test content"
             )
             
             
@@ -850,8 +850,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                path:       "another-file.txt",
-                content:    "Another file content"
+                at:     "another-file.txt",
+                with:   "Another file content"
             )
             
             
@@ -887,8 +887,8 @@ final class DiffTests: XCTestCaseStopOnFail
             repository in
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    "Modified content"
+                at:     Repository.readmeFileName,
+                with:   "Modified content"
             )
             
             
@@ -977,26 +977,23 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let firstCommitOID: GitOID = try repository.createCommit(
-                path:       "first.txt",
-                content:    "First content",
+            let firstCommitOID: GitOID = try repository.commit(
+                "First content",
+                toFile:     "first.txt",
                 message:    "First commit"
             )
             
-            repository.resetToCommit(
-                commitOID:  firstCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: firstCommitOID)
             
-            let secondCommitOID: GitOID = try repository.createCommit(
-                path:       "second.txt",
-                content:    "Second content",
+            let secondCommitOID: GitOID = try repository.commit(
+                "Second content",
+                toFile:     "second.txt",
                 message:    "Second commit"
             )
             
-            let thirdCommitOID: GitOID = try repository.createCommit(
-                path:       "third.txt",
-                content:    "Third content",
+            let thirdCommitOID: GitOID = try repository.commit(
+                "Third content",
+                toFile:     "third.txt",
                 message:    "Third commit"
             )
             
@@ -1334,8 +1331,8 @@ final class DiffTests: XCTestCaseStopOnFail
             repository, indexPointer in
             
             try repository.modifyFile(
-                path:       "staged.txt",
-                content:    "Staged content"
+                at:     "staged.txt",
+                with:   "Staged content"
             )
             
             
@@ -1396,15 +1393,15 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let oldCommitOID: GitOID = try repository.createCommit(
-                path:       "old.txt",
-                content:    "Old content",
+            let oldCommitOID: GitOID = try repository.commit(
+                "Old content",
+                toFile:     "old.txt",
                 message:    "Old commit"
             )
             
-            let newCommitOID: GitOID = try repository.createCommit(
-                path:       "new.txt",
-                content:    "New content",
+            let newCommitOID: GitOID = try repository.commit(
+                "New content",
+                toFile:     "new.txt",
                 message:    "New commit"
             )
             
@@ -1437,8 +1434,8 @@ final class DiffTests: XCTestCaseStopOnFail
             repository in
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    "Modified content"
+                at:     Repository.readmeFileName,
+                with:   "Modified content"
             )
             
             

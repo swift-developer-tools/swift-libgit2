@@ -82,13 +82,13 @@ final class IndexTests: XCTestCaseStopOnFail
             let filename2   : String    = "test2.txt"
             
             try repository.modifyFile(
-                path:       filename1,
-                content:    "Test 1"
+                at:     filename1,
+                with:   "Test 1"
             )
             
             try repository.modifyFile(
-                path:       filename2,
-                content:    "Test 2"
+                at:     filename2,
+                with:   "Test 2"
             )
             
             
@@ -278,13 +278,13 @@ final class IndexTests: XCTestCaseStopOnFail
             repository, indexPointer in
             
             try repository.modifyFile(
-                path:       "included.txt",
-                content:    "Included content"
+                at:     "included.txt",
+                with:   "Included content"
             )
             
             try repository.modifyFile(
-                path:       "skipped.txt",
-                content:    "Skipped content"
+                at:     "skipped.txt",
+                with:   "Skipped content"
             )
             
             
@@ -398,8 +398,8 @@ final class IndexTests: XCTestCaseStopOnFail
             let fileToRemoveFilename: String = "remove-me.txt"
             
             try repository.modifyFile(
-                path:       fileToRemoveFilename,
-                content:    "Goodbye World!"
+                at:     fileToRemoveFilename,
+                with:   "Goodbye World!"
             )
             
             
@@ -622,8 +622,8 @@ final class IndexTests: XCTestCaseStopOnFail
             for conflictPath in conflictPaths
             {
                 try repository.modifyFile(
-                    path:       conflictPath,
-                    content:    "Conflict content"
+                    at:     conflictPath,
+                    with:   "Conflict content"
                 )
                 
                 
@@ -1020,13 +1020,13 @@ final class IndexTests: XCTestCaseStopOnFail
             let filename2   : String    = "\(prefix)file2.txt"
             
             try repository.modifyFile(
-                path:       filename1,
-                content:    "File 1"
+                at:     filename1,
+                with:   "File 1"
             )
             
             try repository.modifyFile(
-                path:       filename2,
-                content:    "File 2"
+                at:     filename2,
+                with:   "File 2"
             )
             
             
@@ -1496,16 +1496,16 @@ final class IndexTests: XCTestCaseStopOnFail
             let file1Path       : String    = "\(directoryPath)/file1.txt"
             let file2Path       : String    = "\(directoryPath)/file2.txt"
             
-            try repository.createDirectory(named: "subdirectory")
+            try repository.createDirectory(at: "subdirectory")
             
             try repository.modifyFile(
-                path:       file1Path,
-                content:    "File 1"
+                at:     file1Path,
+                with:   "File 1"
             )
             
             try repository.modifyFile(
-                path:       file2Path,
-                content:    "File 2"
+                at:     file2Path,
+                with:   "File 2"
             )
             
             
@@ -1594,8 +1594,8 @@ final class IndexTests: XCTestCaseStopOnFail
             let filename: String = "update.txt"
             
             try repository.modifyFile(
-                path:       filename,
-                content:    "Original content"
+                at:     filename,
+                with:   "Original content"
             )
             
             
@@ -1631,8 +1631,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                path:       filename,
-                content:    "Updated content"
+                at:     filename,
+                with:   "Updated content"
             )
             
             

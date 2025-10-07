@@ -266,8 +266,8 @@ extension ApplyTests
             let modifiedContent: String = "\(Repository.readmeFileContent) Goodbye World!"
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    modifiedContent
+                at:     Repository.readmeFileName,
+                with:   modifiedContent
             )
             
             
@@ -430,9 +430,9 @@ extension ApplyTests
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    endContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     endContent
             )
             
             

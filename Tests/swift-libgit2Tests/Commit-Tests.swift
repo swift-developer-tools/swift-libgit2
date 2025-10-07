@@ -181,28 +181,25 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let baseCommitOID: GitOID = try repository.createCommit(
-                path:       "base.txt",
-                content:    "Base content",
+            let baseCommitOID: GitOID = try repository.commit(
+                "Base content",
+                toFile:     "base.txt",
                 message:    "Base commit"
             )
             
-            let branchCommitOID: GitOID = try repository.createCommit(
-                path:       "branch.txt",
-                content:    "Branch content",
+            let branchCommitOID: GitOID = try repository.commit(
+                "Branch content",
+                toFile:     "branch.txt",
                 message:    "Branch commit"
             )
             
             
             
-            repository.resetToCommit(
-                commitOID:  baseCommitOID,
-                resetType:  GIT_RESET_HARD
-            )
+            repository.reset(to: baseCommitOID)
             
-            try repository.createCommit(
-                path:       "other.txt",
-                content:    "Other content",
+            try repository.commit(
+                "Other content",
+                toFile:     "other.txt",
                 message:    "Other commit"
             )
             
@@ -392,12 +389,9 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try repository.createCommit(
-                path:       "hello-world.txt",
-                content:    "Hello World!",
+            try repository.commitStaged(
                 message:    "Add Hello World",
-                options:    commitCreateOptions,
-                fromStage:  true
+                options:    commitCreateOptions
             )
         }
     }
@@ -482,9 +476,9 @@ final class CommitTests: XCTestCaseStopOnFail
             let body    : String    = "Need to add Goodbye World."
             let message : String    = "\(summary)\n\n\(body)"
             
-            let commitOID: GitOID = try repository.createCommit(
-                path:       "hello-world.txt",
-                content:    "Hello World!",
+            let commitOID: GitOID = try repository.commit(
+                "Hello World!",
+                toFile:     "hello-world.txt",
                 message:    message
             )
             
@@ -651,15 +645,15 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try repository.createCommit(
-                path:       "file1.txt",
-                content:    "Content 1",
+            try repository.commit(
+                "Content 1",
+                toFile:     "file1.txt",
                 message:    "Add file1"
             )
             
-            try repository.createCommit(
-                path:       "file2.txt",
-                content:    "Content 2",
+            try repository.commit(
+                "Content 2",
+                toFile:     "file2.txt",
                 message:    "Add file2"
             )
             
@@ -698,9 +692,9 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let commitOID: GitOID = try repository.createCommit(
-                path:       "test.txt",
-                content:    "Test content",
+            let commitOID: GitOID = try repository.commit(
+                "Test content",
+                toFile:     "test.txt",
                 message:    "Second commit"
             )
             

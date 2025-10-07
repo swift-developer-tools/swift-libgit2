@@ -22,14 +22,14 @@ final class DescribeTests: XCTestCaseStopOnFail
             repository in
             
             try Tag.createAnnotatedTag(
+                named:      "v1.0.0",
                 in:         repository,
-                tagName:    "v1.0.0",
                 message:    "Hello World!"
             )
             
-            try repository.createCommit(
-                path:       "feature.txt",
-                content:    "New feature",
+            try repository.commit(
+                "New feature",
+                toFile:     "feature.txt",
                 message:    "Add feature"
             )
             
@@ -89,14 +89,14 @@ final class DescribeTests: XCTestCaseStopOnFail
             repository in
             
             try Tag.createAnnotatedTag(
+                named:      "v1.0.0",
                 in:         repository,
-                tagName:    "v1.0.0",
                 message:    "Hello World!"
             )
             
-            try repository.createCommit(
-                path:       "feature.txt",
-                content:    "New feature",
+            try repository.commit(
+                "New feature",
+                toFile:     "feature.txt",
                 message:    "Add feature"
             )
             
@@ -243,14 +243,14 @@ final class DescribeTests: XCTestCaseStopOnFail
             repository in
             
             try Tag.createAnnotatedTag(
+                named:      "v1.0.0",
                 in:         repository,
-                tagName:    "v1.0.0",
                 message:    "Hello World!"
             )
             
             try repository.modifyFile(
-                path:       "dirty.txt",
-                content:    "Uncommitted changes"
+                at:     "dirty.txt",
+                with:   "Uncommitted changes"
             )
             
             
@@ -284,14 +284,14 @@ final class DescribeTests: XCTestCaseStopOnFail
             repository in
             
             try Tag.createAnnotatedTag(
+                named:      "v1.0.0",
                 in:         repository,
-                tagName:    "v1.0.0",
                 message:    "Hello World!"
             )
             
             try repository.modifyFile(
-                path:       "dirty.txt",
-                content:    "Uncommitted changes"
+                at:     "dirty.txt",
+                with:   "Uncommitted changes"
             )
             
             

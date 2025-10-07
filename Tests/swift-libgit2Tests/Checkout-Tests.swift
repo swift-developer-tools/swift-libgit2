@@ -22,18 +22,18 @@ final class CheckoutTests: XCTestCaseStopOnFail
             repository in
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    "Modified content 1"
+                at:     Repository.readmeFileName,
+                with:   "Modified content 1"
             )
             
             try repository.modifyFile(
-                path:       "file2.txt",
-                content:    "New file content 2"
+                at:     "file2.txt",
+                with:   "New file content 2"
             )
             
             try repository.modifyFile(
-                path:       "file3.txt",
-                content:    "New file content 3"
+                at:     "file3.txt",
+                with:   "New file content 3"
             )
             
             
@@ -168,13 +168,13 @@ final class CheckoutTests: XCTestCaseStopOnFail
             let content: String = "Modified content for HEAD checkout."
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    content
+                at:     Repository.readmeFileName,
+                with:   content
             )
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
             
             
@@ -194,14 +194,14 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    Repository.readmeFileContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     Repository.readmeFileContent
             )
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    content
+                at:     Repository.readmeFileName,
+                with:   content
             )
             
             
@@ -217,9 +217,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
         }
     }
@@ -236,13 +236,13 @@ final class CheckoutTests: XCTestCaseStopOnFail
             let content: String = "Modified content for index checkout."
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    content
+                at:     Repository.readmeFileName,
+                with:   content
             )
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
             
             
@@ -263,14 +263,14 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    Repository.readmeFileContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     Repository.readmeFileContent
             )
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    content
+                at:     Repository.readmeFileName,
+                with:   content
             )
             
             
@@ -288,9 +288,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
         }
     }
@@ -515,13 +515,13 @@ final class CheckoutTests: XCTestCaseStopOnFail
             let content: String = "Modified content for tree checkout."
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    content
+                at:     Repository.readmeFileName,
+                with:   content
             )
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
             
             
@@ -542,14 +542,14 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    Repository.readmeFileContent
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     Repository.readmeFileContent
             )
             
             try repository.modifyFile(
-                path:       Repository.readmeFileName,
-                content:    content
+                at:     Repository.readmeFileName,
+                with:   content
             )
             
             
@@ -567,9 +567,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.verifyFileContent(
-                path:       Repository.readmeFileName,
-                content:    content
+            try repository.assertFileContent(
+                at:         Repository.readmeFileName,
+                equals:     content
             )
         }
     }

@@ -18,14 +18,14 @@ enum Tag
 {
     /// Creates an annotated tag in the repository.
     /// - Parameters:
-    ///   - repository: The repository in which to create the tag.
     ///   - tagName: The tag name.
+    ///   - repository: The repository in which to create the tag.
     ///   - message: The tag message.
     /// - Throws: An error if the tag creation failed.
     static func createAnnotatedTag(
-        in repository   : Repository,
-        tagName         : String,
-        message         : String
+        named       tagName     : String,
+        in          repository  : Repository,
+        message                 : String
     ) throws
     {
         var signature = GitSignature()
