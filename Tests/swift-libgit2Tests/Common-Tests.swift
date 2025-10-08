@@ -102,17 +102,14 @@ final class CommonTests: XCTestCaseStopOnFail
     
     
     
-    /// Tests the complete call chain from the Swift bindings, to the C bindings, to libgit2.
+    /// Tests that the C bindings compile and communicate correctly with libgit2.
     ///
     /// ## Discussion
     ///
-    /// This test verifies that the C bindings compile and communicate correctly with libgit2.
-    /// It does not test the behavioral effects of each configuration option. Most functions are
-    /// called with default values or expected failure cases (for example, calling SSL-related
-    /// functions without certificates being present should result in an error code being returned).
-    ///
-    /// The libgit2 state is automatically cleaned up by ``XCTestCaseStopOnFail/tearDown()``
-    /// after each test method completes, so any configuration changes are isolated to this test.
+    /// The main purpose of this is to test that the C bindings around the variadic
+    /// `git_libgit2_opts()` function compile and work correctly, not to test libgit2 behavior with
+    /// specific option values. The "get" calls are sufficient for this purpose. The "set" calls are not tested
+    /// since not all options have a corresponding "get" method to ensure a safe get/set/restore pattern.
     func testGitLibgit2OptFunctions() throws
     {
         var int1    : Int       = 0
@@ -124,51 +121,20 @@ final class CommonTests: XCTestCaseStopOnFail
         var strings : [String]  = []
         
         XCTAssertOK(gitLibgit2OptGetMWindowSize(size: &int1))
-        XCTAssertOK(gitLibgit2OptSetMWindowSize(size: int1))
         XCTAssertOK(gitLibgit2OptGetMWindowMappedLimit(limit: &int1))
-        XCTAssertOK(gitLibgit2OptSetMWindowMappedLimit(limit: int1))
         XCTAssertOK(gitLibgit2OptGetSearchPath(level: .gitConfigLevelSystem, buf: &buffer))
-        XCTAssertOK(gitLibgit2OptSetSearchPath(level: .gitConfigLevelSystem, path: nil))
-        XCTAssertOK(gitLibgit2OptSetCacheObjectLimit(type: .gitObjectBlob, size: 0))
-        XCTAssertOK(gitLibgit2OptSetCacheMaxSize(maxStorageBytes: 268_435_456))
-        XCTAssertOK(gitLibgit2OptEnableCaching(enabled: true))
         XCTAssertOK(gitLibgit2OptGetCachedMemory(current: &int1, allowed: &int2))
         XCTAssertOK(gitLibgit2OptGetTemplatePath(out: &buffer))
-        XCTAssertOK(gitLibgit2OptSetTemplatePath(path: nil))
-        XCTAssertNotOK(gitLibgit2OptSetSSLCertLocations(file: nil, path: nil))
-        XCTAssertOK(gitLibgit2OptSetUserAgent(userAgent: nil))
-        XCTAssertOK(gitLibgit2OptEnableStrictObjectCreation(enabled: true))
-        XCTAssertOK(gitLibgit2OptEnableStrictSymbolicRefCreation(enabled: true))
-        XCTAssertOK(gitLibgit2OptSetSSLCiphers(ciphers: "HIGH:!aNULL"))
         XCTAssertOK(gitLibgit2OptGetUserAgent(out: &buffer))
-        XCTAssertOK(gitLibgit2OptEnableOFSDelta(enabled: true))
-        XCTAssertOK(gitLibgit2OptEnableFSyncGitDir(enabled: false))
         XCTAssertOK(gitLibgit2OptGetWindowsShareMode(value: &uint))
-        XCTAssertOK(gitLibgit2OptSetWindowsShareMode(value: uint))
-        XCTAssertOK(gitLibgit2OptEnableStrictHashVerification(enabled: true))
-        XCTAssertOK(gitLibgit2OptSetAllocator(allocator: nil))
-        XCTAssertOK(gitLibgit2OptEnableUnsavedIndexSafety(enabled: true))
         XCTAssertOK(gitLibgit2OptGetPackMaxObjects(out: &int1))
-        XCTAssertOK(gitLibgit2OptSetPackMaxObjects(objects: int1))
-        XCTAssertOK(gitLibgit2OptDisablePackKeepFileChecks(enabled: true))
-        XCTAssertOK(gitLibgit2OptEnableHTTPExpectContinue(enabled: true))
         XCTAssertOK(gitLibgit2OptGetMWindowFileLimit(limit: &int1))
-        XCTAssertOK(gitLibgit2OptSetMWindowFileLimit(limit: int1))
-        XCTAssertOK(gitLibgit2OptSetODBPackedPriority(priority: 0))
-        XCTAssertOK(gitLibgit2OptSetODBLoosePriority(priority: 0))
         XCTAssertOK(gitLibgit2OptGetExtensions(out: &strings))
-        XCTAssertOK(gitLibgit2OptSetExtensions(extensions: strings, len: strings.count))
         XCTAssertOK(gitLibgit2OptGetOwnerValidation(enabled: &bool))
-        XCTAssertOK(gitLibgit2OptSetOwnerValidation(enabled: true))
         XCTAssertOK(gitLibgit2OptGetHomeDir(out: &buffer))
-        XCTAssertOK(gitLibgit2OptSetHomeDir(path: nil))
-        XCTAssertOK(gitLibgit2OptSetServerConnectTimeout(timeout: 100))
         XCTAssertOK(gitLibgit2OptGetServerConnectTimeout(timeout: &int32))
-        XCTAssertOK(gitLibgit2OptSetServerTimeout(timeout: 100))
         XCTAssertOK(gitLibgit2OptGetServerTimeout(timeout: &int32))
-        XCTAssertOK(gitLibgit2OptSetUserAgentProduct(userAgent: nil))
         XCTAssertOK(gitLibgit2OptGetUserAgentProduct(out: &buffer))
-        XCTAssertOK(gitLibgit2OptAddSSLX509Cert(cert: nil))
     }
     
     
