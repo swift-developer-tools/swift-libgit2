@@ -458,8 +458,11 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
     /// The deflated binary data.
     public let data         : Data?
     
-    /// The length of the binary data.
-    public let dataLen      : Int
+    /// The length of ``data``.
+    public var dataLen      : Int
+    {
+        return data?.count ?? 0
+    }
     
     /// The length of the inflated binary data.
     public let inflatedLen  : Int
@@ -479,7 +482,6 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
     {
         self.type           = GitDiffBinaryT(cValue: diffBinaryFile.type) ?? .gitDiffBinaryNone
         self.data           = diffBinaryFile.data.map { Data(bytes: $0, count: diffBinaryFile.datalen) }
-        self.dataLen        = diffBinaryFile.datalen
         self.inflatedLen    = diffBinaryFile.inflatedlen
     }
     
