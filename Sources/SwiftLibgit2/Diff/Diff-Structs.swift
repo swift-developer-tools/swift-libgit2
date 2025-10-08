@@ -714,8 +714,11 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
     /// The number of newline characters in the diff text.
     public private(set) var numLines        : Int32         = 0
     
-    /// The number of bytes in the diff text.
-    public private(set) var contentLen      : Int           = 0
+    /// The length of ``content``.
+    public var contentLen                   : Int
+    {
+        return content?.count ?? 0
+    }
     
     /// The offset in the original file to the diff text.
     public private(set) var contentOffset   : GitOffT       = 0
@@ -745,7 +748,6 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
         self.oldLineNo      = diffLine.old_lineno
         self.newLineNo      = diffLine.new_lineno
         self.numLines       = diffLine.num_lines
-        self.contentLen     = diffLine.content_len
         self.contentOffset  = diffLine.content_offset
         self.content        = diffLine.content.map { Data(bytes: $0, count: diffLine.content_len) }
     }
