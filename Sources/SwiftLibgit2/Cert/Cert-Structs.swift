@@ -107,13 +107,16 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     /// contains ``GitCertSSHT/gitCertSSHRaw``.
     public let hostKey      : Data?
     
-    /// The content length of the raw host key.
+    /// The length of ``hostKey``.
     ///
     /// ## Discussion
     ///
     /// This will represent the content length of the raw host key if ``GitCertHostKey/type``
     /// contains ``GitCertSSHT/gitCertSSHRaw``.
-    public let hostKeyLen   : Int
+    public var hostKeyLen   : Int
+    {
+        return hostKey?.count ?? 0
+    }
     
     
     
@@ -149,7 +152,6 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
         self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: Self.hashSHA256Size)
         self.rawType        = GitCertSSHRawTypeT(cValue: certHostKey.raw_type) ?? .gitCertSSHRawTypeUnknown
         self.hostKey        = certHostKey.hostkey.map { Data(bytes: $0, count: certHostKey.hostkey_len) }
-        self.hostKeyLen     = certHostKey.hostkey_len
     }
     
     

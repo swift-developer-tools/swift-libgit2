@@ -323,10 +323,10 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
 public struct GitBlameLine: GitStructReadable, WithCConvertible
 {
     /// The line content.
-    public let ptr: Data?
+    public let ptr  : Data?
     
     /// The length of ``ptr``.
-    public var len: Int
+    public var len  : Int
     {
         return ptr?.count ?? 0
     }
