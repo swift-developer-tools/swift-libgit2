@@ -1,4 +1,4 @@
-# Strarray
+# Str-Array
 
 An array of strings.
 
