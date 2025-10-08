@@ -31,6 +31,8 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// ``ptr`` points to the start of the buffer being returned. The buffer's length, in bytes, is specified
     /// by the ``size`` property. The buffer contains a null terminator at position `size + 1`.
     ///
@@ -45,14 +47,26 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     public internal(set) var ptr        : UnsafeMutablePointer<CChar>?  = nil
     
     /// This property is unused, but is reserved for API compatibility.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public internal(set) var reserved   : Int                           = 0
     
     /// The length, in bytes, of the buffer pointed to by ``ptr``, not including the null terminator.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public internal(set) var size       : Int                           = 0
     
     
     
-    /// Creates a ``GitBuf`` instance.
+    /// Creates a ``GitBuf`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     

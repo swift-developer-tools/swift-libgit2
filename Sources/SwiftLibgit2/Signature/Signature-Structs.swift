@@ -22,22 +22,34 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// Angle brackets (`<` and `>`) are not allowed.
+    /// The default value is an empty string.
+    ///
+    /// - Note: Angle brackets (`<` and `>`) are not allowed.
     public private(set) var name    : String = ""
     
     /// The email of the actor.
     ///
     /// ## Discussion
     ///
-    /// Angle brackets (`<` and `>`) are not allowed.
+    /// The default value is an empty string.
+    ///
+    /// - Note: Angle brackets (`<` and `>`) are not allowed.
     public private(set) var email   : String = ""
     
     /// The time when the action happened.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is a ``GitTime`` instance with the default configuration.
     public private(set) var when    : GitTime = GitTime(cValue: git_time())
     
     
     
-    /// Creates a ``GitSignature`` instance.
+    /// Creates a ``GitSignature`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     

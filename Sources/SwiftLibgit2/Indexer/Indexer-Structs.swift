@@ -20,29 +20,61 @@ import Foundation
 public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
 {
     /// The number of objects being indexed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var totalObjects    : UInt32    = 0
     
     /// The number of received objects that have been hashed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var indexedObjects  : UInt32    = 0
     
     /// The number of objects that have been downloaded.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var receivedObjects : UInt32    = 0
     
     /// The number of locally-available objects that have been injected in order to fix a thin pack.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var localObjects    : UInt32    = 0
     
     /// The number of deltas being indexed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var totalDeltas     : UInt32    = 0
     
     /// The number of deltas that have been indexed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var indexedDeltas   : UInt32    = 0
     
     /// The number of bytes that been received up until the current time.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var receivedBytes   : Int       = 0
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance.
+    /// Creates a ``GitIndexerProgress`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     

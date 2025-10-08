@@ -19,30 +19,56 @@ import CLibgit2
 public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
 {
     /// The normalized name of the configuration entry.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var name            : String?           = nil
     
     /// The value of the configuration entry.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var value           : String?           = nil
     
     /// The type of backend in which the configuration entry exists (for example, `file`).
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var backendType     : String?           = nil
     
     /// The path to the origin of the configuration entry.
     ///
     /// ## Discussion
     ///
+    /// The default value is `nil`.
+    ///
     /// For configuration files, this represents the path to the file.
     public private(set) var originPath      : String?           = nil
     
     /// The depth of includes where the configuration entry was found.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var includeDepth    : UInt32            = 0
     
     /// The configuration level for the file in which the configuration entry was found.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitConfigLevelT/gitConfigLevelLocal``.
     public private(set) var level           : GitConfigLevelT   = .gitConfigLevelLocal
     
     
     
-    /// Creates a ``GitConfigEntry`` instance.
+    /// Creates a ``GitConfigEntry`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     

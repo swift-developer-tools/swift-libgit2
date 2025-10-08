@@ -618,29 +618,57 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
 public struct GitDiffHunk: GitStructInternalMutable, CConvertible
 {
     /// The starting line number in the old file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var oldStart    : Int32     = 0
     
     /// The number of lines in the old file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var oldLines    : Int32     = 0
     
     /// The starting line number in the new file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var newStart    : Int32     = 0
     
     /// The number of lines in the new file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var newLines    : Int32     = 0
     
     /// The length of ``header``.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public var headerLen                : Int
     {
         return header?.count ?? 0
     }
     
     /// The header text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var header      : String?   = nil
     
     
     
-    /// Creates a ``GitDiffHunk`` instance.
+    /// Creates a ``GitDiffHunk`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     
@@ -703,32 +731,64 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
 public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
 {
     /// The type of line origin.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitDiffLineT/gitDiffLineContext``.
     public private(set) var origin          : GitDiffLineT  = .gitDiffLineContext
     
     /// The line number in the old file, or `-1` to indicate an added line.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var oldLineNo       : Int32         = 0
     
     /// The line number in the new file, or `-1` to indicate a deleted line.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var newLineNo       : Int32         = 0
     
     /// The number of newline characters in the diff text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var numLines        : Int32         = 0
     
     /// The length of ``content``.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public var contentLen                   : Int
     {
         return content?.count ?? 0
     }
     
     /// The offset in the original file to the diff text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var contentOffset   : GitOffT       = 0
     
     /// The diff text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var content         : Data?         = nil
     
     
     
-    /// Creates a ``GitDiffLine`` instance.
+    /// Creates a ``GitDiffLine`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     

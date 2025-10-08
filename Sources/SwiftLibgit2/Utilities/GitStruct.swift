@@ -45,14 +45,14 @@
 /// ``GitStructMutable``:
 /// - Generally represents caller-configurable options.
 /// - Uses `public var` properties.
-/// - Provides default property values and publicly documents them.
+/// - Provides default property values.
 /// - Provides a `public init()` method that accepts no parameters and has an empty body.
 /// - Examples: ``GitCheckoutOptions`` and ``GitMergeOptions``.
 ///
 /// ``GitStructInternalMutable``:
 /// - Generally used as `inout` function parameters.
 /// - Uses `public private(set) var` or `public internal(set) var` properties.
-/// - Provides default property values, but does not publicly document them.
+/// - Provides default property values,.
 /// - Provides a `public init()` method that accepts no parameters and has an empty body.
 /// - Examples: ``GitOID`` and ``GitSignature``.
 ///
