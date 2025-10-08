@@ -14,14 +14,14 @@ import CLibgit2
 internal extension Array where Element == OpaquePointer
 {
     /// Creates an `[OpaquePointer]` from a `git_commitarray` instance.
-    /// - Parameter commitarray: The `git_commitarray` instance to convert.
+    /// - Parameter commitArray: The `git_commitarray` instance to convert.
     init(
-        _ commitarray: git_commitarray
+        _ commitArray: git_commitarray
     )
     {
         guard
-            commitarray.count > 0,
-            let commits: UnsafePointer<OpaquePointer?> = commitarray.commits
+            commitArray.count > 0,
+            let commits: UnsafePointer<OpaquePointer?> = commitArray.commits
         else
         {
             self = []
@@ -32,11 +32,11 @@ internal extension Array where Element == OpaquePointer
         
         var opaquePointers: [OpaquePointer] = []
         
-        opaquePointers.reserveCapacity(commitarray.count)
+        opaquePointers.reserveCapacity(commitArray.count)
         
         
         
-        for index in 0..<commitarray.count
+        for index in 0..<commitArray.count
         {
             if let commit: OpaquePointer = commits[index]
             {
