@@ -7,6 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -62,6 +63,10 @@ final class StrArrayTests: XCTestCaseStopOnFail
     
     func testGitStrArrayDispose() throws
     {
+        var strArray = git_strarray()
+        
+        gitStrArrayDispose(array: &strArray)
+        
         gitStrArrayDispose(array: nil)
     }
     
