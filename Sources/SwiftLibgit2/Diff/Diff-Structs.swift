@@ -629,8 +629,11 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
     /// The number of lines in the new file.
     public private(set) var newLines    : Int32     = 0
     
-    /// The number of bytes in the header text.
-    public private(set) var headerLen   : Int       = 0
+    /// The length of ``header``.
+    public var headerLen                : Int
+    {
+        return header?.count ?? 0
+    }
     
     /// The header text.
     public private(set) var header      : String?   = nil
@@ -657,7 +660,6 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
         self.oldLines   = diffHunk.old_lines
         self.newStart   = diffHunk.new_start
         self.newLines   = diffHunk.new_lines
-        self.headerLen  = diffHunk.header_len
         self.header     = String(cArray: diffHunk.header)
     }
     
