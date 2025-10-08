@@ -19,7 +19,7 @@ import CLibgit2
 ///   - messageEncoding: The encoding for the commit message. The default value is UTF-8.
 ///   - message: The commit message.
 ///   - tree: The tree to be committed.
-///   - parentCount: The number of parents of the commit.
+///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
 ///   instances, of length `parentCount`.
 ///   - payload: The payload provided by the caller.

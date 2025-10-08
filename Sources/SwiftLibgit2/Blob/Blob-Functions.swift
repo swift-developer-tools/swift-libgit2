@@ -398,7 +398,7 @@ public func gitBlobCreateFromStreamCommit(
 ///   - repo: The repository where the blob should be written. The underlying type must be
 ///   `git_repository`.
 ///   - buffer: The data to be written into the blob.
-///   - len: The length of the data.
+///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

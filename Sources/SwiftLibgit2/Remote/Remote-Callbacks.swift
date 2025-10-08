@@ -35,7 +35,7 @@ public typealias GitPushTransferProgressCB = @convention(c)
 /// The callback to inform of upcoming updates.
 /// - Parameters:
 ///   - updates: An array containing the updates to send as commands to the destination.
-///   - len: The number of elements in `updates`.
+///   - len: The length of `updates`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///

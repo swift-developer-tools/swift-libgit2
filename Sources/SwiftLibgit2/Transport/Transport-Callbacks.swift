@@ -14,7 +14,7 @@ import CLibgit2
 /// The callback for messages received by the transport.
 /// - Parameters:
 ///   - str: The message from the transport.
-///   - len: The length of the message from the transport.
+///   - len: The length of `str`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///

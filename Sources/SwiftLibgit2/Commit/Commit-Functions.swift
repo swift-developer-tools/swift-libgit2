@@ -638,7 +638,7 @@ public func gitCommitExtractSignature(
 ///   - message: The commit message.
 ///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
 ///   be `git_tree`.
-///   - parentCount: The number of parents of the commit.
+///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
 ///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -838,7 +838,7 @@ public func gitCommitAmend(
 ///   - message: The commit message.
 ///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
 ///   be `git_tree`.
-///   - parentCount: The number of parents of the commit.
+///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
 ///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
