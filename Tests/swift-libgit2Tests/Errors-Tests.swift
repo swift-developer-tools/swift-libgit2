@@ -22,7 +22,7 @@ final class ErrorsTests: XCTestCaseStopOnFail
         XCTAssertNil(error.message)
         XCTAssertEqual(error.klass, .gitErrorNone)
         
-        try error.withCValue
+        error.withCValue
         {
             cError in
             

@@ -44,7 +44,7 @@ public struct GitError: GitStructReadable, WithCConvertible
     /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_error>) throws -> T
-    ) throws -> T
+    ) rethrows -> T
     {
         var error = git_error()
         
