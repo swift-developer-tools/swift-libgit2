@@ -21,6 +21,8 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitEmailCreateFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,18 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitEmailCreateFlagsT`` instance from a `git_email_create_flags_t`
+    /// instance.
+    /// - Parameter emailCreateFlags: The `git_email_create_flags_t` instance to use.
+    internal init(
+        cValue emailCreateFlags: git_email_create_flags_t
+    )
+    {
+        self.rawValue = emailCreateFlags.rawValue
     }
     
     

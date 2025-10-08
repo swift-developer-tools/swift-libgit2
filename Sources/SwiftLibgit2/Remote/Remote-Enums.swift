@@ -82,6 +82,8 @@ public struct GitRemoteCreateFlags: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitRemoteCreateFlags`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -89,6 +91,18 @@ public struct GitRemoteCreateFlags: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitRemoteCreateFlags`` instance from a `git_remote_create_flags`
+    /// instance.
+    /// - Parameter remoteCreateFlags: The `git_remote_create_flags` instance to use.
+    internal init(
+        cValue remoteCreateFlags: git_remote_create_flags
+    )
+    {
+        self.rawValue = remoteCreateFlags.rawValue
     }
     
     
@@ -122,6 +136,8 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitRemoteUpdateFlags`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -129,6 +145,18 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitRemoteUpdateFlags`` instance from a `git_remote_update_flags`
+    /// instance.
+    /// - Parameter remoteUpdateFlags: The `git_remote_update_flags` instance to use.
+    internal init(
+        cValue remoteUpdateFlags: git_remote_update_flags
+    )
+    {
+        self.rawValue = remoteUpdateFlags.rawValue
     }
     
     

@@ -21,6 +21,8 @@ public struct GitDiffOptionT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitDiffOptionT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,17 @@ public struct GitDiffOptionT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitDiffOptionT`` instance from a `git_diff_option_t` instance.
+    /// - Parameter diffOption: The `git_diff_option_t` instance to use.
+    internal init(
+        cValue diffOption: git_diff_option_t
+    )
+    {
+        self.rawValue = diffOption.rawValue
     }
     
     
@@ -246,6 +259,8 @@ public struct GitDiffFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitDiffFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -253,6 +268,17 @@ public struct GitDiffFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitDiffFlagT`` instance from a `git_diff_flag_t` instance.
+    /// - Parameter diffFlag: The `git_diff_flag_t` instance to use.
+    internal init(
+        cValue diffFlag: git_diff_flag_t
+    )
+    {
+        self.rawValue = diffFlag.rawValue
     }
     
     
@@ -528,6 +554,8 @@ public struct GitDiffFindT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitDiffFindT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -535,6 +563,17 @@ public struct GitDiffFindT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitDiffFindT`` instance from a `git_diff_find_t` instance.
+    /// - Parameter diffFind: The `git_diff_find_t` instance to use.
+    internal init(
+        cValue diffFind: git_diff_find_t
+    )
+    {
+        self.rawValue = diffFind.rawValue
     }
     
     
@@ -740,6 +779,8 @@ public struct GitDiffStatsFormatT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitDiffStatsFormatT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -747,6 +788,18 @@ public struct GitDiffStatsFormatT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitDiffStatsFormatT`` instance from a `git_diff_stats_format_t`
+    /// instance.
+    /// - Parameter diffStatsFormat: The `git_diff_stats_format_t` instance to use.
+    internal init(
+        cValue diffStatsFormat: git_diff_stats_format_t
+    )
+    {
+        self.rawValue = diffStatsFormat.rawValue
     }
     
     

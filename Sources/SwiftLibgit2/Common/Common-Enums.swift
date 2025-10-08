@@ -21,6 +21,8 @@ public struct GitFeatureT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitFeatureT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,17 @@ public struct GitFeatureT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitFeatureT`` instance from a `git_feature_t` instance.
+    /// - Parameter feature: The `git_feature_t` instance to use.
+    internal init(
+        cValue feature: git_feature_t
+    )
+    {
+        self.rawValue = feature.rawValue
     }
     
     

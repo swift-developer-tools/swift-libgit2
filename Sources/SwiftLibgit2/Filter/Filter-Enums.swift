@@ -78,6 +78,8 @@ public struct GitFilterFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitFilterFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -85,6 +87,17 @@ public struct GitFilterFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitFilterFlagT`` instance from a `git_filter_flag_t` instance.
+    /// - Parameter filterFlags: The `git_filter_flag_t` instance to use.
+    internal init(
+        cValue filterFlags: git_filter_flag_t
+    )
+    {
+        self.rawValue = filterFlags.rawValue
     }
     
     

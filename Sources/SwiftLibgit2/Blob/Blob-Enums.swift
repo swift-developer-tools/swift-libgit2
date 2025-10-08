@@ -21,6 +21,8 @@ public struct GitBlobFilterFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitBlobFilterFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,17 @@ public struct GitBlobFilterFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitBlobFilterFlagT`` instance from a `git_blob_filter_flag_t` instance.
+    /// - Parameter blobFilterFlag: The `git_blob_filter_flag_t` instance to use.
+    internal init(
+        cValue blobFilterFlag: git_blob_filter_flag_t
+    )
+    {
+        self.rawValue = blobFilterFlag.rawValue
     }
     
     

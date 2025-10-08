@@ -21,6 +21,8 @@ public struct GitIndexEntryFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitIndexEntryFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,18 @@ public struct GitIndexEntryFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitIndexEntryFlagT`` instance from a `git_index_entry_flag_t`
+    /// instance.
+    /// - Parameter indexEntryFlag: The `git_index_entry_flag_t` instance to use.
+    internal init(
+        cValue indexEntryFlag: git_index_entry_flag_t
+    )
+    {
+        self.rawValue = indexEntryFlag.rawValue
     }
     
     
@@ -70,6 +84,8 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -77,6 +93,19 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a
+    /// `git_index_entry_extended_flag_t` instance.
+    /// - Parameter indexEntryExtendedFlag: The `git_index_entry_extended_flag_t`
+    /// instance to use.
+    internal init(
+        cValue indexEntryExtendedFlag: git_index_entry_extended_flag_t
+    )
+    {
+        self.rawValue = indexEntryExtendedFlag.rawValue
     }
     
     
@@ -173,6 +202,8 @@ public struct GitIndexAddOptionT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitIndexAddOptionT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -180,6 +211,18 @@ public struct GitIndexAddOptionT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitIndexAddOptionT`` instance from a `git_index_add_option_t`
+    /// instance.
+    /// - Parameter indexAddOption: The `git_index_add_option_t` instance to use.
+    internal init(
+        cValue indexAddOption: git_index_add_option_t
+    )
+    {
+        self.rawValue = indexAddOption.rawValue
     }
     
     

@@ -12,7 +12,6 @@ import CLibgit2
 
 
 // TODO: Replace `git_repository_set_head()` in documentation.
-
 /// The flags controlling the behavior of the checkout operation.
 ///
 /// ## Discussion
@@ -52,6 +51,8 @@ public struct GitCheckoutStrategyT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitCheckoutStrategyT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -59,6 +60,18 @@ public struct GitCheckoutStrategyT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitCheckoutStrategyT`` instance from a `git_checkout_strategy_t`
+    /// instance.
+    /// - Parameter checkoutStrategy: The `git_checkout_strategy_t` instance to use.
+    internal init(
+        cValue checkoutStrategy: git_checkout_strategy_t
+    )
+    {
+        self.rawValue = checkoutStrategy.rawValue
     }
     
     
@@ -212,6 +225,8 @@ public struct GitCheckoutNotifyT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitCheckoutNotifyT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -219,6 +234,18 @@ public struct GitCheckoutNotifyT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitCheckoutNotifyT`` instance from a `git_checkout_notify_t`
+    /// instance.
+    /// - Parameter checkoutNotify: The `git_checkout_notify_t` instance to use.
+    internal init(
+        cValue checkoutNotify: git_checkout_notify_t
+    )
+    {
+        self.rawValue = checkoutNotify.rawValue
     }
     
     

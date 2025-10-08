@@ -86,6 +86,8 @@ public struct GitCertSSHT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitCertSSHT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -93,6 +95,17 @@ public struct GitCertSSHT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitCertSSHT`` instance from a `git_cert_ssh_t` instance.
+    /// - Parameter certSSH: The `git_cert_ssh_t` instance to use.
+    internal init(
+        cValue certSSH: git_cert_ssh_t
+    )
+    {
+        self.rawValue = certSSH.rawValue
     }
     
     
