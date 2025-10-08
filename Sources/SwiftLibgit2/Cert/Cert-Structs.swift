@@ -241,7 +241,7 @@ public struct GitCertX509: GitStructReadable, CConvertible
     /// The X.509 certificate data.
     public let data     : UnsafeMutableRawPointer?
     
-    /// The length of the memory block pointed to by ``GitCertX509/data``.
+    /// The length of the memory block pointed to by ``data``.
     public let len      : Int
     
     
