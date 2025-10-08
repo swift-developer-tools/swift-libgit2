@@ -135,10 +135,13 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
 public struct GitCommitArray: GitStruct
 {
     /// The array of commits.
-    public let commits  : [OpaquePointer]
+    public let commits: [OpaquePointer]
     
-    /// The number of commits in the array.
-    public let count    : Int
+    /// The length of ``commits``.
+    public var count: Int
+    {
+        return commits.count
+    }
     
     
     
@@ -148,7 +151,6 @@ public struct GitCommitArray: GitStruct
         cValue commitArray: git_commitarray
     )
     {
-        self.commits    = Array(commitArray)
-        self.count      = commitArray.count
+        self.commits = Array(commitArray)
     }
 }
