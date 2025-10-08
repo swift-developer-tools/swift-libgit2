@@ -31,9 +31,8 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// ``GitBuf/ptr`` points to the start of the buffer being returned. The buffer's length, in bytes,
-    /// is specified by the ``GitBuf/size`` property. The buffer contains a null terminator at
-    /// position `size + 1`.
+    /// ``ptr`` points to the start of the buffer being returned. The buffer's length, in bytes, is specified
+    /// by the ``size`` property. The buffer contains a null terminator at position `size + 1`.
     ///
     /// In libgit2, `git_buf->ptr` has the following lifecycle:
     ///
@@ -41,15 +40,14 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     /// - After population: points to allocated, zero-terminated memory.
     /// - After disposal: points to a static single-character array sentinel value.
     ///
-    /// In swift-libgit2, ``GitBuf/ptr`` uses Swift's optional type, where `nil` represents both
-    /// the initial state and the disposed state for more idiomatic Swift.
+    /// In swift-libgit2, ``ptr`` uses Swift's optional type, where `nil` represents both the initial state
+    /// and the disposed state for more idiomatic Swift.
     public internal(set) var ptr        : UnsafeMutablePointer<CChar>?  = nil
     
     /// This property is unused, but is reserved for API compatibility.
     public internal(set) var reserved   : Int                           = 0
     
-    /// The length, in bytes, of the buffer pointed to by ``GitBuf/ptr``, not including the null
-    /// terminator.
+    /// The length, in bytes, of the buffer pointed to by ``ptr``, not including the null terminator.
     public internal(set) var size       : Int                           = 0
     
     
