@@ -20,7 +20,7 @@ internal extension Array where Element == String
     ///
     /// ## Discussion
     ///
-    /// `git_strarray_dispose()` cannot be used here, since that function is
+    /// ``gitStrArrayDispose(array:)`` cannot be used here, since that function is
     /// intended to free the strings of a `git_strarray` which was allocated by libgit2.
     func withGitStrArray<T>(
         _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
