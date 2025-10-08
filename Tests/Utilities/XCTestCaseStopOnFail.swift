@@ -12,7 +12,7 @@ import XCTest
 
 
 
-/// Stops an `XCTest` case as soon as a failure occurs.
+/// Stops an `XCTestCase` as soon as an assertion fails.
 ///
 /// ## Discussion
 ///
@@ -22,10 +22,9 @@ import XCTest
 class XCTestCaseStopOnFail: XCTestCase
 {
     /// Provides an opportunity to customize initial state before a test case begins.
-    override func setUp()
+    override class func setUp()
     {
         super.setUp()
-        continueAfterFailure = false
         
         _ = gitLibgit2Init()
     }
@@ -33,8 +32,20 @@ class XCTestCaseStopOnFail: XCTestCase
     
     
     /// Provides an opportunity to perform cleanup after a test case ends.
-    override func tearDown()
+    override class func tearDown()
     {
         _ = gitLibgit2Shutdown()
+        
+        super.tearDown()
+    }
+    
+    
+    
+    /// Provides an opportunity to reset state before calling each test method in a test case.
+    override func setUp()
+    {
+        super.setUp()
+        
+        continueAfterFailure = false
     }
 }
