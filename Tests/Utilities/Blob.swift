@@ -85,19 +85,12 @@ enum Blob
                 
             case .buffer(let data):
                 
-                let withCBufferResult: GitErrorCode? = try? data.withCBuffer
-                {
-                    cData, cDataCount in
-                    
-                    return gitBlobCreateFromBuffer(
-                        id:         &blobOID,
-                        repo:       repository.pointer,
-                        buffer:     cData,
-                        len:        cDataCount
-                    )
-                }
-                
-                blobCreateResult = withCBufferResult ?? .gitEUser
+                blobCreateResult = gitBlobCreateFromBuffer(
+                    id:         &blobOID,
+                    repo:       repository.pointer,
+                    buffer:     data,
+                    len:        data.count
+                )
         }
         
         

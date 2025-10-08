@@ -24,17 +24,12 @@ final class IndexTests: XCTestCaseStopOnFail
             let buffer      = Data("Custom content".utf8)
             var blobOID     = GitOID()
             
-            let blobCreateFromBufferResult: GitErrorCode = try buffer.withCBuffer
-            {
-                cBuffer, cBufferCount in
-                
-                return gitBlobCreateFromBuffer(
-                    id:         &blobOID,
-                    repo:       repository.pointer,
-                    buffer:     cBuffer,
-                    len:        cBufferCount
-                )
-            }
+            let blobCreateFromBufferResult: GitErrorCode = gitBlobCreateFromBuffer(
+                id:         &blobOID,
+                repo:       repository.pointer,
+                buffer:     buffer,
+                len:        buffer.count
+            )
             
             XCTAssertOK(blobCreateFromBufferResult)
             

@@ -470,17 +470,12 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobCreateFromBufferResult: GitErrorCode = try data.withCBuffer
-            {
-                cData, cDataCount in
-                
-                return gitBlobCreateFromBuffer(
-                    id:         &blobOID,
-                    repo:       repository.pointer,
-                    buffer:     cData,
-                    len:        cDataCount
-                )
-            }
+            let blobCreateFromBufferResult: GitErrorCode = gitBlobCreateFromBuffer(
+                id:         &blobOID,
+                repo:       repository.pointer,
+                buffer:     data,
+                len:        data.count
+            )
             
             XCTAssertOK(blobCreateFromBufferResult)
             

@@ -407,22 +407,27 @@ public func gitBlobCreateFromStreamCommit(
 public func gitBlobCreateFromBuffer(
     id      : inout GitOID,
     repo    : OpaquePointer,
-    buffer  : UnsafeRawPointer,
+    buffer  : Data,
     len     : Int
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return id.withMutatingCValue
+        return try id.withMutatingCValue
         {
             cID in
             
-            return git_blob_create_from_buffer(
-                cID,
-                repo,
-                buffer,
-                len
-            )
+            return try buffer.withCBuffer
+            {
+                cBuffer, cBufferCount in
+                
+                return git_blob_create_from_buffer(
+                    cID,
+                    repo,
+                    cBuffer,
+                    cBufferCount
+                )
+            }
         }
     }
 }
