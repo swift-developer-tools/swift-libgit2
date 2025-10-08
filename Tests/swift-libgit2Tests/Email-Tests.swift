@@ -29,6 +29,11 @@ final class EmailTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateAlwaysNumber.cValue(), GIT_EMAIL_CREATE_ALWAYS_NUMBER)
         XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateNoRenames.cValue(), GIT_EMAIL_CREATE_NO_RENAMES)
         
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_DEFAULT).cValue(), GIT_EMAIL_CREATE_DEFAULT)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_OMIT_NUMBERS).cValue(), GIT_EMAIL_CREATE_OMIT_NUMBERS)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_ALWAYS_NUMBER).cValue(), GIT_EMAIL_CREATE_ALWAYS_NUMBER)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_NO_RENAMES).cValue(), GIT_EMAIL_CREATE_NO_RENAMES)
+        
         
         
         let flags: GitEmailCreateFlagsT =

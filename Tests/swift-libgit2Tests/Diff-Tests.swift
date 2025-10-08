@@ -543,6 +543,23 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffFindT.gitDiffBreakRewritesForRenamesOnly.cValue(), GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY)
         XCTAssertEqual(GitDiffFindT.gitDiffFindRemoveUnmodified.cValue(), GIT_DIFF_FIND_REMOVE_UNMODIFIED)
         
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_BY_CONFIG).cValue(), GIT_DIFF_FIND_BY_CONFIG)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_RENAMES).cValue(), GIT_DIFF_FIND_RENAMES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_RENAMES_FROM_REWRITES).cValue(), GIT_DIFF_FIND_RENAMES_FROM_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_COPIES).cValue(), GIT_DIFF_FIND_COPIES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_COPIES_FROM_UNMODIFIED).cValue(), GIT_DIFF_FIND_COPIES_FROM_UNMODIFIED)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_REWRITES).cValue(), GIT_DIFF_FIND_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_BREAK_REWRITES).cValue(), GIT_DIFF_BREAK_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_AND_BREAK_REWRITES).cValue(), GIT_DIFF_FIND_AND_BREAK_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_FOR_UNTRACKED).cValue(), GIT_DIFF_FIND_FOR_UNTRACKED)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_ALL).cValue(), GIT_DIFF_FIND_ALL)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_IGNORE_LEADING_WHITESPACE).cValue(), GIT_DIFF_FIND_IGNORE_LEADING_WHITESPACE)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_IGNORE_WHITESPACE).cValue(), GIT_DIFF_FIND_IGNORE_WHITESPACE)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_DONT_IGNORE_WHITESPACE).cValue(), GIT_DIFF_FIND_DONT_IGNORE_WHITESPACE)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_EXACT_MATCH_ONLY).cValue(), GIT_DIFF_FIND_EXACT_MATCH_ONLY)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY).cValue(), GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_REMOVE_UNMODIFIED).cValue(), GIT_DIFF_FIND_REMOVE_UNMODIFIED)
+        
         
         
         let flags: GitDiffFindT =
@@ -573,6 +590,12 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffFlagT.gitDiffFlagValidID.cValue(), GIT_DIFF_FLAG_VALID_ID)
         XCTAssertEqual(GitDiffFlagT.gitDiffFlagExists.cValue(), GIT_DIFF_FLAG_EXISTS)
         XCTAssertEqual(GitDiffFlagT.gitDiffFlagValidSize.cValue(), GIT_DIFF_FLAG_VALID_SIZE)
+        
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_BINARY).cValue(), GIT_DIFF_FLAG_BINARY)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_NOT_BINARY).cValue(), GIT_DIFF_FLAG_NOT_BINARY)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_VALID_ID).cValue(), GIT_DIFF_FLAG_VALID_ID)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_EXISTS).cValue(), GIT_DIFF_FLAG_EXISTS)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_VALID_SIZE).cValue(), GIT_DIFF_FLAG_VALID_SIZE)
         
         
         
@@ -1139,6 +1162,38 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffOptionT.gitDiffMinimal.cValue(), GIT_DIFF_MINIMAL)
         XCTAssertEqual(GitDiffOptionT.gitDiffShowBinary.cValue(), GIT_DIFF_SHOW_BINARY)
         
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_NORMAL).cValue(), GIT_DIFF_NORMAL)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_REVERSE).cValue(), GIT_DIFF_REVERSE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_IGNORED).cValue(), GIT_DIFF_INCLUDE_IGNORED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_RECURSE_IGNORED_DIRS).cValue(), GIT_DIFF_RECURSE_IGNORED_DIRS)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNTRACKED).cValue(), GIT_DIFF_INCLUDE_UNTRACKED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_RECURSE_UNTRACKED_DIRS).cValue(), GIT_DIFF_RECURSE_UNTRACKED_DIRS)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNMODIFIED).cValue(), GIT_DIFF_INCLUDE_UNMODIFIED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_TYPECHANGE).cValue(), GIT_DIFF_INCLUDE_TYPECHANGE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_TYPECHANGE_TREES).cValue(), GIT_DIFF_INCLUDE_TYPECHANGE_TREES)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_FILEMODE).cValue(), GIT_DIFF_IGNORE_FILEMODE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_SUBMODULES).cValue(), GIT_DIFF_IGNORE_SUBMODULES)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_CASE).cValue(), GIT_DIFF_IGNORE_CASE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_CASECHANGE).cValue(), GIT_DIFF_INCLUDE_CASECHANGE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_DISABLE_PATHSPEC_MATCH).cValue(), GIT_DIFF_DISABLE_PATHSPEC_MATCH)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SKIP_BINARY_CHECK).cValue(), GIT_DIFF_SKIP_BINARY_CHECK)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_ENABLE_FAST_UNTRACKED_DIRS).cValue(), GIT_DIFF_ENABLE_FAST_UNTRACKED_DIRS)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_UPDATE_INDEX).cValue(), GIT_DIFF_UPDATE_INDEX)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNREADABLE).cValue(), GIT_DIFF_INCLUDE_UNREADABLE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNREADABLE_AS_UNTRACKED).cValue(), GIT_DIFF_INCLUDE_UNREADABLE_AS_UNTRACKED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INDENT_HEURISTIC).cValue(), GIT_DIFF_INDENT_HEURISTIC)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_BLANK_LINES).cValue(), GIT_DIFF_IGNORE_BLANK_LINES)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_FORCE_TEXT).cValue(), GIT_DIFF_FORCE_TEXT)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_FORCE_BINARY).cValue(), GIT_DIFF_FORCE_BINARY)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_WHITESPACE).cValue(), GIT_DIFF_IGNORE_WHITESPACE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_WHITESPACE_CHANGE).cValue(), GIT_DIFF_IGNORE_WHITESPACE_CHANGE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_WHITESPACE_EOL).cValue(), GIT_DIFF_IGNORE_WHITESPACE_EOL)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SHOW_UNTRACKED_CONTENT).cValue(), GIT_DIFF_SHOW_UNTRACKED_CONTENT)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SHOW_UNMODIFIED).cValue(), GIT_DIFF_SHOW_UNMODIFIED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_PATIENCE).cValue(), GIT_DIFF_PATIENCE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_MINIMAL).cValue(), GIT_DIFF_MINIMAL)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SHOW_BINARY).cValue(), GIT_DIFF_SHOW_BINARY)
+        
         
         
         let flags: GitDiffOptionT =
@@ -1281,6 +1336,12 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffStatsFormatT.gitDiffStatsShort.cValue(), GIT_DIFF_STATS_SHORT)
         XCTAssertEqual(GitDiffStatsFormatT.gitDiffStatsNumber.cValue(), GIT_DIFF_STATS_NUMBER)
         XCTAssertEqual(GitDiffStatsFormatT.gitDiffStatsIncludeSummary.cValue(), GIT_DIFF_STATS_INCLUDE_SUMMARY)
+        
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_NONE).cValue(), GIT_DIFF_STATS_NONE)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_FULL).cValue(), GIT_DIFF_STATS_FULL)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_SHORT).cValue(), GIT_DIFF_STATS_SHORT)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_NUMBER).cValue(), GIT_DIFF_STATS_NUMBER)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_INCLUDE_SUMMARY).cValue(), GIT_DIFF_STATS_INCLUDE_SUMMARY)
         
         
         

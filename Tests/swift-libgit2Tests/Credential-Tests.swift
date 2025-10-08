@@ -336,6 +336,14 @@ final class CredentialTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCredentialT.gitCredentialUsername.cValue(), GIT_CREDENTIAL_USERNAME)
         XCTAssertEqual(GitCredentialT.gitCredentialSSHMemory.cValue(), GIT_CREDENTIAL_SSH_MEMORY)
         
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_USERPASS_PLAINTEXT).cValue(), GIT_CREDENTIAL_USERPASS_PLAINTEXT)
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_SSH_KEY).cValue(), GIT_CREDENTIAL_SSH_KEY)
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_SSH_CUSTOM).cValue(), GIT_CREDENTIAL_SSH_CUSTOM)
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_DEFAULT).cValue(), GIT_CREDENTIAL_DEFAULT)
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_SSH_INTERACTIVE).cValue(), GIT_CREDENTIAL_SSH_INTERACTIVE)
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_USERNAME).cValue(), GIT_CREDENTIAL_USERNAME)
+        XCTAssertEqual(GitCredentialT(cValue: GIT_CREDENTIAL_SSH_MEMORY).cValue(), GIT_CREDENTIAL_SSH_MEMORY)
+        
         
         
         let flags: GitCredentialT =

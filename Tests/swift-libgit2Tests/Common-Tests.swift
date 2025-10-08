@@ -74,6 +74,19 @@ final class CommonTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitFeatureT.gitFeatureSHA1.cValue(), GIT_FEATURE_SHA1)
         XCTAssertEqual(GitFeatureT.gitFeatureSHA256.cValue(), GIT_FEATURE_SHA256)
         
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_THREADS).cValue(), GIT_FEATURE_THREADS)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_HTTPS).cValue(), GIT_FEATURE_HTTPS)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_SSH).cValue(), GIT_FEATURE_SSH)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_NSEC).cValue(), GIT_FEATURE_NSEC)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_HTTP_PARSER).cValue(), GIT_FEATURE_HTTP_PARSER)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_REGEX).cValue(), GIT_FEATURE_REGEX)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_I18N).cValue(), GIT_FEATURE_I18N)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_AUTH_NTLM).cValue(), GIT_FEATURE_AUTH_NTLM)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_AUTH_NEGOTIATE).cValue(), GIT_FEATURE_AUTH_NEGOTIATE)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_COMPRESSION).cValue(), GIT_FEATURE_COMPRESSION)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_SHA1).cValue(), GIT_FEATURE_SHA1)
+        XCTAssertEqual(GitFeatureT(cValue: GIT_FEATURE_SHA256).cValue(), GIT_FEATURE_SHA256)
+        
         
         
         let flags: GitFeatureT =
