@@ -160,7 +160,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -256,7 +256,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -371,6 +371,13 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
+    func testGitBlobFree() throws
+    {
+        gitBlobFree(blob: nil)
+    }
+    
+    
+    
     func testGitBlobIsDup() throws
     {
         try Repository.withRepository
@@ -389,8 +396,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(originalBlobPointer)
-                Free.freeBlob(duplicatedBlobPointer)
+                gitBlobFree(blob: originalBlobPointer)
+                gitBlobFree(blob: duplicatedBlobPointer)
             }
             
             
@@ -485,7 +492,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             

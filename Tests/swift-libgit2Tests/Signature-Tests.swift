@@ -221,6 +221,13 @@ final class SignatureTests: XCTestCaseStopOnFail
     
     
     
+    func testGitSignatureFree() throws
+    {
+        gitSignatureFree(sig: nil)
+    }
+    
+    
+    
     func testGitSignatureNewAndDup() throws
     {
         var signature = GitSignature()

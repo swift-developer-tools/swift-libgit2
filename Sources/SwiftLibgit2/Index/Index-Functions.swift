@@ -84,6 +84,12 @@ public func gitIndexFree(
     index: OpaquePointer?
 )
 {
+    guard let index: OpaquePointer = index
+    else
+    {
+        return
+    }
+    
     git_index_free(index)
 }
 
@@ -724,6 +730,12 @@ public func gitIndexIteratorFree(
     iterator: OpaquePointer?
 )
 {
+    guard let iterator: OpaquePointer = iterator
+    else
+    {
+        return
+    }
+    
     git_index_iterator_free(iterator)
 }
 
@@ -1294,5 +1306,11 @@ public func gitIndexConflictIteratorFree(
     iterator: OpaquePointer?
 )
 {
+    guard let iterator: OpaquePointer = iterator
+    else
+    {
+        return
+    }
+    
     git_index_conflict_iterator_free(iterator)
 }

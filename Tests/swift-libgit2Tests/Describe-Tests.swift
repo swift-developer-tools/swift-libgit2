@@ -41,7 +41,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             defer
             {
                 XCTAssertOK(gitBufDispose(buffer: &buffer))
-                Free.freeDescribeResult(describeResultPointer)
+                gitDescribeResultFree(result: describeResultPointer)
             }
             
             
@@ -108,7 +108,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             defer
             {
                 XCTAssertOK(gitBufDispose(buffer: &buffer))
-                Free.freeDescribeResult(describeResultPointer)
+                gitDescribeResultFree(result: describeResultPointer)
             }
             
             
@@ -189,6 +189,13 @@ final class DescribeTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDescribeFree() throws
+    {
+        gitDescribeResultFree(result: nil)
+    }
+    
+    
+    
     func testGitDescribeOptions() throws
     {
         let describeOptions = GitDescribeOptions()
@@ -259,7 +266,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeDescribeResult(describeResultPointer)
+                gitDescribeResultFree(result: describeResultPointer)
             }
             
             
@@ -300,7 +307,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeDescribeResult(describeResultPointer)
+                gitDescribeResultFree(result: describeResultPointer)
             }
             
             

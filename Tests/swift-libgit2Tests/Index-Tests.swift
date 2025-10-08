@@ -219,7 +219,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -678,7 +678,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndexConflictIterator(iteratorPointer)
+                gitIndexConflictIteratorFree(iterator: iteratorPointer)
             }
             
             
@@ -729,6 +729,13 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertEqual(conflictCount, conflictPaths.count)
         }
+    }
+    
+    
+    
+    func testGitIndexConflictIteratorFree() throws
+    {
+        gitIndexConflictIteratorFree(iterator: nil)
     }
     
     
@@ -1082,6 +1089,13 @@ final class IndexTests: XCTestCaseStopOnFail
     
     
     
+    func testGitIndexFree() throws
+    {
+        gitIndexFree(index: nil)
+    }
+    
+    
+    
     func testGitIndexGetByIndex() throws
     {
         try Repository.withRepositoryAndIndexPointer
@@ -1218,7 +1232,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndexIterator(iteratorPointer)
+                gitIndexIteratorFree(iterator: iteratorPointer)
             }
             
             
@@ -1268,6 +1282,13 @@ final class IndexTests: XCTestCaseStopOnFail
     
     
     
+    func testGitIndexIteratorFree() throws
+    {
+        gitIndexIteratorFree(iterator: nil)
+    }
+    
+    
+    
     func testGitIndexNew() throws
     {
         try Repository.withRepository
@@ -1278,7 +1299,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
@@ -1302,7 +1323,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
@@ -1359,7 +1380,7 @@ final class IndexTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeIndex(indexPointer)
+            gitIndexFree(index: indexPointer)
         }
         
         

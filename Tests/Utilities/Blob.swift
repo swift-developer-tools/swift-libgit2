@@ -117,7 +117,7 @@ enum Blob
         
         defer
         {
-            Free.freeBlob(blobPointer)
+            gitBlobFree(blob: blobPointer)
         }
         
         

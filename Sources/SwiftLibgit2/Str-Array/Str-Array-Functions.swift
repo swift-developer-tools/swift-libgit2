@@ -29,5 +29,11 @@ public func gitStrArrayDispose(
     array: UnsafeMutablePointer<git_strarray>?
 )
 {
+    guard let array: UnsafeMutablePointer<git_strarray> = array
+    else
+    {
+        return
+    }
+    
     git_strarray_dispose(array)
 }

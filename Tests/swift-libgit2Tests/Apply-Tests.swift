@@ -137,7 +137,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
@@ -336,7 +336,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             

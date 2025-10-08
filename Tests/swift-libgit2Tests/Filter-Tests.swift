@@ -73,6 +73,13 @@ final class FilterTests: XCTestCaseStopOnFail
     
     
     
+    func testGitFilterListFree() throws
+    {
+        gitFilterListFree(filters: nil)
+    }
+    
+    
+    
     func testGitFilterListLoadAndContains() throws
     {
         try Repository.withRepository
@@ -84,8 +91,8 @@ final class FilterTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
-                Free.freeFilterList(filterListPointer)
+                gitBlobFree(blob: blobPointer)
+                gitFilterListFree(filters: filterListPointer)
             }
             
             
@@ -297,8 +304,8 @@ extension FilterTests
             
             defer
             {
-                Free.freeBlob(blobPointer)
-                Free.freeFilterList(filterListPointer)
+                gitBlobFree(blob: blobPointer)
+                gitFilterListFree(filters: filterListPointer)
                 XCTAssertOK(gitBufDispose(buffer: &buffer))
             }
             
@@ -389,8 +396,8 @@ extension FilterTests
             
             defer
             {
-                Free.freeBlob(blobPointer)
-                Free.freeFilterList(filterListPointer)
+                gitBlobFree(blob: blobPointer)
+                gitFilterListFree(filters: filterListPointer)
                 
                 if let free: (UnsafeMutablePointer<git_writestream>?) -> Void
                     = streamPointer?.pointee.free

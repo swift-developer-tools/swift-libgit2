@@ -59,6 +59,13 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
+    func testGitBranchIteratorFree() throws
+    {
+        gitBranchIteratorFree(iter: nil)
+    }
+    
+    
+    
     func testGitBranchOperationsAndIteration() throws
     {
         try Repository.withRepository
@@ -144,7 +151,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeBranchIterator(branchIteratorPointer)
+                    gitBranchIteratorFree(iter: branchIteratorPointer)
                 }
                 
                 

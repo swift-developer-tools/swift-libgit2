@@ -26,8 +26,8 @@ final class BlameTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlame(baseBlamePointer)
-                Free.freeBlame(bufferBlamePointer)
+                gitBlameFree(blame: baseBlamePointer)
+                gitBlameFree(blame: bufferBlamePointer)
             }
             
             
@@ -76,7 +76,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlame(blamePointer)
+                gitBlameFree(blame: blamePointer)
             }
             
             
@@ -234,6 +234,13 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertTrue(flags.contains(.gitBlameUseMailmap))
         XCTAssertTrue(flags.contains(.gitBlameIgnoreWhitespace))
         XCTAssertFalse(flags.contains(.gitBlameTrackCopiesSameFile))
+    }
+    
+    
+    
+    func testGitBlameFree() throws
+    {
+        gitBlameFree(blame: nil)
     }
     
     

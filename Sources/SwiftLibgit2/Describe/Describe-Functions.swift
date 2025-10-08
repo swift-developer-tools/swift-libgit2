@@ -193,5 +193,11 @@ public func gitDescribeResultFree(
     result: OpaquePointer?
 )
 {
+    guard let result: OpaquePointer = result
+    else
+    {
+        return
+    }
+    
     git_describe_result_free(result)
 }

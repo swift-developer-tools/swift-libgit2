@@ -27,7 +27,10 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeConfigBackend(configBackend)
+                if configBackend != nil
+                {
+                    configBackend?.pointee.free(configBackend)
+                }
             }
             
             
@@ -138,6 +141,13 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     
     
+    func testGitConfigEntryFree() throws
+    {
+        gitConfigEntryFree(entry: nil)
+    }
+    
+    
+    
     func testGitConfigFindPaths() throws
     {
         var buffer = GitBuf()
@@ -153,6 +163,20 @@ final class ConfigTests: XCTestCaseStopOnFail
         _ = gitConfigFindXDG(out: &buffer)
         _ = gitConfigFindSystem(out: &buffer)
         _ = gitConfigFindProgramData(out: &buffer)
+    }
+    
+    
+    
+    func testGitConfigFree() throws
+    {
+        gitConfigFree(cfg: nil)
+    }
+    
+    
+    
+    func testGitConfigIteratorFree() throws
+    {
+        gitConfigIteratorFree(iter: nil)
     }
     
     
@@ -226,7 +250,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeConfigIterator(configIterator)
+                    gitConfigIteratorFree(iter: configIterator)
                 }
                 
                 
@@ -275,7 +299,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeConfigIterator(configGlobIterator)
+                    gitConfigIteratorFree(iter: configGlobIterator)
                 }
                 
                 
@@ -341,9 +365,9 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeConfig(parentConfigPointer)
-                Free.freeConfig(levelConfigPointer)
-                Free.freeConfig(globalConfigPointer)
+                gitConfigFree(cfg: parentConfigPointer)
+                gitConfigFree(cfg: levelConfigPointer)
+                gitConfigFree(cfg: globalConfigPointer)
             }
             
             
@@ -662,7 +686,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeConfigIterator(configIterator)
+                    gitConfigIteratorFree(iter: configIterator)
                 }
                 
                 
@@ -723,7 +747,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeConfig(configPointer)
+            gitConfigFree(cfg: configPointer)
         }
         
         
@@ -742,7 +766,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeConfig(configPointer)
+            gitConfigFree(cfg: configPointer)
         }
         
         
@@ -771,7 +795,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeConfig(newConfigPointer)
+                    gitConfigFree(cfg: newConfigPointer)
                 }
                 
                 
@@ -986,10 +1010,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    if cConfigEntry != nil
-                    {
-                        gitConfigEntryFree(entry: cConfigEntry)
-                    }
+                    gitConfigEntryFree(entry: cConfigEntry)
                 }
                 
                 let cConfigGetEntryResult: Int32 = git_config_get_entry(
@@ -1183,7 +1204,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeConfig(snapshotPointer)
+                    gitConfigFree(cfg: snapshotPointer)
                 }
                 
                 
@@ -1317,7 +1338,7 @@ extension ConfigTests
         
         defer
         {
-            Free.freeConfig(configPointer)
+            gitConfigFree(cfg: configPointer)
         }
         
         

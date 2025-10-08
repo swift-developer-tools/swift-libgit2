@@ -29,7 +29,7 @@ public func gitOIDArrayDispose(
     array: UnsafeMutablePointer<git_oidarray>?
 )
 {
-    guard array != nil
+    guard let array: UnsafeMutablePointer<git_oidarray> = array
     else
     {
         return

@@ -30,7 +30,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
         var oidArray = git_oidarray()
         
         gitOIDArrayDispose(array: &oidArray)
-        
+        gitOIDArrayDispose(array: &oidArray)
         gitOIDArrayDispose(array: nil)
     }
     

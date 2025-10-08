@@ -23,6 +23,17 @@ final class CommitTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCommitArrayDispose() throws
+    {
+        var array = git_commitarray()
+        
+        gitCommitArrayDispose(array: &array)
+        gitCommitArrayDispose(array: &array)
+        gitCommitArrayDispose(array: nil)
+    }
+    
+    
+    
     func testGitCommitCreateBufferWithSignatureAndExtract() throws
     {
         try Repository.withRepositoryAndIndexPointer
@@ -239,7 +250,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
                 Free.freeRebase(rebasePointer)
             }
             
@@ -424,6 +435,13 @@ final class CommitTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCommitFree() throws
+    {
+        gitCommitFree(commit: nil)
+    }
+    
+    
+    
     func testGitCommitHeaderField() throws
     {
         try Repository.withRepository
@@ -467,7 +485,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(commitPointer)
+                gitCommitFree(commit: commitPointer)
             }
             
             
@@ -582,7 +600,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(commitPointer)
+                gitCommitFree(commit: commitPointer)
             }
             
             
@@ -663,7 +681,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(ancestorCommitPointer)
+                gitCommitFree(commit: ancestorCommitPointer)
             }
             
             
@@ -705,8 +723,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(commitPointer)
-                Free.freeCommit(parentCommmiPointer)
+                gitCommitFree(commit: commitPointer)
+                gitCommitFree(commit: parentCommmiPointer)
             }
             
             
@@ -856,8 +874,8 @@ extension CommitTests
 
             defer
             {
-                Free.freeCommit(newCommitPointer)
-                Free.freeCommit(originalCommitPointer)
+                gitCommitFree(commit: newCommitPointer)
+                gitCommitFree(commit: originalCommitPointer)
             }
             
             

@@ -141,7 +141,7 @@ struct Repository
         
         defer
         {
-            Free.freeIndex(indexPointer)
+            gitIndexFree(index: indexPointer)
         }
         
         
@@ -202,7 +202,7 @@ struct Repository
 
             defer
             {
-                Free.freeCommit(commitPointer)
+                gitCommitFree(commit: commitPointer)
             }
             
             
@@ -310,7 +310,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(headCommitPointer)
+            gitCommitFree(commit: headCommitPointer)
         }
         
         
@@ -384,7 +384,7 @@ struct Repository
         
         defer
         {
-            Free.freeCommit(commitPointer)
+            gitCommitFree(commit: commitPointer)
         }
         
         
@@ -683,7 +683,7 @@ extension Repository
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             

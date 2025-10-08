@@ -354,5 +354,11 @@ public func gitFilterListFree(
     filters: OpaquePointer?
 )
 {
+    guard let filters: OpaquePointer = filters
+    else
+    {
+        return
+    }
+    
     git_filter_list_free(filters)
 }

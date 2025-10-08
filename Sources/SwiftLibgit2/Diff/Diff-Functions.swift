@@ -82,6 +82,12 @@ public func gitDiffFree(
     diff: OpaquePointer?
 )
 {
+    guard let diff: OpaquePointer = diff
+    else
+    {
+        return
+    }
+    
     git_diff_free(diff)
 }
 
@@ -1055,6 +1061,12 @@ public func gitDiffStatsFree(
     stats: OpaquePointer?
 )
 {
+    guard let stats: OpaquePointer = stats
+    else
+    {
+        return
+    }
+    
     git_diff_stats_free(stats)
 }
 

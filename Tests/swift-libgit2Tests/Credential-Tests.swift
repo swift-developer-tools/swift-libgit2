@@ -21,7 +21,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -105,7 +105,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -118,13 +118,20 @@ final class CredentialTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCredentialFree() throws
+    {
+        gitCredentialFree(cred: nil)
+    }
+    
+    
+    
     func testGitCredentialSSHCustomNew() throws
     {
         var credentialPointer: UnsafeMutablePointer<git_credential>? = nil
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -168,7 +175,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -207,7 +214,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -231,7 +238,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -278,7 +285,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -365,7 +372,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         
@@ -389,7 +396,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         

@@ -36,7 +36,7 @@ enum Commit
         
         defer
         {
-            Free.freeCommit(commitPointer)
+            gitCommitFree(commit: commitPointer)
         }
         
         

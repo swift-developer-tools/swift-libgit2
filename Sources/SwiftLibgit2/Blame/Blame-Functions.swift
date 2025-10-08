@@ -323,5 +323,11 @@ public func gitBlameFree(
     blame: OpaquePointer?
 )
 {
+    guard let blame: OpaquePointer = blame
+    else
+    {
+        return
+    }
+    
     git_blame_free(blame)
 }

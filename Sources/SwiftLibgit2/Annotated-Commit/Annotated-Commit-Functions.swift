@@ -217,5 +217,11 @@ public func gitAnnotatedCommitFree(
     commit: OpaquePointer?
 )
 {
+    guard let commit: OpaquePointer = commit
+    else
+    {
+        return
+    }
+    
     git_annotated_commit_free(commit)
 }

@@ -203,6 +203,12 @@ public func gitBranchIteratorFree(
     iter: OpaquePointer?
 )
 {
+    guard let iter: OpaquePointer = iter
+    else
+    {
+        return
+    }
+    
     git_branch_iterator_free(iter)
 }
 

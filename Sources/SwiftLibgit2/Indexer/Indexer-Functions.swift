@@ -221,5 +221,11 @@ public func gitIndexerFree(
     idx: OpaquePointer?
 )
 {
+    guard let idx: OpaquePointer = idx
+    else
+    {
+        return
+    }
+    
     git_indexer_free(idx)
 }

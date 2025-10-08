@@ -89,7 +89,7 @@ final class BufferTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -186,5 +186,15 @@ final class BufferTests: XCTestCaseStopOnFail
                 XCTAssertEqual(bufferContent, content)
             }
         }
+    }
+    
+    
+    
+    func testGitBufDispose() throws
+    {
+        var buffer = GitBuf()
+        
+        XCTAssertOK(gitBufDispose(buffer: &buffer))
+        XCTAssertOK(gitBufDispose(buffer: &buffer))
     }
 }

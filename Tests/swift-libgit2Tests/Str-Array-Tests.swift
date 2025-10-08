@@ -66,7 +66,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
         var strArray = git_strarray()
         
         gitStrArrayDispose(array: &strArray)
-        
+        gitStrArrayDispose(array: &strArray)
         gitStrArrayDispose(array: nil)
     }
     

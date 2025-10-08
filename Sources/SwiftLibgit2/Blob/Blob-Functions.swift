@@ -87,6 +87,12 @@ public func gitBlobFree(
     blob: OpaquePointer?
 )
 {
+    guard let blob: OpaquePointer = blob
+    else
+    {
+        return
+    }
+    
     git_blob_free(blob)
 }
 

@@ -86,6 +86,12 @@ public func gitCommitFree(
     commit: OpaquePointer?
 )
 {
+    guard let commit: OpaquePointer = commit
+    else
+    {
+        return
+    }
+    
     git_commit_free(commit)
 }
 
@@ -984,5 +990,11 @@ public func gitCommitArrayDispose(
     array: UnsafeMutablePointer<git_commitarray>?
 )
 {
+    guard let array: UnsafeMutablePointer<git_commitarray> = array
+    else
+    {
+        return
+    }
+    
     return git_commitarray_dispose(array)
 }

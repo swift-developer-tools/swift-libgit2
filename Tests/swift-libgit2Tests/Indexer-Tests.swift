@@ -15,6 +15,13 @@ import XCTest
 
 final class IndexerTests: XCTestCaseStopOnFail
 {
+    func testGitIndexerFree() throws
+    {
+        gitIndexerFree(idx: nil)
+    }
+    
+    
+    
     func testGitIndexerProgress() throws
     {
         let indexerProgress = GitIndexerProgress()
@@ -250,7 +257,7 @@ extension IndexerTests
         
         defer
         {
-            Free.freeIndexer(indexerPointer)
+            gitIndexerFree(idx: indexerPointer)
             Free.freeODB(odbPointer)
             
             try? FileManager.default.removeItem(at: indexerURL)

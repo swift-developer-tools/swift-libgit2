@@ -114,8 +114,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(oldBlobPointer)
-                Free.freeBlob(newBlobPointer)
+                gitBlobFree(blob: oldBlobPointer)
+                gitBlobFree(blob: newBlobPointer)
             }
             
             
@@ -200,7 +200,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -426,7 +426,7 @@ final class DiffTests: XCTestCaseStopOnFail
             defer
             {
                 Free.freeTree(treePointer)
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -671,6 +671,13 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffFree() throws
+    {
+        gitDiffFree(diff: nil)
+    }
+    
+    
+    
     func testGitDiffFromBuffer() throws
     {
         let patchContent: String =
@@ -693,7 +700,7 @@ final class DiffTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeDiff(diffPointer)
+            gitDiffFree(diff: diffPointer)
         }
         
         
@@ -724,7 +731,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeDiffStats(diffStatsPointer)
+                    gitDiffStatsFree(stats: diffStatsPointer)
                 }
                 
                 
@@ -828,8 +835,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(newIndexPointer)
-                Free.freeDiff(diffPointer)
+                gitIndexFree(index: newIndexPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -920,7 +927,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -1358,6 +1365,13 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffStatsFree() throws
+    {
+        gitDiffStatsFree(stats: nil)
+    }
+    
+    
+    
     func testGitDiffStatusChar() throws
     {
         let addedChar: CChar = gitDiffStatusChar(status: .gitDeltaAdded)
@@ -1404,7 +1418,7 @@ final class DiffTests: XCTestCaseStopOnFail
             defer
             {
                 Free.freeTree(treePointer)
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -1507,7 +1521,7 @@ final class DiffTests: XCTestCaseStopOnFail
             defer
             {
                 Free.freeTree(treePointer)
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             

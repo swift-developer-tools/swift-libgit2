@@ -345,5 +345,11 @@ public func gitSignatureFree(
     sig: UnsafeMutablePointer<git_signature>?
 )
 {
+    guard let sig: UnsafeMutablePointer<git_signature> = sig
+    else
+    {
+        return
+    }
+    
     git_signature_free(sig)
 }

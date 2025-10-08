@@ -21,7 +21,7 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeMailmap(mailmapPointer)
+            gitMailmapFree(mm: mailmapPointer)
         }
         
         
@@ -91,6 +91,13 @@ final class MailmapTests: XCTestCaseStopOnFail
     
     
     
+    func testGitMailmapFree() throws
+    {
+        gitMailmapFree(mm: nil)
+    }
+    
+    
+    
     func testGitMailmapFromBuffer() throws
     {
         let firstRealName       : String    = "Proper Name"
@@ -116,7 +123,7 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeMailmap(mailmapPointer)
+            gitMailmapFree(mm: mailmapPointer)
         }
         
         
@@ -202,7 +209,7 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeMailmap(mailmapPointer)
+                gitMailmapFree(mm: mailmapPointer)
             }
             
             
@@ -263,7 +270,7 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeMailmap(mailmapPointer)
+            gitMailmapFree(mm: mailmapPointer)
         }
         
         
@@ -305,7 +312,7 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeMailmap(mailmapPointer)
+                gitMailmapFree(mm: mailmapPointer)
             }
             
             

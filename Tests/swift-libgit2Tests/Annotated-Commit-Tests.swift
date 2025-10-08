@@ -15,6 +15,13 @@ import XCTest
 
 final class AnnotatedCommitTests: XCTestCaseStopOnFail
 {
+    func testGitAnnotatedCommitFree() throws
+    {
+        gitAnnotatedCommitFree(commit: nil)
+    }
+    
+    
+    
     func testGitAnnotatedCommitFromFetchhead() throws
     {
         try Repository.withRepository
@@ -29,7 +36,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
@@ -97,7 +104,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
@@ -146,7 +153,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
@@ -193,7 +200,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
