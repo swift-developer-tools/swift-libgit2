@@ -33,10 +33,7 @@ import Foundation
 ///
 /// None of the C convertible protocols define requirements to convert from a given C value to the
 /// equivalent Swift value (by using an `init(cValue:)` method) in order to maintain flexibility.
-///
-/// For example, other protocols like ``GitEnum`` and ``GitOptionSet`` conform to
-/// ``CConvertible``, but these use `init?(cValue:)` and `init(rawValue:)`, respectively.
-/// The `init(cValue:)` requirement is therefore defined by ``GitStruct``.
+/// The `init(cValue:)` requirement is defined by ``GitStruct``.
 ///
 /// ### Protocol Choice
 ///
