@@ -25,10 +25,13 @@ import CLibgit2
 public struct GitStrArray: GitStruct
 {
     /// The array of strings.
-    public let strings  : [String]
+    public let strings: [String]
     
-    /// The number of strings in the array.
-    public let count    : Int
+    /// The length of ``strings``.
+    public var count: Int
+    {
+        return strings.count
+    }
     
     
     
@@ -38,7 +41,6 @@ public struct GitStrArray: GitStruct
         cValue strArray: git_strarray
     )
     {
-        self.strings    = Array(strArray)
-        self.count      = strArray.count
+        self.strings = Array(strArray)
     }
 }
