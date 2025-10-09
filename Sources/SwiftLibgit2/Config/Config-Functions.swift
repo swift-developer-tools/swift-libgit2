@@ -12,7 +12,7 @@ import CLibgit2
 
 
 /// Frees the memory allocated for the given `git_config_entry` instance.
-/// - Parameter entry: The entry to free.
+/// - Parameter entry: The configuration entry to free.
 ///
 /// ## Discussion
 ///
