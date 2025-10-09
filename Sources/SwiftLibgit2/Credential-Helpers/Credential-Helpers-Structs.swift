@@ -17,9 +17,7 @@ import CLibgit2
 ///
 /// This struct is provided for documentation purposes, but is not used by other bindings.
 ///
-/// All bindings use
-/// [`UnsafeMutableRawPointer`](https://developer.apple.com/documentation/swift/unsafemutablerawpointer)
-/// payloads.
+/// All bindings use `UnsafeMutableRawPointer` payloads.
 ///
 /// ## C Equivalent
 ///
