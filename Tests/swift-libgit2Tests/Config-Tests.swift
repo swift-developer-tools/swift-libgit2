@@ -491,29 +491,48 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigMappingOperations() throws
     {
-        var configMap1 = GitConfigMap()
+        let customString    : String    = "custom-value_123!"
+        let anotherString   : String    = "another-value"
         
-        configMap1.type         = .gitConfigMapFalse
-        configMap1.strMatch     = nil
-        configMap1.mapValue     = 0
+        var configMapBoolFalse = GitConfigMap()
         
-        var configMap2 = GitConfigMap()
+        configMapBoolFalse.type         = .gitConfigMapFalse
+        configMapBoolFalse.strMatch     = nil
+        configMapBoolFalse.mapValue     = 0
         
-        configMap2.type         = .gitConfigMapTrue
-        configMap2.strMatch     = nil
-        configMap2.mapValue     = 1
+        var configMapBoolTrue = GitConfigMap()
         
-        var configMap3 = GitConfigMap()
+        configMapBoolTrue.type          = .gitConfigMapTrue
+        configMapBoolTrue.strMatch      = nil
+        configMapBoolTrue.mapValue      = 1
         
-        configMap3.type         = .gitConfigMapString
-        configMap3.strMatch     = "custom"
-        configMap3.mapValue     = 2
+        var configMapStringCustom = GitConfigMap()
         
+        configMapStringCustom.type          = .gitConfigMapString
+        configMapStringCustom.strMatch      = customString
+        configMapStringCustom.mapValue      = 2
+        
+        var configMapStringAnother = GitConfigMap()
+        
+        configMapStringAnother.type         = .gitConfigMapString
+        configMapStringAnother.strMatch     = anotherString
+        configMapStringAnother.mapValue     = 3
+        
+        var configMapStringEmpty = GitConfigMap()
+        
+        configMapStringEmpty.type           = .gitConfigMapString
+        configMapStringEmpty.strMatch       = ""
+        configMapStringEmpty.mapValue       = 4
+        
+        /// Interweave the `nil` `strMatch` properties to test the indexing of
+        /// ``withArrayOfGitConfigMaps(_:)``.
         let configMaps: [GitConfigMap] =
         [
-            configMap1,
-            configMap2,
-            configMap3
+            configMapStringEmpty,
+            configMapBoolFalse,
+            configMapStringCustom,
+            configMapBoolTrue,
+            configMapStringAnother
         ]
         
         
@@ -526,65 +545,228 @@ final class ConfigTests: XCTestCaseStopOnFail
             {
                 configPointer in
                 
-                let configSetBoolResult: GitErrorCode = gitConfigSetBool(
+                /// Test boolean `false` mapping.
+                let configSetBoolFalseResult: GitErrorCode = gitConfigSetBool(
                     cfg:    configPointer,
-                    name:   "map.bool",
-                    value:  true
+                    name:   "map.boolfalse",
+                    value:  false
                 )
                 
-                XCTAssertOK(configSetBoolResult)
+                XCTAssertOK(configSetBoolFalseResult)
                 
                 
                 
                 var mappedValue: Int32 = -1
                 
-                let configGetMappedBoolResult: GitErrorCode = gitConfigGetMapped(
+                let configGetBoolFalseResult: GitErrorCode = gitConfigGetMapped(
                     out:    &mappedValue,
                     cfg:    configPointer,
-                    name:   "map.bool",
+                    name:   "map.boolfalse",
                     maps:   configMaps,
                     mapN:   configMaps.count
                 )
                 
-                XCTAssertOK(configGetMappedBoolResult)
-                XCTAssertEqual(mappedValue, 1)
+                XCTAssertOK(configGetBoolFalseResult)
+                XCTAssertEqual(mappedValue, Int32(configMapBoolFalse.mapValue))
                 
                 
                 
-                let configSetStringResult: GitErrorCode = gitConfigSetString(
+                
+                /// Test boolean `true` mapping.
+                let configSetBoolTrueResult: GitErrorCode = gitConfigSetBool(
                     cfg:    configPointer,
-                    name:   "map.string",
-                    value:  "custom"
+                    name:   "map.booltrue",
+                    value:  true
                 )
                 
-                XCTAssertOK(configSetStringResult)
+                XCTAssertOK(configSetBoolTrueResult)
                 
                 
                 
-                let configGetMappedStringResult: GitErrorCode = gitConfigGetMapped(
+                mappedValue = -1
+                
+                let configGetBoolTrueResult: GitErrorCode = gitConfigGetMapped(
                     out:    &mappedValue,
                     cfg:    configPointer,
-                    name:   "map.string",
+                    name:   "map.booltrue",
                     maps:   configMaps,
                     mapN:   configMaps.count
                 )
                 
-                XCTAssertOK(configGetMappedStringResult)
-                XCTAssertEqual(mappedValue, 2)
+                XCTAssertOK(configGetBoolTrueResult)
+                XCTAssertEqual(mappedValue, Int32(configMapBoolTrue.mapValue))
                 
                 
                 
+                /// Test string mapping with `customString`.
+                let configSetCustomStringResult: GitErrorCode = gitConfigSetString(
+                    cfg:    configPointer,
+                    name:   "map.stringcustom",
+                    value:  customString
+                )
+                
+                XCTAssertOK(configSetCustomStringResult)
+                
+                
+                
+                mappedValue = -1
+                
+                let configGetCustomStringResult: GitErrorCode = gitConfigGetMapped(
+                    out:    &mappedValue,
+                    cfg:    configPointer,
+                    name:   "map.stringcustom",
+                    maps:   configMaps,
+                    mapN:   configMaps.count
+                )
+                
+                XCTAssertOK(configGetCustomStringResult)
+                XCTAssertEqual(mappedValue, Int32(configMapStringCustom.mapValue))
+                
+                
+                
+                /// Test string mapping with `anotherString`.
+                let configSetAnotherStringResult: GitErrorCode = gitConfigSetString(
+                    cfg:    configPointer,
+                    name:   "map.stringanother",
+                    value:  anotherString
+                )
+                
+                XCTAssertOK(configSetAnotherStringResult)
+                
+                
+                
+                mappedValue = -1
+                
+                let configGetAnotherStringResult: GitErrorCode = gitConfigGetMapped(
+                    out:    &mappedValue,
+                    cfg:    configPointer,
+                    name:   "map.stringanother",
+                    maps:   configMaps,
+                    mapN:   configMaps.count
+                )
+                
+                XCTAssertOK(configGetAnotherStringResult)
+                XCTAssertEqual(mappedValue, Int32(configMapStringAnother.mapValue))
+                
+                
+                
+                /// Test string lookup with `"false"`.
                 var lookupValue: Int32 = -1
                 
-                let configLookupMapValueResult: GitErrorCode = gitConfigLookupMapValue(
+                let configLookupFalseStringResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  "false"
+                )
+                
+                XCTAssertOK(configLookupFalseStringResult)
+                XCTAssertEqual(lookupValue, Int32(configMapBoolFalse.mapValue))
+
+                
+                
+                /// Test string lookup with `"true"`.
+                lookupValue = -1
+                
+                let configLookupTrueStringResult: GitErrorCode = gitConfigLookupMapValue(
                     out:    &lookupValue,
                     maps:   configMaps,
                     mapN:   configMaps.count,
                     value:  "true"
                 )
                 
-                XCTAssertOK(configLookupMapValueResult)
-                XCTAssertEqual(lookupValue, 1)
+                XCTAssertOK(configLookupTrueStringResult)
+                XCTAssertEqual(lookupValue, Int32(configMapBoolTrue.mapValue))
+                
+                
+                
+                /// Test string lookup with `customString`.
+                lookupValue = -1
+                
+                let configLookupCustomStringResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  customString
+                )
+                
+                XCTAssertOK(configLookupCustomStringResult)
+                XCTAssertEqual(lookupValue, Int32(configMapStringCustom.mapValue))
+                
+                
+                
+                /// Test string lookup with `anotherString`.
+                lookupValue = -1
+                
+                let configLookupAnotherStringResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  anotherString
+                )
+                
+                XCTAssertOK(configLookupAnotherStringResult)
+                XCTAssertEqual(lookupValue, Int32(configMapStringAnother.mapValue))
+                
+                
+                
+                /// Test with an empty array.
+                lookupValue = -1
+                
+                let configLookupEmptyResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [],
+                    mapN:   0,
+                    value:  "empty"
+                )
+                
+                XCTAssertNotOK(configLookupEmptyResult)
+                
+                
+                
+                /// Test with all `nil` values. This hits the fast path of
+                /// ``withArrayOfGitConfigMaps(_:)``, where there is no buffer allocation.
+                lookupValue = -1
+                
+                let configLookupAllNilResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [configMapBoolFalse, configMapBoolTrue],
+                    mapN:   2,
+                    value:  "false"
+                )
+                
+                XCTAssertOK(configLookupAllNilResult)
+                XCTAssertEqual(lookupValue, Int32(configMapBoolFalse.mapValue))
+                
+                
+                
+                /// Test with a single string.
+                lookupValue = -1
+                
+                let configLookupSingleStringResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [configMapStringCustom],
+                    mapN:   1,
+                    value:  customString
+                )
+                
+                XCTAssertOK(configLookupSingleStringResult)
+                XCTAssertEqual(lookupValue, Int32(configMapStringCustom.mapValue))
+                
+                
+                
+                /// Test with an empty string.
+                lookupValue = -1
+                
+                let configLookupEmptyStringResult: GitErrorCode = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [configMapStringEmpty],
+                    mapN:   1,
+                    value:  ""
+                )
+                
+                XCTAssertOK(configLookupEmptyStringResult)
+                XCTAssertEqual(lookupValue, Int32(configMapStringEmpty.mapValue))
             }
         }
     }
