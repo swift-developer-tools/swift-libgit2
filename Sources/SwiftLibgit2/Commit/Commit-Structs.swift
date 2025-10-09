@@ -125,9 +125,8 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// All bindings use `[OpaquePointer]` instead of `git_commitarray`.
+/// - Note: This struct is provided for documentation purposes, but is not used by other bindings.
+/// All bindings use `[OpaquePointer]` instead.
 ///
 /// ## C Equivalent
 ///

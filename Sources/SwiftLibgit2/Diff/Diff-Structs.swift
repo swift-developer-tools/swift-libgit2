@@ -859,8 +859,7 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
+/// - Note: This struct is provided for documentation purposes, but is not used by other bindings.
 /// `git_diff_similarity_metric` is treated as an opaque struct since its function pointers are
 /// allocated and managed by libgit2, and cannot be meaningfully recreated or translated.
 ///

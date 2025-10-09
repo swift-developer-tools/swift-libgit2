@@ -15,9 +15,8 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// All bindings use `UnsafeMutableRawPointer` payloads.
+/// - Note: This struct is provided for documentation purposes, but is not used by other bindings.
+/// All bindings use `UnsafeMutableRawPointer` instead.
 ///
 /// ## C Equivalent
 ///
