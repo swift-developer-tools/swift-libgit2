@@ -25,7 +25,7 @@ internal extension Array where Element == GitConfigMap
     ///
     /// The pointer will be `nil` if the array is empty or if memory allocation fails.
     ///
-    /// Neither `recursionIndex` nor `accumulatedMaps` should be provided by the caller.
+    /// Neither ``recursionIndex`` nor ``accumulatedMaps`` should be provided by the caller.
     func withGitConfigMapArray<T>(
         index           recursionIndex  : Int                                   = 0,
         accumulating    accumulatedMaps : [git_configmap]                       = [],
