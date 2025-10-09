@@ -1262,16 +1262,16 @@ public func gitConfigGetMapped(
 {
     return withCConversion
     {
-        return maps.withGitConfigMapArray
+        return try maps.withGitConfigMapArray
         {
-            cMaps in
+            cMaps, cMapsCount in
             
             return git_config_get_mapped(
                 out,
                 cfg,
                 name,
                 cMaps,
-                mapN
+                cMapsCount
             )
         }
     }
@@ -1299,14 +1299,14 @@ public func gitConfigLookupMapValue(
 {
     return withCConversion
     {
-        return maps.withGitConfigMapArray
+        return try maps.withGitConfigMapArray
         {
-            cMaps in
+            cMaps, cMapsCount in
             
             return git_config_lookup_map_value(
                 out,
                 cMaps,
-                mapN,
+                cMapsCount,
                 value
             )
         }
