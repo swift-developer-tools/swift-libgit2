@@ -1262,7 +1262,7 @@ public func gitConfigGetMapped(
 {
     return withCConversion
     {
-        return try maps.withGitConfigMapArray
+        return try maps.withArrayOfGitConfigMaps
         {
             cMaps, cMapsCount in
             
@@ -1299,7 +1299,7 @@ public func gitConfigLookupMapValue(
 {
     return withCConversion
     {
-        return try maps.withGitConfigMapArray
+        return try maps.withArrayOfGitConfigMaps
         {
             cMaps, cMapsCount in
             

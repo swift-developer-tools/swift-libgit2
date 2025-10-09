@@ -141,7 +141,6 @@ public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
 
 
 
-
 /// A mapping from configuration variables to integer values.
 ///
 /// ## Discussion

@@ -14,8 +14,8 @@ import Foundation
 
 internal extension Array where Element == GitConfigMap
 {
-    /// Calls the given closure with a  pointer to a `git_configmap` array and the length of that array,
-    /// by recursively converting each ``GitConfigMap`` element of the receiver.
+    /// Calls the given closure with a pointer to an array of `git_configmap` instances, and the length
+    /// of that array, by recursively converting each ``GitConfigMap`` element of the receiver.
     /// - Parameters:
     ///   - recursionIndex: The current recursion index.
     ///   - accumulatedMaps: The accumulated `git_configmap` instances.
@@ -27,7 +27,7 @@ internal extension Array where Element == GitConfigMap
     ///
     /// - Important: Neither ``recursionIndex`` nor ``accumulatedMaps`` should be
     /// provided by the caller.
-    func withGitConfigMapArray<T>(
+    func withArrayOfGitConfigMaps<T>(
         index           recursionIndex  : Int               = 0,
         accumulating    accumulatedMaps : [git_configmap]   = [],
         _               body            : (UnsafePointer<git_configmap>?, Int) throws -> T
@@ -70,7 +70,7 @@ internal extension Array where Element == GitConfigMap
             
             updatedConfigMaps.append(configMap.pointee)
             
-            return try self.withGitConfigMapArray(
+            return try self.withArrayOfGitConfigMaps(
                 index:          recursionIndex + 1,
                 accumulating:   updatedConfigMaps,
                 body
