@@ -19,7 +19,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
     {
         let strings: [String] = ["hello", "world"]
         
-        strings.withGitStrArray
+        try strings.withGitStrArray
         {
             strArray in
             
@@ -50,7 +50,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
         
         
         
-        [].withGitStrArray
+        try [].withGitStrArray
         {
             strArray in
             
@@ -77,7 +77,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
         let outerArray  : [String]  = ["outer1", "outer2"]
         let innerArray  : [String]  = ["inner1", "inner2"]
         
-        outerArray.withGitStrArray
+        try outerArray.withGitStrArray
         {
             outerStrArray in
             
@@ -106,7 +106,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
             
             
             
-            innerArray.withGitStrArray
+            try innerArray.withGitStrArray
             {
                 innerStrArray in
                 

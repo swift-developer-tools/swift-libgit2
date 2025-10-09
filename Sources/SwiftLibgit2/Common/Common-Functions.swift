@@ -1102,7 +1102,7 @@ public func gitLibgit2OptSetExtensions(
 {
     return withCConversion
     {
-        return extensions.withArrayOfImmutableCStrings
+        return try extensions.withArrayOfImmutableCStrings
         {
             cExtensions in
             

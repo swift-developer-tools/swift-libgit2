@@ -905,7 +905,7 @@ public func gitIndexAddAll(
 {
     return withCConversion
     {
-        return pathspec.withGitStrArray
+        return try pathspec.withGitStrArray
         {
             cPathspec in
             
@@ -942,7 +942,7 @@ public func gitIndexRemoveAll(
 {
     return withCConversion
     {
-        return pathspec.withGitStrArray
+        return try pathspec.withGitStrArray
         {
             cPathspec in
             
@@ -986,7 +986,7 @@ public func gitIndexUpdateAll(
 {
     return withCConversion
     {
-        return pathspec.withGitStrArray
+        return try pathspec.withGitStrArray
         {
             cPathspec in
             

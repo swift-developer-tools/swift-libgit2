@@ -16,7 +16,7 @@ internal extension Array where Element == String
     /// Calls the given closure with a mutable pointer to a `git_strarray` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error thrown by the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -24,7 +24,7 @@ internal extension Array where Element == String
     /// intended to free the strings of a `git_strarray` which was allocated by libgit2.
     func withGitStrArray<T>(
         _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var strArray = git_strarray()
         

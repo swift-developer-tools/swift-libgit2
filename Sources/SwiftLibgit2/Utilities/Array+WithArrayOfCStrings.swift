@@ -20,6 +20,8 @@
 /// functions below are adapted from the Swift.org open source project. Original source code:
 /// https://github.com/swiftlang/swift/blob/c3b7709a7c4789f1ad7249d357f69509fb8be731/stdlib/private/SwiftPrivate/SwiftPrivate.swift
 
+import Foundation
+
 
 
 /// Computes the prefix sums of a sequence by cumulatively applying a binary operation to each element
@@ -67,10 +69,10 @@ internal extension Array where Element == String
     /// Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
-    /// - Throws: An error thrown by the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     func withArrayOfCStrings<T>(
       _ body: ([UnsafeMutablePointer<CChar>?]) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         guard !self.isEmpty
         else
@@ -85,10 +87,6 @@ internal extension Array where Element == String
         /// unqualified `Array(_:)` calls to `Array<String>.init(_:)` rather than the generic
         /// `Array<T>.init(_:)` initializer. This causes a type mismatch since the assigned type
         /// is `[Int]`, but the compiler expects `[String]`.
-        ///
-        /// The explicit `Swift.Array` wrapper is retained from the original Swift implementation for
-        /// consistency, and may proivde benefits for type inference stability or future-proofing against
-        /// changes in collection protocols.
         let argsCounts      : [Int]     = Swift.Array(self.map { $0.utf8.count + 1 })
         let argsOffsets     : [Int]     = [0] + scan(argsCounts, 0, +)
         let argsBufferSize  : Int       = argsOffsets.last ?? 0
@@ -96,6 +94,7 @@ internal extension Array where Element == String
         
         
         var argsBuffer: [UInt8] = []
+        
         argsBuffer.reserveCapacity(argsBufferSize)
         
         for arg in self
@@ -110,8 +109,13 @@ internal extension Array where Element == String
         {
             argsBuffer in
             
-            /// `baseAddress` should not be `nil`, since the buffer will not be empty at this point.
-            let pointer = UnsafeMutableRawPointer(argsBuffer.baseAddress!)
+            guard let baseAddress: UnsafeMutablePointer<UInt8> = argsBuffer.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            let pointer = UnsafeMutableRawPointer(baseAddress)
                 .bindMemory(to: CChar.self, capacity: argsBuffer.count)
             
             var cStrings: [UnsafeMutablePointer<CChar>?] = argsOffsets.map { pointer + $0 }
@@ -126,18 +130,14 @@ internal extension Array where Element == String
     
     
     
-    /// Calls the given closure with an array of immutable C string pointers created from an array of Swift strings.
+    /// Calls the given closure with an array of immutable C string pointers created from an array of
+    /// Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
-    /// - Throws: An error thrown by the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// Use this function instead of ``withArrayOfCStrings(_:)`` when working with C APIs
-    /// that expect `const char **` parameters.
+    /// - Throws: An `NSError` if the conversion failed.
     func withArrayOfImmutableCStrings<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         return try self.withArrayOfCStrings
         {
@@ -154,10 +154,15 @@ internal extension Array where Element == String
             {
                 immutableCStringsBuffer in
                 
-                /// `baseAddress` should not be `nil`, since the buffer will not be empty at
-                /// this point.
+                guard let baseAddress: UnsafePointer<UnsafePointer<CChar>?>
+                        = immutableCStringsBuffer.baseAddress
+                else
+                {
+                    throw NSError.makeCConversionError()
+                }
+                
                 let pointer = UnsafeMutablePointer<UnsafePointer<CChar>?>(
-                    mutating: immutableCStringsBuffer.baseAddress!
+                    mutating: baseAddress
                 )
                 
                 return try body(pointer)

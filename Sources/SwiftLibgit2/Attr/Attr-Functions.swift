@@ -148,7 +148,7 @@ public func gitAttrGetMany(
 {
     return withCConversion
     {
-        return names.withArrayOfImmutableCStrings
+        return try names.withArrayOfImmutableCStrings
         {
             cNames in
                 
