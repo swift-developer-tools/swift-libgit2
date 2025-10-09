@@ -15,7 +15,18 @@ import XCTest
 
 final class StrArrayTests: XCTestCaseStopOnFail
 {
-    func testGitStrArray() throws
+    func testGitStrArrayDispose() throws
+    {
+        var strArray = git_strarray()
+        
+        gitStrArrayDispose(array: &strArray)
+        gitStrArrayDispose(array: &strArray)
+        gitStrArrayDispose(array: nil)
+    }
+    
+    
+    
+    func testWithGitStrArray() throws
     {
         let strings: [String] = ["hello", "world"]
         
@@ -61,18 +72,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
     
     
     
-    func testGitStrArrayDispose() throws
-    {
-        var strArray = git_strarray()
-        
-        gitStrArrayDispose(array: &strArray)
-        gitStrArrayDispose(array: &strArray)
-        gitStrArrayDispose(array: nil)
-    }
-    
-    
-    
-    func testGitStrArrayNested() throws
+    func testWithGitStrArrayNested() throws
     {
         let outerArray  : [String]  = ["outer1", "outer2"]
         let innerArray  : [String]  = ["inner1", "inner2"]
