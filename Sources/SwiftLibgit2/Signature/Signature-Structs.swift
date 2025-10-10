@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_signature`](https://libgit2.org/docs/reference/main/signature/git_signature.html)
-public struct GitSignature: GitStructInternalMutable, WithCConvertible
+public struct GitSignature: Freeable, GitStructInternalMutable, WithCConvertible
 {
     /// The full name of the actor.
     ///
@@ -70,6 +70,17 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
         self.name   = String(optionalCString: signature.name)   ?? ""
         self.email  = String(optionalCString: signature.email)  ?? ""
         self.when   = GitTime(cValue: signature.when)
+    }
+    
+    
+    
+    /// Frees the memory allocated for the C value.
+    /// - Parameter pointer: The pointer to the memory to free.
+    internal static func freeCValue(
+        _ pointer: P
+    )
+    {
+        gitSignatureFree(sig: pointer)
     }
     
     

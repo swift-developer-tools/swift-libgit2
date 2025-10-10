@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_entry`](https://libgit2.org/docs/reference/main/config/git_config_entry.html)
-public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
+public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertible
 {
     /// The normalized name of the configuration entry.
     ///
@@ -90,6 +90,17 @@ public struct GitConfigEntry: GitStructInternalMutable, WithCConvertible
         self.originPath     = String(optionalCString: configEntry.origin_path)
         self.includeDepth   = configEntry.include_depth
         self.level          = GitConfigLevelT(cValue: configEntry.level) ?? .gitConfigLevelLocal
+    }
+    
+    
+    
+    /// Frees the memory allocated for the C value.
+    /// - Parameter pointer: The pointer to the memory to free.
+    internal static func freeCValue(
+        _ pointer: P
+    )
+    {
+        gitConfigEntryFree(entry: pointer)
     }
     
     

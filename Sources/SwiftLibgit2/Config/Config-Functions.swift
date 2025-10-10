@@ -814,7 +814,7 @@ public func gitConfigNext(
 {
     return withCConversion
     {
-        return try entry.withMutatingCValue
+        return try entry.withBorrowingCValue
         {
             cEntry in
             

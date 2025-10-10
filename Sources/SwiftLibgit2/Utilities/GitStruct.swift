@@ -66,19 +66,9 @@
 /// For example, the three protocols described above require different property access levels, but this is
 /// not definable through Swift protocols.
 ///
-/// Similarly, structs that conform to ``GitStructReadable``, ``GitStructMutable``,
-/// or ``GitStructInternalMutable`` must implement one of the following approaches to
-/// converting the Swift struct to its C equivalent:
-///
-/// ```swift
-/// internal func cValue() -> C
-///
-/// internal func withCValue<T>(
-///     _ body: (UnsafeMutablePointer<C>) -> T
-/// ) -> T
-/// ```
-///
-/// Structs must implement these by conforming to one of the following protocols:
+/// Finally, structs that conform to ``GitStructReadable``, ``GitStructMutable``,
+/// or ``GitStructInternalMutable`` must implement a method to convert the Swift struct to its
+/// C equivalent. Structs must implement this method by conforming to one of the following protocols:
 ///
 /// - ``CConvertible`` (non-throwing, without memory management)
 /// - ``ThrowingCConvertible`` (throwing, without memory management)
@@ -90,28 +80,49 @@
 /// of the convertible protocols, unless they conform directly to ``GitStruct`` (and are unused by
 /// other bindings).
 ///
-/// Some structs may also need to implement one of the following mutating methods:
+/// Some structs may also need to implement a mutating Swift-to-C conversion method. These structs are
+/// often used as `inout` parameters. ``GitStruct`` provides default implementations of these
+/// mutating methods, which are designed for use with C functions that expect parameters of the type
+/// `C *`, `C **`, or`const C **`.
 ///
-/// ```swift
-/// internal mutating func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<C>) throws -> T
-/// ) rethrows -> T
+/// ## Freeable Structs
 ///
-/// internal mutating func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
-/// ) rethrows -> T
+/// A struct that conforms to ``GitStructInternalMutable`` may also need to conform to
+/// ``Freeable`` if libgit2 provides a corresponding memory-freeing function.
 ///
-/// internal mutating func withMutatingCValue<T>(
-///     _ body: (UnsafeMutablePointer<UnsafePointer<C>?>) throws -> T
-/// ) throws -> T
-/// ```
+/// Conforming to ``Freeable`` enables automatic memory management when using
+/// ``withMutatingCValue(_:)`` with C functions that expect `C **` parameters and follow the
+/// allocating pattern, where libgit2 allocates new memory that the caller must free.
 ///
-/// The methods are designed for use with C functions that expect parameters of the type `C *`,
-/// `C **`, and `const C **`, respectively. The second and third methods use an optional pointer,
-/// since libgit2 may set the pointer to `nil`.
+/// Structs that do not conform to ``Freeable`` cannot use ``withMutatingCValue(_:)`` with
+/// `C **` parameters. Instead, they must use ``withBorrowingCValue(_:)``, which is appropriate
+/// for functions that follow the borrowing pattern.
 ///
-/// The structs that use these mutating methods are commonly used as `inout` parameters.
-/// ``GitStruct`` provides default implementations of all three methods.
+/// ### Memory Ownership Patterns
+///
+/// libgit2 uses two distinct patterns for functions with `C **` output parameters: the allocating pattern and
+/// the borrowing pattern.
+///
+/// The allocating pattern involves the function allocating new memory on the heap and transferring
+/// ownership to the caller. The caller must free this memory. The libgit2 documentation for these functions
+/// usually states this responsibility. The struct must conform to ``Freeable``, and the caller must use
+/// ``withMutatingCValue(_:)``.
+///
+/// The borrowing pattern involves the function returning a pointer to memory managed by libgit2, usually
+/// through use of an iterator, container, or other object. The caller does not own this memory and must not
+/// free it. The libgit2 documentation for these functions usually mentions the lifecycle/validity of the returned
+/// pointer (for example, a pointer being valid until the next call to the iterator, or until the iterator is freed).
+///
+/// ## Freeable Exceptions
+///
+/// ``GitBuf`` conforms to ``GitStructInternalMutable`` and has an associated memory-freeing
+/// function in libgit2, but does not conform to ``Freeable``. This is because ``GitBuf`` acts as a
+/// pointer container with a lifecycle managed by the API user rather than by the binding API.
+///
+/// ``GitBuf`` uses the `C *` version of ``withMutatingCValue(_:)``, which passes a pointer to
+/// a stack-allocated `git_buf` struct. libgit2 populates `git_buf->ptr` with heap-allocated memory,
+/// which is copied into the Swift struct. The API user must call ``gitBufDispose(buffer:)`` when
+/// done with the buffer to free this memory.
 internal protocol GitStruct
 {
     /// The type of the equivalent C value.
@@ -165,8 +176,6 @@ internal protocol GitStructInternalMutable: GitStruct
 
 // MARK: - Extensions
 
-/// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
-/// to ``GitStructInternalMutable`` and ``CConvertible``.
 internal extension GitStruct where Self: CConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
@@ -260,8 +269,6 @@ internal extension GitStruct where Self: CConvertible
 
 
 
-/// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
-/// to ``GitStructInternalMutable`` and ``ThrowingCConvertible``.
 internal extension GitStruct where Self: ThrowingCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
@@ -355,8 +362,6 @@ internal extension GitStruct where Self: ThrowingCConvertible
 
 
 
-/// The default implementations of ``withMutatingCValue(_:)`` for structs that conform
-/// to ``GitStructInternalMutable`` and ``WithCConvertible``.
 internal extension GitStruct where Self: WithCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance, and updates the receiver with
@@ -395,7 +400,7 @@ internal extension GitStruct where Self: WithCConvertible
     /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type `C **`.
-    mutating func withMutatingCValue<T>(
+    mutating func withBorrowingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) throws -> T
     {
@@ -441,5 +446,52 @@ internal extension GitStruct where Self: WithCConvertible
         }
         
         return result
+    }
+}
+
+
+
+internal extension GitStruct where Self: WithCConvertible & Freeable
+{
+    /// Calls the given closure with a mutable pointer to an optional mutable pointer to a `C` instance,
+    /// and updates the receiver with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type `C **`.
+    ///
+    /// If libgit2 allocates new memory, this method will automatically free that memory using the
+    /// receiver's ``freeCValue(_:)`` method after copying the data.
+    mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
+    ) throws -> T where P == UnsafeMutablePointer<C>?
+    {
+        return try withCValue
+        {
+            cValuePointer in
+            var optionalCValuePointer: UnsafeMutablePointer<C>? = cValuePointer
+            
+            let result: T = try body(&optionalCValuePointer)
+            
+            guard let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer
+            else
+            {
+                return result
+            }
+            
+            
+            
+            self = Self.init(cValue: finalCValuePointer.pointee)
+            
+            if finalCValuePointer != cValuePointer
+            {
+                Self.freeCValue(finalCValuePointer)
+            }
+            
+            return result
+        }
     }
 }
