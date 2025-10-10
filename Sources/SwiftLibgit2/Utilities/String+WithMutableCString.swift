@@ -16,7 +16,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// Parts of the function below are adapted from the Swift.org open source project. Original source code:
+/// Parts of the function below are adapted from the Swift.org open source
+/// project. Original source code:
 /// https://github.com/swiftlang/swift/blob/c3b7709a7c4789f1ad7249d357f69509fb8be731/stdlib/private/SwiftPrivate/SwiftPrivate.swift
 
 
@@ -29,9 +30,6 @@ internal extension String
     /// - Throws: An error thrown by the given closure.
     ///
     /// ## Discussion
-    ///
-    /// Use this function over ``String.withCString(_:)`` when working with C APIs
-    /// that expect mutable strings.
     ///
     /// The core of a simpler implementation would be:
     ///
@@ -48,9 +46,10 @@ internal extension String
     /// }
     /// ```
     ///
-    /// However, the current approach using a single buffer avoids heap allocation via `malloc()` and
-    /// `free()` in `strdup()`. This approach is similar to the one used by the Swift standard library
-    /// in ``withArrayOfCStrings(_:)``.
+    /// However, the current approach using a single buffer avoids heap
+    /// allocation via `malloc()` and `free()` in `strdup()`. This approach
+    /// is similar to the one used by the Swift standard library in
+    /// ``withArrayOfCStrings(_:)``.
     func withMutableCString<T>(
         _ body: (UnsafeMutablePointer<CChar>) throws -> T
     ) rethrows -> T
@@ -74,9 +73,13 @@ internal extension String
         {
             buffer in
             
-            /// `baseAddress` should not be `nil`, since the buffer will not be empty at this point.
+            /// `baseAddress` should not be `nil`, since the buffer will not
+            /// be empty at this point.
             let mutableCString = UnsafeMutableRawPointer(buffer.baseAddress!)
-                .bindMemory(to: CChar.self, capacity: buffer.count)
+                .bindMemory(
+                    to:         CChar.self,
+                    capacity:   buffer.count
+                )
             
             return try body(mutableCString)
         }

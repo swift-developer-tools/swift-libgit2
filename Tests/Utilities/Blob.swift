@@ -19,18 +19,21 @@ enum Blob
     /// The source from which to create a blob.
     enum BlobCreationSource
     {
-        /// Reads a file from the working directory of the given repository and writes it to the
-        /// object database.
+        /// Reads a file from the working directory of the given repository
+        /// and writes it to the object database.
         case workingDirectory
         
-        /// Reads a file from the file system (not necessarily inside the working directory of
-        /// the repository) and writes it to the object database.
-        /// - Parameter path: The path to the file from which the blob should be created.
+        /// Reads a file from the file system (not necessarily inside the
+        /// working directory of the repository) and writes it to the object
+        /// database.
+        /// - Parameter path: The path to the file from which the blob should
+        /// be created.
         case disk(
             path: String
         )
         
-        /// Closes the given stream and finalizes writing the blob to the object database.
+        /// Closes the given stream and finalizes writing the blob to the
+        /// object database.
         /// - Parameter stream: The stream to close.
         case streamCommit(
             stream: UnsafeMutablePointer<git_writestream>
@@ -139,12 +142,9 @@ enum Blob
         
         
         
-        let blobRawContent  : UnsafeRawPointer  = gitBlobRawContent(blob: blobPointer)
-        let blobRawSize     : UInt64            = gitBlobRawSize(blob: blobPointer)
-        
         let blobData = Data(
-            bytes:  blobRawContent,
-            count:  Int(blobRawSize)
+            bytes:  gitBlobRawContent(blob: blobPointer),
+            count:  Int(gitBlobRawSize(blob: blobPointer))
         )
         
         let blobContent = String(

@@ -183,10 +183,11 @@ extension IndexerTests
         // TODO: Remove once `git_backbuilder_insert_commit()` has a binding.
         var cHeadOID: git_oid = headOID.cValue()
         
-        let packBuilderInsertCommitResult: Int32 = git_packbuilder_insert_commit(
-            packBuilderPointer,
-            &cHeadOID
-        )
+        let packBuilderInsertCommitResult: Int32
+            = git_packbuilder_insert_commit(
+                packBuilderPointer,
+                &cHeadOID
+            )
         
         XCTAssertOK(GitErrorCode(rawValue: packBuilderInsertCommitResult))
         

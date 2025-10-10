@@ -15,8 +15,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// The properties of ``GitAttrCheckFlagsT`` correspond to flag macros in libgit2. For consistency
-/// with other APIs, swift-libgit2 presents them as if they were an enum in libgit2.
+/// The properties of ``GitAttrCheckFlagsT`` correspond to flag macros in
+/// libgit2. For consistency with other APIs, swift-libgit2 presents them as
+/// if they were an enum in libgit2.
 ///
 /// ## C Equivalent
 ///
@@ -107,7 +108,8 @@ public enum GitAttrValueT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitAttrValueT`` instance into a `git_attr_value_t` instance.
+    /// Converts the ``GitAttrValueT`` instance into a `git_attr_value_t`
+    /// instance.
     /// - Returns: The `git_attr_value_t` instance.
     internal func cValue() -> git_attr_value_t
     {

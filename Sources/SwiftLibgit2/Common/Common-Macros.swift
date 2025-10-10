@@ -11,12 +11,13 @@ import CLibgit2
 
 
 
-/// The separator used in path list strings, like the `PATH` environment variable.
+/// The separator used in path list strings, like the `PATH` environment
+/// variable.
 ///
 /// ## Discussion
 ///
-/// A colon is used for Apple platforms and all systems other than Windows and AmigaOS,
-/// which use a semi-colon.
+/// A colon is used for Apple platforms and all systems other than Windows
+/// and AmigaOS, which use a semi-colon.
 ///
 /// ## C Equivalent
 ///

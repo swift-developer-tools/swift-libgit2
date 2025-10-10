@@ -34,7 +34,8 @@ public struct GitCredentialT: GitOptionSet
     
     
     
-    /// Creates a ``GitCredentialT`` instance from a `git_credential_t` instance.
+    /// Creates a ``GitCredentialT`` instance from a `git_credential_t`
+    /// instance.
     /// - Parameter credential: The `git_credential_t` instance to use.
     internal init(
         cValue credential: git_credential_t
@@ -64,8 +65,9 @@ public struct GitCredentialT: GitOptionSet
     ///
     /// ## Discussion
     ///
-    /// This is used as a pre-authentication step if the underlying transport does not know which
-    /// username to use (for example, SSH with no username in its URL).
+    /// This is used as a pre-authentication step if the underlying transport
+    /// does not know which username to use (for example, SSH with no username
+    /// in its URL).
     public static let gitCredentialUsername             = GitCredentialT(rawValue: GIT_CREDENTIAL_USERNAME.rawValue)
     
     /// An SSH key-based authentication request.
@@ -73,7 +75,8 @@ public struct GitCredentialT: GitOptionSet
     
     
     
-    /// Converts the ``GitCredentialT`` instance into a `git_credential_t` instance.
+    /// Converts the ``GitCredentialT`` instance into a `git_credential_t`
+    /// instance.
     /// - Returns: The `git_credential_t` instance.
     internal func cValue() -> git_credential_t
     {

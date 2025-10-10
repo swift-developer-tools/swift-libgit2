@@ -39,7 +39,7 @@ internal extension NSError
     {
         return makeError(
             code:       Int(GitErrorCode.gitEUser.rawValue),
-            message:    "Failed to convert Swift binding to C equivalent."
+            message:    "Failed to convert a Swift value to its C equivalent."
         )
     }
 }

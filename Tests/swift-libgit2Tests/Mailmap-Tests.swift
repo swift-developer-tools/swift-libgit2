@@ -26,7 +26,8 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         
         
-        let mailmapNewResult: GitErrorCode = gitMailmapNew(out: &mailmapPointer)
+        let mailmapNewResult: GitErrorCode
+            = gitMailmapNew(out: &mailmapPointer)
         
         XCTAssertOK(mailmapNewResult)
         
@@ -214,10 +215,11 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             
             
-            let mailmapFromRepositoryResult: GitErrorCode = gitMailmapFromRepository(
-                out:    &mailmapPointer,
-                repo:   repository.pointer
-            )
+            let mailmapFromRepositoryResult: GitErrorCode
+                = gitMailmapFromRepository(
+                    out:    &mailmapPointer,
+                    repo:   repository.pointer
+                )
             
             XCTAssertOK(mailmapFromRepositoryResult)
             
@@ -243,14 +245,16 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             XCTAssertOK(mailmapResolveResult)
             
-            guard let resolvedNameString = String(optionalCString: resolvedName)
+            guard let resolvedNameString
+                    = String(optionalCString: resolvedName)
             else
             {
                 XCTFail("The resolved name string was nil.")
                 return
             }
             
-            guard let resolvedEmailString = String(optionalCString: resolvedEmail)
+            guard let resolvedEmailString
+                    = String(optionalCString: resolvedEmail)
             else
             {
                 XCTFail("The resolved email string was nil.")
@@ -275,7 +279,8 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         
         
-        let mailmapNewResult: GitErrorCode = gitMailmapNew(out: &mailmapPointer)
+        let mailmapNewResult: GitErrorCode
+            = gitMailmapNew(out: &mailmapPointer)
         
         XCTAssertOK(mailmapNewResult)
         XCTAssertNotNil(mailmapPointer)
@@ -317,10 +322,11 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             
             
-            let mailmapFromRepositoryResult: GitErrorCode = gitMailmapFromRepository(
-                out:    &mailmapPointer,
-                repo:   repository.pointer
-            )
+            let mailmapFromRepositoryResult: GitErrorCode
+                = gitMailmapFromRepository(
+                    out:    &mailmapPointer,
+                    repo:   repository.pointer
+                )
             
             XCTAssertOK(mailmapFromRepositoryResult)
             
@@ -347,11 +353,12 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             var resolvedSignature = GitSignature()
             
-            let mailmapResolveSignatureResult: GitErrorCode = gitMailmapResolveSignature(
-                out:    &resolvedSignature,
-                mm:     mailmapPointer,
-                sig:    originalSignature
-            )
+            let mailmapResolveSignatureResult: GitErrorCode
+                = gitMailmapResolveSignature(
+                    out:    &resolvedSignature,
+                    mm:     mailmapPointer,
+                    sig:    originalSignature
+                )
             
             XCTAssertOK(mailmapResolveSignatureResult)
             XCTAssertEqual(resolvedSignature.name, realName)

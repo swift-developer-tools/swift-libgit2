@@ -28,7 +28,8 @@ enum Diff
     ///
     /// - The diff is not `nil`.
     /// - The diff has a non-zero number of deltas.
-    /// - The diff has a non-zero number of deltas of the given type, if a type was specified.
+    /// - The diff has a non-zero number of deltas of the given type, if a
+    /// type was specified.
     static func assertDiffChanges(
         diffPointer : OpaquePointer?,
         type        : GitDeltaT?        = nil
@@ -70,7 +71,11 @@ enum Diff
         
         
         
-        guard let delta: GitDiffDelta = gitDiffGetDelta(diff: diffPointer, idx: 0)
+        guard let delta: GitDiffDelta
+                = gitDiffGetDelta(
+                    diff:   diffPointer,
+                    idx:    0
+                )
         else
         {
             XCTFail("The delta was nil.")
@@ -90,8 +95,8 @@ enum Diff
     ///   - oldCommitOID: The old commit ID.
     ///   - newCommitOID: The new commit ID.
     ///   - body: The closure to call.
-    /// - Throws: An error thrown by the closure or if the write operation failed,
-    /// or an `NSError` if the diff could not be created.
+    /// - Throws: An `NSError` if the diff could not be created, or an error
+    /// thrown by the closure or if the write operation failed.
     static func withTreeToTreeDiffPointer(
         in  repository  : Repository,
         oldCommitOID    : GitOID,
@@ -196,12 +201,13 @@ enum Diff
     
     
     
-    /// Calls the given closure with a pointer to a diff between HEAD and the working directory.
+    /// Calls the given closure with a pointer to a diff between HEAD and the
+    /// working directory.
     /// - Parameters:
     ///   - repository: The repository in which the diff should be created.
     ///   - body: The closure to call.
-    /// - Throws: An error thrown by the closure or if the write operation failed,
-    /// or an `NSError` if the diff could not be created.
+    /// - Throws: An `NSError` if the diff could not be created, or an error
+    /// thrown by the closure or if the write operation failed.
     static func withTreeToWorkdirDiffPointer(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> Void
@@ -223,7 +229,8 @@ enum Diff
         
         
         
-        let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+        let commitTreeResult: GitErrorCode
+            = try Commit.withHEADCommit(in: repository)
         {
             commitPointer in
 

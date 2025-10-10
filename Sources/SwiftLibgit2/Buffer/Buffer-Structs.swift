@@ -15,12 +15,15 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// Sometimes libgit2 wants to return an allocated data buffer to the caller and have the caller take
-/// responsibility for freeing that memory. To make ownership clear in these cases, libgit2 uses ``GitBuf``
-/// to return this data. Callers must use ``gitBufDispose(buffer:)`` to free the memory.
+/// A ``GitBuf`` contains a pointer to a null-terminated C string and the
+/// length of the string, in bytes. The length of the string does not include
+/// the null terminator.
 ///
-/// A ``GitBuf`` contains a pointer to a null-terminated C string and the length of the string, in bytes.
-/// The length of the string does not include the null terminator.
+/// - Important: Sometimes libgit2 wants to return an allocated data buffer to
+/// the caller, and have the caller take responsibility for freeing that memory.
+/// To make ownership clear in these cases, swift-libgit2 uses ``GitBuf`` to
+/// return this data. Callers must use``gitBufDispose(buffer:)`` to free the
+/// memory when the buffer is no longer needed.
 ///
 /// ## C Equivalent
 ///
@@ -33,17 +36,19 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// ``ptr`` points to the start of the buffer being returned. The buffer's length, in bytes, is specified
-    /// by the ``size`` property. The buffer contains a null terminator at position `size + 1`.
+    /// ``ptr`` points to the start of the buffer being returned. The buffer's
+    /// length, in bytes, is specified by the ``size`` property. The buffer
+    /// contains a null terminator at position `size + 1`.
     ///
     /// In libgit2, `git_buf->ptr` has the following lifecycle:
     ///
     /// - Initial state: `NULL`.
     /// - After population: points to allocated, zero-terminated memory.
-    /// - After disposal: points to a static single-character array sentinel value.
+    /// - After disposal: points to a static single-character array sentinel
+    /// value.
     ///
-    /// In swift-libgit2, ``ptr`` uses Swift's optional type, where `nil` represents both the initial state
-    /// and the disposed state for more idiomatic Swift.
+    /// In swift-libgit2, ``ptr`` uses `nil` to represent both the initial
+    /// state and the disposed state.
     public internal(set) var ptr        : UnsafeMutablePointer<CChar>?  = nil
     
     /// This property is unused, but is reserved for API compatibility.
@@ -53,7 +58,8 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     /// The default value is `0`.
     public internal(set) var reserved   : Int                           = 0
     
-    /// The length, in bytes, of the buffer pointed to by ``ptr``, not including the null terminator.
+    /// The length, in bytes, of the buffer pointed to by ``ptr``, not
+    /// including the null terminator.
     ///
     /// ## Discussion
     ///

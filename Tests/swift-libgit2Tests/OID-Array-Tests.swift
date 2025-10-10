@@ -163,7 +163,8 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 
                 XCTAssertEqual(cOuterArrayOfOIDsCount, outerArrayOfOIDs.count)
                 
-                guard let cOuterArrayOfOIDs: UnsafePointer<git_oid> = cOuterArrayOfOIDs
+                guard let cOuterArrayOfOIDs: UnsafePointer<git_oid>
+                        = cOuterArrayOfOIDs
                 else
                 {
                     XCTFail("The outer array of C OIDs was nil.")
@@ -185,7 +186,8 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                     
                     XCTAssertEqual(cInnerArrayOfOIdsCount, innerArrayOfOIDs.count)
                     
-                    guard let cInnerArrayOfOIDs: UnsafePointer<git_oid> = cInnerArrayOfOIDs
+                    guard let cInnerArrayOfOIDs: UnsafePointer<git_oid>
+                            = cInnerArrayOfOIDs
                     else
                     {
                         XCTFail("The inner array of C OIDs was nil.")
@@ -201,7 +203,8 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                     
                     
                     
-                    /// Test `outerArrayOfOIDs` again within the `innerArrayOfOIDs` closure.
+                    /// Test `outerArrayOfOIDs` again within the
+                    /// `innerArrayOfOIDs` closure.
                     XCTAssertEqual(cOuterArrayOfOIDsCount, outerArrayOfOIDs.count)
                     
                     for (index, swiftOID) in outerArrayOfOIDs.enumerated()
@@ -263,9 +266,10 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 XCTAssertNil(oidArray.pointee.ids)
                 XCTAssertEqual(oidArray.pointee.count, 0)
                 
-                /// Since the receiver array was empty, `oidArray` will be freed with
-                /// ``gitOIDArrayDispose(array:)``. The allocated memory does not need
-                /// to be freed separately after being assigned to `oidArray.pointee.ids`.
+                /// Since the receiver array was empty, `oidArray` will be
+                /// freed with ``gitOIDArrayDispose(array:)``. The allocated
+                /// memory does not need to be freed separately after being
+                /// assigned to `oidArray.pointee.ids`.
                 let cOIDs = UnsafeMutablePointer<git_oid>.allocate(capacity: 3)
                 
                 cOIDs[0] = headOID.cValue()

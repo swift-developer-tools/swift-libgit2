@@ -52,7 +52,8 @@ public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlobFilterOptions`` instance with the default configuration.
+    /// Creates a ``GitBlobFilterOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -63,7 +64,8 @@ public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
     
     /// Creates a ``GitBlobFilterOptions`` instance from a
     /// `git_blob_filter_options` instance.
-    /// - Parameter blobFilterOptions: The `git_blob_filter_options` instance to use.
+    /// - Parameter blobFilterOptions: The `git_blob_filter_options` instance
+    /// to use.
     internal init(
         cValue blobFilterOptions: git_blob_filter_options
     )
@@ -76,7 +78,8 @@ public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_blob_filter_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_blob_filter_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

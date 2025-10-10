@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_clone_options` instances.
-/// ``GitCloneOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_clone_options` instances. ``GitCloneOptions`` instances do not need
+/// to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -43,8 +44,8 @@ public func gitCloneOptionsInit(
 
 /// Clones a remote repository.
 /// - Parameters:
-///   - out: The pointer in which to store the repository. The underlying type must be
-///   `git_repository`.
+///   - out: The pointer in which to store the repository. The underlying type
+///   must be `git_repository`.
 ///   - url: The URL of the remote to clone.
 ///   - localPath: The path to the local directory in which to clone.
 ///   - options: The options for the clone operation.

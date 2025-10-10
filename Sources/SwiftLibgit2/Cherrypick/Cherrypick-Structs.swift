@@ -37,21 +37,22 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// default merge options.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the default merge options.
     public var mergeOpts    : GitMergeOptions?      = nil
     
     /// The options for the checkout operation.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// default checkout options.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the default checkout options.
     public var checkoutOpts : GitCheckoutOptions?   = nil
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance with the default configuration.
+    /// Creates a ``GitCherrypickOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -60,9 +61,10 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance from a `git_cherrypick_options`
-    /// instance.
-    /// - Parameter cherrypickOptions: The `git_cherrypick_options` instance to use.
+    /// Creates a ``GitCherrypickOptions`` instance from a
+    /// `git_cherrypick_options` instance.
+    /// - Parameter cherrypickOptions: The `git_cherrypick_options` instance
+    /// to use.
     internal init(
         cValue cherrypickOptions: git_cherrypick_options
     )
@@ -75,7 +77,8 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_cherrypick_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_cherrypick_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -101,7 +104,8 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
         {
             cMergeOpts in
             
-            if let cMergeOpts: UnsafeMutablePointer<git_merge_options> = cMergeOpts
+            if let cMergeOpts: UnsafeMutablePointer<git_merge_options>
+                = cMergeOpts
             {
                 cherrypickOptions.merge_opts = cMergeOpts.pointee
             }
@@ -110,7 +114,8 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
             {
                 cCheckoutOpts in
                 
-                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
+                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options>
+                    = cCheckoutOpts
                 {
                     cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
                 }

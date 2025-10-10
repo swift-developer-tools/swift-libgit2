@@ -16,8 +16,8 @@ import CLibgit2
 ///   - path: The matching path.
 ///   - matchedPathspec: The given path to match.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if an error occurred, a positive value to skip this file for the index
-/// operation, or `0` on success.
+/// - Returns: A negative value if an error occurred, a positive value to skip
+/// this file for the index operation, or `0` on success.
 ///
 /// ## C Equivalent
 ///

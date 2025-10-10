@@ -58,7 +58,8 @@ public struct GitAttrOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitAttrOptions`` instance from a `git_attr_options` instance.
+    /// Creates a ``GitAttrOptions`` instance from a `git_attr_options`
+    /// instance.
     /// - Parameter attrOptions: The `git_attr_options` instance to use.
     internal init(
         cValue attrOptions: git_attr_options
@@ -72,7 +73,8 @@ public struct GitAttrOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_attr_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_attr_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

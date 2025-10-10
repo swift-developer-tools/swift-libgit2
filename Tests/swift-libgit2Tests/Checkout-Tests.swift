@@ -206,7 +206,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            /// Checking out without options will default to using safe checkout.
+            /// Checking out without options will default to using safe
+            /// checkout.
             checkoutHEADResult = gitCheckoutHEAD(
                 repo:   repository.pointer,
                 opts:   nil
@@ -275,8 +276,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            /// Checking out without options will default to using safe checkout.
-            /// This will also default to using the repository index.
+            /// Checking out without options will default to using safe
+            /// checkout. This will also default to using the repository index.
             checkoutIndexResult = gitCheckoutIndex(
                 repo:   repository.pointer,
                 index:  nil,
@@ -345,8 +346,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
         let checkoutOptions = GitCheckoutOptions()
         
         /// `dirMode`, `fileMode`, and `fileOpenFlags` are zero-initialized.
-        /// The documentation defaults refer to runtime defaults set in `checkout_data_init()`
-        /// and `blob_content_to_file()`.
+        /// The documentation defaults refer to runtime defaults set in
+        /// `checkout_data_init()` and `blob_content_to_file()`.
         XCTAssertEqual(checkoutOptions.version, gitCheckoutOptionsVersion)
         XCTAssertEqual(checkoutOptions.checkoutStrategy, .gitCheckoutSafe)
         XCTAssertFalse(checkoutOptions.disableFilters)
@@ -531,7 +532,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -587,8 +589,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            /// Checking out without options will default to using safe checkout.
-            /// This will also default to using HEAD.
+            /// Checking out without options will default to using safe
+            /// checkout. This will also default to using HEAD.
             checkoutTreeResult = gitCheckoutTree(
                 repo:       repository.pointer,
                 treeish:    nil,

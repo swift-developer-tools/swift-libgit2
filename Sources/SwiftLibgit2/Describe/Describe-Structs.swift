@@ -47,26 +47,29 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var pattern                  : String?               = nil
     
-    /// Whether to walk down only the first parent's ancestry when calculating the distance from
-    /// the matching tag or reference.
+    /// Whether to walk down only the first parent's ancestry when calculating
+    /// the distance from the matching tag or reference.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
     public var onlyFollowFirstParent    : Bool                  = false
     
-    /// Whether the full commit ID should be shown if no matching tag or reference is found.
+    /// Whether the full commit ID should be shown if no matching tag or
+    /// reference is found.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
     ///
-    /// The describe operation will fail if this is `false` and no matching tag or reference is found.
+    /// The describe operation will fail if this is `false` and no matching
+    /// tag or reference is found.
     public var showCommitOIDAsFallback  : Bool                  = false
     
     
     
-    /// Creates a ``GitDescribeOptions`` instance with the default configuration.
+    /// Creates a ``GitDescribeOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -75,13 +78,15 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDescribeOptions`` instance from a `git_describe_options` instance.
+    /// Creates a ``GitDescribeOptions`` instance from a `git_describe_options`
+    /// instance.
     /// - Parameter describeOptions: The `git_describe_options` instance to use.
     ///
     /// ## Discussion
     ///
-    /// ``describeStrategy`` defaults to ``GitDescribeStrategyT/gitDescribeDefault``
-    /// if an unexpected value is encountered, although this should never occur.
+    /// ``describeStrategy`` defaults to
+    /// ``GitDescribeStrategyT/gitDescribeDefault`` if an unexpected value is
+    /// encountered, although this should never occur.
     internal init(
         cValue describeOptions: git_describe_options
     )
@@ -96,7 +101,8 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_describe_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_describe_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -155,14 +161,16 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     /// The default value is ``gitDescribeDefaultAbbreviatedSize``.
     public var abbreviatedSize      : UInt32    = gitDescribeDefaultAbbreviatedSize
     
-    /// Whether the long format should always be used even when a shorter name is possible.
+    /// Whether the long format should always be used even when a shorter name
+    /// is possible.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
     public var alwaysUseLongFormat  : Bool      = false
     
-    /// The suffix to append to the description if the working directory is dirty.
+    /// The suffix to append to the description if the working directory is
+    /// dirty.
     ///
     /// ## Discussion
     ///
@@ -171,7 +179,8 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDescribeFormatOptions`` instance with the default configuration.
+    /// Creates a ``GitDescribeFormatOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -196,7 +205,8 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_describe_format_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_describe_format_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

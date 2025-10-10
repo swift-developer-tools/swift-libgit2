@@ -46,7 +46,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeCommitResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let describeCommitResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -59,7 +60,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(describeCommitResult)
             
-            guard let describeResultPointer: OpaquePointer = describeResultPointer
+            guard let describeResultPointer: OpaquePointer
+                    = describeResultPointer
             else
             {
                 XCTFail("The describe result pointer was nil.")
@@ -120,7 +122,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeCommitResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let describeCommitResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -133,7 +136,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(describeCommitResult)
             
-            guard let describeResultPointer: OpaquePointer = describeResultPointer
+            guard let describeResultPointer: OpaquePointer
+                    = describeResultPointer
             else
             {
                 XCTFail("The describe result pointer was nil.")

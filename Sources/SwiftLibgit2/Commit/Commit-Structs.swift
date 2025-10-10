@@ -25,7 +25,8 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     /// The default value is ``gitCommitCreateOptionsVersion``.
     public var version          : UInt32            = gitCommitCreateOptionsVersion
     
-    /// Whether a commit with no changes from the prior commit (an empty commit) should be allowed.
+    /// Whether a commit with no changes from the prior commit (an empty commit)
+    /// should be allowed.
     ///
     /// ## Discussion
     ///
@@ -50,12 +51,14 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using UTF-8.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using UTF-8.
     public var messageEncoding  : String?           = nil
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance with the default configuration.
+    /// Creates a ``GitCommitCreateOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -66,8 +69,8 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     
     /// Creates a ``GitCommitCreateOptions`` instance from a
     /// `git_commit_create_options` instance.
-    /// - Parameter commitCreateOptions: The `git_commit_create_options` instance
-    /// to use.
+    /// - Parameter commitCreateOptions: The `git_commit_create_options`
+    /// instance to use.
     internal init(
         cValue commitCreateOptions: git_commit_create_options
     )
@@ -81,7 +84,8 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_commit_create_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_commit_create_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -125,8 +129,8 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// - Note: This struct is provided for documentation purposes, but is not used by other bindings.
-/// All bindings use `[OpaquePointer]` instead.
+/// - Note: This struct is provided for documentation purposes, but is not used
+/// by other bindings. All bindings use `[OpaquePointer]` instead.
 ///
 /// ## C Equivalent
 ///

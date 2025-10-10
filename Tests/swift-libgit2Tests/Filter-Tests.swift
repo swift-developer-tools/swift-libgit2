@@ -247,7 +247,8 @@ extension FilterTests
     
     /// Creates a blob from the working directory of the given repository.
     /// - Parameters:
-    ///   - blobPointer: A pointer to the blob. The underlying type must be `git_blob`.
+    ///   - blobPointer: A pointer to the blob. The underlying type must be
+    ///   `git_blob`.
     ///   - repository: The repository in which to create the blob.
     /// - Returns: The `URL` of the created blob.
     /// - Throws: An error if the file read or write operations failed.
@@ -436,15 +437,17 @@ extension FilterTests
             
             
             
-            let blobCreateFromStreamResult: GitErrorCode = gitBlobCreateFromStream(
-                out:        &streamPointer,
-                repo:       repository.pointer,
-                hintPath:   nil
-            )
+            let blobCreateFromStreamResult: GitErrorCode
+                = gitBlobCreateFromStream(
+                    out:        &streamPointer,
+                    repo:       repository.pointer,
+                    hintPath:   nil
+                )
             
             XCTAssertOK(blobCreateFromStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_writestream> = streamPointer
+            guard let streamPointer: UnsafeMutablePointer<git_writestream>
+                    = streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")

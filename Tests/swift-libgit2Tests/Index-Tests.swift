@@ -24,12 +24,13 @@ final class IndexTests: XCTestCaseStopOnFail
             let buffer      = Data("Custom content".utf8)
             var blobOID     = GitOID()
             
-            let blobCreateFromBufferResult: GitErrorCode = gitBlobCreateFromBuffer(
-                id:         &blobOID,
-                repo:       repository.pointer,
-                buffer:     buffer,
-                len:        buffer.count
-            )
+            let blobCreateFromBufferResult: GitErrorCode
+                = gitBlobCreateFromBuffer(
+                    id:         &blobOID,
+                    repo:       repository.pointer,
+                    buffer:     buffer,
+                    len:        buffer.count
+                )
             
             XCTAssertOK(blobCreateFromBufferResult)
             
@@ -486,7 +487,8 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let initialCaps: GitIndexCapabilityT? = gitIndexCaps(index: indexPointer)
+            let initialCaps: GitIndexCapabilityT?
+                = gitIndexCaps(index: indexPointer)
             
             XCTAssertNotNil(initialCaps)
             
@@ -501,7 +503,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let updatedCaps: GitIndexCapabilityT? = gitIndexCaps(index: indexPointer)
+            let updatedCaps: GitIndexCapabilityT?
+                = gitIndexCaps(index: indexPointer)
             
             XCTAssertEqual(updatedCaps, .gitIndexCapabilityIgnoreCase)
         }
@@ -584,22 +587,24 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexConflictRemoveResult: GitErrorCode = gitIndexConflictRemove(
-                index:  indexPointer,
-                path:   Repository.readmeFileName
-            )
+            let indexConflictRemoveResult: GitErrorCode
+                = gitIndexConflictRemove(
+                    index:  indexPointer,
+                    path:   Repository.readmeFileName
+                )
             
             XCTAssertOK(indexConflictRemoveResult)
             
             
             
-            let afterRemoveConflictGetResult: GitErrorCode = gitIndexConflictGet(
-                ancestorOut:    &ancestorIndexEntry,
-                ourOut:         &ourIndexEntry,
-                theirOut:       &theirIndexEntry,
-                index:          indexPointer,
-                path:           Repository.readmeFileName
-            )
+            let afterRemoveConflictGetResult: GitErrorCode
+                = gitIndexConflictGet(
+                    ancestorOut:    &ancestorIndexEntry,
+                    ourOut:         &ourIndexEntry,
+                    theirOut:       &theirIndexEntry,
+                    index:          indexPointer,
+                    path:           Repository.readmeFileName
+                )
             
             XCTAssertNotOK(afterRemoveConflictGetResult)
         }
@@ -683,10 +688,11 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexConflictIteratorNewResult: GitErrorCode = gitIndexConflictIteratorNew(
-                iteratorOut:    &iteratorPointer,
-                index:          indexPointer
-            )
+            let indexConflictIteratorNewResult: GitErrorCode
+                = gitIndexConflictIteratorNew(
+                    iteratorOut:    &iteratorPointer,
+                    index:          indexPointer
+                )
             
             XCTAssertOK(indexConflictIteratorNewResult)
             
@@ -707,12 +713,13 @@ final class IndexTests: XCTestCaseStopOnFail
             
             while true
             {
-                let indexConflictNextResult: GitErrorCode = gitIndexConflictNext(
-                    ancestorOut:    &ancestorIndexEntry,
-                    ourOut:         &ourIndexEntry,
-                    theirOut:       &theirIndexEntry,
-                    iterator:       iteratorPointer
-                )
+                let indexConflictNextResult: GitErrorCode
+                    = gitIndexConflictNext(
+                        ancestorOut:    &ancestorIndexEntry,
+                        ourOut:         &ourIndexEntry,
+                        theirOut:       &theirIndexEntry,
+                        iterator:       iteratorPointer
+                    )
                 
                 if indexConflictNextResult == .gitIterOver
                 {
@@ -752,7 +759,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexClearResult: GitErrorCode = gitIndexClear(index: indexPointer)
+            let indexClearResult: GitErrorCode
+                = gitIndexClear(index: indexPointer)
             
             XCTAssertOK(indexClearResult)
             
@@ -892,7 +900,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexStage: GitIndexStageT? = gitIndexEntryStage(entry: indexEntry)
+            let indexStage: GitIndexStageT?
+                = gitIndexEntryStage(entry: indexEntry)
             
             XCTAssertEqual(indexStage, .gitIndexStageNormal)
             
@@ -1202,19 +1211,22 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let beforeHasConflicts: Bool = gitIndexHasConflicts(index: indexPointer)
+            let beforeHasConflicts: Bool
+                = gitIndexHasConflicts(index: indexPointer)
             
             XCTAssertTrue(beforeHasConflicts)
             
             
             
-            let indexConflictCleanupResult: GitErrorCode = gitIndexConflictCleanup(index: indexPointer)
+            let indexConflictCleanupResult: GitErrorCode
+                = gitIndexConflictCleanup(index: indexPointer)
             
             XCTAssertOK(indexConflictCleanupResult)
             
             
             
-            let afterHasConflicts: Bool = gitIndexHasConflicts(index: indexPointer)
+            let afterHasConflicts: Bool
+                = gitIndexHasConflicts(index: indexPointer)
             
             XCTAssertFalse(afterHasConflicts)
         }
@@ -1260,10 +1272,11 @@ final class IndexTests: XCTestCaseStopOnFail
             
             while true
             {
-                let indexIteratorNextResult: GitErrorCode = gitIndexIteratorNext(
-                    out:        &indexEntry,
-                    iterator:   iteratorPointer
-                )
+                let indexIteratorNextResult: GitErrorCode
+                    = gitIndexIteratorNext(
+                        out:        &indexEntry,
+                        iterator:   iteratorPointer
+                    )
                 
                 if indexIteratorNextResult == .gitIterOver
                 {
@@ -1304,7 +1317,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexNewResult: GitErrorCode = gitIndexNew(indexOut: &indexPointer)
+            let indexNewResult: GitErrorCode
+                = gitIndexNew(indexOut: &indexPointer)
             
             XCTAssertOK(indexNewResult)
             XCTAssertNotNil(indexPointer)
@@ -1351,7 +1365,8 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let ownerPointer: OpaquePointer = gitIndexOwner(index: indexPointer)
+            let ownerPointer: OpaquePointer
+                = gitIndexOwner(index: indexPointer)
             
             XCTAssertEqual(ownerPointer, repository.pointer)
         }
@@ -1420,7 +1435,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: indexPointer)
             
             XCTAssertOK(indexWriteResult)
         }
@@ -1474,13 +1490,15 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexClearResult: GitErrorCode = gitIndexClear(index: indexPointer)
+            let indexClearResult: GitErrorCode
+                = gitIndexClear(index: indexPointer)
             
             XCTAssertOK(indexClearResult)
             
             
             
-            let entryCountAfterClear: Int = gitIndexEntryCount(index: indexPointer)
+            let entryCountAfterClear: Int
+                = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertEqual(entryCountAfterClear, 0)
             
@@ -1495,7 +1513,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let entryCountAfterRead: Int = gitIndexEntryCount(index: indexPointer)
+            let entryCountAfterRead: Int
+                = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertGreaterThan(entryCountAfterRead, 0)
             
@@ -1561,11 +1580,12 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexRemoveDirectoryResult: GitErrorCode = gitIndexRemoveDirectory(
-                index:  indexPointer,
-                dir:    directoryPath,
-                stage:  .gitIndexStageNormal
-            )
+            let indexRemoveDirectoryResult: GitErrorCode
+                = gitIndexRemoveDirectory(
+                    index:  indexPointer,
+                    dir:    directoryPath,
+                    stage:  .gitIndexStageNormal
+                )
             
             XCTAssertOK(indexRemoveDirectoryResult)
             
@@ -1638,7 +1658,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: indexPointer)
             
             XCTAssertOK(indexWriteResult)
             

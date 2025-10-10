@@ -50,7 +50,10 @@ final class CloneTests: XCTestCaseStopOnFail
                 directoryHint:  .notDirectory
             )
             
-            XCTAssertTrue(FileManager.default.fileExists(atPath: readmeFileURL.path))
+            let fileExists: Bool = FileManager.default
+                .fileExists(atPath: readmeFileURL.path)
+            
+            XCTAssertTrue(fileExists)
             
             
             
@@ -288,7 +291,8 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            guard let branchName = String(optionalCString: git_reference_shorthand(headReferencePointer))
+            guard let branchName
+                    = String(optionalCString: git_reference_shorthand(headReferencePointer))
             else
             {
                 XCTFail("The branch name was nil.")
@@ -382,7 +386,10 @@ final class CloneTests: XCTestCaseStopOnFail
             )
             
             /// A bare repository should have no working directory files.
-            XCTAssertFalse(FileManager.default.fileExists(atPath: readmeFileURL.path))
+            let readmeFileExists: Bool = FileManager.default
+                .fileExists(atPath: readmeFileURL.path)
+            
+            XCTAssertFalse(readmeFileExists)
             
             
             
@@ -392,7 +399,10 @@ final class CloneTests: XCTestCaseStopOnFail
             )
             
             /// A bare repository should still have a `.git/objects` directory.
-            XCTAssertTrue(FileManager.default.fileExists(atPath: objectsDirectoryURL.path))
+            let objectsDirectoryExists: Bool = FileManager.default
+                .fileExists(atPath: objectsDirectoryURL.path)
+            
+            XCTAssertTrue(objectsDirectoryExists)
         }
     }
 }

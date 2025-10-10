@@ -16,11 +16,11 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// The returned ``GitError`` instance may contain stale information if this function is called
-/// after a different function that succeeded.
+/// The returned ``GitError`` instance may contain stale information if this
+/// function is called after a different function that succeeded.
 ///
-/// - Important: Do not rely on this to determine whether an error has occurred. Instead, examine
-/// the ``GitErrorCode`` instances returned by functions.
+/// - Important: Do not rely on this to determine whether an error has occurred.
+/// Instead, examine the ``GitErrorCode`` instances returned by functions.
 ///
 /// ## C Equivalent
 ///

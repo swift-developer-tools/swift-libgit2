@@ -17,8 +17,8 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// If the attribute has a ``GitAttrValueT/gitAttrValueString`` type, it can be accessed normally
-/// as a null-terminated C string.
+/// If the attribute has a ``GitAttrValueT/gitAttrValueString`` type, it can
+/// be accessed normally as a null-terminated C string.
 ///
 /// ## C Equivalent
 ///
@@ -29,26 +29,34 @@ public func gitAttrValue(
 {
     let attributeValue: git_attr_value_t = git_attr_value(attr)
     
-    /// Default to ``GitAttrValueT/gitAttrValueUnspecified`` if an unexpected value is
-    /// encountered, although this should never occur.
-    return GitAttrValueT(rawValue: UInt32(attributeValue.rawValue)) ?? .gitAttrValueUnspecified
+    /// Default to ``GitAttrValueT/gitAttrValueUnspecified`` if an unexpected
+    /// value is encountered, although this should never occur.
+    return GitAttrValueT(rawValue: UInt32(attributeValue.rawValue))
+        ?? .gitAttrValueUnspecified
 }
 
 
 
 /// Looks up the value of one attribute for the given path.
 /// - Parameters:
-///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
-///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
-///   this value.
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - valueOut: The pointer in which to store the value of the attribute.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
-///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
-///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
-///   file (not a directory).
+///   - path: The path within the repository to check for attributes.
 ///   - name: The name of the attribute to look up.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// Use attribute macros to test whether the attribute value is set, unset,
+/// or unspecified, or use the string value for attributes set to a value.
+///
+/// Relative paths will be interpreted relative to the repository root. The
+/// specified file does not have to exist, but if it does not, then it will be
+/// treated as a plain file (not as a directory).
+///
+/// - Important: Do not modify or free the returned attribute value.
 ///
 /// ## C Equivalent
 ///
@@ -75,19 +83,27 @@ public func gitAttrGet(
 
 
 
-/// Looks up the value of one attribute for the given path, with extended options.
+/// Looks up the value of one attribute for the given path, with extended
+/// options.
 /// - Parameters:
-///   - valueOut: The output of the value of the attribute. Use attribute macros to test whether it is
-///   set, unset, or unspecified, or use the string value for attributes set to a value. Do not modify or free
-///   this value.
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - valueOut: The pointer in which to store the value of the attribute.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
 ///   - opts: The options to use when querying the attributes.
-///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
-///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
-///   file (not a directory).
+///   - path: The path within the repository to check for attributes.
 ///   - name: The name of the attribute to look up.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// Use attribute macros to test whether the attribute value is set, unset,
+/// or unspecified, or use the string value for attributes set to a value.
+///
+/// Relative paths will be interpreted relative to the repository root. The
+/// specified file does not have to exist, but if it does not, then it will be
+/// treated as a plain file (not as a directory).
+///
+/// - Important: Do not modify or free the returned attribute value.
 ///
 /// ## C Equivalent
 ///
@@ -121,18 +137,24 @@ public func gitAttrGetExt(
 
 /// Looks up the values of a list of attributes for the given path.
 /// - Parameters:
-///   - valueOut: An array of `numAttr` entries that should have string pointers written into it for the
-///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
-///   array itself if it was not allocated by the library).
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - valueOut: An array of length `numAttr`, into which the attribute values
+///   should be written.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
-///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
-///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
-///   file (not a directory).
+///   - path: The path within the repository to check for attributes.
 ///   - numAttr: The number of attributes to look up.
-///   - names: An array of `numAttr` entries containing attribute names.
+///   - names: An array of length `numAttr`, containing the attribute names.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// Relative paths will be interpreted relative to the repository root. The
+/// specified file does not have to exist, but if it does not, then it will be
+/// treated as a plain file (not as a directory).
+///
+/// - Important: Do not modify or free the values that are written into the
+/// array, but do free the array itself if it was not allocated by libgit2.
 ///
 /// ## C Equivalent
 ///
@@ -166,20 +188,27 @@ public func gitAttrGetMany(
 
 
 
-/// Looks up the values of a list of attributes for the given path, with extended options.
+/// Looks up the values of a list of attributes for the given path, with
+/// extended options.
 /// - Parameters:
-///   - valueOut: An array of `numAttr` entries that should have string pointers written into it for the
-///   values of the attributes. Do not modify or free the values that are written into this array (but do free the
-///   array itself if it was not allocated by the library).
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - valueOut: An array of length `numAttr`, into which the attribute values
+///   should be written.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
 ///   - opts: The options to use when querying the attributes.
-///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
-///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
-///   file (not a directory).
+///   - path: The path within the repository to check for attributes.
 ///   - numAttr: The number of attributes to look up.
-///   - names: An array of `numAttr` entries containing attribute names.
+///   - names: An array of length `numAttr`, containing the attribute names.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// Relative paths will be interpreted relative to the repository root. The
+/// specified file does not have to exist, but if it does not, then it will be
+/// treated as a plain file (not as a directory).
+///
+/// - Important: Do not modify or free the values that are written into the
+/// array, but do free the array itself if it was not allocated by libgit2.
 ///
 /// ## C Equivalent
 ///
@@ -220,15 +249,19 @@ public func gitAttrGetManyExt(
 
 /// Loops over all the attributes for the given path.
 /// - Parameters:
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
-///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
-///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
-///   file (not a directory).
-///   - callback: The function to invoke on each attribute name and value.
+///   - path: The path within the repository to check for attributes.
+///   - callback: The callback to invoke for each attribute name and value.
 ///   - payload: The caller-specified payload passed to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// Relative paths will be interpreted relative to the repository root. The
+/// specified file does not have to exist, but if it does not, then it will be
+/// treated as a plain file (not as a directory).
 ///
 /// ## C Equivalent
 ///
@@ -257,15 +290,19 @@ public func gitAttrForEach(
 
 /// Loops over all the attributes for the given path, with extended options.
 /// - Parameters:
-///   - repo: The repository containing the given path. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
 ///   - opts: The options to use when querying the attributes.
-///   - path: The path inside the repository to check for attributes. Relative paths are interpreted relative
-///   to the repository root. The file does not have to exist, but if it does not, then it will be treated as a plain
-///   file (not a directory).
-///   - callback: The function to invoke on each attribute name and value.
+///   - path: The path within the repository to check for attributes.
+///   - callback: The callback to invoke for each attribute name and value.
 ///   - payload: The caller-specified payload passed to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// Relative paths will be interpreted relative to the repository root. The
+/// specified file does not have to exist, but if it does not, then it will be
+/// treated as a plain file (not as a directory).
 ///
 /// ## C Equivalent
 ///
@@ -298,14 +335,15 @@ public func gitAttrForEachExt(
 
 
 /// Flushes the `.gitattributes` cache.
-/// - Parameter repo: The repository containing the `.gitattributes` cache.  The underlying
-/// type must be `git_repository`.
+/// - Parameter repo: The repository containing the `.gitattributes` cache.
+/// The underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// Call this function if the attributes files on the disk no longer match the cached contents in memory.
-/// This will cause the attributes files to be reloaded the next time an attribute access function is called.
+/// Call this function if the attributes files on the disk no longer match the
+/// cached contents in memory. This will cause the attributes files to be
+/// reloaded the next time an attribute access function is called.
 ///
 /// ## C Equivalent
 ///
@@ -324,16 +362,17 @@ public func gitAttrCacheFlush(
 
 /// Adds a macro definition.
 /// - Parameters:
-///   - repo: The repository in which to add the macro. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository in which to add the macro. The underlying type
+///   must be `git_repository`.
 ///   - name: The name of the macro.
 ///   - values: The value of the macro.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// Macros will be automatically loaded from the top level `.gitattributes` file of the repository
-/// (plus the built-in "binary" macro). This function allows other macros to be added.
+/// Macros will be automatically loaded from the top level `.gitattributes`
+/// file of the repository (plus the built-in "binary" macro). This function
+/// allows other macros to be added.
 ///
 /// For example, call the following to add the default macro:
 ///

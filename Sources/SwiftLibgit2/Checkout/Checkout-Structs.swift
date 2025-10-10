@@ -30,9 +30,10 @@ public struct GitCheckoutPerfData: GitStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitCheckoutPerfData`` instance from a `git_checkout_perfdata`
-    /// instance.
-    /// - Parameter checkoutPerfData: The `git_checkout_perfdata` instance to use.
+    /// Creates a ``GitCheckoutPerfData`` instance from a
+    /// `git_checkout_perfdata` instance.
+    /// - Parameter checkoutPerfData: The `git_checkout_perfdata` instance to
+    /// use.
     internal init(
         cValue checkoutPerfData: git_checkout_perfdata
     )
@@ -44,8 +45,8 @@ public struct GitCheckoutPerfData: GitStructReadable, CConvertible
     
     
     
-    /// Converts the ``GitCheckoutPerfData`` instance into a `git_checkout_perfdata`
-    /// instance.
+    /// Converts the ``GitCheckoutPerfData`` instance into a
+    /// `git_checkout_perfdata` instance.
     /// - Returns: The `git_checkout_perfdata` instance.
     internal func cValue() -> git_checkout_perfdata
     {
@@ -93,23 +94,24 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults to using `0o755`.
+    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
+    /// to using `0o755`.
     public var dirMode          : UInt32                    = 0
     
     /// The file mode.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults to using `0o644`
-    /// or `0o755`, as dictated by the blob.
+    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
+    /// to using `0o644` or `0o755`, as dictated by the blob.
     public var fileMode         : UInt32                    = 0
     
     /// The flags controlling the file opening process.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults to using
-    /// `O_CREAT | O_TRUNC | O_WRONLY`.
+    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
+    /// to using `O_CREAT | O_TRUNC | O_WRONLY`.
     public var fileOpenFlags    : Int32                     = 0
     
     /// The flags controlling the behavior of checkout notifications.
@@ -151,25 +153,29 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is an empty array. If this is empty at runtime, libgit2 defaults to processing
-    /// all paths. If an array of wildmatch patterns is provided, those patterns will be used to determine
-    /// which paths should be taken into account.
+    /// The default value is an empty array. If this is empty at runtime,
+    /// libgit2 defaults to processing all paths. If an array of wildmatch
+    /// patterns is provided, those patterns will be used to determine which
+    /// paths should be taken into account.
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.
     public var paths            : [String]                  = []
     
-    /// The expected content of the working directory. The underlying type must be `git_tree`.
+    /// The expected content of the working directory. The underlying type
+    /// must be `git_tree`.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using HEAD.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using HEAD.
     ///
-    /// A checkout conflict will occur if the working directory does not match this baseline information.
+    /// A checkout conflict will occur if the working directory does not match
+    /// this baseline information.
     public var baseline         : OpaquePointer?            = nil
     
-    /// The expected content of the working directory, expressed as an index. The underlying type
-    /// must be `git_index`.
+    /// The expected content of the working directory, expressed as an index.
+    /// The underlying type must be `git_index`.
     ///
     /// ## Discussion
     ///
@@ -222,7 +228,8 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCheckoutOptions`` instance with the default configuration.
+    /// Creates a ``GitCheckoutOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -231,7 +238,8 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCheckoutOptions`` instance from a `git_checkout_options` instance.
+    /// Creates a ``GitCheckoutOptions`` instance from a `git_checkout_options`
+    /// instance.
     /// - Parameter checkoutOptions: The `git_checkout_options` instance to use.
     internal init(
         cValue checkoutOptions: git_checkout_options
@@ -261,7 +269,8 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_checkout_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_checkout_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

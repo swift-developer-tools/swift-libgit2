@@ -121,15 +121,16 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchDeleteResult: GitErrorCode = gitBranchDelete(branch: movedBranchPointer)
+                let branchDeleteResult: GitErrorCode
+                    = gitBranchDelete(branch: movedBranchPointer)
                 
                 XCTAssertOK(branchDeleteResult)
             }
             
             
             
-            /// Create the branch named `branchName` again, with `force` specified, and
-            /// this time create it from an annotated commit. Free it automatically.
+            /// Create the branch named `branchName` again, with `force`
+            /// specified, and this time create it from an annotated commit.
             try Branch.createLocalBranch(
                 named:      branchName,
                 in:         repository,
@@ -156,15 +157,17 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                let branchIteratorNewResult: GitErrorCode = gitBranchIteratorNew(
-                    out:        &branchIteratorPointer,
-                    repo:       repository.pointer,
-                    listFlags:  GitBranchT.gitBranchLocal
-                )
+                let branchIteratorNewResult: GitErrorCode
+                    = gitBranchIteratorNew(
+                        out:        &branchIteratorPointer,
+                        repo:       repository.pointer,
+                        listFlags:  GitBranchT.gitBranchLocal
+                    )
                 
                 XCTAssertOK(branchIteratorNewResult)
                 
-                guard let branchIteratorPointer: OpaquePointer = branchIteratorPointer
+                guard let branchIteratorPointer: OpaquePointer
+                        = branchIteratorPointer
                 else
                 {
                     XCTFail("The branch iterator pointer was nil.")
@@ -196,8 +199,8 @@ final class BranchTests: XCTestCaseStopOnFail
                     branchCount += 1
                 }
                 
-                /// The iterator should have found the `main` branch and the feature branch.
-                /// The moved branch has been deleted by this point.
+                /// The iterator should have found the `main` branch and the
+                /// feature branch. The moved branch has been deleted by now.
                 XCTAssertEqual(branchCount, 2)
             }
         }
@@ -242,14 +245,16 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(branchNameResult)
                 
-                guard let branchNamePointer: UnsafePointer<CChar> = branchNamePointer
+                guard let branchNamePointer: UnsafePointer<CChar>
+                        = branchNamePointer
                 else
                 {
                     XCTFail("The branch name pointer was nil.")
                     return
                 }
                 
-                guard let branchNameString = String(optionalCString: branchNamePointer)
+                guard let branchNameString
+                        = String(optionalCString: branchNamePointer)
                 else
                 {
                     XCTFail("The branch name string was nil.")
@@ -260,7 +265,8 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                guard let branchIsHEADResult: Bool = gitBranchIsHEAD(branch: branchPointer)
+                guard let branchIsHEADResult: Bool
+                        = gitBranchIsHEAD(branch: branchPointer)
                 else
                 {
                     XCTFail("The branch-is-HEAD result was nil.")
@@ -271,7 +277,8 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                guard let branchIsCheckedOutResult: Bool = gitBranchIsCheckedOut(branch: branchPointer)
+                guard let branchIsCheckedOutResult: Bool
+                        = gitBranchIsCheckedOut(branch: branchPointer)
                 else
                 {
                     XCTFail("The branch-is-checked-out result was nil.")
@@ -296,17 +303,20 @@ final class BranchTests: XCTestCaseStopOnFail
                     ref:    branchPointer
                 )
                 
-                /// The operation should fail since there is no configured upstream.
+                /// The operation should fail since there is no configured
+                /// upstream.
                 XCTAssertNotOK(branchUpstreamResult)
                 
                 
                 
-                let branchSetUpstreamResult: GitErrorCode = gitBranchSetUpstream(
-                    branch:         branchPointer,
-                    branchName:     "origin/main"
-                )
+                let branchSetUpstreamResult: GitErrorCode
+                    = gitBranchSetUpstream(
+                        branch:         branchPointer,
+                        branchName:     "origin/main"
+                    )
                 
-                /// The operation should fail since there is no configured remote.
+                /// The operation should fail since there is no configured
+                /// remote.
                 XCTAssertNotOK(branchSetUpstreamResult)
             }
         }
@@ -339,27 +349,30 @@ final class BranchTests: XCTestCaseStopOnFail
                 refName:    referenceName
             )
             
-            /// The operation should fail since there the reference is a local branch.
+            /// The operation should fail since there the reference is a
+            /// local branch.
             XCTAssertNotOK(branchRemoteNameResult)
             
             
             
-            let branchUpstreamRemoteResult: GitErrorCode = gitBranchUpstreamRemote(
-                buf:        &buffer,
-                repo:       repository.pointer,
-                refName:    referenceName
-            )
+            let branchUpstreamRemoteResult: GitErrorCode
+                = gitBranchUpstreamRemote(
+                    buf:        &buffer,
+                    repo:       repository.pointer,
+                    refName:    referenceName
+                )
             
             /// The operation should fail since there is no configured upstream.
             XCTAssertNotOK(branchUpstreamRemoteResult)
             
             
             
-            let branchUpstreamMergeResult: GitErrorCode = gitBranchUpstreamMerge(
-                buf:        &buffer,
-                repo:       repository.pointer,
-                refName:    referenceName
-            )
+            let branchUpstreamMergeResult: GitErrorCode
+                = gitBranchUpstreamMerge(
+                    buf:        &buffer,
+                    repo:       repository.pointer,
+                    refName:    referenceName
+                )
             
             /// The operation should fail since there is no configured upstream.
             XCTAssertNotOK(branchUpstreamMergeResult)

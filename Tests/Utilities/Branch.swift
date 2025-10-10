@@ -21,10 +21,12 @@ enum Branch
     ///   - branchName: The branch name.
     ///   - repository: The repository in which the branch should be created.
     ///   - force: Whether to overwrite an existing branch.
-    ///   - annotated: Whether the branch should be created from an annotated commit.
-    ///   - free: Whether the branch should be freed. Use this to create a branch without
-    ///   access to the resulting pointer.
-    /// - Returns: A pointer to the branch. If `free` is `true`, the pointer will be `nil`.
+    ///   - annotated: Whether the branch should be created from an annotated
+    ///   commit.
+    ///   - free: Whether the branch should be freed. Use this to create a
+    ///   branch without access to the resulting pointer.
+    /// - Returns: A pointer to the branch. If `free` is `true`, the pointer
+    /// will be `nil`.
     /// - Throws: An `NSError` if the branch could not be created.
     ///
     /// ## Discussion
@@ -58,15 +60,17 @@ enum Branch
         {
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
-            let annotatedCommitLookup: GitErrorCode = gitAnnotatedCommitLookup(
-                out:    &annotatedCommitPointer,
-                repo:   repository.pointer,
-                id:     headOID
-            )
+            let annotatedCommitLookup: GitErrorCode
+                = gitAnnotatedCommitLookup(
+                    out:    &annotatedCommitPointer,
+                    repo:   repository.pointer,
+                    id:     headOID
+                )
             
             XCTAssertOK(annotatedCommitLookup)
             
-            guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
+            guard let annotatedCommitPointer: OpaquePointer
+                    = annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -79,13 +83,14 @@ enum Branch
             
             
             
-            let branchCreateFromAnnotatedResult: GitErrorCode = gitBranchCreateFromAnnotated(
-                refOut:         &branchPointer,
-                repo:           repository.pointer,
-                branchName:     branchName,
-                target:         annotatedCommitPointer,
-                force:          force
-            )
+            let branchCreateFromAnnotatedResult: GitErrorCode
+                = gitBranchCreateFromAnnotated(
+                    refOut:         &branchPointer,
+                    repo:           repository.pointer,
+                    branchName:     branchName,
+                    target:         annotatedCommitPointer,
+                    force:          force
+                )
             
             XCTAssertOK(branchCreateFromAnnotatedResult)
         }
@@ -151,15 +156,17 @@ enum Branch
     
     
     
-    /// Calls the given closure with a pointer to a local branch created from the HEAD commit.
+    /// Calls the given closure with a pointer to a local branch created from
+    /// the HEAD commit.
     /// - Parameters:
     ///   - branchName: The branch name.
     ///   - repository: The repository in which the branch should be created.
     ///   - force: Whether to overwrite an existing branch.
-    ///   - annotated: Whether the branch should be created from an annotated commit.
+    ///   - annotated: Whether the branch should be created from an annotated
+    ///   commit.
     ///   - body: The closure to call.
-    /// - Throws: An error thrown by the closure, or an `NSError` if the branch could not
-    /// be created.
+    /// - Throws: An error thrown by the closure, or an `NSError` if the branch
+    /// could not be created.
     static func withNewLocalBranchPointer(
         named       branchName  : String,
         in          repository  : Repository,

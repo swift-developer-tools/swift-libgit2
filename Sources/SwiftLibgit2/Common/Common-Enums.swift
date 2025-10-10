@@ -45,8 +45,8 @@ public struct GitFeatureT: GitOptionSet
     
     
     
-    /// libgit2 is thread-aware and can be used from multiple threads (as described in the
-    /// libgit2 documentation).
+    /// libgit2 is thread-aware and can be used from multiple threads
+    /// (as described in the libgit2 documentation).
     public static let gitFeatureThreads         = GitFeatureT(rawValue: GIT_FEATURE_THREADS.rawValue)
     
     /// HTTPS remotes.
@@ -114,14 +114,15 @@ public struct GitFeatureT: GitOptionSet
 ///
 /// ## Discussion
 ///
-/// This enum is provided for documentation purposes, but is not used by other bindings.
+/// - Note: In libgit2, these values are intended for use with the variadic
+/// function called [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html).
+/// There is no binding for `git_libgit2_opts()`, since it uses C-style
+/// variadic arguments (`...`), and Swift can only import C variadic functions
+/// that use `va_list` for their arguments.
 ///
-/// In libgit2, these values are intended for use with the variadic function called
-/// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html).
-/// There is no binding for `git_libgit2_opts()`, since it uses C-style variadic arguments
-/// (`...`), and Swift can only import C variadic functions that use `va_list` for their arguments.
-///
-/// Use the type-safe Common Functions bindings related to libgit2 options instead.
+/// - Note: This enum is provided for documentation purposes, but is not used
+/// by other bindings. Use the type-safe Common Functions bindings related to
+/// libgit2 options instead.
 ///
 /// ## C Equivalent
 ///
@@ -132,354 +133,396 @@ public enum GitLibgit2OptT: UInt32, GitEnum
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetMWindowSize(size:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetMWindowSize(size:)`` to interact with
+    /// this option.
     case gitOptGetMWindowSize                   = 0
     
     /// Sets the maximum `mmap()` window size.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetMWindowSize(size:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetMWindowSize(size:)`` to interact with
+    /// this option.
     case gitOptSetMWindowSize                   = 1
     
     /// Gets the maximum memory that will be mapped in total by libgit2.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetMWindowMappedLimit(limit:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetMWindowMappedLimit(limit:)`` to interact
+    /// with this option.
     case gitOptGetMWindowMappedLimit            = 2
     
-    /// Sets the maximum amount of memory that can be mapped in total by libgit2.
+    /// Sets the maximum amount of memory that can be mapped in total by
+    /// libgit2.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetMWindowMappedLimit(limit:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetMWindowMappedLimit(limit:)`` to interact
+    /// with this option.
     case gitOptSetMWindowMappedLimit            = 3
     
     /// Gets the search path for the given level of configuration data.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetSearchPath(level:buf:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetSearchPath(level:buf:)`` to interact with
+    /// this option.
     case gitOptGetSearchPath                    = 4
     
     /// Sets the search path for the given level of configuration data.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetSearchPath(level:path:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetSearchPath(level:path:)`` to interact
+    /// with this option.
     case gitOptSetSearchPath                    = 5
     
-    /// Sets the maximum data size for the given type of object to be considered eligible for caching
-    /// in memory.
+    /// Sets the maximum data size for the given type of object to be
+    /// considered eligible for caching in memory.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetCacheObjectLimit(type:size:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetCacheObjectLimit(type:size:)`` to
+    /// interact with this option.
     case gitOptSetCacheObjectLimit              = 6
     
-    /// Sets the maximum total data size that will be cached in memory across all repositories before
-    /// libgit2 starts evicting objects from the cache.
+    /// Sets the maximum total data size that will be cached in memory across
+    /// all repositories before libgit2 starts evicting objects from the cache.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetCacheMaxSize(maxStorageBytes:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetCacheMaxSize(maxStorageBytes:)`` to
+    /// interact with this option.
     case gitOptSetCacheMaxSize                  = 7
     
     /// Enables or disable caching completely.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableCaching(enabled:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptEnableCaching(enabled:)`` to interact with
+    /// this option.
     case gitOptEnableCaching                    = 8
     
-    /// Gets the current number of bytes in the cache and the maximum number of bytes that would be
-    /// allowed in the cache.
+    /// Gets the current number of bytes in the cache and the maximum number
+    /// of bytes that would be allowed in the cache.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetCachedMemory(current:allowed:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptGetCachedMemory(current:allowed:)`` to
+    /// interact with this option.
     case gitOptGetCachedMemory                  = 9
     
     /// Gets the default template path.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetTemplatePath(out:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetTemplatePath(out:)`` to interact with
+    /// this option.
     case gitOptGetTemplatePath                  = 10
     
     /// Sets the default template path.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetTemplatePath(path:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetTemplatePath(path:)`` to interact with
+    /// this option.
     case gitOptSetTemplatePath                  = 11
     
     /// Sets the SSL certificate-authority locations.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetSSLCertLocations(file:path:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetSSLCertLocations(file:path:)`` to
+    /// interact with this option.
     case gitOptSetSSLCertLocations              = 12
     
     /// Sets the value of the comment section of the User-Agent header.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetUserAgent(userAgent:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetUserAgent(userAgent:)`` to interact with
+    /// this option.
     case gitOptSetUserAgent                     = 13
     
-    /// Enables strict input validation when creating new objects to ensure that all inputs to the new
-    /// objects are valid.
+    /// Enables strict input validation when creating new objects to ensure
+    /// that all inputs to the new objects are valid.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableStrictObjectCreation(enabled:)`` to interact with
-    /// this option.
+    /// - Note: Use ``gitLibgit2OptEnableStrictObjectCreation(enabled:)`` to
+    /// interact with this option.
     case gitOptEnableStrictObjectCreation       = 14
     
     /// Enables validation of the target of a symbolic ref during creation.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableStrictSymbolicRefCreation(enabled:)`` to
-    /// interact with this option.
+    /// - Note: Use ``gitLibgit2OptEnableStrictSymbolicRefCreation(enabled:)``
+    /// to interact with this option.
     case gitOptEnableStrictSymbolicRefCreation  = 15
     
     /// Sets the SSL ciphers use for HTTPS connections.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetSSLCiphers(ciphers:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetSSLCiphers(ciphers:)`` to interact with
+    /// this option.
     case gitOptSetSSLCiphers                    = 16
     
     /// Gets the value of the User-Agent header.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetUserAgent(out:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetUserAgent(out:)`` to interact with this
+    /// option.
     case gitOptGetUserAgent                     = 17
     
-    /// Enables or disables the use of offset deltas when creating packfiles, and the negotiation of
-    /// them when talking to a remote server.
+    /// Enables or disables the use of offset deltas when creating packfiles,
+    /// and the negotiation of them when talking to a remote server.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableOFSDelta(enabled:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptEnableOFSDelta(enabled:)`` to interact with
+    /// this option.
     case gitOptEnableOFSDelta                   = 18
     
-    /// Enables synchronized writes of files in the Git directory using `fsync` (or the platform
-    /// equivalent) to ensure that new object data is written to permanent storage, not simply cached.
+    /// Enables synchronized writes of files in the Git directory using `fsync`
+    /// (or the platform equivalent) to ensure that new object data is written
+    /// to permanent storage, not simply cached.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableFSyncGitDir(enabled:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptEnableFSyncGitDir(enabled:)`` to interact
+    /// with this option.
     case gitOptEnableFSyncGitDir                = 19
     
     /// Gets the share mode used when opening files on Windows.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetWindowsShareMode(value:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetWindowsShareMode(value:)`` to interact
+    /// with this option.
     case gitOptGetWindowsShareMode              = 20
     
     /// Sets the share mode used when opening files on Windows.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetWindowsShareMode(value:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetWindowsShareMode(value:)`` to interact
+    /// with this option.
     case gitOptSetWindowsShareMode              = 21
     
     /// Enables strict verification of object hash sums when reading objects from disk.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableStrictHashVerification(enabled:)`` to interact
-    /// with this option.
+    /// - Note: Use ``gitLibgit2OptEnableStrictHashVerification(enabled:)``
+    /// to interact with this option.
     case gitOptEnableStrictHashVerification     = 22
     
     /// Sets the memory allocator to a different memory allocator.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetAllocator(allocator:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetAllocator(allocator:)`` to interact with
+    /// this option.
     case gitOptSetAllocator                     = 23
     
-    /// Ensures that there are no unsaved changes in the index before beginning any operation that
-    /// reloads the index from disk (for example, the checkout operation).
+    /// Ensures that there are no unsaved changes in the index before beginning
+    /// any operation that reloads the index from disk (for example, the
+    /// checkout operation).
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableUnsavedIndexSafety(enabled:)`` to interact with
-    /// this option.
+    /// - Note: Use ``gitLibgit2OptEnableUnsavedIndexSafety(enabled:)`` to
+    /// interact with this option.
     case gitOptEnableUnsavedIndexSafety         = 24
     
-    /// Gets the maximum number of objects libgit2 will allow in a pack file when downloading a
-    /// packfile from a remote.
+    /// Gets the maximum number of objects libgit2 will allow in a pack file
+    /// when downloading a packfile from a remote.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetPackMaxObjects(out:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetPackMaxObjects(out:)`` to interact with
+    /// this option.
     case gitOptGetPackMaxObjects                = 25
     
-    /// Sets the maximum number of objects libgit2 will allow in a pack file when downloading a
-    /// packfile from a remote.
+    /// Sets the maximum number of objects libgit2 will allow in a pack file
+    /// when downloading a packfile from a remote.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetPackMaxObjects(objects:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetPackMaxObjects(objects:)`` to interact
+    /// with this option.
     case gitOptSetPackMaxObjects                = 26
     
     /// Skips `.keep` file existence checks when accessing packfiles.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptDisablePackKeepFileChecks(enabled:)`` to interact with
-    /// this option.
+    /// - Note: Use ``gitLibgit2OptDisablePackKeepFileChecks(enabled:)`` to
+    /// interact with this option.
     case gitOptDisablePackKeepFileChecks        = 27
     
-    /// Uses `expect`/`continue` when connecting to a server using NTLM or Negotiate
-    /// authentication.
+    /// Uses `expect`/`continue` when connecting to a server using NTLM or
+    /// Negotiate authentication.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptEnableHTTPExpectContinue(enabled:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptEnableHTTPExpectContinue(enabled:)`` to
+    /// interact with this option.
     case gitOptEnableHTTPExpectContinue         = 28
     
-    /// Gets the maximum number of files that will be mapped at any time by libgit2.
+    /// Gets the maximum number of files that will be mapped at any time by
+    /// libgit2.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetMWindowFileLimit(limit:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetMWindowFileLimit(limit:)`` to interact
+    /// with this option.
     case gitOptGetMWindowFileLimit              = 29
     
-    /// Sets the maximum number of files that can be mapped at any time by libgit2.
+    /// Sets the maximum number of files that can be mapped at any time by
+    /// libgit2.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetMWindowFileLimit(limit:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetMWindowFileLimit(limit:)`` to interact
+    /// with this option.
     case gitOptSetMWindowFileLimit              = 30
     
-    /// Overrides the default priority of the packed object database backend, which is added when
-    /// default backends are assigned to a repository.
+    /// - Note: Overrides the default priority of the packed object database
+    /// backend, which is added when default backends are assigned to a
+    /// repository.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetODBPackedPriority(priority:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetODBPackedPriority(priority:)`` to
+    /// interact with this option.
     case gitOptSetODBPackedPriority             = 31
     
-    /// Overrides the default priority of the loose object database backend, which is added when
-    /// default backends are assigned to a repository.
+    /// Overrides the default priority of the loose object database backend,
+    /// which is added when default backends are assigned to a repository.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetODBLoosePriority(priority:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetODBLoosePriority(priority:)`` to interact
+    /// with this option.
     case gitOptSetODBLoosePriority              = 32
     
     /// Gets the list of supported Git extensions.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetExtensions(out:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetExtensions(out:)`` to interact with
+    /// this option.
     case gitOptGetExtensions                    = 33
     
     /// Sets the list of supported Git extensions.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetExtensions(extensions:len:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetExtensions(extensions:len:)`` to interact
+    /// with this option.
     case gitOptSetExtensions                    = 34
     
     /// Gets the owner validation setting for repository directories.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetOwnerValidation(enabled:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetOwnerValidation(enabled:)`` to interact
+    /// with this option.
     case gitOptGetOwnerValidation               = 35
     
-    /// Specifies that repository directories should be owned by the current user.
+    /// Specifies that repository directories should be owned by the current
+    /// user.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetOwnerValidation(enabled:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetOwnerValidation(enabled:)`` to interact
+    /// with this option.
     case gitOptSetOwnerValidation               = 36
     
     /// Gets the current user's home directory to be used for file lookups.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetHomeDir(out:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetHomeDir(out:)`` to interact with this
+    /// option.
     case gitOptGetHomeDir                       = 37
     
     /// Sets the current user's home directory to be used for file lookups.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetHomeDir(path:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetHomeDir(path:)`` to interact with this
+    /// option.
     case gitOptSetHomeDir                       = 38
     
     /// Sets the timeout (in milliseconds) to attempt connections to a remote server.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetServerConnectTimeout(timeout:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetServerConnectTimeout(timeout:)`` to
+    /// interact with this option.
     case gitOptSetServerConnectTimeout          = 39
     
-    /// Gets the timeout (in milliseconds) to attempt connections to a remote server.
+    /// Gets the timeout (in milliseconds) to attempt connections to a remote
+    /// server.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetServerConnectTimeout(timeout:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptGetServerConnectTimeout(timeout:)`` to
+    /// interact with this option.
     case gitOptGetServerConnectTimeout          = 40
     
-    /// Sets the timeout (in milliseconds) for reading from and writing to a remote server.
+    /// Sets the timeout (in milliseconds) for reading from and writing to a
+    /// remote server.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetServerTimeout(timeout:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptSetServerTimeout(timeout:)`` to interact
+    /// with this option.
     case gitOptSetServerTimeout                 = 41
     
-    /// Gets the timeout (in milliseconds) for reading from and writing to a remote server.
+    /// Gets the timeout (in milliseconds) for reading from and writing to a
+    /// remote server.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetServerTimeout(timeout:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetServerTimeout(timeout:)`` to interact
+    /// with this option.
     case gitOptGetServerTimeout                 = 42
     
     /// Sets the value of the product portion of the User-Agent header.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptSetUserAgentProduct(userAgent:)`` to interact with this
-    /// option.
+    /// - Note: Use ``gitLibgit2OptSetUserAgentProduct(userAgent:)`` to
+    /// interact with this option.
     case gitOptSetUserAgentProduct              = 43
     
     /// Gets the value of the User-Agent product header.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptGetUserAgentProduct(out:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptGetUserAgentProduct(out:)`` to interact
+    /// with this option.
     case gitOptGetUserAgentProduct              = 44
     
     /// Adds a raw X.509 certificate into the SSL certifications store.
     ///
     /// ## Discussion
     ///
-    /// Use ``gitLibgit2OptAddSSLX509Cert(cert:)`` to interact with this option.
+    /// - Note: Use ``gitLibgit2OptAddSSLX509Cert(cert:)`` to interact with
+    /// this option.
     case gitOptAddSSLX509Cert                   = 45
     
     
     
-    /// Creates a ``GitLibgit2OptT`` instance from a `git_libgit2_opt_t` instance.
+    /// Creates a ``GitLibgit2OptT`` instance from a `git_libgit2_opt_t`
+    /// instance.
     /// - Parameter libgit2Opt: The `git_libgit2_opt_t` instance to use.
     internal init?(
         cValue libgit2Opt: git_libgit2_opt_t
@@ -539,7 +582,8 @@ public enum GitLibgit2OptT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitLibgit2OptT`` instance into a `git_libgit2_opt_t` instance.
+    /// Converts the ``GitLibgit2OptT`` instance into a `git_libgit2_opt_t`
+    /// instance.
     /// - Returns: The `git_libgit2_opt_t` instance.
     internal func cValue() -> git_libgit2_opt_t
     {

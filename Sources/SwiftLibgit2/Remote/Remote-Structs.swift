@@ -12,7 +12,8 @@ import Foundation
 
 
 
-/// The callbacks invoked by the remote to inform the user about the progress of network operations.
+/// The callbacks invoked by the remote to inform the user about the progress
+/// of network operations.
 ///
 /// ## C Equivalent
 ///
@@ -32,11 +33,12 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// Text sent over the progress side-band will be passed to this function. This is the "counting objects"
-    /// output.
+    /// Text sent over the progress side-band will be passed to this function.
+    /// This is the "counting objects" output.
     public var sidebandProgress     : GitTransportMessageCB?            = nil
     
-    /// The callback invoked when different parts of the download process are completed.
+    /// The callback invoked when different parts of the download process are
+    /// completed.
     ///
     /// ## Discussion
     ///
@@ -72,8 +74,8 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
-    /// Use ``updateRefs`` instead.
+    /// - Warning: This is deprecated in libgit2 and will be removed in the
+    /// next major release. Use ``updateRefs`` instead.
     public var updateTips           : GitRemoteUpdateTipsCB?            = nil
     
     /// The callback for progress notifications.
@@ -111,14 +113,16 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     public var transport            : GitTransportCB?                   = nil
     
-    /// The callback invoked immediately before attempting to connect to the given URL.
+    /// The callback invoked immediately before attempting to connect to the
+    /// given URL.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var remoteReady          : GitRemoteReadyCB?                 = nil
     
-    /// The caller-specified payload passed to each callback in ``GitRemoteCallbacks``.
+    /// The caller-specified payload passed to each callback in
+    /// ``GitRemoteCallbacks``.
     ///
     /// ## Discussion
     ///
@@ -131,8 +135,8 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
-    /// Use ``remoteReady`` instead.
+    /// - Warning: This is deprecated in libgit2 and will be removed in the
+    /// next major release. Use ``remoteReady`` instead.
     public var resolveURL           : GitURLResolveCB?                  = nil
     
     /// The callback invoked for local reference updates.
@@ -144,7 +148,8 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance with the default configuration.
+    /// Creates a ``GitRemoteCallbacks`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -153,7 +158,8 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance from a `git_remote_callbacks` instance.
+    /// Creates a ``GitRemoteCallbacks`` instance from a `git_remote_callbacks`
+    /// instance.
     /// - Parameter remoteCallbacks: The `git_remote_callbacks` instance to use.
     internal init(
         cValue remoteCallbacks: git_remote_callbacks
@@ -179,7 +185,8 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Converts the ``GitRemoteCallbacks`` instance into a `git_remote_callbacks` instance.
+    /// Converts the ``GitRemoteCallbacks`` instance into a
+    /// `git_remote_callbacks` instance.
     /// - Returns: The `git_remote_callbacks` instance.
     /// - Throws: An `NSError` if the conversion failed.
     internal func cValue() throws -> git_remote_callbacks
@@ -233,7 +240,8 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     /// The default value is ``gitFetchOptionsVersion``.
     public var version          : UInt32                    = gitFetchOptionsVersion
     
-    /// The callbacks invoked by the remote to inform the user about the progress of network operations.
+    /// The callbacks invoked by the remote to inform the user about the
+    /// progress of network operations.
     public var callbacks        : GitRemoteCallbacks?       = nil
     
     /// The acceptable prune settings when performing a fetch operation.
@@ -250,7 +258,8 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFetchHEAD``.
     public var updateFetchHEAD  : GitRemoteUpdateFlags      = .gitRemoteUpdateFetchHEAD
     
-    /// The automatic tag-following option used to determine which `--tags` option to use.
+    /// The automatic tag-following option used to determine which `--tags`
+    /// option to use.
     ///
     /// ## Discussion
     ///
@@ -262,8 +271,8 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// default proxy options.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the default proxy options.
     public var proxyOpts        : GitProxyOptions?          = nil
     
     /// The shallowness of the fetch operation.
@@ -298,13 +307,14 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitFetchOptions`` instance from a `git_fetch_options` instance.
+    /// Creates a ``GitFetchOptions`` instance from a `git_fetch_options`
+    /// instance.
     /// - Parameter fetchOptions: The `git_fetch_options` instance to use.
     ///
     /// ## Discussion
     ///
-    /// If unexpected values are encountered, the following defaults are used, although this should
-    /// never occur.
+    /// If unexpected values are encountered, the following defaults are used,
+    /// although this should never occur.
     ///
     /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``
     /// - ``downloadTags``: ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsUnspecified``
@@ -327,7 +337,8 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_fetch_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_fetch_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -362,7 +373,8 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         {
             cProxyOpts in
             
-            if let cProxyOpts: UnsafeMutablePointer<git_proxy_options> = cProxyOpts
+            if let cProxyOpts: UnsafeMutablePointer<git_proxy_options>
+                = cProxyOpts
             {
                 fetchOptions.proxy_opts = cProxyOpts.pointee
             }

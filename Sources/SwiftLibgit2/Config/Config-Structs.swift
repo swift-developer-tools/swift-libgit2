@@ -32,7 +32,8 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     /// The default value is `nil`.
     public private(set) var value           : String?           = nil
     
-    /// The type of backend in which the configuration entry exists (for example, `file`).
+    /// The type of backend in which the configuration entry exists
+    /// (for example, `file`).
     ///
     /// ## Discussion
     ///
@@ -55,7 +56,8 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     /// The default value is `0`.
     public private(set) var includeDepth    : UInt32            = 0
     
-    /// The configuration level for the file in which the configuration entry was found.
+    /// The configuration level for the file in which the configuration entry
+    /// was found.
     ///
     /// ## Discussion
     ///
@@ -73,13 +75,14 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     
     
     
-    /// Creates a ``GitConfigEntry`` instance from a `git_config_entry` instance.
+    /// Creates a ``GitConfigEntry`` instance from a `git_config_entry`
+    /// instance.
     /// - Parameter configEntry: The `git_config_entry` instance to use.
     ///
     /// ## Discussion
     ///
-    /// ``level`` defaults to ``GitConfigLevelT/gitConfigLevelLocal`` if an unexpected
-    /// value is encountered, although this should never occur.
+    /// ``level`` defaults to ``GitConfigLevelT/gitConfigLevelLocal`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue configEntry: git_config_entry
     )
@@ -105,7 +108,8 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_config_entry` instance.
+    /// Calls the given closure with a mutable pointer to a `git_config_entry`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -156,9 +160,9 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
 ///
 /// ## Discussion
 ///
-/// This defines how configuration values should be mapped to integer constants by specifying the
-/// type of value ot match, an optional string to match against, and the integer value to map when
-/// a match is found.
+/// This defines how configuration values should be mapped to integer
+/// constants by specifying the type of value ot match, an optional string
+/// to match against, and the integer value to map when a match is found.
 ///
 /// ## C Equivalent
 ///
@@ -178,8 +182,9 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// When ``type`` is ``GitConfigMapT/gitConfigMapString``, this specifies the exact
-    /// string value to match using case-insensitive comparison. This is ignored for other types.
+    /// When ``type`` is ``GitConfigMapT/gitConfigMapString``, this specifies
+    /// the exact string value to match using case-insensitive comparison.
+    /// This is ignored for other types.
     public var strMatch : String?           = nil
     
     /// The integer value to return when a match is found.
@@ -218,7 +223,8 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_configmap` instance.
+    /// Calls the given closure with a mutable pointer to a `git_configmap`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

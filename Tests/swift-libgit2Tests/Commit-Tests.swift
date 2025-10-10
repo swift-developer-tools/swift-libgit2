@@ -132,13 +132,14 @@ final class CommitTests: XCTestCaseStopOnFail
             
             var signedCommitOID = GitOID()
             
-            let commitCreateWithSignatureResult: GitErrorCode = gitCommitCreateWithSignature(
-                out:                &signedCommitOID,
-                repo:               repository.pointer,
-                commitContent:      commitContent,
-                signature:          fakeSignatureContent,
-                signatureField:     nil
-            )
+            let commitCreateWithSignatureResult: GitErrorCode
+                = gitCommitCreateWithSignature(
+                    out:                &signedCommitOID,
+                    repo:               repository.pointer,
+                    commitContent:      commitContent,
+                    signature:          fakeSignatureContent,
+                    signatureField:     nil
+                )
             
             XCTAssertOK(commitCreateWithSignatureResult)
             XCTAssertNotZeroOID(signedCommitOID)
@@ -156,13 +157,14 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitExtractSignatureResult: GitErrorCode = gitCommitExtractSignature(
-                signature:      &extractedSignature,
-                signedData:     &extractedSignedData,
-                repo:           repository.pointer,
-                commitID:       signedCommitOID,
-                field:          nil
-            )
+            let commitExtractSignatureResult: GitErrorCode
+                = gitCommitExtractSignature(
+                    signature:      &extractedSignature,
+                    signedData:     &extractedSignedData,
+                    repo:           repository.pointer,
+                    commitID:       signedCommitOID,
+                    field:          nil
+                )
             
             XCTAssertOK(commitExtractSignatureResult)
             XCTAssertNotNil(extractedSignature.ptr)
@@ -170,7 +172,8 @@ final class CommitTests: XCTestCaseStopOnFail
             XCTAssertNotNil(extractedSignedData.ptr)
             XCTAssertGreaterThan(extractedSignedData.size, 0)
             
-            guard let extractedSignatureContent = String(optionalCString: extractedSignature.ptr)
+            guard let extractedSignatureContent
+                    = String(optionalCString: extractedSignature.ptr)
             else
             {
                 XCTFail("The extracted signature content was nil.")
@@ -185,9 +188,10 @@ final class CommitTests: XCTestCaseStopOnFail
     
     func testGitCommitCreateCB() throws
     {
-        /// Simulate a rebase operation to test ``GitCommitCreateCB``, which is used only
-        /// in rebases. An actual rebase would be performed differently. This test only attempts to
-        /// check that the callback behaves correctly.
+        /// Simulate a rebase operation to test ``GitCommitCreateCB``,
+        /// which is used only in rebases. An actual rebase would be performed
+        /// differently. This test only attempts to check that the callback
+        /// behaves correctly.
         try Repository.withRepository
         {
             repository in
@@ -230,7 +234,9 @@ final class CommitTests: XCTestCaseStopOnFail
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CommitCreateCallbackData>
-                    = payload.assumingMemoryBound(to: CommitCreateCallbackData.self)
+                    = payload.assumingMemoryBound(
+                        to: CommitCreateCallbackData.self
+                    )
                 
                 payloadPointer.pointee.callCount += 1
                 
@@ -306,7 +312,8 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 while true
                 {
-                    var rebaseOperationPointer: UnsafeMutablePointer<git_rebase_operation>? = nil
+                    var rebaseOperationPointer: UnsafeMutablePointer<git_rebase_operation>?
+                        = nil
                     
                     let rebaseNextResult: Int32 = git_rebase_next(
                         &rebaseOperationPointer,
@@ -457,7 +464,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitHeaderFieldResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitHeaderFieldResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
 
@@ -536,7 +544,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let ownerPointer: OpaquePointer = gitCommitOwner(commit: commitPointer)
+            let ownerPointer: OpaquePointer
+                = gitCommitOwner(commit: commitPointer)
             
             XCTAssertEqual(ownerPointer, repository.pointer)
             
@@ -634,21 +643,23 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 
                 
-                let commitAuthorWithMailmapResult: GitErrorCode = gitCommitAuthorWithMailmap(
-                    out:        &author,
-                    commit:     commitPointer,
-                    mailmap:    nil
-                )
+                let commitAuthorWithMailmapResult: GitErrorCode
+                    = gitCommitAuthorWithMailmap(
+                        out:        &author,
+                        commit:     commitPointer,
+                        mailmap:    nil
+                    )
                 
                 XCTAssertOK(commitAuthorWithMailmapResult)
                 
                 
                 
-                let commitCommitterWithMailmapResult: GitErrorCode = gitCommitCommitterWithMailmap(
-                    out:        &committer,
-                    commit:     commitPointer,
-                    mailmap:    nil
-                )
+                let commitCommitterWithMailmapResult: GitErrorCode
+                    = gitCommitCommitterWithMailmap(
+                        out:        &committer,
+                        commit:     commitPointer,
+                        mailmap:    nil
+                    )
                 
                 XCTAssertOK(commitCommitterWithMailmapResult)
             }
@@ -686,7 +697,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitNthGenAncestorResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitNthGenAncestorResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
 
@@ -784,7 +796,8 @@ final class CommitTests: XCTestCaseStopOnFail
             {
                 commitPointer in
 
-                guard let rawCommitHeader: String = gitCommitRawHeader(commit: commitPointer)
+                guard let rawCommitHeader: String
+                        = gitCommitRawHeader(commit: commitPointer)
                 else
                 {
                     XCTFail("The raw commit header was nil.")
@@ -888,7 +901,8 @@ extension CommitTests
             
             XCTAssertOK(commitLookupResult)
             
-            guard let originalCommitPointer: OpaquePointer = originalCommitPointer
+            guard let originalCommitPointer: OpaquePointer
+                    = originalCommitPointer
             else
             {
                 XCTFail("The original commit pointer was nil.")
@@ -950,7 +964,8 @@ extension CommitTests
             
             if type == .amend
             {
-                let retrievedOID: GitOID = gitCommitID(commit: newCommitPointer)
+                let retrievedOID: GitOID
+                    = gitCommitID(commit: newCommitPointer)
                 
                 XCTAssertEqual(retrievedOID, newCommitOID)
             }
@@ -959,19 +974,22 @@ extension CommitTests
             
             
             
-            let ownerPointer: OpaquePointer = gitCommitOwner(commit: newCommitPointer)
+            let ownerPointer: OpaquePointer
+                = gitCommitOwner(commit: newCommitPointer)
             
             XCTAssertEqual(ownerPointer, repository.pointer)
             
             
             
-            let newCommitMessage: String? = gitCommitMessage(commit: newCommitPointer)
+            let newCommitMessage: String?
+                = gitCommitMessage(commit: newCommitPointer)
             
             XCTAssertNotNil(newCommitMessage)
             
             
             
-            let newCommitSummary: String? = gitCommitSummary(commit: newCommitPointer)
+            let newCommitSummary: String?
+                = gitCommitSummary(commit: newCommitPointer)
             
             XCTAssertNotNil(newCommitSummary)
             

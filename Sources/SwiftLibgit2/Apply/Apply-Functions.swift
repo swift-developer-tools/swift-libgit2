@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_apply_options` instances.
-/// ``GitApplyOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_apply_options` instances. ``GitApplyOptions`` instances do not need
+/// to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -43,11 +44,12 @@ public func gitApplyOptionsInit(
 
 /// Applies a diff to a tree, and returns the resulting image as an index.
 /// - Parameters:
-///   - out: The pointer in which to store the postimage of the application. The underlying
-///   type must be `git_index`.
-///   - repo: The repository to apply. The underlying type must be `git_repository`.
-///   - preimage: The tree to which the diff should be applied. The underlying type must be
-///   `git_tree`.
+///   - out: The pointer in which to store the postimage of the application.
+///   The underlying type must be `git_index`.
+///   - repo: The repository to apply. The underlying type must be
+///   `git_repository`.
+///   - preimage: The tree to which the diff should be applied. The underlying
+///   type must be `git_tree`.
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
 ///   - options: The options for the apply operation.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -82,13 +84,14 @@ public func gitApplyToTree(
 
 
 
-/// Applies a diff to the given repository, making changes directly in the working directory,
-/// the index, or both.
+/// Applies a diff to the given repository, making changes directly in the
+/// working directory, the index, or both.
 /// - Parameters:
-///   - repo: The repository to which the diff should be applied. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository to which the diff should be applied. The
+///   underlying type must be `git_repository`.
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
-///   - location: The location to apply (the working directory, the index, or both).
+///   - location: The location to apply (the working directory, the index,
+///   or both).
 ///   - options: The options for the apply operation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

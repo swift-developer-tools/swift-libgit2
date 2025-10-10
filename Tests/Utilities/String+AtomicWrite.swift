@@ -13,9 +13,11 @@ import Foundation
 
 extension String
 {
-    /// Atomically writes the contents of the receiver to the `URL` specified by `url` using UTF-8
-    /// encoding. This is a convenience wrapper of `write(to:atomically:encoding:)`.
-    /// - Parameter url: The URL to which to write the receiver. Only file URLs are supported.
+    /// Atomically writes the contents of the receiver to the `URL` specified
+    /// by `url` using UTF-8 encoding. This is a convenience wrapper of
+    /// `write(to:atomically:encoding:)`.
+    /// - Parameter url: The URL to which to write the receiver. Only file URLs
+    /// are supported.
     /// - Throws: An error if the write operation failed.
     func atomicWrite(
         to url: URL

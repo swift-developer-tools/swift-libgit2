@@ -25,15 +25,16 @@ public enum GitCertT: UInt32, GitEnum
     /// This value may be encountered when using Curl.
     case gitCertNone            = 0
     
-    /// The callback's certificate parameter will be a ``GitCertX509`` instance containing
-    /// DER-encoded data.
+    /// The callback's certificate parameter will be a ``GitCertX509`` instance
+    /// containing DER-encoded data.
     case gitCertX509            = 1
     
-    /// The callback's certificate parameter will be a ``GitCertHostKey`` instance.
+    /// The callback's certificate parameter will be a ``GitCertHostKey``
+    /// instance.
     case gitCertHostKeyLibSSH2  = 2
     
-    /// The callback's certificate parameter will contain a `git_strarray` with `name:content`
-    /// strings.
+    /// The callback's certificate parameter will contain a `git_strarray`
+    /// with `name:content` strings.
     ///
     /// ## Discussion
     ///
@@ -164,9 +165,10 @@ public enum GitCertSSHRawTypeT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitCertSSHRawTypeT`` instance from a `git_cert_ssh_raw_type_t`
-    /// instance.
-    /// - Parameter certSSHRawType: The `git_cert_ssh_raw_type_t` instance to use.
+    /// Creates a ``GitCertSSHRawTypeT`` instance from a
+    /// `git_cert_ssh_raw_type_t` instance.
+    /// - Parameter certSSHRawType: The `git_cert_ssh_raw_type_t` instance
+    /// to use.
     internal init?(
         cValue certSSHRawType: git_cert_ssh_raw_type_t
     )
@@ -186,7 +188,8 @@ public enum GitCertSSHRawTypeT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitCertSSHRawTypeT`` instance into a `git_cert_ssh_raw_type_t` instance.
+    /// Converts the ``GitCertSSHRawTypeT`` instance into a
+    /// `git_cert_ssh_raw_type_t` instance.
     /// - Returns: The `git_cert_ssh_raw_type_t` instance.
     internal func cValue() -> git_cert_ssh_raw_type_t
     {

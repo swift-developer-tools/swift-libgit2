@@ -45,8 +45,8 @@ public let gitIndexEntryStageShift: Int32 = 12
 ///
 /// ## Discussion
 ///
-/// If `stage` is ``GitIndexStageT/gitIndexStageAny``, this function returns without
-/// modifying the given index entry.
+/// If `stage` is ``GitIndexStageT/gitIndexStageAny``, this function returns
+/// without modifying the given index entry.
 ///
 /// ## C Equivalent
 ///
@@ -62,11 +62,12 @@ public func gitIndexEntryStageSet(
         return
     }
     
-    /// Clear the existing stage bits (positions 12-13), while preserving the other bits.
+    /// Clear the existing stage bits (positions 12-13), while preserving
+    /// the other bits.
     let clearedFlags: UInt32 = entry.flags.rawValue & ~gitIndexEntryStageMask
     
     /// Use only the last two bits of `stage` and shift to positions 12-13.
-    let stageMasked: UInt32 = UInt32(stage.rawValue & 0x03) << gitIndexEntryStageShift
+    let stageMasked = UInt32(stage.rawValue & 0x03) << gitIndexEntryStageShift
     
     entry.flags = GitIndexEntryFlagT(rawValue: clearedFlags | stageMasked)
 }

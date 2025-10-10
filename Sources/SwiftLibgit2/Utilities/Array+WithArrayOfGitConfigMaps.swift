@@ -16,7 +16,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// Parts of the function below are adapted from the Swift.org open source project. Original source code:
+/// Parts of the function below are adapted from the Swift.org open source
+/// project. Original source code:
 /// https://github.com/swiftlang/swift/blob/c3b7709a7c4789f1ad7249d357f69509fb8be731/stdlib/private/SwiftPrivate/SwiftPrivate.swift
 
 import CLibgit2
@@ -26,8 +27,8 @@ import Foundation
 
 internal extension Array where Element == GitConfigMap
 {
-    /// Calls the given closure with a pointer to an array of `git_configmap` instances, and the length
-    /// of that array.
+    /// Calls the given closure with a pointer to an array of `git_configmap`
+    /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -43,8 +44,10 @@ internal extension Array where Element == GitConfigMap
         
         
         
-        /// Collect the non-`nil` `strMatch` properties with their original indices.
-        let stringEntries: [(index: Int, string: String)] = self.enumerated().compactMap
+        /// Collect the non-`nil` `strMatch` properties with their original
+        /// indices.
+        let stringEntries: [(index: Int, string: String)]
+            = self.enumerated().compactMap
         {
             index, configMap in
             
@@ -59,7 +62,8 @@ internal extension Array where Element == GitConfigMap
         
         
         
-        /// If there were no non-`nil` `strMatch` properties, perform direct conversion.
+        /// If there were no non-`nil` `strMatch` properties, perform
+        /// direct conversion.
         guard !stringEntries.isEmpty
         else
         {
@@ -98,11 +102,13 @@ internal extension Array where Element == GitConfigMap
         
         /// Create an array of mutable C string pointers.
         ///
-        /// Use `Swift.Array` instead of the unqualified `Array` because within the
-        /// `extension Array where Element == GitConfigMap` context, the compiler
-        /// resolves unqualified `Array(_:)` calls to `Array<GitConfigMap>.init(_:)` rather
-        /// than the generic `Array<T>.init(_:)` initializer. This causes a type mismatch since the
-        /// assigned type is `[Int]`, but the compiler expects `[GitConfigMap]`.
+        /// Use `Swift.Array` instead of the unqualified `Array` because within
+        /// the`extension Array where Element == GitConfigMap` context, the
+        /// compiler resolves unqualified `Array(_:)` calls to
+        /// `Array<GitConfigMap>.init(_:)` rather than the generic
+        /// `Array<T>.init(_:)` initializer. This causes a type mismatch since
+        /// the assigned type is `[Int]`, but the compiler expects
+        /// `[GitConfigMap]`.
         let strings         : [String]  = stringEntries.map { $0.string }
         let argsCounts      : [Int]     = Swift.Array(strings.map { $0.utf8.count + 1 })
         let argsOffsets     : [Int]     = [0] + scan(argsCounts, 0, +)
@@ -126,16 +132,25 @@ internal extension Array where Element == GitConfigMap
         {
             argsBuffer in
             
-            guard let baseAddress: UnsafeMutablePointer<UInt8> = argsBuffer.baseAddress
+            guard let baseAddress: UnsafeMutablePointer<UInt8>
+                    = argsBuffer.baseAddress
             else
             {
                 throw NSError.makeCConversionError()
             }
             
-            let pointer = UnsafeMutableRawPointer(baseAddress)
-                .bindMemory(to: CChar.self, capacity: argsBuffer.count)
             
-            let cStrings: [UnsafeMutablePointer<CChar>?] = argsOffsets.map { pointer + $0 }
+            
+            let pointer = UnsafeMutableRawPointer(baseAddress)
+                .bindMemory(
+                    to:         CChar.self,
+                    capacity:   argsBuffer.count
+                )
+            
+            
+            
+            let cStrings: [UnsafeMutablePointer<CChar>?]
+                = argsOffsets.map { pointer + $0 }
             
             
             

@@ -102,14 +102,17 @@ final class CommonTests: XCTestCaseStopOnFail
     
     
     
-    /// Tests that the C bindings compile and communicate correctly with libgit2.
+    /// Tests that the C bindings compile and communicate correctly with
+    /// libgit2.
     ///
     /// ## Discussion
     ///
-    /// The main purpose of this is to test that the C bindings around the variadic
-    /// `git_libgit2_opts()` function compile and work correctly, not to test libgit2 behavior with
-    /// specific option values. The "get" calls are sufficient for this purpose. The "set" calls are not tested
-    /// since not all options have a corresponding "get" method to ensure a safe get/set/restore pattern.
+    /// The main purpose of this is to test that the C bindings around the
+    /// variadic `git_libgit2_opts()` function compile and work correctly,
+    /// not to test libgit2 behavior with specific option values. The "get"
+    /// calls are sufficient for this purpose. The "set" calls are not tested
+    /// since not all options have a corresponding "get" method to ensure a
+    /// safe get/set/restore pattern.
     func testGitLibgit2OptFunctions() throws
     {
         var int1    : Int       = 0

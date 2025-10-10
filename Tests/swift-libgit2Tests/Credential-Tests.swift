@@ -110,7 +110,8 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialDefaultNewResult: GitErrorCode = gitCredentialDefaultNew(out: &credentialPointer)
+        let credentialDefaultNewResult: GitErrorCode
+            = gitCredentialDefaultNew(out: &credentialPointer)
         
         XCTAssertOK(credentialDefaultNewResult)
         XCTAssertNotNil(credentialPointer)
@@ -140,9 +141,9 @@ final class CredentialTests: XCTestCaseStopOnFail
         {
             session, sig, sigLen, data, dataLen, abstract in
             
-            /// `abstract` is not the standard payload parameter.
-            /// This callback will be invoked by libssh2 during actual SSH authentication, so
-            /// the payload cannot be used for standard testing.
+            /// `abstract` is not the standard payload parameter. This callback
+            /// will be invoked by libssh2 during actual SSH authentication,
+            /// so the payload cannot be used for standard testing.
             
             return GitErrorCode.gitOK.rawValue
         }
@@ -151,14 +152,15 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         let publicKey = Data("ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZ...".utf8)
         
-        let credentialSSHCustomNewResult: GitErrorCode = gitCredentialSSHCustomNew(
-            out:            &credentialPointer,
-            username:       Repository.commitAuthorName,
-            publicKey:      publicKey,
-            publicKeyLen:   publicKey.count,
-            signCallback:   credentialSignCB,
-            payload:        nil
-        )
+        let credentialSSHCustomNewResult: GitErrorCode
+            = gitCredentialSSHCustomNew(
+                out:            &credentialPointer,
+                username:       Repository.commitAuthorName,
+                publicKey:      publicKey,
+                publicKeyLen:   publicKey.count,
+                signCallback:   credentialSignCB,
+                payload:        nil
+            )
         
         XCTAssertOK(credentialSSHCustomNewResult)
         
@@ -185,19 +187,20 @@ final class CredentialTests: XCTestCaseStopOnFail
             name, nameLen, instructon, instructionLen,
             numPrompts, prompts, responses, abstract in
             
-            /// `abstract` is not the standard payload parameter.
-            /// This callback will be invoked by libssh2 during actual SSH authentication, so
-            /// the payload cannot be used for standard testing.
+            /// `abstract` is not the standard payload parameter. This callback
+            /// will be invoked by libssh2 during actual SSH authentication,
+            /// so the payload cannot be used for standard testing.
         }
         
         
         
-        let credentialSSHInteractiveNewResult: GitErrorCode = gitCredentialSSHInteractiveNew(
-            out:                &credentialPointer,
-            username:           Repository.commitAuthorName,
-            promptCallback:     credentialSSHInteractiveCB,
-            payload:            nil
-        )
+        let credentialSSHInteractiveNewResult: GitErrorCode
+            = gitCredentialSSHInteractiveNew(
+                out:                &credentialPointer,
+                username:           Repository.commitAuthorName,
+                promptCallback:     credentialSSHInteractiveCB,
+                payload:            nil
+            )
         
         XCTAssertOK(credentialSSHInteractiveNewResult)
         
@@ -219,10 +222,11 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialSSHKeyFromAgentResult: GitErrorCode = gitCredentialSSHKeyFromAgent(
-            out:        &credentialPointer,
-            username:   Repository.commitAuthorName
-        )
+        let credentialSSHKeyFromAgentResult: GitErrorCode
+            = gitCredentialSSHKeyFromAgent(
+                out:        &credentialPointer,
+                username:   Repository.commitAuthorName
+            )
         
         XCTAssertOK(credentialSSHKeyFromAgentResult)
         XCTAssertNotNil(credentialPointer)
@@ -246,13 +250,14 @@ final class CredentialTests: XCTestCaseStopOnFail
         let publicKey   : String    = "ssh-rsa ABCDEFGHIJKLMNOPQRSTUVWXYZ..."
         let privateKey  : String    = "-----BEGIN OPENSSH PRIVATE KEY-----\nABC"
         
-        var credentialSSHKeyMemoryNewResult: GitErrorCode = gitCredentialSSHKeyMemoryNew(
-            out:            &credentialPointer,
-            username:       Repository.commitAuthorName,
-            publicKey:      publicKey,
-            privateKey:     privateKey,
-            passphrase:     nil
-        )
+        var credentialSSHKeyMemoryNewResult: GitErrorCode
+            = gitCredentialSSHKeyMemoryNew(
+                out:            &credentialPointer,
+                username:       Repository.commitAuthorName,
+                publicKey:      publicKey,
+                privateKey:     privateKey,
+                passphrase:     nil
+            )
         
         XCTAssertOK(credentialSSHKeyMemoryNewResult)
         
@@ -298,7 +303,8 @@ final class CredentialTests: XCTestCaseStopOnFail
             passphrase:     nil
         )
         
-        /// There is no verification of SSH keys, so invalid paths will not cause a failure.
+        /// There is no verification of SSH keys, so invalid paths will not
+        /// cause a failure.
         XCTAssertOK(credentialSSHKeyNewResult)
         XCTAssertNotNil(credentialPointer)
         XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
@@ -314,7 +320,8 @@ final class CredentialTests: XCTestCaseStopOnFail
             passphrase:     "helloworld"
         )
         
-        /// There is no verification of SSH keys, so invalid paths will not cause a failure.
+        /// There is no verification of SSH keys, so invalid paths will not
+        /// cause a failure.
         XCTAssertOK(credentialSSHKeyNewResult)
         XCTAssertNotNil(credentialPointer)
         XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
@@ -377,10 +384,11 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialUsernameNewResult: GitErrorCode = gitCredentialUsernameNew(
-            out:        &credentialPointer,
-            username:   Repository.commitAuthorName
-        )
+        let credentialUsernameNewResult: GitErrorCode
+            = gitCredentialUsernameNew(
+                out:        &credentialPointer,
+                username:   Repository.commitAuthorName
+            )
         
         XCTAssertOK(credentialUsernameNewResult)
         XCTAssertNotNil(credentialPointer)
@@ -401,11 +409,12 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
-        let credentialUserPassPlaintextNewResult: GitErrorCode = gitCredentialUserPassPlaintextNew(
-            out:        &credentialPointer,
-            username:   Repository.commitAuthorName,
-            password:   "helloworld"
-        )
+        let credentialUserPassPlaintextNewResult: GitErrorCode
+            = gitCredentialUserPassPlaintextNew(
+                out:        &credentialPointer,
+                username:   Repository.commitAuthorName,
+                password:   "helloworld"
+            )
         
         XCTAssertOK(credentialUserPassPlaintextNewResult)
         XCTAssertNotNil(credentialPointer)

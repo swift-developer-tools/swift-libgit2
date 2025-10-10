@@ -164,11 +164,12 @@ final class SignatureTests: XCTestCaseStopOnFail
                 var authorSignature     : GitSignature?     = GitSignature()
                 var committerSignature  : GitSignature?     = nil
                 
-                let authorOnlyResult: GitErrorCode = gitSignatureDefaultFromEnv(
-                    authorOut:      &authorSignature,
-                    committerOut:   &committerSignature,
-                    repo:           repository.pointer
-                )
+                let authorOnlyResult: GitErrorCode
+                    = gitSignatureDefaultFromEnv(
+                        authorOut:      &authorSignature,
+                        committerOut:   &committerSignature,
+                        repo:           repository.pointer
+                    )
                 
                 XCTAssertOK(authorOnlyResult)
                 XCTAssertNotNil(authorSignature)
@@ -185,11 +186,12 @@ final class SignatureTests: XCTestCaseStopOnFail
                 var authorSignature     : GitSignature?     = nil
                 var committerSignature  : GitSignature?     = GitSignature()
                 
-                let committerOnlyResult: GitErrorCode = gitSignatureDefaultFromEnv(
-                    authorOut:      &authorSignature,
-                    committerOut:   &committerSignature,
-                    repo:           repository.pointer
-                )
+                let committerOnlyResult: GitErrorCode
+                    = gitSignatureDefaultFromEnv(
+                        authorOut:      &authorSignature,
+                        committerOut:   &committerSignature,
+                        repo:           repository.pointer
+                    )
                 
                 XCTAssertOK(committerOnlyResult)
                 XCTAssertNil(authorSignature)

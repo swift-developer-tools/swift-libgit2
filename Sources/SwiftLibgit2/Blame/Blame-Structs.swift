@@ -33,8 +33,9 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     /// The default value is ``GitBlameFlagT/gitBlameNormal``.
     public var flags                : GitBlameFlagT     = .gitBlameNormal
     
-    /// The lower bound on the number of alphanumeric characters that must be detected as
-    /// moving/copying within a file for it to associate those lines with the parent commit.
+    /// The lower bound on the number of alphanumeric characters that must be
+    /// detected as moving/copying within a file for it to associate those
+    /// lines with the parent commit.
     ///
     /// ## Discussion
     ///
@@ -51,15 +52,16 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using HEAD.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using HEAD.
     public var newestCommit         : GitOID?           = nil
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the first
-    /// commit encountered with a `nil` parent.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the first commit encountered with a `nil` parent.
     public var oldestCommit         : GitOID?           = nil
     
     /// The first line in the file to blame.
@@ -73,8 +75,8 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using last line
-    /// of the file.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using last line of the file.
     public var maxLine              : Int?              = nil
     
     
@@ -88,7 +90,8 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameOptions`` instance from a `git_blame_options` instance.
+    /// Creates a ``GitBlameOptions`` instance from a `git_blame_options`
+    /// instance.
     /// - Parameter blameOptions: The `git_blame_options` instance to use.
     internal init(
         cValue blameOptions: git_blame_options
@@ -105,7 +108,8 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_blame_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_blame_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -155,35 +159,37 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     /// The OID of the commit where this hunk was last changed.
     public let finalCommitID        : GitOID
     
-    /// The 1-indexed line number where this hunk begins, in the final version of the file.
+    /// The 1-indexed line number where this hunk begins, in the final version
+    /// of the file.
     public let finalStartLineNumber : Int
     
     /// The author of ``GitBlameHunk/finalCommitID``.
     ///
     /// ## Discussion
     ///
-    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
-    /// canonical real name and email address.
+    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
+    /// contain the canonical real name and email address.
     public let finalSignature       : GitSignature?
     
     /// The committer of ``GitBlameHunk/finalCommitID``.
     ///
     /// ## Discussion
     ///
-    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
-    /// canonical real name and email address.
+    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
+    /// contain the canonical real name and email address.
     public let finalCommitter       : GitSignature?
     
     /// The OID of the commit where this hunk was found.
     ///
     /// ## Discussion
     ///
-    /// This will usually be the same as ``GitBlameHunk/finalCommitID``, except when
-    /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` has been specified.
+    /// This will usually be the same as ``GitBlameHunk/finalCommitID``,
+    /// except when ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` has
+    /// been specified.
     public let origCommitID         : GitOID
     
-    /// The path to the file where this hunk originated, as of the commit specified by
-    /// ``GitBlameHunk/origCommitID``.
+    /// The path to the file where this hunk originated, as of the commit
+    /// specified by ``GitBlameHunk/origCommitID``.
     public let origPath             : String?
     
     /// The 1-indexed line number where this hunk begins in the file named by
@@ -195,16 +201,16 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
-    /// canonical real name and email address.
+    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
+    /// contain the canonical real name and email address.
     public let origSignature        : GitSignature?
     
     /// The committer of ``GitBlameHunk/origCommitID``.
     ///
     /// ## Discussion
     ///
-    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will contain the
-    /// canonical real name and email address.
+    /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
+    /// contain the canonical real name and email address.
     public let origCommitter        : GitSignature?
     
     /// The summary of the commit where this hunk was last changed.
@@ -214,9 +220,9 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// This value will be `true` if and only if the hunk has been tracked to a boundary commit
-    /// (the root, or the commit specified in ``GitBlameOptions/oldestCommit``).
-    /// Otherwise, it will be `false`.
+    /// This value will be `true` if and only if the hunk has been tracked to
+    /// a boundary commit (the root, or the commit specified in
+    /// ``GitBlameOptions/oldestCommit``).  Otherwise, it will be `false`.
     public let boundary             : Bool
     
     
@@ -226,10 +232,11 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// - Warning: This initializer must not be called with a `git_blame_hunk` instance that
-    /// was not created by libgit2, unless the signature fields have been set to non-`nil` values.
-    /// Doing so will cause a crash when ``GitSignature.init(cValue:)`` tries to unwrap
-    /// the `nil` signature fields.
+    /// - Warning: This initializer must not be called with a `git_blame_hunk`
+    /// instance that was not created by libgit2, unless the signature fields
+    /// have been set to non-`nil` values. Doing so will cause a crash when
+    /// ``GitSignature.init(cValue:)`` tries to unwrap the `nil` signature
+    /// fields.
     internal init(
         cValue blameHunk: git_blame_hunk
     )
@@ -250,7 +257,8 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_blame_hunk` instance.
+    /// Calls the given closure with a mutable pointer to a `git_blame_hunk`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -344,7 +352,8 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_blame_line` instance.
+    /// Calls the given closure with a mutable pointer to a `git_blame_line`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

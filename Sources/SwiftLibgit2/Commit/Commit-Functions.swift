@@ -13,10 +13,12 @@ import CLibgit2
 
 /// Looks up a commit from a repository.
 /// - Parameters:
-///   - commit: The pointer in which to store the commit. The underlying type must be `git_commit`.
-///   - repo: The repository in which to look up the commit. The underlying type must be
-///   `git_repository`.
-///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
+///   - commit: The pointer in which to store the commit. The underlying type
+///   must be `git_commit`.
+///   - repo: The repository in which to look up the commit. The underlying
+///   type must be `git_repository`.
+///   - id: The commit ID. If the object is an annotated tag, it will be
+///   peeled back to the commit.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -42,12 +44,15 @@ public func gitCommitLookup(
 
 
 
-/// Looks up a commit from a repository, given a prefix of its identifier (short ID).
+/// Looks up a commit from a repository, given a prefix of its identifier
+/// (short ID).
 /// - Parameters:
-///   - commit: The pointer in which to store the commit. The underlying type must be `git_commit`.
-///   - repo: The repository in which to look up the commit. The underlying type must be
-///   `git_repository`.
-///   - id: The commit ID. If the object is an annotated tag, it will be peeled back to the commit.
+///   - commit: The pointer in which to store the commit. The underlying type
+///   must be `git_commit`.
+///   - repo: The repository in which to look up the commit. The underlying
+///   type must be `git_repository`.
+///   - id: The commit ID. If the object is an annotated tag, it will be
+///   peeled back to the commit.
 ///   - len: The length of the short ID.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -77,7 +82,8 @@ public func gitCommitLookupPrefix(
 
 
 /// Frees the memory allocated for the given `git_commit` instance.
-/// - Parameter commit: The commit to free. The underlying type must be `git_commit`.
+/// - Parameter commit: The commit to free. The underlying type must be
+/// `git_commit`.
 ///
 /// ## C Equivalent
 ///
@@ -155,7 +161,8 @@ public func gitCommitMessageEncoding(
 ///
 /// ## Discussion
 ///
-/// The returned message will be slightly prettified by removing any potential leading newlines.
+/// The returned message will be slightly prettified by removing any potential
+/// leading newlines.
 ///
 /// ## C Equivalent
 ///
@@ -195,8 +202,8 @@ public func gitCommitMessageRaw(
 ///
 /// ## Discussion
 ///
-/// The summary of a commit is the first paragraph of the commit message with whitespace trimmed and
-/// squashed.
+/// The summary of a commit is the first paragraph of the commit message with
+/// whitespace trimmed.
 ///
 /// ## C Equivalent
 ///
@@ -218,8 +225,8 @@ public func gitCommitSummary(
 ///
 /// ## Discussion
 ///
-/// The body of a commit is everything except the first paragraph of the commit message. Leading and
-/// trailing whitespace will be trimmed.
+/// The body of a commit is everything except the first paragraph of the
+/// commit message. Leading and trailing whitespace will be trimmed.
 ///
 /// ## C Equivalent
 ///
@@ -303,13 +310,14 @@ public func gitCommitAuthor(
 
 
 
-/// Gets the committer of the given commit, using the mailmap to map names and email addresses to
-/// canonical real names and email addresses.
+/// Gets the committer of the given commit, using the mailmap to map names
+/// and email addresses to canonical real names and email addresses.
 /// - Parameters:
-///   - out: The ``GitSignature`` instance in which to store the resolved signature.
+///   - out: The ``GitSignature`` instance in which to store the resolved
+///   signature.
 ///   - commit: The commit. The underlying type must be `git_commit`.
-///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
-///   `git_mailmap`.
+///   - mailmap: The mailmap with which to resolve the signature. The
+///   underlying type must be `git_mailmap`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -338,13 +346,14 @@ public func gitCommitCommitterWithMailmap(
 
 
 
-/// Gets the author of the given commit, using the mailmap to map names and email addresses to
-/// canonical real names and email addresses.
+/// Gets the author of the given commit, using the mailmap to map names and
+/// email addresses to canonical real names and email addresses.
 /// - Parameters:
-///   - out: The ``GitSignature`` instance in which to store the resolved signature.
+///   - out: The ``GitSignature`` instance in which to store the resolved
+///   signature.
 ///   - commit: The commit. The underlying type must be `git_commit`.
-///   - mailmap: The mailmap with which to resolve the signature. The underlying type must be
-///   `git_mailmap`.
+///   - mailmap: The mailmap with which to resolve the signature. The
+///   underlying type must be `git_mailmap`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -393,7 +402,8 @@ public func gitCommitRawHeader(
 
 /// Gets the tree pointed to by the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the tree. The underlying type must be `git_tree`.
+///   - out: The pointer in which to store the tree. The underlying type must
+///   be `git_tree`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -422,8 +432,8 @@ public func gitCommitTree(
 ///
 /// ## Discussion
 ///
-/// This function differs from ``gitCommitTree(out:commit:)`` in that no attempts will be made
-/// to fetch an object from the object database.
+/// This function differs from ``gitCommitTree(out:commit:)`` in that no
+/// attempts will be made to fetch an object from the object database.
 ///
 /// ## C Equivalent
 ///
@@ -459,8 +469,8 @@ public func gitCommitParentCount(
 
 /// Gets the specified parent of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the parent commit. The underlying type must be
-///   `git_commit`.
+///   - out: The pointer in which to store the parent commit. The underlying
+///   type must be `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed position of the parent.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -510,18 +520,19 @@ public func gitCommitParentID(
 
 
 
-/// Gets the commit that is the n<sup>th</sup> generation ancestor of the given commit, following only
-/// the first parents.
+/// Gets the commit that is the n<sup>th</sup> generation ancestor of the
+/// given commit, following only the first parents.
 /// - Parameters:
-///   - ancestor: The pointer in which to store the ancestor commit. The underlying type
-///   must be `git_commit`.
+///   - ancestor: The pointer in which to store the ancestor commit. The
+///   underlying type must be `git_commit`.
 ///   - commit: The commit. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed generation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// Passing `0` as the generation number will return another instance of the given commit.
+/// Passing `0` as the generation number will return another instance of the
+/// given commit.
 ///
 /// ## C Equivalent
 ///
@@ -546,8 +557,10 @@ public func gitCommitNthGenAncestor(
 
 /// Gets the a header field from the given commit.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the header field should be written.
-///   - commit: The commit in which to look. The underlying type must be `git_commit`.
+///   - out: The ``GitBuf`` instance into which the header field should be
+///   written.
+///   - commit: The commit in which to look. The underlying type must be
+///   `git_commit`.
 ///   - field: The header field to return.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -579,20 +592,24 @@ public func gitCommitHeaderField(
 
 /// Extracts the signature from a commit.
 /// - Parameters:
-///   - signature: The ``GitBuf`` instance into which the signature block should be written.
-///   - signedData: The ``GitBuf`` instance into which the signed data (the commit content less
-///   the signature block) should be written.
-///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
+///   - signature: The ``GitBuf`` instance into which the signature block
+///   should be written.
+///   - signedData: The ``GitBuf`` instance into which the signed data (the
+///   commit content less the signature block) should be written.
+///   - repo: The repository containing the commit. The underlying type must
+///   be `git_repository`.
 ///   - commitID: The commit from which to extract the data.
-///   - field: The name of the header field containing the signature block. Pass `nil` to extract
-///   `gpgsig`.
+///   - field: The name of the header field containing the signature block.
+///   Pass `nil` to extract `gpgsig`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// If `commitID` is not the ID of a commit, the error class will be ``GitErrorT/gitErrorInvalid``.
+/// If `commitID` is not the ID of a commit, the error class will be
+/// ``GitErrorT/gitErrorInvalid``.
 ///
-/// If the commit does not have a signature, the error class will be ``GitErrorT/gitErrorObject``.
+/// If the commit does not have a signature, the error class will be
+/// ``GitErrorT/gitErrorObject``.
 ///
 /// ## C Equivalent
 ///
@@ -632,38 +649,44 @@ public func gitCommitExtractSignature(
 
 
 // TODO: Replace `git_message_prettify()` in documentation.
-/// Creates a new commit in the given repository from a list of `git_object` pointers.
+/// Creates a new commit in the given repository from a list of `git_object`
+/// pointers.
 /// - Parameters:
-///   - id: The ``GitOID`` instance in which to store the ID of the newly-created commit.
-///   - repo: The repository in which to store the commit. The underlying type must be
-///   `git_repository`.
-///   - updateRef: The name of the reference that will be updated to point to the commit.
+///   - id: The ``GitOID`` instance in which to store the ID of the
+///   newly-created commit.
+///   - repo: The repository in which to store the commit. The underlying type
+///   must be `git_repository`.
+///   - updateRef: The name of the reference that will be updated to point to
+///   the commit.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
 ///   - messageEncoding: The encoding of the commit message.
 ///   - message: The commit message.
-///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
-///   be `git_tree`.
+///   - tree: The tree object that should be used as the tree for the commit.
+///   The underlying type must be `git_tree`.
 ///   - parentCount: The length of `parents`.
-///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
-///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
+///   - parents: The parents of the commit. The underlying type must be an
+///   array of `git_commit` instances, of length `parentCount`. All the given
+///   commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// The commit message will not be cleaned up automatically. Use `git_message_prettify()`
-/// to clean up the commit message.
+/// The commit message will not be cleaned up automatically. Use
+/// `git_message_prettify()` to clean up the commit message.
 ///
-/// If `updateRef` is not direct, it will be resolved to a direct reference. Pass `HEAD` to update the
-/// HEAD of the current branch and make it point to this commit. If the reference does not exist yet, it will
-/// be created. If it does exist, the first parent must be the tip of this branch.
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
 ///
 /// `parents` may be `nil` if `parentCount` is `0`.
 ///
 /// - Note: libgit2 provides a similar variadic function called
 /// [`git_commit_create_v()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_v.html).
-/// There is no binding for `git_commit_create_v()`, since it uses C-style variadic arguments
-/// (`...`), and Swift can only import C variadic functions that use `va_list` for their arguments.
+/// There is no binding for `git_commit_create_v()`, since it uses C-style
+/// variadic arguments (`...`), and Swift can only import C variadic functions
+/// that use `va_list` for their arguments.
 ///
 /// ## C Equivalent
 ///
@@ -717,9 +740,10 @@ public func gitCommitCreate(
 
 /// Commits the staged changes in the repository.
 /// - Parameters:
-///   - id: The ``GitOID`` instance in which to store the ID of the newly-created commit.
-///   - repo: The repository in which to store the commit. The underlying type must be
-///   `git_repository`.
+///   - id: The ``GitOID`` instance in which to store the ID of the
+///   newly-created commit.
+///   - repo: The repository in which to store the commit. The underlying type
+///   must be `git_repository`.
 ///   - message: The commit message.
 ///   - opts: The options for commit creation.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -763,29 +787,34 @@ public func gitCommitCreateFromStage(
 
 /// Amends an existing commit by replacing only non-`nil` values.
 /// - Parameters:
-///   - id: The ``GitOID`` instance in which to store the ID of the newly-created commit.
-///   - commitToAmend: The commit to amend. The underlying type must be `git_commit`.
-///   - updateRef: The name of the reference that will be updated to point to the commit.
+///   - id: The ``GitOID`` instance in which to store the ID of the
+///   newly-created commit.
+///   - commitToAmend: The commit to amend. The underlying type must be
+///   `git_commit`.
+///   - updateRef: The name of the reference that will be updated to point to
+///   the commit.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
 ///   - messageEncoding: The encoding of the commit message.
 ///   - message: The commit message.
-///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
-///   be `git_tree`.
+///   - tree: The tree object that should be used as the tree for the commit.
+///   The underlying type must be `git_tree`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This function creates a new commit that is exactly the same as the old commit, except that any
-/// non-`nil` values will be updated. The new commit will have the same parents as the old commit.
+/// This function creates a new commit that is exactly the same as the old
+/// commit, except that any non-`nil` values will be updated. The new commit
+/// will have the same parents as the old commit.
 ///
-/// If `updateRef` is not direct, it will be resolved to a direct reference. Pass `HEAD` to update the
-/// HEAD of the current branch and make it point to this commit. If the reference does not exist yet, it will
-/// be created. If it does exist, the first parent must be the tip of this branch.
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
 ///
 /// Unlike ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
-/// the `author`, `committer`, `message`,  and `tree` parameters can be `nil`, in which case
-/// the values from the original `commitToAmend` will be used.
+/// the `author`, `committer`, `message`,  and `tree` parameters can be `nil`,
+/// in which case the values from the original `commitToAmend` will be used.
 ///
 /// ## C Equivalent
 ///
@@ -835,18 +864,20 @@ public func gitCommitAmend(
 
 /// Creates a new commit in the given repository and writes it into a buffer.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the commit content should be written.
-///   - repo: The repository in which to store the commit. The underlying type must be
-///   `git_repository`.
+///   - out: The ``GitBuf`` instance into which the commit content should be
+///   written.
+///   - repo: The repository in which to store the commit. The underlying type
+///   must be `git_repository`.
 ///   - author: The author of the commit.
 ///   - committer: The committer of the commit.
 ///   - messageEncoding: The encoding of the commit message.
 ///   - message: The commit message.
-///   - tree: The tree object that should be used as the tree for the commit. The underlying type must
-///   be `git_tree`.
+///   - tree: The tree object that should be used as the tree for the commit.
+///   The underlying type must be `git_tree`.
 ///   - parentCount: The length of `parents`.
-///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
-///   instances, of length `parentCount`. All the given commits must be owned by `repo`.
+///   - parents: The parents of the commit. The underlying type must be an
+///   array of `git_commit` instances, of length `parentCount`. All the given
+///   commits must be owned by `repo`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -855,8 +886,8 @@ public func gitCommitAmend(
 ///
 /// This function is similar to
 /// ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
-/// except instead of writing the new commit into the object database, it writes the commit content into
-/// the given buffer.
+/// except instead of writing the new commit into the object database, it
+/// writes the commit content into the given buffer.
 ///
 /// ## C Equivalent
 ///
@@ -908,13 +939,14 @@ public func gitCommitCreateBuffer(
 
 /// Creates a commit from the given content and signature.
 /// - Parameters:
-///   - out: The ``GitOID`` instance in which to store the ID of the newly-created commit
-///   - repo: The repository in which to store the commit. The underlying type must be
-///   `git_repository`.
+///   - out: The ``GitOID`` instance in which to store the ID of the
+///   newly-created commit
+///   - repo: The repository in which to store the commit. The underlying type
+///   must be `git_repository`.
 ///   - commitContent: The content of the unsigned commit.
 ///   - signature: The signature to add to the commit.
-///   - signatureField: The header field which should contain the signature. Pass `nil` to use
-///   `gpgsig`.
+///   - signatureField: The header field which should contain the signature.
+///   Pass `nil` to use `gpgsig`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -949,8 +981,10 @@ public func gitCommitCreateWithSignature(
 
 /// Creates an in-memory copy of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the commit. The underlying type must be `git_commit`.
-///   - source: The original commit to copy. The underlying type must be `git_commit`.
+///   - out: The pointer in which to store the commit. The underlying type
+///   must be `git_commit`.
+///   - source: The original commit to copy. The underlying type must be
+///   `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -977,11 +1011,12 @@ public func gitCommitDup(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_commitarray` instances allocated by
-/// libgit2. ``GitCommitArray`` instances do not need to be freed.
+/// This function does not free the `git_commitarray` itself, since libgit2
+/// will never allocate that object directly.
 ///
-/// This function does not free the `git_commitarray` itself, since libgit2 will never allocate that object
-/// directly.
+/// - Note: This function is only needed when working directly with
+/// `git_commitarray` instances allocated by libgit2. ``GitCommitArray``
+/// instances do not need to be freed.
 ///
 /// ## C Equivalent
 ///

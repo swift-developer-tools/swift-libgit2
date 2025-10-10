@@ -314,7 +314,8 @@ final class CertTests: XCTestCaseStopOnFail
         {
             bytes in
             
-            let baseAddressPointer = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
+            let baseAddressPointer
+                = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
             
             cCertX509.data  = baseAddressPointer
             cCertX509.len   = bytes.count

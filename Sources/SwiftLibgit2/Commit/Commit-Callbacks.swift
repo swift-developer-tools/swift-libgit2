@@ -16,11 +16,13 @@ import CLibgit2
 ///   - out: The pointer in which to store the resulting commit.
 ///   - author: The author's signature.
 ///   - committer: The committer's signature.
-///   - messageEncoding: The encoding for the commit message. The default value is UTF-8.
+///   - messageEncoding: The encoding for the commit message. The default
+///   value is UTF-8.
 ///   - message: The commit message.
 ///   - tree: The tree to be committed.
 ///   - parentCount: The length of `parents`.
-///   - parents: The parents of the commit. The underlying type must be an array of `git_commit`
+///   - parents: The parents of the commit. The underlying type must be an
+///   array of `git_commit`
 ///   instances, of length `parentCount`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.

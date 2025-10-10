@@ -62,7 +62,8 @@ final class BufferTests: XCTestCaseStopOnFail
                 refName:    "refs/heads/main"
             )
             
-            /// The operation should fail since there the reference is a local branch.
+            /// The operation should fail since there the reference is a
+            /// local branch.
             XCTAssertNotOK(branchRemoteNameResult)
             
             
@@ -168,7 +169,8 @@ final class BufferTests: XCTestCaseStopOnFail
             {
                 cBuffer in
                 
-                guard let bufferPointer: UnsafeMutablePointer<CChar> = cBuffer.pointee.ptr
+                guard let bufferPointer: UnsafeMutablePointer<CChar>
+                        = cBuffer.pointee.ptr
                 else
                 {
                     XCTFail("The C buffer pointer was nil.")

@@ -40,7 +40,8 @@ public struct GitSignature: Freeable, GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is a ``GitTime`` instance with the default configuration.
+    /// The default value is a ``GitTime`` instance with the default
+    /// configuration.
     public private(set) var when    : GitTime = GitTime(cValue: git_time())
     
     
@@ -59,10 +60,10 @@ public struct GitSignature: Freeable, GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default values of ``name`` and ``email`` are empty strings instead of `nil`
-    /// to ensure validation failures, since Git requires non-empty identity information.
-    /// Generally, neither of these should ever be `nil` when initializing from a `git_signature`
-    /// returned by libgit2.
+    /// The default values of ``name`` and ``email`` are empty strings instead
+    /// of `nil` to ensure validation failures, since Git requires non-empty
+    /// identity information. Generally, neither of these should ever be `nil`
+    /// when initializing from a `git_signature` returned by libgit2.
     internal init(
         cValue signature: git_signature
     )
@@ -85,7 +86,8 @@ public struct GitSignature: Freeable, GitStructInternalMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_signature` instance.
+    /// Calls the given closure with a mutable pointer to a `git_signature`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.

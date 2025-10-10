@@ -40,7 +40,8 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     /// The default value is `0`.
     public private(set) var receivedObjects : UInt32    = 0
     
-    /// The number of locally-available objects that have been injected in order to fix a thin pack.
+    /// The number of locally-available objects that have been injected in
+    /// order to fix a thin pack.
     ///
     /// ## Discussion
     ///
@@ -70,7 +71,8 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance with the default configuration.
+    /// Creates a ``GitIndexerProgress`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -79,7 +81,8 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance from a `git_indexer_progress` instance.
+    /// Creates a ``GitIndexerProgress`` instance from a `git_indexer_progress`
+    /// instance.
     /// - Parameter indexerProgress: The `git_indexer_progress` instance to use.
     internal init(
         cValue indexerProgress: git_indexer_progress
@@ -96,7 +99,8 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     
     
     
-    /// Converts the ``GitIndexerProgress`` instance into a `git_indexer_progress` instance.
+    /// Converts the ``GitIndexerProgress`` instance into a
+    /// `git_indexer_progress` instance.
     /// - Returns: The `git_indexer_progress` instance.
     internal func cValue() -> git_indexer_progress
     {
@@ -162,7 +166,8 @@ public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitIndexerOptions`` instance from a `git_indexer_options` instance.
+    /// Creates a ``GitIndexerOptions`` instance from a `git_indexer_options`
+    /// instance.
     /// - Parameter indexerOptions: The `git_indexer_options` instance
     /// to use.
     internal init(
@@ -177,7 +182,8 @@ public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Converts the ``GitIndexerOptions`` instance into a `git_indexer_options` instance.
+    /// Converts the ``GitIndexerOptions`` instance into a `git_indexer_options`
+    /// instance.
     /// - Returns: The `git_indexer_options` instance.
     /// - Throws: An `NSError` if the conversion failed.
     internal func cValue() throws -> git_indexer_options

@@ -112,7 +112,8 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -225,15 +226,18 @@ extension ApplyTests
     
     
     
-    /// Tests `git apply` functionality by creating a diff and applying it with the given options.
+    /// Tests `git apply` functionality by creating a diff and applying it
+    /// with the given options.
     ///
     /// - Parameters:
-    ///   - location: The target location for applying the diff (the working directory, the index, or both).
+    ///   - location: The target location for applying the diff (the working
+    ///   directory, the index, or both).
     ///   - flags: The flags to control the apply behavior.
-    ///   - checkIndex: Whether to check that the index contains staged changes after applying.
+    ///   - checkIndex: Whether to check that the index contains staged changes
+    ///   after applying.
     ///   - endContent: The expected file content after applying.
-    /// - Throws: An error if a Git operation, write operation fails, or `GitApplyOptions`
-    /// initialization fails.
+    /// - Throws: An error if a Git operation or write operation fails, or
+    /// ``GitApplyOptions`` initialization fails.
     ///
     /// ## Discussion
     ///
@@ -267,7 +271,8 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -281,7 +286,8 @@ extension ApplyTests
             
             
             
-            let modifiedContent: String = "\(Repository.readmeFileContent) Goodbye World!"
+            let modifiedContent: String 
+                = "\(Repository.readmeFileContent) Goodbye World!"
             
             try repository.modifyFile(
                 at:     Repository.readmeFileName,

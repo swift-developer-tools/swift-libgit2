@@ -67,7 +67,8 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let attrCacheFlushResult: GitErrorCode = gitAttrCacheFlush(repo: repository.pointer)
+            let attrCacheFlushResult: GitErrorCode
+                = gitAttrCacheFlush(repo: repository.pointer)
             
             XCTAssertOK(attrCacheFlushResult)
             
@@ -164,9 +165,8 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
-                capacity: attributeCount
-            )
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>
+                .allocate(capacity: attributeCount)
             
             defer
             {
@@ -230,9 +230,8 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
-                capacity: attributeCount
-            )
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>
+                .allocate(capacity: attributeCount)
             
             defer
             {
@@ -265,7 +264,8 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertTrue(gitAttrHasValue(attr: customAttribute))
             
-            guard let customAttributeString = String(optionalCString: customAttribute)
+            guard let customAttributeString
+                = String(optionalCString: customAttribute)
             else
             {
                 XCTFail("The custom attribute string was nil.")
@@ -289,9 +289,8 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
-                capacity: attributeCount
-            )
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>
+                .allocate(capacity: attributeCount)
             
             defer
             {
@@ -333,9 +332,8 @@ final class AttrTests: XCTestCaseStopOnFail
             
             
             
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>.allocate(
-                capacity: attributeCount
-            )
+            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>
+                .allocate(capacity: attributeCount)
             
             defer
             {
@@ -511,7 +509,8 @@ final class AttrTests: XCTestCaseStopOnFail
 
 extension AttrTests
 {
-    /// Tests looping over all the attributes in the given path, with or without extended options.
+    /// Tests looping over all the attributes in the given path, with or
+    /// without extended options.
     /// - Parameter options: The options to use when querying the attributes.
     /// - Throws: An error if repository initialization fails.
     private func testGitAttrForEachFlow(

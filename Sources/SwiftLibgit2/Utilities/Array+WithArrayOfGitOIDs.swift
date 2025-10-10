@@ -14,8 +14,8 @@ import Foundation
 
 internal extension Array where Element == GitOID
 {
-    /// Calls the given closure with a pointer to an array of `git_oid` instances, and the length of
-    /// that array.
+    /// Calls the given closure with a pointer to an array of `git_oid`
+    /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An `NSError` if the conversion failed.
@@ -53,18 +53,20 @@ internal extension Array where Element == GitOID
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_oidarray` instance, and updates the
-    /// receiver with any changes made by the closure.
+    /// Calls the given closure with a mutable pointer to a `git_oidarray`
+    /// instance, and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error thrown by the given closure.
     ///
     /// ## Discussion
     ///
-    /// ``gitOIDArrayDispose(array:)`` is used only if the receiver is empty, since that function
-    /// is intended to free the OIDs of a `git_oidarray` which was allocated by libgit2.
+    /// ``gitOIDArrayDispose(array:)`` is used only if the receiver is empty,
+    /// since that function is intended to free the OIDs of a `git_oidarray`
+    /// which was allocated by libgit2.
     ///
-    /// When the receiver is not empty, the memory is manually allocated and deallocated.
+    /// When the receiver is not empty, the memory is manually allocated and
+    /// deallocated.
     mutating func withMutatingGitOIDArray<T>(
         _ body: (UnsafeMutablePointer<git_oidarray>) throws -> T
     ) throws -> T

@@ -14,12 +14,14 @@ internal extension String
     ///
     /// ## Discussion
     ///
-    /// Use this initializer to convert C string pointers that may be `nil` due to zero-initialized fields,
-    /// optional fields, or error conditions where libgit2 may not populate string fields.
+    /// Use this initializer to convert C string pointers that may be `nil` due
+    /// to zero-initialized fields, optional fields, or error conditions where
+    /// libgit2 may not populate string fields.
     ///
-    /// Although it is not always strictly necessary, use this initializer consistently to prevent runtime
-    /// crashes if assumptions about non-`nil` strings prove to be incorrect, or if libgit2 behavior
-    /// changes in subsequent versions.
+    /// Although it is not always strictly necessary, use this initializer
+    /// consistently to prevent runtime crashes if assumptions about non-`nil`
+    /// strings prove to be incorrect, or if libgit2 behavior changes in
+    /// subsequent versions.
     init?(
         optionalCString cString: UnsafePointer<CChar>?
     )

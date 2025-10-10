@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_cherrypick_options` instances.
-/// ``GitCherrypickOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_cherrypick_options` instances. ``GitCherrypickOptions`` instances do
+/// not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -41,12 +42,13 @@ public func gitCherrypickOptionsInit(
 
 
 
-/// Cherry-picks the given commit against the given "our" commit, and produces an index that reflects
-/// the result of the cherry-pick operation.
+/// Cherry-picks the given commit against the given "our" commit, and produces
+/// an index that reflects the result of the cherry-pick operation.
 /// - Parameters:
-///   - out: The pointer in which to store the index. The underlying type must be `git_index`.
-///   - repo: The repository containing the given commits. The underlying type must be
-///   `git_repository`.
+///   - out: The pointer in which to store the index. The underlying type must
+///   be `git_index`.
+///   - repo: The repository containing the given commits. The underlying type
+///   must be `git_repository`.
 ///   - cherrypickCommit: The commit to cherry-pick.
 ///   - ourCommit: The commit against which to cherry-pick (for example, HEAD).
 ///   - mainline: The parent of the commit to cherry-pick, if it is a merge.
@@ -85,10 +87,11 @@ public func gitCherrypickCommit(
 
 
 
-/// Cherry-picks the given commit, and produces changes in the index and working directory.
+/// Cherry-picks the given commit, and produces changes in the index and
+/// working directory.
 /// - Parameters:
-///   - repo: The repository containing the given commit. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given commit. The underlying type
+///   must be `git_repository`.
 ///   - commit: The commit to cherry-pick.
 ///   - cherrypickOptions: The options to use for the cherry-pick operation.
 /// - Returns: A ``GitErrorCode`` instance.

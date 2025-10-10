@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_describe_options` instances.
-/// ``GitDescribeOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_describe_options` instances. ``GitDescribeOptions`` instances do not
+/// need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -49,8 +50,9 @@ public func gitDescribeOptionsInit(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_describe_format_options` instances.
-/// ``GitDescribeFormatOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_describe_format_options` instances. ``GitDescribeFormatOptions``
+/// instances do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -73,9 +75,10 @@ public func gitDescribeFormatOptionsInit(
 
 /// Describes the given commit.
 /// - Parameters:
-///   - result: The pointer in which to store the description. The underlying type must be
-///   `git_describe_result`.
-///   - committish: The commit to describe. The underlying type must be `git_object`.
+///   - result: The pointer in which to store the description. The underlying
+///   type must be `git_describe_result`.
+///   - committish: The commit to describe. The underlying type must be
+///   `git_object`.
 ///   - opts: The options for describing the commit.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -107,16 +110,17 @@ public func gitDescribeCommit(
 
 /// Describes the current commit and worktree.
 /// - Parameters:
-///   - out: The pointer in which to store the description. The underlying type must be 
-///   `git_describe_result`.
-///   - repo: The repository containing the commit. The underlying type must be `git_repository`.
+///   - out: The pointer in which to store the description. The underlying
+///   type must be `git_describe_result`.
+///   - repo: The repository containing the commit. The underlying type must
+///   be `git_repository`.
 ///   - opts: The options for describing the commit.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// A status check will be run after performing the describe operation on HEAD. The description will be
-/// considered dirity if there are any entries.
+/// A status check will be run after performing the describe operation on HEAD.
+/// The description will be considered dirity if there are any entries.
 ///
 /// ## C Equivalent
 ///
@@ -146,8 +150,10 @@ public func gitDescribeWorkdir(
 
 /// Writes the given commit description to a buffer.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the description should be written.
-///   - result: The commit description. The underlying type must be `git_describe_result`.
+///   - out: The ``GitBuf`` instance into which the description should be
+///   written.
+///   - result: The commit description. The underlying type must be
+///   `git_describe_result`.
 ///   - opts: The options for formatting the commit description.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

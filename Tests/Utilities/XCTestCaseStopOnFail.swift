@@ -16,12 +16,14 @@ import XCTest
 ///
 /// ## Discussion
 ///
-/// This class initializes and shuts down libgit2, so test cases do not need to handle that.
-/// This ensures that all tests cases run in an environment in which libgit2 has been initialized.
-/// Any behavior of the library prior to its being initialized is untested and is considered undefined behavior.
+/// This class initializes and shuts down libgit2, so test cases do not need
+/// to handle that. This ensures that all tests cases run in an environment in
+/// which libgit2 has been initialized. Any behavior of the library prior to
+/// libgit2 being initialized is untested and is considered undefined behavior.
 class XCTestCaseStopOnFail: XCTestCase
 {
-    /// Provides an opportunity to customize initial state before a test case begins.
+    /// Provides an opportunity to customize initial state before a test case
+    /// begins.
     override class func setUp()
     {
         super.setUp()
@@ -41,7 +43,8 @@ class XCTestCaseStopOnFail: XCTestCase
     
     
     
-    /// Provides an opportunity to reset state before calling each test method in a test case.
+    /// Provides an opportunity to reset state before calling each test method
+    /// in a test case.
     override func setUp()
     {
         super.setUp()

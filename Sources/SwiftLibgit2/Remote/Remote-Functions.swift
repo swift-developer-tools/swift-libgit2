@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_remote_callbacks` instances.
-/// ``GitRemoteCallbacks`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_remote_callbacks` instances. ``GitRemoteCallbacks`` instances
+/// do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -49,8 +50,9 @@ public func gitRemoteInitCallbacks(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_fetch_options` instances.
-/// ``GitFetchOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_fetch_options` instances. ``GitFetchOptions`` instances do not
+/// need to be initialized this way.
 ///
 /// ## C Equivalent
 ///

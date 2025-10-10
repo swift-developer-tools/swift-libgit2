@@ -11,15 +11,15 @@ import CLibgit2
 
 
 
-/// The callback for the user's custom certificate checks.
+/// The callback for custom certificate checks.
 /// - Parameters:
 ///   - cert: The host certificate.
 ///   - valid: Whether OpenSSL thinks this certificate is valid.
 ///   - host: The host name of the host to which libgit2 is connected.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if the connection should be failed, a positive value if the callback
-/// refused to act and the existing validity determination should be honored, or `0` to proceed with
-/// the connection.
+/// - Returns: A negative value if the connection should be failed, a positive
+/// value if the callback refused to act and the existing validity
+/// determination should be honored, or `0` to proceed with the connection.
 ///
 /// ## C Equivalent
 ///

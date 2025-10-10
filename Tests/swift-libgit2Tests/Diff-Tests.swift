@@ -752,19 +752,22 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                let filesChanged: Int = gitDiffStatsFilesChanged(stats: diffStatsPointer)
+                let filesChanged: Int
+                    = gitDiffStatsFilesChanged(stats: diffStatsPointer)
                 
                 XCTAssertGreaterThan(filesChanged, 0)
                 
                 
                 
-                let insertions: Int = gitDiffStatsInsertions(stats: diffStatsPointer)
+                let insertions: Int
+                    = gitDiffStatsInsertions(stats: diffStatsPointer)
                 
                 XCTAssertGreaterThanOrEqual(insertions, 0)
                 
                 
                 
-                let deletions: Int = gitDiffStatsDeletions(stats: diffStatsPointer)
+                let deletions: Int
+                    = gitDiffStatsDeletions(stats: diffStatsPointer)
                 
                 XCTAssertGreaterThanOrEqual(deletions, 0)
                 
@@ -857,7 +860,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: oldIndexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: oldIndexPointer)
             
             XCTAssertOK(indexWriteResult)
             
@@ -1541,12 +1545,13 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffTreeToWorkdirWithIndexResult: GitErrorCode = gitDiffTreeToWorkdirWithIndex(
-                diff:       &diffPointer,
-                repo:       repository.pointer,
-                oldTree:    treePointer,
-                opts:       nil
-            )
+            let diffTreeToWorkdirWithIndexResult: GitErrorCode
+                = gitDiffTreeToWorkdirWithIndex(
+                    diff:       &diffPointer,
+                    repo:       repository.pointer,
+                    oldTree:    treePointer,
+                    opts:       nil
+                )
             
             XCTAssertOK(diffTreeToWorkdirWithIndexResult)
             Diff.assertDiffChanges(diffPointer: diffPointer)

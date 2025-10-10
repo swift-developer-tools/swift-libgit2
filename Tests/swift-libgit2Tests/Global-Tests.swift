@@ -18,14 +18,16 @@ final class GlobalTests: XCTestCaseStopOnFail
     {
         let initResult: Int32 = gitLibgit2Init()
         
-        /// ``XCTestCaseStopOnFail`` also initialized libgit2 before this test case began.
+        /// ``XCTestCaseStopOnFail`` also initialized libgit2 before this test
+        /// case began.
         XCTAssertEqual(initResult, 2)
         
         
         
         let shutdownResult: Int32 = gitLibgit2Shutdown()
         
-        /// ``XCTestCaseStopOnFail`` will shut down libgit2 after this test case ends.
+        /// ``XCTestCaseStopOnFail`` will shut down libgit2 after this test
+        /// case ends.
         XCTAssertEqual(shutdownResult, 1)
     }
     
@@ -35,7 +37,8 @@ final class GlobalTests: XCTestCaseStopOnFail
     {
         let firstInitResult: Int32 = gitLibgit2Init()
 
-        /// ``XCTestCaseStopOnFail`` also initialized libgit2 before this test case began.
+        /// ``XCTestCaseStopOnFail`` also initialized libgit2 before this test
+        /// case began.
         XCTAssertEqual(firstInitResult, 2)
         
         
@@ -51,7 +54,8 @@ final class GlobalTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(firstShutdownResult, 2)
         
-        /// ``XCTestCaseStopOnFail`` will shut down libgit2 after this test case ends.
+        /// ``XCTestCaseStopOnFail`` will shut down libgit2 after this test
+        /// case ends.
         XCTAssertEqual(secondShutdownResult, 1)
     }
 }

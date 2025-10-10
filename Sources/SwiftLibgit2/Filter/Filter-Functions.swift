@@ -14,10 +14,12 @@ import Foundation
 
 /// Loads the filter list for the given path.
 /// - Parameters:
-///   - filters: The pointer in which to store the filter list. The underlying type must be
-///   `git_filter_list`.
-///   - repo: The repository containing the given path. The underlying type must be `git_repository`.
-///   - blob: The blob to which the filter should be applied. The underlying type must be `git_blob`.
+///   - filters: The pointer in which to store the filter list. The underlying
+///   type must be `git_filter_list`.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
+///   - blob: The blob to which the filter should be applied. The underlying
+///   type must be `git_blob`.
 ///   - path: The relative path to the file to filter.
 ///   - mode: The filtering direction.
 ///   - flags: The flags controlling the filtering process.
@@ -25,8 +27,8 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// The operation will succeed if no filters are requested for the specified file, but `filters` will be set
-/// to `nil`.
+/// The operation will succeed if no filters are requested for the specified
+/// file, but `filters` will be set to `nil`.
 ///
 /// ## C Equivalent
 ///
@@ -57,10 +59,12 @@ public func gitFilterListLoad(
 
 /// Loads the filter list for the given path.
 /// - Parameters:
-///   - filters: The pointer in which to store the filter list. The underlying type must be
-///   `git_filter_list`.
-///   - repo: The repository containing the given path. The underlying type must be `git_repository`.
-///   - blob: The blob to which the filter should be applied. The underlying type must be `git_blob`.
+///   - filters: The pointer in which to store the filter list. The underlying
+///   type must be `git_filter_list`.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
+///   - blob: The blob to which the filter should be applied. The underlying
+///   type must be `git_blob`.
 ///   - path: The relative path to the file to filter.
 ///   - mode: The filtering direction.
 ///   - opts: The filtering options.
@@ -68,8 +72,8 @@ public func gitFilterListLoad(
 ///
 /// ## Discussion
 ///
-/// The operation will succeed if no filters are requested for the specified file, but `filters` will be set
-/// to `nil`.
+/// The operation will succeed if no filters are requested for the specified
+/// file, but `filters` will be set to `nil`.
 ///
 /// ## C Equivalent
 ///
@@ -105,7 +109,8 @@ public func gitFilterListLoadExt(
 
 /// Checks whether the named filter will be applied.
 /// - Parameters:
-///   - filters: The filter list to check. The underlying type must be `git_filter_list`.
+///   - filters: The filter list to check. The underlying type must be
+///   `git_filter_list`.
 ///   - name: The name of the filter to check.
 /// - Returns: Whether the named filter will be applied.
 ///
@@ -131,8 +136,10 @@ public func gitFilterListContains(
 
 /// Applies the given filter list to the given data buffer.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should be written.
-///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
+///   - out: The ``GitBuf`` instance into which the filtered content should
+///   be written.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
 ///   - input: The buffer containing the data to filter.
 ///   - inputLen: The length of `input`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -172,16 +179,19 @@ public func gitFilterListApplyToBuffer(
 
 /// Applies the given filter list to the contents of the specified on-disk file.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should be written.
-///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
-///   - repo: The repository containing the specified file. The underlying type must be
-///   `git_repository`.
+///   - out: The ``GitBuf`` instance into which the filtered content should
+///   be written.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - repo: The repository containing the specified file. The underlying
+///   type must be `git_repository`.
 ///   - path: The path of the file to filter.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// If `path` is a relative path, it will be interpreted as being relative to the working directory.
+/// If `path` is a relative path, it will be interpreted as being relative to
+/// the working directory.
 ///
 /// ## C Equivalent
 ///
@@ -213,8 +223,10 @@ public func gitFilterListApplyToFile(
 
 /// Applies the given filter list to the contents of the given blob.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should be written.
-///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
+///   - out: The ``GitBuf`` instance into which the filtered content should
+///   be written.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
 ///   - blob: The blob to filter. The underlying type must be `git_blob`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -246,7 +258,8 @@ public func gitFilterListApplyToBlob(
 
 /// Applies the given filter list to the given buffer as a stream.
 /// - Parameters:
-///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
 ///   - buffer: The buffer containing the data to filter.
 ///   - len: The length of `buffer`.
 ///   - target: The stream into which the data should be written.
@@ -282,16 +295,18 @@ public func gitFilterListStreamBuffer(
 
 /// Applies the given filter list to the specified file as a stream.
 /// - Parameters:
-///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
-///   - repo: The repository containing the specified file. The underlying type must be
-///   `git_repository`.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - repo: The repository containing the specified file. The underlying
+///   type must be `git_repository`.
 ///   - path: The path of the file to filter.
 ///   - target: The stream into which the data should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// If `path` is a relative path, it will be interpreted as being relative to the working directory.
+/// If `path` is a relative path, it will be interpreted as being relative to
+/// the working directory.
 ///
 /// ## C Equivalent
 ///
@@ -318,7 +333,8 @@ public func gitFilterListStreamFile(
 
 /// Applies the given filter list to the given blob as a stream.
 /// - Parameters:
-///   - filters: The filter list to apply. The underlying type must be `git_filter_list`.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
 ///   - blob: The blob to filter. The underlying type must be `git_blob`.
 ///   - target: The stream into which the data should be written.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -345,7 +361,8 @@ public func gitFilterListStreamBlob(
 
 
 /// Frees the memory allocated for the given `git_filter_list` instance.
-/// - Parameter filters: The filter list to free. The underlying type must be `git_filter_list`.
+/// - Parameter filters: The filter list to free. The underlying type must
+/// be `git_filter_list`.
 ///
 /// ## C Equivalent
 ///

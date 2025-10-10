@@ -85,15 +85,17 @@ final class BlobTests: XCTestCaseStopOnFail
             
             var streamPointer: UnsafeMutablePointer<git_writestream>? = nil
             
-            let blobCreateFromStreamResult: GitErrorCode = gitBlobCreateFromStream(
-                out:        &streamPointer,
-                repo:       repository.pointer,
-                hintPath:   "test.txt"
-            )
+            let blobCreateFromStreamResult: GitErrorCode
+                = gitBlobCreateFromStream(
+                    out:        &streamPointer,
+                    repo:       repository.pointer,
+                    hintPath:   "test.txt"
+                )
             
             XCTAssertOK(blobCreateFromStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_writestream> = streamPointer
+            guard let streamPointer: UnsafeMutablePointer<git_writestream>
+                    = streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")
@@ -426,7 +428,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobDupResult)
             
-            guard let duplicatedBlobPointer: OpaquePointer = duplicatedBlobPointer
+            guard let duplicatedBlobPointer: OpaquePointer
+                    = duplicatedBlobPointer
             else
             {
                 XCTFail("The duplicated blob pointer was nil.")
@@ -477,12 +480,13 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobCreateFromBufferResult: GitErrorCode = gitBlobCreateFromBuffer(
-                id:         &blobOID,
-                repo:       repository.pointer,
-                buffer:     data,
-                len:        data.count
-            )
+            let blobCreateFromBufferResult: GitErrorCode
+                = gitBlobCreateFromBuffer(
+                    id:         &blobOID,
+                    repo:       repository.pointer,
+                    buffer:     data,
+                    len:        data.count
+                )
             
             XCTAssertOK(blobCreateFromBufferResult)
             

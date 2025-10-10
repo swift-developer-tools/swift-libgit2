@@ -11,7 +11,8 @@ import CLibgit2
 
 
 
-/// The flags controlling the behavior of ``gitApply(repo:diff:location:options:)``.
+/// The flags controlling the behavior of
+/// ``gitApply(repo:diff:location:options:)``.
 ///
 /// ## C Equivalent
 ///
@@ -34,7 +35,8 @@ public struct GitApplyFlagsT: GitOptionSet
     
     
     
-    /// Creates a ``GitApplyFlagsT`` instance from a `git_apply_flags_t` instance.
+    /// Creates a ``GitApplyFlagsT`` instance from a `git_apply_flags_t`
+    /// instance.
     /// - Parameter applyFlags: The `git_apply_flags_t` instance to use.
     internal init(
         cValue applyFlags: git_apply_flags_t
@@ -54,7 +56,8 @@ public struct GitApplyFlagsT: GitOptionSet
     
     
     
-    /// Converts the ``GitApplyFlagsT`` instance into a `git_apply_flags_t` instance.
+    /// Converts the ``GitApplyFlagsT`` instance into a `git_apply_flags_t`
+    /// instance.
     /// - Returns: The `git_apply_flags_t` instance.
     internal func cValue() -> git_apply_flags_t
     {
@@ -87,7 +90,8 @@ public struct GitApplyLocationT: GitOptionSet
     
     
     
-    /// Creates a ``GitApplyLocationT`` instance from a `git_apply_location_t` instance.
+    /// Creates a ``GitApplyLocationT`` instance from a `git_apply_location_t`
+    /// instance.
     /// - Parameter applyLocation: The `git_apply_location_t` instance to use.
     internal init(
         cValue applyLocation: git_apply_location_t
@@ -121,7 +125,8 @@ public struct GitApplyLocationT: GitOptionSet
     
     
     
-    /// Converts the ``GitApplyLocationT`` instance into a `git_apply_location_t` instance.
+    /// Converts the ``GitApplyLocationT`` instance into a
+    /// `git_apply_location_t` instance.
     /// - Returns: The `git_apply_location_t` instance.
     internal func cValue() -> git_apply_location_t
     {

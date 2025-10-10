@@ -15,11 +15,6 @@ import XCTest
 
 
 /// Repository-related testing utilities.
-///
-/// ## Discussion
-///
-/// The repository created by ``Repository/withRepository(_:)`` contains various files used
-/// to test bindings.
 struct Repository
 {
     /// The URL of the repository.
@@ -65,15 +60,18 @@ struct Repository
     
     
     
-    /// Commits changes to the specified file with the given content and message.
+    /// Commits changes to the specified file with the given content and
+    /// message.
     /// - Parameters:
     ///   - content: The new content of the file.
-    ///   - path: The path to the file to modify, relative to the repository's root.
+    ///   - path: The path to the file to modify, relative to the repository's
+    ///   root.
     ///   - message: The commit message.
-    ///   - appending: Whether the new content should be appended to the existing content.
+    ///   - appending: Whether the new content should be appended to the
+    ///   existing content.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
-    /// or tree initialization failed.
+    /// - Throws:  An `NSError` if the commit or tree initialization failed,
+    /// or an error if the file write operation failed.
     @discardableResult
     func commit(
         _           content : String,
@@ -103,8 +101,8 @@ struct Repository
     ///   - message: The commit message.
     ///   - options: The options for commit creation.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
-    /// or tree initialization failed.
+    /// - Throws: An `NSError` if the commit or tree initialization failed,
+    /// or an error if the file write operation failed.
     @discardableResult
     func commitStaged(
         message : String,
@@ -125,10 +123,11 @@ struct Repository
     ///   - message: The commit message.
     ///   - options: The options for commit creation.
     ///   - fromStage: Whether the commit should be created from staged changes.
-    ///   - path: The path to the file to modify. This will be appended to the repository's URL.
+    ///   - path: The path to the file to modify. This will be appended to the
+    ///   repository's URL.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An error if the file write operation failed, or an `NSError` if the commit
-    /// or tree initialization failed.
+    /// - Throws: An `NSError` if the commit or tree initialization failed,
+    /// or an error if the file write operation failed.
     @discardableResult
     private func _commit(
         message     : String,
@@ -175,7 +174,8 @@ struct Repository
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: indexPointer)
             
             XCTAssertOK(indexWriteResult)
         }
@@ -186,12 +186,13 @@ struct Repository
         {
             var commitOID = GitOID()
             
-            let commitCreateFromStageResult: GitErrorCode = gitCommitCreateFromStage(
-                id:         &commitOID,
-                repo:       pointer,
-                message:    message,
-                opts:       options
-            )
+            let commitCreateFromStageResult: GitErrorCode
+                = gitCommitCreateFromStage(
+                    id:         &commitOID,
+                    repo:       pointer,
+                    message:    message,
+                    opts:       options
+                )
             
             XCTAssertOK(commitCreateFromStageResult)
             XCTAssertNotZeroOID(commitOID)
@@ -226,7 +227,8 @@ struct Repository
             
             
             
-            let messageEncoding: String? = gitCommitMessageEncoding(commit: commitPointer)
+            let messageEncoding: String?
+                = gitCommitMessageEncoding(commit: commitPointer)
             
             XCTAssertNotNil(messageEncoding)
             XCTAssertEqual(messageEncoding, options?.messageEncoding)
@@ -240,7 +242,8 @@ struct Repository
             
             
             
-            let committer: GitSignature = gitCommitCommitter(commit: commitPointer)
+            let committer: GitSignature
+                = gitCommitCommitter(commit: commitPointer)
             
             XCTAssertEqual(committer.name, options?.committer?.name)
             XCTAssertEqual(committer.email, options?.committer?.email)
@@ -374,7 +377,8 @@ struct Repository
     /// Resets to the given commit.
     /// - Parameters:
     ///   - commitOID: The ID of the commit.
-    ///   - resetType: The type of reset to perform. The default value is `GIT_RESET_HARD`.
+    ///   - resetType: The type of reset to perform. The default value is
+    ///   `GIT_RESET_HARD`.
     func reset(
         to      commitOID   : GitOID,
         type    resetType   : git_reset_t   = GIT_RESET_HARD
@@ -412,8 +416,8 @@ struct Repository
     
     
     /// Creates a directory at the given path in the repository.
-    /// - Parameter path: The path to the directory to create. This will be appended to the
-    /// repository's URL.
+    /// - Parameter path: The path to the directory to create. This will be
+    /// appended to the repository's URL.
     /// - Returns: The URL of the created directory.
     /// - Throws: An error if the directory creation operation failed.
     @discardableResult
@@ -438,9 +442,12 @@ struct Repository
     
     /// Modifies the content of a file.
     /// - Parameters:
-    ///   - path: The path to the file to modify. This will be appended to the repository's URL.
-    ///   - content: The new content of the file. This is ignored when creating a directory.
-    ///   - appending: Whether the new content should be appended to the existing content.
+    ///   - path: The path to the file to modify. This will be appended to the
+    ///   repository's URL.
+    ///   - content: The new content of the file. This is ignored when creating
+    ///   a directory.
+    ///   - appending: Whether the new content should be appended to the
+    ///   existing content.
     /// - Returns: The URL to which the content was written.
     /// - Throws: An error if the file read or write operations failed.
     @discardableResult
@@ -470,12 +477,14 @@ struct Repository
     
     
     
-    /// Asserts that the contents of the specified file are equal to the given value.
+    /// Asserts that the contents of the specified file are equal to the given
+    /// value.
     /// - Parameters:
-    ///   - path: The path to the file whose content should be verified. This will be appended to the
-    ///   repository's URL.
+    ///   - path: The path to the file whose content should be verified. This
+    ///   will be appended to the repository's URL.
     ///   - content: The expected content of the file.
-    ///   - directoryHint: A hint to URL file APIs for handling paths that may reference directories.
+    ///   - directoryHint: A hint to URL file APIs for handling paths that may
+    ///   reference directories.
     /// - Throws: An error if the file read operation failed.
     func assertFileContent(
         at              path    : String,
@@ -498,7 +507,6 @@ struct Repository
 
 // MARK: - Extensions
 
-/// Static methods related to ``Repository/withRepository(_:)``.
 extension Repository
 {
     /// Creates blame data in the given repository.
@@ -667,10 +675,11 @@ extension Repository
     
     
     
-    /// Calls the given closure with a `Repository` instance and a pointer to the repository's index.
+    /// Calls the given closure with a `Repository` instance and a pointer to
+    /// the repository's index.
     /// - Parameter body: The closure to call.
-    /// - Throws: An error if the directory creation failed, or an `NSError` if the index pointer
-    /// could not be created.
+    /// - Throws: An `NSError` if the index pointer could not be created,
+    /// or an error if the directory creation failed.
     static func withRepositoryAndIndexPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws

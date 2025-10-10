@@ -121,7 +121,8 @@ final class GraphTests: XCTestCaseStopOnFail
                 ancestor:   secondCommitOID
             )
             
-            guard let isThirdDescendantOfSecond: Bool = isThirdDescendantOfSecond
+            guard let isThirdDescendantOfSecond: Bool
+                    = isThirdDescendantOfSecond
             else
             {
                 XCTFail("The third vs. second descendant result was nil.")
@@ -212,10 +213,17 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
+            let descendantArray: [GitOID] =
+            [
+                firstCommitOID,
+                secondCommitOID,
+                thirdCommitOID
+            ]
+            
             let isBaseReachable: Bool? = gitGraphReachableFromAny(
                 repo            : repository.pointer,
                 commit          : baseCommitOID,
-                descendantArray : [firstCommitOID, secondCommitOID, thirdCommitOID],
+                descendantArray : descendantArray,
                 length          : 3
             )
             

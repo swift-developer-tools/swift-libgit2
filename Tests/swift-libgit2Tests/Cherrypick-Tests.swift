@@ -21,7 +21,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let (_, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
+            let (_, featureCommitOID): (GitOID, GitOID)
+                = try setupCherrypickScenario(in: repository)
             
             
             
@@ -112,7 +113,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let (mainCommitOID, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
+            let (mainCommitOID, featureCommitOID): (GitOID, GitOID)
+                = try setupCherrypickScenario(in: repository)
             
             
             
@@ -183,7 +185,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let indexEntryCountResult: Int = gitIndexEntryCount(index: indexPointer)
+            let indexEntryCountResult: Int
+                = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertGreaterThan(indexEntryCountResult, 0)
         }
@@ -227,7 +230,8 @@ extension CherrypickTests
     
     /// Creates a repository with branches suitable for cherry-picking.
     /// - Parameter repository: The repository in which to create the branches.
-    /// - Returns: A tuple containing the main branch commit and the feature branch commit.
+    /// - Returns: A tuple containing the main branch commit and the feature
+    /// branch commit.
     private func setupCherrypickScenario(
         in repository: Repository
     ) throws -> (GitOID, GitOID)
@@ -308,7 +312,8 @@ extension CherrypickTests
         
         
         
-        guard let referenceName: UnsafePointer<CChar> = git_reference_name(branchPointer)
+        guard let referenceName: UnsafePointer<CChar>
+                = git_reference_name(branchPointer)
         else
         {
             XCTFail("The branch name was nil.")

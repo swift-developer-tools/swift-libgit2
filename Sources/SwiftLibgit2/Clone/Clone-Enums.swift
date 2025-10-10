@@ -15,16 +15,18 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// Bypassing the Git-aware transport on clone means that instead of a fetch, libgit2 will copy the
-/// object database directory instead of figuring out what it needs, which is faster. If possible, it will
-/// hardlink the files to save space.
+/// Bypassing the Git-aware transport on clone means that instead of a fetch,
+/// libgit2 will copy the object database directory instead of figuring out
+/// what it needs, which is faster. If possible, it will hardlink the files
+/// to save space.
 ///
 /// ## C Equivalent
 ///
 /// [`git_clone_local_t`](https://libgit2.org/docs/reference/main/clone/git_clone_local_t.html)
 public enum GitCloneLocalT: UInt32, GitEnum
 {
-    /// Bypass the Git-aware transport for local paths, but use a normal fetch for `file://` URLs.
+    /// Bypass the Git-aware transport for local paths, but use a normal fetch
+    /// for `file://` URLs.
     ///
     /// ## Discussion
     ///
@@ -42,7 +44,8 @@ public enum GitCloneLocalT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitCloneLocalT`` instance from a `git_clone_local_t` instance.
+    /// Creates a ``GitCloneLocalT`` instance from a `git_clone_local_t`
+    /// instance.
     /// - Parameter cloneLocal: The `git_clone_local_t` instance to use.
     internal init?(
         cValue cloneLocal: git_clone_local_t
@@ -60,7 +63,8 @@ public enum GitCloneLocalT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitCloneLocalT`` instance into a `git_clone_local_t` instance.
+    /// Converts the ``GitCloneLocalT`` instance into a `git_clone_local_t`
+    /// instance.
     /// - Returns: The `git_clone_local_t` instance.
     internal func cValue() -> git_clone_local_t
     {

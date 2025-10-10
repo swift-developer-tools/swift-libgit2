@@ -20,8 +20,9 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_blame_options` instances.
-/// ``GitBlameOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_blame_options` instances. ``GitBlameOptions`` instances do not need
+/// to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -43,7 +44,8 @@ public func gitBlameOptionsInit(
 
 
 /// Gets the number of lines that exist in the blame.
-/// - Parameter blame: The blame to query. The underlying type must be `git_blame`.
+/// - Parameter blame: The blame to query. The underlying type must be
+/// `git_blame`.
 /// - Returns: The number of lines that exist in the blame.
 ///
 /// ## C Equivalent
@@ -59,7 +61,8 @@ public func gitBlameLineCount(
 
 
 /// Gets the number of hunks that exist in the blame.
-/// - Parameter blame: The blame to query. The underlying type must be `git_blame`.
+/// - Parameter blame: The blame to query. The underlying type must be
+/// `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
 /// ## C Equivalent
@@ -78,7 +81,7 @@ public func gitBlameHunkCount(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - index: The index of the hunk to retrieve.
-/// - Returns: The hunk at the given index, or `nil` on error.
+/// - Returns: The hunk at the given index, or `nil` if there was an error.
 ///
 /// ## C Equivalent
 ///
@@ -88,7 +91,11 @@ public func gitBlameHunkByIndex(
     index   : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_hunk_byindex(blame, index)
+    guard let blameHunk: UnsafePointer<git_blame_hunk>
+            = git_blame_hunk_byindex(
+                blame,
+                index
+            )
     else
     {
         return nil
@@ -103,7 +110,8 @@ public func gitBlameHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk that contains the given line, or `nil` on error.
+/// - Returns: The hunk that contains the given line, or `nil` if there was
+/// an error.
 ///
 /// ## C Equivalent
 ///
@@ -113,7 +121,11 @@ public func gitBlameHunkByLine(
     lineNo  : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_hunk_byline(blame, lineNo)
+    guard let blameHunk: UnsafePointer<git_blame_hunk>
+            = git_blame_hunk_byline(
+                blame,
+                lineNo
+            )
     else
     {
         return nil
@@ -128,7 +140,7 @@ public func gitBlameHunkByLine(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - idx: The 1-indexed line number.
-/// - Returns: The blamed line, or `nil` on error.
+/// - Returns: The blamed line, or `nil` if there was an error.
 ///
 /// ## C Equivalent
 ///
@@ -138,7 +150,11 @@ public func gitBlameLineByIndex(
     idx     : Int
 ) -> GitBlameLine?
 {
-    guard let blameLine: UnsafePointer<git_blame_line> = git_blame_line_byindex(blame, idx)
+    guard let blameLine: UnsafePointer<git_blame_line>
+            = git_blame_line_byindex(
+                blame,
+                idx
+            )
     else
     {
         return nil
@@ -150,13 +166,14 @@ public func gitBlameLineByIndex(
 
 
 /// Gets the number of hunks that exist in the blame.
-/// - Parameter blame: The blame to query. The underlying type must be `git_blame`.
+/// - Parameter blame: The blame to query. The underlying type must be
+/// `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
 /// ## Discussion
 ///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
-/// Use ``gitBlameHunkCount(blame:)`` instead.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``gitBlameHunkCount(blame:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -174,12 +191,12 @@ public func gitBlameGetHunkCount(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - index: The index of the hunk to retrieve.
-/// - Returns: The hunk at the given index, or `nil` on error.
+/// - Returns: The hunk at the given index, or `nil` if there was an error.
 ///
 /// ## Discussion
 ///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
-/// Use ``gitBlameHunkByIndex(blame:index:)`` instead.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``gitBlameHunkByIndex(blame:index:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -189,7 +206,11 @@ public func gitBlameGetHunkByIndex(
     index   : UInt32
 ) -> GitBlameHunk?
 {
-    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byindex(blame, index)
+    guard let blameHunk: UnsafePointer<git_blame_hunk>
+            = git_blame_get_hunk_byindex(
+                blame,
+                index
+            )
     else
     {
         return nil
@@ -204,12 +225,13 @@ public func gitBlameGetHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk that contains the given line, or `nil` on error.
+/// - Returns: The hunk that contains the given line, or `nil` if there was
+/// an error.
 ///
 /// ## Discussion
 ///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
-/// Use ``gitBlameHunkByLine(blame:lineNo:)`` instead.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``gitBlameHunkByLine(blame:lineNo:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -219,7 +241,11 @@ public func gitBlameGetHunkByLine(
     lineNo  : Int
 ) -> GitBlameHunk?
 {
-    guard let blameHunk: UnsafePointer<git_blame_hunk> = git_blame_get_hunk_byline(blame, lineNo)
+    guard let blameHunk: UnsafePointer<git_blame_hunk>
+            = git_blame_get_hunk_byline(
+                blame,
+                lineNo
+            )
     else
     {
         return nil
@@ -232,9 +258,10 @@ public func gitBlameGetHunkByLine(
 
 /// Gets the blame for a single file in the repository.
 /// - Parameters:
-///   - out: The pointer in which to store the blame. The underlying type must be `git_blame`.
-///   - repo: The repository whose history should be walked. The underlying type must be
-///   `git_repository`.
+///   - out: The pointer in which to store the blame. The underlying type must
+///   be `git_blame`.
+///   - repo: The repository whose history should be walked. The underlying
+///   type must be `git_repository`.
 ///   - path: The path to the file to consider.
 ///   - options: The options for the blame operation.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -269,21 +296,25 @@ public func gitBlameFile(
 
 /// Gets the blame data for a file that has been modified in memory.
 /// - Parameters:
-///   - out: The pointer in which to store the blame. The underlying type must be `git_blame`.
-///   - base: The cached blame from the history of the file.  The underlying type must be
-///   `git_blame`. This is usually the output from ``gitBlameFile(out:repo:path:options:)``.
+///   - out: The pointer in which to store the blame. The underlying type must
+///   be `git_blame`.
+///   - base: The cached blame from the history of the file. The underlying
+///   type must be `git_blame`.
 ///   - buffer: The possibly-modified content of the file.
 ///   - bufferLen: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// The blame parameter is a pre-calculated blame for the in-`odb` (object database) history of the file.
-/// This means that once a file blame is completed (which can be expensive), updating the buffer blame
-/// is very fast.
+/// The `base` parameter is a pre-calculated blame for the in-ODB (object
+/// database) history of the file. This means that once a file blame is
+/// completed (which can be expensive), updating the buffer blame is very fast.
 ///
-/// Lines that differ between the buffer and the committed version are marked as having a zero OID for
-/// their ``GitBlameHunk/finalCommitID``.
+/// Lines that differ between the buffer and the committed version are marked
+/// as having a zero OID for their ``GitBlameHunk/finalCommitID``.
+///
+/// - Note: The cached blame from the history of the file is usually the output
+/// from ``gitBlameFile(out:repo:path:options:)``.
 ///
 /// ## C Equivalent
 ///
@@ -314,7 +345,8 @@ public func gitBlameBuffer(
 
 
 /// Frees the memory allocated for the given `git_blame` instance.
-/// - Parameter blame: The blame to free. The underlying type must be `git_blame`.
+/// - Parameter blame: The blame to free. The underlying type must be
+/// `git_blame`.
 ///
 /// ## C Equivalent
 ///
