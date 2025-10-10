@@ -146,7 +146,7 @@ extension IndexerTests
     /// Creates packfile data from the given repository.
     /// - Parameter repository: The repository to use.
     /// - Returns: The packfile data.
-    /// - Throws: An error if packfile creation fails.
+    /// - Throws: An error if an operation fails.
     private func createPackfileData(
         from repository: Repository
     ) throws -> Data
@@ -245,7 +245,7 @@ extension IndexerTests
     ///   - repository: The repository from which the packfile data was created.
     ///   - packfileData: The packfile data to index.
     ///   - indexerOptions: The indexer options.
-    /// - Throws: An error if the directory write operation failed.
+    /// - Throws: An error if an operation fails.
     private func testIndexerWithPackfile(
         in          repository      : Repository,
         data        packfileData    : Data,

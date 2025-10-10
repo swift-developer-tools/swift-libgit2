@@ -140,7 +140,7 @@ internal protocol ThrowingCConvertible
     
     /// Converts the receiver to the equivalent C value.
     /// - Returns: The equivalent C value
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -163,7 +163,7 @@ internal protocol WithCConvertible
     /// value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -178,7 +178,7 @@ internal protocol WithCConvertible
     /// equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -198,7 +198,7 @@ internal extension WithCConvertible
     /// equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     func withOptionalCValue<T>(
         _ body: (UnsafeMutablePointer<C>?) throws -> T
     ) throws -> T
@@ -220,7 +220,7 @@ internal extension Optional where Wrapped: WithCConvertible
     /// equivalent C value.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     func withOptionalCValue<T>(
         _ body: (UnsafeMutablePointer<Wrapped.C>?) throws -> T
     ) throws -> T

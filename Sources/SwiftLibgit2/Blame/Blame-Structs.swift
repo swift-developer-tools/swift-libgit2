@@ -112,7 +112,7 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blame_options>) throws -> T
     ) throws -> T
@@ -261,7 +261,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blame_hunk>) throws -> T
     ) throws -> T
@@ -356,7 +356,7 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blame_line>) throws -> T
     ) throws -> T

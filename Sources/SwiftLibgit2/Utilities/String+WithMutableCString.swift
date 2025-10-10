@@ -29,7 +29,7 @@ internal extension String
     /// Calls the given closure with a mutable C string pointer.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -82,8 +82,6 @@ internal extension String
                 throw NSError.makeCConversionError()
             }
             
-            /// `baseAddress` should not be `nil`, since the buffer will not
-            /// be empty at this point.
             let mutableCString = UnsafeMutableRawPointer(baseAddress)
                 .bindMemory(
                     to:         CChar.self,

@@ -161,7 +161,6 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_cert_hostkey>) throws -> T
     ) rethrows -> T

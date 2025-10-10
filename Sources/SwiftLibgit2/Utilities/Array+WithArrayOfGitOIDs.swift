@@ -18,7 +18,7 @@ internal extension Array where Element == GitOID
     /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     func withArrayOfGitOIDs<T>(
         _ body: (UnsafePointer<git_oid>?, Int) throws -> T
     ) throws -> T
@@ -57,7 +57,6 @@ internal extension Array where Element == GitOID
     /// instance, and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error thrown by the given closure.
     ///
     /// ## Discussion
     ///
@@ -69,7 +68,7 @@ internal extension Array where Element == GitOID
     /// deallocated.
     mutating func withMutatingGitOIDArray<T>(
         _ body: (UnsafeMutablePointer<git_oidarray>) throws -> T
-    ) throws -> T
+    ) rethrows -> T
     {
         guard !self.isEmpty
         else

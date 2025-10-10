@@ -105,7 +105,7 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
     /// `git_describe_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_describe_options>) throws -> T
     ) throws -> T
@@ -209,7 +209,7 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     /// `git_describe_format_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_describe_format_options>) throws -> T
     ) throws -> T

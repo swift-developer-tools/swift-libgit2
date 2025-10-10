@@ -232,6 +232,7 @@ extension CherrypickTests
     /// - Parameter repository: The repository in which to create the branches.
     /// - Returns: A tuple containing the main branch commit and the feature
     /// branch commit.
+    /// - Throws: An error if an operation fails.
     private func setupCherrypickScenario(
         in repository: Repository
     ) throws -> (GitOID, GitOID)

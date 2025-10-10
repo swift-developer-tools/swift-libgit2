@@ -1556,7 +1556,7 @@ extension ConfigTests
     ///   object.
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the configuration creation failed.
+    /// - Throws: An error if an operation fails.
     private func withConfigOnDisk<T>(
         in  repository  : Repository,
         _   body        : (OpaquePointer) -> T

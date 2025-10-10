@@ -70,8 +70,7 @@ struct Repository
     ///   - appending: Whether the new content should be appended to the
     ///   existing content.
     /// - Returns: The ID of the created commit.
-    /// - Throws:  An `NSError` if the commit or tree initialization failed,
-    /// or an error if the file write operation failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     func commit(
         _           content : String,
@@ -101,8 +100,7 @@ struct Repository
     ///   - message: The commit message.
     ///   - options: The options for commit creation.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An `NSError` if the commit or tree initialization failed,
-    /// or an error if the file write operation failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     func commitStaged(
         message : String,
@@ -126,8 +124,7 @@ struct Repository
     ///   - path: The path to the file to modify. This will be appended to the
     ///   repository's URL.
     /// - Returns: The ID of the created commit.
-    /// - Throws: An `NSError` if the commit or tree initialization failed,
-    /// or an error if the file write operation failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     private func _commit(
         message     : String,
@@ -419,7 +416,7 @@ struct Repository
     /// - Parameter path: The path to the directory to create. This will be
     /// appended to the repository's URL.
     /// - Returns: The URL of the created directory.
-    /// - Throws: An error if the directory creation operation failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     func createDirectory(
         at path: String
@@ -449,7 +446,7 @@ struct Repository
     ///   - appending: Whether the new content should be appended to the
     ///   existing content.
     /// - Returns: The URL to which the content was written.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     func modifyFile(
         at          path    : String,
@@ -485,7 +482,7 @@ struct Repository
     ///   - content: The expected content of the file.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may
     ///   reference directories.
-    /// - Throws: An error if the file read operation failed.
+    /// - Throws: An error if an operation fails.
     func assertFileContent(
         at              path    : String,
         equals          content : String,
@@ -511,7 +508,7 @@ extension Repository
 {
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
-    /// - Throws: An error if the file write operation failed.
+    /// - Throws: An error if an operation fails.
     private static func createBlameData(
         in repository: Repository
     ) throws
@@ -568,7 +565,7 @@ extension Repository
     /// Creates a temporary directory with the given name.
     /// - Parameter directoryName: The name of the directory.
     /// - Returns: The URL of the temporary directory.
-    /// - Throws: An error if the directory creation failed.
+    /// - Throws: An error if an operation fails.
     static func createTemporaryDirectory(
         named directoryName: String
     ) throws -> URL
@@ -590,7 +587,7 @@ extension Repository
     
     /// Calls the given closure with a `Repository` instance.
     /// - Parameter body: The closure to call.
-    /// - Throws: An error if the directory creation failed.
+    /// - Throws: An error if an operation fails.
     static func withRepository(
         _ body: (Repository) throws -> Void
     ) throws
@@ -678,8 +675,7 @@ extension Repository
     /// Calls the given closure with a `Repository` instance and a pointer to
     /// the repository's index.
     /// - Parameter body: The closure to call.
-    /// - Throws: An `NSError` if the index pointer could not be created,
-    /// or an error if the directory creation failed.
+    /// - Throws: An error if an operation fails.
     static func withRepositoryAndIndexPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws

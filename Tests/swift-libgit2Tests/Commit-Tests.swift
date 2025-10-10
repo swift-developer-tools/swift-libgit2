@@ -870,6 +870,9 @@ extension CommitTests
     
     
     
+    /// Amends or duplicates a commit.
+    /// - Parameter type: Whether to amend or duplicate a commit.
+    /// - Throws: An error if an operation fails.
     private func amendOrDuplicateCommit(
         type: AmendOrDuplicate
     ) throws

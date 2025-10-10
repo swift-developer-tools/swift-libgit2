@@ -17,7 +17,7 @@ internal extension Array where Element == String
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///

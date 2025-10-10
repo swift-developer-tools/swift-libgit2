@@ -196,7 +196,6 @@ internal extension GitStruct where Self: CConvertible
     /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -227,7 +226,6 @@ internal extension GitStruct where Self: CConvertible
     /// made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -265,7 +263,6 @@ internal extension GitStruct where Self: CConvertible
     /// the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -296,7 +293,7 @@ internal extension GitStruct where Self: ThrowingCConvertible
     /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -327,7 +324,7 @@ internal extension GitStruct where Self: ThrowingCConvertible
     /// made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -364,7 +361,6 @@ internal extension GitStruct where Self: ThrowingCConvertible
     /// the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -395,7 +391,7 @@ internal extension GitStruct where Self: WithCConvertible
     /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -424,7 +420,7 @@ internal extension GitStruct where Self: WithCConvertible
     /// made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
@@ -459,7 +455,6 @@ internal extension GitStruct where Self: WithCConvertible
     /// the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -491,7 +486,7 @@ internal extension GitStruct where Self: WithCConvertible & Freeable
     /// made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///

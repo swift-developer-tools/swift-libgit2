@@ -70,7 +70,7 @@ internal extension Array where Element == String
     /// created from an array of Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     func withArrayOfCStrings<T>(
       _ body: ([UnsafeMutablePointer<CChar>?]) throws -> T
     ) throws -> T
@@ -145,7 +145,7 @@ internal extension Array where Element == String
     /// created from an array of Swift strings.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     func withArrayOfImmutableCStrings<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>) throws -> T
     ) throws -> T

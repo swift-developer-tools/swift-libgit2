@@ -112,7 +112,6 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_config_entry>) throws -> T
     ) rethrows -> T
@@ -227,7 +226,6 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_configmap>) throws -> T
     ) rethrows -> T

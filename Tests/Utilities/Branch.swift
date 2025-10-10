@@ -27,7 +27,7 @@ enum Branch
     ///   branch without access to the resulting pointer.
     /// - Returns: A pointer to the branch. If `free` is `true`, the pointer
     /// will be `nil`.
-    /// - Throws: An `NSError` if the branch could not be created.
+    /// - Throws: An error if an operation fails.
     ///
     /// ## Discussion
     ///
@@ -124,7 +124,6 @@ enum Branch
     ///   - branchName: The branch name.
     ///   - repository: The repository in which the branch exists.
     ///   - body: The closure to call.
-    /// - Throws: An error thrown by the closure.
     static func withExistingLocalBranchPointer(
         named   branchName  : String,
         in      repository  : Repository,
@@ -165,8 +164,7 @@ enum Branch
     ///   - annotated: Whether the branch should be created from an annotated
     ///   commit.
     ///   - body: The closure to call.
-    /// - Throws: An error thrown by the closure, or an `NSError` if the branch
-    /// could not be created.
+    /// - Throws: An error if an operation fails.
     static func withNewLocalBranchPointer(
         named       branchName  : String,
         in          repository  : Repository,

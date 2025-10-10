@@ -31,7 +31,7 @@ internal extension Array where Element == GitConfigMap
     /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     func withArrayOfGitConfigMaps<T>(
         _ body: (UnsafePointer<git_configmap>?, Int) throws -> T
     ) throws -> T

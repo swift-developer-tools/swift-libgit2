@@ -21,7 +21,7 @@ enum Tag
     ///   - tagName: The tag name.
     ///   - repository: The repository in which to create the tag.
     ///   - message: The tag message.
-    /// - Throws: An error if the tag creation failed.
+    /// - Throws: An error if an operation fails.
     static func createAnnotatedTag(
         named       tagName     : String,
         in          repository  : Repository,

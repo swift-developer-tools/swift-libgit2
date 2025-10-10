@@ -21,8 +21,7 @@ enum Commit
     ///   - repository: The repository in which the commit exists.
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the commit lookup operation failed, or an
-    /// error thrown by the given closure.
+    /// - Throws: An error if an operation fails.
     static func withHEADCommit<T>(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> T

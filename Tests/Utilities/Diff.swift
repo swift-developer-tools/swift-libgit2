@@ -95,8 +95,7 @@ enum Diff
     ///   - oldCommitOID: The old commit ID.
     ///   - newCommitOID: The new commit ID.
     ///   - body: The closure to call.
-    /// - Throws: An `NSError` if the diff could not be created, or an error
-    /// thrown by the closure or if the write operation failed.
+    /// - Throws: An error if an operation fails.
     static func withTreeToTreeDiffPointer(
         in  repository  : Repository,
         oldCommitOID    : GitOID,
@@ -206,8 +205,7 @@ enum Diff
     /// - Parameters:
     ///   - repository: The repository in which the diff should be created.
     ///   - body: The closure to call.
-    /// - Throws: An `NSError` if the diff could not be created, or an error
-    /// thrown by the closure or if the write operation failed.
+    /// - Throws: An error if an operation fails.
     static func withTreeToWorkdirDiffPointer(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> Void

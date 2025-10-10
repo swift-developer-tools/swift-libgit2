@@ -512,7 +512,7 @@ extension AttrTests
     /// Tests looping over all the attributes in the given path, with or
     /// without extended options.
     /// - Parameter options: The options to use when querying the attributes.
-    /// - Throws: An error if repository initialization fails.
+    /// - Throws: An error if an operation fails.
     private func testGitAttrForEachFlow(
         options: GitAttrOptions?
     ) throws

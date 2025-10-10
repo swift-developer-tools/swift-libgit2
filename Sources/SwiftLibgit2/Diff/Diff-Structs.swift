@@ -85,7 +85,6 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_file>) throws -> T
     ) rethrows -> T
@@ -208,7 +207,6 @@ public struct GitDiffDelta: GitStructReadable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_delta>) throws -> T
     ) rethrows -> T
@@ -412,7 +410,7 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_options>) throws -> T
     ) throws -> T
@@ -514,7 +512,7 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
     /// `git_diff_binary_file` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_binary_file>) throws -> T
     ) throws -> T
@@ -601,7 +599,7 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_binary>) throws -> T
     ) throws -> T
@@ -845,7 +843,7 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_line>) throws -> T
     ) throws -> T
@@ -1075,7 +1073,7 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     /// Converts the ``GitDiffFindOptions`` instance into a
     /// `git_diff_find_options` instance.
     /// - Returns: The `git_diff_find_options` instance.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func cValue() throws -> git_diff_find_options
     {
         var diffFindOptions = git_diff_find_options()
@@ -1213,7 +1211,7 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     /// Converts the ``GitDiffPatchIDOptions`` instance into a
     /// `git_diff_patchid_options` instance.
     /// - Returns: The `git_diff_patchid_options` instance.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func cValue() throws -> git_diff_patchid_options
     {
         var diffPatchIDOptions = git_diff_patchid_options()

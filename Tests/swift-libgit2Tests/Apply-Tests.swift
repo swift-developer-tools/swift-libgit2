@@ -236,8 +236,7 @@ extension ApplyTests
     ///   - checkIndex: Whether to check that the index contains staged changes
     ///   after applying.
     ///   - endContent: The expected file content after applying.
-    /// - Throws: An error if a Git operation or write operation fails, or
-    /// ``GitApplyOptions`` initialization fails.
+    /// - Throws: An error if an operation fails.
     ///
     /// ## Discussion
     ///

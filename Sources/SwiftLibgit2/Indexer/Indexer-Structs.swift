@@ -185,7 +185,7 @@ public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
     /// Converts the ``GitIndexerOptions`` instance into a `git_indexer_options`
     /// instance.
     /// - Returns: The `git_indexer_options` instance.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func cValue() throws -> git_indexer_options
     {
         var indexerOptions = git_indexer_options()

@@ -251,7 +251,7 @@ extension FilterTests
     ///   `git_blob`.
     ///   - repository: The repository in which to create the blob.
     /// - Returns: The `URL` of the created blob.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     private func createWorkingDirectoryBlob(
         _   blobPointer : UnsafeMutablePointer<OpaquePointer?>,
@@ -290,7 +290,7 @@ extension FilterTests
     
     /// Tests filter list application for the given type.
     /// - Parameter type: The type of filter list application to test.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     private func testGitFilterListApplyFlow(
         type: FilerListType
     ) throws
@@ -382,7 +382,7 @@ extension FilterTests
     
     /// Tests filter list streaming for the given type.
     /// - Parameter type: The type of filter list streaming to test.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     private func testGitFilterListStreamFlow(
         type: FilerListType
     ) throws

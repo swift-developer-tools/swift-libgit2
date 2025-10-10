@@ -18,7 +18,7 @@ extension String
     /// `write(to:atomically:encoding:)`.
     /// - Parameter url: The URL to which to write the receiver. Only file URLs
     /// are supported.
-    /// - Throws: An error if the write operation failed.
+    /// - Throws: An error if an operation fails.
     func atomicWrite(
         to url: URL
     ) throws
