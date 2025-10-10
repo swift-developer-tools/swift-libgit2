@@ -41,10 +41,10 @@ internal extension Optional where Wrapped == String
     /// contents of the string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error thrown by the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     func withOptionalMutableCString<T>(
         _ body: (UnsafeMutablePointer<CChar>?) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         switch self
         {

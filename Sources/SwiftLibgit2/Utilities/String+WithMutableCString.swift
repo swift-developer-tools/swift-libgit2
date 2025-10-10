@@ -20,6 +20,8 @@
 /// project. Original source code:
 /// https://github.com/swiftlang/swift/blob/c3b7709a7c4789f1ad7249d357f69509fb8be731/stdlib/private/SwiftPrivate/SwiftPrivate.swift
 
+import Foundation
+
 
 
 internal extension String
@@ -27,7 +29,7 @@ internal extension String
     /// Calls the given closure with a mutable C string pointer.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
-    /// - Throws: An error thrown by the given closure.
+    /// - Throws: An `NSError` if the conversion failed.
     ///
     /// ## Discussion
     ///
@@ -52,7 +54,7 @@ internal extension String
     /// ``withArrayOfCStrings(_:)``.
     func withMutableCString<T>(
         _ body: (UnsafeMutablePointer<CChar>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var buffer: [UInt8] = []
         
@@ -73,9 +75,16 @@ internal extension String
         {
             buffer in
             
+            guard let baseAddress: UnsafeMutablePointer<UInt8>
+                    = buffer.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
             /// `baseAddress` should not be `nil`, since the buffer will not
             /// be empty at this point.
-            let mutableCString = UnsafeMutableRawPointer(buffer.baseAddress!)
+            let mutableCString = UnsafeMutableRawPointer(baseAddress)
                 .bindMemory(
                     to:         CChar.self,
                     capacity:   buffer.count

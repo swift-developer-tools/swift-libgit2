@@ -227,7 +227,7 @@ public func gitMailmapResolveSignature(
         {
             cOut in
             
-            return sig.withCValue
+            return try sig.withCValue
             {
                 cSig in
                 

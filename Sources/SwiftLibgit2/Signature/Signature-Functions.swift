@@ -320,7 +320,7 @@ public func gitSignatureDup(
         {
             cDest in
             
-            return sig.withCValue
+            return try sig.withCValue
             {
                 cSig in
                 

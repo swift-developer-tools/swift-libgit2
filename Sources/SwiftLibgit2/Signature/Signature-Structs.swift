@@ -93,7 +93,7 @@ public struct GitSignature: Freeable, GitStructInternalMutable, WithCConvertible
     /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_signature>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var signature = git_signature()
         

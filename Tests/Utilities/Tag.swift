@@ -44,7 +44,7 @@ enum Tag
         {
             commitPointer in
 
-            return signature.withCValue
+            return try signature.withCValue
             {
                 cSignature in
                 

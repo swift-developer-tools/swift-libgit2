@@ -272,7 +272,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            withUnsafeMutablePointer(to: &callbackData)
+            try withUnsafeMutablePointer(to: &callbackData)
             {
                 callbackDataPointer in
                 
@@ -342,7 +342,7 @@ final class CommitTests: XCTestCaseStopOnFail
                     // TODO: Replace once `git_rebase_commit()` has a binding.
                     var rebasedCommitOID = git_oid()
                     
-                    signature.withCValue
+                    try signature.withCValue
                     {
                         cSignature in
                         

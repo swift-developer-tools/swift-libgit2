@@ -23,7 +23,7 @@ final class SignatureTests: XCTestCaseStopOnFail
         XCTAssertTrue(signature.email.isEmpty)
         XCTAssertNotNil(signature.when)
         
-        signature.withCValue
+        try signature.withCValue
         {
             cSignature in
             

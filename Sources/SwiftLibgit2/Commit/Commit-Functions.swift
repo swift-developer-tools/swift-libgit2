@@ -706,15 +706,15 @@ public func gitCommitCreate(
 {
     return withCConversion
     {
-        return id.withMutatingCValue
+        return try id.withMutatingCValue
         {
             cID in
             
-            return author.withCValue
+            return try author.withCValue
             {
                 cAuthor in
                 
-                return committer.withCValue
+                return try committer.withCValue
                 {
                     cCommitter in
                     
@@ -910,11 +910,11 @@ public func gitCommitCreateBuffer(
         {
             cOut in
             
-            return author.withCValue
+            return try author.withCValue
             {
                 cAuthor in
                 
-                return committer.withCValue
+                return try committer.withCValue
                 {
                     cCommitter in
                     
