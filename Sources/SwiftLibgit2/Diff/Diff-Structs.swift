@@ -1216,10 +1216,11 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     {
         var diffPatchIDOptions = git_diff_patchid_options()
         
-        let diffPatchIDOptionsInitResult: GitErrorCode = gitDiffPatchIDOptionsInit(
-            opts:       &diffPatchIDOptions,
-            version:    version
-        )
+        let diffPatchIDOptionsInitResult: GitErrorCode
+            = gitDiffPatchIDOptionsInit(
+                opts:       &diffPatchIDOptions,
+                version:    version
+            )
         
         if diffPatchIDOptionsInitResult != .gitOK
         {

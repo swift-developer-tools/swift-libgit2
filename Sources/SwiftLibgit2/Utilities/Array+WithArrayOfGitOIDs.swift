@@ -91,7 +91,8 @@ internal extension Array where Element == GitOID
         
         
         
-        let cOIDs = UnsafeMutablePointer<git_oid>.allocate(capacity: self.count)
+        let cOIDs = UnsafeMutablePointer<git_oid>
+            .allocate(capacity: self.count)
         
         defer
         {

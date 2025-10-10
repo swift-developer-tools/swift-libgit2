@@ -313,7 +313,8 @@ public enum GitLibgit2OptT: UInt32, GitEnum
     /// with this option.
     case gitOptSetWindowsShareMode              = 21
     
-    /// Enables strict verification of object hash sums when reading objects from disk.
+    /// Enables strict verification of object hash sums when reading objects
+    /// from disk.
     ///
     /// ## Discussion
     ///
@@ -460,7 +461,8 @@ public enum GitLibgit2OptT: UInt32, GitEnum
     /// option.
     case gitOptSetHomeDir                       = 38
     
-    /// Sets the timeout (in milliseconds) to attempt connections to a remote server.
+    /// Sets the timeout (in milliseconds) to attempt connections to a remote
+    /// server.
     ///
     /// ## Discussion
     ///

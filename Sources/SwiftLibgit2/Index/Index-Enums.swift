@@ -101,8 +101,8 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
     
     /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a
     /// `git_index_entry_extended_flag_t` instance.
-    /// - Parameter indexEntryExtendedFlag: The `git_index_entry_extended_flag_t`
-    /// instance to use.
+    /// - Parameter indexEntryExtendedFlag: The
+    /// `git_index_entry_extended_flag_t` instance to use.
     internal init(
         cValue indexEntryExtendedFlag: git_index_entry_extended_flag_t
     )

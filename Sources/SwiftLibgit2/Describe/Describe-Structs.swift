@@ -216,10 +216,11 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
     {
         var describeFormatOptions = git_describe_format_options()
         
-        let describeFormatOptionsInitResult: GitErrorCode = gitDescribeFormatOptionsInit(
-            opts:       &describeFormatOptions,
-            version:    version
-        )
+        let describeFormatOptionsInitResult: GitErrorCode
+            = gitDescribeFormatOptionsInit(
+                opts:       &describeFormatOptions,
+                version:    version
+            )
         
         if describeFormatOptionsInitResult != .gitOK
         {

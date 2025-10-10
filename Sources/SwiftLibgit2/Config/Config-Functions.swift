@@ -114,7 +114,7 @@ public func gitConfigFindXDG(
 ///
 /// ## Discussion
 ///
-/// The system configuration file is usually located in `/etc/gitconfig`  or
+/// The system configuration file is usually located in `/etc/gitconfig` or
 /// `%PROGRAMFILES%\Git\etc\gitconfig`.
 ///
 /// ## C Equivalent

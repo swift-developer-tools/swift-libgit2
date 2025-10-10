@@ -158,7 +158,8 @@ public struct GitDiffOptionT: GitOptionSet
     /// needed. This avoids having to completely load each file.
     public static let gitDiffSkipBinaryCheck                = GitDiffOptionT(rawValue: GIT_DIFF_SKIP_BINARY_CHECK.rawValue)
     
-    /// Label untracked directories as untracked, without scanning for ignored files.
+    /// Label untracked directories as untracked, without scanning for ignored
+    /// files.
     ///
     /// ## Discussion
     ///

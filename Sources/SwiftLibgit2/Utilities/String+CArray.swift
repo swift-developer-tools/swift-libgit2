@@ -23,9 +23,9 @@ internal extension String
     ///
     /// Use this initializer to convert fixed-size C character arrays.
     ///
-    /// When a length field is available in the C struct, pass it as the `count`
-    /// parameter for better performance. Otherwise, the array must be
-    /// null-terminated.
+    /// When a length field is available in the C struct, pass it as the
+    /// `count` parameter for better performance. Otherwise, the array must
+    /// be null-terminated.
     ///
     /// This initializer is failable rather than returning an empty string.
     /// Although a fixed-size C character array will never be `nil`, the array
