@@ -371,6 +371,21 @@ final class BlobTests: XCTestCaseStopOnFail
     
     
     
+    func testGitBlobFilterOptionsInit() throws
+    {
+        var blobFilterOptions = git_blob_filter_options()
+        
+        let blobFilterOptionsInitResult: GitErrorCode
+            = gitBlobFilterOptionsInit(
+                opts:       &blobFilterOptions,
+                version:    gitBlobFilterOptionsVersion
+            )
+        
+        XCTAssertOK(blobFilterOptionsInitResult)
+    }
+    
+    
+    
     func testGitBlobFilterOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitBlobFilterOptionsVersion), GIT_BLOB_FILTER_OPTIONS_VERSION)

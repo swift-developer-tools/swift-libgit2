@@ -216,6 +216,21 @@ final class CherrypickTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCherrypickOptionsInit() throws
+    {
+        var cherrypickOptions = git_cherrypick_options()
+        
+        let cherrypickOptionsInitResult: GitErrorCode
+            = gitCherrypickOptionsInit(
+                opts:       &cherrypickOptions,
+                version:    gitCherrypickOptionsVersion
+            )
+        
+        XCTAssertOK(cherrypickOptionsInitResult)
+    }
+    
+    
+    
     func testGitCherrypickOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitCherrypickOptionsVersion), GIT_CHERRYPICK_OPTIONS_VERSION)

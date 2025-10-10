@@ -129,6 +129,20 @@ final class IndexerTests: XCTestCaseStopOnFail
     
     
     
+    func testGitIndexerOptionsInit() throws
+    {
+        var indexerOptions = git_indexer_options()
+        
+        let indexerOptionsInitResult: GitErrorCode = gitIndexerOptionsInit(
+            opts:       &indexerOptions,
+            version:    gitIndexerOptionsVersion
+        )
+        
+        XCTAssertOK(indexerOptionsInitResult)
+    }
+    
+    
+    
     func testGitIndexerOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitIndexerOptionsVersion), GIT_INDEXER_OPTIONS_VERSION)

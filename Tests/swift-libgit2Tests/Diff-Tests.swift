@@ -387,6 +387,20 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffFindOptionsInit() throws
+    {
+        var diffFindOptions = git_diff_find_options()
+        
+        let diffFindOptionsInitResult: GitErrorCode = gitDiffFindOptionsInit(
+            opts:       &diffFindOptions,
+            version:    gitDiffFindOptionsVersion
+        )
+        
+        XCTAssertOK(diffFindOptionsInitResult)
+    }
+    
+    
+    
     func testGitDiffFindOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitDiffFindOptionsVersion), GIT_DIFF_FIND_OPTIONS_VERSION)
@@ -1116,6 +1130,20 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffOptionsInit() throws
+    {
+        var diffOptions = git_diff_options()
+        
+        let diffOptionsInitResult: GitErrorCode = gitDiffOptionsInit(
+            opts:       &diffOptions,
+            version:    gitDiffOptionsVersion
+        )
+        
+        XCTAssertOK(diffOptionsInitResult)
+    }
+    
+    
+    
     func testGitDiffOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitDiffOptionsVersion), GIT_DIFF_OPTIONS_VERSION)
@@ -1294,6 +1322,21 @@ final class DiffTests: XCTestCaseStopOnFail
         let cDiffPatchIDOptions: git_diff_patchid_options = try diffPatchIDOptions.cValue()
         
         XCTAssertEqual(cDiffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
+    }
+    
+    
+    
+    func testGitDiffPatchIDOptionsInit() throws
+    {
+        var diffPatchIDOptions = git_diff_patchid_options()
+        
+        let diffPatchIDOptionsInitResult: GitErrorCode
+            = gitDiffPatchIDOptionsInit(
+                opts:       &diffPatchIDOptions,
+                version:    gitDiffPatchIDOptionsVersion
+            )
+        
+        XCTAssertOK(diffPatchIDOptionsInitResult)
     }
     
     

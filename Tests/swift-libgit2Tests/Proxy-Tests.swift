@@ -41,6 +41,20 @@ final class ProxyTests: XCTestCaseStopOnFail
     
     
     
+    func testGitProxyOptionsInit() throws
+    {
+        var proxyOptions = git_proxy_options()
+        
+        let proxyOptionsInitResult: GitErrorCode = gitProxyOptionsInit(
+            opts:       &proxyOptions,
+            version:    gitProxyOptionsVersion
+        )
+        
+        XCTAssertOK(proxyOptionsInitResult)
+    }
+    
+    
+    
     func testGitProxyOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitProxyOptionsVersion), GIT_PROXY_OPTIONS_VERSION)

@@ -291,6 +291,20 @@ final class BlameTests: XCTestCaseStopOnFail
     
     
     
+    func testGitBlameOptionsInit() throws
+    {
+        var blameOptions = git_blame_options()
+        
+        let blameOptionsInitResult: GitErrorCode = gitBlameOptionsInit(
+            opts:       &blameOptions,
+            version:    gitBlameOptionsVersion
+        )
+        
+        XCTAssertOK(blameOptionsInitResult)
+    }
+    
+    
+    
     func testGitBlameOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitBlameOptionsVersion), GIT_BLAME_OPTIONS_VERSION)

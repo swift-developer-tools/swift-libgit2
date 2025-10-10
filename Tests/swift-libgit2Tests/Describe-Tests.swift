@@ -204,6 +204,21 @@ final class DescribeTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDescribeFormatOptionsInit() throws
+    {
+        var describeFormatOptions = git_describe_format_options()
+        
+        let describeFormatOptionsInitResult: GitErrorCode
+            = gitDescribeFormatOptionsInit(
+                opts:       &describeFormatOptions,
+                version:    gitDescribeFormatOptionsVersion
+            )
+        
+        XCTAssertOK(describeFormatOptionsInitResult)
+    }
+    
+    
+    
     func testGitDescribeFormatOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitDescribeFormatOptionsVersion), GIT_DESCRIBE_FORMAT_OPTIONS_VERSION)
@@ -240,6 +255,20 @@ final class DescribeTests: XCTestCaseStopOnFail
             XCTAssertFalse(Bool(cDescribeOptions.pointee.only_follow_first_parent))
             XCTAssertFalse(Bool(cDescribeOptions.pointee.show_commit_oid_as_fallback))
         }
+    }
+    
+    
+    
+    func testGitDescribeOptionsInit() throws
+    {
+        var describeOptions = git_describe_options()
+        
+        let describeOptionsInitResult: GitErrorCode = gitDescribeOptionsInit(
+            opts:       &describeOptions,
+            version:    gitDescribeOptionsVersion
+        )
+        
+        XCTAssertOK(describeOptionsInitResult)
     }
     
     

@@ -95,6 +95,20 @@ final class ApplyTests: XCTestCaseStopOnFail
     
     
     
+    func testGitApplyOptionsInit() throws
+    {
+        var applyOptions = git_apply_options()
+        
+        let applyOptionsInitResult: GitErrorCode = gitApplyOptionsInit(
+            opts:       &applyOptions,
+            version:    gitApplyOptionsVersion
+        )
+        
+        XCTAssertOK(applyOptionsInitResult)
+    }
+    
+    
+    
     func testGitApplyOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitApplyOptionsVersion), GIT_APPLY_OPTIONS_VERSION)

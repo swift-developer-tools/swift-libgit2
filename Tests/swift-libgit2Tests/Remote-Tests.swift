@@ -47,6 +47,20 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     
     
+    func testGitFetchOptionsInit() throws
+    {
+        var fetchOptions = git_fetch_options()
+        
+        let fetchOptionsInitResult: GitErrorCode = gitFetchOptionsInit(
+            opts:       &fetchOptions,
+            version:    gitFetchOptionsVersion
+        )
+        
+        XCTAssertOK(fetchOptionsInitResult)
+    }
+    
+    
+    
     func testGitFetchOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitFetchOptionsVersion), GIT_FETCH_OPTIONS_VERSION)

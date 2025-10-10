@@ -398,6 +398,20 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCheckoutOptionsInit() throws
+    {
+        var checkoutOptions = git_checkout_options()
+        
+        let checkoutOptionsInitResult: GitErrorCode = gitCheckoutOptionsInit(
+            opts:       &checkoutOptions,
+            version:    gitCheckoutOptionsVersion
+        )
+        
+        XCTAssertOK(checkoutOptionsInitResult)
+    }
+    
+    
+    
     func testGitCheckoutOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitCheckoutOptionsVersion), GIT_CHECKOUT_OPTIONS_VERSION)

@@ -120,6 +120,20 @@ final class CloneTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCloneOptionsInit() throws
+    {
+        var cloneOptions = git_clone_options()
+        
+        let cloneOptionsInitResult: GitErrorCode = gitCloneOptionsInit(
+            opts:       &cloneOptions,
+            version:    gitCloneOptionsVersion
+        )
+        
+        XCTAssertOK(cloneOptionsInitResult)
+    }
+    
+    
+    
     func testGitCloneOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitCloneOptionsVersion), GIT_CLONE_OPTIONS_VERSION)
