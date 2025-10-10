@@ -369,8 +369,6 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertNil(checkoutOptions.perfDataCB)
         XCTAssertNil(checkoutOptions.perfDataPayload)
         
-        XCTAssertEqual(gitCheckoutOptionsVersion, UInt32(GIT_CHECKOUT_OPTIONS_VERSION))
-        
         try checkoutOptions.withCValue
         {
             cCheckoutOptions in
@@ -396,6 +394,13 @@ final class CheckoutTests: XCTestCaseStopOnFail
             XCTAssertNil(cCheckoutOptions.pointee.perfdata_cb)
             XCTAssertNil(cCheckoutOptions.pointee.perfdata_payload)
         }
+    }
+    
+    
+    
+    func testGitCheckoutOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitCheckoutOptionsVersion), GIT_CHECKOUT_OPTIONS_VERSION)
     }
     
     

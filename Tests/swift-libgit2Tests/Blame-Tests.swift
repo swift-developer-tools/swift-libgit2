@@ -275,8 +275,6 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertEqual(blameOptions.minLine, 1)
         XCTAssertNil(blameOptions.maxLine)
         
-        XCTAssertEqual(gitBlameOptionsVersion, UInt32(GIT_BLAME_OPTIONS_VERSION))
-        
         try blameOptions.withCValue
         {
             cBlameOptions in
@@ -289,5 +287,12 @@ final class BlameTests: XCTestCaseStopOnFail
             XCTAssertEqual(cBlameOptions.pointee.min_line, 1)
             XCTAssertNotNil(cBlameOptions.pointee.max_line)
         }
+    }
+    
+    
+    
+    func testGitBlameOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitBlameOptionsVersion), GIT_BLAME_OPTIONS_VERSION)
     }
 }

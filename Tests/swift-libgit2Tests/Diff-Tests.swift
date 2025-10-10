@@ -373,8 +373,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffFindOptions.renameLimit, 1000)
         XCTAssertNil(diffFindOptions.metric)
         
-        XCTAssertEqual(gitDiffFindOptionsVersion, UInt32(GIT_DIFF_FIND_OPTIONS_VERSION))
-        
         let cDiffFindOptions: git_diff_find_options = try diffFindOptions.cValue()
         
         XCTAssertEqual(cDiffFindOptions.version, gitDiffOptionsVersion)
@@ -385,6 +383,13 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(cDiffFindOptions.break_rewrite_threshold, 50)
         XCTAssertEqual(cDiffFindOptions.rename_limit, 1000)
         XCTAssertNil(cDiffFindOptions.metric)
+    }
+    
+    
+    
+    func testGitDiffFindOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffFindOptionsVersion), GIT_DIFF_FIND_OPTIONS_VERSION)
     }
     
     
@@ -827,6 +832,13 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffHunkHeaderSize() throws
+    {
+        XCTAssertEqual(Int32(gitDiffHunkHeaderSize), GIT_DIFF_HUNK_HEADER_SIZE)
+    }
+    
+    
+    
     func testGitDiffIndexToIndex() throws
     {
         try Repository.withRepositoryAndIndexPointer
@@ -1081,8 +1093,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffOptions.oldPrefix, "a")
         XCTAssertEqual(diffOptions.newPrefix, "b")
         
-        XCTAssertEqual(gitDiffOptionsVersion, UInt32(GIT_DIFF_OPTIONS_VERSION))
-        
         try diffOptions.withCValue
         {
             cDiffOptions in
@@ -1102,6 +1112,13 @@ final class DiffTests: XCTestCaseStopOnFail
             XCTAssertEqual(String(optionalCString: cDiffOptions.pointee.old_prefix), "a")
             XCTAssertEqual(String(optionalCString: cDiffOptions.pointee.new_prefix), "b")
         }
+    }
+    
+    
+    
+    func testGitDiffOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffOptionsVersion), GIT_DIFF_OPTIONS_VERSION)
     }
     
     
@@ -1227,12 +1244,17 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffParseOptions.version, gitDiffParseOptionsVersion)
         XCTAssertEqual(diffParseOptions.oidType, .gitOIDSHA1)
         
-        XCTAssertEqual(gitDiffParseOptionsVersion, UInt32(GIT_DIFF_PARSE_OPTIONS_VERSION))
-        
         let cDiffParseOptions: git_diff_parse_options = diffParseOptions.cValue()
         
         XCTAssertEqual(cDiffParseOptions.version, gitDiffParseOptionsVersion)
         XCTAssertEqual(GitOIDT(cValue: cDiffParseOptions.oid_type), .gitOIDSHA1)
+    }
+    
+    
+    
+    func testGitDiffParseOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffParseOptionsVersion), GIT_DIFF_PARSE_OPTIONS_VERSION)
     }
     
     
@@ -1269,11 +1291,16 @@ final class DiffTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(diffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
         
-        XCTAssertEqual(gitDiffPatchIDOptionsVersion, UInt32(GIT_DIFF_PATCHID_OPTIONS_VERSION))
-        
         let cDiffPatchIDOptions: git_diff_patchid_options = try diffPatchIDOptions.cValue()
         
         XCTAssertEqual(cDiffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
+    }
+    
+    
+    
+    func testGitDiffPatchIDOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffPatchIDOptionsVersion), GIT_DIFF_PATCHID_OPTIONS_VERSION)
     }
     
     

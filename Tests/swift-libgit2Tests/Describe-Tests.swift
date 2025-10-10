@@ -168,6 +168,20 @@ final class DescribeTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDescribeDefaultAbbreviatedSize() throws
+    {
+        XCTAssertEqual(Int32(gitDescribeDefaultAbbreviatedSize), GIT_DESCRIBE_DEFAULT_ABBREVIATED_SIZE)
+    }
+    
+    
+    
+    func testGitDescribeDefaultMaxCandidatesTags() throws
+    {
+        XCTAssertEqual(Int32(gitDescribeDefaultMaxCandidatesTags), GIT_DESCRIBE_DEFAULT_MAX_CANDIDATES_TAGS)
+    }
+    
+    
+    
     func testGitDescribeFormatOptions() throws
     {
         let describeFormatOptions = GitDescribeFormatOptions()
@@ -176,9 +190,6 @@ final class DescribeTests: XCTestCaseStopOnFail
         XCTAssertEqual(describeFormatOptions.abbreviatedSize, gitDescribeDefaultAbbreviatedSize)
         XCTAssertFalse(describeFormatOptions.alwaysUseLongFormat)
         XCTAssertNil(describeFormatOptions.dirtySuffix)
-        
-        XCTAssertEqual(gitDescribeFormatOptionsVersion, UInt32(GIT_DESCRIBE_FORMAT_OPTIONS_VERSION))
-        XCTAssertEqual(gitDescribeDefaultAbbreviatedSize, UInt32(GIT_DESCRIBE_DEFAULT_ABBREVIATED_SIZE))
         
         try describeFormatOptions.withCValue
         {
@@ -189,6 +200,13 @@ final class DescribeTests: XCTestCaseStopOnFail
             XCTAssertFalse(Bool(cDescribeFormatOptions.pointee.always_use_long_format))
             XCTAssertNil(cDescribeFormatOptions.pointee.dirty_suffix)
         }
+    }
+    
+    
+    
+    func testGitDescribeFormatOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDescribeFormatOptionsVersion), GIT_DESCRIBE_FORMAT_OPTIONS_VERSION)
     }
     
     
@@ -211,9 +229,6 @@ final class DescribeTests: XCTestCaseStopOnFail
         XCTAssertFalse(describeOptions.onlyFollowFirstParent)
         XCTAssertFalse(describeOptions.showCommitOIDAsFallback)
         
-        XCTAssertEqual(gitDescribeOptionsVersion, UInt32(GIT_DESCRIBE_OPTIONS_VERSION))
-        XCTAssertEqual(gitDescribeDefaultMaxCandidatesTags, UInt32(GIT_DESCRIBE_DEFAULT_MAX_CANDIDATES_TAGS))
-        
         try describeOptions.withCValue
         {
             cDescribeOptions in
@@ -225,6 +240,13 @@ final class DescribeTests: XCTestCaseStopOnFail
             XCTAssertFalse(Bool(cDescribeOptions.pointee.only_follow_first_parent))
             XCTAssertFalse(Bool(cDescribeOptions.pointee.show_commit_oid_as_fallback))
         }
+    }
+    
+    
+    
+    func testGitDescibeOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDescribeOptionsVersion), GIT_DESCRIBE_OPTIONS_VERSION)
     }
     
     

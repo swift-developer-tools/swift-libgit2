@@ -211,8 +211,6 @@ final class FilterTests: XCTestCaseStopOnFail
         XCTAssertNil(filterOptions.commitID)
         XCTAssertZeroOID(filterOptions.attrCommitID)
         
-        XCTAssertEqual(gitFilterOptionsVersion, UInt32(GIT_FILTER_OPTIONS_VERSION))
-        
         filterOptions.withCValue
         {
             cFilterOptions in
@@ -222,6 +220,13 @@ final class FilterTests: XCTestCaseStopOnFail
             XCTAssertNil(cFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cFilterOptions.pointee.attr_commit_id))
         }
+    }
+    
+    
+    
+    func testGitFilterOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitFilterOptionsVersion), GIT_FILTER_OPTIONS_VERSION)
     }
 }
 

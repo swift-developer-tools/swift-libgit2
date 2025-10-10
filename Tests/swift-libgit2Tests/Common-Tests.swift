@@ -287,6 +287,13 @@ final class CommonTests: XCTestCaseStopOnFail
     
     
     
+    func testGitPathListSeparator() throws
+    {
+        XCTAssertEqual(gitPathListSeparator, ":")
+    }
+    
+    
+    
     func testGitPathMax() throws
     {
         XCTAssertEqual(gitPathMax, GIT_PATH_MAX)

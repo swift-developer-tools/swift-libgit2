@@ -455,8 +455,6 @@ final class AttrTests: XCTestCaseStopOnFail
             XCTAssertNil(attrOptions.commitID)
             XCTAssertZeroOID(attrOptions.attrCommitID)
             
-            XCTAssertEqual(gitAttrOptionsVersion, UInt32(GIT_ATTR_OPTIONS_VERSION))
-            
             attrOptions.withCValue
             {
                 cAttrOptions in
@@ -479,6 +477,13 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertOK(attrGetExtResult)
         }
+    }
+    
+    
+    
+    func testGitAttrOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitAttrOptionsVersion), GIT_ATTR_OPTIONS_VERSION)
     }
     
     

@@ -101,8 +101,6 @@ final class CloneTests: XCTestCaseStopOnFail
         XCTAssertNil(cloneOptions.remoteCB)
         XCTAssertNil(cloneOptions.remoteCBPayload)
         
-        XCTAssertEqual(gitCloneOptionsVersion, UInt32(GIT_CLONE_OPTIONS_VERSION))
-        
         try cloneOptions.withCValue
         {
             cCloneOptions in
@@ -118,6 +116,13 @@ final class CloneTests: XCTestCaseStopOnFail
             XCTAssertNil(cCloneOptions.pointee.remote_cb)
             XCTAssertNil(cCloneOptions.pointee.remote_cb_payload)
         }
+    }
+    
+    
+    
+    func testGitCloneOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitCloneOptionsVersion), GIT_CLONE_OPTIONS_VERSION)
     }
     
     

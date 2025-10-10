@@ -119,14 +119,19 @@ final class IndexerTests: XCTestCaseStopOnFail
         XCTAssertNil(indexerOptions.progressCBPayload)
         XCTAssertFalse(indexerOptions.verify)
         
-        XCTAssertEqual(gitIndexerOptionsVersion, UInt32(GIT_INDEXER_OPTIONS_VERSION))
-        
         let cIndexerOptions: git_indexer_options = try indexerOptions.cValue()
         
         XCTAssertEqual(cIndexerOptions.version, gitIndexerOptionsVersion)
         XCTAssertNil(cIndexerOptions.progress_cb)
         XCTAssertNil(cIndexerOptions.progress_cb_payload)
         XCTAssertFalse(Bool(cIndexerOptions.verify))
+    }
+    
+    
+    
+    func testGitIndexerOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitIndexerOptionsVersion), GIT_INDEXER_OPTIONS_VERSION)
     }
 }
 

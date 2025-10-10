@@ -426,8 +426,6 @@ final class CommitTests: XCTestCaseStopOnFail
         XCTAssertNil(commitCreateOptions.committer)
         XCTAssertNil(commitCreateOptions.messageEncoding)
         
-        XCTAssertEqual(gitCommitCreateOptionsVersion, UInt32(GIT_COMMIT_CREATE_OPTIONS_VERSION))
-        
         try commitCreateOptions.withCValue
         {
             cCommitCreateOptions in
@@ -438,6 +436,13 @@ final class CommitTests: XCTestCaseStopOnFail
             XCTAssertNil(cCommitCreateOptions.pointee.committer)
             XCTAssertNil(cCommitCreateOptions.pointee.message_encoding)
         }
+    }
+    
+    
+    
+    func testGitCommitCreateOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitCommitCreateOptionsVersion), GIT_COMMIT_CREATE_OPTIONS_VERSION)
     }
     
     

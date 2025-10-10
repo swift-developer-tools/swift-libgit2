@@ -26,8 +26,6 @@ final class ProxyTests: XCTestCaseStopOnFail
         XCTAssertNil(proxyOptions.certificateCheck)
         XCTAssertNil(proxyOptions.payload)
         
-        XCTAssertEqual(gitProxyOptionsVersion, UInt32(GIT_PROXY_OPTIONS_VERSION))
-        
         try proxyOptions.withCValue
         {
             cProxyOptions in
@@ -39,6 +37,13 @@ final class ProxyTests: XCTestCaseStopOnFail
             XCTAssertNil(cProxyOptions.pointee.certificate_check)
             XCTAssertNil(cProxyOptions.pointee.payload)
         }
+    }
+    
+    
+    
+    func testGitProxyOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitProxyOptionsVersion), GIT_PROXY_OPTIONS_VERSION)
     }
     
     

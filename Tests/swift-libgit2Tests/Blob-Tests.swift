@@ -358,8 +358,6 @@ final class BlobTests: XCTestCaseStopOnFail
         XCTAssertNil(blobFilterOptions.commitID)
         XCTAssertZeroOID(blobFilterOptions.attrCommitID)
         
-        XCTAssertEqual(gitBlobFilterOptionsVersion, UInt32(GIT_BLOB_FILTER_OPTIONS_VERSION))
-        
         try blobFilterOptions.withCValue
         {
             cBlobFilterOptions in
@@ -369,6 +367,13 @@ final class BlobTests: XCTestCaseStopOnFail
             XCTAssertNil(cBlobFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cBlobFilterOptions.pointee.attr_commit_id))
         }
+    }
+    
+    
+    
+    func testGitBlobFilterOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitBlobFilterOptionsVersion), GIT_BLOB_FILTER_OPTIONS_VERSION)
     }
     
     

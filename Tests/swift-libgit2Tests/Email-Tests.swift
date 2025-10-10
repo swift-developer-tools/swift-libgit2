@@ -103,8 +103,6 @@ final class EmailTests: XCTestCaseStopOnFail
         XCTAssertEqual(emailCreateOptions.startNumber, 1)
         XCTAssertEqual(emailCreateOptions.rerollNumber, 0)
         
-        XCTAssertEqual(gitEmailCreateOptionsVersion, UInt32(GIT_EMAIL_CREATE_OPTIONS_VERSION))
-        
         try emailCreateOptions.withCValue
         {
             cEmailCreateOptions in
@@ -117,5 +115,12 @@ final class EmailTests: XCTestCaseStopOnFail
             XCTAssertEqual(cEmailCreateOptions.pointee.start_number, 1)
             XCTAssertEqual(cEmailCreateOptions.pointee.reroll_number, 0)
         }
+    }
+    
+    
+    
+    func testGitEmailCreateOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitEmailCreateOptionsVersion), GIT_EMAIL_CREATE_OPTIONS_VERSION)
     }
 }

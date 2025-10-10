@@ -203,8 +203,6 @@ final class CherrypickTests: XCTestCaseStopOnFail
         XCTAssertNil(cherrypickOptions.mergeOpts)
         XCTAssertNil(cherrypickOptions.checkoutOpts)
         
-        XCTAssertEqual(gitCherrypickOptionsVersion, UInt32(GIT_CHERRYPICK_OPTIONS_VERSION))
-        
         try cherrypickOptions.withCValue
         {
             cCherrypickOptions in
@@ -214,6 +212,13 @@ final class CherrypickTests: XCTestCaseStopOnFail
             XCTAssertNotNil(cCherrypickOptions.pointee.merge_opts)
             XCTAssertNotNil(cCherrypickOptions.pointee.checkout_opts)
         }
+    }
+    
+    
+    
+    func testGitCherrypickOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitCherrypickOptionsVersion), GIT_CHERRYPICK_OPTIONS_VERSION)
     }
 }
 
