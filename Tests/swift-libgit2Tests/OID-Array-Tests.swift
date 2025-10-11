@@ -268,8 +268,8 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 
                 /// Since the receiver array was empty, `oidArray` will be
                 /// freed with ``gitOIDArrayDispose(array:)``. The allocated
-                /// memory does not need to be freed separately after being
-                /// assigned to `oidArray.pointee.ids`.
+                /// memory does not need to be freed after being assigned to
+                /// `oidArray.pointee.ids`.
                 let cOIDs = UnsafeMutablePointer<git_oid>.allocate(capacity: 3)
                 
                 cOIDs[0] = headOID.cValue()
