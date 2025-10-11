@@ -16,17 +16,20 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// These priority levels correspond to the natural escalation logic (from higher to lower) when reading
-/// or searching for configuration entries in `git.git`. This means that for the same key, the
-/// configuration in the local configuration is preferred over the configuration in the system configuration file.
+/// These priority levels correspond to the natural escalation logic (from
+/// higher to lower) when reading or searching for configuration entries in
+/// `git.git`. This means that for the same key, the configuration in the
+/// local configuration is preferred over the configuration in the system
+/// configuration file.
 ///
 /// Callers can add custom configuration beginning at ``gitConfigLevelApp``.
 ///
-/// By default, writes occur in the highest priority level backend that is writable. This ordering can be
-/// overridden with ``gitConfigSetWriteOrder(cfg:levels:len:)``.
+/// By default, writes occur in the highest priority level backend that is
+/// writable. This ordering can be overridden with
+/// ``gitConfigSetWriteOrder(cfg:levels:len:)``.
 ///
-/// ``gitConfigOpenDefault(out:)`` and `git_repository_config()` honor those priority
-/// levels as well.
+/// ``gitConfigOpenDefault(out:)`` and `git_repository_config()` honor those
+/// priority levels as well.
 ///
 /// ## C Equivalent
 ///
@@ -79,20 +82,23 @@ public enum GitConfigLevelT: Int32, GitEnum
     ///
     /// ## Discussion
     ///
-    /// Callers into libgit2 can add custom configuration beginning at this level.
+    /// Callers into libgit2 can add custom configuration beginning at this
+    /// level.
     case gitConfigLevelApp          = 7
     
     /// The most specific configuration file available that is loaded.
     ///
     /// ## Discussion
     ///
-    /// This is not a configuration level. Callers can use this value when querying configuration levels
-    /// to retrieve data from the current highest-level configuration.
+    /// This is not a configuration level. Callers can use this value when
+    /// querying configuration levels to retrieve data from the current
+    /// highest-level configuration.
     case gitConfigHighestLevel      = -1
     
     
     
-    /// Creates a ``GitConfigLevelT`` instance from a `git_config_level_t` instance.
+    /// Creates a ``GitConfigLevelT`` instance from a `git_config_level_t`
+    /// instance.
     /// - Parameter configLevel: The `git_config_level_t` instance to use.
     internal init?(
         cValue configLevel: git_config_level_t
@@ -115,7 +121,8 @@ public enum GitConfigLevelT: Int32, GitEnum
     
     
     
-    /// Converts the ``GitConfigLevelT`` instance into a `git_config_level_t` instance.
+    /// Converts the ``GitConfigLevelT`` instance into a `git_config_level_t`
+    /// instance.
     /// - Returns: The `git_config_level_t` instance.
     internal func cValue() -> git_config_level_t
     {
@@ -139,9 +146,9 @@ public enum GitConfigLevelT: Int32, GitEnum
 ///
 /// ## Discussion
 ///
-/// This defines the different types of values that can be matched when using configuration mapping
-/// functions. Each type determines how the configuration value should be interpreted during the mapping
-/// operation.
+/// This defines the different types of values that can be matched when using
+/// configuration mapping functions. Each type determines how the configuration
+/// value should be interpreted during the mapping operation.
 ///
 /// ## C Equivalent
 ///
@@ -152,14 +159,16 @@ public enum GitConfigMapT: UInt32, GitEnum
     ///
     /// ## Discussion
     ///
-    /// Boolean false values include `false`, `FALSE`, `no`, `off`, `0`, and other similar values.
+    /// Boolean false values include `false`, `FALSE`, `no`, `off`, `0`,
+    /// and other similar values.
     case gitConfigMapFalse      = 0
     
     /// The configuration variable matches boolean true values.
     ///
     /// ## Discussion
     ///
-    /// Boolean true values include `true`, `TRUE`, `yes`, `on`, `1`, and other similar values.
+    /// Boolean true values include `true`, `TRUE`, `yes`, `on`, `1`,
+    /// and other similar values.
     case gitConfigMapTrue       = 1
     
     /// The configuration variable matches 32-bit signed integer values.
@@ -189,7 +198,8 @@ public enum GitConfigMapT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitConfigMapT`` instance into a `git_configmap_t` instance.
+    /// Converts the ``GitConfigMapT`` instance into a `git_configmap_t`
+    /// instance.
     /// - Returns: The `git_configmap_t` instance.
     internal func cValue() -> git_configmap_t
     {

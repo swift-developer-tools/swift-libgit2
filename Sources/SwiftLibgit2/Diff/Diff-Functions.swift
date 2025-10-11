@@ -20,8 +20,9 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_diff_options` instances.
-/// ``GitDiffOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_diff_options` instances.``GitDiffOptions`` instances do not need to
+/// be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -50,8 +51,9 @@ public func gitDiffOptionsInit(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_diff_find_options` instances.
-/// ``GitDiffFindOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_diff_find_options` instances. ``GitDiffFindOptions`` instances do
+/// not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -82,6 +84,12 @@ public func gitDiffFree(
     diff: OpaquePointer?
 )
 {
+    guard let diff: OpaquePointer = diff
+    else
+    {
+        return
+    }
+    
     git_diff_free(diff)
 }
 
@@ -89,11 +97,14 @@ public func gitDiffFree(
 
 /// Creates a diff with the difference between the given trees.
 /// - Parameters:
-///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given trees. The underlying type must be
-///   `git_repository`.
-///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
-///   - newTree: The new tree to use in the diff operation. The underlying type must be `git_tree`.
+///   - diff: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
+///   - repo: The repository containing the given trees. The underlying type
+///   must be `git_repository`.
+///   - oldTree: The old tree to use in the diff operation. The underlying type
+///   must be `git_tree`.
+///   - newTree: The new tree to use in the diff operation. The underlying type
+///   must be `git_tree`.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -135,22 +146,24 @@ public func gitDiffTreeToTree(
 
 /// Creates a diff between the given tree and index.
 /// - Parameters:
-///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given tree and index. The underlying type must be
-///   `git_repository`.
-///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
-///   - index: The index to use in the diff operation. The underlying type must be `git_index`.
-///   Pass `nil` to use the repository index.
+///   - diff: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
+///   - repo: The repository containing the given tree and index. The
+///   underlying type must be `git_repository`.
+///   - oldTree: The old tree to use in the diff operation. The underlying type
+///   must be `git_tree`.
+///   - index: The index to use in the diff operation. The underlying type must
+///   be `git_index`. Pass `nil` to use the repository index.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This is equivalent to `git diff --cached <treeish>` or `git diff --cached` if the
-/// HEAD tree is used.
+/// This is equivalent to `git diff --cached <treeish>` or `git diff --cached`
+/// if the HEAD tree is used.
 ///
-/// If `index` is `nil`, the repository index will be used. If the index has changed, it willl be refreshed
-/// from the disk before the diff is generated.
+/// If `index` is `nil`, the repository index will be used. If the index has
+/// changed, it willl be refreshed from the disk before the diff is generated.
 ///
 /// ## C Equivalent
 ///
@@ -184,11 +197,12 @@ public func gitDiffTreeToIndex(
 
 /// Creates a diff between the given index and the working directory.
 /// - Parameters:
-///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given index and the working directory. The underlying type
-///   must be `git_repository`.
-///   - index: The index to use in the diff operation. The underlying type must be `git_index`.
-///   Pass `nil` to use the repository index.
+///   - diff: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
+///   - repo: The repository containing the given index and the working
+///   directory. The underlying type must be `git_repository`.
+///   - index: The index to use in the diff operation. The underlying type must
+///   be `git_index`. Pass `nil` to use the repository index.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -196,8 +210,8 @@ public func gitDiffTreeToIndex(
 ///
 /// This is equivalent to `git diff`.
 ///
-/// If `index` is `nil`, the repository index will be used. If the index has changed, it willl be refreshed
-/// from the disk before the diff is generated.
+/// If `index` is `nil`, the repository index will be used. If the index has
+/// changed, it willl be refreshed from the disk before the diff is generated.
 ///
 /// ## C Equivalent
 ///
@@ -229,24 +243,28 @@ public func gitDiffIndexToWorkdir(
 
 /// Creates a diff between the given tree and the working directory.
 /// - Parameters:
-///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given tree. The underlying type must be
-///   `git_repository`.
-///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
-///   - opts: The options for the diff operation
+///   - diff: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
+///   - repo: The repository containing the given tree. The underlying type
+///   must be `git_repository`.
+///   - oldTree: The old tree to use in the diff operation. The underlying type
+///   must be `git_tree`.
+///   - opts: The options for the diff operation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This is not equivalent to `git diff <treeish>` or `git diff-index <treeish>`. Those
-/// commands use information from the index, whereas this function strictly returns the differences between
-/// the tree and the files in the working directory, regardless of the state of the index.
+/// This is not equivalent to `git diff <treeish>` or
+/// `git diff-index <treeish>`. Those commands use information from the index,
+/// whereas this function strictly returns the differences between the tree and
+/// the files in the working directory, regardless of the state of the index.
 ///
 /// To understand the difference between this function and
-/// ``gitDiffTreeToWorkdirWithIndex(diff:repo:oldTree:opts:)``, consider the example
-/// of a staged file deletion where the file has then been put back into the working directory and further
-/// modified. The tree-to-working-directory diff for that file would show `modified`, but `git diff`
-/// would show `deleted`, since there was a staged delete.
+/// ``gitDiffTreeToWorkdirWithIndex(diff:repo:oldTree:opts:)``, consider the
+/// example of a staged file deletion where the file has then been put back
+/// into the working directory and further modified. The
+/// tree-to-working-directory diff for that file would show `modified`,
+/// but `git diff` would show `deleted`, since there was a staged delete.
 ///
 /// ## C Equivalent
 ///
@@ -276,20 +294,23 @@ public func gitDiffTreeToWorkdir(
 
 
 
-/// Creates a diff between the given tree and the working directory, using index data to account for staged
-/// deletes, tracked files, and other changes.
+/// Creates a diff between the given tree and the working directory, using
+/// index data to account for staged deletes, tracked files, and other changes.
 /// - Parameters:
-///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given tree. The underlying type must be `git_repository`.
-///   - oldTree: The old tree to use in the diff operation. The underlying type must be `git_tree`.
+///   - diff: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
+///   - repo: The repository containing the given tree. The underlying type
+///   must be `git_repository`.
+///   - oldTree: The old tree to use in the diff operation. The underlying type
+///   must be `git_tree`.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This emulates `git diff <tree>` by diffing the tree to the index and the index to the working
-/// directory, and blending the results into a single diff that includes staged deletes, tracked files, and other
-/// changes.
+/// This emulates `git diff <tree>` by diffing the tree to the index and the
+/// index to the working directory, and blending the results into a single
+/// diff that includes staged deletes, tracked files, and other changes.
 ///
 /// ## C Equivalent
 ///
@@ -321,11 +342,14 @@ public func gitDiffTreeToWorkdirWithIndex(
 
 /// Creates a diff between the given indices.
 /// - Parameters:
-///   - diff: The pointer in which to store the diff. The underlying type must be `git_diff`.
-///   - repo: The repository containing the given indices. The underlying type must be
-///   `git_repository`.
-///   - oldIndex: The old index to use in the diff operation. The underlying type must be `git_index`.
-///   - newIndex: The new index to use in the diff operation. The underlying type must be `git_index`.
+///   - diff: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
+///   - repo: The repository containing the given indices. The underlying type
+///   must be `git_repository`.
+///   - oldIndex: The old index to use in the diff operation. The underlying
+///   type must be `git_index`.
+///   - newIndex: The new index to use in the diff operation. The underlying
+///   type must be `git_index`.
 ///   - opts: The options for the diff operation
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -351,7 +375,8 @@ public func gitDiffIndexToIndex(
                 repo,
                 oldIndex,
                 newIndex,
-                cOpts)
+                cOpts
+            )
         }
     }
 }
@@ -366,10 +391,11 @@ public func gitDiffIndexToIndex(
 ///
 /// ## Discussion
 ///
-/// The resulting diff will contain all items that appear in either list. If an item appears in both lists, then it
-/// will be "merged" to appear as if the old version was from the `onto` list and the new version is from
-/// the `from` list (with the exception that if the item has a pending delete in the middle, then it will show
-/// as deleted).
+/// The resulting diff will contain all items that appear in either list.
+/// If an item appears in both lists, then it will be "merged" to appear as
+/// if the old version was from the `onto` list and the new version is from
+/// the `from` list (with the exception that if the item has a pending delete
+/// in the middle, then it will show as deleted).
 ///
 /// ## C Equivalent
 ///
@@ -390,8 +416,8 @@ public func gitDiffMerge(
 
 
 
-/// Transforms a diff, marking file renames or copies, and breaking modified files into add/remove pairs if
-/// requested.
+/// Transforms a diff, marking file renames or copies, and breaking modified
+/// files into add/remove pairs if requested.
 /// - Parameters:
 ///   - diff: The diff to transform. The underlying type must be `git_diff`.
 ///   - options: The options for diff rename and copy detection.
@@ -473,12 +499,13 @@ public func gitDiffNumDeltasOfType(
 ///
 /// ## Discussion
 ///
-/// The flags on the delta related to whether it has binary content may not be set if there are no attributes
-/// set for the file, and there has been no reason to load the file data up until this pointer.
+/// The flags on the delta related to whether it has binary content may not
+/// be set if there are no attributes set for the file, and there has been no
+/// reason to load the file data up until this pointer.
 ///
 /// If those flags need to be up to date, use either
-/// ``gitDiffForEach(diff:fileCB:binaryCB:hunkCB:lineCB:payload:)``, or create a
-/// `git_patch`.
+/// ``gitDiffForEach(diff:fileCB:binaryCB:hunkCB:lineCB:payload:)``, or create
+/// a `git_patch`.
 ///
 /// - Note: The return value will be `nil` if the given index is out of range.
 ///
@@ -491,7 +518,8 @@ public func gitDiffGetDelta(
 ) -> GitDiffDelta?
 {
     /// The pointer is owned by libgit2 and does not need to be freed.
-    guard let diffDelta: UnsafePointer<git_diff_delta> = git_diff_get_delta(diff, idx)
+    guard let diffDelta: UnsafePointer<git_diff_delta>
+            = git_diff_get_delta(diff, idx)
     else
     {
         return nil
@@ -504,7 +532,8 @@ public func gitDiffGetDelta(
 
 /// Checks whether the deltas of the given diff are sorted case-insensitively.
 /// - Parameter diff: The diff to check. The underlying type must be `git_diff`.
-/// - Returns: Whether the deltas of the given diff are sorted case-insensitively.
+/// - Returns: Whether the deltas of the given diff are sorted
+/// case-insensitively.
 ///
 /// ## C Equivalent
 ///
@@ -530,8 +559,9 @@ public func gitDiffIsSortedICase(
 ///
 /// ## Discussion
 ///
-/// The text of diff files will be calculated only if `hunkCB` and `lineCB` are not `nil`. Neither of these
-/// callbacks will be invoked for binary files or for files whose only change is a file mode change.
+/// The text of diff files will be calculated only if `hunkCB` and `lineCB`
+/// are not `nil`. Neither of these callbacks will be invoked for binary files
+/// or for files whose only change is a file mode change.
 ///
 /// ## C Equivalent
 ///
@@ -566,10 +596,12 @@ public func gitDiffForEach(
 ///
 /// ## Discussion
 ///
-/// This is similar to `git diff --name-status`, which uses a single letter code such as `A` for
-/// added files, `D` for deleted files, and `M` for modified files.
+/// This is similar to `git diff --name-status`, which uses a single letter
+/// code such as `A` for added files, `D` for deleted files, and `M` for
+/// modified files.
 ///
-/// If the given delta status is ``GitDeltaT/gitDeltaUntracked``, the character will be a space.
+/// If the given delta status is ``GitDeltaT/gitDeltaUntracked``, the character
+/// will be a space.
 ///
 /// ## C Equivalent
 ///
@@ -614,9 +646,11 @@ public func gitDiffPrint(
 
 
 
-/// Writes the complete formatted text from the given diff into the given buffer.
+/// Writes the complete formatted text from the given diff into the given
+/// buffer.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the formatted text should be written.
+///   - out: The ``GitBuf`` instance into which the formatted text should be
+///   written.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The possible diff data output formats.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -649,9 +683,11 @@ public func gitDiffToBuf(
 
 /// Performs a diff on the given blobs.
 /// - Parameters:
-///   - oldBlob: The old blob to use in the diff operation. The underlying type must be `git_blob`.
+///   - oldBlob: The old blob to use in the diff operation. The underlying type
+///   must be `git_blob`.
 ///   - oldAsPath: The filename to use for `oldBlob`.
-///   - newBlob: The new blob to use in the diff operation. The underlying type must be `git_blob`.
+///   - newBlob: The new blob to use in the diff operation. The underlying type
+///   must be `git_blob`.
 ///   - newAsPath: The filename to use for `newBlob`.
 ///   - options: The options for the diff operation.
 ///   - fileCB: The callback invoked for each file in a diff.
@@ -663,15 +699,17 @@ public func gitDiffToBuf(
 ///
 /// ## Discussion
 ///
-/// Since a blob lacks some contextual information compared to a file,  the `git_diff_file` given to
-/// the callback will include some placeholder data. For example, `mode` will be `0` and `path` will be
-/// `NULL`.
+/// Since a blob lacks some contextual information compared to a file,
+/// the `git_diff_file` given to the callback will include some placeholder
+/// data. For example, `mode` will be `0` and `path` will be `NULL`.
 ///
-/// Either `oldBlob` or `newBlob` may be `nil`. If both are `nil`, this function will do nothing.
+/// Either `oldBlob` or `newBlob` may be `nil`. If both are `nil`, this
+/// function will do nothing.
 ///
-/// A binary content check will be performed on the blob content. If either blob looks like binary data, the
-/// `git_diff_delta` `binary` attribute will be set to `1`, and neither `hunkCB` nor `lineCB`
-/// will be invoked (unless ``GitDiffOptions/flags`` includes
+/// A binary content check will be performed on the blob content. If either
+/// blob looks like binary data, the `git_diff_delta` `binary` attribute will
+/// be set to `1`, and neither `hunkCB` nor `lineCB` will be invoked
+/// (unless ``GitDiffOptions/flags`` includes
 /// ``GitDiffOptionT/gitDiffForceText``).
 ///
 /// ## C Equivalent
@@ -714,7 +752,8 @@ public func gitDiffBlobs(
                         binaryCB,
                         hunkCB,
                         lineCB,
-                        payload)
+                        payload
+                    )
                 }
             }
         }
@@ -725,7 +764,8 @@ public func gitDiffBlobs(
 
 /// Performs a diff on the given blobs.
 /// - Parameters:
-///   - oldBlob: The old blob to use in the diff operation. The underlying type must be `git_blob`.
+///   - oldBlob: The old blob to use in the diff operation. The underlying type
+///   must be `git_blob`.
 ///   - oldAsPath: The filename to use for `oldBlob`.
 ///   - buffer: The raw data for the new side of the diff.
 ///   - bufferLen: The length of `buffer`.
@@ -740,9 +780,9 @@ public func gitDiffBlobs(
 ///
 /// ## Discussion
 ///
-/// Since a blob lacks some contextual information compared to a file,  the `git_diff_file` given to
-/// the callback will include some placeholder data. For example, `mode` will be `0` and `path` will be
-/// `NULL`.
+/// Since a blob lacks some contextual information compared to a file,
+/// the `git_diff_file` given to the callback will include some placeholder
+/// data. For example, `mode` will be `0` and `path` will be `NULL`.
 ///
 /// ## C Equivalent
 ///
@@ -819,9 +859,9 @@ public func gitDiffBlobToBuffer(
 ///
 /// ## Discussion
 ///
-/// Since a blob lacks some contextual information compared to a file,  the `git_diff_file` given to
-/// the callback will include some placeholder data. For example, `mode` will be `0` and `path` will be
-/// `NULL`.
+/// Since a blob lacks some contextual information compared to a file,
+/// the `git_diff_file` given to the callback will include some placeholder
+/// data. For example, `mode` will be `0` and `path` will be `NULL`.
 ///
 /// ## C Equivalent
 ///
@@ -889,20 +929,22 @@ public func gitDiffBuffers(
 
 /// Writes the given contents of a patch file into a diff.
 /// - Parameters:
-///   - out: The pointer in which to store the diff. The underlying type must be `git_diff`.
+///   - out: The pointer in which to store the diff. The underlying type must
+///   be `git_diff`.
 ///   - content: The contents of a patch file.
 ///   - contentLen: The length of `content`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// The resulting diff will be similar to the one that would be produced by comparing two trees, but with
-/// subtle differences. For example, a patch file likely contains abbreviated OIDs, so the OIDs in a
-/// diff delta produced by this function will also be abbreviated.
+/// The resulting diff will be similar to the one that would be produced by
+/// comparing two trees, but with subtle differences. For example, a patch
+/// file likely contains abbreviated OIDs, so the OIDs in a diff delta
+/// produced by this function will also be abbreviated.
 ///
-/// - Note: This function supports only SHA-1 patch files, and will read only patch files created
-/// by a Git implementation. It will not read unified diffs produced by the diff program or any other type
-/// of patch file.
+/// - Note: This function supports only SHA-1 patch files, and will read only
+/// patch files created by a Git implementation. It will not read unified
+/// diffs produced by the diff program or any other type of patch file.
 ///
 /// ## C Equivalent
 ///
@@ -917,12 +959,12 @@ public func gitDiffFromBuffer(
     {
         return try content.withCBuffer
         {
-            contentBuffer, contentBufferCount in
+            cContent, cContentCount in
             
             return git_diff_from_buffer(
                 out,
-                contentBuffer,
-                contentBufferCount
+                cContent,
+                cContentCount
             )
         }
     }
@@ -932,8 +974,8 @@ public func gitDiffFromBuffer(
 
 /// Accumulates diff statistics for all patches.
 /// - Parameters:
-///   - out: The pointer in which to store the diff statistics. The underlying type must be
-///   `git_diff_stats`.
+///   - out: The pointer in which to store the diff statistics. The underlying
+///   type must be `git_diff_stats`.
 ///   - diff: The diff to evaluate. The underlying type must be `git_diff`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -957,7 +999,8 @@ public func gitDiffGetStats(
 
 
 /// Gets the total number of files changed in a diff.
-/// - Parameter stats: The diff statistics. The underlying type must be `git_diff_stats`.
+/// - Parameter stats: The diff statistics. The underlying type must be
+/// `git_diff_stats`.
 /// - Returns: The total number of files changed in a diff.
 ///
 /// ## C Equivalent
@@ -973,7 +1016,8 @@ public func gitDiffStatsFilesChanged(
 
 
 /// Gets the total number of insertions in a diff.
-/// - Parameter stats: The diff statistics. The underlying type must be `git_diff_stats`.
+/// - Parameter stats: The diff statistics. The underlying type must be
+/// `git_diff_stats`.
 /// - Returns: The total number of insertions in a diff.
 ///
 /// ## C Equivalent
@@ -989,7 +1033,8 @@ public func gitDiffStatsInsertions(
 
 
 /// Gets the total number of deletions in a diff.
-/// - Parameter stats: The diff statistics. The underlying type must be `git_diff_stats`.
+/// - Parameter stats: The diff statistics. The underlying type must be
+/// `git_diff_stats`.
 /// - Returns: The total number of deletions in a diff.
 ///
 /// ## C Equivalent
@@ -1006,8 +1051,10 @@ public func gitDiffStatsDeletions(
 
 /// Writes the given diff statistics into the given buffer.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the given diff statistics should be written.
-///   - stats: The diff statistics. The underlying type must be `git_diff_stats`.
+///   - out: The ``GitBuf`` instance into which the given diff statistics
+///   should be written.
+///   - stats: The diff statistics. The underlying type must be
+///   `git_diff_stats`.
 ///   - format: The diff stats formatting options.
 ///   - width: The target width for output.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -1046,7 +1093,8 @@ public func gitDiffStatsToBuf(
 
 
 /// Frees the memory allocated for the given `git_diff_stats` instance.
-/// - Parameter stats: The diff statistics to free. The underlying type must be `git_diff_stats`.
+/// - Parameter stats: The diff statistics to free. The underlying type must
+/// be `git_diff_stats`.
 ///
 /// ## C Equivalent
 ///
@@ -1055,6 +1103,12 @@ public func gitDiffStatsFree(
     stats: OpaquePointer?
 )
 {
+    guard let stats: OpaquePointer = stats
+    else
+    {
+        return
+    }
+    
     git_diff_stats_free(stats)
 }
 
@@ -1068,8 +1122,9 @@ public func gitDiffStatsFree(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_diff_patchid_options` instances.
-/// ``GitDiffPatchIDOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_diff_patchid_options` instances. ``GitDiffPatchIDOptions`` instances
+/// do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -1090,8 +1145,8 @@ public func gitDiffPatchIDOptionsInit(
 
 
 
-/// Calculates the patch ID for the given patch, by summing the hash of the file diffs, and ignoring
-/// whitespace and line numbers.
+/// Calculates the patch ID for the given patch, by summing the hash of the
+/// file diffs, and ignoring whitespace and line numbers.
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the patch ID.
 ///   - diff: The diff to evaluate. The underlying type must be `git_diff`.
@@ -1100,10 +1155,12 @@ public func gitDiffPatchIDOptionsInit(
 ///
 /// ## Discussion
 ///
-/// The resulting patch ID can be used to derive whether two diffs are the same with a high probability.
+/// The resulting patch ID can be used to derive whether two diffs are the
+/// same with a high probability.
 ///
-/// - Note: Currently, this function calculates only stable patch IDs as defined in `git-patch-id(1)`,
-/// and should generate the same IDs as the ones generated by the upstream Git project.
+/// - Note: Currently, this function calculates only stable patch IDs as
+/// defined in `git-patch-id(1)`, and should generate the same IDs as the ones
+/// generated by the upstream Git project.
 ///
 /// ## C Equivalent
 ///

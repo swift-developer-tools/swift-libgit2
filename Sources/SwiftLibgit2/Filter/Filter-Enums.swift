@@ -18,16 +18,17 @@ import CLibgit2
 /// [`git_filter_mode_t`](https://libgit2.org/docs/reference/main/filter/git_filter_mode_t.html)
 public enum GitFilterModeT: UInt32, GitEnum
 {
-    /// Filters are applied when exporting a file from the object database to the working directory
-    /// (smudging).
+    /// Filters are applied when exporting a file from the object database to
+    /// the working directory (smudging).
     ///
     /// ## Discussion
     ///
-    /// This is equivalent to both `GIT_FILTER_TO_WORKTREE` and `GIT_FILTER_SMUDGE`.
+    /// This is equivalent to both `GIT_FILTER_TO_WORKTREE` and
+    /// `GIT_FILTER_SMUDGE`.
     case gitFilterToWorktree    = 0
     
-    /// Filters are applied when importing a file from the working directory to the object database
-    /// (cleaning).
+    /// Filters are applied when importing a file from the working directory
+    /// to the object database (cleaning).
     ///
     /// ## Discussion
     ///
@@ -36,7 +37,8 @@ public enum GitFilterModeT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitFilterModeT`` instance from a `git_filter_mode_t` instance.
+    /// Creates a ``GitFilterModeT`` instance from a `git_filter_mode_t`
+    /// instance.
     /// - Parameter filterMode: The `git_filter_mode_t` instance to use.
     internal init?(
         cValue filterMode: git_filter_mode_t
@@ -54,7 +56,8 @@ public enum GitFilterModeT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitFilterModeT`` instance into a `git_filter_mode_t` instance.
+    /// Converts the ``GitFilterModeT`` instance into a `git_filter_mode_t`
+    /// instance.
     /// - Returns: The `git_filter_mode_t` instance.
     internal func cValue() -> git_filter_mode_t
     {
@@ -78,6 +81,8 @@ public struct GitFilterFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitFilterFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -85,6 +90,18 @@ public struct GitFilterFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitFilterFlagT`` instance from a `git_filter_flag_t`
+    /// instance.
+    /// - Parameter filterFlags: The `git_filter_flag_t` instance to use.
+    internal init(
+        cValue filterFlags: git_filter_flag_t
+    )
+    {
+        self.rawValue = filterFlags.rawValue
     }
     
     
@@ -114,7 +131,8 @@ public struct GitFilterFlagT: GitOptionSet
     
     
     
-    /// Converts the ``GitFilterFlagT`` instance into a `git_filter_flag_t` instance.
+    /// Converts the ``GitFilterFlagT`` instance into a `git_filter_flag_t`
+    /// instance.
     /// - Returns: The `git_filter_flag_t` instance.
     internal func cValue() -> git_filter_flag_t
     {

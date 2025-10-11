@@ -15,9 +15,8 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// All bindings use `[String]` instead of `git_strarray`.
+/// - Note: This struct is provided for documentation purposes, but is not
+/// used by other bindings. All bindings use `[String]` instead.
 ///
 /// ## C Equivalent
 ///
@@ -27,8 +26,11 @@ public struct GitStrArray: GitStruct
     /// The array of strings.
     public let strings  : [String]
     
-    /// The number of strings in the array.
-    public let count    : Int
+    /// The length of ``strings``.
+    public var count    : Int
+    {
+        return strings.count
+    }
     
     
     
@@ -38,7 +40,6 @@ public struct GitStrArray: GitStruct
         cValue strArray: git_strarray
     )
     {
-        self.strings    = Array(strArray)
-        self.count      = strArray.count
+        self.strings = Array(strArray)
     }
 }

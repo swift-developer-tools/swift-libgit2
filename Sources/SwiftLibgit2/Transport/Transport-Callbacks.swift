@@ -14,7 +14,7 @@ import CLibgit2
 /// The callback for messages received by the transport.
 /// - Parameters:
 ///   - str: The message from the transport.
-///   - len: The length of the message from the transport.
+///   - len: The length of `str`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -33,7 +33,8 @@ public typealias GitTransportMessageCB = @convention(c)
 /// The callback to create a transport.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting transport.
-///   - owner: The owner of the transport. The underlying type must be `git_remote`.
+///   - owner: The owner of the transport. The underlying type must be
+///   `git_remote`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///

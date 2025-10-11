@@ -13,18 +13,20 @@ import CLibgit2
 
 internal extension Array where Element == String
 {
-    /// Calls the given closure with a mutable pointer to a `git_strarray` instance.
+    /// Calls the given closure with a mutable pointer to a `git_strarray`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error thrown by the given closure.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
-    /// `git_strarray_dispose()` cannot be used here, since that function is
-    /// intended to free the strings of a `git_strarray` which was allocated by libgit2.
+    /// ``gitStrArrayDispose(array:)`` cannot be used here, since that function
+    /// is intended to free the strings of a `git_strarray` which was allocated
+    /// by libgit2.
     func withGitStrArray<T>(
         _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var strArray = git_strarray()
         
@@ -52,9 +54,8 @@ internal extension Array where Element == String
         {
             cStrings in
             
-            let pointers = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>.allocate(
-                capacity: cStrings.count
-            )
+            let pointers = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
+                .allocate(capacity: cStrings.count)
             
             for (index, cString) in cStrings.enumerated()
             {
@@ -78,7 +79,8 @@ internal extension Array where Element == String
     {
         guard
             strArray.count > 0,
-            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strArray.strings
+            let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
+                = strArray.strings
         else
         {
             self = []

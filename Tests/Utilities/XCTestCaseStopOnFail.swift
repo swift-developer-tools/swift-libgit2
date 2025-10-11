@@ -12,20 +12,21 @@ import XCTest
 
 
 
-/// Stops an `XCTest` case as soon as a failure occurs.
+/// Stops an `XCTestCase` as soon as an assertion fails.
 ///
 /// ## Discussion
 ///
-/// This class initializes and shuts down libgit2, so test cases do not need to handle that.
-/// This ensures that all tests cases run in an environment in which libgit2 has been initialized.
-/// Any behavior of the library prior to its being initialized is untested and is considered undefined behavior.
+/// This class initializes and shuts down libgit2, so test cases do not need
+/// to handle that. This ensures that all tests cases run in an environment in
+/// which libgit2 has been initialized. Any behavior of the library prior to
+/// libgit2 being initialized is untested and is considered undefined behavior.
 class XCTestCaseStopOnFail: XCTestCase
 {
-    /// Provides an opportunity to customize initial state before a test case begins.
-    override func setUp()
+    /// Provides an opportunity to customize initial state before a test case
+    /// begins.
+    override class func setUp()
     {
         super.setUp()
-        continueAfterFailure = false
         
         _ = gitLibgit2Init()
     }
@@ -33,8 +34,21 @@ class XCTestCaseStopOnFail: XCTestCase
     
     
     /// Provides an opportunity to perform cleanup after a test case ends.
-    override func tearDown()
+    override class func tearDown()
     {
         _ = gitLibgit2Shutdown()
+        
+        super.tearDown()
+    }
+    
+    
+    
+    /// Provides an opportunity to reset state before calling each test method
+    /// in a test case.
+    override func setUp()
+    {
+        super.setUp()
+        
+        continueAfterFailure = false
     }
 }

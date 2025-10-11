@@ -15,11 +15,8 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// All bindings use
-/// [`UnsafeMutableRawPointer`](https://developer.apple.com/documentation/swift/unsafemutablerawpointer)
-/// payloads.
+/// - Note: This struct is provided for documentation purposes, but is not used
+/// by other bindings. All bindings use `UnsafeMutableRawPointer` instead.
 ///
 /// ## C Equivalent
 ///
@@ -36,12 +33,13 @@ public struct GitCredentialUserPassPayload: GitStruct
     
     /// Creates a ``GitCredentialUserPassPayload`` instance from a
     /// `git_credential_userpass_payload` instance.
-    /// - Parameter payload: The `git_credential_userpass_payload` instance to use.
+    /// - Parameter payload: The `git_credential_userpass_payload` instance
+    /// to use.
     ///
     /// ## Discussion
     ///
-    /// ``username`` and ``password`` default to empty strings if unexpected values are
-    /// encountered, although this should never occur.
+    /// ``username`` and ``password`` default to empty strings if unexpected
+    /// values are encountered, although this should never occur.
     internal init(
         cValue payload: git_credential_userpass_payload
     )

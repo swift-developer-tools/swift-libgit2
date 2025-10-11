@@ -20,34 +20,69 @@ import Foundation
 public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
 {
     /// The number of objects being indexed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var totalObjects    : UInt32    = 0
     
     /// The number of received objects that have been hashed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var indexedObjects  : UInt32    = 0
     
     /// The number of objects that have been downloaded.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var receivedObjects : UInt32    = 0
     
-    /// The number of locally-available objects that have been injected in order to fix a thin pack.
+    /// The number of locally-available objects that have been injected in
+    /// order to fix a thin pack.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var localObjects    : UInt32    = 0
     
     /// The number of deltas being indexed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var totalDeltas     : UInt32    = 0
     
     /// The number of deltas that have been indexed.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var indexedDeltas   : UInt32    = 0
     
     /// The number of bytes that been received up until the current time.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var receivedBytes   : Int       = 0
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance.
+    /// Creates a ``GitIndexerProgress`` instance with the default
+    /// configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance from a `git_indexer_progress` instance.
+    /// Creates a ``GitIndexerProgress`` instance from a `git_indexer_progress`
+    /// instance.
     /// - Parameter indexerProgress: The `git_indexer_progress` instance to use.
     internal init(
         cValue indexerProgress: git_indexer_progress
@@ -64,7 +99,8 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     
     
     
-    /// Converts the ``GitIndexerProgress`` instance into a `git_indexer_progress` instance.
+    /// Converts the ``GitIndexerProgress`` instance into a
+    /// `git_indexer_progress` instance.
     /// - Returns: The `git_indexer_progress` instance.
     internal func cValue() -> git_indexer_progress
     {
@@ -130,7 +166,8 @@ public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitIndexerOptions`` instance from a `git_indexer_options` instance.
+    /// Creates a ``GitIndexerOptions`` instance from a `git_indexer_options`
+    /// instance.
     /// - Parameter indexerOptions: The `git_indexer_options` instance
     /// to use.
     internal init(
@@ -145,9 +182,10 @@ public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Converts the ``GitIndexerOptions`` instance into a `git_indexer_options` instance.
+    /// Converts the ``GitIndexerOptions`` instance into a `git_indexer_options`
+    /// instance.
     /// - Returns: The `git_indexer_options` instance.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func cValue() throws -> git_indexer_options
     {
         var indexerOptions = git_indexer_options()

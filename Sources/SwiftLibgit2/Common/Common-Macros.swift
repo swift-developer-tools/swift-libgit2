@@ -11,17 +11,18 @@ import CLibgit2
 
 
 
-/// The separator used in path list strings, like the `PATH` environment variable.
+/// The separator used in path list strings, like the `PATH` environment
+/// variable.
 ///
 /// ## Discussion
 ///
-/// A colon is used for Apple platforms and all systems other than Windows and AmigaOS,
-/// which use a semi-colon.
+/// A colon (`:`) is used for Apple platforms and all systems other than
+/// Windows and AmigaOS, which use a semi-colon (`;`).
 ///
 /// ## C Equivalent
 ///
 /// [`GIT_PATH_LIST_SEPARATOR`](https://libgit2.org/docs/reference/main/common/GIT_PATH_LIST_SEPARATOR.html)
-public let GitPathListSeparator: String = ":"
+public let gitPathListSeparator: String = ":"
 
 
 
@@ -30,4 +31,4 @@ public let GitPathListSeparator: String = ":"
 /// ## C Equivalent
 ///
 /// [`GIT_PATH_MAX`](https://libgit2.org/docs/reference/main/common/GIT_PATH_MAX.html)
-public let GitPathMax: Int32 = GIT_PATH_MAX
+public let gitPathMax: Int32 = 4096

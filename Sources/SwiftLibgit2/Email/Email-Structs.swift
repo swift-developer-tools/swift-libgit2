@@ -36,14 +36,16 @@ public struct GitEmailCreateOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is a ``GitDiffOptions`` instance with the default configuration.
+    /// The default value is a ``GitDiffOptions`` instance with the default
+    /// configuration.
     public var diffOpts         : GitDiffOptions        = GitDiffOptions()
     
     /// The options for diff rename and copy detection.
     ///
     /// ## Discussion
     ///
-    /// The default value is a ``GitDiffFindOptions`` instance with the default configuration.
+    /// The default value is a ``GitDiffFindOptions`` instance with the
+    /// default configuration.
     public var diffFindOpts     : GitDiffFindOptions    = GitDiffFindOptions()
     
     /// The subject prefix.
@@ -52,8 +54,9 @@ public struct GitEmailCreateOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `PATCH`.
     ///
-    /// If the subject prefix is set to an empty string, only the patch numbers will be shown in the prefix.
-    /// If patch numbers are not being shown, the prefix will be omitted entirely.
+    /// If the subject prefix is set to an empty string, only the patch
+    /// numbers will be shown in the prefix. If patch numbers are not being
+    /// shown, the prefix will be omitted entirely.
     public var subjectPrefix    : String                = "PATCH"
     
     /// The starting patch number.
@@ -74,7 +77,8 @@ public struct GitEmailCreateOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitEmailCreateOptions`` instance with the default configuration.
+    /// Creates a ``GitEmailCreateOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -83,15 +87,15 @@ public struct GitEmailCreateOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitEmailCreateOptions`` instance from a `git_email_create_options`
-    /// instance.
+    /// Creates a ``GitEmailCreateOptions`` instance from a
+    /// `git_email_create_options` instance.
     /// - Parameter emailCreateOptions: The `git_email_create_options` instance
     /// to use.
     ///
     /// ## Discussion
     ///
-    /// ``subjectPrefix`` defaults to `PATCH` if an unexpected value is encountered, although
-    /// this should never occur.
+    /// ``subjectPrefix`` defaults to `PATCH` if an unexpected value is
+    /// encountered, although this should never occur.
     internal init(
         cValue emailCreateOptions: git_email_create_options
     )
@@ -107,10 +111,11 @@ public struct GitEmailCreateOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_email_create_options` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_email_create_options` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_email_create_options>) throws -> T
     ) throws -> T

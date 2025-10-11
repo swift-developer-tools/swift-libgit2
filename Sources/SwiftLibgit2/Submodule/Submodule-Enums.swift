@@ -16,12 +16,14 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// These values represent the options for the `submodule.$name.ignore` configuration value,
-/// which indicates how deeply to look at the working directory when determining the submodule status.
+/// These values represent the options for the `submodule.$name.ignore`
+/// configuration value, which indicates how deeply to look at the working
+/// directory when determining the submodule status.
 ///
-/// This can be overriden in memory on a per-submodule basis with `git_submodule_set_ignore()`,
-/// and can write the changed value to the disk with `git_submodule_save()`. If the value has been
-/// overwritten, it can be reverted to the on-disk value by using `GIT_SUBMODULE_IGNORE_RESET`.
+/// This can be overriden in memory on a per-submodule basis with
+/// `git_submodule_set_ignore()`, and can write the changed value to the disk
+/// with `git_submodule_save()`. If the value has been overwritten, it can be
+/// reverted to the on-disk value by using `GIT_SUBMODULE_IGNORE_RESET`.
 ///
 /// ## C Equivalent
 ///
@@ -38,11 +40,12 @@ public enum GitSubmoduleIgnoreT: Int32, GitEnum
     ///
     /// ## Discussion
     ///
-    /// Only changes to tracked files, the index, or the HEAD commit will matter.
+    /// Only changes to tracked files, the index, or the HEAD commit will
+    /// matter.
     case gitSubmoduleIgnoreUntracked    = 2
     
-    /// Ignore changes in the working directory, and only consider changes if the HEAD of the
-    /// submodule has moved from the value in the superproject.
+    /// Ignore changes in the working directory, and only consider changes if
+    /// the HEAD of the submodule has moved from the value in the superproject.
     case gitSubmoduleIgnoreDirty        = 3
     
     /// Never check if the submodule is dirty.
@@ -50,9 +53,10 @@ public enum GitSubmoduleIgnoreT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitSubmoduleIgnoreT`` instance from a `git_submodule_ignore_t`
-    /// instance.
-    /// - Parameter submoduleIgnore: The `git_submodule_ignore_t` instance to use.
+    /// Creates a ``GitSubmoduleIgnoreT`` instance from a
+    /// `git_submodule_ignore_t` instance.
+    /// - Parameter submoduleIgnore: The `git_submodule_ignore_t` instance to
+    /// use.
     internal init?(
         cValue submoduleIgnore: git_submodule_ignore_t
     )
@@ -70,8 +74,8 @@ public enum GitSubmoduleIgnoreT: Int32, GitEnum
     
     
     
-    /// Converts the ``GitSubmoduleIgnoreT`` instance into a `git_submodule_ignore_t`
-    /// instance.
+    /// Converts the ``GitSubmoduleIgnoreT`` instance into a
+    /// `git_submodule_ignore_t` instance.
     /// - Returns: The `git_submodule_ignore_t` instance.
     internal func cValue() -> git_submodule_ignore_t
     {

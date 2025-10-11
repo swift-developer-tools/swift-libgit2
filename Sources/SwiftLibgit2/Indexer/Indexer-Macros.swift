@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_INDEXER_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/indexer/GIT_INDEXER_OPTIONS_VERSION.html)
-public let gitIndexerOptionsVersion: UInt32 = UInt32(GIT_INDEXER_OPTIONS_VERSION)
+public let gitIndexerOptionsVersion: UInt32 = 1

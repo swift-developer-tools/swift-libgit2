@@ -11,12 +11,13 @@ import CLibgit2
 
 
 
-/// The callback that will be made per delta (file) when applying a patch.
+/// The callback to invoke for each delta (file) when applying a patch.
 /// - Parameters:
 ///   - delta: The delta to be applied.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if the apply operation should be aborted, a positive value if the delta
-/// should not be applied but the operation should continue, or `0` if the delta should be applied.
+/// - Returns: A negative value if the apply operation should be aborted, a
+/// positive value if the delta should not be applied but the operation should
+/// continue, or `0` if the delta should be applied.
 ///
 /// ## C Equivalent
 ///
@@ -29,12 +30,13 @@ public typealias GitApplyDeltaCB = @convention(c)
 
 
 
-/// The callback that will be made per hunk when applying a patch.
+/// The callback that to invoke for each hunk when applying a patch.
 /// - Parameters:
 ///   - hunk: The hunk to be applied.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if the apply operation should be aborted, a positive value if the hunk
-/// should not be applied but the operation should continue, or `0` if the hunk should be applied.
+/// - Returns: A negative value if the apply operation should be aborted, a
+/// positive value if the hunk should not be applied but the operation should
+/// continue, or `0` if the hunk should be applied.
 ///
 /// ## C Equivalent
 ///

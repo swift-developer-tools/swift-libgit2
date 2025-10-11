@@ -15,19 +15,22 @@ import CLibgit2
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting credential.
 ///   - url: The resource for which a credential is being demanded.
-///   - usernameFromURL: The username that is embedded in a `user@host` remote URL.
+///   - usernameFromURL: The username that is embedded in a `user@host` remote
+///   URL.
 ///   - allowedTypes: The allowed credential types. See ``GitCredentialT``.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if an error occurred, a positive value if no credential was acquired,
-/// or `0` on success.
+/// - Returns: A negative value if an error occurred, a positive value if no
+/// credential was acquired, or `0` on success.
 ///
 /// ## Discussion
 ///
-/// This callback is usually involved any time another system might need authentication. A valid
-/// `git_credential` object must be provided, depending on `allowedTypes`.
+/// This callback is usually involved any time another system might need
+/// authentication. A valid `git_credential` object must be provided, depending
+/// on `allowedTypes`.
 ///
-/// Most authentication details are the caller's responsibility. This callback will be called repeatedly until
-/// the authentication succeeds or an error is reported. Take care to stop providing the same incorrect
+/// - Important: Most authentication details are the caller's responsibility.
+/// This callback will be called repeatedly until the authentication succeeds
+/// or an error is reported. Take care to stop providing the same incorrect
 /// credentials, otherwise it is easy to fall into an infinite loop.
 ///
 /// ## C Equivalent
@@ -76,14 +79,15 @@ public typealias GitCredentialSSHInteractiveCB = @convention(c)
 
 /// The callback for credential signing.
 /// - Parameters:
-///   - session: The libssh2 session. The underlying type must be `LIBSSH_SESSION`.
+///   - session: The libssh2 session. The underlying type must be
+///   `LIBSSH_SESSION`.
 ///   - sig: The signature.
 ///   - sigLen: The length of the signature.
 ///   - data: The credential data.
 ///   - dataLen: The length of the credential data.
 ///   - abstract: The libssh2 abstract authentication state.
-/// - Returns: A negative value if an error occurred, a positive value if no credential was acquired,
-/// or `0` on success.
+/// - Returns: A negative value if an error occurred, a positive value if no
+/// credential was acquired, or `0` on success.
 ///
 /// ## C Equivalent
 ///

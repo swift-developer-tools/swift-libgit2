@@ -6,8 +6,8 @@ Common platform functionality, including libgit2 itself.
 
 ### Macros
 
-- ``GitPathListSeparator``
-- ``GitPathMax``
+- ``gitPathListSeparator``
+- ``gitPathMax``
 
 ### Enums
 

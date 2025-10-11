@@ -23,6 +23,8 @@ final class ApplyTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.cValue(), GIT_APPLY_CHECK)
         
+        XCTAssertEqual(GitApplyFlagsT(cValue: GIT_APPLY_CHECK).cValue(), GIT_APPLY_CHECK)
+        
         
         
         let flags: GitApplyFlagsT =
@@ -49,6 +51,22 @@ final class ApplyTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationWorkdir.cValue(), GIT_APPLY_LOCATION_WORKDIR)
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.cValue(), GIT_APPLY_LOCATION_INDEX)
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.cValue(), GIT_APPLY_LOCATION_BOTH)
+        
+        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_INDEX).cValue(), GIT_APPLY_LOCATION_INDEX)
+        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_INDEX).cValue(), GIT_APPLY_LOCATION_INDEX)
+        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_BOTH).cValue(), GIT_APPLY_LOCATION_BOTH)
+        
+        
+        
+        let flags: GitApplyLocationT =
+        [
+            .gitApplyLocationWorkdir,
+            .gitApplyLocationIndex
+        ]
+        
+        XCTAssertTrue(flags.contains(.gitApplyLocationWorkdir))
+        XCTAssertTrue(flags.contains(.gitApplyLocationIndex))
+        XCTAssertFalse(flags.contains(.gitApplyLocationBoth))
     }
     
     
@@ -63,8 +81,6 @@ final class ApplyTests: XCTestCaseStopOnFail
         XCTAssertNil(applyOptions.payload)
         XCTAssertEqual(applyOptions.flags, [])
         
-        XCTAssertEqual(gitApplyOptionsVersion, UInt32(GIT_APPLY_OPTIONS_VERSION))
-        
         try applyOptions.withCValue
         {
             cApplyOptions in
@@ -75,6 +91,27 @@ final class ApplyTests: XCTestCaseStopOnFail
             XCTAssertNil(cApplyOptions.pointee.payload)
             XCTAssertEqual(cApplyOptions.pointee.flags, 0)
         }
+    }
+    
+    
+    
+    func testGitApplyOptionsInit() throws
+    {
+        var applyOptions = git_apply_options()
+        
+        let applyOptionsInitResult: GitErrorCode = gitApplyOptionsInit(
+            opts:       &applyOptions,
+            version:    gitApplyOptionsVersion
+        )
+        
+        XCTAssertOK(applyOptionsInitResult)
+    }
+    
+    
+    
+    func testGitApplyOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitApplyOptionsVersion), GIT_APPLY_OPTIONS_VERSION)
     }
     
     
@@ -94,7 +131,8 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -119,7 +157,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
@@ -207,15 +245,17 @@ extension ApplyTests
     
     
     
-    /// Tests `git apply` functionality by creating a diff and applying it with the given options.
+    /// Tests `git apply` functionality by creating a diff and applying it
+    /// with the given options.
     ///
     /// - Parameters:
-    ///   - location: The target location for applying the diff (the working directory, the index, or both).
+    ///   - location: The target location for applying the diff (the working
+    ///   directory, the index, or both).
     ///   - flags: The flags to control the apply behavior.
-    ///   - checkIndex: Whether to check that the index contains staged changes after applying.
+    ///   - checkIndex: Whether to check that the index contains staged changes
+    ///   after applying.
     ///   - endContent: The expected file content after applying.
-    /// - Throws: An error if a Git operation, write operation fails, or `GitApplyOptions`
-    /// initialization fails.
+    /// - Throws: An error if an operation fails.
     ///
     /// ## Discussion
     ///
@@ -249,7 +289,8 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: GitErrorCode = try Commit.withHEADCommit(in: repository)
+            let commitTreeResult: GitErrorCode
+                = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
@@ -263,7 +304,8 @@ extension ApplyTests
             
             
             
-            let modifiedContent: String = "\(Repository.readmeFileContent) Goodbye World!"
+            let modifiedContent: String 
+                = "\(Repository.readmeFileContent) Goodbye World!"
             
             try repository.modifyFile(
                 at:     Repository.readmeFileName,
@@ -318,7 +360,7 @@ extension ApplyTests
             
             defer
             {
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             

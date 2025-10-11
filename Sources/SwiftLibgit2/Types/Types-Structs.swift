@@ -62,10 +62,10 @@ public struct GitTime: GitStructReadable, CConvertible
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// `git_writestream` is treated as an opaque struct since its function pointers are
-/// allocated and managed by libgit2, and cannot be meaningfully recreated or translated.
+/// - Note: This struct is provided for documentation purposes, but is not used
+/// by other bindings. `git_writestream` is treated as an opaque struct since
+/// its function pointers are allocated and managed by libgit2, and cannot be
+/// meaningfully recreated or translated.
 ///
 /// ## C Equivalent
 ///

@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_proxy_options` instances.
-/// ``GitProxyOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_proxy_options` instances. ``GitProxyOptions`` instances do not need
+/// to be initialized this way.
 ///
 /// ## C Equivalent
 ///

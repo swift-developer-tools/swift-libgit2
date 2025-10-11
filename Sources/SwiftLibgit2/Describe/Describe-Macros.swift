@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_DESCRIBE_DEFAULT_MAX_CANDIDATES_TAGS`](https://libgit2.org/docs/reference/main/describe/GIT_DESCRIBE_DEFAULT_MAX_CANDIDATES_TAGS.html)
-public let gitDescribeDefaultMaxCandidatesTags: UInt32 = UInt32(GIT_DESCRIBE_DEFAULT_MAX_CANDIDATES_TAGS)
+public let gitDescribeDefaultMaxCandidatesTags: UInt32 = 10
 
 
 
@@ -25,7 +25,7 @@ public let gitDescribeDefaultMaxCandidatesTags: UInt32 = UInt32(GIT_DESCRIBE_DEF
 /// ## C Equivalent
 ///
 /// [`GIT_DESCRIBE_DEFAULT_ABBREVIATED_SIZE`](https://libgit2.org/docs/reference/main/describe/GIT_DESCRIBE_DEFAULT_ABBREVIATED_SIZE.html)
-public let gitDescribeDefaultAbbreviatedSize: UInt32 = UInt32(GIT_DESCRIBE_DEFAULT_ABBREVIATED_SIZE)
+public let gitDescribeDefaultAbbreviatedSize: UInt32 = 7
 
 
 
@@ -34,7 +34,7 @@ public let gitDescribeDefaultAbbreviatedSize: UInt32 = UInt32(GIT_DESCRIBE_DEFAU
 /// ## C Equivalent
 ///
 /// [`GIT_DESCRIBE_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/describe/GIT_DESCRIBE_OPTIONS_VERSION.html)
-public let gitDescribeOptionsVersion: UInt32 = UInt32(GIT_DESCRIBE_OPTIONS_VERSION)
+public let gitDescribeOptionsVersion: UInt32 = 1
 
 
 
@@ -43,4 +43,4 @@ public let gitDescribeOptionsVersion: UInt32 = UInt32(GIT_DESCRIBE_OPTIONS_VERSI
 /// ## C Equivalent
 ///
 /// [`GIT_DESCRIBE_FORMAT_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/describe/GIT_DESCRIBE_FORMAT_OPTIONS_VERSION.html)
-public let gitDescribeFormatOptionsVersion: UInt32 = UInt32(GIT_DESCRIBE_FORMAT_OPTIONS_VERSION)
+public let gitDescribeFormatOptionsVersion: UInt32 = 1

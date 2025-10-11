@@ -21,7 +21,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let (_, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
+            let (_, featureCommitOID): (GitOID, GitOID)
+                = try setupCherrypickScenario(in: repository)
             
             
             
@@ -29,7 +30,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(featureCommitPointer)
+                gitCommitFree(commit: featureCommitPointer)
             }
             
             
@@ -112,7 +113,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let (mainCommitOID, featureCommitOID): (GitOID, GitOID) = try setupCherrypickScenario(in: repository)
+            let (mainCommitOID, featureCommitOID): (GitOID, GitOID)
+                = try setupCherrypickScenario(in: repository)
             
             
             
@@ -122,9 +124,9 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeCommit(mainCommitPointer)
-                Free.freeCommit(featureCommitPointer)
-                Free.freeIndex(indexPointer)
+                gitCommitFree(commit: mainCommitPointer)
+                gitCommitFree(commit: featureCommitPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
@@ -183,7 +185,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let indexEntryCountResult: Int = gitIndexEntryCount(index: indexPointer)
+            let indexEntryCountResult: Int
+                = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertGreaterThan(indexEntryCountResult, 0)
         }
@@ -200,8 +203,6 @@ final class CherrypickTests: XCTestCaseStopOnFail
         XCTAssertNil(cherrypickOptions.mergeOpts)
         XCTAssertNil(cherrypickOptions.checkoutOpts)
         
-        XCTAssertEqual(gitCherrypickOptionsVersion, UInt32(GIT_CHERRYPICK_OPTIONS_VERSION))
-        
         try cherrypickOptions.withCValue
         {
             cCherrypickOptions in
@@ -211,6 +212,28 @@ final class CherrypickTests: XCTestCaseStopOnFail
             XCTAssertNotNil(cCherrypickOptions.pointee.merge_opts)
             XCTAssertNotNil(cCherrypickOptions.pointee.checkout_opts)
         }
+    }
+    
+    
+    
+    func testGitCherrypickOptionsInit() throws
+    {
+        var cherrypickOptions = git_cherrypick_options()
+        
+        let cherrypickOptionsInitResult: GitErrorCode
+            = gitCherrypickOptionsInit(
+                opts:       &cherrypickOptions,
+                version:    gitCherrypickOptionsVersion
+            )
+        
+        XCTAssertOK(cherrypickOptionsInitResult)
+    }
+    
+    
+    
+    func testGitCherrypickOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitCherrypickOptionsVersion), GIT_CHERRYPICK_OPTIONS_VERSION)
     }
 }
 
@@ -227,7 +250,9 @@ extension CherrypickTests
     
     /// Creates a repository with branches suitable for cherry-picking.
     /// - Parameter repository: The repository in which to create the branches.
-    /// - Returns: A tuple containing the main branch commit and the feature branch commit.
+    /// - Returns: A tuple containing the main branch commit and the feature
+    /// branch commit.
+    /// - Throws: An error if an operation fails.
     private func setupCherrypickScenario(
         in repository: Repository
     ) throws -> (GitOID, GitOID)
@@ -283,7 +308,7 @@ extension CherrypickTests
         
         defer
         {
-            Free.freeCommit(headCommitPointer)
+            gitCommitFree(commit: headCommitPointer)
             Free.freeReference(branchPointer)
         }
         
@@ -308,7 +333,8 @@ extension CherrypickTests
         
         
         
-        guard let referenceName: UnsafePointer<CChar> = git_reference_name(branchPointer)
+        guard let referenceName: UnsafePointer<CChar>
+                = git_reference_name(branchPointer)
         else
         {
             XCTFail("The branch name was nil.")

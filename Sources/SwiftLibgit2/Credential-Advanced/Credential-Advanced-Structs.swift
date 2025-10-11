@@ -15,10 +15,10 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// `git_credential` is treated as an opaque struct since its function pointer is
-/// allocated and managed by libgit2, and cannot be meaningfully recreated or translated.
+/// - Note: This struct is provided for documentation purposes, but is not
+/// used by other bindings. `git_credential` is treated as an opaque struct
+/// since its function pointer is allocated and managed by libgit2, and cannot
+/// be meaningfully recreated or translated.
 ///
 /// ## C Equivalent
 ///

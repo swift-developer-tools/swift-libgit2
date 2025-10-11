@@ -88,11 +88,12 @@ final class IgnoreTests: XCTestCaseStopOnFail
             
             var isIgnored: Bool = false
             
-            let isIgnoredBeforeClearResult: GitErrorCode = gitIgnorePathIsIgnored(
-                ignored:    &isIgnored,
-                repo:       repository.pointer,
-                path:       "file.tmp"
-            )
+            let isIgnoredBeforeClearResult: GitErrorCode
+                = gitIgnorePathIsIgnored(
+                    ignored:    &isIgnored,
+                    repo:       repository.pointer,
+                    path:       "file.tmp"
+                )
             
             XCTAssertOK(isIgnoredBeforeClearResult)
             XCTAssertTrue(isIgnored)
@@ -108,11 +109,12 @@ final class IgnoreTests: XCTestCaseStopOnFail
             
             isIgnored = true
             
-            let isIgnoredAfterClearResult: GitErrorCode = gitIgnorePathIsIgnored(
-                ignored:    &isIgnored,
-                repo:       repository.pointer,
-                path:       "file.tmp"
-            )
+            let isIgnoredAfterClearResult: GitErrorCode
+                = gitIgnorePathIsIgnored(
+                    ignored:    &isIgnored,
+                    repo:       repository.pointer,
+                    path:       "file.tmp"
+                )
             
             XCTAssertOK(isIgnoredAfterClearResult)
             XCTAssertFalse(isIgnored)

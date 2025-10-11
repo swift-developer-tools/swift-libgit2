@@ -36,7 +36,8 @@ final class TransportTests: XCTestCaseStopOnFail
             XCTAssertNil(owner)
             XCTAssertNil(payload)
             
-            if let out: UnsafeMutablePointer<UnsafeMutablePointer<git_transport>?> = out
+            if let out: UnsafeMutablePointer<UnsafeMutablePointer<git_transport>?>
+                = out
             {
                 out.pointee = nil
             }

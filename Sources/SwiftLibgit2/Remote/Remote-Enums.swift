@@ -15,15 +15,16 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// The default behavior of Git is to follow a redirect on the initial request (`/info/refs`), but not
-/// on subsequent requests.
+/// The default behavior of Git is to follow a redirect on the initial request
+/// (`/info/refs`), but not on subsequent requests.
 ///
 /// ## C Equivalent
 ///
 /// [`git_remote_redirect_t`](https://libgit2.org/docs/reference/main/remote/git_remote_redirect_t.html)
 public enum GitRemoteRedirectT: UInt32, GitEnum
 {
-    /// Do not follow any off-site redirects at any stage of the fetch or push operation.
+    /// Do not follow any off-site redirects at any stage of the fetch or push
+    /// operation.
     case gitRemoteRedirectNone      = 0
     
     /// Allow off-site redirects only upon the initial request.
@@ -56,8 +57,8 @@ public enum GitRemoteRedirectT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitRemoteRedirectT`` instance into a `git_remote_redirect_t`
-    /// instance.
+    /// Converts the ``GitRemoteRedirectT`` instance into a
+    /// `git_remote_redirect_t` instance.
     /// - Returns: The `git_remote_redirect_t` instance.
     internal func cValue() -> git_remote_redirect_t
     {
@@ -82,6 +83,8 @@ public struct GitRemoteCreateFlags: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitRemoteCreateFlags`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -89,6 +92,19 @@ public struct GitRemoteCreateFlags: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitRemoteCreateFlags`` instance from a
+    /// `git_remote_create_flags` instance.
+    /// - Parameter remoteCreateFlags: The `git_remote_create_flags` instance
+    /// to use.
+    internal init(
+        cValue remoteCreateFlags: git_remote_create_flags
+    )
+    {
+        self.rawValue = remoteCreateFlags.rawValue
     }
     
     
@@ -101,8 +117,8 @@ public struct GitRemoteCreateFlags: GitOptionSet
     
     
     
-    /// Converts the ``GitRemoteCreateFlags`` instance into a `git_remote_create_flags`
-    /// instance.
+    /// Converts the ``GitRemoteCreateFlags`` instance into a
+    /// `git_remote_create_flags` instance.
     /// - Returns: The `git_remote_create_flags` instance.
     internal func cValue() -> git_remote_create_flags
     {
@@ -122,6 +138,8 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitRemoteUpdateFlags`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -129,6 +147,19 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitRemoteUpdateFlags`` instance from a
+    /// `git_remote_update_flags` instance.
+    /// - Parameter remoteUpdateFlags: The `git_remote_update_flags` instance
+    /// to use.
+    internal init(
+        cValue remoteUpdateFlags: git_remote_update_flags
+    )
+    {
+        self.rawValue = remoteUpdateFlags.rawValue
     }
     
     
@@ -141,8 +172,8 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     
     
     
-    /// Converts the ``GitRemoteUpdateFlags`` instance into a `git_remote_update_flags`
-    /// instance.
+    /// Converts the ``GitRemoteUpdateFlags`` instance into a
+    /// `git_remote_update_flags` instance.
     /// - Returns: The `git_remote_update_flags` instance.
     internal func cValue() -> git_remote_update_flags
     {
@@ -170,9 +201,10 @@ public enum GitRemoteCompletionT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitRemoteCompletionT`` instance from a `git_remote_completion_t`
-    /// instance.
-    /// - Parameter remoteCompletion: The `git_remote_completion_t` instance to use.
+    /// Creates a ``GitRemoteCompletionT`` instance from a
+    /// `git_remote_completion_t` instance.
+    /// - Parameter remoteCompletion: The `git_remote_completion_t` instance
+    /// to use.
     internal init?(
         cValue remoteCompletion: git_remote_completion_t
     )
@@ -188,8 +220,8 @@ public enum GitRemoteCompletionT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitRemoteCompletionT`` instance into a `git_remote_completion_t`
-    /// instance.
+    /// Converts the ``GitRemoteCompletionT`` instance into a
+    /// `git_remote_completion_t` instance.
     /// - Returns: The `git_remote_completion_t` instance.
     internal func cValue() -> git_remote_completion_t
     {
@@ -222,7 +254,8 @@ public enum GitFetchPruneT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitFetchPruneT`` instance from a `git_fetch_prune_t` instance.
+    /// Creates a ``GitFetchPruneT`` instance from a `git_fetch_prune_t`
+    /// instance.
     /// - Parameter fetchPrune: The `git_fetch_prune_t` instance to use.
     internal init?(
         cValue fetchPrune: git_fetch_prune_t
@@ -255,7 +288,8 @@ public enum GitFetchPruneT: UInt32, GitEnum
 
 
 
-/// The automatic tag-following option used to determine which `--tags` option to use.
+/// The automatic tag-following option used to determine which `--tags` option
+/// to use.
 ///
 /// ## C Equivalent
 ///
@@ -265,7 +299,8 @@ public enum GitRemoteAutoTagOptionT: UInt32, GitEnum
     /// Use the setting from the configuration.
     case gitRemoteDownloadTagsUnspecified   = 0
     
-    /// Ask the server for tags pointing to objects that are already being downloaded.
+    /// Ask the server for tags pointing to objects that are already being
+    /// downloaded.
     case gitRemoteDownloadTagsAuto          = 1
     
     /// Do not ask for any tags beyond the refspecs.
@@ -332,7 +367,8 @@ public enum GitFetchDepthT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitFetchDepthT`` instance from a `git_fetch_depth_t` instance.
+    /// Creates a ``GitFetchDepthT`` instance from a `git_fetch_depth_t`
+    /// instance.
     /// - Parameter fetchDepth: The `git_fetch_depth_t` instance to use.
     internal init?(
         cValue fetchDepth: git_fetch_depth_t
@@ -348,7 +384,8 @@ public enum GitFetchDepthT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitFetchDepthT`` instance into a `git_fetch_depth_t` instance.
+    /// Converts the ``GitFetchDepthT`` instance into a `git_fetch_depth_t`
+    /// instance.
     /// - Returns: The `git_fetch_depth_t` instance.
     internal func cValue() -> git_fetch_depth_t
     {

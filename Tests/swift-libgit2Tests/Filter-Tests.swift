@@ -31,6 +31,12 @@ final class FilterTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitFilterFlagT.gitFilterAttributesFromHEAD.cValue(), GIT_FILTER_ATTRIBUTES_FROM_HEAD)
         XCTAssertEqual(GitFilterFlagT.gitFilterAttributesFromCommit.cValue(), GIT_FILTER_ATTRIBUTES_FROM_COMMIT)
         
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_DEFAULT).cValue(), GIT_FILTER_DEFAULT)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ALLOW_UNSAFE).cValue(), GIT_FILTER_ALLOW_UNSAFE)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_NO_SYSTEM_ATTRIBUTES).cValue(), GIT_FILTER_NO_SYSTEM_ATTRIBUTES)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ATTRIBUTES_FROM_HEAD).cValue(), GIT_FILTER_ATTRIBUTES_FROM_HEAD)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ATTRIBUTES_FROM_COMMIT).cValue(), GIT_FILTER_ATTRIBUTES_FROM_COMMIT)
+        
         
         
         let flags: GitFilterFlagT =
@@ -67,6 +73,13 @@ final class FilterTests: XCTestCaseStopOnFail
     
     
     
+    func testGitFilterListFree() throws
+    {
+        gitFilterListFree(filters: nil)
+    }
+    
+    
+    
     func testGitFilterListLoadAndContains() throws
     {
         try Repository.withRepository
@@ -78,8 +91,8 @@ final class FilterTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
-                Free.freeFilterList(filterListPointer)
+                gitBlobFree(blob: blobPointer)
+                gitFilterListFree(filters: filterListPointer)
             }
             
             
@@ -198,8 +211,6 @@ final class FilterTests: XCTestCaseStopOnFail
         XCTAssertNil(filterOptions.commitID)
         XCTAssertZeroOID(filterOptions.attrCommitID)
         
-        XCTAssertEqual(gitFilterOptionsVersion, UInt32(GIT_FILTER_OPTIONS_VERSION))
-        
         filterOptions.withCValue
         {
             cFilterOptions in
@@ -209,6 +220,13 @@ final class FilterTests: XCTestCaseStopOnFail
             XCTAssertNil(cFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cFilterOptions.pointee.attr_commit_id))
         }
+    }
+    
+    
+    
+    func testGitFilterOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitFilterOptionsVersion), GIT_FILTER_OPTIONS_VERSION)
     }
 }
 
@@ -234,10 +252,11 @@ extension FilterTests
     
     /// Creates a blob from the working directory of the given repository.
     /// - Parameters:
-    ///   - blobPointer: A pointer to the blob. The underlying type must be `git_blob`.
+    ///   - blobPointer: A pointer to the blob. The underlying type must be
+    ///   `git_blob`.
     ///   - repository: The repository in which to create the blob.
     /// - Returns: The `URL` of the created blob.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     @discardableResult
     private func createWorkingDirectoryBlob(
         _   blobPointer : UnsafeMutablePointer<OpaquePointer?>,
@@ -276,7 +295,7 @@ extension FilterTests
     
     /// Tests filter list application for the given type.
     /// - Parameter type: The type of filter list application to test.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     private func testGitFilterListApplyFlow(
         type: FilerListType
     ) throws
@@ -291,8 +310,8 @@ extension FilterTests
             
             defer
             {
-                Free.freeBlob(blobPointer)
-                Free.freeFilterList(filterListPointer)
+                gitBlobFree(blob: blobPointer)
+                gitFilterListFree(filters: filterListPointer)
                 XCTAssertOK(gitBufDispose(buffer: &buffer))
             }
             
@@ -368,7 +387,7 @@ extension FilterTests
     
     /// Tests filter list streaming for the given type.
     /// - Parameter type: The type of filter list streaming to test.
-    /// - Throws: An error if the file read or write operations failed.
+    /// - Throws: An error if an operation fails.
     private func testGitFilterListStreamFlow(
         type: FilerListType
     ) throws
@@ -383,8 +402,8 @@ extension FilterTests
             
             defer
             {
-                Free.freeBlob(blobPointer)
-                Free.freeFilterList(filterListPointer)
+                gitBlobFree(blob: blobPointer)
+                gitFilterListFree(filters: filterListPointer)
                 
                 if let free: (UnsafeMutablePointer<git_writestream>?) -> Void
                     = streamPointer?.pointee.free
@@ -423,15 +442,17 @@ extension FilterTests
             
             
             
-            let blobCreateFromStreamResult: GitErrorCode = gitBlobCreateFromStream(
-                out:        &streamPointer,
-                repo:       repository.pointer,
-                hintPath:   nil
-            )
+            let blobCreateFromStreamResult: GitErrorCode
+                = gitBlobCreateFromStream(
+                    out:        &streamPointer,
+                    repo:       repository.pointer,
+                    hintPath:   nil
+                )
             
             XCTAssertOK(blobCreateFromStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_writestream> = streamPointer
+            guard let streamPointer: UnsafeMutablePointer<git_writestream>
+                    = streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")

@@ -30,19 +30,19 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// default checkout options.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the default checkout options.
     public var checkoutOpts         : GitCheckoutOptions?       = nil
     
     /// The options for the fetch operation, including callbacks.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// default fetch options.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the default fetch options.
     ///
-    /// The callbacks are used for reporting fetch progress and for acquiring credentials in the event
-    /// that they are needed.
+    /// The callbacks are used for reporting fetch progress and for acquiring
+    ///  credentials in the event that they are needed.
     public var fetchOpts            : GitFetchOptions?          = nil
     
     /// Whether a bare repository should be created.
@@ -63,16 +63,17 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// remote's default branch.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the remote's default branch.
     public var checkoutBranch       : String?                   = nil
     
     /// A callback used to create the new repository into which to clone.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using ``bare``
-    /// property to determine whether to create a bare repository.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using ``bare`` property to determine whether to create a
+    /// bare repository.
     public var repositoryCB         : GitRepositoryCreateCB?    = nil
     
     /// The caller-specified payload passed to ``repositoryCB``.
@@ -84,7 +85,8 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     /// This property will be ignored unless ``repositoryCB`` is not `nil`.
     public var repositoryCBPayload  : UnsafeMutableRawPointer?  = nil
     
-    /// A callback used to create the remote, prior to its being used to perform the clone operation.
+    /// A callback used to create the remote, prior to its being used to
+    /// perform the clone operation.
     ///
     /// ## Discussion
     ///
@@ -111,7 +113,8 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCloneOptions`` instance from a `git_clone_options` instance.
+    /// Creates a ``GitCloneOptions`` instance from a `git_clone_options`
+    /// instance.
     /// - Parameter cloneOptions: The `git_clone_options` instance to use.
     internal init(
         cValue cloneOptions: git_clone_options
@@ -131,10 +134,11 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_clone_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_clone_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_clone_options>) throws -> T
     ) throws -> T
@@ -168,7 +172,8 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
             {
                 cCheckoutOpts in
                 
-                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options> = cCheckoutOpts
+                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options>
+                    = cCheckoutOpts
                 {
                     cloneOptions.checkout_opts = cCheckoutOpts.pointee
                 }
@@ -177,7 +182,8 @@ public struct GitCloneOptions: GitStructMutable, WithCConvertible
                 {
                     cFetchOpts in
                     
-                    if let cFetchOpts: UnsafeMutablePointer<git_fetch_options> = cFetchOpts
+                    if let cFetchOpts: UnsafeMutablePointer<git_fetch_options>
+                        = cFetchOpts
                     {
                         cloneOptions.fetch_opts = cFetchOpts.pointee
                     }

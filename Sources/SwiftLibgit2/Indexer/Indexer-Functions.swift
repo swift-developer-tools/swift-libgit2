@@ -20,8 +20,9 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_indexer_options` instances.
-/// ``GitIndexerOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_indexer_options` instances. ``GitIndexerOptions`` instances do not
+/// need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -44,17 +45,21 @@ public func gitIndexerOptionsInit(
 
 /// Creates a new indexer.
 /// - Parameters:
-///   - out: The pointer in which to store the indexer. The underlying type must be `git_indexer`.
+///   - out: The pointer in which to store the indexer. The underlying type
+///   must be `git_indexer`.
 ///   - path: The path to the directory in which the packfile should be stored.
-///   - mode: The permissions to use when creating the packfile. Pass `0` for the default permissions.
-///   - odb: The object database from which to read objects when fixing thin packs. The underlying type
-///   must be `git_odb`. Pass `nil` if no thin packs are expected.
+///   - mode: The permissions to use when creating the packfile. Pass `0` for
+///   the default permissions.
+///   - odb: The object database from which to read objects when fixing thin
+///   packs. The underlying type must be `git_odb`. Pass `nil` if no thin packs
+///   are expected.
 ///   - opts: The indexer options.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// If `odb` is `nil` and there are missing bases, this function will return an error code.
+/// If `odb` is `nil` and there are missing bases, this function will return
+/// an error code.
 ///
 /// ## C Equivalent
 ///
@@ -167,16 +172,17 @@ public func gitIndexerCommit(
 
 
 /// Gets the hash of the given packfile.
-/// - Parameter idx: The indexer to use. The underlying type must be `git_indexer`.
+/// - Parameter idx: The indexer to use. The underlying type must be
+/// `git_indexer`.
 /// - Returns: The hash of the given packfile.
 ///
 /// ## Discussion
 ///
-/// The hash of a packfile is derived from the sorted hashing of all object names. This hash will be
-/// correct only after the index has been finalized.
+/// The hash of a packfile is derived from the sorted hashing of all object
+/// names. This hash will be correct only after the index has been finalized.
 ///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next major release.
-/// Use ``gitIndexerName(idx:)`` instead.
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``gitIndexerName(idx:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -191,13 +197,14 @@ public func gitIndexerHash(
 
 
 /// Gets the unique name of the given packfile.
-/// - Parameter idx: The indexer to use. The underlying type must be `git_indexer`.
+/// - Parameter idx: The indexer to use. The underlying type must be
+/// `git_indexer`.
 /// - Returns: The unique name of the given packfile.
 ///
 /// ## Discussion
 ///
-/// The name of a packfile is derived from the packfile's content. This name will be correct only after the
-/// index has been finalized.
+/// The name of a packfile is derived from the packfile's content. This name
+/// will be correct only after the index has been finalized.
 ///
 /// ## C Equivalent
 ///
@@ -212,7 +219,8 @@ public func gitIndexerName(
 
 
 /// Frees the memory allocated for the given `git_indexer` instance.
-/// - Parameter idx: The indexer to free. The underlying type must be `git_indexer`.
+/// - Parameter idx: The indexer to free. The underlying type must be
+/// `git_indexer`.
 ///
 /// ## C Equivalent
 ///
@@ -221,5 +229,11 @@ public func gitIndexerFree(
     idx: OpaquePointer?
 )
 {
+    guard let idx: OpaquePointer = idx
+    else
+    {
+        return
+    }
+    
     git_indexer_free(idx)
 }

@@ -13,18 +13,21 @@ import CLibgit2
 
 /// Adds internal ignore rules in the given repository.
 /// - Parameters:
-///   - repo: The repository to which the ignore rules should be added. The underlying type must be
-///   `git_repository`.
-///   - rules: The text of rules to add, with each rule terminated by a newline character.
+///   - repo: The repository to which the ignore rules should be added. The
+///   underlying type must be `git_repository`.
+///   - rules: The text of rules to add, with each rule terminated by a
+///   newline character.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// The `excludesfile` rules are generally read from `.gitignore` files in the repository tree or
-/// from a shared system file only if a `core.excludesfile` configuration value is set.
+/// The `excludesfile` rules are generally read from `.gitignore` files in the
+/// repository tree or from a shared system file only if a `core.excludesfile`
+/// configuration value is set.
 ///
-/// This function may be used to add rules to a set of per-repository internal ignore rules maintained by
-/// libgit2. These rules can be configured in memory and will not persist across sessions.
+/// This function may be used to add rules to a set of per-repository internal
+/// ignore rules maintained by libgit2. These rules can be configured in memory
+/// and will not persist across sessions.
 ///
 /// ## C Equivalent
 ///
@@ -46,13 +49,14 @@ public func gitIgnoreAddRule(
 
 
 /// Resets the internal ignore list.
-/// - Parameter repo: The repository from which to remove explicitly-added rules. The underlying
-/// type must be `git_repository`.
+/// - Parameter repo: The repository from which to remove explicitly-added
+/// rules. The underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// The default internal ignore list includes the current directory ("."), the parent directory (".."), and `.git`.
+/// The default internal ignore list includes the current directory ("."),
+/// the parent directory (".."), and `.git`.
 ///
 /// ## C Equivalent
 ///
@@ -72,14 +76,15 @@ public func gitIgnoreClearInternalRules(
 /// Checks whether the given path is (or would be) ignored.
 /// - Parameters:
 ///   - ignored: The pointer in which to store the resulting boolean.
-///   - repo: The repository containing the path. The underlying type must be `git_repository`.
+///   - repo: The repository containing the path. The underlying type must be
+///   `git_repository`.
 ///   - path: The path to the file to check, relative to the working directory.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// The value stored in `ignored` indicates whether the given path would be ignored regardless of
-/// whether the file is already committed or in the index.
+/// The value stored in `ignored` indicates whether the given path would be
+/// ignored regardless of whether the file is already committed or in the index.
 ///
 /// This is similar to `git check-ignore --no-index`.
 ///

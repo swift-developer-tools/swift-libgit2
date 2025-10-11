@@ -16,11 +16,12 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_strarray` instances allocated by
-/// libgit2. ``GitStrArray`` instances do not need to be freed.
+/// This function does not free the `git_strarray` itself, since libgit2 will
+/// never allocate that object directly.
 ///
-/// This function does not free the `git_strarray` itself, since libgit2 will never allocate that object
-/// directly.
+/// - Note: This function is only needed when working directly with
+/// `git_strarray` instances allocated by libgit2. ``GitStrArray`` instances
+/// do not need to be freed.
 ///
 /// ## C Equivalent
 ///
@@ -29,5 +30,11 @@ public func gitStrArrayDispose(
     array: UnsafeMutablePointer<git_strarray>?
 )
 {
+    guard let array: UnsafeMutablePointer<git_strarray> = array
+    else
+    {
+        return
+    }
+    
     git_strarray_dispose(array)
 }

@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_CHERRYPICK_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/cherrypick/GIT_CHERRYPICK_OPTIONS_VERSION.html)
-public let gitCherrypickOptionsVersion: UInt32 = UInt32(GIT_CHERRYPICK_OPTIONS_VERSION)
+public let gitCherrypickOptionsVersion: UInt32 = 1

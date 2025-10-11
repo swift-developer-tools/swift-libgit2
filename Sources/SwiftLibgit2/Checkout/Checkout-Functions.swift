@@ -19,8 +19,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_checkout_options` instances.
-/// ``GitCheckoutOptions`` instances do not need to be initialized this way.
+/// - Note: This function is only needed when working directly with
+/// `git_checkout_options` instances. ``GitCheckoutOptions`` instances do not
+/// need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -42,19 +43,19 @@ public func gitCheckoutOptionsInit(
 
 
 // TODO: Replace `git_repository_set_head()` in documentation.
-/// Updates files in the index and in the working tree to match the contenet of the commit
-/// pointed at by HEAD.
+/// Updates files in the index and in the working tree to match the conent of
+/// the commit pointed at by HEAD.
 /// - Parameters:
-///   - repo: The repository to check out. The underlying type must be `git_repository`.
-///   This repository may not be bare.
+///   - repo: The repository to check out. The underlying type must be
+///   `git_repository`. This repository may not be bare.
 ///   - opts: The options for the checkout operation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This function is not the correct mechanism to switch between branches. Changing HEAD and then
-/// calling this function, would cause checkout conflicts since the working directory would then appear
-/// to be dirty.
+/// This function is not the correct mechanism to switch between branches.
+/// Changing HEAD and then calling this function, would cause checkout
+/// conflicts since the working directory would then appear to be dirty.
 ///
 /// Instead, checkout the target of the branch and then update HEAD using
 /// `git_repository_set_head()` to point to the checked-out branch.
@@ -85,8 +86,8 @@ public func gitCheckoutHEAD(
 
 /// Updates files in the working tree to match the index.
 /// - Parameters:
-///   - repo: The repository to check out. The underlying type must be `git_repository`.
-///   This repository may not be bare.
+///   - repo: The repository to check out. The underlying type must be
+///   `git_repository`. This repository may not be bare.
 ///   - index: The index to check out. The underlying type must be `git_index`.
 ///   Pass `nil` to use the repository index.
 ///   - opts: The options for the checkout operation.
@@ -118,13 +119,14 @@ public func gitCheckoutIndex(
 
 
 
-/// Updates files in the index and working tree to match the content of the tree pointed at by the
-/// given tree-ish object.
+/// Updates files in the index and working tree to match the content of the
+/// tree pointed at by the given tree-ish object.
 /// - Parameters:
-///   - repo: The repository to check out. The underlying type must be `git_repository`.
-///   This repository may not be bare.
-///   - treeish: The commit, tag, or tree whose content will be used to update the working
-///   directory. The underlying type must be `git_object`. Pass `nil` to use HEAD.
+///   - repo: The repository to check out. The underlying type must be
+///   `git_repository`. This repository may not be bare.
+///   - treeish: The commit, tag, or tree whose content will be used to update
+///   the working directory. The underlying type must be `git_object`. Pass
+///   `nil` to use HEAD.
 ///   - opts: The options for the checkout operation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

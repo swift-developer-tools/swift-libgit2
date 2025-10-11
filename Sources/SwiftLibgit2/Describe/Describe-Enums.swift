@@ -41,9 +41,10 @@ public enum GitDescribeStrategyT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDescribeStrategyT`` instance from a `git_describe_strategy_t`
-    /// instance.
-    /// - Parameter describeStrategy: The `git_describe_strategy_t` instance to use.
+    /// Creates a ``GitDescribeStrategyT`` instance from a
+    /// `git_describe_strategy_t` instance.
+    /// - Parameter describeStrategy: The `git_describe_strategy_t` instance
+    /// to use.
     internal init?(
         cValue describeStrategy: git_describe_strategy_t
     )
@@ -66,11 +67,13 @@ public enum GitDescribeStrategyT: UInt32, GitEnum
     /// ## Discussion
     ///
     /// This method is necessary since `git_describe_options->describe_strategy`
-    /// does not use the `git_describe_strategy_t` type, but uses `unsigned int` instead.
+    /// does not use the `git_describe_strategy_t` type, but uses `unsigned int`
+    /// instead.
     ///
-    /// This is a factory method  instead of an initializer since `init(rawValue:)` matches a
-    /// requirement in the public `RawRepresentable` protocol, and the initializer would need to be
-    /// public as well. ``GitEnum`` initializers are required to be internal.
+    /// This is a factory method  instead of an initializer since
+    /// `init(rawValue:)` matches a requirement in the public `RawRepresentable`
+    /// protocol, and the initializer would need to be public as well.
+    /// ``GitEnum`` initializers are required to be internal.
     internal static func makeStrategy(
         rawValue: UInt32
     ) -> GitDescribeStrategyT?
@@ -86,8 +89,8 @@ public enum GitDescribeStrategyT: UInt32, GitEnum
     
     
     
-    /// Converts the ``GitDescribeStrategyT`` instance into a `git_describe_strategy_t`
-    /// instance.
+    /// Converts the ``GitDescribeStrategyT`` instance into a
+    /// `git_describe_strategy_t` instance.
     /// - Returns: The `git_describe_strategy_t` instance.
     internal func cValue() -> git_describe_strategy_t
     {

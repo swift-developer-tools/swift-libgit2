@@ -21,7 +21,7 @@ final class CredentialHelpersTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeCredential(credentialPointer)
+            gitCredentialFree(cred: credentialPointer)
         }
         
         

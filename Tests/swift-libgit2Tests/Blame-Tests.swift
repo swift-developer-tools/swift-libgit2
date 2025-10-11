@@ -26,8 +26,8 @@ final class BlameTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlame(baseBlamePointer)
-                Free.freeBlame(bufferBlamePointer)
+                gitBlameFree(blame: baseBlamePointer)
+                gitBlameFree(blame: bufferBlamePointer)
             }
             
             
@@ -76,7 +76,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlame(blamePointer)
+                gitBlameFree(blame: blamePointer)
             }
             
             
@@ -214,6 +214,15 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitBlameFlagT.gitBlameUseMailmap.cValue(), GIT_BLAME_USE_MAILMAP)
         XCTAssertEqual(GitBlameFlagT.gitBlameIgnoreWhitespace.cValue(), GIT_BLAME_IGNORE_WHITESPACE)
         
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_NORMAL).cValue(), GIT_BLAME_NORMAL)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_TRACK_COPIES_SAME_FILE).cValue(), GIT_BLAME_TRACK_COPIES_SAME_FILE)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_TRACK_COPIES_SAME_COMMIT_MOVES).cValue(), GIT_BLAME_TRACK_COPIES_SAME_COMMIT_MOVES)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_TRACK_COPIES_SAME_COMMIT_COPIES).cValue(), GIT_BLAME_TRACK_COPIES_SAME_COMMIT_COPIES)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_TRACK_COPIES_ANY_COMMIT_COPIES).cValue(), GIT_BLAME_TRACK_COPIES_ANY_COMMIT_COPIES)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_FIRST_PARENT).cValue(), GIT_BLAME_FIRST_PARENT)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_USE_MAILMAP).cValue(), GIT_BLAME_USE_MAILMAP)
+        XCTAssertEqual(GitBlameFlagT(cValue: GIT_BLAME_IGNORE_WHITESPACE).cValue(), GIT_BLAME_IGNORE_WHITESPACE)
+        
         
         
         let flags: GitBlameFlagT =
@@ -225,6 +234,13 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertTrue(flags.contains(.gitBlameUseMailmap))
         XCTAssertTrue(flags.contains(.gitBlameIgnoreWhitespace))
         XCTAssertFalse(flags.contains(.gitBlameTrackCopiesSameFile))
+    }
+    
+    
+    
+    func testGitBlameFree() throws
+    {
+        gitBlameFree(blame: nil)
     }
     
     
@@ -259,8 +275,6 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertEqual(blameOptions.minLine, 1)
         XCTAssertNil(blameOptions.maxLine)
         
-        XCTAssertEqual(gitBlameOptionsVersion, UInt32(GIT_BLAME_OPTIONS_VERSION))
-        
         try blameOptions.withCValue
         {
             cBlameOptions in
@@ -273,5 +287,26 @@ final class BlameTests: XCTestCaseStopOnFail
             XCTAssertEqual(cBlameOptions.pointee.min_line, 1)
             XCTAssertNotNil(cBlameOptions.pointee.max_line)
         }
+    }
+    
+    
+    
+    func testGitBlameOptionsInit() throws
+    {
+        var blameOptions = git_blame_options()
+        
+        let blameOptionsInitResult: GitErrorCode = gitBlameOptionsInit(
+            opts:       &blameOptions,
+            version:    gitBlameOptionsVersion
+        )
+        
+        XCTAssertOK(blameOptionsInitResult)
+    }
+    
+    
+    
+    func testGitBlameOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitBlameOptionsVersion), GIT_BLAME_OPTIONS_VERSION)
     }
 }

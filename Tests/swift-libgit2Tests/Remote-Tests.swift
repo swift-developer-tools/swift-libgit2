@@ -29,8 +29,6 @@ final class RemoteTests: XCTestCaseStopOnFail
         XCTAssertEqual(fetchOptions.followRedirects, .gitRemoteRedirectNone)
         XCTAssertEqual(fetchOptions.customHeaders, [])
         
-        XCTAssertEqual(gitFetchOptionsVersion, UInt32(GIT_FETCH_OPTIONS_VERSION))
-        
         try fetchOptions.withCValue
         {
             cFetchOptions in
@@ -45,6 +43,34 @@ final class RemoteTests: XCTestCaseStopOnFail
             XCTAssertEqual(GitRemoteRedirectT(cValue: cFetchOptions.pointee.follow_redirects), .gitRemoteRedirectNone)
             XCTAssertEqual(Array(cFetchOptions.pointee.custom_headers), [])
         }
+    }
+    
+    
+    
+    func testGitFetchOptionsInit() throws
+    {
+        var fetchOptions = git_fetch_options()
+        
+        let fetchOptionsInitResult: GitErrorCode = gitFetchOptionsInit(
+            opts:       &fetchOptions,
+            version:    gitFetchOptionsVersion
+        )
+        
+        XCTAssertOK(fetchOptionsInitResult)
+    }
+    
+    
+    
+    func testGitFetchOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitFetchOptionsVersion), GIT_FETCH_OPTIONS_VERSION)
+    }
+    
+    
+    
+    func testGitPushOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitPushOptionsVersion), GIT_PUSH_OPTIONS_VERSION)
     }
     
     
@@ -88,6 +114,27 @@ final class RemoteTests: XCTestCaseStopOnFail
         XCTAssertNil(cRemoteCallbacks.payload)
         XCTAssertNil(cRemoteCallbacks.resolve_url)
         XCTAssertNil(cRemoteCallbacks.update_refs)
+    }
+    
+    
+    
+    func testGitRemoteCallbacksVersion() throws
+    {
+        XCTAssertEqual(Int32(gitRemoteCallbacksVersion), GIT_REMOTE_CALLBACKS_VERSION)
+    }
+    
+    
+    
+    func testGitRemoteConnectOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitRemoteConnectOptionsVersion), GIT_REMOTE_CONNECT_OPTIONS_VERSION)
+    }
+    
+    
+    
+    func testGitRemoteCreateOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitRemoteCreateOptionsVersion), GIT_REMOTE_CREATE_OPTIONS_VERSION)
     }
 }
 

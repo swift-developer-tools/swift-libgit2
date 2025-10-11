@@ -20,6 +20,10 @@ import Foundation
 public struct GitOID: GitStructInternalMutable, CConvertible
 {
     /// The raw binary-formatted ID.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is a `Data` instance with a `count` of 20 bytes.
     public private(set) var id: Data = Data(count: Self.size)
     
     /// The size of a Git OID in bytes.
@@ -27,7 +31,11 @@ public struct GitOID: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitOID`` instance.
+    /// Creates a ``GitOID`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     

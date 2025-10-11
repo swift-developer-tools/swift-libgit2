@@ -21,6 +21,8 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitEmailCreateFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,19 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitEmailCreateFlagsT`` instance from a
+    /// `git_email_create_flags_t` instance.
+    /// - Parameter emailCreateFlags: The `git_email_create_flags_t` instance
+    /// to use.
+    internal init(
+        cValue emailCreateFlags: git_email_create_flags_t
+    )
+    {
+        self.rawValue = emailCreateFlags.rawValue
     }
     
     
@@ -42,7 +57,8 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     /// Do not include patch numbers in the subject prefix.
     public static let gitEmailCreateOmitNumbers     = GitEmailCreateFlagsT(rawValue: GIT_EMAIL_CREATE_OMIT_NUMBERS.rawValue)
     
-    /// Include numbers in the subject prefix, even when the patch is for a single commit.
+    /// Include numbers in the subject prefix, even when the patch is for
+    /// a single commit.
     public static let gitEmailCreateAlwaysNumber    = GitEmailCreateFlagsT(rawValue: GIT_EMAIL_CREATE_ALWAYS_NUMBER.rawValue)
     
     /// Do not perform rename or similarity detection.
@@ -50,8 +66,8 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     
     
     
-    /// Converts the ``GitEmailCreateFlagsT`` instance into a `git_email_create_flags_t`
-    /// instance.
+    /// Converts the ``GitEmailCreateFlagsT`` instance into a
+    /// `git_email_create_flags_t` instance.
     /// - Returns: The `git_email_create_flags_t` instance.
     internal func cValue() -> git_email_create_flags_t
     {

@@ -21,6 +21,8 @@ public struct GitIndexEntryFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitIndexEntryFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +30,19 @@ public struct GitIndexEntryFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitIndexEntryFlagT`` instance from a
+    /// `git_index_entry_flag_t` instance.
+    /// - Parameter indexEntryFlag: The `git_index_entry_flag_t` instance to
+    /// use.
+    internal init(
+        cValue indexEntryFlag: git_index_entry_flag_t
+    )
+    {
+        self.rawValue = indexEntryFlag.rawValue
     }
     
     
@@ -40,8 +55,8 @@ public struct GitIndexEntryFlagT: GitOptionSet
     
     
     
-    /// Converts the ``GitIndexEntryFlagT`` instance into a `git_index_entry_flag_t`
-    /// instance.
+    /// Converts the ``GitIndexEntryFlagT`` instance into a
+    /// `git_index_entry_flag_t` instance.
     /// - Returns: The `git_index_entry_flag_t` instance.
     internal func cValue() -> git_index_entry_flag_t
     {
@@ -55,12 +70,13 @@ public struct GitIndexEntryFlagT: GitOptionSet
 ///
 /// ## Discussion
 ///
-/// The ``GitIndexEntry/flagsExtended`` property contains flags that are persisted to the disk,
-/// and flags that exist only in memory for libgit2's internal use.
+/// The ``GitIndexEntry/flagsExtended`` property contains flags that are
+/// persisted to the disk, and flags that exist only in memory for libgit2's
+/// internal use.
 ///
-/// ``gitIndexEntryIntentToAdd`` and ``gitIndexEntrySkipWorktree`` are persisted to
-/// the disk. ``gitIndexEntryExtendedFlags`` is a combined mask of these two flags.
-/// ``gitIndexEntryUpToDate`` is used only in-memory.
+/// ``gitIndexEntryIntentToAdd`` and ``gitIndexEntrySkipWorktree`` are
+/// persisted to the disk. ``gitIndexEntryExtendedFlags`` is a combined mask
+/// of these two flags. ``gitIndexEntryUpToDate`` is used only in-memory.
 ///
 /// ## C Equivalent
 ///
@@ -70,6 +86,8 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -77,6 +95,19 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a
+    /// `git_index_entry_extended_flag_t` instance.
+    /// - Parameter indexEntryExtendedFlag: The
+    /// `git_index_entry_extended_flag_t` instance to use.
+    internal init(
+        cValue indexEntryExtendedFlag: git_index_entry_extended_flag_t
+    )
+    {
+        self.rawValue = indexEntryExtendedFlag.rawValue
     }
     
     
@@ -127,9 +158,10 @@ public enum GitIndexCapabilityT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitIndexCapabilityT`` instance from a `git_index_capability_t`
-    /// instance.
-    /// - Parameter indexCapability: The `git_index_capability_t` instance to use.
+    /// Creates a ``GitIndexCapabilityT`` instance from a
+    /// `git_index_capability_t` instance.
+    /// - Parameter indexCapability: The `git_index_capability_t` instance to
+    /// use.
     internal init?(
         cValue indexCapability: git_index_capability_t
     )
@@ -146,8 +178,8 @@ public enum GitIndexCapabilityT: Int32, GitEnum
     
     
     
-    /// Converts the ``GitIndexCapabilityT`` instance into a `git_index_capability_t`
-    /// instance.
+    /// Converts the ``GitIndexCapabilityT`` instance into a
+    /// `git_index_capability_t` instance.
     /// - Returns: The `git_index_capability_t` instance.
     internal func cValue() -> git_index_capability_t
     {
@@ -173,6 +205,8 @@ public struct GitIndexAddOptionT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitIndexAddOptionT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -180,6 +214,19 @@ public struct GitIndexAddOptionT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitIndexAddOptionT`` instance from a
+    /// `git_index_add_option_t` instance.
+    /// - Parameter indexAddOption: The `git_index_add_option_t` instance to
+    /// use.
+    internal init(
+        cValue indexAddOption: git_index_add_option_t
+    )
+    {
+        self.rawValue = indexAddOption.rawValue
     }
     
     
@@ -197,13 +244,14 @@ public struct GitIndexAddOptionT: GitOptionSet
     /// Disable pathspec matching.
     public static let gitIndexAddDisablePatchspecMatch  = GitIndexAddOptionT(rawValue: GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH.rawValue)
     
-    /// Check that each pathspec entry either matches a file or is already in the index.
+    /// Check that each pathspec entry either matches a file or is already
+    /// in the index.
     public static let gitIndexAddCheckPathspec          = GitIndexAddOptionT(rawValue: GIT_INDEX_ADD_CHECK_PATHSPEC.rawValue)
     
     
     
-    /// Converts the ``GitIndexAddOptionT`` instance into a `git_index_add_option_t`
-    /// instance.
+    /// Converts the ``GitIndexAddOptionT`` instance into a
+    /// `git_index_add_option_t` instance.
     /// - Returns: The `git_index_add_option_t` instance.
     internal func cValue() -> git_index_add_option_t
     {
@@ -237,7 +285,8 @@ public enum GitIndexStageT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitIndexStageT`` instance from a `git_index_stage_t` instance.
+    /// Creates a ``GitIndexStageT`` instance from a `git_index_stage_t`
+    /// instance.
     /// - Parameter indexStage: The `git_index_stage_t` instance to use.
     internal init?(
         cValue indexStage: git_index_stage_t
@@ -256,7 +305,8 @@ public enum GitIndexStageT: Int32, GitEnum
     
     
     
-    /// Converts the ``GitIndexStageT`` instance into a `git_index_stage_t` instance.
+    /// Converts the ``GitIndexStageT`` instance into a `git_index_stage_t`
+    /// instance.
     /// - Returns: The `git_index_stage_t` instance.
     internal func cValue() -> git_index_stage_t
     {

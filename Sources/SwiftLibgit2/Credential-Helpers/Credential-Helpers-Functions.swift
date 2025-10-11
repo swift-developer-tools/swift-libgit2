@@ -22,9 +22,10 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This is a stock implementation of the ``GitCredentialAcquireCB`` callback, and will call
-/// ``gitCredentialUserPassPlaintextNew(out:username:password:)``, unless
-/// ``GitCredentialT/gitCredentialUserPassPlaintext`` is not an allowed type.
+/// This is a stock implementation of the ``GitCredentialAcquireCB`` callback,
+/// and will call ``gitCredentialUserPassPlaintextNew(out:username:password:)``,
+/// unless ``GitCredentialT/gitCredentialUserPassPlaintext`` is not an allowed
+/// type.
 ///
 /// ## C Equivalent
 ///

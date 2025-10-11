@@ -13,19 +13,22 @@ import CLibgit2
 
 /// Counts the number of unique commits between the given commits.
 /// - Parameters:
-///   - ahead: The pointer in which to store the number of unique commits in `upstream`.
-///   - behind: The pointer in which to store the number of unique commits in `local`.
-///   - repo: The repository containing the given commits. The underlying type must be
-///   `git_repository`.
+///   - ahead: The pointer in which to store the number of unique commits in
+///   `upstream`.
+///   - behind: The pointer in which to store the number of unique commits in
+///   `local`.
+///   - repo: The repository containing the given commits. The underlying type
+///   must be `git_repository`.
 ///   - local: The ID of the local commit.
 ///   - upstream: The ID of the upstream commit.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// There is no need for the branches containing the commits to have any upstream relationship, but it
-/// helps to think of one as a branch and the other as its upstream. The ahead and behind values will be
-/// what Git would report for the branches in such a scenario.
+/// There is no need for the branches containing the commits to have any
+/// upstream relationship, but it helps to think of one as a branch and the
+/// other as its upstream. The ahead and behind values will be what Git would
+/// report for the branches in such a scenario.
 ///
 /// ## C Equivalent
 ///
@@ -55,19 +58,20 @@ public func gitGraphAheadBehind(
 
 
 
-/// Checks whether the given commit is the descendant of the given ancestor commit.
+/// Checks whether the given commit is the descendant of the given ancestor
+/// commit.
 /// - Parameters:
-///   - repo: The repository containing the given commits. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given commits. The underlying type
+///   must be `git_repository`.
 ///   - commit: The ID of the commit to evaluate.
 ///   - ancestor: The ID of the ancestor commit.
-/// - Returns: Whether the given commit is the descendant of the given ancestor commit, or `nil`
-/// if there was an error.
+/// - Returns: Whether the given commit is the descendant of the given ancestor
+/// commit, or `nil` if there was an error.
 ///
 /// ## Discussion
 ///
-/// In contrast to `git merge-base --is-ancestor`, this function does not consider a commit
-/// to be a descendant of itself.
+/// In contrast to `git merge-base --is-ancestor`, this function does not
+/// consider a commit to be a descendant of itself.
 ///
 /// ## C Equivalent
 ///
@@ -97,15 +101,16 @@ public func gitGraphDescendantOf(
 
 
 
-/// Checks whether the given commit is reachable from any of the given commits, by following parent edges.
+/// Checks whether the given commit is reachable from any of the given commits,
+/// by following parent edges.
 /// - Parameters:
-///   - repo: The repository containing the given commits. The underlying type must be
-///   `git_repository`.
+///   - repo: The repository containing the given commits. The underlying type
+///   must be `git_repository`.
 ///   - commit: The ID of the commit to evaluate.
 ///   - descendantArray: The IDs of the potential descendant commits.
 ///   - length: The length of `descendantArray`.
-/// - Returns: Whether the given commit is reachable from any of the given commits, or `nil`
-/// if there was an error.
+/// - Returns: Whether the given commit is reachable from any of the given
+/// commits, or `nil` if there was an error.
 ///
 /// ## C Equivalent
 ///

@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_INDEX_ENTRY_NAMEMASK`](https://libgit2.org/docs/reference/main/index/GIT_INDEX_ENTRY_NAMEMASK.html)
-public let gitIndexEntryNameMask: Int32 = GIT_INDEX_ENTRY_NAMEMASK
+public let gitIndexEntryNameMask: UInt32 = 0x0fff
 
 
 
@@ -25,7 +25,7 @@ public let gitIndexEntryNameMask: Int32 = GIT_INDEX_ENTRY_NAMEMASK
 /// ## C Equivalent
 ///
 /// [`GIT_INDEX_ENTRY_STAGEMASK`](https://libgit2.org/docs/reference/main/index/GIT_INDEX_ENTRY_STAGEMASK.html)
-public let gitIndexEntryStageMask: Int32 = GIT_INDEX_ENTRY_STAGEMASK
+public let gitIndexEntryStageMask: UInt32 = 0x3000
 
 
 
@@ -34,7 +34,7 @@ public let gitIndexEntryStageMask: Int32 = GIT_INDEX_ENTRY_STAGEMASK
 /// ## C Equivalent
 ///
 /// [`GIT_INDEX_ENTRY_STAGESHIFT`](https://libgit2.org/docs/reference/main/index/GIT_INDEX_ENTRY_STAGESHIFT.html)
-public let gitIndexEntryStageShift: Int32 = GIT_INDEX_ENTRY_STAGESHIFT
+public let gitIndexEntryStageShift: Int32 = 12
 
 
 
@@ -45,8 +45,8 @@ public let gitIndexEntryStageShift: Int32 = GIT_INDEX_ENTRY_STAGESHIFT
 ///
 /// ## Discussion
 ///
-/// If `stage` is ``GitIndexStageT/gitIndexStageAny``, this function returns without
-/// modifying the given index entry.
+/// If `stage` is ``GitIndexStageT/gitIndexStageAny``, this function returns
+/// without modifying the given index entry.
 ///
 /// ## C Equivalent
 ///
@@ -62,11 +62,12 @@ public func gitIndexEntryStageSet(
         return
     }
     
-    /// Clear the existing stage bits (positions 12-13), while preserving the other bits.
-    let clearedFlags: UInt32 = entry.flags.rawValue & ~UInt32(gitIndexEntryStageMask)
+    /// Clear the existing stage bits (positions 12-13), while preserving
+    /// the other bits.
+    let clearedFlags: UInt32 = entry.flags.rawValue & ~gitIndexEntryStageMask
     
     /// Use only the last two bits of `stage` and shift to positions 12-13.
-    let stageMasked: UInt32 = UInt32(stage.rawValue & 0x03) << gitIndexEntryStageShift
+    let stageMasked = UInt32(stage.rawValue & 0x03) << gitIndexEntryStageShift
     
     entry.flags = GitIndexEntryFlagT(rawValue: clearedFlags | stageMasked)
 }

@@ -16,28 +16,41 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_signature`](https://libgit2.org/docs/reference/main/signature/git_signature.html)
-public struct GitSignature: GitStructInternalMutable, WithCConvertible
+public struct GitSignature: Freeable, GitStructInternalMutable, WithCConvertible
 {
     /// The full name of the actor.
     ///
     /// ## Discussion
     ///
-    /// Angle brackets (`<` and `>`) are not allowed.
+    /// The default value is an empty string.
+    ///
+    /// - Note: Angle brackets (`<` and `>`) are not allowed.
     public private(set) var name    : String = ""
     
     /// The email of the actor.
     ///
     /// ## Discussion
     ///
-    /// Angle brackets (`<` and `>`) are not allowed.
+    /// The default value is an empty string.
+    ///
+    /// - Note: Angle brackets (`<` and `>`) are not allowed.
     public private(set) var email   : String = ""
     
     /// The time when the action happened.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is a ``GitTime`` instance with the default
+    /// configuration.
     public private(set) var when    : GitTime = GitTime(cValue: git_time())
     
     
     
-    /// Creates a ``GitSignature`` instance.
+    /// Creates a ``GitSignature`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     
@@ -47,10 +60,10 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default values of ``name`` and ``email`` are empty strings instead of `nil`
-    /// to ensure validation failures, since Git requires non-empty identity information.
-    /// Generally, neither of these should ever be `nil` when initializing from a `git_signature`
-    /// returned by libgit2.
+    /// The default values of ``name`` and ``email`` are empty strings instead
+    /// of `nil` to ensure validation failures, since Git requires non-empty
+    /// identity information. Generally, neither of these should ever be `nil`
+    /// when initializing from a `git_signature` returned by libgit2.
     internal init(
         cValue signature: git_signature
     )
@@ -62,13 +75,25 @@ public struct GitSignature: GitStructInternalMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_signature` instance.
+    /// Frees the memory allocated for the C value.
+    /// - Parameter pointer: The pointer to the memory to free.
+    internal static func freeCValue(
+        _ pointer: P
+    )
+    {
+        gitSignatureFree(sig: pointer)
+    }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to a `git_signature`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_signature>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var signature = git_signature()
         

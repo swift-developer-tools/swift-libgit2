@@ -7,6 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -14,18 +15,30 @@ import XCTest
 
 final class StrArrayTests: XCTestCaseStopOnFail
 {
-    func testGitStrArray() throws
+    func testGitStrArrayDispose() throws
+    {
+        var strArray = git_strarray()
+        
+        gitStrArrayDispose(array: &strArray)
+        gitStrArrayDispose(array: &strArray)
+        gitStrArrayDispose(array: nil)
+    }
+    
+    
+    
+    func testWithGitStrArray() throws
     {
         let strings: [String] = ["hello", "world"]
         
-        strings.withGitStrArray
+        try strings.withGitStrArray
         {
             strArray in
             
             /// Adjust for the null terminator in `git_strArray`.
             XCTAssertEqual(strArray.pointee.count - 1, strings.count)
             
-            guard let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = strArray.pointee.strings
+            guard let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
+                    = strArray.pointee.strings
             else
             {
                 XCTFail("The C strings were nil.")
@@ -49,7 +62,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
         
         
         
-        [].withGitStrArray
+        try [].withGitStrArray
         {
             strArray in
             
@@ -60,19 +73,12 @@ final class StrArrayTests: XCTestCaseStopOnFail
     
     
     
-    func testGitStrArrayDispose() throws
-    {
-        gitStrArrayDispose(array: nil)
-    }
-    
-    
-    
-    func testGitStrArrayNested() throws
+    func testWithGitStrArrayNested() throws
     {
         let outerArray  : [String]  = ["outer1", "outer2"]
         let innerArray  : [String]  = ["inner1", "inner2"]
         
-        outerArray.withGitStrArray
+        try outerArray.withGitStrArray
         {
             outerStrArray in
             
@@ -89,7 +95,8 @@ final class StrArrayTests: XCTestCaseStopOnFail
             
             for (index, swiftString) in outerArray.enumerated()
             {
-                guard let cString = String(optionalCString: outerCStrings[index])
+                guard let cString
+                        = String(optionalCString: outerCStrings[index])
                 else
                 {
                     XCTFail("The C string at index \(index) was nil.")
@@ -101,7 +108,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
             
             
             
-            innerArray.withGitStrArray
+            try innerArray.withGitStrArray
             {
                 innerStrArray in
                 
@@ -118,7 +125,8 @@ final class StrArrayTests: XCTestCaseStopOnFail
                 
                 for (index, swiftString) in innerArray.enumerated()
                 {
-                    guard let cString = String(optionalCString: innerCStrings[index])
+                    guard let cString
+                            = String(optionalCString: innerCStrings[index])
                     else
                     {
                         XCTFail("The C string at index \(index) was nil.")
@@ -144,7 +152,8 @@ final class StrArrayTests: XCTestCaseStopOnFail
                 
                 for (index, swiftString) in outerArray.enumerated()
                 {
-                    guard let cString = String(optionalCString: outerCStrings[index])
+                    guard let cString
+                            = String(optionalCString: outerCStrings[index])
                     else
                     {
                         XCTFail("The C string at index \(index) was nil.")

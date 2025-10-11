@@ -11,20 +11,17 @@ import CLibgit2
 
 
 
-/// The callback to add a remote with the default fetch refspec to the repository's configuration.
+/// The callback to add a remote with the default fetch refspec to the
+/// repository's configuration.
 /// - Parameters:
-///   - out: The pointer in which to store the remote. The underlying type must be `git_remote`.
-///   - repo: The repository in which to create the remote. The underlying type must be
-///   `git_repository`.
+///   - out: The pointer in which to store the remote. The underlying type
+///   must be `git_remote`.
+///   - repo: The repository in which to create the remote. The underlying
+///   type must be `git_repository`.
 ///   - name: The remote name.
 ///   - url: The remote URL.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// Callers of ``gitClone(out:url:localPath:options:)`` may provide a function matching
-/// this signature to override the remote creation and customization process during a clone operation.
 ///
 /// ## C Equivalent
 ///
@@ -42,19 +39,15 @@ public typealias GitRemoteCreateCB = @convention(c)
 
 /// The callback to create a new Git repository in the given folder.
 /// - Parameters:
-///   - out: The pointer in which to store the repository. The underlying type must be
-///   `git_repository`.
+///   - out: The pointer in which to store the repository. The underlying type
+///   must be `git_repository`.
 ///   - path: The path to the repository.
-///   - isBare: Whether a Git repository without a working directory should be created at the
-///   given path. If `false`, the provided path will be considered the working directory in which
-///   the `.git` directory will be created.
+///   - isBare: Whether a Git repository without a working directory should be
+///   created at the given path. If `false`, the provided path will be
+///   considered the working directory in which the `.git` directory will be
+///   created.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// Callers of ``gitClone(out:url:localPath:options:)`` may provide a function matching
-/// this signature to override the repository creation and customization process during a clone operation.
 ///
 /// ## C Equivalent
 ///

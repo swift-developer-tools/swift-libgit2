@@ -29,6 +29,11 @@ final class EmailTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateAlwaysNumber.cValue(), GIT_EMAIL_CREATE_ALWAYS_NUMBER)
         XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateNoRenames.cValue(), GIT_EMAIL_CREATE_NO_RENAMES)
         
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_DEFAULT).cValue(), GIT_EMAIL_CREATE_DEFAULT)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_OMIT_NUMBERS).cValue(), GIT_EMAIL_CREATE_OMIT_NUMBERS)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_ALWAYS_NUMBER).cValue(), GIT_EMAIL_CREATE_ALWAYS_NUMBER)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_NO_RENAMES).cValue(), GIT_EMAIL_CREATE_NO_RENAMES)
+        
         
         
         let flags: GitEmailCreateFlagsT =
@@ -98,8 +103,6 @@ final class EmailTests: XCTestCaseStopOnFail
         XCTAssertEqual(emailCreateOptions.startNumber, 1)
         XCTAssertEqual(emailCreateOptions.rerollNumber, 0)
         
-        XCTAssertEqual(gitEmailCreateOptionsVersion, UInt32(GIT_EMAIL_CREATE_OPTIONS_VERSION))
-        
         try emailCreateOptions.withCValue
         {
             cEmailCreateOptions in
@@ -112,5 +115,12 @@ final class EmailTests: XCTestCaseStopOnFail
             XCTAssertEqual(cEmailCreateOptions.pointee.start_number, 1)
             XCTAssertEqual(cEmailCreateOptions.pointee.reroll_number, 0)
         }
+    }
+    
+    
+    
+    func testGitEmailCreateOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitEmailCreateOptionsVersion), GIT_EMAIL_CREATE_OPTIONS_VERSION)
     }
 }

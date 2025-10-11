@@ -13,25 +13,30 @@ import Foundation
 
 internal extension Data
 {
-    /// Calls the given closure with a pointer to a buffer and the length of that buffer.
+    /// Calls the given closure with a pointer to a buffer, and the length of
+    /// that buffer.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
-    /// Callers should ensure that the receiver is not empty before calling this method when:
+    /// Callers should ensure that the receiver is not empty before calling
+    /// this method when:
     ///
-    /// - Empty data has semantic meaning other than an error. For example, empty binary diff data
-    /// may represent no changes, and empty credential data may be valid.
+    /// - Empty data has semantic meaning other than an error. For example,
+    /// empty binary diff data may represent no changes, and empty credential
+    /// data may be valid.
     /// - The receiver represents data returned by libgit2.
     ///
-    /// In these cases, callers should handle the empty data by passing `nil` for the buffer and `0`
-    /// for the buffer count.
+    /// In these cases, callers should handle the empty data by passing `nil`
+    /// for the buffer and `0` for the buffer count.
     ///
-    /// Callers may call this method without checking whether the receiver is empty when:
+    /// Callers may call this method without checking whether the receiver is
+    /// empty when:
     ///
-    /// - The receiver represents user-provided data, where empty input is invalid.
+    /// - The receiver represents user-provided data, where empty input is
+    /// invalid.
     /// - Empty data would cause undefined behavior in the C function.
     ///
     /// In these cases, the thrown error appropriately signals invalid input.
@@ -61,18 +66,22 @@ internal extension Data
 
 internal extension Optional where Wrapped == Data
 {
-    /// Calls the given closure with an optional pointer to a buffer and the length of that buffer.
+    /// Calls the given closure with an optional pointer to a buffer, and the
+    /// length of that buffer.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
-    /// When the receiver is `nil`, this method passes `nil` and `0` to the closure.
-    /// When the receiver contains data, it calls ``Data/withCBuffer(_:)`` on the wrapped value.
+    /// When the receiver is `nil`, this method passes `nil` and `0` to the
+    /// closure.
     ///
-    /// - Important: See ``Data/withCBuffer(_:)`` for guidance on when to check for empty
-    /// data before calling this method.
+    /// When the receiver contains data, this method will call the
+    /// ``Data/withCBuffer(_:)`` method of the wrapped value.
+    ///
+    /// - Note: See ``Data/withCBuffer(_:)`` for more information on when
+    /// to check for empty data before calling this method.
     func withOptionalCBuffer<T>(
         _ body: (UnsafePointer<CChar>?, Int) throws -> T
     ) throws -> T

@@ -15,6 +15,13 @@ import XCTest
 
 final class AnnotatedCommitTests: XCTestCaseStopOnFail
 {
+    func testGitAnnotatedCommitFree() throws
+    {
+        gitAnnotatedCommitFree(commit: nil)
+    }
+    
+    
+    
     func testGitAnnotatedCommitFromFetchhead() throws
     {
         try Repository.withRepository
@@ -29,22 +36,24 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
             
-            let annotatedCommitFromFetchheadResult: GitErrorCode = gitAnnotatedCommitFromFetchhead(
-                out:            &annotatedCommitPointer,
-                repo:           repository.pointer,
-                branchName:     "main",
-                remoteURL:      "https://github.com/github/gitignore",
-                id:             headOID
-            )
+            let annotatedCommitFromFetchheadResult: GitErrorCode
+                = gitAnnotatedCommitFromFetchhead(
+                    out:            &annotatedCommitPointer,
+                    repo:           repository.pointer,
+                    branchName:     "main",
+                    remoteURL:      "https://github.com/github/gitignore",
+                    id:             headOID
+                )
             
             XCTAssertOK(annotatedCommitFromFetchheadResult)
             
-            guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
+            guard let annotatedCommitPointer: OpaquePointer
+                    = annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -53,7 +62,8 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitOID: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            let annotatedCommitOID: GitOID
+                = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
             XCTAssertEqual(headOID, annotatedCommitOID)
         }
@@ -97,20 +107,22 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
             
-            let annotatedCommitFromRefResult: GitErrorCode = gitAnnotatedCommitFromRef(
-                out:    &annotatedCommitPointer,
-                repo:   repository.pointer,
-                ref:    headReferencePointer
-            )
+            let annotatedCommitFromRefResult: GitErrorCode
+                = gitAnnotatedCommitFromRef(
+                    out:    &annotatedCommitPointer,
+                    repo:   repository.pointer,
+                    ref:    headReferencePointer
+                )
             
             XCTAssertOK(annotatedCommitFromRefResult)
             
-            guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
+            guard let annotatedCommitPointer: OpaquePointer
+                    = annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -123,7 +135,8 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            guard let referenceName: String = gitAnnotatedCommitRef(commit: annotatedCommitPointer)
+            guard let referenceName: String
+                    = gitAnnotatedCommitRef(commit: annotatedCommitPointer)
             else
             {
                 XCTFail("The reference name was nil.")
@@ -146,20 +159,22 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
             
-            let annotatedCommitFromRevspecResult: GitErrorCode = gitAnnotatedCommitFromRevspec(
-                out:        &annotatedCommitPointer,
-                repo:       repository.pointer,
-                revspec:    "HEAD"
-            )
+            let annotatedCommitFromRevspecResult: GitErrorCode
+                = gitAnnotatedCommitFromRevspec(
+                    out:        &annotatedCommitPointer,
+                    repo:       repository.pointer,
+                    revspec:    "HEAD"
+                )
             
             XCTAssertOK(annotatedCommitFromRevspecResult)
             
-            guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
+            guard let annotatedCommitPointer: OpaquePointer
+                    = annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -193,20 +208,22 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeAnnotatedCommit(annotatedCommitPointer)
+                gitAnnotatedCommitFree(commit: annotatedCommitPointer)
             }
             
             
             
-            let annotatedCommitLookupResult: GitErrorCode = gitAnnotatedCommitLookup(
-                out:    &annotatedCommitPointer,
-                repo:   repository.pointer,
-                id:     headOID
-            )
+            let annotatedCommitLookupResult: GitErrorCode
+                = gitAnnotatedCommitLookup(
+                    out:    &annotatedCommitPointer,
+                    repo:   repository.pointer,
+                    id:     headOID
+                )
             
             XCTAssertOK(annotatedCommitLookupResult)
             
-            guard let annotatedCommitPointer: OpaquePointer = annotatedCommitPointer
+            guard let annotatedCommitPointer: OpaquePointer
+                    = annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -215,7 +232,8 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitOID: GitOID = gitAnnotatedCommitID(commit: annotatedCommitPointer)
+            let annotatedCommitOID: GitOID
+                = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
             XCTAssertEqual(headOID, annotatedCommitOID)
         }

@@ -24,17 +24,13 @@ final class IndexTests: XCTestCaseStopOnFail
             let buffer      = Data("Custom content".utf8)
             var blobOID     = GitOID()
             
-            let blobCreateFromBufferResult: GitErrorCode = try buffer.withCBuffer
-            {
-                cBuffer, cBufferCount in
-                
-                return gitBlobCreateFromBuffer(
+            let blobCreateFromBufferResult: GitErrorCode
+                = gitBlobCreateFromBuffer(
                     id:         &blobOID,
                     repo:       repository.pointer,
-                    buffer:     cBuffer,
-                    len:        cBufferCount
+                    buffer:     buffer,
+                    len:        buffer.count
                 )
-            }
             
             XCTAssertOK(blobCreateFromBufferResult)
             
@@ -224,7 +220,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -448,6 +444,11 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDisablePatchspecMatch.cValue(), GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH)
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddCheckPathspec.cValue(), GIT_INDEX_ADD_CHECK_PATHSPEC)
         
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DEFAULT).cValue(), GIT_INDEX_ADD_DEFAULT)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_FORCE).cValue(), GIT_INDEX_ADD_FORCE)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH).cValue(), GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_CHECK_PATHSPEC).cValue(), GIT_INDEX_ADD_CHECK_PATHSPEC)
+        
         
         
         let flags: GitIndexAddOptionT =
@@ -486,7 +487,8 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let initialCaps: GitIndexCapabilityT? = gitIndexCaps(index: indexPointer)
+            let initialCaps: GitIndexCapabilityT?
+                = gitIndexCaps(index: indexPointer)
             
             XCTAssertNotNil(initialCaps)
             
@@ -501,7 +503,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let updatedCaps: GitIndexCapabilityT? = gitIndexCaps(index: indexPointer)
+            let updatedCaps: GitIndexCapabilityT?
+                = gitIndexCaps(index: indexPointer)
             
             XCTAssertEqual(updatedCaps, .gitIndexCapabilityIgnoreCase)
         }
@@ -584,22 +587,24 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexConflictRemoveResult: GitErrorCode = gitIndexConflictRemove(
-                index:  indexPointer,
-                path:   Repository.readmeFileName
-            )
+            let indexConflictRemoveResult: GitErrorCode
+                = gitIndexConflictRemove(
+                    index:  indexPointer,
+                    path:   Repository.readmeFileName
+                )
             
             XCTAssertOK(indexConflictRemoveResult)
             
             
             
-            let afterRemoveConflictGetResult: GitErrorCode = gitIndexConflictGet(
-                ancestorOut:    &ancestorIndexEntry,
-                ourOut:         &ourIndexEntry,
-                theirOut:       &theirIndexEntry,
-                index:          indexPointer,
-                path:           Repository.readmeFileName
-            )
+            let afterRemoveConflictGetResult: GitErrorCode
+                = gitIndexConflictGet(
+                    ancestorOut:    &ancestorIndexEntry,
+                    ourOut:         &ourIndexEntry,
+                    theirOut:       &theirIndexEntry,
+                    index:          indexPointer,
+                    path:           Repository.readmeFileName
+                )
             
             XCTAssertNotOK(afterRemoveConflictGetResult)
         }
@@ -678,15 +683,16 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndexConflictIterator(iteratorPointer)
+                gitIndexConflictIteratorFree(iterator: iteratorPointer)
             }
             
             
             
-            let indexConflictIteratorNewResult: GitErrorCode = gitIndexConflictIteratorNew(
-                iteratorOut:    &iteratorPointer,
-                index:          indexPointer
-            )
+            let indexConflictIteratorNewResult: GitErrorCode
+                = gitIndexConflictIteratorNew(
+                    iteratorOut:    &iteratorPointer,
+                    index:          indexPointer
+                )
             
             XCTAssertOK(indexConflictIteratorNewResult)
             
@@ -707,12 +713,13 @@ final class IndexTests: XCTestCaseStopOnFail
             
             while true
             {
-                let indexConflictNextResult: GitErrorCode = gitIndexConflictNext(
-                    ancestorOut:    &ancestorIndexEntry,
-                    ourOut:         &ourIndexEntry,
-                    theirOut:       &theirIndexEntry,
-                    iterator:       iteratorPointer
-                )
+                let indexConflictNextResult: GitErrorCode
+                    = gitIndexConflictNext(
+                        ancestorOut:    &ancestorIndexEntry,
+                        ourOut:         &ourIndexEntry,
+                        theirOut:       &theirIndexEntry,
+                        iterator:       iteratorPointer
+                    )
                 
                 if indexConflictNextResult == .gitIterOver
                 {
@@ -728,6 +735,40 @@ final class IndexTests: XCTestCaseStopOnFail
             }
             
             XCTAssertEqual(conflictCount, conflictPaths.count)
+        }
+    }
+    
+    
+    
+    func testGitIndexConflictIteratorFree() throws
+    {
+        gitIndexConflictIteratorFree(iterator: nil)
+    }
+    
+    
+    
+    func testGitIndexCountAndClear() throws
+    {
+        try Repository.withRepositoryAndIndexPointer
+        {
+            repository, indexPointer in
+            
+            let initialCount: Int = gitIndexEntryCount(index: indexPointer)
+            
+            XCTAssertGreaterThan(initialCount, 0)
+            
+            
+            
+            let indexClearResult: GitErrorCode
+                = gitIndexClear(index: indexPointer)
+            
+            XCTAssertOK(indexClearResult)
+            
+            
+            
+            let afterClearCount: Int = gitIndexEntryCount(index: indexPointer)
+            
+            XCTAssertEqual(afterClearCount, 0)
         }
     }
     
@@ -771,32 +812,6 @@ final class IndexTests: XCTestCaseStopOnFail
     
     
     
-    func testGitIndexCountAndClear() throws
-    {
-        try Repository.withRepositoryAndIndexPointer
-        {
-            repository, indexPointer in
-            
-            let initialCount: Int = gitIndexEntryCount(index: indexPointer)
-            
-            XCTAssertGreaterThan(initialCount, 0)
-            
-            
-            
-            let indexClearResult: GitErrorCode = gitIndexClear(index: indexPointer)
-            
-            XCTAssertOK(indexClearResult)
-            
-            
-            
-            let afterClearCount: Int = gitIndexEntryCount(index: indexPointer)
-            
-            XCTAssertEqual(afterClearCount, 0)
-        }
-    }
-    
-    
-    
     func testGitIndexEntryExtendedFlagT() throws
     {
         XCTAssertEqual(GitIndexEntryExtendedFlagT.gitIndexEntryIntentToAdd.rawValue, GIT_INDEX_ENTRY_INTENT_TO_ADD.rawValue)
@@ -810,6 +825,11 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitIndexEntryExtendedFlagT.gitIndexEntrySkipWorktree.cValue(), GIT_INDEX_ENTRY_SKIP_WORKTREE)
         XCTAssertEqual(GitIndexEntryExtendedFlagT.gitIndexEntryExtendedFlags.cValue(), GIT_INDEX_ENTRY_EXTENDED_FLAGS)
         XCTAssertEqual(GitIndexEntryExtendedFlagT.gitIndexEntryUpToDate.cValue(), GIT_INDEX_ENTRY_UPTODATE)
+        
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_INTENT_TO_ADD).cValue(), GIT_INDEX_ENTRY_INTENT_TO_ADD)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_SKIP_WORKTREE).cValue(), GIT_INDEX_ENTRY_SKIP_WORKTREE)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_EXTENDED_FLAGS).cValue(), GIT_INDEX_ENTRY_EXTENDED_FLAGS)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_UPTODATE).cValue(), GIT_INDEX_ENTRY_UPTODATE)
         
         
         
@@ -836,6 +856,9 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitIndexEntryFlagT.gitIndexEntryExtended.cValue(), GIT_INDEX_ENTRY_EXTENDED)
         XCTAssertEqual(GitIndexEntryFlagT.gitIndexEntryValid.cValue(), GIT_INDEX_ENTRY_VALID)
         
+        XCTAssertEqual(GitIndexEntryFlagT(cValue: GIT_INDEX_ENTRY_EXTENDED).cValue(), GIT_INDEX_ENTRY_EXTENDED)
+        XCTAssertEqual(GitIndexEntryFlagT(cValue: GIT_INDEX_ENTRY_VALID).cValue(), GIT_INDEX_ENTRY_VALID)
+        
         
         
         let flags: GitIndexEntryFlagT =
@@ -851,7 +874,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexEntryNameMask() throws
     {
-        XCTAssertEqual(gitIndexEntryNameMask, GIT_INDEX_ENTRY_NAMEMASK)
+        XCTAssertEqual(Int32(gitIndexEntryNameMask), GIT_INDEX_ENTRY_NAMEMASK)
     }
     
     
@@ -877,7 +900,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexStage: GitIndexStageT? = gitIndexEntryStage(entry: indexEntry)
+            let indexStage: GitIndexStageT?
+                = gitIndexEntryStage(entry: indexEntry)
             
             XCTAssertEqual(indexStage, .gitIndexStageNormal)
             
@@ -893,7 +917,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexEntryStageMask() throws
     {
-        XCTAssertEqual(gitIndexEntryStageMask, GIT_INDEX_ENTRY_STAGEMASK)
+        XCTAssertEqual(Int32(gitIndexEntryStageMask), GIT_INDEX_ENTRY_STAGEMASK)
     }
     
     
@@ -1074,6 +1098,13 @@ final class IndexTests: XCTestCaseStopOnFail
     
     
     
+    func testGitIndexFree() throws
+    {
+        gitIndexFree(index: nil)
+    }
+    
+    
+    
     func testGitIndexGetByIndex() throws
     {
         try Repository.withRepositoryAndIndexPointer
@@ -1180,19 +1211,22 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let beforeHasConflicts: Bool = gitIndexHasConflicts(index: indexPointer)
+            let beforeHasConflicts: Bool
+                = gitIndexHasConflicts(index: indexPointer)
             
             XCTAssertTrue(beforeHasConflicts)
             
             
             
-            let indexConflictCleanupResult: GitErrorCode = gitIndexConflictCleanup(index: indexPointer)
+            let indexConflictCleanupResult: GitErrorCode
+                = gitIndexConflictCleanup(index: indexPointer)
             
             XCTAssertOK(indexConflictCleanupResult)
             
             
             
-            let afterHasConflicts: Bool = gitIndexHasConflicts(index: indexPointer)
+            let afterHasConflicts: Bool
+                = gitIndexHasConflicts(index: indexPointer)
             
             XCTAssertFalse(afterHasConflicts)
         }
@@ -1210,7 +1244,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndexIterator(iteratorPointer)
+                gitIndexIteratorFree(iterator: iteratorPointer)
             }
             
             
@@ -1238,10 +1272,11 @@ final class IndexTests: XCTestCaseStopOnFail
             
             while true
             {
-                let indexIteratorNextResult: GitErrorCode = gitIndexIteratorNext(
-                    out:        &indexEntry,
-                    iterator:   iteratorPointer
-                )
+                let indexIteratorNextResult: GitErrorCode
+                    = gitIndexIteratorNext(
+                        out:        &indexEntry,
+                        iterator:   iteratorPointer
+                    )
                 
                 if indexIteratorNextResult == .gitIterOver
                 {
@@ -1260,6 +1295,13 @@ final class IndexTests: XCTestCaseStopOnFail
     
     
     
+    func testGitIndexIteratorFree() throws
+    {
+        gitIndexIteratorFree(iterator: nil)
+    }
+    
+    
+    
     func testGitIndexNew() throws
     {
         try Repository.withRepository
@@ -1270,12 +1312,13 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
             
-            let indexNewResult: GitErrorCode = gitIndexNew(indexOut: &indexPointer)
+            let indexNewResult: GitErrorCode
+                = gitIndexNew(indexOut: &indexPointer)
             
             XCTAssertOK(indexNewResult)
             XCTAssertNotNil(indexPointer)
@@ -1294,7 +1337,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(indexPointer)
+                gitIndexFree(index: indexPointer)
             }
             
             
@@ -1322,7 +1365,8 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let ownerPointer: OpaquePointer = gitIndexOwner(index: indexPointer)
+            let ownerPointer: OpaquePointer
+                = gitIndexOwner(index: indexPointer)
             
             XCTAssertEqual(ownerPointer, repository.pointer)
         }
@@ -1351,7 +1395,7 @@ final class IndexTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeIndex(indexPointer)
+            gitIndexFree(index: indexPointer)
         }
         
         
@@ -1391,7 +1435,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: indexPointer)
             
             XCTAssertOK(indexWriteResult)
         }
@@ -1445,13 +1490,15 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexClearResult: GitErrorCode = gitIndexClear(index: indexPointer)
+            let indexClearResult: GitErrorCode
+                = gitIndexClear(index: indexPointer)
             
             XCTAssertOK(indexClearResult)
             
             
             
-            let entryCountAfterClear: Int = gitIndexEntryCount(index: indexPointer)
+            let entryCountAfterClear: Int
+                = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertEqual(entryCountAfterClear, 0)
             
@@ -1466,7 +1513,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let entryCountAfterRead: Int = gitIndexEntryCount(index: indexPointer)
+            let entryCountAfterRead: Int
+                = gitIndexEntryCount(index: indexPointer)
             
             XCTAssertGreaterThan(entryCountAfterRead, 0)
             
@@ -1532,11 +1580,12 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexRemoveDirectoryResult: GitErrorCode = gitIndexRemoveDirectory(
-                index:  indexPointer,
-                dir:    directoryPath,
-                stage:  .gitIndexStageNormal
-            )
+            let indexRemoveDirectoryResult: GitErrorCode
+                = gitIndexRemoveDirectory(
+                    index:  indexPointer,
+                    dir:    directoryPath,
+                    stage:  .gitIndexStageNormal
+                )
             
             XCTAssertOK(indexRemoveDirectoryResult)
             
@@ -1609,7 +1658,8 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: indexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: indexPointer)
             
             XCTAssertOK(indexWriteResult)
             

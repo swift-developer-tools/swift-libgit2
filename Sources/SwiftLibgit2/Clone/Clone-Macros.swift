@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_CLONE_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/clone/GIT_CLONE_OPTIONS_VERSION.html)
-public let gitCloneOptionsVersion: UInt32 = UInt32(GIT_CLONE_OPTIONS_VERSION)
+public let gitCloneOptionsVersion: UInt32 = 1

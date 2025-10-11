@@ -16,8 +16,9 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// Although this is called a "file", it could represent a file, a symbolic link, a submodule commit ID,
-/// or even a tree (when tracking type changes or ignored or untracked directories).
+/// Although this is called a "file", it could represent a file, a symbolic
+/// link, a submodule commit ID, or even a tree (when tracking type changes
+/// or ignored or untracked directories).
 ///
 /// ## C Equivalent
 ///
@@ -28,17 +29,20 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// If the entry represents an absent side of a diff (for example, the `old_file` of a
-    /// ``GitDeltaT/gitDeltaAdded`` delta), then the ID will be all zeros.
+    /// If the entry represents an absent side of a diff (for example, the
+    /// `old_file` of a ``GitDeltaT/gitDeltaAdded`` delta), then the ID will
+    /// be all zeros.
     public let id       : GitOID
     
-    /// The null-terminated path to the entry relative to the working directory of the repository.
+    /// The null-terminated path to the entry relative to the working
+    /// directory of the repository.
     public let path     : String?
     
     /// The size of the entry in bytes.
     public let size     : GitObjectSizeT
     
-    /// The flags for the delta object and the file objects on each side of the delta.
+    /// The flags for the delta object and the file objects on each side of
+    /// the delta.
     public let flags    : GitDiffFlagT
     
     /// Approximately the `stat() st_mode` value for the item.
@@ -49,8 +53,9 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// This is generally `GIT_OID_SHA1_HEXSIZE`, unless this delta was created from reading
-    /// a patch file, in which case it may be abbreviated to something reasonable, like seven characters.
+    /// This is generally `GIT_OID_SHA1_HEXSIZE`, unless this delta was
+    /// created from reading a patch file, in which case it may be abbreviated
+    /// to something reasonable, like seven characters.
     public let idAbbrev : UInt16
     
     
@@ -60,8 +65,8 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// ``mode`` defaults to ``GitFileModeT/gitFileModeUnreadable`` if an unexpected
-    /// value is encountered, although this should never occur.
+    /// ``mode`` defaults to ``GitFileModeT/gitFileModeUnreadable`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffFile: git_diff_file
     )
@@ -76,10 +81,10 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_diff_file` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_file`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_file>) throws -> T
     ) rethrows -> T
@@ -109,40 +114,46 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// A delta is a file pair with old and new versions. The old version may be absent if the file was just
-/// created and the new version may be absent if the file was deleted. A diff is mostly just a list of deltas.
+/// A delta is a file pair with old and new versions. The old version may be
+/// absent if the file was just created and the new version may be absent if
+/// the file was deleted. A diff is mostly just a list of deltas.
 ///
-/// When iterating over a diff, this will be passed to most callbacks and the file contents may be used to
-/// understand exactly what has changed.
+/// When iterating over a diff, this will be passed to most callbacks and the
+/// file contents may be used to understand exactly what has changed.
 ///
 /// ``GitDiffDelta/oldFile`` represents the "from" side of the diff and
-/// ``GitDiffDelta/newFile`` represents to "to" side of the diff. What those means depend on
-/// the function that was used to generate the diff and is explained below. The
-/// ``GitDiffOptionT/gitDiffReverse`` flag may be used to reverse this relationship.
+/// ``GitDiffDelta/newFile`` represents to "to" side of the diff. What those
+/// means depend on the function that was used to generate the diff and is
+/// explained below. The ``GitDiffOptionT/gitDiffReverse`` flag may be used
+/// to reverse this relationship.
 ///
-/// Although the two sides of the delta are named ``GitDiffDelta/oldFile`` and
-/// ``GitDiffDelta/newFile``, they actually may correspond to entries that represent a file,
-/// a symbolic link, a submodule commit ID, or even a tree (when tracking type changes or ignored or
-/// untracked directories).
+/// Although the two sides of the delta are named ``GitDiffDelta/oldFile``
+/// and ``GitDiffDelta/newFile``, they actually may correspond to entries that
+/// represent a file, a symbolic link, a submodule commit ID, or even a tree
+/// (when tracking type changes or ignored or untracked directories).
 ///
-/// Under some circumstances, in the name of efficiency, not all properties will be filled in, but generally
-/// as much as possible will be filled in. For example, ``GitDiffDelta/flags`` may not have either
-/// the ``GitDiffFlagT/gitDiffFlagBinary`` or the
-/// ``GitDiffFlagT/gitDiffFlagNotBinary`` flag set to avoid examining file contents when no
-/// hunk and/or line callbacks are passed in. In this case, the diff iteration process will use the Git attributes
-/// for those files.
+/// Under some circumstances, in the name of efficiency, not all properties
+/// will be filled in, but generally as much as possible will be filled in.
+/// For example, ``GitDiffDelta/flags`` may not have either the
+/// ``GitDiffFlagT/gitDiffFlagBinary`` or the
+/// ``GitDiffFlagT/gitDiffFlagNotBinary`` flag set to avoid examining file
+/// contents when no hunk and/or line callbacks are passed in. In this case,
+/// the diff iteration process will use the Git attributes for those files.
 ///
 /// ``GitDiffDelta/similarity`` will be zero unless
-/// ``gitDiffFindSimilar(diff:options:)`` is called, which performs a similarity analysis of
-/// files in the diff. That function may be used to perform rename and copy detection, and to split heavily
-/// modified files into add/delete pairs. After that call, deltas with a status of
-/// ``GitDeltaT/gitDeltaRenamed`` or ``GitDeltaT/gitDeltaCopied`` will have a similarity
-/// score between 0 and 100 indicating the similarity between the old version and the new version.
+/// ``gitDiffFindSimilar(diff:options:)`` is called, which performs a
+/// similarity analysis of files in the diff. That function may be used to
+/// perform rename and copy detection, and to split heavily modified files
+/// into add/delete pairs. After that call, deltas with a status of
+/// ``GitDeltaT/gitDeltaRenamed`` or ``GitDeltaT/gitDeltaCopied`` will have
+/// a similarity score between 0 and 100 indicating the similarity between
+/// the old version and the new version.
 ///
-/// If ``gitDiffFindSimilar(diff:options:)`` is used to find heavily modified files to break, but
-/// not to actually break the records, then ``GitDeltaT/gitDeltaModified`` records may have a
-/// non-zero similarity score if the self-similarity is below the split threshold. To display this value like core
-/// Git, invert the score by subtracting it from 100.
+/// If ``gitDiffFindSimilar(diff:options:)`` is used to find heavily modified
+/// files to break, but not to actually break the records, then
+/// ``GitDeltaT/gitDeltaModified`` records may have a non-zero similarity score
+/// if the self-similarity is below the split threshold. To display this value
+/// like core Git, invert the score by subtracting it from 100.
 ///
 /// ## C Equivalent
 ///
@@ -152,11 +163,12 @@ public struct GitDiffDelta: GitStructReadable, WithCConvertible
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
     
-    /// The flags for the delta object and the file objects on each side of the delta.
+    /// The flags for the delta object and the file objects on each side of
+    /// the delta.
     public let flags        : GitDiffFlagT
     
-    /// The similarity threshold (0 - 100) of the item for ``GitDeltaT/gitDeltaRenamed``
-    /// and ``GitDeltaT/gitDeltaCopied`` changes.
+    /// The similarity threshold (0 - 100) of the item for
+    /// ``GitDeltaT/gitDeltaRenamed`` and ``GitDeltaT/gitDeltaCopied`` changes.
     public let similarity   : UInt16
     
     /// The number of files in this delta.
@@ -175,8 +187,8 @@ public struct GitDiffDelta: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// ``status`` defaults to ``GitDeltaT/gitDeltaUnmodified`` if an unexpected value
-    /// is encountered, although this should never occur.
+    /// ``status`` defaults to ``GitDeltaT/gitDeltaUnmodified`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffDelta: git_diff_delta
     )
@@ -191,10 +203,10 @@ public struct GitDiffDelta: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_diff_delta` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_delta`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_delta>) throws -> T
     ) rethrows -> T
@@ -251,7 +263,8 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``.
+    /// The default value is
+    /// ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``.
     public var ignoreSubmodules : GitSubmoduleIgnoreT       = .gitSubmoduleIgnoreUnspecified
     
     /// The paths or `fnmatch` patterns to constrain the diff.
@@ -261,14 +274,16 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     /// The default value is an empty array.
     public var pathspec         : [String]                  = []
     
-    /// The callback for notifications of new diff deltas being added during the diff operation.
+    /// The callback for notifications of new diff deltas being added during
+    /// the diff operation.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var notifyCB         : GitDiffNotifyCB?          = nil
     
-    /// The callback for notifications of which files are being examined during the diff operation.
+    /// The callback for notifications of which files are being examined
+    /// during the diff operation.
     ///
     /// ## Discussion
     ///
@@ -282,16 +297,16 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var payload          : UnsafeMutableRawPointer?  = nil
     
-    /// The number of unchanged lines that define the boundaries of a diff hunk, and should
-    /// be displayed before and after each hunk.
+    /// The number of unchanged lines that define the boundaries of a diff hunk,
+    /// and should be displayed before and after each hunk.
     ///
     /// ## Discussion
     ///
     /// The default value is `3`.
     public var contextLines     : UInt32                    = 3
     
-    /// The maximum number of unchanged lines between diff hunk boundaries before the
-    /// hunks should be merged.
+    /// The maximum number of unchanged lines between diff hunk boundaries
+    /// before the hunks should be merged.
     ///
     /// ## Discussion
     ///
@@ -304,27 +319,30 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This is used by functions that operate without a repository. If a repository is available,
-    /// the OID format of the repository will be used. Otherwise, if there is no repository available
-    /// and this is `nil` at runtime, libgit2 defaults to using ``GitOIDT/gitOIDSHA1``.
+    /// This is used by functions that operate without a repository. If a
+    /// repository is available, the OID format of the repository will be used.
+    /// Otherwise, if there is no repository available and this is `nil` at
+    /// runtime, libgit2 defaults to using ``GitOIDT/gitOIDSHA1``.
     ///
-    /// If this is specified and a repository is available, the specified type should match the
-    /// repository's OID format.
+    /// If this is specified and a repository is available, the specified type
+    /// should match the repository's OID format.
     public var oidType          : GitOIDT?                  = nil
     
     /// The abbreviation length to use when formatting OIDs.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using the
-    /// value of `core.abbrev` from the configuration file, or `7` if that value is unset.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using the value of `core.abbrev` from the configuration
+    /// file, or `7` if that value is unset.
     public var idAbbrev         : UInt16?                   = nil
     
-    /// The maximum size, in bytes, above which a blob will be automatically marked as binary.
+    /// The maximum size, in bytes, above which a blob will be automatically
+    /// marked as binary.
     ///
     /// ## Discussion
     ///
-    /// The default value is  512 MB.
+    /// The default value is 512 MB.
     ///
     /// Pass a negative value to disable the limit.
     public var maxSize          : GitOffT                   = 536_870_912
@@ -354,13 +372,14 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffOptions`` instance from a `git_diff_options` instance.
+    /// Creates a ``GitDiffOptions`` instance from a `git_diff_options`
+    /// instance.
     /// - Parameter diffOptions: The `git_diff_options` instance to use.
     ///
     /// ## Discussion
     ///
-    /// If unexpected values are encountered, the following defaults are used, although this should
-    /// never occur.
+    /// If unexpected values are encountered, the following defaults are used,
+    /// although this should never occur.
     ///
     /// - ``ignoreSubmodules``: ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``
     /// - ``oldPrefix``: `a`
@@ -387,10 +406,11 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_diff_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_options>) throws -> T
     ) throws -> T
@@ -458,37 +478,41 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
     /// The deflated binary data.
     public let data         : Data?
     
-    /// The length of the binary data.
-    public let dataLen      : Int
+    /// The length of ``data``.
+    public var dataLen      : Int
+    {
+        return data?.count ?? 0
+    }
     
     /// The length of the inflated binary data.
     public let inflatedLen  : Int
     
     
     
-    /// Creates a ``GitDiffBinaryFile`` instance from a `git_diff_binary_file` instance.
+    /// Creates a ``GitDiffBinaryFile`` instance from a `git_diff_binary_file`
+    /// instance.
     /// - Parameter diffBinaryFile: The `git_diff_binary_file` instance to use.
     ///
     /// ## Discussion
     ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an unexpected value
-    /// is encountered, although this should never occur.
+    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffBinaryFile: git_diff_binary_file
     )
     {
         self.type           = GitDiffBinaryT(cValue: diffBinaryFile.type) ?? .gitDiffBinaryNone
         self.data           = diffBinaryFile.data.map { Data(bytes: $0, count: diffBinaryFile.datalen) }
-        self.dataLen        = diffBinaryFile.datalen
         self.inflatedLen    = diffBinaryFile.inflatedlen
     }
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_diff_binary_file` instance.
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_diff_binary_file` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_binary_file>) throws -> T
     ) throws -> T
@@ -511,10 +535,10 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
         
         return try data.withCBuffer
         {
-            dataBuffer, dataBufferCount in
+            cData, cDataCount in
             
-            diffBinaryFile.data         = dataBuffer
-            diffBinaryFile.datalen      = dataBufferCount
+            diffBinaryFile.data         = cData
+            diffBinaryFile.datalen      = cDataCount
             diffBinaryFile.inflatedlen  = inflatedLen
             
             return try body(&diffBinaryFile)
@@ -528,8 +552,9 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// A binary file or binary delta is a file (or pair of files) for which no text diffs should be generated.
-/// A diff can contain delta entries that are binary, but no diff content will be output for those files.
+/// A binary file or binary delta is a file (or pair of files) for which no
+/// text diffs should be generated. A diff can contain delta entries that are
+/// binary, but no diff content will be output for those files.
 ///
 /// ## C Equivalent
 ///
@@ -540,8 +565,8 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// If this is `false`, then the instance was generated knowing only that a binary file changed,
-    /// but without providing the data.
+    /// If this is `false`, then the instance was generated knowing only that
+    /// a binary file changed, but without providing the data.
     public let containsData : Bool
     
     /// The contents of the old file.
@@ -557,8 +582,8 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an unexpected value
-    /// is encountered, although this should never occur.
+    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffBinary: git_diff_binary
     )
@@ -570,10 +595,11 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_diff_binary` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_binary`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_binary>) throws -> T
     ) throws -> T
@@ -606,9 +632,9 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// A hunk is a span of modified lines in a diff delta along with some stable surrounding context. Each
-/// hunk also comes with a header that described where it starts and ends in the delta, in both the old
-/// and new files.
+/// A hunk is a span of modified lines in a diff delta along with some stable
+/// surrounding context. Each hunk also comes with a header that described
+/// where it starts and ends in the delta, in both the old and new files.
 ///
 /// ## C Equivalent
 ///
@@ -616,26 +642,57 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
 public struct GitDiffHunk: GitStructInternalMutable, CConvertible
 {
     /// The starting line number in the old file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var oldStart    : Int32     = 0
     
     /// The number of lines in the old file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var oldLines    : Int32     = 0
     
     /// The starting line number in the new file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var newStart    : Int32     = 0
     
     /// The number of lines in the new file.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var newLines    : Int32     = 0
     
-    /// The number of bytes in the header text.
-    public private(set) var headerLen   : Int       = 0
+    /// The length of ``header``.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
+    public var headerLen                : Int
+    {
+        return header?.count ?? 0
+    }
     
     /// The header text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var header      : String?   = nil
     
     
     
-    /// Creates a ``GitDiffHunk`` instance.
+    /// Creates a ``GitDiffHunk`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     
@@ -645,8 +702,8 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
     ///
     /// ## Discussion
     ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an unexpected value
-    /// is encountered, although this should never occur.
+    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffHunk: git_diff_hunk
     )
@@ -655,7 +712,6 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
         self.oldLines   = diffHunk.old_lines
         self.newStart   = diffHunk.new_start
         self.newLines   = diffHunk.new_lines
-        self.headerLen  = diffHunk.header_len
         self.header     = String(cArray: diffHunk.header)
     }
     
@@ -689,9 +745,10 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
 ///
 /// ## Discussion
 ///
-/// A line (or data span) is a range of characters inside a diff hunk. It could be a context line (a line that
-/// exists in both the old and new versions), an added line (a line that exists only in the new version), or
-/// a deleted line (a line that exists only in the old version).
+/// A line (or data span) is a range of characters inside a diff hunk.
+/// It could be a context line (a line that exists in both the old and new
+/// versions), an added line (a line that exists only in the new version),
+/// or a deleted line (a line that exists only in the old version).
 ///
 /// ## C Equivalent
 ///
@@ -699,29 +756,64 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
 public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
 {
     /// The type of line origin.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is ``GitDiffLineT/gitDiffLineContext``.
     public private(set) var origin          : GitDiffLineT  = .gitDiffLineContext
     
     /// The line number in the old file, or `-1` to indicate an added line.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var oldLineNo       : Int32         = 0
     
     /// The line number in the new file, or `-1` to indicate a deleted line.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var newLineNo       : Int32         = 0
     
     /// The number of newline characters in the diff text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var numLines        : Int32         = 0
     
-    /// The number of bytes in the diff text.
-    public private(set) var contentLen      : Int           = 0
+    /// The length of ``content``.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
+    public var contentLen                   : Int
+    {
+        return content?.count ?? 0
+    }
     
     /// The offset in the original file to the diff text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `0`.
     public private(set) var contentOffset   : GitOffT       = 0
     
     /// The diff text.
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
     public private(set) var content         : Data?         = nil
     
     
     
-    /// Creates a ``GitDiffLine`` instance.
+    /// Creates a ``GitDiffLine`` instance with the default configuration.
+    ///
+    /// ## Discussion
+    ///
+    /// See the individual property documentation for specific default values.
     public init() { }
     
     
@@ -731,8 +823,8 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// ``origin`` defaults to ``GitDiffLineT/gitDiffLineContext`` if an unexpected value
-    /// is encountered, although this should never occur.
+    /// ``origin`` defaults to ``GitDiffLineT/gitDiffLineContext`` if an
+    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffLine: git_diff_line
     )
@@ -741,17 +833,17 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
         self.oldLineNo      = diffLine.old_lineno
         self.newLineNo      = diffLine.new_lineno
         self.numLines       = diffLine.num_lines
-        self.contentLen     = diffLine.content_len
         self.contentOffset  = diffLine.content_offset
         self.content        = diffLine.content.map { Data(bytes: $0, count: diffLine.content_len) }
     }
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_diff_line` instance.
+    /// Calls the given closure with a mutable pointer to a `git_diff_line`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_diff_line>) throws -> T
     ) throws -> T
@@ -777,10 +869,10 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
         
         return try content.withCBuffer
         {
-            contentBuffer, contentBufferCount in
+            cContent, cContentCount in
             
-            diffLine.content_len    = contentBufferCount
-            diffLine.content        = contentBuffer
+            diffLine.content_len    = cContentCount
+            diffLine.content        = cContent
             
             return try body(&diffLine)
         }
@@ -793,10 +885,10 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
 ///
 /// ## Discussion
 ///
-/// This struct is provided for documentation purposes, but is not used by other bindings.
-///
-/// `git_diff_similarity_metric` is treated as an opaque struct since its function pointers are
-/// allocated and managed by libgit2, and cannot be meaningfully recreated or translated.
+/// - Note: This struct is provided for documentation purposes, but is not
+/// used by other bindings. `git_diff_similarity_metric` is treated as an
+/// opaque struct since its function pointers are allocated and managed by
+/// libgit2, and cannot be meaningfully recreated or translated.
 ///
 /// ## C Equivalent
 ///
@@ -891,7 +983,8 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     /// This is equivalent to `git diff --find-renames`.
     public var renameThreshold              : UInt16                            = 50
     
-    /// The threshold below which similar files will be eligible to be a rename source.
+    /// The threshold below which similar files will be eligible to be a
+    /// rename source.
     ///
     /// ## Discussion
     ///
@@ -909,7 +1002,8 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     /// This is equivalent to `git diff --find-copies`.
     public var copyThreshold                : UInt16                            = 50
     
-    /// The threshold below which similar files will be split into an add/delete pair.
+    /// The threshold below which similar files will be split into an
+    /// add/delete pair.
     ///
     /// ## Discussion
     ///
@@ -924,25 +1018,30 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     ///
     /// The default value is `50`.
     ///
-    /// This is slightly different from `git diff -l`, since libgit2 will still process up to the specified
-    /// number of matches before abandoning the search.
+    /// This is slightly different from `git diff -l`, since libgit2 will
+    /// still process up to the specified number of matches before abandoning
+    /// the search.
     public var renameLimit                  : Int                               = 1000
     
     /// The pluggable similarity metric.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2 defaults to using a sampling hash
-    /// of ranges of data in the file. This is a reliable similarity approximation that generally works well
-    /// for both text and binary data, while maintaining speed and a fixed memory overhead.
+    /// The default value is `nil`. If this is `nil` at runtime, libgit2
+    /// defaults to using a sampling hash of ranges of data in the file.
+    /// This is a reliable similarity approximation that generally works
+    /// well for both text and binary data, while maintaining speed and a
+    /// fixed memory overhead.
     ///
-    /// - Important: If a custom metric is provided, the caller is responsible for memory management.
+    /// - Important: If a custom metric is provided, the caller will be
+    /// responsible for memory management.
     public var metric                       : UnsafeMutablePointer<
                                                 git_diff_similarity_metric>?    = nil
     
     
     
-    /// Creates a ``GitDiffFindOptions`` instance with the default configuration.
+    /// Creates a ``GitDiffFindOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -951,8 +1050,10 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffFindOptions`` instance from a `git_diff_find_options` instance.
-    /// - Parameter diffFindOptions: The `git_diff_find_options` instance to use.
+    /// Creates a ``GitDiffFindOptions`` instance from a `git_diff_find_options`
+    /// instance.
+    /// - Parameter diffFindOptions: The `git_diff_find_options` instance to
+    /// use.
     internal init(
         cValue diffFindOptions: git_diff_find_options
     )
@@ -969,10 +1070,10 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Converts the ``GitDiffFindOptions`` instance into a `git_diff_find_options`
-    /// instance.
+    /// Converts the ``GitDiffFindOptions`` instance into a
+    /// `git_diff_find_options` instance.
     /// - Returns: The `git_diff_find_options` instance.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func cValue() throws -> git_diff_find_options
     {
         var diffFindOptions = git_diff_find_options()
@@ -1024,7 +1125,8 @@ public struct GitDiffParseOptions: GitStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitDiffParseOptions`` instance with the default configuration.
+    /// Creates a ``GitDiffParseOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -1033,9 +1135,10 @@ public struct GitDiffParseOptions: GitStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitDiffParseOptions`` instance from a `git_diff_parse_options`
-    /// instance.
-    /// - Parameter diffParseOptions: The `git_diff_parse_options` instance to use.
+    /// Creates a ``GitDiffParseOptions`` instance from a
+    /// `git_diff_parse_options` instance.
+    /// - Parameter diffParseOptions: The `git_diff_parse_options` instance
+    /// to use.
     internal init(
         cValue diffParseOptions: git_diff_parse_options
     )
@@ -1046,8 +1149,8 @@ public struct GitDiffParseOptions: GitStructMutable, CConvertible
     
     
     
-    /// Converts the ``GitDiffParseOptions`` instance into a `git_diff_parse_options`
-    /// instance.
+    /// Converts the ``GitDiffParseOptions`` instance into a
+    /// `git_diff_parse_options` instance.
     /// - Returns: The `git_diff_parse_options` instance.
     internal func cValue() -> git_diff_parse_options
     {
@@ -1082,7 +1185,8 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffPatchIDOptions`` instance with the default configuration.
+    /// Creates a ``GitDiffPatchIDOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -1091,8 +1195,8 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffPatchIDOptions`` instance from a `git_diff_patchid_options`
-    /// instance.
+    /// Creates a ``GitDiffPatchIDOptions`` instance from a
+    /// `git_diff_patchid_options` instance.
     /// - Parameter diffPatchIDOptions: The `git_diff_patchid_options` instance
     /// to use.
     internal init(
@@ -1104,18 +1208,19 @@ public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
     
     
     
-    /// Converts the ``GitDiffPatchIDOptions`` instance into a `git_diff_patchid_options`
-    /// instance.
+    /// Converts the ``GitDiffPatchIDOptions`` instance into a
+    /// `git_diff_patchid_options` instance.
     /// - Returns: The `git_diff_patchid_options` instance.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func cValue() throws -> git_diff_patchid_options
     {
         var diffPatchIDOptions = git_diff_patchid_options()
         
-        let diffPatchIDOptionsInitResult: GitErrorCode = gitDiffPatchIDOptionsInit(
-            opts:       &diffPatchIDOptions,
-            version:    version
-        )
+        let diffPatchIDOptionsInitResult: GitErrorCode
+            = gitDiffPatchIDOptionsInit(
+                opts:       &diffPatchIDOptions,
+                version:    version
+            )
         
         if diffPatchIDOptionsInitResult != .gitOK
         {

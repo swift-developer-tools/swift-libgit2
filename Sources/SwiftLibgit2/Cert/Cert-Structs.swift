@@ -71,49 +71,52 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// This will represent the MD5 hash of the host key if ``GitCertHostKey/type``
-    /// contains ``GitCertSSHT/gitCertSSHMD5``.
+    /// This will represent the MD5 hash of the host key if
+    /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHMD5``.
     public let hashMD5      : Data
     
     /// The SHA-1 hash of the host key.
     ///
     /// ## Discussion
     ///
-    /// This will represent the SHA-1 hash of the host key if ``GitCertHostKey/type``
-    /// contains ``GitCertSSHT/gitCertSSHSHA1``.
+    /// This will represent the SHA-1 hash of the host key if
+    /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHSHA1``.
     public let hashSHA1     : Data
     
     /// The SHA-256 hash of the host key.
     ///
     /// ## Discussion
     ///
-    /// This will represent the SHA-256 hash of the host key if ``GitCertHostKey/type``
-    /// contains ``GitCertSSHT/gitCertSSHSHA256``.
+    /// This will represent the SHA-256 hash of the host key if
+    /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHSHA256``.
     public let hashSHA256   : Data
     
     /// The type of the raw host key.
     ///
     /// ## Discussion
     ///
-    /// This will represent the type of the raw host key if ``GitCertHostKey/type``
-    /// contains ``GitCertSSHT/gitCertSSHRaw``.
+    /// This will represent the type of the raw host key if
+    /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHRaw``.
     public let rawType      : GitCertSSHRawTypeT
     
     /// The content of the raw host key.
     ///
     /// ## Discussion
     ///
-    /// This will represent the content of the raw host key if ``GitCertHostKey/type``
-    /// contains ``GitCertSSHT/gitCertSSHRaw``.
+    /// This will represent the content of the raw host key if
+    /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHRaw``.
     public let hostKey      : Data?
     
-    /// The content length of the raw host key.
+    /// The length of ``hostKey``.
     ///
     /// ## Discussion
     ///
-    /// This will represent the content length of the raw host key if ``GitCertHostKey/type``
-    /// contains ``GitCertSSHT/gitCertSSHRaw``.
-    public let hostKeyLen   : Int
+    /// This will represent the content length of the raw host key if
+    /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHRaw``.
+    public var hostKeyLen   : Int
+    {
+        return hostKey?.count ?? 0
+    }
     
     
     
@@ -128,14 +131,15 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitCertHostKey`` instance from a `git_cert_hostkey` instance.
+    /// Creates a ``GitCertHostKey`` instance from a `git_cert_hostkey`
+    /// instance.
     /// - Parameter certHostKey: The `git_cert_hostkey` instance to use.
     ///
     /// ## Discussion
     ///
     /// ``GitCertHostKey/rawType`` defaults to
-    /// ``GitCertSSHRawTypeT/gitCertSSHRawTypeUnknown`` if an unexpected value is
-    /// encountered, although this should never occur.
+    /// ``GitCertSSHRawTypeT/gitCertSSHRawTypeUnknown`` if an unexpected value
+    /// is encountered, although this should never occur.
     internal init(
         cValue certHostKey: git_cert_hostkey
     )
@@ -149,15 +153,14 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
         self.hashSHA256     = Data(bytes: &certHostKeyCopy.hash_sha256, count: Self.hashSHA256Size)
         self.rawType        = GitCertSSHRawTypeT(cValue: certHostKey.raw_type) ?? .gitCertSSHRawTypeUnknown
         self.hostKey        = certHostKey.hostkey.map { Data(bytes: $0, count: certHostKey.hostkey_len) }
-        self.hostKeyLen     = certHostKey.hostkey_len
     }
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_cert_hostkey` instance.
+    /// Calls the given closure with a mutable pointer to a `git_cert_hostkey`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_cert_hostkey>) throws -> T
     ) rethrows -> T
@@ -239,7 +242,7 @@ public struct GitCertX509: GitStructReadable, CConvertible
     /// The X.509 certificate data.
     public let data     : UnsafeMutableRawPointer?
     
-    /// The length of the memory block pointed to by ``GitCertX509/data``.
+    /// The length of the memory block pointed to by ``data``.
     public let len      : Int
     
     

@@ -11,7 +11,8 @@ import CLibgit2
 
 
 
-/// The flags controlling the behavior of ``gitApply(repo:diff:location:options:)``.
+/// The flags controlling the behavior of
+/// ``gitApply(repo:diff:location:options:)``.
 ///
 /// ## C Equivalent
 ///
@@ -21,6 +22,8 @@ public struct GitApplyFlagsT: GitOptionSet
     /// The raw value to use.
     public let rawValue: UInt32
     
+    
+    
     /// Creates a ``GitApplyFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -28,6 +31,18 @@ public struct GitApplyFlagsT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitApplyFlagsT`` instance from a `git_apply_flags_t`
+    /// instance.
+    /// - Parameter applyFlags: The `git_apply_flags_t` instance to use.
+    internal init(
+        cValue applyFlags: git_apply_flags_t
+    )
+    {
+        self.rawValue = applyFlags.rawValue
     }
     
     
@@ -41,7 +56,8 @@ public struct GitApplyFlagsT: GitOptionSet
     
     
     
-    /// Converts the ``GitApplyFlagsT`` instance into a `git_apply_flags_t` instance.
+    /// Converts the ``GitApplyFlagsT`` instance into a `git_apply_flags_t`
+    /// instance.
     /// - Returns: The `git_apply_flags_t` instance.
     internal func cValue() -> git_apply_flags_t
     {
@@ -60,7 +76,9 @@ public struct GitApplyLocationT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
-        
+    
+    
+    
     /// Creates a ``GitApplyLocationT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
@@ -68,6 +86,18 @@ public struct GitApplyLocationT: GitOptionSet
     )
     {
         self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitApplyLocationT`` instance from a `git_apply_location_t`
+    /// instance.
+    /// - Parameter applyLocation: The `git_apply_location_t` instance to use.
+    internal init(
+        cValue applyLocation: git_apply_location_t
+    )
+    {
+        self.rawValue = applyLocation.rawValue
     }
     
     
@@ -95,7 +125,8 @@ public struct GitApplyLocationT: GitOptionSet
     
     
     
-    /// Converts the ``GitApplyLocationT`` instance into a `git_apply_location_t` instance.
+    /// Converts the ``GitApplyLocationT`` instance into a
+    /// `git_apply_location_t` instance.
     /// - Returns: The `git_apply_location_t` instance.
     internal func cValue() -> git_apply_location_t
     {

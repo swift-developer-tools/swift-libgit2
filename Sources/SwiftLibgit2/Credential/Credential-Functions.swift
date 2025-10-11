@@ -17,8 +17,8 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// This function is only needed when libgit2 does not own the `git_credential` (when the caller
-/// is a transport).
+/// - Note: This function is only needed when libgit2 does not own the
+/// `git_credential` (when the caller is a transport).
 ///
 /// ## C Equivalent
 ///
@@ -27,6 +27,12 @@ public func gitCredentialFree(
     cred: UnsafeMutablePointer<git_credential>?
 )
 {
+    guard let cred: UnsafeMutablePointer<git_credential> = cred
+    else
+    {
+        return
+    }
+    
     git_credential_free(cred)
 }
 
@@ -94,7 +100,8 @@ public func gitCredentialUserPassPlaintextNew(
 
 
 
-/// Creates a default credential usable with Negotiate mechanisms like NTLM or Kerberos authentication.
+/// Creates a default credential usable with Negotiate mechanisms like NTLM or
+/// Kerberos authentication.
 /// - Parameter out: The pointer in which to store the resulting credential.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -280,7 +287,8 @@ public func gitCredentialSSHKeyFromAgent(
 ///   - username: The username of the credential.
 ///   - publicKey: The public key of the credential.
 ///   - publicKeyLen: The length of `publicKey`.
-///   - signCallback: The callback invoked to sign the data during the authentication challenge.
+///   - signCallback: The callback invoked to sign the data during the
+///   authentication challenge.
 ///   - payload: The caller-specified payload passed to `signCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -317,13 +325,13 @@ public func gitCredentialSSHCustomNew(
         
         return try publicKey.withCBuffer
         {
-            publicKeyBuffer, publicKeyBufferCount in
+            cPublicKey, cPublicKeyCount in
             
             return git_credential_ssh_custom_new(
                 out,
                 username,
-                publicKeyBuffer,
-                publicKeyBufferCount,
+                cPublicKey,
+                cPublicKeyCount,
                 signCallback,
                 payload
             )

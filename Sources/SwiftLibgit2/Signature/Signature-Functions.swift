@@ -83,37 +83,41 @@ public func gitSignatureNow(
 
 
 
-/// Creates new author and/or committer signatures with default information based on the configuration
-/// and environment variables.
+/// Creates new author and/or committer signatures with default information
+/// based on the configuration and environment variables.
 /// - Parameters:
-///   - authorOut: The ``GitSignature`` instance in which to store the new author signature.
-///   - committerOut: The ``GitSignature`` instance in which to store the new committer
-///   signature.
+///   - authorOut: The ``GitSignature`` instance in which to store the new
+///   author signature.
+///   - committerOut: The ``GitSignature`` instance in which to store the
+///   new committer signature.
 ///   - repo: The repository. The underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// At least one of `authorOut` or `committerOut` must not be `nil`. If both are `nil`,
-/// this function will return ``GitErrorCode/gitEUser``.
+/// At least one of `authorOut` or `committerOut` must not be `nil`. If both
+/// are `nil`, this function will return ``GitErrorCode/gitEUser``.
 ///
-/// If `authorOut` is not `nil`, it will be populated with the author information.
-/// The `GIT_AUTHOR_NAME` and `GIT_AUTHOR_EMAIL` environment variables will be honored.
-/// The `user.name` and `user.email` configuration options will be honored if the environment
-/// variables are unset. For timestamps, `GIT_AUTHOR_DATE` will be used, otherwise the current time
+/// If `authorOut` is not `nil`, it will be populated with the author
+/// information. The `GIT_AUTHOR_NAME` and `GIT_AUTHOR_EMAIL` environment
+/// variables will be honored. The `user.name` and `user.email` configuration
+/// options will be honored if the environment variables are unset.
+/// For timestamps, `GIT_AUTHOR_DATE` will be used, otherwise the current time
 /// will be used.
 ///
-/// If `committerOut` is not `nil`, it will be populated with the committer information. The
-/// `GIT_COMMITTER_NAME` and `GIT_COMMITTER_EMAIL` environment variables will be honored.
-/// The `user.name` and `user.email` configuration options will be honored if the environment
-/// variables are unset. For timestamps, `GIT_COMMITTER_DATE` will be used, otherwise the current
+/// If `committerOut` is not `nil`, it will be populated with the committer
+/// information. The `GIT_COMMITTER_NAME` and `GIT_COMMITTER_EMAIL` environment
+/// variables will be honored. The `user.name` and `user.email` configuration
+/// options will be honored if the environment variables are unset.
+/// For timestamps, `GIT_COMMITTER_DATE` will be used, otherwise the current
 /// time will be used.
 ///
-/// If neither `GIT_AUTHOR_DATE` nor `GIT_COMMITTER_DATE` are set, both timestamps will be set
-/// to the same time.
+/// If neither `GIT_AUTHOR_DATE` nor `GIT_COMMITTER_DATE` are set, both
+/// timestamps will be set to the same time.
 ///
-/// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name` or
-/// `user.email `are not set, and there is no fallback from an environment variable.
+/// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name`
+/// or `user.email `are not set, and there is no fallback from an environment
+/// variable.
 ///
 /// ## C Equivalent
 ///
@@ -210,7 +214,8 @@ public func gitSignatureDefaultFromEnv(
 
 
 
-/// Creates a new signature with the default user and a timestamp representing the current time.
+/// Creates a new signature with the default user and a timestamp representing
+/// the current time.
 /// - Parameters:
 ///   - out: The ``GitSignature`` instance in which to store the new signature.
 ///   - repo: The repository. The underlying type must be `git_repository`.
@@ -218,14 +223,16 @@ public func gitSignatureDefaultFromEnv(
 ///
 /// ## Discussion
 ///
-/// This function looks up the `user.name` and `user.email` from the configuration, uses the
-/// current time as the timestamp, and creates a new signature based on that information.
+/// This function looks up the `user.name` and `user.email` from the
+/// configuration, uses the current time as the timestamp, and creates a new
+/// signature based on that information.
 ///
-/// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name` or
-/// `user.email` are not set.
+/// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name`
+/// or `user.email` are not set.
 ///
-/// - Note: This function does not examine environment variables. It examines only the configuration files.
-/// Use ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)`` to consider
+/// - Note: This function does not examine environment variables. It examines
+/// only the configuration files. Use
+/// ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)`` to consider
 /// the environment variables.
 ///
 /// ## C Equivalent
@@ -260,9 +267,10 @@ public func gitSignatureDefault(
 ///
 /// ## Discussion
 ///
-/// The buffer is expected to be in the format `Real Name <email> timestamp tzoffset`,
-/// where `timestamp` is the number of seconds since the UNIX epoch and `tzoffset` is the
-/// timezone offset in `hhmm` format (without colon separators).
+/// The buffer is expected to be in the format
+/// `Real Name <email> timestamp tzoffset`, where `timestamp` is the number
+/// of seconds since the UNIX epoch and `tzoffset` is the timezone offset in
+/// `hhmm` format (without colon separators).
 ///
 /// ## C Equivalent
 ///
@@ -312,7 +320,7 @@ public func gitSignatureDup(
         {
             cDest in
             
-            return sig.withCValue
+            return try sig.withCValue
             {
                 cSig in
                 
@@ -332,11 +340,13 @@ public func gitSignatureDup(
 ///
 /// ## Discussion
 ///
-/// This function is only needed when working directly with `git_signature` instances allocated by
-/// libgit2. ``GitSignature`` instances do not need to be freed.
+/// Since `git_signature` is not an opaque struct, it is legal to free it
+/// manually, but be sure to free the `name` and `email` strings in addition
+/// to the `git_signature` struct itself.
 ///
-/// Since `git_signature` is not an opaque struct, it is legal to free it manually, but be sure to
-/// free the `name` and `email` strings in addition to the `git_signature` struct itself.
+/// -  Note: This function is only needed when working directly with
+/// `git_signature` instances allocated by libgit2. ``GitSignature`` instances
+/// do not need to be freed.
 ///
 /// ## C Equivalent
 ///
@@ -345,5 +355,11 @@ public func gitSignatureFree(
     sig: UnsafeMutablePointer<git_signature>?
 )
 {
+    guard let sig: UnsafeMutablePointer<git_signature> = sig
+    else
+    {
+        return
+    }
+    
     git_signature_free(sig)
 }

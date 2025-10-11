@@ -7,7 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// A sendable type that can be converted to and from an associated fixed-size integer raw value.
+/// A sendable type that can be converted to and from an associated fixed-size
+/// integer raw value.
 internal protocol GitEnum: CConvertible, RawRepresentable, Sendable
     where RawValue: FixedWidthInteger
 {

@@ -114,8 +114,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(oldBlobPointer)
-                Free.freeBlob(newBlobPointer)
+                gitBlobFree(blob: oldBlobPointer)
+                gitBlobFree(blob: newBlobPointer)
             }
             
             
@@ -200,7 +200,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -373,8 +373,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffFindOptions.renameLimit, 1000)
         XCTAssertNil(diffFindOptions.metric)
         
-        XCTAssertEqual(gitDiffFindOptionsVersion, UInt32(GIT_DIFF_FIND_OPTIONS_VERSION))
-        
         let cDiffFindOptions: git_diff_find_options = try diffFindOptions.cValue()
         
         XCTAssertEqual(cDiffFindOptions.version, gitDiffOptionsVersion)
@@ -385,6 +383,27 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(cDiffFindOptions.break_rewrite_threshold, 50)
         XCTAssertEqual(cDiffFindOptions.rename_limit, 1000)
         XCTAssertNil(cDiffFindOptions.metric)
+    }
+    
+    
+    
+    func testGitDiffFindOptionsInit() throws
+    {
+        var diffFindOptions = git_diff_find_options()
+        
+        let diffFindOptionsInitResult: GitErrorCode = gitDiffFindOptionsInit(
+            opts:       &diffFindOptions,
+            version:    gitDiffFindOptionsVersion
+        )
+        
+        XCTAssertOK(diffFindOptionsInitResult)
+    }
+    
+    
+    
+    func testGitDiffFindOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffFindOptionsVersion), GIT_DIFF_FIND_OPTIONS_VERSION)
     }
     
     
@@ -426,7 +445,7 @@ final class DiffTests: XCTestCaseStopOnFail
             defer
             {
                 Free.freeTree(treePointer)
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -543,6 +562,23 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffFindT.gitDiffBreakRewritesForRenamesOnly.cValue(), GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY)
         XCTAssertEqual(GitDiffFindT.gitDiffFindRemoveUnmodified.cValue(), GIT_DIFF_FIND_REMOVE_UNMODIFIED)
         
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_BY_CONFIG).cValue(), GIT_DIFF_FIND_BY_CONFIG)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_RENAMES).cValue(), GIT_DIFF_FIND_RENAMES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_RENAMES_FROM_REWRITES).cValue(), GIT_DIFF_FIND_RENAMES_FROM_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_COPIES).cValue(), GIT_DIFF_FIND_COPIES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_COPIES_FROM_UNMODIFIED).cValue(), GIT_DIFF_FIND_COPIES_FROM_UNMODIFIED)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_REWRITES).cValue(), GIT_DIFF_FIND_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_BREAK_REWRITES).cValue(), GIT_DIFF_BREAK_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_AND_BREAK_REWRITES).cValue(), GIT_DIFF_FIND_AND_BREAK_REWRITES)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_FOR_UNTRACKED).cValue(), GIT_DIFF_FIND_FOR_UNTRACKED)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_ALL).cValue(), GIT_DIFF_FIND_ALL)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_IGNORE_LEADING_WHITESPACE).cValue(), GIT_DIFF_FIND_IGNORE_LEADING_WHITESPACE)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_IGNORE_WHITESPACE).cValue(), GIT_DIFF_FIND_IGNORE_WHITESPACE)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_DONT_IGNORE_WHITESPACE).cValue(), GIT_DIFF_FIND_DONT_IGNORE_WHITESPACE)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_EXACT_MATCH_ONLY).cValue(), GIT_DIFF_FIND_EXACT_MATCH_ONLY)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY).cValue(), GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY)
+        XCTAssertEqual(GitDiffFindT(cValue: GIT_DIFF_FIND_REMOVE_UNMODIFIED).cValue(), GIT_DIFF_FIND_REMOVE_UNMODIFIED)
+        
         
         
         let flags: GitDiffFindT =
@@ -573,6 +609,12 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffFlagT.gitDiffFlagValidID.cValue(), GIT_DIFF_FLAG_VALID_ID)
         XCTAssertEqual(GitDiffFlagT.gitDiffFlagExists.cValue(), GIT_DIFF_FLAG_EXISTS)
         XCTAssertEqual(GitDiffFlagT.gitDiffFlagValidSize.cValue(), GIT_DIFF_FLAG_VALID_SIZE)
+        
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_BINARY).cValue(), GIT_DIFF_FLAG_BINARY)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_NOT_BINARY).cValue(), GIT_DIFF_FLAG_NOT_BINARY)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_VALID_ID).cValue(), GIT_DIFF_FLAG_VALID_ID)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_EXISTS).cValue(), GIT_DIFF_FLAG_EXISTS)
+        XCTAssertEqual(GitDiffFlagT(cValue: GIT_DIFF_FLAG_VALID_SIZE).cValue(), GIT_DIFF_FLAG_VALID_SIZE)
         
         
         
@@ -648,6 +690,13 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffFree() throws
+    {
+        gitDiffFree(diff: nil)
+    }
+    
+    
+    
     func testGitDiffFromBuffer() throws
     {
         let patchContent: String =
@@ -670,7 +719,7 @@ final class DiffTests: XCTestCaseStopOnFail
         
         defer
         {
-            Free.freeDiff(diffPointer)
+            gitDiffFree(diff: diffPointer)
         }
         
         
@@ -701,7 +750,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeDiffStats(diffStatsPointer)
+                    gitDiffStatsFree(stats: diffStatsPointer)
                 }
                 
                 
@@ -722,19 +771,22 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                let filesChanged: Int = gitDiffStatsFilesChanged(stats: diffStatsPointer)
+                let filesChanged: Int
+                    = gitDiffStatsFilesChanged(stats: diffStatsPointer)
                 
                 XCTAssertGreaterThan(filesChanged, 0)
                 
                 
                 
-                let insertions: Int = gitDiffStatsInsertions(stats: diffStatsPointer)
+                let insertions: Int
+                    = gitDiffStatsInsertions(stats: diffStatsPointer)
                 
                 XCTAssertGreaterThanOrEqual(insertions, 0)
                 
                 
                 
-                let deletions: Int = gitDiffStatsDeletions(stats: diffStatsPointer)
+                let deletions: Int
+                    = gitDiffStatsDeletions(stats: diffStatsPointer)
                 
                 XCTAssertGreaterThanOrEqual(deletions, 0)
                 
@@ -794,6 +846,13 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffHunkHeaderSize() throws
+    {
+        XCTAssertEqual(Int32(gitDiffHunkHeaderSize), GIT_DIFF_HUNK_HEADER_SIZE)
+    }
+    
+    
+    
     func testGitDiffIndexToIndex() throws
     {
         try Repository.withRepositoryAndIndexPointer
@@ -805,8 +864,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeIndex(newIndexPointer)
-                Free.freeDiff(diffPointer)
+                gitIndexFree(index: newIndexPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -827,7 +886,8 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let indexWriteResult: GitErrorCode = gitIndexWrite(index: oldIndexPointer)
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: oldIndexPointer)
             
             XCTAssertOK(indexWriteResult)
             
@@ -897,7 +957,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -1047,8 +1107,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffOptions.oldPrefix, "a")
         XCTAssertEqual(diffOptions.newPrefix, "b")
         
-        XCTAssertEqual(gitDiffOptionsVersion, UInt32(GIT_DIFF_OPTIONS_VERSION))
-        
         try diffOptions.withCValue
         {
             cDiffOptions in
@@ -1068,6 +1126,27 @@ final class DiffTests: XCTestCaseStopOnFail
             XCTAssertEqual(String(optionalCString: cDiffOptions.pointee.old_prefix), "a")
             XCTAssertEqual(String(optionalCString: cDiffOptions.pointee.new_prefix), "b")
         }
+    }
+    
+    
+    
+    func testGitDiffOptionsInit() throws
+    {
+        var diffOptions = git_diff_options()
+        
+        let diffOptionsInitResult: GitErrorCode = gitDiffOptionsInit(
+            opts:       &diffOptions,
+            version:    gitDiffOptionsVersion
+        )
+        
+        XCTAssertOK(diffOptionsInitResult)
+    }
+    
+    
+    
+    func testGitDiffOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffOptionsVersion), GIT_DIFF_OPTIONS_VERSION)
     }
     
     
@@ -1139,6 +1218,38 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffOptionT.gitDiffMinimal.cValue(), GIT_DIFF_MINIMAL)
         XCTAssertEqual(GitDiffOptionT.gitDiffShowBinary.cValue(), GIT_DIFF_SHOW_BINARY)
         
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_NORMAL).cValue(), GIT_DIFF_NORMAL)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_REVERSE).cValue(), GIT_DIFF_REVERSE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_IGNORED).cValue(), GIT_DIFF_INCLUDE_IGNORED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_RECURSE_IGNORED_DIRS).cValue(), GIT_DIFF_RECURSE_IGNORED_DIRS)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNTRACKED).cValue(), GIT_DIFF_INCLUDE_UNTRACKED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_RECURSE_UNTRACKED_DIRS).cValue(), GIT_DIFF_RECURSE_UNTRACKED_DIRS)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNMODIFIED).cValue(), GIT_DIFF_INCLUDE_UNMODIFIED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_TYPECHANGE).cValue(), GIT_DIFF_INCLUDE_TYPECHANGE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_TYPECHANGE_TREES).cValue(), GIT_DIFF_INCLUDE_TYPECHANGE_TREES)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_FILEMODE).cValue(), GIT_DIFF_IGNORE_FILEMODE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_SUBMODULES).cValue(), GIT_DIFF_IGNORE_SUBMODULES)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_CASE).cValue(), GIT_DIFF_IGNORE_CASE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_CASECHANGE).cValue(), GIT_DIFF_INCLUDE_CASECHANGE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_DISABLE_PATHSPEC_MATCH).cValue(), GIT_DIFF_DISABLE_PATHSPEC_MATCH)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SKIP_BINARY_CHECK).cValue(), GIT_DIFF_SKIP_BINARY_CHECK)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_ENABLE_FAST_UNTRACKED_DIRS).cValue(), GIT_DIFF_ENABLE_FAST_UNTRACKED_DIRS)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_UPDATE_INDEX).cValue(), GIT_DIFF_UPDATE_INDEX)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNREADABLE).cValue(), GIT_DIFF_INCLUDE_UNREADABLE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INCLUDE_UNREADABLE_AS_UNTRACKED).cValue(), GIT_DIFF_INCLUDE_UNREADABLE_AS_UNTRACKED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_INDENT_HEURISTIC).cValue(), GIT_DIFF_INDENT_HEURISTIC)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_BLANK_LINES).cValue(), GIT_DIFF_IGNORE_BLANK_LINES)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_FORCE_TEXT).cValue(), GIT_DIFF_FORCE_TEXT)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_FORCE_BINARY).cValue(), GIT_DIFF_FORCE_BINARY)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_WHITESPACE).cValue(), GIT_DIFF_IGNORE_WHITESPACE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_WHITESPACE_CHANGE).cValue(), GIT_DIFF_IGNORE_WHITESPACE_CHANGE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_IGNORE_WHITESPACE_EOL).cValue(), GIT_DIFF_IGNORE_WHITESPACE_EOL)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SHOW_UNTRACKED_CONTENT).cValue(), GIT_DIFF_SHOW_UNTRACKED_CONTENT)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SHOW_UNMODIFIED).cValue(), GIT_DIFF_SHOW_UNMODIFIED)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_PATIENCE).cValue(), GIT_DIFF_PATIENCE)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_MINIMAL).cValue(), GIT_DIFF_MINIMAL)
+        XCTAssertEqual(GitDiffOptionT(cValue: GIT_DIFF_SHOW_BINARY).cValue(), GIT_DIFF_SHOW_BINARY)
+        
         
         
         let flags: GitDiffOptionT =
@@ -1161,12 +1272,17 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffParseOptions.version, gitDiffParseOptionsVersion)
         XCTAssertEqual(diffParseOptions.oidType, .gitOIDSHA1)
         
-        XCTAssertEqual(gitDiffParseOptionsVersion, UInt32(GIT_DIFF_PARSE_OPTIONS_VERSION))
-        
         let cDiffParseOptions: git_diff_parse_options = diffParseOptions.cValue()
         
         XCTAssertEqual(cDiffParseOptions.version, gitDiffParseOptionsVersion)
         XCTAssertEqual(GitOIDT(cValue: cDiffParseOptions.oid_type), .gitOIDSHA1)
+    }
+    
+    
+    
+    func testGitDiffParseOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffParseOptionsVersion), GIT_DIFF_PARSE_OPTIONS_VERSION)
     }
     
     
@@ -1203,11 +1319,31 @@ final class DiffTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(diffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
         
-        XCTAssertEqual(gitDiffPatchIDOptionsVersion, UInt32(GIT_DIFF_PATCHID_OPTIONS_VERSION))
-        
         let cDiffPatchIDOptions: git_diff_patchid_options = try diffPatchIDOptions.cValue()
         
         XCTAssertEqual(cDiffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
+    }
+    
+    
+    
+    func testGitDiffPatchIDOptionsInit() throws
+    {
+        var diffPatchIDOptions = git_diff_patchid_options()
+        
+        let diffPatchIDOptionsInitResult: GitErrorCode
+            = gitDiffPatchIDOptionsInit(
+                opts:       &diffPatchIDOptions,
+                version:    gitDiffPatchIDOptionsVersion
+            )
+        
+        XCTAssertOK(diffPatchIDOptionsInitResult)
+    }
+    
+    
+    
+    func testGitDiffPatchIDOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitDiffPatchIDOptionsVersion), GIT_DIFF_PATCHID_OPTIONS_VERSION)
     }
     
     
@@ -1282,6 +1418,12 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffStatsFormatT.gitDiffStatsNumber.cValue(), GIT_DIFF_STATS_NUMBER)
         XCTAssertEqual(GitDiffStatsFormatT.gitDiffStatsIncludeSummary.cValue(), GIT_DIFF_STATS_INCLUDE_SUMMARY)
         
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_NONE).cValue(), GIT_DIFF_STATS_NONE)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_FULL).cValue(), GIT_DIFF_STATS_FULL)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_SHORT).cValue(), GIT_DIFF_STATS_SHORT)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_NUMBER).cValue(), GIT_DIFF_STATS_NUMBER)
+        XCTAssertEqual(GitDiffStatsFormatT(cValue: GIT_DIFF_STATS_INCLUDE_SUMMARY).cValue(), GIT_DIFF_STATS_INCLUDE_SUMMARY)
+        
         
         
         let flags: GitDiffStatsFormatT =
@@ -1293,6 +1435,13 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertTrue(flags.contains(.gitDiffStatsFull))
         XCTAssertTrue(flags.contains(.gitDiffStatsNumber))
         XCTAssertFalse(flags.contains(.gitDiffStatsShort))
+    }
+    
+    
+    
+    func testGitDiffStatsFree() throws
+    {
+        gitDiffStatsFree(stats: nil)
     }
     
     
@@ -1343,7 +1492,7 @@ final class DiffTests: XCTestCaseStopOnFail
             defer
             {
                 Free.freeTree(treePointer)
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -1446,7 +1595,7 @@ final class DiffTests: XCTestCaseStopOnFail
             defer
             {
                 Free.freeTree(treePointer)
-                Free.freeDiff(diffPointer)
+                gitDiffFree(diff: diffPointer)
             }
             
             
@@ -1466,12 +1615,13 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let diffTreeToWorkdirWithIndexResult: GitErrorCode = gitDiffTreeToWorkdirWithIndex(
-                diff:       &diffPointer,
-                repo:       repository.pointer,
-                oldTree:    treePointer,
-                opts:       nil
-            )
+            let diffTreeToWorkdirWithIndexResult: GitErrorCode
+                = gitDiffTreeToWorkdirWithIndex(
+                    diff:       &diffPointer,
+                    repo:       repository.pointer,
+                    oldTree:    treePointer,
+                    opts:       nil
+                )
             
             XCTAssertOK(diffTreeToWorkdirWithIndexResult)
             Diff.assertDiffChanges(diffPointer: diffPointer)

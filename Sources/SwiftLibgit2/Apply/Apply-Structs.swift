@@ -40,8 +40,8 @@ public struct GitApplyOptions: GitStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var hunkCB  : GitApplyHunkCB?            = nil
     
-    /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB`` and
-    /// ``GitApplyOptions/hunkCB``.
+    /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB``
+    /// and ``GitApplyOptions/hunkCB``.
     ///
     /// ## Discussion
     ///
@@ -66,7 +66,8 @@ public struct GitApplyOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitApplyOptions`` instance from a `git_apply_options` instance.
+    /// Creates a ``GitApplyOptions`` instance from a `git_apply_options`
+    /// instance.
     /// - Parameter applyOptions: The `git_apply_options` instance to use.
     internal init(
         cValue applyOptions: git_apply_options
@@ -81,10 +82,11 @@ public struct GitApplyOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_apply_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_apply_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_apply_options>) throws -> T
     ) throws -> T

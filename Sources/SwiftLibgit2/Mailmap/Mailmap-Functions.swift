@@ -13,13 +13,14 @@ import Foundation
 
 
 /// Creates a new mailmap.
-/// - Parameter out: The pointer in which to store the mailmap. The underlying type must be
-/// `git_mailmap`.
+/// - Parameter out: The pointer in which to store the mailmap. The underlying
+/// type must be `git_mailmap`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// - Note: The resulting mailmap will be empty. Add a mailmap file before using it.
+/// - Note: The resulting mailmap will be empty. Add a mailmap file before
+/// using it.
 ///
 /// ## C Equivalent
 ///
@@ -37,7 +38,8 @@ public func gitMailmapNew(
 
 
 /// Frees the memory allocated for the given `git_mailmap` instance.
-/// - Parameter mm: The mailmap to free. The underlying type must be `git_mailmap`.
+/// - Parameter mm: The mailmap to free. The underlying type must be
+/// `git_mailmap`.
 ///
 /// ## C Equivalent
 ///
@@ -46,6 +48,12 @@ public func gitMailmapFree(
     mm: OpaquePointer?
 )
 {
+    guard let mm: OpaquePointer = mm
+    else
+    {
+        return
+    }
+    
     git_mailmap_free(mm)
 }
 
@@ -87,7 +95,8 @@ public func gitMailmapAddEntry(
 
 /// Creates a new mailmap containing a single mailmap file.
 /// - Parameters:
-///   - out: The pointer in which to store the mailmap. The underlying type must be `git_mailmap`.
+///   - out: The pointer in which to store the mailmap. The underlying type
+///   must be `git_mailmap`.
 ///   - buf: The buffer from which to parse the mailmap.
 ///   - len: The length of `buf`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -118,10 +127,11 @@ public func gitMailmapFromBuffer(
 
 
 
-/// Creates a new mailmap from the given repository, loading mailmap files based on the repository's
-/// configuration.
+/// Creates a new mailmap from the given repository, loading mailmap files
+/// based on the repository's configuration.
 /// - Parameters:
-///   - out: The pointer in which to store the mailmap. The underlying type must be `git_mailmap`.
+///   - out: The pointer in which to store the mailmap. The underlying type
+///   must be `git_mailmap`.
 ///   - repo: The repository from which to load mailmap information.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -129,9 +139,10 @@ public func gitMailmapFromBuffer(
 ///
 /// Mailmaps will be loaded in the following order:
 ///
-/// 1. From `.mailmap` in the root of the given repository's working directory, if present.
-/// 2. From the blob specified by the `mailmap.blob` configuration entry, if set. This entry defaults to
-/// `HEAD:.mailmap` in bare repositories.
+/// 1. From `.mailmap` in the root of the given repository's working directory,
+/// if present.
+/// 2. From the blob specified by the `mailmap.blob` configuration entry,
+/// if set. This entry defaults to `HEAD:.mailmap` in bare repositories.
 /// 3. The path in the `mailmap.file` configuration entry, if set.
 ///
 /// ## C Equivalent
@@ -164,8 +175,8 @@ public func gitMailmapFromRepository(
 ///
 /// ## Discussion
 ///
-/// - Important: The lifetime of the `realName` and `realEmail` strings are tied to the
-/// `mm`, `name`, and `email` parameters.
+/// - Important: The lifetime of the `realName` and `realEmail` strings are
+/// tied to the `mm`, `name`, and `email` parameters.
 ///
 /// ## C Equivalent
 ///
@@ -194,9 +205,10 @@ public func gitMailmapResolve(
 
 /// Resolves the given signature to the real name and real email.
 /// - Parameters:
-///   - out: The ``GitSignature`` instance in which to store the resolved signature.
-///   - mm: The mailmap with which to resolve the signature. The underlying type must be
-///   `git_mailmap`.
+///   - out: The ``GitSignature`` instance in which to store the resolved
+///   signature.
+///   - mm: The mailmap with which to resolve the signature. The underlying
+///   type must be `git_mailmap`.
 ///   - sig: The signature to resolve.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -215,7 +227,7 @@ public func gitMailmapResolveSignature(
         {
             cOut in
             
-            return sig.withCValue
+            return try sig.withCValue
             {
                 cSig in
                 

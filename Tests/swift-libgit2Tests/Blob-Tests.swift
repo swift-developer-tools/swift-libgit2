@@ -85,15 +85,17 @@ final class BlobTests: XCTestCaseStopOnFail
             
             var streamPointer: UnsafeMutablePointer<git_writestream>? = nil
             
-            let blobCreateFromStreamResult: GitErrorCode = gitBlobCreateFromStream(
-                out:        &streamPointer,
-                repo:       repository.pointer,
-                hintPath:   "test.txt"
-            )
+            let blobCreateFromStreamResult: GitErrorCode
+                = gitBlobCreateFromStream(
+                    out:        &streamPointer,
+                    repo:       repository.pointer,
+                    hintPath:   "test.txt"
+                )
             
             XCTAssertOK(blobCreateFromStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_writestream> = streamPointer
+            guard let streamPointer: UnsafeMutablePointer<git_writestream>
+                    = streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")
@@ -115,12 +117,12 @@ final class BlobTests: XCTestCaseStopOnFail
             
             let writeResult: Int32 = try data.withCBuffer
             {
-                dataBuffer, dataBufferCount in
+                cData, cDataCount in
                 
                 return streamPointer.pointee.write(
                     streamPointer,
-                    dataBuffer,
-                    dataBufferCount
+                    cData,
+                    cDataCount
                 )
             }
             
@@ -160,7 +162,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -256,7 +258,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             
@@ -327,6 +329,11 @@ final class BlobTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterAttributesFromHEAD.cValue(), GIT_BLOB_FILTER_ATTRIBUTES_FROM_HEAD)
         XCTAssertEqual(GitBlobFilterFlagT.gitBlobFilterAttributesFromCommit.cValue(), GIT_BLOB_FILTER_ATTRIBUTES_FROM_COMMIT)
         
+        XCTAssertEqual(GitBlobFilterFlagT(cValue: GIT_BLOB_FILTER_CHECK_FOR_BINARY).cValue(), GIT_BLOB_FILTER_CHECK_FOR_BINARY)
+        XCTAssertEqual(GitBlobFilterFlagT(cValue: GIT_BLOB_FILTER_NO_SYSTEM_ATTRIBUTES).cValue(), GIT_BLOB_FILTER_NO_SYSTEM_ATTRIBUTES)
+        XCTAssertEqual(GitBlobFilterFlagT(cValue: GIT_BLOB_FILTER_ATTRIBUTES_FROM_HEAD).cValue(), GIT_BLOB_FILTER_ATTRIBUTES_FROM_HEAD)
+        XCTAssertEqual(GitBlobFilterFlagT(cValue: GIT_BLOB_FILTER_ATTRIBUTES_FROM_COMMIT).cValue(), GIT_BLOB_FILTER_ATTRIBUTES_FROM_COMMIT)
+        
         
         
         let flags: GitBlobFilterFlagT =
@@ -351,8 +358,6 @@ final class BlobTests: XCTestCaseStopOnFail
         XCTAssertNil(blobFilterOptions.commitID)
         XCTAssertZeroOID(blobFilterOptions.attrCommitID)
         
-        XCTAssertEqual(gitBlobFilterOptionsVersion, UInt32(GIT_BLOB_FILTER_OPTIONS_VERSION))
-        
         try blobFilterOptions.withCValue
         {
             cBlobFilterOptions in
@@ -362,6 +367,35 @@ final class BlobTests: XCTestCaseStopOnFail
             XCTAssertNil(cBlobFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cBlobFilterOptions.pointee.attr_commit_id))
         }
+    }
+    
+    
+    
+    func testGitBlobFilterOptionsInit() throws
+    {
+        var blobFilterOptions = git_blob_filter_options()
+        
+        let blobFilterOptionsInitResult: GitErrorCode
+            = gitBlobFilterOptionsInit(
+                opts:       &blobFilterOptions,
+                version:    gitBlobFilterOptionsVersion
+            )
+        
+        XCTAssertOK(blobFilterOptionsInitResult)
+    }
+    
+    
+    
+    func testGitBlobFilterOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitBlobFilterOptionsVersion), GIT_BLOB_FILTER_OPTIONS_VERSION)
+    }
+    
+    
+    
+    func testGitBlobFree() throws
+    {
+        gitBlobFree(blob: nil)
     }
     
     
@@ -384,8 +418,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(originalBlobPointer)
-                Free.freeBlob(duplicatedBlobPointer)
+                gitBlobFree(blob: originalBlobPointer)
+                gitBlobFree(blob: duplicatedBlobPointer)
             }
             
             
@@ -414,7 +448,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobDupResult)
             
-            guard let duplicatedBlobPointer: OpaquePointer = duplicatedBlobPointer
+            guard let duplicatedBlobPointer: OpaquePointer
+                    = duplicatedBlobPointer
             else
             {
                 XCTFail("The duplicated blob pointer was nil.")
@@ -465,17 +500,13 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobCreateFromBufferResult: GitErrorCode = try data.withCBuffer
-            {
-                dataBuffer, dataBufferCount in
-                
-                return gitBlobCreateFromBuffer(
+            let blobCreateFromBufferResult: GitErrorCode
+                = gitBlobCreateFromBuffer(
                     id:         &blobOID,
                     repo:       repository.pointer,
-                    buffer:     dataBuffer,
-                    len:        dataBufferCount
+                    buffer:     data,
+                    len:        data.count
                 )
-            }
             
             XCTAssertOK(blobCreateFromBufferResult)
             
@@ -485,7 +516,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeBlob(blobPointer)
+                gitBlobFree(blob: blobPointer)
             }
             
             

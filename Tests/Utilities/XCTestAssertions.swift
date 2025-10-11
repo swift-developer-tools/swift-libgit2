@@ -15,13 +15,14 @@ import XCTest
 
 // MARK: - Result Codes
 
-/// Checks whether a libgit2 result code is ``GitErrorCode/gitOK``, or is one of the given codes.
+/// Checks whether a libgit2 result code is ``GitErrorCode/gitOK``, or is one
+/// of the given codes.
 /// - Parameters:
 ///   - resultCode: The libgit2 result code.
-///   - includedCodes: The libgit2 result codes other than ``GitErrorCode/gitOK`` to
-///   consider successful.
-/// - Returns: Whether the libgit2 result code was ``GitErrorCode/gitOK``, or was one of the
-/// given result codes.
+///   - includedCodes: The libgit2 result codes other than
+///   ``GitErrorCode/gitOK`` to consider successful.
+/// - Returns: Whether the libgit2 result code was ``GitErrorCode/gitOK``,
+/// or was one of the given result codes.
 func isOK(
     _           resultCode      : GitErrorCode,
     including   includedCodes   : Set<GitErrorCode> = []
@@ -33,7 +34,8 @@ func isOK(
 
 
 
-/// Asserts that the given libgit2 operation result code is ``GitErrorCode/gitOK``.
+/// Asserts that the given libgit2 operation result code is
+/// ``GitErrorCode/gitOK``.
 /// - Parameter result: The libgit2 operation result code.
 func XCTAssertOK(
     _ result: GitErrorCode
@@ -60,7 +62,8 @@ func XCTAssertOK(
 
 
 
-/// Asserts that the given libgit2 operation result code is not ``GitErrorCode/gitOK``.
+/// Asserts that the given libgit2 operation result code is not
+/// ``GitErrorCode/gitOK``.
 /// - Parameter result: The libgit2 operation result code.
 func XCTAssertNotOK(
     _ result: GitErrorCode
@@ -73,9 +76,6 @@ func XCTAssertNotOK(
         return
     }
     
-    
-    
-    /// Clear the error before returning.
     git_error_last()
 }
 

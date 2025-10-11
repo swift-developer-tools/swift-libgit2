@@ -9,10 +9,10 @@
 
 internal extension Optional where Wrapped == String
 {
-    /// Calls the given closure with an optional pointer to the contents of the string.
+    /// Calls the given closure with an optional pointer to the contents of
+    /// the string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error thrown by the given closure.
     func withOptionalCString<T>(
         _ body: (UnsafePointer<CChar>?) throws -> T
     ) rethrows -> T
@@ -36,13 +36,14 @@ internal extension Optional where Wrapped == String
     
     
     
-    /// Calls the given closure with an optional mutable pointer to the contents of the string.
+    /// Calls the given closure with an optional mutable pointer to the
+    /// contents of the string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error thrown by the given closure.
+    /// - Throws: An error if the conversion fails.
     func withOptionalMutableCString<T>(
         _ body: (UnsafeMutablePointer<CChar>?) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         switch self
         {

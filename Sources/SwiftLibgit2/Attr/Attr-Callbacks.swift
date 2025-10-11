@@ -11,20 +11,19 @@ import CLibgit2
 
 
 
-/// The callback that will be used with
-/// ``gitAttrForEach(repo:flags:path:callback:payload:)``.
+/// The callback to invoke for each attribute name and value during attribute
+/// iteration.
 /// - Parameters:
 ///   - name: The attribute name.
-///   - value: The attribute value. This may be `nil` if the attribute is explicitly set to unspecified
-///   using the `!` operator.
+///   - value: The attribute value. This may be `nil` if the attribute is
+///   explicitly set to unspecified using the exclamation mark (`!`) operator.
 ///   - payload: The payload provided by the caller.
-/// - Returns: `0` to continue looping or a non-zero value to stop looping. This value will be returned
-/// from ``gitAttrForEach(repo:flags:path:callback:payload:)``.
+/// - Returns: `0` to continue looping, or a non-zero value to stop looping.
 ///
 /// ## Discussion
 ///
-/// This callback will be invoked only once per attribute name, even if there are multiple rules for a given file.
-/// The highest priority rule will be used.
+/// This callback will be invoked only once per attribute name, even if there
+/// are multiple rules for a given file. The highest priority rule will be used.
 ///
 /// ## C Equivalent
 ///

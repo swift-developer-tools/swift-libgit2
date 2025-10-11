@@ -15,6 +15,13 @@ import XCTest
 
 final class IndexerTests: XCTestCaseStopOnFail
 {
+    func testGitIndexerFree() throws
+    {
+        gitIndexerFree(idx: nil)
+    }
+    
+    
+    
     func testGitIndexerProgress() throws
     {
         let indexerProgress = GitIndexerProgress()
@@ -112,14 +119,33 @@ final class IndexerTests: XCTestCaseStopOnFail
         XCTAssertNil(indexerOptions.progressCBPayload)
         XCTAssertFalse(indexerOptions.verify)
         
-        XCTAssertEqual(gitIndexerOptionsVersion, UInt32(GIT_INDEXER_OPTIONS_VERSION))
-        
         let cIndexerOptions: git_indexer_options = try indexerOptions.cValue()
         
         XCTAssertEqual(cIndexerOptions.version, gitIndexerOptionsVersion)
         XCTAssertNil(cIndexerOptions.progress_cb)
         XCTAssertNil(cIndexerOptions.progress_cb_payload)
         XCTAssertFalse(Bool(cIndexerOptions.verify))
+    }
+    
+    
+    
+    func testGitIndexerOptionsInit() throws
+    {
+        var indexerOptions = git_indexer_options()
+        
+        let indexerOptionsInitResult: GitErrorCode = gitIndexerOptionsInit(
+            opts:       &indexerOptions,
+            version:    gitIndexerOptionsVersion
+        )
+        
+        XCTAssertOK(indexerOptionsInitResult)
+    }
+    
+    
+    
+    func testGitIndexerOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitIndexerOptionsVersion), GIT_INDEXER_OPTIONS_VERSION)
     }
 }
 
@@ -139,7 +165,7 @@ extension IndexerTests
     /// Creates packfile data from the given repository.
     /// - Parameter repository: The repository to use.
     /// - Returns: The packfile data.
-    /// - Throws: An error if packfile creation fails.
+    /// - Throws: An error if an operation fails.
     private func createPackfileData(
         from repository: Repository
     ) throws -> Data
@@ -176,10 +202,11 @@ extension IndexerTests
         // TODO: Remove once `git_backbuilder_insert_commit()` has a binding.
         var cHeadOID: git_oid = headOID.cValue()
         
-        let packBuilderInsertCommitResult: Int32 = git_packbuilder_insert_commit(
-            packBuilderPointer,
-            &cHeadOID
-        )
+        let packBuilderInsertCommitResult: Int32
+            = git_packbuilder_insert_commit(
+                packBuilderPointer,
+                &cHeadOID
+            )
         
         XCTAssertOK(GitErrorCode(rawValue: packBuilderInsertCommitResult))
         
@@ -237,7 +264,7 @@ extension IndexerTests
     ///   - repository: The repository from which the packfile data was created.
     ///   - packfileData: The packfile data to index.
     ///   - indexerOptions: The indexer options.
-    /// - Throws: An error if the directory write operation failed.
+    /// - Throws: An error if an operation fails.
     private func testIndexerWithPackfile(
         in          repository      : Repository,
         data        packfileData    : Data,
@@ -250,7 +277,7 @@ extension IndexerTests
         
         defer
         {
-            Free.freeIndexer(indexerPointer)
+            gitIndexerFree(idx: indexerPointer)
             Free.freeODB(odbPointer)
             
             try? FileManager.default.removeItem(at: indexerURL)

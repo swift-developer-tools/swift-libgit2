@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_DIFF_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/diff/GIT_DIFF_OPTIONS_VERSION.html)
-public let gitDiffOptionsVersion: UInt32 = UInt32(GIT_DIFF_OPTIONS_VERSION)
+public let gitDiffOptionsVersion: UInt32 = 1
 
 
 
@@ -25,7 +25,7 @@ public let gitDiffOptionsVersion: UInt32 = UInt32(GIT_DIFF_OPTIONS_VERSION)
 /// ## C Equivalent
 ///
 /// [`GIT_DIFF_HUNK_HEADER_SIZE`](https://libgit2.org/docs/reference/main/diff/GIT_DIFF_HUNK_HEADER_SIZE.html)
-public let gitDiffHunkHeaderSize: UInt32 = UInt32(GIT_DIFF_HUNK_HEADER_SIZE)
+public let gitDiffHunkHeaderSize: UInt32 = 128
 
 
 
@@ -34,7 +34,7 @@ public let gitDiffHunkHeaderSize: UInt32 = UInt32(GIT_DIFF_HUNK_HEADER_SIZE)
 /// ## C Equivalent
 ///
 /// [`GIT_DIFF_FIND_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/diff/GIT_DIFF_FIND_OPTIONS_VERSION.html)
-public let gitDiffFindOptionsVersion: UInt32 = UInt32(GIT_DIFF_FIND_OPTIONS_VERSION)
+public let gitDiffFindOptionsVersion: UInt32 = 1
 
 
 
@@ -43,7 +43,7 @@ public let gitDiffFindOptionsVersion: UInt32 = UInt32(GIT_DIFF_FIND_OPTIONS_VERS
 /// ## C Equivalent
 ///
 /// [`GIT_DIFF_PARSE_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/diff/GIT_DIFF_PARSE_OPTIONS_VERSION.html)
-public let gitDiffParseOptionsVersion: UInt32 = UInt32(GIT_DIFF_PARSE_OPTIONS_VERSION)
+public let gitDiffParseOptionsVersion: UInt32 = 1
 
 
 
@@ -52,4 +52,4 @@ public let gitDiffParseOptionsVersion: UInt32 = UInt32(GIT_DIFF_PARSE_OPTIONS_VE
 /// ## C Equivalent
 ///
 /// [`GIT_DIFF_PATCHID_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/diff/GIT_DIFF_PATCHID_OPTIONS_VERSION.html)
-public let gitDiffPatchIDOptionsVersion: UInt32 = UInt32(GIT_DIFF_PATCHID_OPTIONS_VERSION)
+public let gitDiffPatchIDOptionsVersion: UInt32 = 1

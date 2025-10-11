@@ -46,8 +46,9 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This function will be called if the remote host requires authentication in order to connect.
-    /// Returning `GIT_PASSTHROUGH` will make libgit2 behave as though this field were not set.
+    /// This function will be called if the remote host requires authentication
+    /// in order to connect. Returning `GIT_PASSTHROUGH` will make libgit2
+    /// behave as though this field were not set.
     public var credentials      : GitCredentialAcquireCB?           = nil
     
     /// The callback for the user's custom certificate checks.
@@ -56,11 +57,13 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If  certificate verification fails, this function will be called to let the user make the final decision
-    /// of whether to allow the connection to proceed.
+    /// If  certificate verification fails, this function will be called to
+    /// let the user make the final decision of whether to allow the connection
+    /// to proceed.
     public var certificateCheck : GitTransportCertificateCheckCB?   = nil
     
-    /// The caller-specified payload passed to ``credentials`` and ``certificateCheck``.
+    /// The caller-specified payload passed to ``credentials`` and
+    /// ``certificateCheck``.
     ///
     /// ## Discussion
     ///
@@ -78,13 +81,14 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitProxyOptions`` instance from a `git_proxy_options` instance.
+    /// Creates a ``GitProxyOptions`` instance from a `git_proxy_options`
+    /// instance.
     /// - Parameter proxyOptions: The `git_proxy_options` instance to use.
     ///
     /// ## Discussion
     ///
-    /// ``type`` defaults to ``GitProxyT/gitProxyNone`` if an unexpected value is
-    /// encountered, although this should never occur.
+    /// ``type`` defaults to ``GitProxyT/gitProxyNone`` if an unexpected value
+    /// is encountered, although this should never occur.
     internal init(
         cValue proxyOptions: git_proxy_options
     )
@@ -99,10 +103,11 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     
     
     
-    /// Calls the given closure with a mutable pointer to a `git_proxy_options` instance.
+    /// Calls the given closure with a mutable pointer to a `git_proxy_options`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An `NSError` if the conversion failed.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_proxy_options>) throws -> T
     ) throws -> T
