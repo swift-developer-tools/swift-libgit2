@@ -238,7 +238,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             /// Simulate libgit2 populating the array.
-            arrayOfOIDs.withMutatingGitOIDArray
+            try arrayOfOIDs.withMutatingGitOIDArray
             {
                 oidArray in
                 
@@ -259,7 +259,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             var emptyArrayOfOIDs: [GitOID] = []
             
-            emptyArrayOfOIDs.withMutatingGitOIDArray
+            try emptyArrayOfOIDs.withMutatingGitOIDArray
             {
                 oidArray in
                 
