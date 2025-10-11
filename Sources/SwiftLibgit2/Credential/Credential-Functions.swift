@@ -323,7 +323,46 @@ public func gitCredentialSSHCustomNew(
             )
         }
         
-        return try publicKey.withCBuffer
+        
+        
+        /// If `publicKey` is not null-terminated, append a null terminator.
+        /// This is necessary due to a bug in libgit2's `ssh_custom_free()`
+        /// function. The code flow of the bug is as follows:
+        ///
+        /// 1. `git_credential_ssh_custom_new()` is a wrapper around the
+        /// undocumented `libssh2_userauth_publickey()` function.
+        ///
+        /// 2. The libssh2 function accepts `const unsigned char *pubkeydata`
+        /// and `size_t pubkeydata_len`, which strongly indicate that it is
+        /// not a null-terminated string.
+        ///
+        /// 3. `git_credential_ssh_custom_new()` allocates and copies the
+        /// given binary data, then assigns `ssh_custom_free()` to
+        /// `git_credential_ssh_custom->parent.free`.
+        ///
+        /// 4. `ssh_custom_free()` treats the public key as null-terminated by
+        /// assigning `size_t key_len strlen(c->publickey)` before calling
+        /// `git__memzero(c->publickey, key_len)` and `git__free(c->publickey)`,
+        /// where `c` is a `git_credential_ssh_custom` instance.
+        ///
+        /// This causes a heap buffer overflow when freeing a public key that
+        /// is not null-terminated. The overflow was detected by Apple's
+        /// Address Sanitizer.
+        ///
+        /// Instead, `ssh_custom_free()` should use the stored length property
+        /// and assign `size_t key_len c->publickey_len`. As long as libgit2
+        /// is treating the public key as a null-terminated string, the given
+        /// public key must be adjusted to avoid a heap buffer overflow.
+        var nullTerminatedPublicKey: Data = publicKey
+        
+        if
+            let lastByte: UInt8 = nullTerminatedPublicKey.last,
+            lastByte != 0
+        {
+            nullTerminatedPublicKey.append(0)
+        }
+        
+        return try nullTerminatedPublicKey.withCBuffer
         {
             cPublicKey, cPublicKeyCount in
             
