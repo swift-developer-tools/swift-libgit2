@@ -483,6 +483,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitHeaderFieldResult)
             XCTAssertNotNil(buffer.ptr)
+            XCTAssertGreaterThan(buffer.size, 0)
         }
     }
     
