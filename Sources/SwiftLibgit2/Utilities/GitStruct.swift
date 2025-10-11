@@ -503,6 +503,7 @@ internal extension GitStruct where Self: WithCConvertible & Freeable
         return try withCValue
         {
             cValuePointer in
+            
             var optionalCValuePointer: UnsafeMutablePointer<C>? = cValuePointer
             
             let result: T = try body(&optionalCValuePointer)
