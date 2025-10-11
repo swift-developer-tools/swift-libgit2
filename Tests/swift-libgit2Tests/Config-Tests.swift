@@ -1259,24 +1259,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                     )
                 
                 XCTAssertOK(configGetStringBufResult)
-                
-                guard let stringBufferPointer: UnsafeMutablePointer<CChar>
-                        = stringBuffer.ptr
-                else
-                {
-                    XCTFail("The string buffer pointer was nil.")
-                    return
-                }
-                
-                guard let stringBufferContent
-                        = String(optionalCString: stringBufferPointer)
-                else
-                {
-                    XCTFail("The string buffer content was nil.")
-                    return
-                }
-                
-                XCTAssertEqual(stringBufferContent, stringExpectedValue)
+                XCTAssertEqual(stringBuffer, stringExpectedValue)
                 
                 
                 

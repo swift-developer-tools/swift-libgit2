@@ -57,18 +57,10 @@ internal extension Array where Element == GitOID
     /// instance, and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
-    ///
-    /// ``gitOIDArrayDispose(array:)`` is used only if the receiver is empty,
-    /// since that function is intended to free the OIDs of a `git_oidarray`
-    /// which was allocated by libgit2.
-    ///
-    /// When the receiver is not empty, the memory is manually allocated and
-    /// deallocated.
+    /// - Throws: An error if the conversion fails.
     mutating func withMutatingGitOIDArray<T>(
         _ body: (UnsafeMutablePointer<git_oidarray>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         guard !self.isEmpty
         else
@@ -80,8 +72,6 @@ internal extension Array where Element == GitOID
                 gitOIDArrayDispose(array: &oidArray)
             }
             
-            
-            
             let result: T = try body(&oidArray)
             
             self = Array(oidArray)
@@ -91,38 +81,37 @@ internal extension Array where Element == GitOID
         
         
         
-        let cOIDs = UnsafeMutablePointer<git_oid>
-            .allocate(capacity: self.count)
-        
-        defer
+        return try self.withArrayOfGitOIDs
         {
-            cOIDs.deallocate()
+            cArrayOfOIDs, cArrayOfOIDsCount in
+            
+            let originalPointer: UnsafeMutablePointer<git_oid>?
+                = UnsafeMutablePointer(mutating: cArrayOfOIDs)
+            
+            var oidArray = git_oidarray()
+            
+            oidArray.ids    = originalPointer
+            oidArray.count  = cArrayOfOIDsCount
+            
+            
+            
+            let result: T = try body(&oidArray)
+            
+            self = Array(oidArray)
+            
+            if oidArray.ids != originalPointer
+            {
+                /// libgit2 allocated new memory that must be freed.
+                gitOIDArrayDispose(array: &oidArray)
+            }
+            
+            return result
         }
-        
-        
-        
-        for (index, swiftOID) in self.enumerated()
-        {
-            cOIDs[index] = swiftOID.cValue()
-        }
-        
-        var oidArray = git_oidarray()
-        
-        oidArray.ids    = cOIDs
-        oidArray.count  = self.count
-        
-        
-        
-        let result: T = try body(&oidArray)
-        
-        self = Array(oidArray)
-        
-        return result
     }
     
     
     
-    /// Creates an array of ``GitOID``instnaces from a `git_oidarray` instance.
+    /// Creates an array of ``GitOID`` instances from a `git_oidarray` instance.
     /// - Parameter oidArray: The `git_oidarray` instance to convert.
     init(
         _ oidArray: git_oidarray

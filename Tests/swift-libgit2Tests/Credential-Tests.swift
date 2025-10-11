@@ -164,9 +164,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         XCTAssertOK(credentialSSHCustomNewResult)
         
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        validateUsername(of: credentialPointer)
     }
     
     
@@ -204,9 +202,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         XCTAssertOK(credentialSSHInteractiveNewResult)
         
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        validateUsername(of: credentialPointer)
     }
     
     
@@ -229,9 +225,8 @@ final class CredentialTests: XCTestCaseStopOnFail
             )
         
         XCTAssertOK(credentialSSHKeyFromAgentResult)
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        
+        validateUsername(of: credentialPointer)
     }
     
     
@@ -261,9 +256,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         XCTAssertOK(credentialSSHKeyMemoryNewResult)
         
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        validateUsername(of: credentialPointer)
         
         
         
@@ -277,9 +270,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         XCTAssertOK(credentialSSHKeyMemoryNewResult)
         
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        validateUsername(of: credentialPointer)
     }
     
     
@@ -306,9 +297,8 @@ final class CredentialTests: XCTestCaseStopOnFail
         /// There is no verification of SSH keys, so invalid paths will not
         /// cause a failure.
         XCTAssertOK(credentialSSHKeyNewResult)
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        
+        validateUsername(of: credentialPointer)
         
         
         
@@ -323,9 +313,8 @@ final class CredentialTests: XCTestCaseStopOnFail
         /// There is no verification of SSH keys, so invalid paths will not
         /// cause a failure.
         XCTAssertOK(credentialSSHKeyNewResult)
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        
+        validateUsername(of: credentialPointer)
     }
     
     
@@ -391,9 +380,8 @@ final class CredentialTests: XCTestCaseStopOnFail
             )
         
         XCTAssertOK(credentialUsernameNewResult)
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        
+        validateUsername(of: credentialPointer)
     }
     
     
@@ -417,9 +405,8 @@ final class CredentialTests: XCTestCaseStopOnFail
             )
         
         XCTAssertOK(credentialUserPassPlaintextNewResult)
-        XCTAssertNotNil(credentialPointer)
-        XCTAssertTrue(gitCredentialHasUsername(cred: credentialPointer))
-        XCTAssertEqual(gitCredentialGetUsername(cred: credentialPointer), Repository.commitAuthorName)
+        
+        validateUsername(of: credentialPointer)
     }
 }
 
@@ -435,5 +422,35 @@ extension CredentialTests
         var url             : String?   = nil
         var usernameFromURL : String?   = nil
         var allowedTypes    : UInt32?   = nil
+    }
+    
+    
+    
+    /// Checks the the username of the given credential pointer equals the
+    /// given username.
+    /// - Parameters:
+    ///   - credentialPointer: A mutable pointer to the credential to check.
+    ///   - expectedUsername: The expected username.
+    private func validateUsername(
+        of      credentialPointer   : UnsafeMutablePointer<git_credential>?,
+        equals  expectedUsername    : String = Repository.commitAuthorName
+    )
+    {
+        guard let credentialPointer: UnsafeMutablePointer<git_credential>
+                = credentialPointer
+        else
+        {
+            XCTFail("The credential pointer was nil.")
+            return
+        }
+        
+        
+        
+        let hasUsername : Bool      = gitCredentialHasUsername(cred: credentialPointer)
+        let username    : String?   = gitCredentialGetUsername(cred: credentialPointer)
+        
+        XCTAssertTrue(hasUsername)
+        XCTAssertNotNil(username)
+        XCTAssertEqual(username, expectedUsername)
     }
 }

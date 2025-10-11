@@ -147,23 +147,9 @@ final class BufferTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(blobFilterResult)
+            XCTAssertEqual(buffer, content)
             
-            guard let bufferPointer: UnsafeMutablePointer<CChar> = buffer.ptr
-            else
-            {
-                XCTFail("The buffer pointer was nil.")
-                return
-            }
             
-            guard let bufferContent = String(optionalCString: bufferPointer)
-            else
-            {
-                XCTFail("The buffer content was nil.")
-                return
-            }
-            
-            XCTAssertEqual(buffer.size, firstBufferSize)
-            XCTAssertEqual(bufferContent, content)
             
             buffer.withCValue
             {

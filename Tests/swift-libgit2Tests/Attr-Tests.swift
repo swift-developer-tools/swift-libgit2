@@ -284,38 +284,18 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let attributeNames  : [String]  = []
-            let attributeCount  : Int       = attributeNames.count
-            
-            
-            
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>
-                .allocate(capacity: attributeCount)
-            
-            defer
-            {
-                valueOut.deallocate()
-            }
-            
-            
+            var valueOut: UnsafePointer<CChar>? = nil
             
             let attrGetManyResult: GitErrorCode = gitAttrGetMany(
-                valueOut:   valueOut,
+                valueOut:   &valueOut,
                 repo:       repository.pointer,
                 flags:      .gitAttrCheckFileThenIndex,
                 path:       "test.txt",
-                numAttr:    attributeCount,
-                names:      attributeNames
+                numAttr:    0,
+                names:      []
             )
             
             XCTAssertOK(attrGetManyResult)
-            
-            
-            
-            let firstAttribute: UnsafePointer<CChar>? = valueOut[0]
-            
-            XCTAssertNil(firstAttribute)
-            XCTAssertTrue(gitAttrIsUnspecified(attr: firstAttribute))
         }
     }
     
@@ -327,38 +307,18 @@ final class AttrTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let attributeNames  : [String]  = []
-            let attributeCount  : Int       = attributeNames.count
-            
-            
-            
-            let valueOut = UnsafeMutablePointer<UnsafePointer<CChar>?>
-                .allocate(capacity: attributeCount)
-            
-            defer
-            {
-                valueOut.deallocate()
-            }
-            
-            
+            var valueOut: UnsafePointer<CChar>? = nil
             
             let attrGetManyExtResult: GitErrorCode = gitAttrGetManyExt(
-                valueOut:   valueOut,
+                valueOut:   &valueOut,
                 repo:       repository.pointer,
                 opts:       GitAttrOptions(),
                 path:       "file.special",
-                numAttr:    attributeCount,
-                names:      attributeNames
+                numAttr:    0,
+                names:      []
             )
             
             XCTAssertOK(attrGetManyExtResult)
-            
-            
-            
-            let firstAttribute: UnsafePointer<CChar>? = valueOut[0]
-            
-            XCTAssertNil(firstAttribute)
-            XCTAssertTrue(gitAttrIsUnspecified(attr: firstAttribute))
         }
     }
     

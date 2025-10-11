@@ -268,7 +268,7 @@ public func gitMergeBases(
 {
     return withCConversion
     {
-        return out.withMutatingGitOIDArray
+        return try out.withMutatingGitOIDArray
         {
             cOut in
             

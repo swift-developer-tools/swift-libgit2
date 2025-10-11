@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// Frees the strings contained in a `git_strarray`.
+/// Frees the memory allocated for the strings of a `git_strarray` instance.
 /// - Parameter array: The array containing the strings to free.
 ///
 /// ## Discussion

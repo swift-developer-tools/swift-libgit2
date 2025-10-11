@@ -34,7 +34,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
-            let originalSwiftArrayOfOIDs: [GitOID] =
+            let swiftArrayOfOIDs: [GitOID] =
             [
                 GitOID(),
                 headOID,
@@ -43,38 +43,38 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             
-            let cOIDs = UnsafeMutablePointer<git_oid>.allocate(
-                capacity: originalSwiftArrayOfOIDs.count
+            let cArrayOfOIDs = UnsafeMutablePointer<git_oid>.allocate(
+                capacity: swiftArrayOfOIDs.count
             )
             
             defer
             {
-                cOIDs.deallocate()
+                cArrayOfOIDs.deallocate()
             }
             
             
             
-            for (index, swiftOID) in originalSwiftArrayOfOIDs.enumerated()
+            for (index, swiftOID) in swiftArrayOfOIDs.enumerated()
             {
-                cOIDs[index] = swiftOID.cValue()
+                cArrayOfOIDs[index] = swiftOID.cValue()
             }
             
             
             
             var cOIDArray = git_oidarray()
             
-            cOIDArray.ids       = cOIDs
-            cOIDArray.count     = originalSwiftArrayOfOIDs.count
+            cOIDArray.ids       = cArrayOfOIDs
+            cOIDArray.count     = swiftArrayOfOIDs.count
             
             
             
             let convertedSwiftArrayOfOIDs: [GitOID] = Array(cOIDArray)
             
-            XCTAssertEqual(convertedSwiftArrayOfOIDs.count, originalSwiftArrayOfOIDs.count)
+            XCTAssertEqual(convertedSwiftArrayOfOIDs.count, swiftArrayOfOIDs.count)
             
             for (index, swiftOID) in convertedSwiftArrayOfOIDs.enumerated()
             {
-                XCTAssertEqual(swiftOID, originalSwiftArrayOfOIDs[index])
+                XCTAssertEqual(swiftOID, swiftArrayOfOIDs[index])
             }
         }
     }
@@ -238,7 +238,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             /// Simulate libgit2 populating the array.
-            arrayOfOIDs.withMutatingGitOIDArray
+            try arrayOfOIDs.withMutatingGitOIDArray
             {
                 oidArray in
                 
@@ -259,7 +259,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             var emptyArrayOfOIDs: [GitOID] = []
             
-            emptyArrayOfOIDs.withMutatingGitOIDArray
+            try emptyArrayOfOIDs.withMutatingGitOIDArray
             {
                 oidArray in
                 
@@ -268,8 +268,8 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 
                 /// Since the receiver array was empty, `oidArray` will be
                 /// freed with ``gitOIDArrayDispose(array:)``. The allocated
-                /// memory does not need to be freed separately after being
-                /// assigned to `oidArray.pointee.ids`.
+                /// memory does not need to be freed after being assigned to
+                /// `oidArray.pointee.ids`.
                 let cOIDs = UnsafeMutablePointer<git_oid>.allocate(capacity: 3)
                 
                 cOIDs[0] = headOID.cValue()

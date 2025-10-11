@@ -81,6 +81,67 @@ func XCTAssertNotOK(
 
 
 
+// MARK: - Buffers
+
+/// Asserts that the content and size of the given buffer is equal to the
+/// content and length of the given string, respectively.
+/// - Parameters:
+///   - buffer: The buffer to evaluate.
+///   - content: The content to compare against.
+func XCTAssertEqual(
+    _   buffer:     GitBuf,
+    _   content:    String
+)
+{
+    guard let bufferPointer: UnsafeMutablePointer<CChar> = buffer.ptr
+    else
+    {
+        XCTFail("The buffer pointer was nil.")
+        return
+    }
+    
+    guard let bufferContent = String(optionalCString: bufferPointer)
+    else
+    {
+        XCTFail("The buffer content was nil.")
+        return
+    }
+    
+    XCTAssertEqual(bufferContent, content)
+    XCTAssertEqual(buffer.size, content.count)
+}
+
+
+
+/// Asserts that the content the given buffer is non-`nil` and not equal to
+/// the given string.
+/// - Parameters:
+///   - buffer: The buffer to evaluate.
+///   - content: The content to compare against.
+func XCTAssertNotEqual(
+    _   buffer:     GitBuf,
+    _   content:    String
+)
+{
+    guard let bufferPointer: UnsafeMutablePointer<CChar> = buffer.ptr
+    else
+    {
+        XCTFail("The buffer pointer was nil.")
+        return
+    }
+    
+    guard let bufferContent = String(optionalCString: bufferPointer)
+    else
+    {
+        XCTFail("The buffer content was nil.")
+        return
+    }
+    
+    XCTAssertNotEqual(bufferContent, content)
+}
+
+
+
 // MARK: - OIDs
 
 /// Asserts that the given OIDs are equal.

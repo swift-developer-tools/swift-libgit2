@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "63F12DEB-4DC1-447C-8642-CB98019778D6",
+      "name" : "Test Scheme Action",
+      "options" : {
+        "addressSanitizer" : {
+          "detectStackUseAfterReturn" : true,
+          "enabled" : true
+        },
+        "checkedAllocations" : {
+          "enabled" : false,
+          "requiresHardwareAcceleration" : true
+        },
+        "mainThreadCheckerDetectionPolicy" : {
+          "severity" : "failure"
+        },
+        "nsZombieEnabled" : true,
+        "runtimeIssueDetection" : {
+          "severity" : "failure"
+        },
+        "threadPerformanceCheckerRuntimeIssueDetection" : {
+          "severity" : "failure"
+        },
+        "threadSanitizerEnabled" : false,
+        "undefinedBehaviorSanitizerEnabled" : true
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "addressSanitizer" : {
+      "detectStackUseAfterReturn" : true,
+      "enabled" : true
+    },
+    "mainThreadCheckerDetectionPolicy" : {
+      "severity" : "failure"
+    },
+    "nsZombieEnabled" : true,
+    "performanceAntipatternCheckerEnabled" : true,
+    "runtimeIssueDetection" : {
+      "severity" : "failure"
+    },
+    "testExecutionOrdering" : "random",
+    "threadPerformanceCheckerRuntimeIssueDetection" : {
+      "severity" : "failure"
+    },
+    "undefinedBehaviorSanitizerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SwiftLibgit2Tests",
+        "name" : "SwiftLibgit2Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

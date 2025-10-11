@@ -1006,7 +1006,7 @@ public func gitCommitDup(
 
 
 
-/// Frees the commits contained in a `git_commitarray`.
+/// Frees the memory allocated for the commits of a `git_commitarray` instance.
 /// - Parameter array: The array containing the commits to free.
 ///
 /// ## Discussion
