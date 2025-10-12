@@ -214,56 +214,11 @@ final class IndexTests: XCTestCaseStopOnFail
             XCTAssertEqual(retrievedIndexEntry.mode, 0o100644)
             XCTAssertNotZeroOID(retrievedIndexEntry.id)
             
-            
-            
-            var blobPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitBlobFree(blob: blobPointer)
-            }
-            
-            
-            
-            let blobLookupResult: GitErrorCode = gitBlobLookup(
-                blob:   &blobPointer,
-                repo:   repository.pointer,
-                id:     retrievedIndexEntry.id
+            Blob.validateBlobContent(
+                in:     repository,
+                id:     retrievedIndexEntry.id,
+                as:     bufferContent
             )
-            
-            XCTAssertOK(blobLookupResult)
-            
-            guard let blobPointer: OpaquePointer = blobPointer
-            else
-            {
-                XCTFail("The blob pointer was nil.")
-                return
-            }
-            
-            
-            
-            let blobRawContent  : UnsafeRawPointer  = gitBlobRawContent(blob: blobPointer)
-            let blobRawSize     : UInt64            = gitBlobRawSize(blob: blobPointer)
-            
-            guard blobRawSize < Int.max
-            else
-            {
-                /// The blob's raw size being greater than or equal to
-                /// `Int.max` is not necessarily a failing condition.
-                return
-            }
-            
-            let retrievedData = Data(
-                bytes:  blobRawContent,
-                count:  Int(blobRawSize)
-            )
-            
-            let retrievedString = String(
-                data:       retrievedData,
-                encoding:   .utf8
-            )
-            
-            XCTAssertEqual(retrievedString, bufferContent)
         }
     }
     
