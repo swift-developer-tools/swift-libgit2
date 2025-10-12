@@ -543,7 +543,7 @@ public func gitCommitParentID(
 public func gitCommitNthGenAncestor(
     ancestor    : UnsafeMutablePointer<OpaquePointer?>,
     commit      : OpaquePointer,
-    n           : UInt
+    n           : UInt32
 ) -> GitErrorCode
 {
     return withCConversion
@@ -551,7 +551,7 @@ public func gitCommitNthGenAncestor(
         return git_commit_nth_gen_ancestor(
             ancestor,
             commit,
-            UInt32(n)
+            n
         )
     }
 }
