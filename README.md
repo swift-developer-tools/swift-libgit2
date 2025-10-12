@@ -114,8 +114,8 @@ responsible for freeing memory allocated by libgit2, unless otherwise specified.
 
 Consider using 
 [`defer`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/statements/#Defer-Statement)
-statements in tandem with built-in memory-freeing functions to consistently and 
-safely free memory.
+statements with memory-freeing function bindings to consistently and safely 
+free memory.
 
 ### Thread Safety
 
@@ -130,7 +130,7 @@ to ensure thread-safe access to libgit2.
 
 Some libgit2 functions are asynchronous, but are not exposed as asynchronous. 
 Generally, any function that interacts with a remote repository is asynchronous.
-Since swift-libgit2 provides direct bindings to libgit2, no function bindings  
+Since swift-libgit2 provides direct bindings to libgit2, no function bindings 
 are asynchronous either.
 
 Consider using an appropriate 
