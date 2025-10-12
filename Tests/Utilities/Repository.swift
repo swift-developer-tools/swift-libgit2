@@ -184,7 +184,7 @@ struct Repository
         else
         {
             throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
+                code:       GitErrorCode.gitEUser.rawValue,
                 message:    "The index pointer was nil."
             )
         }
@@ -248,7 +248,7 @@ struct Repository
             else
             {
                 throw NSError.makeError(
-                    code:       Int(GitErrorCode.gitEUser.rawValue),
+                    code:       GitErrorCode.gitEUser.rawValue,
                     message:    "The staged commit pointer was nil."
                 )
             }
@@ -318,7 +318,7 @@ struct Repository
         else
         {
             throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
+                code:       GitErrorCode.gitEUser.rawValue,
                 message:    "The tree pointer was nil."
             )
         }
@@ -723,7 +723,7 @@ extension Repository
             else
             {
                 throw NSError.makeError(
-                    code:       Int(GitErrorCode.gitEUser.rawValue),
+                    code:       GitErrorCode.gitEUser.rawValue,
                     message:    "The index pointer was nil."
                 )
             }

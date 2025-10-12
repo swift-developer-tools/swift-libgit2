@@ -54,7 +54,7 @@ enum Commit
             XCTFail("The commit pointer was nil.")
             
             throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
+                code:       GitErrorCode.gitEUser.rawValue,
                 message:    "The commit pointer was nil."
             )
         }

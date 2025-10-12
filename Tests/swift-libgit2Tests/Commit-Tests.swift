@@ -727,7 +727,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let parentCount: Int = gitCommitParentCount(commit: commitPointer)
+            let parentCount: UInt32
+                = gitCommitParentCount(commit: commitPointer)
             
             XCTAssertEqual(parentCount, 1)
             

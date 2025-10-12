@@ -190,7 +190,7 @@ extension IndexerTests
         else
         {
             throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
+                code:       GitErrorCode.gitEUser.rawValue,
                 message:    "The pack builder pointer was nil."
             )
         }

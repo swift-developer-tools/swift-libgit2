@@ -340,7 +340,7 @@ extension CherrypickTests
             XCTFail("The branch name was nil.")
             
             throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
+                code:       GitErrorCode.gitEUser.rawValue,
                 message:    "The branch name was nil."
             )
         }

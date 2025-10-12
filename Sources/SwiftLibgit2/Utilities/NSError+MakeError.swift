@@ -20,13 +20,15 @@ internal extension NSError
     ///   - message: The localized description.
     /// - Returns: The created `NSError`.
     static func makeError(
-        code    : Int,
+        code    : Int32,
         message : String
     ) -> NSError
     {
+        /// `code` can be safely cast from `Int32` to `Int` since this is
+        /// a widening conversion.
         return NSError(
             domain:     Bundle.main.bundleIdentifier ?? "swift-libgit2",
-            code:       code,
+            code:       Int(code),
             userInfo:   [NSLocalizedDescriptionKey: message]
         )
     }
@@ -38,7 +40,7 @@ internal extension NSError
     static func makeCConversionError() -> NSError
     {
         return makeError(
-            code:       Int(GitErrorCode.gitEUser.rawValue),
+            code:       GitErrorCode.gitEUser.rawValue,
             message:    "Failed to convert a Swift value to its C equivalent."
         )
     }
