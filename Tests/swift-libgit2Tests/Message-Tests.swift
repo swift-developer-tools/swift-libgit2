@@ -95,7 +95,7 @@ final class MessageTests: XCTestCaseStopOnFail
         XCTAssertNil(messageTrailer.key)
         XCTAssertNil(messageTrailer.value)
         
-        try messageTrailer.withCValue
+        messageTrailer.withCValue
         {
             cMessageTrailer in
             

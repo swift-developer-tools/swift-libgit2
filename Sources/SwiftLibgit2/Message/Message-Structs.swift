@@ -43,10 +43,9 @@ public struct GitMessageTrailer: GitStructReadable, WithCConvertible
     /// `git_message_trailer` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_message_trailer>) throws -> T
-    ) throws -> T
+    ) rethrows -> T
     {
         var messageTrailer = git_message_trailer()
         
