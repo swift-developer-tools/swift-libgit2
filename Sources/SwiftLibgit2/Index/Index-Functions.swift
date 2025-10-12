@@ -121,10 +121,6 @@ public func gitIndexOwner(
 /// `git_index`.
 /// - Returns: The system capabilities of the given index.
 ///
-/// ## Discussion
-///
-/// This function will return `nil` if an unexpected value is encountered.
-///
 /// ## C Equivalent
 ///
 /// [`git_index_caps()`](https://libgit2.org/docs/reference/main/index/git_index_caps.html)
@@ -132,7 +128,9 @@ public func gitIndexCaps(
     index: OpaquePointer
 ) -> GitIndexCapabilityT?
 {
-    return GitIndexCapabilityT(rawValue: git_index_caps(index))
+    let indexCaps: Int32 = git_index_caps(index)
+    
+    return GitIndexCapabilityT(rawValue: indexCaps)
 }
 
 
