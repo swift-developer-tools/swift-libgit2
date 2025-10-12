@@ -248,6 +248,8 @@ final class IndexTests: XCTestCaseStopOnFail
             guard blobRawSize < Int.max
             else
             {
+                /// The blob's raw size being greater than or equal to
+                /// `Int.max` is not necessarily a failing condition.
                 return
             }
             
