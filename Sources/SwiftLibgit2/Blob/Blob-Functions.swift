@@ -216,9 +216,6 @@ public func gitBlobFilterOptionsInit(
 /// other types of changes depending on the file attributes set for the blob
 /// and the content detected in it.
 ///
-/// The output is written into a ``GitBuf`` instance which the caller must
-/// dispose of when done, by using ``gitBufDispose(buffer:)``.
-///
 /// If no filters need to be applied, then the `out` buffer will just be
 /// populated with a pointer to the raw content of the blob. In that case, be
 /// careful to either copy the buffer into memory not owned by libgit2, or to
