@@ -48,9 +48,9 @@ public func gitCredentialHasUsername(
     cred: UnsafeMutablePointer<git_credential>?
 ) -> Bool
 {
-    let credHasUsername: Int32 = git_cred_has_username(cred)
+    let credentialHasUsername: Int32 = git_cred_has_username(cred)
     
-    return Bool(credHasUsername)
+    return Bool(credentialHasUsername)
 }
 
 
@@ -65,7 +65,9 @@ public func gitCredentialGetUsername(
     cred: UnsafeMutablePointer<git_credential>?
 ) -> String?
 {
-    return String(optionalCString: git_cred_get_username(cred))
+    let credentialUsername: UnsafePointer<CChar>? = git_cred_get_username(cred)
+    
+    return String(optionalCString: credentialUsername)
 }
 
 
