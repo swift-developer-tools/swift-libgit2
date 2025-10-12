@@ -484,7 +484,7 @@ public func gitCommitParentCount(
 public func gitCommitParent(
     out     : UnsafeMutablePointer<OpaquePointer?>,
     commit  : OpaquePointer,
-    n       : UInt
+    n       : UInt32
 ) -> GitErrorCode
 {
     return withCConversion
@@ -492,7 +492,7 @@ public func gitCommitParent(
         return git_commit_parent(
             out,
             commit,
-            UInt32(n)
+            n
         )
     }
 }

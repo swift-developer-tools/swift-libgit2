@@ -494,7 +494,7 @@ public func gitNoteRemove(
 /// [`git_note_commit_remove()`](https://libgit2.org/docs/reference/main/notes/git_note_commit_remove.html)
 public func gitNoteCommitRemove(
     notesCommitOut  : inout GitOID,
-    repo:            OpaquePointer,
+    repo            : OpaquePointer,
     notesCommit     : OpaquePointer,
     author          : GitSignature,
     committer       : GitSignature,
