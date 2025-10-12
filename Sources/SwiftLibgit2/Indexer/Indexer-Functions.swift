@@ -215,7 +215,9 @@ public func gitIndexerName(
     idx: OpaquePointer
 ) -> String?
 {
-    return String(optionalCString: git_indexer_name(idx))
+    let indexerName: UnsafePointer<CChar>? = git_indexer_name(idx)
+    
+    return String(optionalCString: indexerName)
 }
 
 
