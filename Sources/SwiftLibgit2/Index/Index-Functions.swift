@@ -296,7 +296,9 @@ public func gitIndexPath(
     index: OpaquePointer
 ) -> String?
 {
-    return String(optionalCString: git_index_path(index))
+    let indexPath: UnsafePointer<CChar>? = git_index_path(index)
+    
+    return String(optionalCString: indexPath)
 }
 
 
