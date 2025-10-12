@@ -66,6 +66,7 @@ public func gitClone(
         return try options.withOptionalCValue
         {
             cOptions in
+            
             return git_clone(
                 out,
                 url,
