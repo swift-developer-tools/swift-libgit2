@@ -1165,7 +1165,7 @@ extension MergeTests
     /// pointer to the HEAD reference, after preparing the repostiory for a
     /// merge operation.
     /// - Parameter body: The closure to call.
-    /// - Throws: An error if an operation failed.
+    /// - Throws: An error if an operation fails.
     private func withPreparedMerge(
         _ body: (Repository, OpaquePointer, OpaquePointer, OpaquePointer) throws -> Void
     ) throws
