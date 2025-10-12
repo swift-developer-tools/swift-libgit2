@@ -277,9 +277,9 @@ public func gitNoteID(
     note: OpaquePointer
 ) -> GitOID
 {
-    let oid: UnsafePointer<git_oid> = git_note_id(note)
+    let noteOID: UnsafePointer<git_oid> = git_note_id(note)
     
-    return GitOID(cValue: oid.pointee)
+    return GitOID(cValue: noteOID.pointee)
 }
 
 

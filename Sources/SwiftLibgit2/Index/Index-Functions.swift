@@ -324,7 +324,9 @@ public func gitIndexChecksum(
     index: OpaquePointer
 ) -> GitOID
 {
-    return GitOID(cValue: git_index_checksum(index).pointee)
+    let indexChecksumOID: UnsafePointer<git_oid> = git_index_checksum(index)
+    
+    return GitOID(cValue: indexChecksumOID.pointee)
 }
 
 

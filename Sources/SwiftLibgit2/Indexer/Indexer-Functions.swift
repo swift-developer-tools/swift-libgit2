@@ -191,7 +191,9 @@ public func gitIndexerHash(
     idx: OpaquePointer
 ) -> GitOID
 {
-    return GitOID(cValue: git_indexer_hash(idx).pointee)
+    let indexerHashOID: UnsafePointer<git_oid> = git_indexer_hash(idx)
+    
+    return GitOID(cValue: indexerHashOID.pointee)
 }
 
 
