@@ -63,7 +63,7 @@ public func gitLibgit2Prerelease() -> String?
 
 
 /// Gets the compile-time options of libgit2.
-/// - Returns: A ``GitFeatureT`` instance.
+/// - Returns: The compile-time options of libgit2.
 ///
 /// ## C Equivalent
 ///
