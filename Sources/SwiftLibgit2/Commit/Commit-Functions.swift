@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// Looks up a commit from a repository.
+/// Looks up a commit in the given repository.
 /// - Parameters:
 ///   - commit: The pointer in which to store the commit. The underlying type
 ///   must be `git_commit`.
@@ -44,8 +44,8 @@ public func gitCommitLookup(
 
 
 
-/// Looks up a commit from a repository, given a prefix of its identifier
-/// (short ID).
+/// Looks up a commit in the given repository, using a prefix of the commit's
+/// ID.
 /// - Parameters:
 ///   - commit: The pointer in which to store the commit. The underlying type
 ///   must be `git_commit`.
@@ -53,7 +53,7 @@ public func gitCommitLookup(
 ///   type must be `git_repository`.
 ///   - id: The commit ID. If the object is an annotated tag, it will be
 ///   peeled back to the commit.
-///   - len: The length of the short ID.
+///   - len: The length of the commit's ID prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

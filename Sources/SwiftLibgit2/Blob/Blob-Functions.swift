@@ -12,13 +12,13 @@ import Foundation
 
 
 
-/// Looks up a blob from a repository.
+/// Looks up a blob in the given repository.
 /// - Parameters:
 ///   - blob: The pointer in which to store the blob. The underlying type must
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The ID of the blob to locate.
+///   - id: The ID of the blob.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -44,15 +44,14 @@ public func gitBlobLookup(
 
 
 
-/// Looks up a blob from a repository, given a prefix of its identifier
-/// (short ID).
+/// Looks up a blob in the given repository, using a prefix of the blob's ID.
 /// - Parameters:
 ///   - blob: The pointer in which to store the blob. The underlying type must
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The ID of the blob to locate.
-///   - len: The length of the short ID.
+///   - id: The ID of the blob.
+///   - len: The length of the blob's ID prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
