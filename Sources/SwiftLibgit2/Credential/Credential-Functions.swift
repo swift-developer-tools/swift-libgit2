@@ -58,6 +58,7 @@ public func gitCredentialHasUsername(
 
 /// Gets the username associated with the given credential.
 /// - Parameter cred: The credential to check.
+/// - Returns: The username associated with the given credential.
 ///
 /// ## C Equivalent
 ///
