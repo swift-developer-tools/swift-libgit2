@@ -461,11 +461,9 @@ public func gitCommitTreeID(
 /// [`git_commit_parentcount()`](https://libgit2.org/docs/reference/main/commit/git_commit_parentcount.html)
 public func gitCommitParentCount(
     commit: OpaquePointer
-) -> Int
+) -> UInt32
 {
-    let parentCount: UInt32 = git_commit_parentcount(commit)
-    
-    return Int(parentCount)
+    return git_commit_parentcount(commit)
 }
 
 
