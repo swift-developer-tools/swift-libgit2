@@ -22,10 +22,10 @@ public struct GitRemoteHEAD: GitStructReadable, WithCConvertible
     /// Whether the reference exists locally.
     public let local        : Bool
     
-    /// The OID of the reference.
+    /// The ID of the reference.
     public let oid          : GitOID
     
-    /// The local OID of the reference.
+    /// The local ID of the reference.
     public let loid         : GitOID
     
     /// The name of the reference.

@@ -369,8 +369,8 @@ public func gitIndexReadTree(
 ///
 /// This function will scan the given index and write a representation of its
 /// current state back to the disk. It recursively creates tree objects for
-/// each of the subtrees stored in the index, but only returns the OID of the
-/// root tree. The resulting OID can be used for operations such as creating
+/// each of the subtrees stored in the index, but only returns the ID of the
+/// root tree. The resulting ID can be used for operations such as creating
 /// a commit.
 ///
 /// The given index cannot be bare, must be associated with an existing

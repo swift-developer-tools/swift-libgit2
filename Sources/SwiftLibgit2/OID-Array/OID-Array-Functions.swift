@@ -11,8 +11,8 @@ import CLibgit2
 
 
 
-/// Frees the memory allocated for the OIDs of a `git_oidarray` instance.
-/// - Parameter array: The array containing the OIDs to free.
+/// Frees the memory allocated for the IDs of a `git_oidarray` instance.
+/// - Parameter array: The array containing the IDs to free.
 ///
 /// ## Discussion
 ///

@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// An array of OIDs.
+/// An array of IDs.
 ///
 /// ## Discussion
 ///
@@ -24,7 +24,7 @@ import CLibgit2
 /// [`git_oidarray`](https://libgit2.org/docs/reference/main/oidarray/git_oidarray.html)
 public struct GitOIDArray: GitStruct
 {
-    /// The OIDs.
+    /// The IDs.
     public private(set) var ids : [GitOID]
     
     /// The length of ``ids``.

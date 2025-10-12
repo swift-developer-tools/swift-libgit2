@@ -26,7 +26,7 @@ public struct GitOID: GitStructInternalMutable, CConvertible
     /// The default value is a `Data` instance with a `count` of 20 bytes.
     public private(set) var id: Data = Data(count: Self.size)
     
-    /// The size of a Git OID in bytes.
+    /// The size of a Git ID in bytes.
     internal static let size: Int = 20
     
     

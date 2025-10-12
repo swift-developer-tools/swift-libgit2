@@ -311,7 +311,7 @@ public func gitBlameFile(
 /// completed (which can be expensive), updating the buffer blame is very fast.
 ///
 /// Lines that differ between the buffer and the committed version are marked
-/// as having a zero OID for their ``GitBlameHunk/finalCommitID``.
+/// as having a zero ID for their ``GitBlameHunk/finalCommitID``.
 ///
 /// - Note: The cached blame from the history of the file is usually the output
 /// from ``gitBlameFile(out:repo:path:options:)``.

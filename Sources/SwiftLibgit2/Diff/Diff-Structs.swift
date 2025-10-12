@@ -313,22 +313,22 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
     /// The default value is `0`.
     public var interHunkLines   : UInt32                    = 0
     
-    /// The type of OID to emit in diffs.
+    /// The type of ID to emit in diffs.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
     /// This is used by functions that operate without a repository. If a
-    /// repository is available, the OID format of the repository will be used.
+    /// repository is available, the ID format of the repository will be used.
     /// Otherwise, if there is no repository available and this is `nil` at
     /// runtime, libgit2 defaults to using ``GitOIDT/gitOIDSHA1``.
     ///
     /// If this is specified and a repository is available, the specified type
-    /// should match the repository's OID format.
+    /// should match the repository's ID format.
     public var oidType          : GitOIDT?                  = nil
     
-    /// The abbreviation length to use when formatting OIDs.
+    /// The abbreviation length to use when formatting IDs.
     ///
     /// ## Discussion
     ///
@@ -1116,7 +1116,7 @@ public struct GitDiffParseOptions: GitStructMutable, CConvertible
     /// The default value is ``gitDiffParseOptionsVersion``.
     public var version  : UInt32    = gitDiffParseOptionsVersion
     
-    /// The OID type used in the patch file.
+    /// The ID type used in the patch file.
     ///
     /// ## Discussion
     ///

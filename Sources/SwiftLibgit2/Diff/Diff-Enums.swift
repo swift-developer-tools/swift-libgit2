@@ -178,7 +178,7 @@ public struct GitDiffOptionT: GitOptionSet
     ///
     /// This flag indicates that when the diff finds a file in the working
     /// directory with stat information different from the index, but with
-    /// the same OID, the correct state information should be written into
+    /// the same ID, the correct state information should be written into
     /// the index.
     ///
     /// If this flag is not enabled, the diff will always leave the index

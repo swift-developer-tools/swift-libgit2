@@ -939,7 +939,7 @@ public func gitDiffBuffers(
 ///
 /// The resulting diff will be similar to the one that would be produced by
 /// comparing two trees, but with subtle differences. For example, a patch
-/// file likely contains abbreviated OIDs, so the OIDs in a diff delta
+/// file likely contains abbreviated IDs, so the IDs in a diff delta
 /// produced by this function will also be abbreviated.
 ///
 /// - Note: This function supports only SHA-1 patch files, and will read only
