@@ -510,12 +510,12 @@ public func gitCommitParent(
 /// [`git_commit_parent_id()`](https://libgit2.org/docs/reference/main/commit/git_commit_parent_id.html)
 public func gitCommitParentID(
     commit  : OpaquePointer,
-    n       : UInt
+    n       : UInt32
 ) -> GitOID
 {
     let parentCommitOID: UnsafePointer<git_oid> = git_commit_parent_id(
         commit,
-        UInt32(n)
+        n
     )
     
     return GitOID(cValue: parentCommitOID.pointee)
