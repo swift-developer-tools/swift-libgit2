@@ -44,6 +44,7 @@ public func gitBlobLookup(
 
 
 
+// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Looks up a blob in the given repository, using a prefix of the blob's ID.
 /// - Parameters:
 ///   - blob: The pointer in which to store the blob. The underlying type must
@@ -51,7 +52,9 @@ public func gitBlobLookup(
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
 ///   - id: The ID of the blob.
-///   - len: The length of the blob's ID prefix.
+///   - len: The length of the blob's ID prefix. This must be greater than
+///   or equal to `GIT_OID_MINPREFIXLEN`, and long enough to identify a unique
+///   blob matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
