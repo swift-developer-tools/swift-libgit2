@@ -25,14 +25,11 @@ import CLibgit2
 /// [`git_attr_value()`](https://libgit2.org/docs/reference/main/attr/git_attr_value.html)
 public func gitAttrValue(
     attr: UnsafePointer<CChar>?
-) -> GitAttrValueT
+) -> GitAttrValueT?
 {
     let attributeValue: git_attr_value_t = git_attr_value(attr)
     
-    /// Default to ``GitAttrValueT/gitAttrValueUnspecified`` if an unexpected
-    /// value is encountered, although this should never occur.
-    return GitAttrValueT(rawValue: UInt32(attributeValue.rawValue))
-        ?? .gitAttrValueUnspecified
+    return GitAttrValueT(cValue: attributeValue)
 }
 
 
