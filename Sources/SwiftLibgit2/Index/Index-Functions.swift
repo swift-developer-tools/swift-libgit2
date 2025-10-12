@@ -661,7 +661,9 @@ public func gitIndexEntryStage(
     {
         cEntry in
         
-        return GitIndexStageT(rawValue: git_index_entry_stage(cEntry))
+        let indexStage: Int32 = git_index_entry_stage(cEntry)
+        
+        return GitIndexStageT(rawValue: indexStage)
     }
 }
 
