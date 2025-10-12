@@ -465,7 +465,9 @@ public func gitBlobIsBinary(
     blob: OpaquePointer
 ) -> Bool
 {
-    return Bool(git_blob_is_binary(blob))
+    let blobIsBinary: Int32 = git_blob_is_binary(blob)
+    
+    return Bool(blobIsBinary)
 }
 
 
