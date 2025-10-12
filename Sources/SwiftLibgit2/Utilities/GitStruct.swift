@@ -190,6 +190,30 @@ internal protocol GitStructInternalMutable: GitStruct
 
 // MARK: - Extensions
 
+internal extension GitStruct
+{
+    /// Checks if the given libgit2 operation result indicates success.
+    /// - Parameters:
+    ///   - result: The libgit2 operation result.
+    ///   - defaultSuccess: Whether a result that is not of the type
+    ///   ``GitErrorCode`` should be considered successful.
+    /// - Returns: Whether the given libgit2 operation result indicates success.
+    private func isSuccess<T>(
+        _ result        : T,
+        defaultSuccess  : Bool  = true
+    ) -> Bool
+    {
+        if let errorCode = result as? GitErrorCode
+        {
+            return errorCode == .gitOK
+        }
+        
+        return defaultSuccess
+    }
+}
+
+
+
 internal extension GitStruct where Self: CConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
@@ -213,7 +237,10 @@ internal extension GitStruct where Self: CConvertible
             
             let result: T = try body(cValuePointer)
             
-            self = Self.init(cValue: cValuePointer.pointee)
+            if isSuccess(result)
+            {
+                self = Self.init(cValue: cValuePointer.pointee)
+            }
             
             return result
         }
@@ -246,7 +273,9 @@ internal extension GitStruct where Self: CConvertible
             
             let result: T = try body(&optionalCValuePointer)
             
-            if let finalCValuePointer: UnsafeMutablePointer<C>
+            if
+                isSuccess(result),
+                let finalCValuePointer: UnsafeMutablePointer<C>
                     = optionalCValuePointer
             {
                 self = Self.init(cValue: finalCValuePointer.pointee)
@@ -276,7 +305,9 @@ internal extension GitStruct where Self: CConvertible
         
         let result: T = try body(&optionalCValuePointer)
         
-        if let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+        if
+            isSuccess(result),
+            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
         {
             self = Self.init(cValue: finalCValuePointer.pointee)
         }
@@ -311,7 +342,10 @@ internal extension GitStruct where Self: ThrowingCConvertible
             
             let result: T = try body(cValuePointer)
             
-            self = Self.init(cValue: cValuePointer.pointee)
+            if isSuccess(result)
+            {
+                self = Self.init(cValue: cValuePointer.pointee)
+            }
             
             return result
         }
@@ -344,8 +378,10 @@ internal extension GitStruct where Self: ThrowingCConvertible
             
             let result: T = try body(&optionalCValuePointer)
             
-            if let finalCValuePointer: UnsafeMutablePointer<C>
-                = optionalCValuePointer
+            if
+                isSuccess(result),
+                let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer
             {
                 self = Self.init(cValue: finalCValuePointer.pointee)
             }
@@ -374,7 +410,9 @@ internal extension GitStruct where Self: ThrowingCConvertible
         
         let result: T = try body(&optionalCValuePointer)
         
-        if let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+        if
+            isSuccess(result),
+            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
         {
             self = Self.init(cValue: finalCValuePointer.pointee)
         }
@@ -407,7 +445,10 @@ internal extension GitStruct where Self: WithCConvertible
             
             let result: T = try body(cValuePointer)
             
-            self = Self.init(cValue: cValuePointer.pointee)
+            if isSuccess(result)
+            {
+                self = Self.init(cValue: cValuePointer.pointee)
+            }
             
             return result
         }
@@ -438,8 +479,10 @@ internal extension GitStruct where Self: WithCConvertible
             
             let result: T = try body(&optionalCValuePointer)
             
-            if let finalCValuePointer: UnsafeMutablePointer<C>
-                = optionalCValuePointer
+            if
+                isSuccess(result),
+                let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer
             {
                 self = Self.init(cValue: finalCValuePointer.pointee)
             }
@@ -468,7 +511,9 @@ internal extension GitStruct where Self: WithCConvertible
         
         let result: T = try body(&optionalCValuePointer)
         
-        if let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+        if
+            isSuccess(result),
+            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
         {
             self = Self.init(cValue: finalCValuePointer.pointee)
         }
@@ -517,7 +562,10 @@ internal extension GitStruct where Self: WithCConvertible & Freeable
             
             
             
-            self = Self.init(cValue: finalCValuePointer.pointee)
+            if isSuccess(result)
+            {
+                self = Self.init(cValue: finalCValuePointer.pointee)
+            }
             
             if finalCValuePointer != cValuePointer
             {
