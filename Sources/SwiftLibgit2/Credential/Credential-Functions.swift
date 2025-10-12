@@ -40,6 +40,7 @@ public func gitCredentialFree(
 
 /// Checks whether the given credential contains username information.
 /// - Parameter cred: The credential to check.
+/// - Returns: Whether the given credential contains username information.
 ///
 /// ## C Equivalent
 ///
