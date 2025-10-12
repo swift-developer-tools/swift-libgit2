@@ -1278,7 +1278,9 @@ public func gitIndexHasConflicts(
     index: OpaquePointer
 ) -> Bool
 {
-    return Bool(git_index_has_conflicts(index))
+    let indexHasConflicts: Int32 = git_index_has_conflicts(index)
+    
+    return Bool(indexHasConflicts)
 }
 
 
