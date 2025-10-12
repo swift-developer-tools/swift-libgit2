@@ -180,9 +180,9 @@ public func gitBlameLineByIndex(
 /// [`git_blame_get_hunk_count()`](https://libgit2.org/docs/reference/main/blame/git_blame_get_hunk_count.html)
 public func gitBlameGetHunkCount(
     blame: OpaquePointer
-) -> Int
+) -> UInt32
 {
-    return Int(git_blame_get_hunk_count(blame))
+    return git_blame_get_hunk_count(blame)
 }
 
 
