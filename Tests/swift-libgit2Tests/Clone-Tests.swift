@@ -159,7 +159,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            var callbackData = CloneCallbackData()
+            var callbackData = CallbackData()
             
             let repositoryCreateCallback: GitRepositoryCreateCB =
             {
@@ -172,8 +172,8 @@ final class CloneTests: XCTestCaseStopOnFail
                     return GitErrorCode.gitEUser.rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CloneCallbackData>
-                    = payload.assumingMemoryBound(to: CloneCallbackData.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.isRepositoryCreated = true
                 
@@ -197,8 +197,8 @@ final class CloneTests: XCTestCaseStopOnFail
                     return GitErrorCode.gitEUser.rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CloneCallbackData>
-                    = payload.assumingMemoryBound(to: CloneCallbackData.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.isRemoteCreated = true
                 
@@ -432,7 +432,7 @@ final class CloneTests: XCTestCaseStopOnFail
 
 extension CloneTests
 {
-    private struct CloneCallbackData
+    private struct CallbackData
     {
         var isRepositoryCreated : Bool  = false
         var isRemoteCreated     : Bool  = false

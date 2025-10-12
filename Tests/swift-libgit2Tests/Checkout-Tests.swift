@@ -38,7 +38,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            var callbackData = CheckoutCallbackData()
+            var callbackData = CallbackData()
             
             let notifyCB: GitCheckoutNotifyCB =
             {
@@ -50,8 +50,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
                     return GitErrorCode.gitOK.rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CheckoutCallbackData>
-                    = payload.assumingMemoryBound(to: CheckoutCallbackData.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.notifyCallCount      += 1
                 payloadPointer.pointee.lastNotifyReason     = GitCheckoutNotifyT(rawValue: why.rawValue)
@@ -76,8 +76,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
                     return
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CheckoutCallbackData>
-                    = payload.assumingMemoryBound(to: CheckoutCallbackData.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.progressCallCount    += 1
                 payloadPointer.pointee.lastCompletedSteps   = completedSteps
@@ -103,8 +103,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
                     return
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CheckoutCallbackData>
-                    = payload.assumingMemoryBound(to: CheckoutCallbackData.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.perfDataCallCount    += 1
                 payloadPointer.pointee.lastPerfData         = GitCheckoutPerfData(cValue: perfData.pointee)
@@ -635,7 +635,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
 
 extension CheckoutTests
 {
-    private struct CheckoutCallbackData
+    private struct CallbackData
     {
         var notifyCallCount     : Int                   = 0
         var lastNotifyReason    : GitCheckoutNotifyT?   = nil

@@ -220,7 +220,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            var callbackData = CommitCreateCallbackData()
+            var callbackData = CallbackData()
                         
             let commitCreateCB: GitCommitCreateCB =
             {
@@ -233,10 +233,8 @@ final class CommitTests: XCTestCaseStopOnFail
                     return GIT_PASSTHROUGH.rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CommitCreateCallbackData>
-                    = payload.assumingMemoryBound(
-                        to: CommitCreateCallbackData.self
-                    )
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.callCount += 1
                 
@@ -860,7 +858,7 @@ final class CommitTests: XCTestCaseStopOnFail
 
 extension CommitTests
 {
-    private struct CommitCreateCallbackData
+    private struct CallbackData
     {
         var callCount   : Int       = 0
         var lastMessage : String?   = nil
