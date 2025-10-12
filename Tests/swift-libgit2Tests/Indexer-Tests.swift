@@ -189,10 +189,7 @@ extension IndexerTests
         guard let packBuilderPointer: OpaquePointer = packBuilderPointer
         else
         {
-            throw NSError.makeError(
-                code:       GitErrorCode.gitEUser.rawValue,
-                message:    "The pack builder pointer was nil."
-            )
+            throw NSError.makeError("The pack builder pointer was nil.")
         }
         
         

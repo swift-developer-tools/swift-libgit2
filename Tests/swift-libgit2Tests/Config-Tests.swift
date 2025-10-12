@@ -1564,12 +1564,7 @@ extension ConfigTests
         guard let configPointer: OpaquePointer = configPointer
         else
         {
-            XCTFail("The configuration pointer was nil.")
-            
-            throw NSError.makeError(
-                code:       GitErrorCode.gitEUser.rawValue,
-                message:    "The configuration pointer was nil."
-            )
+            throw NSError.makeError("The configuration pointer was nil.")
         }
         
         return body(configPointer)

@@ -35,6 +35,22 @@ internal extension NSError
     
     
     
+    /// Creates an `NSError` with the given message and an error code of
+    /// ``GitErrorCode/gitEUser``.
+    /// - Parameter message: The localized description.
+    /// - Returns: The created `NSError`.
+    static func makeError(
+        _ message : String
+    ) -> NSError
+    {
+        return makeError(
+            code:       GitErrorCode.gitEUser.rawValue,
+            message:    message
+        )
+    }
+    
+    
+    
     /// Creates an `NSError` related to a Swift-to-C conversion failure.
     /// - Returns: The created `NSError`.
     static func makeCConversionError() -> NSError

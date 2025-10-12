@@ -73,11 +73,8 @@ enum Branch
                     = annotatedCommitPointer
             else
             {
-                XCTFail("The annotated commit pointer was nil.")
-                
                 throw NSError.makeError(
-                    code:       GitErrorCode.gitEUser.rawValue,
-                    message:    "The annotated commit pointer was nil."
+                    "The annotated commit pointer was nil."
                 )
             }
             

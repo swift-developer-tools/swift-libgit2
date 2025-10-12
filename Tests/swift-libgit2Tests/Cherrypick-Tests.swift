@@ -337,12 +337,7 @@ extension CherrypickTests
                 = git_reference_name(branchPointer)
         else
         {
-            XCTFail("The branch name was nil.")
-            
-            throw NSError.makeError(
-                code:       GitErrorCode.gitEUser.rawValue,
-                message:    "The branch name was nil."
-            )
+            throw NSError.makeError("The branch name was nil.")
         }
         
         

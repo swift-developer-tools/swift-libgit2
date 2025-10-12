@@ -183,10 +183,7 @@ struct Repository
         guard let indexPointer: OpaquePointer = indexPointer
         else
         {
-            throw NSError.makeError(
-                code:       GitErrorCode.gitEUser.rawValue,
-                message:    "The index pointer was nil."
-            )
+            throw NSError.makeError("The index pointer was nil.")
         }
         
         
@@ -247,10 +244,7 @@ struct Repository
             guard let commitPointer: OpaquePointer = commitPointer
             else
             {
-                throw NSError.makeError(
-                    code:       GitErrorCode.gitEUser.rawValue,
-                    message:    "The staged commit pointer was nil."
-                )
+                throw NSError.makeError("The staged commit pointer was nil.")
             }
             
             
@@ -317,10 +311,7 @@ struct Repository
         guard let treePointer: OpaquePointer = treePointer
         else
         {
-            throw NSError.makeError(
-                code:       GitErrorCode.gitEUser.rawValue,
-                message:    "The tree pointer was nil."
-            )
+            throw NSError.makeError("The tree pointer was nil.")
         }
         
         
@@ -684,8 +675,6 @@ extension Repository
         
         try createBlameData(in: repository)
         
-        
-        
         return try body(repository)
     }
     
@@ -722,13 +711,8 @@ extension Repository
             guard let indexPointer: OpaquePointer = indexPointer
             else
             {
-                throw NSError.makeError(
-                    code:       GitErrorCode.gitEUser.rawValue,
-                    message:    "The index pointer was nil."
-                )
+                throw NSError.makeError("The index pointer was nil.")
             }
-            
-            
             
             return try body(
                 repository,
