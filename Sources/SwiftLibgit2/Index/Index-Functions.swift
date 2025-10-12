@@ -490,7 +490,7 @@ public func gitIndexClear(
 /// - Parameters:
 ///   - index: The index to search. The underlying type must be `git_index`.
 ///   - n: The position of the entry within the given index.
-/// - Returns: A ``GitIndexEntry`` instance.
+/// - Returns: The entry at the given position within the given index.
 ///
 /// ## C Equivalent
 ///
@@ -521,7 +521,7 @@ public func gitIndexGetByIndex(
 ///   - index: The index to search. The underlying type must be `git_index`.
 ///   - path: The path to the entry.
 ///   - stage: The stage to search.
-/// - Returns: A ``GitIndexEntry`` instance.
+/// - Returns: The entry at the given path and stage within the given index.
 ///
 /// ## C Equivalent
 ///
@@ -646,7 +646,7 @@ public func gitIndexAdd(
 
 /// Gets the stage from the given index entry.
 /// - Parameter entry: The index entry to evaluate.
-/// - Returns: A ``GitIndexStageT`` instance.
+/// - Returns: The stage from the given index entry.
 ///
 /// ## C Equivalent
 ///
