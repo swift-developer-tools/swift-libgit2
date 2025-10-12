@@ -684,7 +684,9 @@ public func gitIndexEntryIsConflict(
     {
         cEntry in
         
-        return Bool(git_index_entry_is_conflict(cEntry))
+        let indexEntryIsConflict: Int32 = git_index_entry_is_conflict(cEntry)
+        
+        return Bool(indexEntryIsConflict)
     }
 }
 
