@@ -18,10 +18,14 @@ import XCTest
 struct Repository
 {
     /// The URL of the repository.
-    let url     : URL
+    let url         : URL
     
     /// A pointer to the repository.
-    let pointer : OpaquePointer
+    let pointer     : OpaquePointer
+    
+    /// The default signature using ``commitAuthorName`` and
+    /// ``commitAuthorEmail``.
+    let signature   : GitSignature
     
     
     
@@ -38,6 +42,33 @@ struct Repository
         ("file.special",    "Special file"),
         ("negative.false",  "File with false attribute")
     ]
+    
+    
+    
+    /// Creates a new ``Repository`` instance from the given URL and pointer.
+    /// - Parameters:
+    ///   - url: The URL of the repository.
+    ///   - pointer: A pointer to the repository.
+    init(
+        url     : URL,
+        pointer : OpaquePointer
+    )
+    {
+        self.url        = url
+        self.pointer    = pointer
+        
+        var signature = GitSignature()
+        
+        let signatureNowResult: GitErrorCode = gitSignatureNow(
+            out:    &signature,
+            name:   Repository.commitAuthorName,
+            email:  Repository.commitAuthorEmail
+        )
+        
+        XCTAssertOK(signatureNowResult)
+        
+        self.signature = signature
+    }
     
     
     
@@ -291,18 +322,6 @@ struct Repository
                 message:    "The tree pointer was nil."
             )
         }
-        
-        
-        
-        var signature = GitSignature()
-        
-        let signatureNowResult: GitErrorCode = gitSignatureNow(
-            out:    &signature,
-            name:   Self.commitAuthorName,
-            email:  Self.commitAuthorEmail
-        )
-        
-        XCTAssertOK(signatureNowResult)
         
         
         

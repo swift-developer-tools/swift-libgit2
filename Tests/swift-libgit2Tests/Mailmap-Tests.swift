@@ -339,31 +339,19 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             
             
-            var originalSignature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &originalSignature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             var resolvedSignature = GitSignature()
             
             let mailmapResolveSignatureResult: GitErrorCode
                 = gitMailmapResolveSignature(
                     out:    &resolvedSignature,
                     mm:     mailmapPointer,
-                    sig:    originalSignature
+                    sig:    repository.signature
                 )
             
             XCTAssertOK(mailmapResolveSignatureResult)
             XCTAssertEqual(resolvedSignature.name, realName)
             XCTAssertEqual(resolvedSignature.email, realEmail)
-            XCTAssertEqual(resolvedSignature.when.time, originalSignature.when.time)
+            XCTAssertEqual(resolvedSignature.when.time, repository.signature.when.time)
         }
     }
 }

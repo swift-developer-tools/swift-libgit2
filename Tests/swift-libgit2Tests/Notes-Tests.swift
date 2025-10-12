@@ -19,7 +19,7 @@ final class NotesTests: XCTestCaseStopOnFail
     {
         try withRepositoryAndNote
         {
-            _, notePointer, _, signature in
+            _, notePointer, _ in
             
             let signature: GitSignature? = gitNoteAuthor(note: notePointer)
             
@@ -39,18 +39,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             let headOID         : GitOID    = OID.getHEADCommitOID(in: repository)
             var notesCommitOID  : GitOID    = GitOID()
             var notesBlobOID    : GitOID    = GitOID()
@@ -60,8 +48,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 notesBlobOut:           &notesBlobOID,
                 repo:                   repository.pointer,
                 parent:                 nil,
-                author:                 signature,
-                committer:              signature,
+                author:                 repository.signature,
+                committer:              repository.signature,
                 oid:                    headOID,
                 note:                   Self.defaultNoteMessage,
                 allowNoteOverwrite:     false
@@ -141,18 +129,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             let secondCommitOID: GitOID = try repository.commit(
@@ -185,8 +161,8 @@ final class NotesTests: XCTestCaseStopOnFail
                     notesBlobOut:           &firstNotesBlobOID,
                     repo:                   repository.pointer,
                     parent:                 nil,
-                    author:                 signature,
-                    committer:              signature,
+                    author:                 repository.signature,
+                    committer:              repository.signature,
                     oid:                    headOID,
                     note:                   "First commit note",
                     allowNoteOverwrite:     false
@@ -215,8 +191,8 @@ final class NotesTests: XCTestCaseStopOnFail
                     notesBlobOut:           &secondNotesBlobOID,
                     repo:                   repository.pointer,
                     parent:                 firstNotesCommitPointer,
-                    author:                 signature,
-                    committer:              signature,
+                    author:                 repository.signature,
+                    committer:              repository.signature,
                     oid:                    secondCommitOID,
                     note:                   "Second commit note",
                     allowNoteOverwrite:     false
@@ -309,18 +285,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             var notesCommitOID  = GitOID()
@@ -331,8 +295,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 notesBlobOut:           &notesBlobOID,
                 repo:                   repository.pointer,
                 parent:                 nil,
-                author:                 signature,
-                committer:              signature,
+                author:                 repository.signature,
+                committer:              repository.signature,
                 oid:                    headOID,
                 note:                   "Goodbye World!",
                 allowNoteOverwrite:     false
@@ -378,8 +342,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 notesCommitOut:     &newNotesCommitOID,
                 repo:               repository.pointer,
                 notesCommit:        notesCommitPointer,
-                author:             signature,
-                committer:          signature,
+                author:             repository.signature,
+                committer:          repository.signature,
                 oid:                headOID
             )
             
@@ -434,7 +398,7 @@ final class NotesTests: XCTestCaseStopOnFail
     {
         try withRepositoryAndNote
         {
-            _, notePointer, _, signature in
+            _, notePointer, _ in
             
             let signature: GitSignature? = gitNoteCommitter(note: notePointer)
             
@@ -452,7 +416,7 @@ final class NotesTests: XCTestCaseStopOnFail
     {
         try withRepositoryAndNote
         {
-            _, notePointer, noteOID, _ in
+            _, notePointer, noteOID in
             
             let retrievedNoteMessage: String?
                 = gitNoteMessage(note: notePointer)
@@ -513,18 +477,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             var firstNoteOID = GitOID()
@@ -533,8 +485,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 out         : &firstNoteOID,
                 repo        : repository.pointer,
                 notesRef    : nil,
-                author      : signature,
-                committer   : signature,
+                author      : repository.signature,
+                committer   : repository.signature,
                 oid         : headOID,
                 note        : "First note",
                 force       : false
@@ -557,8 +509,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 out         : &secondNoteOID,
                 repo        : repository.pointer,
                 notesRef    : nil,
-                author      : signature,
-                committer   : signature,
+                author      : repository.signature,
+                committer   : repository.signature,
                 oid         : secondCommitOID,
                 note        : "Second note",
                 force       : false
@@ -658,18 +610,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             var firstNoteOID = GitOID()
@@ -678,8 +618,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 out         : &firstNoteOID,
                 repo        : repository.pointer,
                 notesRef    : nil,
-                author      : signature,
-                committer   : signature,
+                author      : repository.signature,
+                committer   : repository.signature,
                 oid         : headOID,
                 note        : "First note",
                 force       : false
@@ -702,8 +642,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 out         : &secondNoteOID,
                 repo        : repository.pointer,
                 notesRef    : nil,
-                author      : signature,
-                committer   : signature,
+                author      : repository.signature,
+                committer   : repository.signature,
                 oid         : secondCommitOID,
                 note        : "Second note",
                 force       : false
@@ -775,15 +715,15 @@ final class NotesTests: XCTestCaseStopOnFail
     {
         try withRepositoryAndNote
         {
-            repository, _, _, signature in
+            repository, _, _ in
             
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             let noteRemoveResult: GitErrorCode = gitNoteRemove(
                 repo:       repository.pointer,
                 notesRef:   nil,
-                author:     signature,
-                committer:  signature,
+                author:     repository.signature,
+                committer:  repository.signature,
                 oid:        headOID
             )
             
@@ -833,28 +773,16 @@ extension NotesTests
     
     
     /// Calls the given closure with a ``Repository`` instance, a pointer to
-    /// a created, the ID of that note, and the signature of the note creator.
+    /// a created, and the ID of that note.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
     private func withRepositoryAndNote(
-        _ body: (Repository, OpaquePointer, GitOID, GitSignature) throws -> Void
+        _ body: (Repository, OpaquePointer, GitOID) throws -> Void
     ) throws
     {
         try Repository.withRepository
         {
             repository in
-            
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
             
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
@@ -864,8 +792,8 @@ extension NotesTests
                 out         : &noteOID,
                 repo        : repository.pointer,
                 notesRef    : nil,
-                author      : signature,
-                committer   : signature,
+                author      : repository.signature,
+                committer   : repository.signature,
                 oid         : headOID,
                 note        : Self.defaultNoteMessage,
                 force       : false
@@ -906,8 +834,7 @@ extension NotesTests
             return try body(
                 repository,
                 notePointer,
-                noteOID,
-                signature
+                noteOID
             )
         }
     }

@@ -28,23 +28,11 @@ enum Tag
         message                 : String
     ) throws
     {
-        var signature = GitSignature()
-        
-        let signatureNowResult: GitErrorCode = gitSignatureNow(
-            out:    &signature,
-            name:   Repository.commitAuthorName,
-            email:  Repository.commitAuthorEmail
-        )
-        
-        XCTAssertOK(signatureNowResult)
-        
-        
-        
         try Commit.withHEADCommit(in: repository)
         {
             commitPointer in
 
-            return try signature.withCValue
+            return try repository.signature.withCValue
             {
                 cSignature in
                 
