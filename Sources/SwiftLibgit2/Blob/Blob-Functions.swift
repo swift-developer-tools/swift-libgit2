@@ -504,10 +504,12 @@ public func gitBlobDataIsBinary(
     {
         cData, cDataCount in
         
-        return Bool(git_blob_data_is_binary(
+        let blobDataIsBinary: Int32 = git_blob_data_is_binary(
             cData,
-            cDataCount,
-        ))
+            cDataCount
+        )
+        
+        return Bool(blobDataIsBinary)
     }
 }
 
