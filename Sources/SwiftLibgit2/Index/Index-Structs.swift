@@ -133,7 +133,7 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     /// The default value is `0`.
     public var fileSize         : UInt32                        = 0
     
-    /// The OID of the Git object.
+    /// The ID of the Git object.
     ///
     /// ## Discussion
     ///

@@ -35,19 +35,7 @@ final class TypesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
-            let cTime   : git_time  = signature.when.cValue()
+            let cTime   : git_time  = repository.signature.when.cValue()
             let gitTime : GitTime   = GitTime(cValue: cTime)
             
             XCTAssertGreaterThan(gitTime.time, 0)

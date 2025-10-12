@@ -82,23 +82,11 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
-            
-            
-            
             let commitCreateBufferResult: GitErrorCode = gitCommitCreateBuffer(
                 out:                &buffer,
                 repo:               repository.pointer,
-                author:             signature,
-                committer:          signature,
+                author:             repository.signature,
+                committer:          repository.signature,
                 messageEncoding:    nil,
                 message:            "Buffer commit",
                 tree:               treePointer,
@@ -220,7 +208,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            var callbackData = CommitCreateCallbackData()
+            var callbackData = CallbackData()
                         
             let commitCreateCB: GitCommitCreateCB =
             {
@@ -233,10 +221,8 @@ final class CommitTests: XCTestCaseStopOnFail
                     return GIT_PASSTHROUGH.rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CommitCreateCallbackData>
-                    = payload.assumingMemoryBound(
-                        to: CommitCreateCallbackData.self
-                    )
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.callCount += 1
                 
@@ -327,22 +313,10 @@ final class CommitTests: XCTestCaseStopOnFail
                     
                     
                     
-                    var signature = GitSignature()
-                    
-                    let signatureNowResult: GitErrorCode = gitSignatureNow(
-                        out:    &signature,
-                        name:   Repository.commitAuthorName,
-                        email:  Repository.commitAuthorEmail
-                    )
-                    
-                    XCTAssertOK(signatureNowResult)
-                    
-                    
-                    
                     // TODO: Replace once `git_rebase_commit()` has a binding.
                     var rebasedCommitOID = git_oid()
                     
-                    try signature.withCValue
+                    try repository.signature.withCValue
                     {
                         cSignature in
                         
@@ -530,17 +504,6 @@ final class CommitTests: XCTestCaseStopOnFail
                 XCTFail("The commit pointer was nil.")
                 return
             }
-            
-            
-            var signature = GitSignature()
-            
-            let signatureNowResult: GitErrorCode = gitSignatureNow(
-                out:    &signature,
-                name:   Repository.commitAuthorName,
-                email:  Repository.commitAuthorEmail
-            )
-            
-            XCTAssertOK(signatureNowResult)
             
             
             
@@ -860,7 +823,7 @@ final class CommitTests: XCTestCaseStopOnFail
 
 extension CommitTests
 {
-    private struct CommitCreateCallbackData
+    private struct CallbackData
     {
         var callCount   : Int       = 0
         var lastMessage : String?   = nil

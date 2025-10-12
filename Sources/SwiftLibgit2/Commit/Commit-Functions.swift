@@ -648,7 +648,6 @@ public func gitCommitExtractSignature(
 
 
 
-// TODO: Replace `git_message_prettify()` in documentation.
 /// Creates a new commit in the given repository from a list of `git_object`
 /// pointers.
 /// - Parameters:
@@ -673,7 +672,8 @@ public func gitCommitExtractSignature(
 /// ## Discussion
 ///
 /// The commit message will not be cleaned up automatically. Use
-/// `git_message_prettify()` to clean up the commit message.
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the commit message.
 ///
 /// If `updateRef` is not direct, it will be resolved to a direct reference.
 /// Pass `HEAD` to update the HEAD of the current branch and make it point to

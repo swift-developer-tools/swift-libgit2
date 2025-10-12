@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The type of OID.
+/// The type of ID.
 ///
 /// ## C Equivalent
 ///

@@ -11,11 +11,11 @@ import CLibgit2
 
 
 
-/// Compares two OIDs for equality.
+/// Compares two IDs for equality.
 /// - Parameters:
-///   - a: The first OID.
-///   - b: The second OID.
-/// - Returns: Whether the two OIDs are equal.
+///   - a: The first ID.
+///   - b: The second ID.
+/// - Returns: Whether the two IDs are equal.
 ///
 /// ## C Equivalent
 ///

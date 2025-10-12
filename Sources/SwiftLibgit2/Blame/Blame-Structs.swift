@@ -156,7 +156,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
     
-    /// The OID of the commit where this hunk was last changed.
+    /// The ID of the commit where this hunk was last changed.
     public let finalCommitID        : GitOID
     
     /// The 1-indexed line number where this hunk begins, in the final version
@@ -179,7 +179,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     /// contain the canonical real name and email address.
     public let finalCommitter       : GitSignature?
     
-    /// The OID of the commit where this hunk was found.
+    /// The ID of the commit where this hunk was found.
     ///
     /// ## Discussion
     ///

@@ -355,7 +355,7 @@ public func gitBlobCreateFromDisk(
 ///
 /// - Important: Do not manually close this stream. Instead, pass it to
 /// ``gitBlobCreateFromStreamCommit(out:stream:)`` to commit the write to the
-/// object database and get the OID.
+/// object database and get the ID.
 ///
 /// ## C Equivalent
 ///
