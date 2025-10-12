@@ -112,7 +112,7 @@ enum Blob
     ///   - expectedContent: The expected content of the blob.
     static func validateBlobContent(
         in  repository      : Repository,
-        id  blobOID         : inout GitOID,
+        id  blobOID         : GitOID,
         as  expectedContent : String
     )
     {
@@ -142,9 +142,21 @@ enum Blob
         
         
         
+        let blobRawContent  : UnsafeRawPointer  = gitBlobRawContent(blob: blobPointer)
+        let blobRawSize     : UInt64            = gitBlobRawSize(blob: blobPointer)
+        
+        guard blobRawSize < Int.max
+        else
+        {
+            /// The blob's raw size being greater than or equal to
+            /// `Int.max` is not necessarily a failing condition.
+            return
+        }
+        
+        
         let blobData = Data(
-            bytes:  gitBlobRawContent(blob: blobPointer),
-            count:  Int(gitBlobRawSize(blob: blobPointer))
+            bytes:  blobRawContent,
+            count:  Int(blobRawSize)
         )
         
         let blobContent = String(

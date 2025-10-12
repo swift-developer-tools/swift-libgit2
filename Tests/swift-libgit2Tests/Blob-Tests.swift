@@ -32,14 +32,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: GitOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .buffer(data: data)
             )
             
             Blob.validateBlobContent(
                 in:     repository,
-                id:     &blobOID,
+                id:     blobOID,
                 as:     content
             )
         }
@@ -62,14 +62,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: GitOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .disk(path: fileURL.path)
             )
             
             Blob.validateBlobContent(
                 in:     repository,
-                id:     &blobOID,
+                id:     blobOID,
                 as:     fileContent
             )
         }
@@ -130,14 +130,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: GitOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .streamCommit(stream: streamPointer)
             )
             
             Blob.validateBlobContent(
                 in:     repository,
-                id:     &blobOID,
+                id:     blobOID,
                 as:     content
             )
         }
