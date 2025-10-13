@@ -283,11 +283,8 @@ public func gitIndexWrite(
 /// Gets the full path to the on-disk index.
 /// - Parameter index: The index to evaluate. The underlying type must be
 /// `git_index`.
-/// - Returns: The full path to the on-disk index.
-///
-/// ## Discussion
-///
-/// This function will return `nil` if the given index is an in-memory index.
+/// - Returns: The full path to the on-disk index, or `nil` if the given
+/// index is an in-memory index.
 ///
 /// ## C Equivalent
 ///
