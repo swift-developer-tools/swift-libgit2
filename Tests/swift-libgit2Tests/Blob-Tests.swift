@@ -355,7 +355,7 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             cBlobFilterOptions in
             
-            XCTAssertEqual(cBlobFilterOptions.pointee.version, Int32(gitBlobFilterOptionsVersion))
+            XCTAssertEqual(cBlobFilterOptions.pointee.version, gitBlobFilterOptionsVersion)
             XCTAssertEqual(GitBlobFilterFlagT(rawValue: cBlobFilterOptions.pointee.flags), .gitBlobFilterCheckForBinary)
             XCTAssertNil(cBlobFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cBlobFilterOptions.pointee.attr_commit_id))
@@ -371,7 +371,7 @@ final class BlobTests: XCTestCaseStopOnFail
         let blobFilterOptionsInitResult: GitErrorCode
             = gitBlobFilterOptionsInit(
                 opts:       &blobFilterOptions,
-                version:    gitBlobFilterOptionsVersion
+                version:    UInt32(gitBlobFilterOptionsVersion)
             )
         
         XCTAssertOK(blobFilterOptionsInitResult)
@@ -381,7 +381,7 @@ final class BlobTests: XCTestCaseStopOnFail
     
     func testGitBlobFilterOptionsVersion() throws
     {
-        XCTAssertEqual(Int32(gitBlobFilterOptionsVersion), GIT_BLOB_FILTER_OPTIONS_VERSION)
+        XCTAssertEqual(gitBlobFilterOptionsVersion, GIT_BLOB_FILTER_OPTIONS_VERSION)
     }
     
     

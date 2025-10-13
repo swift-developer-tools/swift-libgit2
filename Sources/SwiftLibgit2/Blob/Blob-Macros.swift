@@ -16,4 +16,4 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`GIT_BLOB_FILTER_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/blob/GIT_BLOB_FILTER_OPTIONS_VERSION.html)
-public let gitBlobFilterOptionsVersion: UInt32 = 1
+public let gitBlobFilterOptionsVersion: Int32 = 1
