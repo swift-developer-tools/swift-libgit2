@@ -98,16 +98,14 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            let isThirdDescendantOfFirst: Bool? = gitGraphDescendantOf(
+            guard let isThirdDescendantOfFirst: Bool = gitGraphDescendantOf(
                 repo:       repository.pointer,
                 commit:     thirdCommitOID,
                 ancestor:   firstCommitOID
             )
-            
-            guard let isThirdDescendantOfFirst: Bool = isThirdDescendantOfFirst
             else
             {
-                XCTFail("The third vs. first descendant result was nil.")
+                XCTFail("The isThirdDescendantOfFirst boolean was nil.")
                 return
             }
             
@@ -115,17 +113,14 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            let isThirdDescendantOfSecond: Bool? = gitGraphDescendantOf(
+            guard let isThirdDescendantOfSecond: Bool = gitGraphDescendantOf(
                 repo:       repository.pointer,
                 commit:     thirdCommitOID,
                 ancestor:   secondCommitOID
             )
-            
-            guard let isThirdDescendantOfSecond: Bool
-                    = isThirdDescendantOfSecond
             else
             {
-                XCTFail("The third vs. second descendant result was nil.")
+                XCTFail("The isThirdDescendantOfSecond boolean was nil.")
                 return
             }
             
@@ -133,16 +128,14 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            let isFirstDescendantOfThird: Bool? = gitGraphDescendantOf(
+            guard let isFirstDescendantOfThird: Bool = gitGraphDescendantOf(
                 repo:       repository.pointer,
                 commit:     firstCommitOID,
                 ancestor:   thirdCommitOID
             )
-            
-            guard let isFirstDescendantOfThird: Bool = isFirstDescendantOfThird
             else
             {
-                XCTFail("The first vs. third descendant result was nil.")
+                XCTFail("The isFirstDescendantOfThird boolean was nil.")
                 return
             }
             
@@ -150,16 +143,14 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            let isFirstDescendantOfFirst: Bool? = gitGraphDescendantOf(
+            guard let isFirstDescendantOfFirst: Bool = gitGraphDescendantOf(
                 repo:       repository.pointer,
                 commit:     firstCommitOID,
                 ancestor:   firstCommitOID
             )
-            
-            guard let isFirstDescendantOfFirst: Bool = isFirstDescendantOfFirst
             else
             {
-                XCTFail("The first vs. first descendant result was nil.")
+                XCTFail("The isFirstDescendantOfFirst boolean was nil.")
                 return
             }
             
@@ -220,17 +211,17 @@ final class GraphTests: XCTestCaseStopOnFail
                 thirdCommitOID
             ]
             
-            let isBaseReachable: Bool? = gitGraphReachableFromAny(
+            
+            
+            guard let isBaseReachable: Bool = gitGraphReachableFromAny(
                 repo            : repository.pointer,
                 commit          : baseCommitOID,
                 descendantArray : descendantArray,
                 length          : 3
             )
-            
-            guard let isBaseReachable: Bool = isBaseReachable
             else
             {
-                XCTFail("The base-reachable result was nil.")
+                XCTFail("The isBaseReachable boolean was nil.")
                 return
             }
             
@@ -238,17 +229,15 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            let isFirstReachable: Bool? = gitGraphReachableFromAny(
+            guard let isFirstReachable: Bool = gitGraphReachableFromAny(
                 repo            : repository.pointer,
                 commit          : firstCommitOID,
                 descendantArray : [secondCommitOID, thirdCommitOID],
                 length          : 2
             )
-            
-            guard let isFirstReachable: Bool = isFirstReachable
             else
             {
-                XCTFail("The first-reachable result was nil.")
+                XCTFail("The isFirstReachable boolean was nil.")
                 return
             }
             
@@ -256,21 +245,19 @@ final class GraphTests: XCTestCaseStopOnFail
             
             
             
-            let emptyArrayResult: Bool? = gitGraphReachableFromAny(
+            guard let isEmptyReachableFromAny: Bool = gitGraphReachableFromAny(
                 repo            : repository.pointer,
                 commit          : baseCommitOID,
                 descendantArray : [],
                 length          : 0
             )
-            
-            guard let emptyArrayResult: Bool = emptyArrayResult
             else
             {
-                XCTFail("The empty array result was nil.")
+                XCTFail("The isEmptyReachableFromAny boolean was nil.")
                 return
             }
             
-            XCTAssertFalse(emptyArrayResult)
+            XCTAssertFalse(isEmptyReachableFromAny)
         }
     }
 }

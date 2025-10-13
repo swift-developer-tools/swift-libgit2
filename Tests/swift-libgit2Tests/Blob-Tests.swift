@@ -219,19 +219,17 @@ final class BlobTests: XCTestCaseStopOnFail
     {
         let data = Data("Hello World!".utf8)
         
-        let isBinary: Bool? = gitBlobDataIsBinary(
+        guard let isBlobDataBinary: Bool = gitBlobDataIsBinary(
             data:   data,
             len:    data.count
         )
-        
-        guard let isBinary: Bool = isBinary
         else
         {
-            XCTFail("The boolean was nil.")
+            XCTFail("The isBlobDataBinary boolean was nil.")
             return
         }
         
-        XCTAssertFalse(isBinary)
+        XCTAssertFalse(isBlobDataBinary)
     }
     
     
