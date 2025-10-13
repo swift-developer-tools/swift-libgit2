@@ -75,7 +75,7 @@ internal extension Array where Element == GitConfigMap
                 
                 cConfigMap.type         = configMap.type.cValue()
                 cConfigMap.str_match    = nil
-                cConfigMap.map_value    = Int32(configMap.mapValue)
+                cConfigMap.map_value    = configMap.mapValue
                 
                 return cConfigMap
             }
@@ -171,7 +171,7 @@ internal extension Array where Element == GitConfigMap
                 
                 cConfigMap.type         = configMap.type.cValue()
                 cConfigMap.str_match    = cStringsByIndex[index].map { UnsafePointer($0) }
-                cConfigMap.map_value    = Int32(configMap.mapValue)
+                cConfigMap.map_value    = configMap.mapValue
                 
                 return cConfigMap
             }
