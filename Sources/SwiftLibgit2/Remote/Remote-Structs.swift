@@ -330,9 +330,19 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         self.updateFetchHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
         self.downloadTags       = GitRemoteAutoTagOptionT(cValue: fetchOptions.download_tags)           ?? .gitRemoteDownloadTagsUnspecified
         self.proxyOpts          = GitProxyOptions(cValue: fetchOptions.proxy_opts)
-        self.depth              = GitFetchDepthT(rawValue: UInt32(fetchOptions.depth))                  ?? .gitFetchDepthFull
         self.followRedirects    = GitRemoteRedirectT(rawValue: fetchOptions.follow_redirects.rawValue)  ?? .gitRemoteRedirectInitial
         self.customHeaders      = Array(fetchOptions.custom_headers)
+        
+        if
+            fetchOptions.depth >= 0,
+            let fetchDepth = GitFetchDepthT(rawValue: UInt32(fetchOptions.depth))
+        {
+            self.depth = fetchDepth
+        }
+        else
+        {
+            self.depth = .gitFetchDepthFull
+        }
     }
     
     
@@ -346,7 +356,9 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         _ body: (UnsafeMutablePointer<git_fetch_options>) throws -> T
     ) throws -> T
     {
-        guard version >= 0
+        guard
+            version >= 0,
+            depth.rawValue <= Int32.max
         else
         {
             throw NSError.makeCConversionError()
