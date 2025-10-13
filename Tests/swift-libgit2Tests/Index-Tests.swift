@@ -748,7 +748,7 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(indexEntry.flagsExtended, [])
         XCTAssertEqual(indexEntry.path, "")
         
-        indexEntry.withCValue
+        try indexEntry.withCValue
         {
             cIndexEntry in
             
@@ -864,7 +864,13 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            let isConflict: Bool = gitIndexEntryIsConflict(entry: indexEntry)
+            guard let isConflict: Bool
+                    = gitIndexEntryIsConflict(entry: indexEntry)
+            else
+            {
+                XCTFail("The index-is-conflict boolean was nil.")
+                return
+            }
             
             XCTAssertFalse(isConflict)
         }

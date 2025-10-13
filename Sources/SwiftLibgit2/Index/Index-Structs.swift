@@ -181,7 +181,7 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     /// The C enum members of ``GitIndexEntryFlagT`` and
     /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
     /// and `flags_extended` fields of `git_index_entry` expect `UInt16`.
-    /// Both values can be safely cast from `UInt16` to `UInt32`, since this
+    /// The values can be safely cast from `UInt16` to `UInt32`, since this
     /// is a widening conversion.
     internal init(
         cValue indexEntry: git_index_entry
@@ -207,10 +207,38 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    ///
+    /// ## Discussion
+    ///
+    /// The C enum members of ``GitIndexEntryFlagT`` and
+    /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
+    /// and `flags_extended` fields of `git_index_entry` expect `UInt16`.
+    /// If either value is greater than `UInt16.max`, this method will throw
+    /// an error.
+    ///
+    /// Alternatively, the values could be masked to 16 bits and then
+    /// cast as follows:
+    ///
+    /// ```swift
+    /// UInt16(flags.rawValue & 0xFFFF)
+    /// UInt16(flagsExtended.rawValue & 0xFFFF)
+    /// ```
+    ///
+    /// However, this may cause silent data loss if the original values
+    /// exceeded `UInt16.max`.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_index_entry>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
+        guard
+            flags.rawValue <= UInt16.max,
+            flagsExtended.rawValue <= UInt16.max
+        else
+        {
+            throw NSError.makeCConversionError()
+        }
+        
         var indexEntry = git_index_entry()
         
         indexEntry.ctime            = cTime.cValue()
@@ -222,8 +250,8 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
         indexEntry.gid              = gid
         indexEntry.file_size        = fileSize
         indexEntry.id               = id.cValue()
-        indexEntry.flags            = UInt16(flags.rawValue & 0xFFFF)
-        indexEntry.flags_extended   = UInt16(flagsExtended.rawValue & 0xFFFF)
+        indexEntry.flags            = UInt16(flags.rawValue)
+        indexEntry.flags_extended   = UInt16(flagsExtended.rawValue)
         
         return try path.withCString
         {

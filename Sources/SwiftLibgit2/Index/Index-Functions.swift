@@ -632,7 +632,7 @@ public func gitIndexAdd(
 {
     return withCConversion
     {
-        return sourceEntry.withCValue
+        return try sourceEntry.withCValue
         {
             cSourceEntry in
             
@@ -648,7 +648,8 @@ public func gitIndexAdd(
 
 /// Gets the stage from the given index entry.
 /// - Parameter entry: The index entry to evaluate.
-/// - Returns: The stage from the given index entry.
+/// - Returns: The stage from the given index entry, or `nil` if there was
+/// an error.
 ///
 /// ## C Equivalent
 ///
@@ -657,7 +658,7 @@ public func gitIndexEntryStage(
     entry: GitIndexEntry
 ) -> GitIndexStageT?
 {
-    return entry.withCValue
+    return try? entry.withCValue
     {
         cEntry in
         
@@ -671,16 +672,17 @@ public func gitIndexEntryStage(
 
 /// Checks whether the given index entry is a conflict entry.
 /// - Parameter entry: The entry to check.
-/// - Returns: Whether the given index entry is a conflict entry.
+/// - Returns: Whether the given index entry is a conflict entry, or `nil` if
+/// there was an error.
 ///
 /// ## C Equivalent
 ///
 /// [`git_index_entry_is_conflict()`](https://libgit2.org/docs/reference/main/index/git_index_entry_is_conflict.html)
 public func gitIndexEntryIsConflict(
     entry: GitIndexEntry
-) -> Bool
+) -> Bool?
 {
-    return entry.withCValue
+    return try? entry.withCValue
     {
         cEntry in
         
