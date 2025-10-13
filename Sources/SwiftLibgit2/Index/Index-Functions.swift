@@ -283,8 +283,7 @@ public func gitIndexWrite(
 /// Gets the full path to the on-disk index.
 /// - Parameter index: The index to evaluate. The underlying type must be
 /// `git_index`.
-/// - Returns: The full path to the on-disk index, or `nil` if the given
-/// index is an in-memory index.
+/// - Returns: The full path to the on-disk index.
 ///
 /// ## C Equivalent
 ///
@@ -645,8 +644,7 @@ public func gitIndexAdd(
 
 /// Gets the stage from the given index entry.
 /// - Parameter entry: The index entry to evaluate.
-/// - Returns: The stage from the given index entry, or `nil` if there was
-/// an error.
+/// - Returns: The stage from the given index entry.
 ///
 /// ## C Equivalent
 ///

@@ -507,8 +507,6 @@ public func gitDiffNumDeltasOfType(
 /// ``gitDiffForEach(diff:fileCB:binaryCB:hunkCB:lineCB:payload:)``, or create
 /// a `git_patch`.
 ///
-/// - Note: The return value will be `nil` if the given index is out of range.
-///
 /// ## C Equivalent
 ///
 /// [`git_diff_get_delta()`](https://libgit2.org/docs/reference/main/diff/git_diff_get_delta.html)

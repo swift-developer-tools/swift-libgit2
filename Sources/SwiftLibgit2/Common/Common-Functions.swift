@@ -85,7 +85,8 @@ public func gitLibgit2Features() -> GitFeatureT?
 
 /// Gets the backend details for the given compile-time feature in libgit2.
 /// - Parameter feature: The feature for which to get backend details.
-/// - Returns: The backend details for the given compile-time feature.
+/// - Returns: The backend details for the given compile-time feature,
+/// or `nil` if the feature is not supported.
 ///
 /// ## Discussion
 ///
@@ -98,9 +99,6 @@ public func gitLibgit2Features() -> GitFeatureT?
 /// reflect the compilation options specified to the build system (though in
 /// all lower case). The backend may be `builtin` for features that are
 /// provided by libgit2 itself.
-///
-/// This function will return `nil` if the feature is not supported by the
-/// library.
 ///
 /// ## C Equivalent
 ///
