@@ -252,7 +252,7 @@ internal func withCConversion(
     _ body: () throws -> Int32
 ) -> GitErrorCode
 {
-    let result: Int32
+    var result: Int32 = GitErrorCode.gitEUser.rawValue
     
     do
     {
@@ -260,11 +260,16 @@ internal func withCConversion(
     }
     catch let error as NSError
     {
-        result = Int32(error.code)
+        if
+            error.code >= Int32.min,
+            error.code <= Int32.max
+        {
+            result = Int32(error.code)
+        }
     }
     catch
     {
-        result = GitErrorCode.gitEUser.rawValue
+        /// Non-`NSError` cases return the default value.
     }
     
     return GitErrorCode(rawValue: result)
