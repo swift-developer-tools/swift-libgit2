@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -174,6 +175,14 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     
     /// Creates a ``GitIndexEntry`` instance from a `git_index_entry` instance.
     /// - Parameter indexEntry: The `git_index_entry` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The C enum members of ``GitIndexEntryFlagT`` and
+    /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
+    /// and `flags_extended` fields of `git_index_entry` use `UInt16`. The
+    /// values can be safely cast from `UInt16` to `UInt32`, since this is a
+    /// widening conversion.
     internal init(
         cValue indexEntry: git_index_entry
     )
@@ -198,10 +207,19 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_index_entry>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
+        guard
+            flags.rawValue <= UInt16.max,
+            flagsExtended.rawValue <= UInt16.max
+        else
+        {
+            throw NSError.makeCConversionError()
+        }
+        
         var indexEntry = git_index_entry()
         
         indexEntry.ctime            = cTime.cValue()
@@ -213,8 +231,8 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
         indexEntry.gid              = gid
         indexEntry.file_size        = fileSize
         indexEntry.id               = id.cValue()
-        indexEntry.flags            = UInt16(flags.rawValue & 0xFFFF)
-        indexEntry.flags_extended   = UInt16(flagsExtended.rawValue & 0xFFFF)
+        indexEntry.flags            = UInt16(flags.rawValue)
+        indexEntry.flags_extended   = UInt16(flagsExtended.rawValue)
         
         return try path.withCString
         {

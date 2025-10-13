@@ -51,15 +51,8 @@ enum Commit
         guard let commitPointer: OpaquePointer = commitPointer
         else
         {
-            XCTFail("The commit pointer was nil.")
-            
-            throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
-                message:    "The commit pointer was nil."
-            )
+            throw NSError.makeError("The commit pointer was nil.")
         }
-        
-        
         
         return try body(commitPointer)
     }

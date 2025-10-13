@@ -17,7 +17,7 @@ import CLibgit2
 ///   written.
 ///   - commit: The commit for which to create a patch. The underlying type
 ///   must be `git_commit`.
-///   - opts: The options for formatting generated emails.
+///   - opts: The email creation options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

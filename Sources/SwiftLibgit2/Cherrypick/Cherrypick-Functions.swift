@@ -52,7 +52,7 @@ public func gitCherrypickOptionsInit(
 ///   - cherrypickCommit: The commit to cherry-pick.
 ///   - ourCommit: The commit against which to cherry-pick (for example, HEAD).
 ///   - mainline: The parent of the commit to cherry-pick, if it is a merge.
-///   - mergeOptions: The options to use for the merge operation.
+///   - mergeOptions: The merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -93,7 +93,7 @@ public func gitCherrypickCommit(
 ///   - repo: The repository containing the given commit. The underlying type
 ///   must be `git_repository`.
 ///   - commit: The commit to cherry-pick.
-///   - cherrypickOptions: The options to use for the cherry-pick operation.
+///   - cherrypickOptions: The cherry-pick options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

@@ -96,7 +96,7 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
         var commitCreateOptions = git_commit_create_options()
         
         commitCreateOptions.version             = version
-        commitCreateOptions.allow_empty_commit  = UInt32(bitPattern: allowEmptyCommit.intValue)
+        commitCreateOptions.allow_empty_commit  = allowEmptyCommit.uint32Value
         
         return try author.withOptionalCValue
         {

@@ -63,7 +63,7 @@ public struct GitRemoteHEAD: GitStructReadable, WithCConvertible
     {
         var remoteHEAD = git_remote_head()
         
-        remoteHEAD.local    = local.intValue
+        remoteHEAD.local    = local.int32Value
         remoteHEAD.oid      = oid.cValue()
         remoteHEAD.loid     = loid.cValue()
         

@@ -53,7 +53,7 @@ public func gitIndexerOptionsInit(
 ///   - odb: The object database from which to read objects when fixing thin
 ///   packs. The underlying type must be `git_odb`. Pass `nil` if no thin packs
 ///   are expected.
-///   - opts: The indexer options.
+///   - opts: The indexer options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -191,7 +191,9 @@ public func gitIndexerHash(
     idx: OpaquePointer
 ) -> GitOID
 {
-    return GitOID(cValue: git_indexer_hash(idx).pointee)
+    let indexerHashOID: UnsafePointer<git_oid> = git_indexer_hash(idx)
+    
+    return GitOID(cValue: indexerHashOID.pointee)
 }
 
 
@@ -213,7 +215,9 @@ public func gitIndexerName(
     idx: OpaquePointer
 ) -> String?
 {
-    return String(optionalCString: git_indexer_name(idx))
+    let indexerName: UnsafePointer<CChar>? = git_indexer_name(idx)
+    
+    return String(optionalCString: indexerName)
 }
 
 

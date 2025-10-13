@@ -51,8 +51,8 @@ public func gitNoteIteratorNew(
 /// - Parameters:
 ///   - out: The pointer in which to store the commit note iterator. The
 ///   underlying type must be `git_note_iterator`.
-///   - notesCommit: The notes commit object. The underlying type must be
-///   `git_commit`.
+///   - notesCommit: The notes commit object to iterate. The underlying type
+///   must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -102,7 +102,8 @@ public func gitNoteIteratorFree(
 ///   containing the message.
 ///   - annotatedID: The ``GitOID`` instance in which to store the ID of the
 ///   object being annotated.
-///   - it: The note iterator. The underlying type must be `git_note_iterator`.
+///   - it: The note iterator to use. The underlying type must be
+///   `git_note_iterator`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -178,8 +179,8 @@ public func gitNoteRead(
 ///   must be `git_note`.
 ///   - repo: The repository in which to look up the note. The underlying
 ///   type must be `git_repository`.
-///   - notesCommit: The notes commit object. The underlying type must be
-///   `git_commit`.
+///   - notesCommit: The notes commit object to read. The underlying type must
+///   be `git_commit`.
 ///   - oid: The ID of the object for which to read the note.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -258,7 +259,7 @@ public func gitNoteMessage(
     note: OpaquePointer
 ) -> String?
 {
-    let message: UnsafePointer<CChar> = git_note_message(note)
+    let message: UnsafePointer<CChar>? = git_note_message(note)
     
     return String(optionalCString: message)
 }
@@ -277,9 +278,9 @@ public func gitNoteID(
     note: OpaquePointer
 ) -> GitOID
 {
-    let oid: UnsafePointer<git_oid> = git_note_id(note)
+    let noteOID: UnsafePointer<git_oid> = git_note_id(note)
     
-    return GitOID(cValue: oid.pointee)
+    return GitOID(cValue: noteOID.pointee)
 }
 
 
@@ -336,7 +337,7 @@ public func gitNoteCreate(
                         cCommitter,
                         &cOID,
                         note,
-                        force.intValue
+                        force.int32Value
                     )
                 }
             }
@@ -411,7 +412,7 @@ public func gitNoteCommitCreate(
                             cCommitter,
                             &cOID,
                             note,
-                            allowNoteOverwrite.intValue
+                            allowNoteOverwrite.int32Value
                         )
                     }
                 }
@@ -494,7 +495,7 @@ public func gitNoteRemove(
 /// [`git_note_commit_remove()`](https://libgit2.org/docs/reference/main/notes/git_note_commit_remove.html)
 public func gitNoteCommitRemove(
     notesCommitOut  : inout GitOID,
-    repo:            OpaquePointer,
+    repo            : OpaquePointer,
     notesCommit     : OpaquePointer,
     author          : GitSignature,
     committer       : GitSignature,
@@ -592,7 +593,7 @@ public func gitNoteDefaultRef(
 ///   `git_repository`.
 ///   - notesRef: The canonical name of the reference to use. Pass `nil` to
 ///   use `refs/notes/commits`.
-///   - noteCB: The callback invoked for each note.
+///   - noteCB: The callback to invoke for each note.
 ///   - payload: The payload provided by the caller.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

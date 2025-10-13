@@ -53,7 +53,7 @@ public func gitMessagePrettify(
             return git_message_prettify(
                 cOut,
                 message,
-                stripComments.intValue,
+                stripComments.int32Value,
                 commentChar ?? 0
             )
         }

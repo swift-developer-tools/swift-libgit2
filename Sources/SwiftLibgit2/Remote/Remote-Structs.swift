@@ -238,7 +238,7 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitFetchOptionsVersion``.
-    public var version          : UInt32                    = gitFetchOptionsVersion
+    public var version          : Int32                     = gitFetchOptionsVersion
     
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
@@ -324,15 +324,25 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         cValue fetchOptions: git_fetch_options
     )
     {
-        self.version            = UInt32(fetchOptions.version)
+        self.version            = fetchOptions.version
         self.callbacks          = GitRemoteCallbacks(cValue: fetchOptions.callbacks)
         self.prune              = GitFetchPruneT(cValue: fetchOptions.prune)                            ?? .gitFetchPruneUnspecified
         self.updateFetchHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
         self.downloadTags       = GitRemoteAutoTagOptionT(cValue: fetchOptions.download_tags)           ?? .gitRemoteDownloadTagsUnspecified
         self.proxyOpts          = GitProxyOptions(cValue: fetchOptions.proxy_opts)
-        self.depth              = GitFetchDepthT(rawValue: UInt32(fetchOptions.depth))                  ?? .gitFetchDepthFull
         self.followRedirects    = GitRemoteRedirectT(rawValue: fetchOptions.follow_redirects.rawValue)  ?? .gitRemoteRedirectInitial
         self.customHeaders      = Array(fetchOptions.custom_headers)
+        
+        if
+            fetchOptions.depth >= 0,
+            let fetchDepth = GitFetchDepthT(rawValue: UInt32(fetchOptions.depth))
+        {
+            self.depth = fetchDepth
+        }
+        else
+        {
+            self.depth = .gitFetchDepthFull
+        }
     }
     
     
@@ -346,11 +356,19 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         _ body: (UnsafeMutablePointer<git_fetch_options>) throws -> T
     ) throws -> T
     {
+        guard
+            version >= 0,
+            depth.rawValue <= Int32.max
+        else
+        {
+            throw NSError.makeCConversionError()
+        }
+        
         var fetchOptions = git_fetch_options()
         
         let fetchOptionsInitResult: GitErrorCode = gitFetchOptionsInit(
             opts:       &fetchOptions,
-            version:    version
+            version:    UInt32(version)
         )
         
         if fetchOptionsInitResult != .gitOK

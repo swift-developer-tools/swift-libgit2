@@ -19,8 +19,8 @@ import CLibgit2
 ///   `local`.
 ///   - repo: The repository containing the given commits. The underlying type
 ///   must be `git_repository`.
-///   - local: The ID of the local commit.
-///   - upstream: The ID of the upstream commit.
+///   - local: The ID of the local commit to evaluate.
+///   - upstream: The ID of the upstream commit to evaluate.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -63,8 +63,8 @@ public func gitGraphAheadBehind(
 /// - Parameters:
 ///   - repo: The repository containing the given commits. The underlying type
 ///   must be `git_repository`.
-///   - commit: The ID of the commit to evaluate.
-///   - ancestor: The ID of the ancestor commit.
+///   - commit: The ID of the commit to check.
+///   - ancestor: The ID of the ancestor commit to check against.
 /// - Returns: Whether the given commit is the descendant of the given ancestor
 /// commit, or `nil` if there was an error.
 ///

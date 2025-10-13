@@ -606,7 +606,7 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     {
         var diffBinary = git_diff_binary()
         
-        diffBinary.contains_data = UInt32(containsData.intValue)
+        diffBinary.contains_data = containsData.uint32Value
         
         return try oldFile.withCValue
         {
@@ -829,7 +829,17 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
         cValue diffLine: git_diff_line
     )
     {
-        self.origin         = GitDiffLineT(rawValue: UInt32(diffLine.origin)) ?? .gitDiffLineContext
+        if
+            diffLine.origin >= 0,
+            let diffLineT = GitDiffLineT(rawValue: UInt32(diffLine.origin))
+        {
+            self.origin = diffLineT
+        }
+        else
+        {
+            self.origin = .gitDiffLineContext
+        }
+        
         self.oldLineNo      = diffLine.old_lineno
         self.newLineNo      = diffLine.new_lineno
         self.numLines       = diffLine.num_lines
@@ -849,6 +859,12 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
     ) throws -> T
     {
         var diffLine = git_diff_line()
+        
+        guard origin.rawValue <= CChar.max
+        else
+        {
+            throw NSError.makeCConversionError()
+        }
         
         diffLine.origin             = CChar(origin.rawValue)
         diffLine.old_lineno         = oldLineNo

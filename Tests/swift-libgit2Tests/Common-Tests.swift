@@ -31,15 +31,21 @@ final class CommonTests: XCTestCaseStopOnFail
     
     func testGitLibgitFeatures() throws
     {
-        let features            = Int32(gitLibgit2Features().rawValue)
-        let featuresSecondCall  = Int32(gitLibgit2Features().rawValue)
+        guard
+            let featuresFirstCall   : GitFeatureT   = gitLibgit2Features(),
+            let featuresSecondCall  : GitFeatureT   = gitLibgit2Features()
+        else
+        {
+            XCTFail("The features were nil.")
+            return
+        }
         
-        XCTAssertEqual(features, featuresSecondCall)
-        XCTAssertGreaterThanOrEqual(features, 0)
-        XCTAssertNotEqual(features & Int32(GitFeatureT.gitFeatureHTTPParser.rawValue), 0)
-        XCTAssertNotEqual(features & Int32(GitFeatureT.gitFeatureRegex.rawValue), 0)
-        XCTAssertNotEqual(features & Int32(GitFeatureT.gitFeatureCompression.rawValue), 0)
-        XCTAssertNotEqual(features & Int32(GitFeatureT.gitFeatureSHA1.rawValue), 0)
+        XCTAssertEqual(featuresFirstCall, featuresSecondCall)
+        XCTAssertGreaterThanOrEqual(featuresFirstCall.rawValue, 0)
+        XCTAssertTrue(featuresFirstCall.contains(.gitFeatureHTTPParser))
+        XCTAssertTrue(featuresFirstCall.contains(.gitFeatureRegex))
+        XCTAssertTrue(featuresFirstCall.contains(.gitFeatureCompression))
+        XCTAssertTrue(featuresFirstCall.contains(.gitFeatureSHA1))
     }
     
     

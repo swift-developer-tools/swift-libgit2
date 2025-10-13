@@ -291,7 +291,7 @@ public struct GitCheckoutOptions: GitStructMutable, WithCConvertible
         }
         
         checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
-        checkoutOptions.disable_filters     = disableFilters.intValue
+        checkoutOptions.disable_filters     = disableFilters.int32Value
         checkoutOptions.dir_mode            = dirMode
         checkoutOptions.file_mode           = fileMode
         checkoutOptions.file_open_flags     = fileOpenFlags

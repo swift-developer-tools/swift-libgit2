@@ -32,14 +32,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: GitOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .buffer(data: data)
             )
             
             Blob.validateBlobContent(
                 in:     repository,
-                id:     &blobOID,
+                id:     blobOID,
                 as:     content
             )
         }
@@ -62,14 +62,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: GitOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .disk(path: fileURL.path)
             )
             
             Blob.validateBlobContent(
                 in:     repository,
-                id:     &blobOID,
+                id:     blobOID,
                 as:     fileContent
             )
         }
@@ -130,14 +130,14 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var blobOID: GitOID = Blob.createBlob(
+            let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
                 from:   .streamCommit(stream: streamPointer)
             )
             
             Blob.validateBlobContent(
                 in:     repository,
-                id:     &blobOID,
+                id:     blobOID,
                 as:     content
             )
         }
@@ -201,12 +201,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            guard let blobID: GitOID = gitBlobID(blob: blobPointer)
-            else
-            {
-                XCTFail("The blob ID was nil.")
-                return
-            }
+            let blobID: GitOID = gitBlobID(blob: blobPointer)
             
             XCTAssertEqual(blobOID, blobID)
             
@@ -224,19 +219,17 @@ final class BlobTests: XCTestCaseStopOnFail
     {
         let data = Data("Hello World!".utf8)
         
-        let isBinary: Bool? = gitBlobDataIsBinary(
+        guard let isBlobDataBinary: Bool = gitBlobDataIsBinary(
             data:   data,
             len:    data.count
         )
-        
-        guard let isBinary: Bool = isBinary
         else
         {
-            XCTFail("The boolean was nil.")
+            XCTFail("The isBlobDataBinary boolean was nil.")
             return
         }
         
-        XCTAssertFalse(isBinary)
+        XCTAssertFalse(isBlobDataBinary)
     }
     
     
@@ -362,7 +355,7 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             cBlobFilterOptions in
             
-            XCTAssertEqual(cBlobFilterOptions.pointee.version, Int32(gitBlobFilterOptionsVersion))
+            XCTAssertEqual(cBlobFilterOptions.pointee.version, gitBlobFilterOptionsVersion)
             XCTAssertEqual(GitBlobFilterFlagT(rawValue: cBlobFilterOptions.pointee.flags), .gitBlobFilterCheckForBinary)
             XCTAssertNil(cBlobFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cBlobFilterOptions.pointee.attr_commit_id))
@@ -378,7 +371,7 @@ final class BlobTests: XCTestCaseStopOnFail
         let blobFilterOptionsInitResult: GitErrorCode
             = gitBlobFilterOptionsInit(
                 opts:       &blobFilterOptions,
-                version:    gitBlobFilterOptionsVersion
+                version:    UInt32(gitBlobFilterOptionsVersion)
             )
         
         XCTAssertOK(blobFilterOptionsInitResult)
@@ -388,7 +381,7 @@ final class BlobTests: XCTestCaseStopOnFail
     
     func testGitBlobFilterOptionsVersion() throws
     {
-        XCTAssertEqual(Int32(gitBlobFilterOptionsVersion), GIT_BLOB_FILTER_OPTIONS_VERSION)
+        XCTAssertEqual(gitBlobFilterOptionsVersion, GIT_BLOB_FILTER_OPTIONS_VERSION)
     }
     
     
@@ -458,14 +451,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            guard
-                let originalBlobID      : GitOID    = gitBlobID(blob: originalBlobPointer),
-                let duplicatedBlobID    : GitOID    = gitBlobID(blob: duplicatedBlobPointer)
-            else
-            {
-                XCTFail("The original or duplicated blob IDs were nil.")
-                return
-            }
+            let originalBlobID      : GitOID    = gitBlobID(blob: originalBlobPointer)
+            let duplicatedBlobID    : GitOID    = gitBlobID(blob: duplicatedBlobPointer)
             
             XCTAssertEqual(originalBlobID, duplicatedBlobID)
             

@@ -18,7 +18,7 @@ import Foundation
 /// - Parameters:
 ///   - indexOut: The pointer in which to store the index. The underlying type
 ///   must be `git_index`.
-///   - indexPath: The path to the on-disk index.
+///   - indexPath: The on-disk index path to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -100,9 +100,10 @@ public func gitIndexFree(
 
 
 
-/// Gets the repository that is related to the given index.
+/// Gets the repository containing the given index.
 /// - Parameter index: The index. The underlying type must be `git_index`.
-/// - Returns: A pointer to the repository that is related to the given index.
+/// - Returns: The repository containing the given index. The underlying
+/// type will be `git_repository`.
 ///
 /// ## C Equivalent
 ///
@@ -121,10 +122,6 @@ public func gitIndexOwner(
 /// `git_index`.
 /// - Returns: The system capabilities of the given index.
 ///
-/// ## Discussion
-///
-/// This function will return `nil` if an unexpected value is encountered.
-///
 /// ## C Equivalent
 ///
 /// [`git_index_caps()`](https://libgit2.org/docs/reference/main/index/git_index_caps.html)
@@ -132,7 +129,9 @@ public func gitIndexCaps(
     index: OpaquePointer
 ) -> GitIndexCapabilityT?
 {
-    return GitIndexCapabilityT(rawValue: git_index_caps(index))
+    let indexCaps: Int32 = git_index_caps(index)
+    
+    return GitIndexCapabilityT(rawValue: indexCaps)
 }
 
 
@@ -254,7 +253,7 @@ public func gitIndexRead(
     {
         return git_index_read(
             index,
-            force.intValue
+            force.int32Value
         )
     }
 }
@@ -287,10 +286,6 @@ public func gitIndexWrite(
 /// `git_index`.
 /// - Returns: The full path to the on-disk index.
 ///
-/// ## Discussion
-///
-/// This function will return `nil` if the given index is an in-memory index.
-///
 /// ## C Equivalent
 ///
 /// [`git_index_path()`](https://libgit2.org/docs/reference/main/index/git_index_path.html)
@@ -298,7 +293,9 @@ public func gitIndexPath(
     index: OpaquePointer
 ) -> String?
 {
-    return String(optionalCString: git_index_path(index))
+    let indexPath: UnsafePointer<CChar>? = git_index_path(index)
+    
+    return String(optionalCString: indexPath)
 }
 
 
@@ -324,7 +321,9 @@ public func gitIndexChecksum(
     index: OpaquePointer
 ) -> GitOID
 {
-    return GitOID(cValue: git_index_checksum(index).pointee)
+    let indexChecksumOID: UnsafePointer<git_oid> = git_index_checksum(index)
+    
+    return GitOID(cValue: indexChecksumOID.pointee)
 }
 
 
@@ -519,7 +518,7 @@ public func gitIndexGetByIndex(
 /// Gets the entry at the given path and stage within the given index.
 /// - Parameters:
 ///   - index: The index to search. The underlying type must be `git_index`.
-///   - path: The path to the entry.
+///   - path: The path to the entry to get.
 ///   - stage: The stage to search.
 /// - Returns: The entry at the given path and stage within the given index.
 ///
@@ -552,7 +551,7 @@ public func gitIndexGetByPath(
 /// Removes the entry at the given path and stage from the given index.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - path: The path to the entry.
+///   - path: The path to the entry to remove.
 ///   - stage: The stage to search.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -580,7 +579,7 @@ public func gitIndexRemove(
 /// Removes all entries in the given directory and stage from the given index.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - dir: The path to the directory.
+///   - dir: The path to the directory within which to remove all entries.
 ///   - stage: The stage to search.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -608,7 +607,7 @@ public func gitIndexRemoveDirectory(
 /// Adds the given index entry to the given index.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - sourceEntry: The new index entry.
+///   - sourceEntry: The new index entry to add.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -630,7 +629,7 @@ public func gitIndexAdd(
 {
     return withCConversion
     {
-        return sourceEntry.withCValue
+        return try sourceEntry.withCValue
         {
             cSourceEntry in
             
@@ -655,11 +654,13 @@ public func gitIndexEntryStage(
     entry: GitIndexEntry
 ) -> GitIndexStageT?
 {
-    return entry.withCValue
+    return try? entry.withCValue
     {
         cEntry in
         
-        return GitIndexStageT(rawValue: git_index_entry_stage(cEntry))
+        let indexStage: Int32 = git_index_entry_stage(cEntry)
+        
+        return GitIndexStageT(rawValue: indexStage)
     }
 }
 
@@ -667,20 +668,23 @@ public func gitIndexEntryStage(
 
 /// Checks whether the given index entry is a conflict entry.
 /// - Parameter entry: The entry to check.
-/// - Returns: Whether the given index entry is a conflict entry.
+/// - Returns: Whether the given index entry is a conflict entry, or `nil` if
+/// there was an error.
 ///
 /// ## C Equivalent
 ///
 /// [`git_index_entry_is_conflict()`](https://libgit2.org/docs/reference/main/index/git_index_entry_is_conflict.html)
 public func gitIndexEntryIsConflict(
     entry: GitIndexEntry
-) -> Bool
+) -> Bool?
 {
-    return entry.withCValue
+    return try? entry.withCValue
     {
         cEntry in
         
-        return Bool(git_index_entry_is_conflict(cEntry))
+        let indexEntryIsConflict: Int32 = git_index_entry_is_conflict(cEntry)
+        
+        return Bool(indexEntryIsConflict)
     }
 }
 
@@ -811,7 +815,7 @@ public func gitIndexAddByPath(
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - entry: The index entry to add.
-///   - buffer: The data to be written into the blob.
+///   - buffer: The data to write into the blob.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -898,10 +902,10 @@ public func gitIndexRemoveByPath(
 /// directory.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - pathspec: The path patterns.
+///   - pathspec: The path patterns to use.
 ///   - flags: The flags for adding files that match a pathspec.
 ///   - callback: The callback for adding or updating files matching a pathspec.
-///   - payload: The caller-specified payload passed to `callback`.
+///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -967,9 +971,9 @@ public func gitIndexAddAll(
 /// directory.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - pathspec: The path patterns.
+///   - pathspec: The path patterns to use.
 ///   - callback: The callback for removing files matching a pathspec.
-///   - payload: The caller-specified payload passed to `callback`.
+///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -1004,9 +1008,9 @@ public func gitIndexRemoveAll(
 /// directory.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - pathspec: The path patterns.
+///   - pathspec: The path patterns to use.
 ///   - callback: The callback for updating files matching a pathspec.
-///   - payload: The caller-specified payload passed to `callback`.
+///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1051,7 +1055,7 @@ public func gitIndexUpdateAll(
 /// - Parameters:
 ///   - atPos: The pointer in which to store the position of the index entry.
 ///   - index: The index to search. The underlying type must be `git_index`.
-///   - path: The path the file to search.
+///   - path: The path to the file to search.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -1217,7 +1221,7 @@ public func gitIndexConflictGet(
 /// in the given index.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - path: The path to the file for which to remove conflicts.
+///   - path: The path to the file from which to remove conflicts.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -1272,7 +1276,9 @@ public func gitIndexHasConflicts(
     index: OpaquePointer
 ) -> Bool
 {
-    return Bool(git_index_has_conflicts(index))
+    let indexHasConflicts: Int32 = git_index_has_conflicts(index)
+    
+    return Bool(indexHasConflicts)
 }
 
 
@@ -1308,7 +1314,8 @@ public func gitIndexConflictIteratorNew(
 ///   - ancestorOut: The ``GitIndexEntry`` instance in which to store the
 ///   ancestory entry.
 ///   - ourOut: The ``GitIndexEntry`` instance in which to store "our" entry.
-///   - theirOut: The ``GitIndexEntry`` instance in which to store "their" entry.
+///   - theirOut: The ``GitIndexEntry`` instance in which to store "their"
+///   entry.
 ///   - iterator: The index conflict iterator to use. The underlying type must
 ///   be `git_index_conflict_iterator`.
 /// - Returns: A ``GitErrorCode`` instance.

@@ -11,9 +11,9 @@ import CLibgit2
 
 
 
-/// The current version for ``GitBlobFilterOptions``.
+/// The maximum size of a Git object.
 ///
 /// ## C Equivalent
 ///
-/// [`GIT_BLOB_FILTER_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/blob/GIT_BLOB_FILTER_OPTIONS_VERSION.html)
-public let gitBlobFilterOptionsVersion: Int32 = 1
+/// [`GIT_OBJECT_SIZE_MAX`](https://libgit2.org/docs/reference/main/object/GIT_OBJECT_SIZE_MAX.html)
+public let gitObjectSizeMax: UInt64 = UInt64.max

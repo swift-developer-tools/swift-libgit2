@@ -33,7 +33,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         {
             cFetchOptions in
             
-            XCTAssertEqual(cFetchOptions.pointee.version, Int32(gitFetchOptionsVersion))
+            XCTAssertEqual(cFetchOptions.pointee.version, gitFetchOptionsVersion)
             XCTAssertNotNil(cFetchOptions.pointee.callbacks)
             XCTAssertEqual(GitFetchPruneT(cValue: cFetchOptions.pointee.prune), .gitFetchPruneUnspecified)
             XCTAssertEqual(GitRemoteUpdateFlags(rawValue: cFetchOptions.pointee.update_fetchhead), .gitRemoteUpdateFetchHEAD)
@@ -53,7 +53,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         
         let fetchOptionsInitResult: GitErrorCode = gitFetchOptionsInit(
             opts:       &fetchOptions,
-            version:    gitFetchOptionsVersion
+            version:    UInt32(gitFetchOptionsVersion)
         )
         
         XCTAssertOK(fetchOptionsInitResult)
@@ -63,7 +63,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitFetchOptionsVersion() throws
     {
-        XCTAssertEqual(Int32(gitFetchOptionsVersion), GIT_FETCH_OPTIONS_VERSION)
+        XCTAssertEqual(gitFetchOptionsVersion, GIT_FETCH_OPTIONS_VERSION)
     }
     
     

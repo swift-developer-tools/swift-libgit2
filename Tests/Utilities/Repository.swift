@@ -183,10 +183,7 @@ struct Repository
         guard let indexPointer: OpaquePointer = indexPointer
         else
         {
-            throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
-                message:    "The index pointer was nil."
-            )
+            throw NSError.makeError("The index pointer was nil.")
         }
         
         
@@ -247,10 +244,7 @@ struct Repository
             guard let commitPointer: OpaquePointer = commitPointer
             else
             {
-                throw NSError.makeError(
-                    code:       Int(GitErrorCode.gitEUser.rawValue),
-                    message:    "The staged commit pointer was nil."
-                )
+                throw NSError.makeError("The staged commit pointer was nil.")
             }
             
             
@@ -317,10 +311,7 @@ struct Repository
         guard let treePointer: OpaquePointer = treePointer
         else
         {
-            throw NSError.makeError(
-                code:       Int(GitErrorCode.gitEUser.rawValue),
-                message:    "The tree pointer was nil."
-            )
+            throw NSError.makeError("The tree pointer was nil.")
         }
         
         
@@ -382,7 +373,7 @@ struct Repository
         )
         
         XCTAssertOK(commitCreateResult)
-        
+        XCTAssertNotZeroOID(commitOID)
         
         
         return commitOID
@@ -496,8 +487,8 @@ struct Repository
     /// Asserts that the contents of the specified file are equal to the given
     /// value.
     /// - Parameters:
-    ///   - path: The path to the file whose content should be verified. This
-    ///   will be appended to the repository's URL.
+    ///   - path: The path to the file content to verify. This will be appended
+    ///   to the repository's URL.
     ///   - content: The expected content of the file.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may
     ///   reference directories.
@@ -684,8 +675,6 @@ extension Repository
         
         try createBlameData(in: repository)
         
-        
-        
         return try body(repository)
     }
     
@@ -722,13 +711,8 @@ extension Repository
             guard let indexPointer: OpaquePointer = indexPointer
             else
             {
-                throw NSError.makeError(
-                    code:       Int(GitErrorCode.gitEUser.rawValue),
-                    message:    "The index pointer was nil."
-                )
+                throw NSError.makeError("The index pointer was nil.")
             }
-            
-            
             
             return try body(
                 repository,

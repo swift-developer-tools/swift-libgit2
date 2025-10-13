@@ -40,6 +40,7 @@ public func gitCredentialFree(
 
 /// Checks whether the given credential contains username information.
 /// - Parameter cred: The credential to check.
+/// - Returns: Whether the given credential contains username information.
 ///
 /// ## C Equivalent
 ///
@@ -48,13 +49,16 @@ public func gitCredentialHasUsername(
     cred: UnsafeMutablePointer<git_credential>?
 ) -> Bool
 {
-    return Bool(git_cred_has_username(cred))
+    let credentialHasUsername: Int32 = git_cred_has_username(cred)
+    
+    return Bool(credentialHasUsername)
 }
 
 
 
 /// Gets the username associated with the given credential.
 /// - Parameter cred: The credential to check.
+/// - Returns: The username associated with the given credential.
 ///
 /// ## C Equivalent
 ///
@@ -63,7 +67,9 @@ public func gitCredentialGetUsername(
     cred: UnsafeMutablePointer<git_credential>?
 ) -> String?
 {
-    return String(optionalCString: git_cred_get_username(cred))
+    let credentialUsername: UnsafePointer<CChar>? = git_cred_get_username(cred)
+    
+    return String(optionalCString: credentialUsername)
 }
 
 
@@ -221,8 +227,8 @@ public func gitCredentialSSHKeyMemoryNew(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting credential.
 ///   - username: The username of the credential.
-///   - promptCallback: The callback invoked for authentication prompts.
-///   - payload: The caller-specified payload passed to `promptCallback`.
+///   - promptCallback: The callback to invoke for authentication prompts.
+///   - payload: The payload to pass to `promptCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -287,9 +293,9 @@ public func gitCredentialSSHKeyFromAgent(
 ///   - username: The username of the credential.
 ///   - publicKey: The public key of the credential.
 ///   - publicKeyLen: The length of `publicKey`.
-///   - signCallback: The callback invoked to sign the data during the
+///   - signCallback: The callback to invoke to sign the data during the
 ///   authentication challenge.
-///   - payload: The caller-specified payload passed to `signCallback`.
+///   - payload: The payload to pass to `signCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

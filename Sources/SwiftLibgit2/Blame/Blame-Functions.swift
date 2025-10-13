@@ -81,7 +81,7 @@ public func gitBlameHunkCount(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - index: The index of the hunk to retrieve.
-/// - Returns: The hunk at the given index, or `nil` if there was an error.
+/// - Returns: The hunk at the given index.
 ///
 /// ## C Equivalent
 ///
@@ -110,8 +110,7 @@ public func gitBlameHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk that contains the given line, or `nil` if there was
-/// an error.
+/// - Returns: The hunk containing the given line.
 ///
 /// ## C Equivalent
 ///
@@ -140,7 +139,7 @@ public func gitBlameHunkByLine(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - idx: The 1-indexed line number.
-/// - Returns: The blamed line, or `nil` if there was an error.
+/// - Returns: The blamed line.
 ///
 /// ## C Equivalent
 ///
@@ -180,9 +179,9 @@ public func gitBlameLineByIndex(
 /// [`git_blame_get_hunk_count()`](https://libgit2.org/docs/reference/main/blame/git_blame_get_hunk_count.html)
 public func gitBlameGetHunkCount(
     blame: OpaquePointer
-) -> Int
+) -> UInt32
 {
-    return Int(git_blame_get_hunk_count(blame))
+    return git_blame_get_hunk_count(blame)
 }
 
 
@@ -191,7 +190,7 @@ public func gitBlameGetHunkCount(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - index: The index of the hunk to retrieve.
-/// - Returns: The hunk at the given index, or `nil` if there was an error.
+/// - Returns: The hunk at the given index.
 ///
 /// ## Discussion
 ///
@@ -225,8 +224,7 @@ public func gitBlameGetHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk that contains the given line, or `nil` if there was
-/// an error.
+/// - Returns: The hunk containing the given line.
 ///
 /// ## Discussion
 ///
@@ -260,10 +258,10 @@ public func gitBlameGetHunkByLine(
 /// - Parameters:
 ///   - out: The pointer in which to store the blame. The underlying type must
 ///   be `git_blame`.
-///   - repo: The repository whose history should be walked. The underlying
-///   type must be `git_repository`.
+///   - repo: The repository containing the file. The underlying type must be
+///   `git_repository`.
 ///   - path: The path to the file to consider.
-///   - options: The options for the blame operation.
+///   - options: The blame options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

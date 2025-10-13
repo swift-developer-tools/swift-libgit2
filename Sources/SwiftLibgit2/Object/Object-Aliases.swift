@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// The maximum size of an object.
+/// The maximum size of a Git object.
 ///
 /// ## C Equivalent
 ///

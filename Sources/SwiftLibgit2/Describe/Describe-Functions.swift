@@ -79,7 +79,7 @@ public func gitDescribeFormatOptionsInit(
 ///   type must be `git_describe_result`.
 ///   - committish: The commit to describe. The underlying type must be
 ///   `git_object`.
-///   - opts: The options for describing the commit.
+///   - opts: The describe options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -114,7 +114,7 @@ public func gitDescribeCommit(
 ///   type must be `git_describe_result`.
 ///   - repo: The repository containing the commit. The underlying type must
 ///   be `git_repository`.
-///   - opts: The options for describing the commit.
+///   - opts: The describe options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -152,9 +152,9 @@ public func gitDescribeWorkdir(
 /// - Parameters:
 ///   - out: The ``GitBuf`` instance into which the description should be
 ///   written.
-///   - result: The commit description. The underlying type must be
+///   - result: The commit description to write. The underlying type must be
 ///   `git_describe_result`.
-///   - opts: The options for formatting the commit description.
+///   - opts: The describe format options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

@@ -191,7 +191,7 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var mapValue : Int               = 0
+    public var mapValue : Int32             = 0
     
     
     
@@ -217,7 +217,7 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     {
         self.type       = GitConfigMapT(cValue: configMap.type) ?? .gitConfigMapFalse
         self.strMatch   = String(optionalCString: configMap.str_match)
-        self.mapValue   = Int(configMap.map_value)
+        self.mapValue   = configMap.map_value
     }
     
     
@@ -233,7 +233,7 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
         var configMap = git_configmap()
         
         configMap.type          = type.cValue()
-        configMap.map_value     = Int32(mapValue)
+        configMap.map_value     = mapValue
         
         return try strMatch.withOptionalCString
         {

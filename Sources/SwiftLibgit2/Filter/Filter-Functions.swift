@@ -21,7 +21,7 @@ import Foundation
 ///   - blob: The blob to which the filter should be applied. The underlying
 ///   type must be `git_blob`.
 ///   - path: The relative path to the file to filter.
-///   - mode: The filtering direction.
+///   - mode: The filtering direction to use.
 ///   - flags: The flags controlling the filtering process.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -66,8 +66,8 @@ public func gitFilterListLoad(
 ///   - blob: The blob to which the filter should be applied. The underlying
 ///   type must be `git_blob`.
 ///   - path: The relative path to the file to filter.
-///   - mode: The filtering direction.
-///   - opts: The filtering options.
+///   - mode: The filtering direction to use.
+///   - opts: The filtering options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -126,10 +126,12 @@ public func gitFilterListContains(
     name    : String
 ) -> Bool
 {
-    return Bool(git_filter_list_contains(
+    let filterListContainsName: Int32 = git_filter_list_contains(
         filters,
         name
-    ))
+    )
+    
+    return Bool(filterListContainsName)
 }
 
 
@@ -185,7 +187,7 @@ public func gitFilterListApplyToBuffer(
 ///   `git_filter_list`.
 ///   - repo: The repository containing the specified file. The underlying
 ///   type must be `git_repository`.
-///   - path: The path of the file to filter.
+///   - path: The path to the file to filter.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -299,7 +301,7 @@ public func gitFilterListStreamBuffer(
 ///   `git_filter_list`.
 ///   - repo: The repository containing the specified file. The underlying
 ///   type must be `git_repository`.
-///   - path: The path of the file to filter.
+///   - path: The path to the file to filter.
 ///   - target: The stream into which the data should be written.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

@@ -116,7 +116,7 @@ public typealias GitDiffHunkCB = @convention(c)
 /// The callback invoked for each line in a diff.
 /// - Parameters:
 ///   - delta: The delta data of the file.
-///   - hunk: The diff hunk that contains the line.
+///   - hunk: The diff hunk containing the line.
 ///   - line: The diff line.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.

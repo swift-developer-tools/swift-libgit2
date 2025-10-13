@@ -273,7 +273,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
         blameHunk.final_start_line_number   = finalStartLineNumber
         blameHunk.orig_commit_id            = origCommitID.cValue()
         blameHunk.orig_start_line_number    = origStartLineNumber
-        blameHunk.boundary                  = CChar(boundary.intValue)
+        blameHunk.boundary                  = CChar(boundary.int32Value)
         
         return try finalSignature.withOptionalCValue
         {

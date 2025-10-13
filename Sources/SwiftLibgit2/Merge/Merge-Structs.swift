@@ -365,7 +365,7 @@ public struct GitMergeFileResult: Freeable, GitStructInternalMutable, WithCConve
     {
         var mergeFileResult = git_merge_file_result()
         
-        mergeFileResult.automergeable   = UInt32(automergeable.intValue)
+        mergeFileResult.automergeable   = automergeable.uint32Value
         mergeFileResult.mode            = mode
         
         return try path.withOptionalCString

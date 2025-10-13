@@ -14,10 +14,10 @@ import CLibgit2
 /// Creates a new signature.
 /// - Parameters:
 ///   - out: The ``GitSignature`` instance in which to store the new signature.
-///   - name: The name of the actor.
-///   - email: The email of the actor.
-///   - time: The UNIX timestamp in seconds.
-///   - offset: The timezone offset in minutes.
+///   - name: The name of the actor to use.
+///   - email: The email of the actor to use.
+///   - time: The UNIX timestamp in seconds to use.
+///   - offset: The timezone offset in minutes to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -53,8 +53,8 @@ public func gitSignatureNew(
 /// Creates a new signature with a timestamp representing the current time.
 /// - Parameters:
 ///   - out: The ``GitSignature`` instance in which to store the new signature.
-///   - name: The name of the actor.
-///   - email: The email of the actor.
+///   - name: The name of the actor to use.
+///   - email: The email of the actor to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -90,7 +90,8 @@ public func gitSignatureNow(
 ///   author signature.
 ///   - committerOut: The ``GitSignature`` instance in which to store the
 ///   new committer signature.
-///   - repo: The repository. The underlying type must be `git_repository`.
+///   - repo: The repository to use. The underlying type must be
+///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -262,7 +263,7 @@ public func gitSignatureDefault(
 /// Creates a new signature by parsing the given buffer.
 /// - Parameters:
 ///   - out: The ``GitSignature`` instance in which to store the new signature.
-///   - buf: The signature string.
+///   - buf: The signature string to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -298,8 +299,9 @@ public func gitSignatureFromBuffer(
 
 /// Creates a copy of an existing signature.
 /// - Parameters:
-///   - dest: The ``GitSignature`` instance in which to store the new signature.
-///   - sig: The signature to duplicate.
+///   - dest: The ``GitSignature`` instance in which to store the copied
+///   signature.
+///   - sig: The signature to copy.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

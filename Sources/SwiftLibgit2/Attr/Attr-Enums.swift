@@ -15,9 +15,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// The properties of ``GitAttrCheckFlagsT`` correspond to flag macros in
-/// libgit2. For consistency with other APIs, swift-libgit2 presents them as
-/// if they were an enum in libgit2.
+/// - Note: The options of ``GitAttrCheckFlagsT`` correspond to flag macros
+/// in libgit2. For consistency with other APIs and type-safe usage,
+/// swift-libgit2 binds these macros as if they were a bitset enum in libgit2.
 ///
 /// ## C Equivalent
 ///
@@ -32,10 +32,12 @@ import CLibgit2
 /// [`GIT_ATTR_CHECK_INCLUDE_HEAD`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_HEAD.html)
 ///
 /// [`GIT_ATTR_CHECK_INCLUDE_COMMIT`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_COMMIT.html)
-public struct GitAttrCheckFlagsT: OptionSet, Sendable
+public struct GitAttrCheckFlagsT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
+    
+    
     
     /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
@@ -48,23 +50,48 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
     
     
     
+    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
+    /// - Parameter rawValue: The raw value to use.
+    internal init(
+        cValue rawValue: UInt32
+    )
+    {
+        self.rawValue = rawValue
+    }
+    
+    
+    
     /// Examine attributes in the working directory, then in the index.
-    public static let gitAttrCheckFileThenIndex     = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_FILE_THEN_INDEX))
+    public static let gitAttrCheckFileThenIndex     = GitAttrCheckFlagsT(rawValue: UInt32(0))
     
     /// Examine attributes in the index, then in the working directory.
-    public static let gitAttrCheckIndexThenFile     = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INDEX_THEN_FILE))
+    public static let gitAttrCheckIndexThenFile     = GitAttrCheckFlagsT(rawValue: 1)
     
     /// Examine attributes only in the index.
-    public static let gitAttrCheckIndexOnly         = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INDEX_ONLY))
+    public static let gitAttrCheckIndexOnly         = GitAttrCheckFlagsT(rawValue: 2)
     
     /// Ignore the system attributes.
-    public static let gitAttrCheckNoSystem          = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_NO_SYSTEM))
+    public static let gitAttrCheckNoSystem          = GitAttrCheckFlagsT(rawValue: 1 << 2)
     
     /// Honor `.gitattributes` in the HEAD revision.
-    public static let gitAttrCheckIncludeHEAD       = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INCLUDE_HEAD))
+    public static let gitAttrCheckIncludeHEAD       = GitAttrCheckFlagsT(rawValue: 1 << 3)
     
     /// Honor `.gitattributes` in a specific commit.
-    public static let gitAttrCheckIncludeCommit     = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INCLUDE_COMMIT))
+    public static let gitAttrCheckIncludeCommit     = GitAttrCheckFlagsT(rawValue: 1 << 4)
+    
+    
+    
+    /// Converts the ``GitAttrCheckFlagsT`` instance into a raw value.
+    /// - Returns: The raw value.
+    ///
+    /// ## Discussion
+    ///
+    /// Since the options of ``GitAttrCheckFlagsT`` correspond to flag macros
+    /// in libgit2, there is no equivalent C value other than the raw value.
+    internal func cValue() -> UInt32
+    {
+        return rawValue
+    }
 }
 
 
