@@ -373,7 +373,7 @@ struct Repository
         )
         
         XCTAssertOK(commitCreateResult)
-        
+        XCTAssertNotZeroOID(commitOID)
         
         
         return commitOID
