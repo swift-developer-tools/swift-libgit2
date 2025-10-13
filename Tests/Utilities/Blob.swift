@@ -145,11 +145,12 @@ enum Blob
         let blobRawContent  : UnsafeRawPointer  = gitBlobRawContent(blob: blobPointer)
         let blobRawSize     : UInt64            = gitBlobRawSize(blob: blobPointer)
         
-        guard blobRawSize < Int.max
+        guard blobRawSize <= Int.max
         else
         {
-            /// The blob's raw size being greater than or equal to
-            /// `Int.max` is not necessarily a failing condition.
+            /// The blob's raw size being greater than or equal to `Int.max`
+            /// is not necessarily a failing condition, but if this is the
+            /// case, it cannot be cast to `Int` for the assertion.
             return
         }
         
