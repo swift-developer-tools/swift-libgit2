@@ -35,7 +35,7 @@ public let gitRemoteCallbacksVersion: UInt32 = 1
 /// ## C Equivalent
 ///
 /// [`GIT_FETCH_OPTIONS_VERSION`](https://libgit2.org/docs/reference/main/remote/GIT_FETCH_OPTIONS_VERSION.html)
-public let gitFetchOptionsVersion: UInt32 = 1
+public let gitFetchOptionsVersion: Int32 = 1
 
 
 

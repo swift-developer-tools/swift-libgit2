@@ -238,7 +238,7 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitFetchOptionsVersion``.
-    public var version          : UInt32                    = gitFetchOptionsVersion
+    public var version          : Int32                     = gitFetchOptionsVersion
     
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
@@ -324,7 +324,7 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         cValue fetchOptions: git_fetch_options
     )
     {
-        self.version            = UInt32(fetchOptions.version)
+        self.version            = fetchOptions.version
         self.callbacks          = GitRemoteCallbacks(cValue: fetchOptions.callbacks)
         self.prune              = GitFetchPruneT(cValue: fetchOptions.prune)                            ?? .gitFetchPruneUnspecified
         self.updateFetchHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
@@ -346,11 +346,17 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
         _ body: (UnsafeMutablePointer<git_fetch_options>) throws -> T
     ) throws -> T
     {
+        guard version >= 0
+        else
+        {
+            throw NSError.makeCConversionError()
+        }
+        
         var fetchOptions = git_fetch_options()
         
         let fetchOptionsInitResult: GitErrorCode = gitFetchOptionsInit(
             opts:       &fetchOptions,
-            version:    version
+            version:    UInt32(version)
         )
         
         if fetchOptionsInitResult != .gitOK
