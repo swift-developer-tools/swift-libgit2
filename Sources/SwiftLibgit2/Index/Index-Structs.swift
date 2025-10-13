@@ -208,25 +208,6 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
-    ///
-    /// The C enum members of ``GitIndexEntryFlagT`` and
-    /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
-    /// and `flags_extended` fields of `git_index_entry` expect `UInt16`.
-    /// If either value is greater than `UInt16.max`, this method will throw
-    /// an error.
-    ///
-    /// Alternatively, the values could be masked to 16 bits and then
-    /// cast as follows:
-    ///
-    /// ```swift
-    /// UInt16(flags.rawValue & 0xFFFF)
-    /// UInt16(flagsExtended.rawValue & 0xFFFF)
-    /// ```
-    ///
-    /// However, this may cause silent data loss if the original values
-    /// exceeded `UInt16.max`.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_index_entry>) throws -> T
     ) throws -> T
