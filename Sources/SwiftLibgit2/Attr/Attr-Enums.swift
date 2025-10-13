@@ -15,9 +15,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// - Note: The properties of ``GitAttrCheckFlagsT`` correspond to flag macros
+/// - Note: The options of ``GitAttrCheckFlagsT`` correspond to flag macros
 /// in libgit2. For consistency with other APIs and type-safe usage,
-/// swift-libgit2 binds these macros as if they were an enum in libgit2.
+/// swift-libgit2 binds these macros as if they were a bitset enum in libgit2.
 ///
 /// ## C Equivalent
 ///
@@ -32,15 +32,28 @@ import CLibgit2
 /// [`GIT_ATTR_CHECK_INCLUDE_HEAD`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_HEAD.html)
 ///
 /// [`GIT_ATTR_CHECK_INCLUDE_COMMIT`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_COMMIT.html)
-public struct GitAttrCheckFlagsT: OptionSet, Sendable
+public struct GitAttrCheckFlagsT: GitOptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
+    
+    
     
     /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
+    )
+    {
+        self.rawValue = rawValue
+    }
+    
+    
+    
+    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
+    /// - Parameter rawValue: The raw value to use.
+    internal init(
+        cValue rawValue: UInt32
     )
     {
         self.rawValue = rawValue
@@ -65,6 +78,20 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
     
     /// Honor `.gitattributes` in a specific commit.
     public static let gitAttrCheckIncludeCommit     = GitAttrCheckFlagsT(rawValue: 1 << 4)
+    
+    
+    
+    /// Converts the ``GitAttrCheckFlagsT`` instance into a raw value.
+    /// - Returns: The raw value.
+    ///
+    /// ## Discussion
+    ///
+    /// Since the options of ``GitAttrCheckFlagsT`` correspond to flag macros
+    /// in libgit2, there is no equivalent C value other than the raw value.
+    internal func cValue() -> UInt32
+    {
+        return rawValue
+    }
 }
 
 
