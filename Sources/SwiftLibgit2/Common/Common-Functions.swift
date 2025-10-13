@@ -68,15 +68,14 @@ public func gitLibgit2Prerelease() -> String?
 /// ## C Equivalent
 ///
 /// [`git_libgit2_features()`](https://libgit2.org/docs/reference/main/common/git_libgit2_features.html)
-public func gitLibgit2Features() -> GitFeatureT
+public func gitLibgit2Features() -> GitFeatureT?
 {
     let features: Int32 = git_libgit2_features()
     
     guard features >= 0
     else
     {
-        /// `features` should never be negative.
-        return GitFeatureT(rawValue: 0)
+        return nil
     }
     
     return GitFeatureT(rawValue: UInt32(features))
