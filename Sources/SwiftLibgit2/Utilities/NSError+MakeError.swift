@@ -19,13 +19,17 @@ internal extension NSError
     ///   - code: The error code.
     ///   - message: The localized description.
     /// - Returns: The created `NSError`.
+    ///
+    /// ## Discussion
+    ///
+    /// libgit2 result codes use a type of `Int32`, but `NSError` expects
+    /// `Int`. ``code`` can be safely cast from `Int32` to `Int`, since this
+    /// is a widening conversion.
     static func makeError(
         code    : Int32,
         message : String
     ) -> NSError
     {
-        /// `code` can be safely cast from `Int32` to `Int` since this is
-        /// a widening conversion.
         return NSError(
             domain:     Bundle.main.bundleIdentifier ?? "swift-libgit2",
             code:       Int(code),
