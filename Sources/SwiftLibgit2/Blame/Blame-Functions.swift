@@ -110,7 +110,7 @@ public func gitBlameHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk that contains the given line.
+/// - Returns: The hunk containing the given line.
 ///
 /// ## C Equivalent
 ///
@@ -224,7 +224,7 @@ public func gitBlameGetHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to query. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk that contains the given line.
+/// - Returns: The hunk containing the given line.
 ///
 /// ## Discussion
 ///

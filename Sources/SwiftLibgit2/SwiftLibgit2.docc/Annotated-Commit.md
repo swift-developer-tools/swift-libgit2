@@ -1,6 +1,6 @@
 # Annotated Commit
 
-A commit that contains information about how it was resolved.
+A commit containing information about how it was resolved.
 
 ## Topics
 
