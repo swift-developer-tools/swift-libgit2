@@ -258,7 +258,7 @@ public func gitNoteMessage(
     note: OpaquePointer
 ) -> String?
 {
-    let message: UnsafePointer<CChar> = git_note_message(note)
+    let message: UnsafePointer<CChar>? = git_note_message(note)
     
     return String(optionalCString: message)
 }
