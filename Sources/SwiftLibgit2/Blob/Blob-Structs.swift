@@ -83,13 +83,6 @@ public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
-    ///
-    /// The `version` field of `git_blob_filter_options` uses a type of `Int32`,
-    /// which also aligns with the type of ``gitBlobFilterOptionsVersion``, but
-    /// the `version` parameter of `git_blob_filter_options()` uses `UInt32`.
-    /// If ``version`` is negative, this method will throw an error.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_blob_filter_options>) throws -> T
     ) throws -> T
