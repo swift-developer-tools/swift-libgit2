@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -174,6 +175,14 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     
     /// Creates a ``GitIndexEntry`` instance from a `git_index_entry` instance.
     /// - Parameter indexEntry: The `git_index_entry` instance to use.
+    ///
+    /// ## Discussion
+    ///
+    /// The C enum members of ``GitIndexEntryFlagT`` and
+    /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
+    /// and `flags_extended` fields of `git_index_entry` expect `UInt16`.
+    /// Both values can be safely cast from `UInt16` to `UInt32`, since this
+    /// is a widening conversion.
     internal init(
         cValue indexEntry: git_index_entry
     )
