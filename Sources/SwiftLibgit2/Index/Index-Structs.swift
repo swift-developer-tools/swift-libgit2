@@ -180,9 +180,9 @@ public struct GitIndexEntry: GitStructMutable, WithCConvertible
     ///
     /// The C enum members of ``GitIndexEntryFlagT`` and
     /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
-    /// and `flags_extended` fields of `git_index_entry` expect `UInt16`.
-    /// The values can be safely cast from `UInt16` to `UInt32`, since this
-    /// is a widening conversion.
+    /// and `flags_extended` fields of `git_index_entry` use `UInt16`. The
+    /// values can be safely cast from `UInt16` to `UInt32`, since this is a
+    /// widening conversion.
     internal init(
         cValue indexEntry: git_index_entry
     )
