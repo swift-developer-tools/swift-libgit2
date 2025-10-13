@@ -7,9 +7,13 @@
 //
 //===----------------------------------------------------------------------===//
 
+import CLibgit2
+
+
+
 /// The maximum size of a Git object.
 ///
 /// ## C Equivalent
 ///
-/// [`git_object_size_t`](https://libgit2.org/docs/reference/main/object/git_object_size_t.html)
-public typealias GitObjectSizeT = UInt64
+/// [`GIT_OBJECT_SIZE_MAX`](https://libgit2.org/docs/reference/main/object/GIT_OBJECT_SIZE_MAX.html)
+public let gitObjectSizeMax: UInt64 = UInt64.max
