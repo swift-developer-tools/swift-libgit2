@@ -53,7 +53,7 @@ public func gitIndexerOptionsInit(
 ///   - odb: The object database from which to read objects when fixing thin
 ///   packs. The underlying type must be `git_odb`. Pass `nil` if no thin packs
 ///   are expected.
-///   - opts: The indexer options.
+///   - opts: The indexer options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

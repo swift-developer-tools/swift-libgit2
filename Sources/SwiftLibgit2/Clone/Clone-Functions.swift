@@ -48,7 +48,7 @@ public func gitCloneOptionsInit(
 ///   must be `git_repository`.
 ///   - url: The URL of the remote to clone.
 ///   - localPath: The path to the local directory in which to clone.
-///   - options: The options for the clone operation.
+///   - options: The clone options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

@@ -487,8 +487,8 @@ struct Repository
     /// Asserts that the contents of the specified file are equal to the given
     /// value.
     /// - Parameters:
-    ///   - path: The path to the file whose content should be verified. This
-    ///   will be appended to the repository's URL.
+    ///   - path: The path to the file content to verify. This will be appended
+    ///   to the repository's URL.
     ///   - content: The expected content of the file.
     ///   - directoryHint: A hint to URL file APIs for handling paths that may
     ///   reference directories.

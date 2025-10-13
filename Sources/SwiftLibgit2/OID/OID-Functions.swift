@@ -13,8 +13,8 @@ import CLibgit2
 
 /// Compares two IDs for equality.
 /// - Parameters:
-///   - a: The first ID.
-///   - b: The second ID.
+///   - a: The first ID to compare.
+///   - b: The second ID to compare.
 /// - Returns: Whether the two IDs are equal.
 ///
 /// ## C Equivalent

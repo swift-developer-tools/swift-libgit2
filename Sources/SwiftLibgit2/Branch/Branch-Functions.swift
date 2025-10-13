@@ -133,7 +133,7 @@ public func gitBranchDelete(
 ///   must be `git_branch_iterator`.
 ///   - repo: The repository in which the branches exist. The underlying type
 ///   must be `git_repository`.
-///   - listFlags: The basic type of the branch.
+///   - listFlags: The branch type flags to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -226,7 +226,7 @@ public func gitBranchIteratorFree(
 ///   - out: The pointer in which to store the updated name. The underlying
 ///   type must be `git_reference`.
 ///   - branch: The local branch. The underlying type must be `git_reference`.
-///   - newBranchName: The target name of the branch, once the move has been
+///   - newBranchName: The new branch name to use, once the move has been
 ///   performed. The name will be validated for consistency.
 ///   - force: Whether to overwrite an existing branch.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -267,8 +267,9 @@ public func gitBranchMove(
 ///   type must be `git_reference`.
 ///   - repo: The repository in which the branches exist. The underlying type
 ///   must be `git_repository`.
-///   - branchName: The branch name. The name will be validated for consistency.
-///   - branchType: The basic type of the branch.
+///   - branchName: The name of the branch to lookup. The name will be
+///   validated for consistency.
+///   - branchType: The branch type flags to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -363,7 +364,8 @@ public func gitBranchUpstream(
 
 /// Sets the upstream of the given branch.
 /// - Parameters:
-///   - branch: The branch whose upstream should be set.
+///   - branch: The branch for which to set the upstream. The underlying type
+///   must be `git_reference`.
 ///   - branchName: The name of the remote-tracking or local branch to set as
 ///   the upstream branch. Pass `nil` to unset the upstream information.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -398,7 +400,8 @@ public func gitBranchSetUpstream(
 ///   written.
 ///   - repo: The repository containing the branches. The underlying type must
 ///   be `git_repository`.
-///   - refName: The branch name.
+///   - refName: The name of the local branch for which to get the upstream
+///   name.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -436,7 +439,7 @@ public func gitBranchUpstreamName(
 
 
 /// Checks whether HEAD points to the given local branch.
-/// - Parameter branch: The local branch. The underlying type must be
+/// - Parameter branch: The local branch to check. The underlying type must be
 /// `git_reference`.
 /// - Returns: Whether HEAD points to the given local branch, or `nil` if
 /// there was an error.
@@ -461,7 +464,7 @@ public func gitBranchIsHEAD(
 
 
 /// Checks whether any HEAD points to the given local branch.
-/// - Parameter branch: The local branch. The underlying type must be
+/// - Parameter branch: The local branch to check. The underlying type must be
 /// `git_reference`.
 /// - Returns: Whether any HEAD points to the given local branch, or `nil` if
 /// there was an error.
@@ -496,12 +499,13 @@ public func gitBranchIsCheckedOut(
 ///   written.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
-///   - refName: The full reference name of the branch.
+///   - refName: The full reference name of the branch for which to get the
+///   remote name.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This function will return the name of the remote whose refspec matches
+/// This function will return the name of the remote with a refspec matching
 /// the given branch.
 ///
 /// For example, `refs/remotes/test/main` has a remote name of `test`.
@@ -541,7 +545,8 @@ public func gitBranchRemoteName(
 ///   should be written.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
-///   - refName: The full reference name of the branch.
+///   - refName: The full reference name of the branch for which to get the
+///   upstream remote name.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -581,7 +586,8 @@ public func gitBranchUpstreamRemote(
 ///   be written.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
-///   - refName: The full reference name of the branch.
+///   - refName: The full reference name of the branch for which to get the
+///   upstream merge name.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -618,7 +624,7 @@ public func gitBranchUpstreamMerge(
 /// Checks whether the given branch name is valid.
 /// - Parameters:
 ///   - valid: The pointer in which to store the resulting boolean.
-///   - name: The branch name.
+///   - name: The branch name to check.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

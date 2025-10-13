@@ -258,10 +258,10 @@ public func gitBlameGetHunkByLine(
 /// - Parameters:
 ///   - out: The pointer in which to store the blame. The underlying type must
 ///   be `git_blame`.
-///   - repo: The repository whose history should be walked. The underlying
-///   type must be `git_repository`.
+///   - repo: The repository containing the file. The underlying type must be
+///   `git_repository`.
 ///   - path: The path to the file to consider.
-///   - options: The options for the blame operation.
+///   - options: The blame options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

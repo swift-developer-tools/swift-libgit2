@@ -17,7 +17,7 @@ import CLibgit2
 ///   type must be `git_annotated_commit`.
 ///   - repo: The repository containing the given reference. The underlying
 ///   type must be `git_repository`.
-///   - ref: The reference to use to lookup the  annotated commit. The
+///   - ref: The reference to use to lookup the annotated commit. The
 ///   underlying type must be `git_reference`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -86,7 +86,7 @@ public func gitAnnotatedCommitFromFetchhead(
 ///   type must be `git_annotated_commit`.
 ///   - repo: The repository containing the given commit. The underlying type
 ///   must be `git_repository`.
-///   - id: The commit ID to lookup.
+///   - id: The commit ID to look up.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -157,8 +157,8 @@ public func gitAnnotatedCommitFromRevspec(
 
 
 /// Gets the commit ID to which the given annotated commit refers.
-/// - Parameter commit: The annotated commit.  The underlying type must be
-/// `git_annotated_commit`.
+/// - Parameter commit: The annotated commit for which to get the referenced
+/// ID. The underlying type must be `git_annotated_commit`.
 /// - Returns: The commit ID to which the given annotated commit refers.
 ///
 /// ## C Equivalent
@@ -177,8 +177,8 @@ public func gitAnnotatedCommitID(
 
 
 /// Gets the reference name to which the given annotated commit refers.
-/// - Parameter commit: The annotated commit. The underlying type must be
-/// `git_annotated_commit`.
+/// - Parameter commit: The annotated commit for which to get the referenced
+/// name. The underlying type must be `git_annotated_commit`.
 /// - Returns: The reference name to which the given annotated commit refers.
 ///
 /// ## C Equivalent

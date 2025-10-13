@@ -42,13 +42,13 @@ import Foundation
 /// The protocol used by a struct depends on the conversion process and whether
 /// the conversion can fail.
 ///
-/// Structs whose conversion involves only simple field assignment (creating a
-/// C struct and directly returning it) must conform to ``CConvertible`` or
+/// Structs that can be converted using only simple field assignment (creating
+/// a C struct and directly returning it) must conform to ``CConvertible`` or
 /// ``ThrowingCConvertible``. Any structs with an initialization method involve
 /// the possibility of failure during conversion, so these structs must conform
 /// to ``ThrowingCConvertible``.
 ///
-/// Structs whose conversion requires memory management (using closures to
+/// Structs that must be converted with memory management (using closures to
 /// ensure proper lifetime of C values and other nested conversions) must
 /// conform to ``WithCConvertible``.
 ///
@@ -57,13 +57,13 @@ import Foundation
 ///
 /// ## Methods vs Properties
 ///
-/// Structs whose conversion process involves only simple field assignment
-/// without memory management would theoretically be able to use a computed
-/// property instead of an instance method.
+/// Structs that can be converted using only simple field assignment without
+/// memory management would theoretically be able to use a computed property
+/// instead of an instance method.
 ///
 /// However, computed properties are not used for C conversion, since they
-/// cannot throw an error. The only recourse for a computed property whose
-/// conversion fails would be to return an optional value.
+/// cannot throw an error. The only recourse for conversion failure in a
+/// computed property is to return an optional value.
 ///
 /// ### Optional Receivers
 ///
@@ -74,16 +74,16 @@ import Foundation
 ///
 /// ``CConvertible`` and ``ThrowingCConvertible`` do not provide equivalent
 /// optional handling extensions. These protocols are generally used by structs
-/// whose C values are passed directly to C functions (not as pointers), so the
-/// standard optional chaining syntax `object?.cValue()` is more appropriate.
-/// For cases where a pointer is needed, a simple `guard` statement provides
-/// clear control flow without adding protocol complexity for an uncommon use
-/// case.
+/// that pass the equivalent C value directly to C functions (not as pointers),
+/// so the standard optional chaining syntax `object?.cValue()` is more
+/// appropriate. For cases where a pointer is needed, a simple `guard` statement
+/// provides clear control flow without adding protocol complexity for an
+/// uncommon use case.
 ///
 /// ### Preventing Silent Failure
 ///
-/// Protocols whose conversion may fail will throw instead of returning `nil`.
-/// If the methods returned a `nil` pointer on failure, it would lead to
+/// Protocols with failable conversion methods must throw instead of returning
+/// `nil`. If the methods returned a `nil` pointer on failure, it would cause
 /// ambiguity and additional overhead at call sites.
 ///
 /// For example, consider the following outcomes of calling

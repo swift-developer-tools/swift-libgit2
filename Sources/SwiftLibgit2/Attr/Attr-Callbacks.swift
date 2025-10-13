@@ -14,9 +14,10 @@ import CLibgit2
 /// The callback to invoke for each attribute name and value during attribute
 /// iteration.
 /// - Parameters:
-///   - name: The attribute name.
-///   - value: The attribute value. This may be `nil` if the attribute is
-///   explicitly set to unspecified using the exclamation mark (`!`) operator.
+///   - name: The name of the attribute being iterated.
+///   - value: The value of the attribute being iterated. This may be `nil` if
+///   the attribute is explicitly set to unspecified using the exclamation mark
+///   (`!`) operator.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` to continue looping, or a non-zero value to stop looping.
 ///

@@ -51,7 +51,7 @@ public func gitApplyOptionsInit(
 ///   - preimage: The tree to which the diff should be applied. The underlying
 ///   type must be `git_tree`.
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
-///   - options: The options for the apply operation.
+///   - options: The apply options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -92,7 +92,7 @@ public func gitApplyToTree(
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
 ///   - location: The location to apply (the working directory, the index,
 ///   or both).
-///   - options: The options for the apply operation.
+///   - options: The apply options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

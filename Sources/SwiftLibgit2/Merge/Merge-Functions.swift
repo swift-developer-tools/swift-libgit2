@@ -456,10 +456,10 @@ public func gitMergeBaseOctopus(
 /// - Parameters:
 ///   - out: The ``GitMergeFileResult`` instance in which to store the file
 ///   merge result.
-///   - ancestor: The content of the ancestor file.
+///   - ancestor: The contents of the ancestor file.
 ///   - ours: The contents of "our" file.
 ///   - theirs: The contents of "their" file.
-///   - opts: The options for the merge operation.
+///   - opts: The file merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -522,7 +522,7 @@ public func gitMergeFile(
 ///   - ancestor: The ancestor index entry (stage level 1).
 ///   - ours: "Our" index entry (stage level 2).
 ///   - theirs: "Their" index entry (stage level 3).
-///   - opts: The options for the merge operation.
+///   - opts: The file merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -615,7 +615,7 @@ public func gitMergeFileResultFree(
 ///   - ourTree: The destination tree. The underlying type must be `git_tree`.
 ///   - theirTree: The tree to merge into `ourTree`. The underlying type must
 ///   be `git_tree`.
-///   - opts: The options for the merge operation.
+///   - opts: The merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -666,7 +666,7 @@ public func gitMergeTrees(
 ///   `git_commit`.
 ///   - theirCommit: The commit to merge into `ourCommit`. The underlying type
 ///   must be `git_commit`.
-///   - opts: The options for the merge operation.
+///   - opts: The merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -714,8 +714,8 @@ public func gitMergeCommits(
 ///   - theirHeads: The heads to merge into. The underlying type must be an
 ///   array of `git_annotated_commit` instances, of length `theirHeadsLen`.
 ///   - theirHeadsLen: The length of `theirHeads`.
-///   - mergeOpts: The options for the merge operation.
-///   - checkoutOpts: The options for the checkout operation.
+///   - mergeOpts: The merge options to use.
+///   - checkoutOpts: The checkout options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

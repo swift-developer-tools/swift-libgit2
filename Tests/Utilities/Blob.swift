@@ -40,7 +40,7 @@ enum Blob
         )
         
         /// Writes an in-memory buffer to the object database as a blob.
-        /// - Parameter data: The data to be written into the blob.
+        /// - Parameter data: The data to to write into the blob.
         case buffer(
             data: Data
         )

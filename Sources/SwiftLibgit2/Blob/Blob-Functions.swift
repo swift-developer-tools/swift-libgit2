@@ -18,7 +18,7 @@ import Foundation
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The ID of the blob.
+///   - id: The ID of the blob to look up.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -51,7 +51,7 @@ public func gitBlobLookup(
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The ID of the blob.
+///   - id: The ID of the blob to look up.
 ///   - len: The length of the blob's ID prefix. This must be greater than
 ///   or equal to `GIT_OID_MINPREFIXLEN`, and long enough to identify a unique
 ///   blob matching the prefix.
@@ -104,7 +104,8 @@ public func gitBlobFree(
 
 
 /// Gets the ID of the given blob.
-/// - Parameter blob: The blob. The underlying type must be `git_blob`.
+/// - Parameter blob: The blob for which to get the ID. The underlying type
+/// must be `git_blob`.
 /// - Returns: The ID of the blob.
 ///
 /// ## C Equivalent
@@ -122,7 +123,8 @@ public func gitBlobID(
 
 
 /// Gets the repository containing the given blob.
-/// - Parameter blob: The blob. The underlying type must be `git_blob`.
+/// - Parameter blob: The blob for which to get the repository. The underlying
+/// type must be `git_blob`.
 /// - Returns: The repository containing the given blob. The underlying
 /// type will be `git_repository`.
 ///
@@ -139,7 +141,8 @@ public func gitBlobOwner(
 
 
 /// Gets a read-only buffer containing the raw content of the given blob.
-/// - Parameter blob: The blob. The underlying type must be `git_blob`.
+/// - Parameter blob: The blob for which to get the raw content. The underlying
+/// type must be `git_blob`.
 /// - Returns: A read-only buffer containing the raw content of the given blob.
 ///
 /// ## C Equivalent
@@ -155,8 +158,9 @@ public func gitBlobRawContent(
 
 
 /// Gets the size, in bytes, of the content of the given blob.
-/// - Parameter blob: The blob. The underlying type must be `git_blob`.
-/// - Returns: The size, in bytes, of the content of the given blob.
+/// - Parameter blob: The blob for which to get the size. The underlying type
+/// must be `git_blob`.
+/// - Returns: The size of the content of the given blob.
 ///
 /// ## C Equivalent
 ///
@@ -205,9 +209,10 @@ public func gitBlobFilterOptionsInit(
 /// - Parameters:
 ///   - out: The ``GitBuf`` instance into which the filtered content should
 ///   be written.
-///   - blob: The blob. The underlying type must be `git_blob`.
+///   - blob: The blob for which to get the filtered content. The underlying
+///   type must be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.
-///   - opts: The options for the blob filtering operation.
+///   - opts: The blob filter options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -411,7 +416,7 @@ public func gitBlobCreateFromStreamCommit(
 ///   blob.
 ///   - repo: The repository where the blob should be written. The underlying
 ///   type must be `git_repository`.
-///   - buffer: The data to be written into the blob.
+///   - buffer: The data to to write into the blob.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -449,8 +454,7 @@ public func gitBlobCreateFromBuffer(
 
 
 /// Checks whether the blob content is most likely binary.
-/// - Parameter blob: The blob to analyze. The underlying type must be
-/// `git_blob`.
+/// - Parameter blob: The blob to check. The underlying type must be `git_blob`.
 /// - Returns: Whether the blob content is most likely binary.
 ///
 /// ## Discussion
@@ -475,7 +479,7 @@ public func gitBlobIsBinary(
 
 /// Checks whether the given content is most likely binary.
 /// - Parameters:
-///   - data: The blob data to analyze.
+///   - data: The blob data to check.
 ///   - len: The length `data`.
 /// - Returns: Whether the given content is most likely binary, or `nil` if
 /// there was an error.

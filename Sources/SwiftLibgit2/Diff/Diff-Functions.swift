@@ -105,7 +105,7 @@ public func gitDiffFree(
 ///   must be `git_tree`.
 ///   - newTree: The new tree to use in the diff operation. The underlying type
 ///   must be `git_tree`.
-///   - opts: The options for the diff operation
+///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -154,7 +154,7 @@ public func gitDiffTreeToTree(
 ///   must be `git_tree`.
 ///   - index: The index to use in the diff operation. The underlying type must
 ///   be `git_index`. Pass `nil` to use the repository index.
-///   - opts: The options for the diff operation
+///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -203,7 +203,7 @@ public func gitDiffTreeToIndex(
 ///   directory. The underlying type must be `git_repository`.
 ///   - index: The index to use in the diff operation. The underlying type must
 ///   be `git_index`. Pass `nil` to use the repository index.
-///   - opts: The options for the diff operation
+///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -249,7 +249,7 @@ public func gitDiffIndexToWorkdir(
 ///   must be `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type
 ///   must be `git_tree`.
-///   - opts: The options for the diff operation.
+///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -303,7 +303,7 @@ public func gitDiffTreeToWorkdir(
 ///   must be `git_repository`.
 ///   - oldTree: The old tree to use in the diff operation. The underlying type
 ///   must be `git_tree`.
-///   - opts: The options for the diff operation
+///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -350,7 +350,7 @@ public func gitDiffTreeToWorkdirWithIndex(
 ///   type must be `git_index`.
 ///   - newIndex: The new index to use in the diff operation. The underlying
 ///   type must be `git_index`.
-///   - opts: The options for the diff operation
+///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -420,7 +420,7 @@ public func gitDiffMerge(
 /// files into add/remove pairs if requested.
 /// - Parameters:
 ///   - diff: The diff to transform. The underlying type must be `git_diff`.
-///   - options: The options for diff rename and copy detection.
+///   - options: The diff rename and copy detection options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -472,7 +472,7 @@ public func gitDiffNumDeltas(
 /// Gets the number of diff records of the given type in the given diff.
 /// - Parameters:
 ///   - diff: The diff to query. The underlying type must be `git_diff`.
-///   - type: The type of change described by a diff delta.
+///   - type: The type of change for which to get the number of diff records.
 /// - Returns: The number of diff records of the given type in the given diff.
 ///
 /// ## C Equivalent
@@ -550,18 +550,18 @@ public func gitDiffIsSortedICase(
 /// Loops over all deltas in the given diff.
 /// - Parameters:
 ///   - diff: The diff to iterate. The underlying type must be `git_diff`.
-///   - fileCB: The callback invoked for each file in a diff.
-///   - binaryCB: The callback invoked for binary content in a diff.
-///   - hunkCB: The callback invoked for each hunk in a diff.
-///   - lineCB: The callback invoked for each line in a diff.
-///   - payload: The caller-specified payload passed to the callbacks.
+///   - fileCB: The callback to invoke for each file in a diff.
+///   - binaryCB: The callback to invoke for binary content in a diff.
+///   - hunkCB: The callback to invoke for each hunk in a diff.
+///   - lineCB: The callback to invoke for each line in a diff.
+///   - payload: The payload to pass to the callbacks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
 /// The text of diff files will be calculated only if `hunkCB` and `lineCB`
 /// are not `nil`. Neither of these callbacks will be invoked for binary files
-/// or for files whose only change is a file mode change.
+/// or for files with only file mode changes.
 ///
 /// ## C Equivalent
 ///
@@ -591,7 +591,8 @@ public func gitDiffForEach(
 
 
 /// Gets the single character abbreviation for the given delta status.
-/// - Parameter status: The type of change described by a diff delta.
+/// - Parameter status: The type of change for which to get the single
+/// character abbreviation.
 /// - Returns: The single character abbreviation for the given delta status.
 ///
 /// ## Discussion
@@ -618,9 +619,9 @@ public func gitDiffStatusChar(
 /// Loops over the given diff and generates formatted text.
 /// - Parameters:
 ///   - diff: The diff to iterate. The underlying type must be `git_diff`.
-///   - format: The possible diff data output formats.
-///   - printCB: The callback invoked for each line in a diff.
-///   - payload: The caller-specified payload passed to `printCB`.
+///   - format: The diff data output format to use.
+///   - printCB: The callback to invoke for each line in a diff.
+///   - payload: The payload to pass to `printCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -652,7 +653,7 @@ public func gitDiffPrint(
 ///   - out: The ``GitBuf`` instance into which the formatted text should be
 ///   written.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
-///   - format: The possible diff data output formats.
+///   - format: The diff data output format to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -689,12 +690,12 @@ public func gitDiffToBuf(
 ///   - newBlob: The new blob to use in the diff operation. The underlying type
 ///   must be `git_blob`.
 ///   - newAsPath: The filename to use for `newBlob`.
-///   - options: The options for the diff operation.
-///   - fileCB: The callback invoked for each file in a diff.
-///   - binaryCB: The callback invoked for binary content in a diff.
-///   - hunkCB: The callback invoked for each hunk in a diff.
-///   - lineCB: The callback invoked for each line in a diff.
-///   - payload: The caller-specified payload passed to the callbacks.
+///   - options: The diff options to use.
+///   - fileCB: The callback to invoke for each file in a diff.
+///   - binaryCB: The callback to invoke for binary content in a diff.
+///   - hunkCB: The callback to invoke for each hunk in a diff.
+///   - lineCB: The callback to invoke for each line in a diff.
+///   - payload: The payload to pass to the callbacks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -770,12 +771,12 @@ public func gitDiffBlobs(
 ///   - buffer: The raw data for the new side of the diff.
 ///   - bufferLen: The length of `buffer`.
 ///   - bufferAsPath: The filename to use for `buffer`.
-///   - options: The options for the diff operation.
-///   - fileCB: The callback invoked for each file in a diff.
-///   - binaryCB: The callback invoked for binary content in a diff.
-///   - hunkCB: The callback invoked for each hunk in a diff.
-///   - lineCB: The callback invoked for each line in a diff.
-///   - payload: The caller-specified payload passed to the callbacks.
+///   - options: The diff options to use.
+///   - fileCB: The callback to invoke for each file in a diff.
+///   - binaryCB: The callback to invoke for binary content in a diff.
+///   - hunkCB: The callback to invoke for each hunk in a diff.
+///   - lineCB: The callback to invoke for each line in a diff.
+///   - payload: The payload to pass to the callbacks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -849,12 +850,12 @@ public func gitDiffBlobToBuffer(
 ///   - newBuffer: The raw data for the new side of the diff.
 ///   - newBufferLen: The length of `newBuffer`.
 ///   - newBufferAsPath: The filename to use for `newBuffer`.
-///   - options: The options for the diff operation.
-///   - fileCB: The callback invoked for each file in a diff.
-///   - binaryCB: The callback invoked for binary content in a diff.
-///   - hunkCB: The callback invoked for each hunk in a diff.
-///   - lineCB: The callback invoked for each line in a diff.
-///   - payload: The caller-specified payload passed to the callbacks.
+///   - options: The diff options to use.
+///   - fileCB: The callback to invoke for each file in a diff.
+///   - binaryCB: The callback to invoke for binary content in a diff.
+///   - hunkCB: The callback to invoke for each hunk in a diff.
+///   - lineCB: The callback to invoke for each line in a diff.
+///   - payload: The payload to pass to the callbacks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -927,11 +928,11 @@ public func gitDiffBuffers(
 
 
 
-/// Writes the given contents of a patch file into a diff.
+/// Writes the given patch file contents into a diff.
 /// - Parameters:
 ///   - out: The pointer in which to store the diff. The underlying type must
 ///   be `git_diff`.
-///   - content: The contents of a patch file.
+///   - content: The patch file contents to write.
 ///   - contentLen: The length of `content`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -999,8 +1000,8 @@ public func gitDiffGetStats(
 
 
 /// Gets the total number of files changed in a diff.
-/// - Parameter stats: The diff statistics. The underlying type must be
-/// `git_diff_stats`.
+/// - Parameter stats: The diff statistics from which to get the total number
+/// of changed files. The underlying type must be `git_diff_stats`.
 /// - Returns: The total number of files changed in a diff.
 ///
 /// ## C Equivalent
@@ -1016,8 +1017,8 @@ public func gitDiffStatsFilesChanged(
 
 
 /// Gets the total number of insertions in a diff.
-/// - Parameter stats: The diff statistics. The underlying type must be
-/// `git_diff_stats`.
+/// - Parameter stats: The diff statistics from which to get the total number
+/// of insertions. The underlying type must be `git_diff_stats`.
 /// - Returns: The total number of insertions in a diff.
 ///
 /// ## C Equivalent
@@ -1033,8 +1034,8 @@ public func gitDiffStatsInsertions(
 
 
 /// Gets the total number of deletions in a diff.
-/// - Parameter stats: The diff statistics. The underlying type must be
-/// `git_diff_stats`.
+/// - Parameter stats: The diff statistics from which to get the total number
+/// of deletions. The underlying type must be `git_diff_stats`.
 /// - Returns: The total number of deletions in a diff.
 ///
 /// ## C Equivalent
@@ -1053,10 +1054,10 @@ public func gitDiffStatsDeletions(
 /// - Parameters:
 ///   - out: The ``GitBuf`` instance into which the given diff statistics
 ///   should be written.
-///   - stats: The diff statistics. The underlying type must be
+///   - stats: The diff statistics to write. The underlying type must be
 ///   `git_diff_stats`.
-///   - format: The diff stats formatting options.
-///   - width: The target width for output.
+///   - format: The diff stats format to use.
+///   - width: The target output width to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1150,7 +1151,7 @@ public func gitDiffPatchIDOptionsInit(
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the patch ID.
 ///   - diff: The diff to evaluate. The underlying type must be `git_diff`.
-///   - opts: The options for calculating the patch ID.
+///   - opts: The patch ID calculation options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

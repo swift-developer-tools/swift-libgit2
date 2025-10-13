@@ -140,7 +140,7 @@ public func gitLibgit2OptGetMWindowSize(
 
 
 /// Sets the maximum `mmap()` window size.
-/// - Parameter size: The window size.
+/// - Parameter size: The maximum `mmap()` window size to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -188,7 +188,7 @@ public func gitLibgit2OptGetMWindowMappedLimit(
 
 
 /// Sets the maximum amount of memory that can be mapped in total by libgit2.
-/// - Parameter limit: The maximum memory value.
+/// - Parameter limit: The maximum memory value to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -213,7 +213,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 
 /// Gets the search path for the given level of configuration data.
 /// - Parameters:
-///   - level: The priority level of the configuration data.
+///   - level: The priority level for which to get the search path.
 ///   - buf: The ``GitBuf`` instance into which the search path should be
 ///   written.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -256,8 +256,8 @@ public func gitLibgit2OptGetSearchPath(
 
 /// Sets the search path for the given level of configuration data.
 /// - Parameters:
-///   - level: The priority level of the configuration data.
-///   - path: The search path.
+///   - level: The priority level for which to set the search path.
+///   - path: The search path to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -298,8 +298,8 @@ public func gitLibgit2OptSetSearchPath(
 /// Sets the maximum data size for the given type of object to be considered
 /// eligible for caching in memory.
 /// - Parameters:
-///   - type: The basic type of the object.
-///   - size: The maximum data size for the given type of object.
+///   - type: The type of object for which to set the maximum data size.
+///   - size: The maximum data size to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -335,7 +335,7 @@ public func gitLibgit2OptSetCacheObjectLimit(
 
 /// Sets the maximum total data size that will be cached in memory across all
 /// repositories before libgit2 starts evicting objects from the cache.
-/// - Parameter maxStorageBytes: The maximum total data size.
+/// - Parameter maxStorageBytes: The maximum total data size to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -455,7 +455,7 @@ public func gitLibgit2OptGetTemplatePath(
 
 
 /// Sets the default template path.
-/// - Parameter path: The template path.
+/// - Parameter path: The default template path to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -482,7 +482,7 @@ public func gitLibgit2OptSetTemplatePath(
 /// - Parameters:
 ///   - file: The location of a file containing several certificates
 ///   concatenated together.
-///   - path: The location of a directory holding several certificates, one
+///   - path: The path to a directory holding several certificates, one
 ///   per file.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -516,7 +516,7 @@ public func gitLibgit2OptSetSSLCertLocations(
 
 
 /// Sets the value of the comment section of the User-Agent header.
-/// - Parameter userAgent: The comment section of the User-Agent header.
+/// - Parameter userAgent: The comment section value to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -614,7 +614,7 @@ public func gitLibgit2OptEnableStrictSymbolicRefCreation(
 
 
 /// Sets the SSL ciphers use for HTTPS connections.
-/// - Parameter ciphers: The SSL ciphers.
+/// - Parameter ciphers: The SSL ciphers to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -752,7 +752,7 @@ public func gitLibgit2OptGetWindowsShareMode(
 
 
 /// Sets the share mode used when opening files on Windows.
-/// - Parameter value: The share mode value.
+/// - Parameter value: The share mode value to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -807,7 +807,7 @@ public func gitLibgit2OptEnableStrictHashVerification(
 
 
 /// Sets the memory allocator to a different memory allocator.
-/// - Parameter allocator: The memory allocator to use.
+/// - Parameter allocator: The memory allocator to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -889,7 +889,7 @@ public func gitLibgit2OptGetPackMaxObjects(
 
 /// Sets the maximum number of objects libgit2 will allow in a pack file when
 /// downloading a packfile from a remote.
-/// - Parameter objects: The maximum number of objects to use.
+/// - Parameter objects: The maximum number of objects to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1022,7 +1022,7 @@ public func gitLibgit2OptSetMWindowFileLimit(
 
 /// Overrides the default priority of the packed object database backend,
 /// which is added when default backends are assigned to a repository.
-/// - Parameter priority: The priority level to use.
+/// - Parameter priority: The priority level to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1047,7 +1047,7 @@ public func gitLibgit2OptSetODBPackedPriority(
 
 /// Overrides the default priority of the loose object database backend, which
 /// is added when default backends are assigned to a repository.
-/// - Parameter priority: The priority level to use.
+/// - Parameter priority: The priority level to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1111,7 +1111,7 @@ public func gitLibgit2OptGetExtensions(
 
 /// Sets the list of supported Git extensions.
 /// - Parameters:
-///   - extensions: The Git extensions to use.
+///   - extensions: The Git extensions to set.
 ///   - len: The length of `extensions`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1240,7 +1240,7 @@ public func gitLibgit2OptGetHomeDir(
 
 
 /// Sets the current user's home directory to be used for file lookups.
-/// - Parameter path: The path to the home directory.
+/// - Parameter path: The home directory path to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1265,7 +1265,7 @@ public func gitLibgit2OptSetHomeDir(
 
 /// Sets the timeout (in milliseconds) to attempt connections to a remote
 /// server.
-/// - Parameter timeout: The timeout to use.
+/// - Parameter timeout: The timeout to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1315,7 +1315,7 @@ public func gitLibgit2OptGetServerConnectTimeout(
 
 /// Sets the timeout (in milliseconds) for reading from and writing to a
 /// remote server.
-/// - Parameter timeout: The timeout to use.
+/// - Parameter timeout: The timeout to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1364,7 +1364,7 @@ public func gitLibgit2OptGetServerTimeout(
 
 
 /// Sets the value of the product portion of the User-Agent header.
-/// - Parameter userAgent: The product section of the User-Agent header.
+/// - Parameter userAgent: The product section value to set.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

@@ -12,7 +12,7 @@ import CLibgit2
 
 
 /// Gets the value type for the given attribute.
-/// - Parameter attr: The attribute.
+/// - Parameter attr: The attribute for which to get the value type.
 /// - Returns: The value type for the attribute.
 ///
 /// ## Discussion
@@ -86,7 +86,7 @@ public func gitAttrGet(
 ///   - valueOut: The pointer in which to store the value of the attribute.
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
-///   - opts: The options to use when querying the attributes.
+///   - opts: The attribute options to use.
 ///   - path: The path within the repository to check for attributes.
 ///   - name: The name of the attribute to look up.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -192,7 +192,7 @@ public func gitAttrGetMany(
 ///   should be written.
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
-///   - opts: The options to use when querying the attributes.
+///   - opts: The attribute options to use.
 ///   - path: The path within the repository to check for attributes.
 ///   - numAttr: The number of attributes to look up.
 ///   - names: An array of length `numAttr`, containing the attribute names.
@@ -251,7 +251,7 @@ public func gitAttrGetManyExt(
 ///   - flags: The flags to use when querying the attributes.
 ///   - path: The path within the repository to check for attributes.
 ///   - callback: The callback to invoke for each attribute name and value.
-///   - payload: The caller-specified payload passed to `callback`.
+///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -289,10 +289,10 @@ public func gitAttrForEach(
 /// - Parameters:
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
-///   - opts: The options to use when querying the attributes.
+///   - opts: The attribute options to use.
 ///   - path: The path within the repository to check for attributes.
 ///   - callback: The callback to invoke for each attribute name and value.
-///   - payload: The caller-specified payload passed to `callback`.
+///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -361,8 +361,8 @@ public func gitAttrCacheFlush(
 /// - Parameters:
 ///   - repo: The repository in which to add the macro. The underlying type
 ///   must be `git_repository`.
-///   - name: The name of the macro.
-///   - values: The value of the macro.
+///   - name: The name of the macro to add.
+///   - values: The value of the macro to add.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
