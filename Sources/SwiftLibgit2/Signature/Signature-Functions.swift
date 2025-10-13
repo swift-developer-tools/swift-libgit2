@@ -299,8 +299,9 @@ public func gitSignatureFromBuffer(
 
 /// Creates a copy of an existing signature.
 /// - Parameters:
-///   - dest: The ``GitSignature`` instance in which to store the new signature.
-///   - sig: The signature to duplicate.
+///   - dest: The ``GitSignature`` instance in which to store the copied
+///   signature.
+///   - sig: The signature to copy.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

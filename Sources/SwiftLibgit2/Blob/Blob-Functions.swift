@@ -522,10 +522,9 @@ public func gitBlobDataIsBinary(
 
 /// Creates an in-memory copy of the given blob.
 /// - Parameters:
-///   - out: The pointer in which to store a copy of the blob. The underlying
+///   - out: The pointer in which to store the copied blob. The underlying
 ///   type must be `git_blob`.
-///   - source: The original blob to copy. The underlying type must be
-///   `git_blob`.
+///   - source: The blob to copy. The underlying type must be `git_blob`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

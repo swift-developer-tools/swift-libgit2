@@ -1002,10 +1002,9 @@ public func gitCommitCreateWithSignature(
 
 /// Creates an in-memory copy of the given commit.
 /// - Parameters:
-///   - out: The pointer in which to store the commit. The underlying type
-///   must be `git_commit`.
-///   - source: The original commit to copy. The underlying type must be
-///   `git_commit`.
+///   - out: The pointer in which to store the copied commit. The underlying
+///   type must be `git_commit`.
+///   - source: The commit to copy. The underlying type must be `git_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
