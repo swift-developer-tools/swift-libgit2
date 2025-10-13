@@ -263,7 +263,7 @@ public func gitConfigAddFileOnDisk(
             path,
             level.cValue(),
             repo,
-            force.intValue
+            force.int32Value
         )
     }
 }
@@ -992,7 +992,7 @@ public func gitConfigSetBool(
         return git_config_set_bool(
             cfg,
             name,
-            value.intValue
+            value.int32Value
         )
     }
 }

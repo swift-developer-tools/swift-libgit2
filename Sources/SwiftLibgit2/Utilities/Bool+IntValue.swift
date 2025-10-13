@@ -10,7 +10,23 @@
 internal extension Bool
 {
     /// The equivalent C 32-bit signed integer value.
-    var intValue: Int32
+    var int32Value: Int32
+    {
+        return self ? 1 : 0
+    }
+    
+    
+    
+    /// The equivalent C 8-bit unsigned integer value.
+    var uint8Value: UInt8
+    {
+        return self ? 1 : 0
+    }
+    
+    
+    
+    /// The equivalent C 32-bit unsigned integer value.
+    var uint32Value: UInt32
     {
         return self ? 1 : 0
     }

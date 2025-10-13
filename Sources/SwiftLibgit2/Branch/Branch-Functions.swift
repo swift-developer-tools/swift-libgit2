@@ -47,7 +47,7 @@ public func gitBranchCreate(
             repo,
             branchName,
             target,
-            force.intValue
+            force.int32Value
         )
     }
 }
@@ -93,7 +93,7 @@ public func gitBranchCreateFromAnnotated(
             repo,
             branchName,
             target,
-            force.intValue
+            force.int32Value
         )
     }
 }
@@ -253,7 +253,7 @@ public func gitBranchMove(
             out,
             branch,
             newBranchName,
-            force.intValue
+            force.int32Value
         )
     }
 }

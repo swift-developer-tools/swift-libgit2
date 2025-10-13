@@ -336,7 +336,7 @@ public func gitNoteCreate(
                         cCommitter,
                         &cOID,
                         note,
-                        force.intValue
+                        force.int32Value
                     )
                 }
             }
@@ -411,7 +411,7 @@ public func gitNoteCommitCreate(
                             cCommitter,
                             &cOID,
                             note,
-                            allowNoteOverwrite.intValue
+                            allowNoteOverwrite.int32Value
                         )
                     }
                 }

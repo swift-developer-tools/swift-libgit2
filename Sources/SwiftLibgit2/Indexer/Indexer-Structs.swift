@@ -202,7 +202,7 @@ public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
         
         indexerOptions.progress_cb          = progressCB
         indexerOptions.progress_cb_payload  = progressCBPayload
-        indexerOptions.verify               = UInt8(verify.intValue)
+        indexerOptions.verify               = verify.uint8Value
         
         return indexerOptions
     }

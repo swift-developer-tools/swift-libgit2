@@ -387,7 +387,7 @@ public func gitLibgit2OptEnableCaching(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_caching(enabled.intValue)
+        return git_libgit2_opt_enable_caching(enabled.int32Value)
     }
 }
 
@@ -574,7 +574,7 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_strict_object_creation(enabled.intValue)
+        return git_libgit2_opt_enable_strict_object_creation(enabled.int32Value)
     }
 }
 
@@ -608,7 +608,7 @@ public func gitLibgit2OptEnableStrictSymbolicRefCreation(
     return withCConversion
     {
         return git_libgit2_opt_enable_strict_symbolic_ref_creation(
-            enabled.intValue
+            enabled.int32Value
         )
     }
 }
@@ -694,7 +694,7 @@ public func gitLibgit2OptEnableOFSDelta(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_ofs_delta(enabled.intValue)
+        return git_libgit2_opt_enable_ofs_delta(enabled.int32Value)
     }
 }
 
@@ -723,7 +723,7 @@ public func gitLibgit2OptEnableFSyncGitDir(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_fsync_gitdir(enabled.intValue)
+        return git_libgit2_opt_enable_fsync_gitdir(enabled.int32Value)
     }
 }
 
@@ -802,7 +802,7 @@ public func gitLibgit2OptEnableStrictHashVerification(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_strict_hash_verification(enabled.intValue)
+        return git_libgit2_opt_enable_strict_hash_verification(enabled.int32Value)
     }
 }
 
@@ -857,7 +857,7 @@ public func gitLibgit2OptEnableUnsavedIndexSafety(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_unsaved_index_safety(enabled.intValue)
+        return git_libgit2_opt_enable_unsaved_index_safety(enabled.int32Value)
     }
 }
 
@@ -938,7 +938,7 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
 {
     return withCConversion
     {
-        return git_libgit2_opt_disable_pack_keep_file_checks(enabled.intValue)
+        return git_libgit2_opt_disable_pack_keep_file_checks(enabled.int32Value)
     }
 }
 
@@ -965,7 +965,7 @@ public func gitLibgit2OptEnableHTTPExpectContinue(
 {
     return withCConversion
     {
-        return git_libgit2_opt_enable_http_expect_continue(enabled.intValue)
+        return git_libgit2_opt_enable_http_expect_continue(enabled.int32Value)
     }
 }
 
@@ -1205,7 +1205,7 @@ public func gitLibgit2OptSetOwnerValidation(
 {
     return withCConversion
     {
-        return git_libgit2_opt_set_owner_validation(enabled.intValue)
+        return git_libgit2_opt_set_owner_validation(enabled.int32Value)
     }
 }
 

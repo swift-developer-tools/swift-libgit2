@@ -606,7 +606,7 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
     {
         var diffBinary = git_diff_binary()
         
-        diffBinary.contains_data = UInt32(containsData.intValue)
+        diffBinary.contains_data = containsData.uint32Value
         
         return try oldFile.withCValue
         {

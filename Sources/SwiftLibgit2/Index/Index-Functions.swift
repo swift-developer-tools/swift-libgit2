@@ -252,7 +252,7 @@ public func gitIndexRead(
     {
         return git_index_read(
             index,
-            force.intValue
+            force.int32Value
         )
     }
 }

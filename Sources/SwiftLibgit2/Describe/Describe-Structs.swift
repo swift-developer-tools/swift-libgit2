@@ -124,8 +124,8 @@ public struct GitDescribeOptions: GitStructMutable, WithCConvertible
         
         describeOptions.max_candidates_tags             = maxCandidatesTags
         describeOptions.describe_strategy               = describeStrategy.rawValue
-        describeOptions.only_follow_first_parent        = onlyFollowFirstParent.intValue
-        describeOptions.show_commit_oid_as_fallback     = showCommitOIDAsFallback.intValue
+        describeOptions.only_follow_first_parent        = onlyFollowFirstParent.int32Value
+        describeOptions.show_commit_oid_as_fallback     = showCommitOIDAsFallback.int32Value
         
         return try pattern.withOptionalCString
         {
@@ -228,7 +228,7 @@ public struct GitDescribeFormatOptions: GitStructMutable, WithCConvertible
         }
         
         describeFormatOptions.abbreviated_size          = abbreviatedSize
-        describeFormatOptions.always_use_long_format    = alwaysUseLongFormat.intValue
+        describeFormatOptions.always_use_long_format    = alwaysUseLongFormat.int32Value
         
         return try dirtySuffix.withOptionalCString
         {
