@@ -15,9 +15,9 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// The properties of ``GitAttrCheckFlagsT`` correspond to flag macros in
-/// libgit2. For consistency with other APIs, swift-libgit2 presents them as
-/// if they were an enum in libgit2.
+/// - Note: The properties of ``GitAttrCheckFlagsT`` correspond to flag macros
+/// in libgit2. For consistency with other APIs and type-safe usage,
+/// swift-libgit2 binds these macros as if they were an enum in libgit2.
 ///
 /// ## C Equivalent
 ///
@@ -49,22 +49,22 @@ public struct GitAttrCheckFlagsT: OptionSet, Sendable
     
     
     /// Examine attributes in the working directory, then in the index.
-    public static let gitAttrCheckFileThenIndex     = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_FILE_THEN_INDEX))
+    public static let gitAttrCheckFileThenIndex     = GitAttrCheckFlagsT(rawValue: UInt32(0))
     
     /// Examine attributes in the index, then in the working directory.
-    public static let gitAttrCheckIndexThenFile     = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INDEX_THEN_FILE))
+    public static let gitAttrCheckIndexThenFile     = GitAttrCheckFlagsT(rawValue: 1)
     
     /// Examine attributes only in the index.
-    public static let gitAttrCheckIndexOnly         = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INDEX_ONLY))
+    public static let gitAttrCheckIndexOnly         = GitAttrCheckFlagsT(rawValue: 2)
     
     /// Ignore the system attributes.
-    public static let gitAttrCheckNoSystem          = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_NO_SYSTEM))
+    public static let gitAttrCheckNoSystem          = GitAttrCheckFlagsT(rawValue: 1 << 2)
     
     /// Honor `.gitattributes` in the HEAD revision.
-    public static let gitAttrCheckIncludeHEAD       = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INCLUDE_HEAD))
+    public static let gitAttrCheckIncludeHEAD       = GitAttrCheckFlagsT(rawValue: 1 << 3)
     
     /// Honor `.gitattributes` in a specific commit.
-    public static let gitAttrCheckIncludeCommit     = GitAttrCheckFlagsT(rawValue: UInt32(GIT_ATTR_CHECK_INCLUDE_COMMIT))
+    public static let gitAttrCheckIncludeCommit     = GitAttrCheckFlagsT(rawValue: 1 << 4)
 }
 
 
