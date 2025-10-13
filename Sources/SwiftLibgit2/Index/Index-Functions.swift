@@ -100,9 +100,10 @@ public func gitIndexFree(
 
 
 
-/// Gets the repository that is related to the given index.
+/// Gets the repository that contains the given index.
 /// - Parameter index: The index. The underlying type must be `git_index`.
-/// - Returns: A pointer to the repository that is related to the given index.
+/// - Returns: The repository that contains the given index. The underlying
+/// type will be `git_repository`.
 ///
 /// ## C Equivalent
 ///
