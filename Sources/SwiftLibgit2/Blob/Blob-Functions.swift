@@ -356,7 +356,6 @@ public func gitBlobCreateFromDisk(
 
 
 
-// TODO: Replace `git_odb_open_wstream()` in documentation.
 /// Creates a stream to write a new blob into the object database.
 /// - Parameters:
 ///   - out: The pointer in which to store the write stream.
@@ -375,7 +374,7 @@ public func gitBlobCreateFromDisk(
 /// ``gitBlobCreateFromBuffer(id:repo:buffer:len:)`` instead.
 ///
 /// Otherwise, if the size of the contents are known (and filtering is not
-/// needed), use `git_odb_open_wstream()` instead.
+/// needed), use ``gitODBOpenWStream(out:db:size:type:)`` instead.
 ///
 /// - Important: Do not manually close this stream. Instead, pass it to
 /// ``gitBlobCreateFromStreamCommit(out:stream:)`` to commit the write to the
