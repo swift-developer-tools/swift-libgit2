@@ -17,7 +17,7 @@ import Foundation
 ///
 /// ## Discussion
 ///
-/// - Note: This function is only needed when libgit2 does not own the
+/// - Important: This function is only needed when libgit2 does not own the
 /// `git_credential` (when the caller is a transport).
 ///
 /// ## C Equivalent
