@@ -142,7 +142,7 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_index_capability_t`](https://libgit2.org/docs/reference/main/index/git_index_capability_t.html)
-public enum GitIndexCapabilityT: Int32, GitEnum
+public enum GitIndexCapabilityT: Int32, CEnum
 {
     /// Ignore case when comparing file names.
     case gitIndexCapabilityIgnoreCase   = 1
@@ -266,7 +266,7 @@ public struct GitIndexAddOptionT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_index_stage_t`](https://libgit2.org/docs/reference/main/index/git_index_stage_t.html)
-public enum GitIndexStageT: Int32, GitEnum
+public enum GitIndexStageT: Int32, CEnum
 {
     /// Match any entry matching the path, regardless of stage.
     case gitIndexStageAny       = -1

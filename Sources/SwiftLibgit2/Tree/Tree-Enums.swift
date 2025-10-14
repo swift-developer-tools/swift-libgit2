@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_filemode_t`](https://libgit2.org/docs/reference/main/tree/git_filemode_t.html)
-public enum GitFileModeT: UInt16, GitEnum
+public enum GitFileModeT: UInt16, CEnum
 {
     /// The unreadable file mode.
     case gitFileModeUnreadable      = 0

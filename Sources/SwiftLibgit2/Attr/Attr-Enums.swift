@@ -101,7 +101,7 @@ public struct GitAttrCheckFlagsT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_attr_value_t`](https://libgit2.org/docs/reference/main/attr/git_attr_value_t.html)
-public enum GitAttrValueT: UInt32, GitEnum
+public enum GitAttrValueT: UInt32, CEnum
 {
     /// The attribute has been left unspecified.
     case gitAttrValueUnspecified    = 0

@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// These enums specify additional protocols beyond ``GitEnum`` for
+/// These enums specify additional protocols beyond ``CEnum`` for
 /// documentation purposes.
 ///
 /// Enums that can use a simple raw value type get automatic `Equatable`,
@@ -42,7 +42,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_error_code`](https://libgit2.org/docs/reference/main/errors/git_error_code.html)
-public enum GitErrorCode: GitEnum, Equatable, Hashable, RawRepresentable
+public enum GitErrorCode: CEnum, Equatable, Hashable, RawRepresentable
 {
     /// No error occurred, and the operation was successful.
     case gitOK
@@ -319,9 +319,9 @@ public enum GitErrorCode: GitEnum, Equatable, Hashable, RawRepresentable
     /// This method returns `GIT_EUSER` for the ``GitErrorCode/gitUnknown(_:)``
     /// case.
     ///
-    /// The ``GitEnum`` protocol requires conformance to ``CConvertible``,
+    /// The ``CEnum`` protocol requires conformance to ``CConvertible``,
     /// which requires a non-throwing conversion method. An alternative design
-    /// would be to not conform to ``GitEnum``, and instead directly conform to
+    /// would be to not conform to ``CEnum``, and instead directly conform to
     /// ``ThrowingCConvertible`` and the other necessary protocols, allowing
     /// this method to throw an error for unknown result codes.
     ///
@@ -380,7 +380,7 @@ public enum GitErrorCode: GitEnum, Equatable, Hashable, RawRepresentable
 /// ## C Equivalent
 ///
 /// [`git_error_t`](https://libgit2.org/docs/reference/main/errors/git_error_t.html)
-public enum GitErrorT: GitEnum, Equatable, Hashable, RawRepresentable
+public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
 {
     /// No error occurred, and the operation was successful.
     case gitErrorNone

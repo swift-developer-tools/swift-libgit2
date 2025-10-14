@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_branch_t`](https://libgit2.org/docs/reference/main/branch/git_branch_t.html)
-public enum GitBranchT: UInt32, GitEnum
+public enum GitBranchT: UInt32, CEnum
 {
     /// A local branch.
     case gitBranchLocal     = 1

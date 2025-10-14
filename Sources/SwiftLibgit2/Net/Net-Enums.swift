@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_direction`](https://libgit2.org/docs/reference/main/net/git_direction.html)
-public enum GitDirection: UInt32, GitEnum
+public enum GitDirection: UInt32, CEnum
 {
     /// The remote connection is for fetching.
     case gitDirectionFetch  = 0

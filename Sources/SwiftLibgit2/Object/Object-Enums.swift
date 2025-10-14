@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_object_t`](https://libgit2.org/docs/reference/main/object/git_object_t.html)
-public enum GitObjectT: Int32, GitEnum
+public enum GitObjectT: Int32, CEnum
 {
     /// Any object.
     case gitObjectAny       = -2

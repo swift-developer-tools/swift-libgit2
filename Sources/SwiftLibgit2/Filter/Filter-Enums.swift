@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_filter_mode_t`](https://libgit2.org/docs/reference/main/filter/git_filter_mode_t.html)
-public enum GitFilterModeT: UInt32, GitEnum
+public enum GitFilterModeT: UInt32, CEnum
 {
     /// Filters are applied when exporting a file from the object database to
     /// the working directory (smudging).

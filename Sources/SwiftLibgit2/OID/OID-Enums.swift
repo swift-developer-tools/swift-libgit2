@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_oid_t`](https://libgit2.org/docs/reference/main/oid/git_oid_t.html)
-public enum GitOIDT: UInt32, GitEnum
+public enum GitOIDT: UInt32, CEnum
 {
     /// SHA-1.
     case gitOIDSHA1 = 1

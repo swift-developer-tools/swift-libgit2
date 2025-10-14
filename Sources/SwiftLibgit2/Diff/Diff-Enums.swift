@@ -346,7 +346,7 @@ public struct GitDiffFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_delta_t`](https://libgit2.org/docs/reference/main/diff/git_delta_t.html)
-public enum GitDeltaT: UInt32, GitEnum
+public enum GitDeltaT: UInt32, CEnum
 {
     /// There are no changes.
     case gitDeltaUnmodified     = 0
@@ -443,7 +443,7 @@ public enum GitDeltaT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_binary_t`](https://libgit2.org/docs/reference/main/diff/git_diff_binary_t.html)
-public enum GitDiffBinaryT: UInt32, GitEnum
+public enum GitDiffBinaryT: UInt32, CEnum
 {
     /// There is no binary delta.
     case gitDiffBinaryNone      = 0
@@ -495,7 +495,7 @@ public enum GitDiffBinaryT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_line_t`](https://libgit2.org/docs/reference/main/diff/git_diff_line_t.html)
-public enum GitDiffLineT: UInt32, GitEnum
+public enum GitDiffLineT: UInt32, CEnum
 {
     /// The line is unchanged and shown as context.
     case gitDiffLineContext         = 32
@@ -730,7 +730,7 @@ public struct GitDiffFindT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_diff_format_t`](https://libgit2.org/docs/reference/main/diff/git_diff_format_t.html)
-public enum GitDiffFormatT: UInt32, GitEnum
+public enum GitDiffFormatT: UInt32, CEnum
 {
     /// Show the full Git diff.
     case gitDiffFormatPatch         = 1

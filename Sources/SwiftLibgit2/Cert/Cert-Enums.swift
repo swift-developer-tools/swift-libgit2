@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_cert_t`](https://libgit2.org/docs/reference/main/cert/git_cert_t.html)
-public enum GitCertT: UInt32, GitEnum
+public enum GitCertT: UInt32, CEnum
 {
     /// No information about the certificate is available.
     ///
@@ -140,7 +140,7 @@ public struct GitCertSSHT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_cert_ssh_raw_type_t`](https://libgit2.org/docs/reference/main/cert/git_cert_ssh_raw_type_t.html)
-public enum GitCertSSHRawTypeT: UInt32, GitEnum
+public enum GitCertSSHRawTypeT: UInt32, CEnum
 {
     /// The raw host key type is unknown.
     case gitCertSSHRawTypeUnknown       = 0

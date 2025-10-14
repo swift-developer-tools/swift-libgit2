@@ -34,7 +34,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_level_t`](https://libgit2.org/docs/reference/main/config/git_config_level_t.html)
-public enum GitConfigLevelT: Int32, GitEnum
+public enum GitConfigLevelT: Int32, CEnum
 {
     /// System-wide on Windows.
     ///
@@ -153,7 +153,7 @@ public enum GitConfigLevelT: Int32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_configmap_t`](https://libgit2.org/docs/reference/main/config/git_configmap_t.html)
-public enum GitConfigMapT: UInt32, GitEnum
+public enum GitConfigMapT: UInt32, CEnum
 {
     /// The configuration variable matches boolean false values.
     ///

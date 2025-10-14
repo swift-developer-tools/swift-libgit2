@@ -127,7 +127,7 @@ public struct GitFeatureT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_libgit2_opt_t`](https://libgit2.org/docs/reference/main/common/git_libgit2_opt_t.html)
-public enum GitLibgit2OptT: UInt32, GitEnum
+public enum GitLibgit2OptT: UInt32, CEnum
 {
     /// Gets the maximum `mmap()` window size.
     ///

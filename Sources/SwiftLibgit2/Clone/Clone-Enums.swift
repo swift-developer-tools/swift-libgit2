@@ -23,7 +23,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_clone_local_t`](https://libgit2.org/docs/reference/main/clone/git_clone_local_t.html)
-public enum GitCloneLocalT: UInt32, GitEnum
+public enum GitCloneLocalT: UInt32, CEnum
 {
     /// Bypass the Git-aware transport for local paths, but use a normal fetch
     /// for `file://` URLs.
