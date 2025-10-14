@@ -190,30 +190,6 @@ internal protocol GitStructInternalMutable: GitStruct
 
 // MARK: - Extensions
 
-internal extension GitStruct
-{
-    /// Checks if the given libgit2 operation result indicates success.
-    /// - Parameters:
-    ///   - result: The libgit2 operation result.
-    ///   - defaultSuccess: Whether a result that is not of the type
-    ///   ``GitErrorCode`` should be considered successful.
-    /// - Returns: Whether the given libgit2 operation result indicates success.
-    private func isSuccess<T>(
-        _ result        : T,
-        defaultSuccess  : Bool  = true
-    ) -> Bool
-    {
-        if let errorCode = result as? GitErrorCode
-        {
-            return errorCode == .gitOK
-        }
-        
-        return defaultSuccess
-    }
-}
-
-
-
 internal extension GitStruct where Self: CConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
