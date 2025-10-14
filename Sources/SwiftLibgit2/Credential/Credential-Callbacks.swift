@@ -13,7 +13,7 @@ import CLibgit2
 
 /// The callback for credential acquisition.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the acquired credential.
 ///   - url: The resource for which a credential is being demanded.
 ///   - usernameFromURL: The username that is embedded in a `user@host` remote
 ///   URL.
