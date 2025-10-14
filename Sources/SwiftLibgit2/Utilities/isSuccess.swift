@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// Checks if the given libgit2 operation result indicates success.
+/// Checks whether the given libgit2 operation result indicates success.
 /// - Parameters:
 ///   - result: The libgit2 operation result.
 ///   - defaultSuccess: Whether a result that is not of the type
