@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_feature_t`](https://libgit2.org/docs/reference/main/common/git_feature_t.html)
-public struct GitFeatureT: GitOptionSet
+public struct GitFeatureT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

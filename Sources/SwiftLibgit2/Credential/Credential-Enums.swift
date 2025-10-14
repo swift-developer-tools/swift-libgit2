@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_credential_t`](https://libgit2.org/docs/reference/main/credential/git_credential_t.html)
-public struct GitCredentialT: GitOptionSet
+public struct GitCredentialT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

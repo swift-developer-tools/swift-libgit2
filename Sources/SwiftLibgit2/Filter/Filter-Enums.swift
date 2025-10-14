@@ -76,7 +76,7 @@ public enum GitFilterModeT: UInt32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_filter_flag_t`](https://libgit2.org/docs/reference/main/filter/git_filter_flag_t.html)
-public struct GitFilterFlagT: GitOptionSet
+public struct GitFilterFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

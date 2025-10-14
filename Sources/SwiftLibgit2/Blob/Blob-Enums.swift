@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_flag_t`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_flag_t.html)
-public struct GitBlobFilterFlagT: GitOptionSet
+public struct GitBlobFilterFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

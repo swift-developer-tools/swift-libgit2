@@ -32,7 +32,7 @@ import CLibgit2
 /// [`GIT_ATTR_CHECK_INCLUDE_HEAD`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_HEAD.html)
 ///
 /// [`GIT_ATTR_CHECK_INCLUDE_COMMIT`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_COMMIT.html)
-public struct GitAttrCheckFlagsT: GitOptionSet
+public struct GitAttrCheckFlagsT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

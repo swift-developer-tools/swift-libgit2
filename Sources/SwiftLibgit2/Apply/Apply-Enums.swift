@@ -17,7 +17,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_flags_t`](https://libgit2.org/docs/reference/main/apply/git_apply_flags_t.html)
-public struct GitApplyFlagsT: GitOptionSet
+public struct GitApplyFlagsT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -72,7 +72,7 @@ public struct GitApplyFlagsT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_apply_location_t`](https://libgit2.org/docs/reference/main/apply/git_apply_location_t.html)
-public struct GitApplyLocationT: GitOptionSet
+public struct GitApplyLocationT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

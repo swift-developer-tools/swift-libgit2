@@ -50,7 +50,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_checkout_strategy_t`](https://libgit2.org/docs/reference/main/checkout/git_checkout_strategy_t.html)
-public struct GitCheckoutStrategyT: GitOptionSet
+public struct GitCheckoutStrategyT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -232,7 +232,7 @@ public struct GitCheckoutStrategyT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_checkout_notify_t`](https://libgit2.org/docs/reference/main/checkout/git_checkout_notify_t.html)
-public struct GitCheckoutNotifyT: GitOptionSet
+public struct GitCheckoutNotifyT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

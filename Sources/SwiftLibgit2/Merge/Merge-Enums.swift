@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_merge_flag_t`](https://libgit2.org/docs/reference/main/merge/git_merge_flag_t.html)
-public struct GitMergeFlagT: GitOptionSet
+public struct GitMergeFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -173,7 +173,7 @@ public enum GitMergeFileFavorT: UInt32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_merge_file_flag_t`](https://libgit2.org/docs/reference/main/merge/git_merge_file_flag_t.html)
-public struct GitMergeFileFlagT: GitOptionSet
+public struct GitMergeFileFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -256,7 +256,7 @@ public struct GitMergeFileFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_merge_analysis_t`](https://libgit2.org/docs/reference/main/merge/git_merge_analysis_t.html)
-public struct GitMergeAnalysisT: GitOptionSet
+public struct GitMergeAnalysisT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -335,7 +335,7 @@ public struct GitMergeAnalysisT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_merge_preference_t`](https://libgit2.org/docs/reference/main/merge/git_merge_preference_t.html)
-public struct GitMergePreferenceT: GitOptionSet
+public struct GitMergePreferenceT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

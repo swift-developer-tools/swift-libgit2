@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_option_t`](https://libgit2.org/docs/reference/main/diff/git_diff_option_t.html)
-public struct GitDiffOptionT: GitOptionSet
+public struct GitDiffOptionT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -275,7 +275,7 @@ public struct GitDiffOptionT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_diff_flag_t`](https://libgit2.org/docs/reference/main/diff/git_diff_flag_t.html)
-public struct GitDiffFlagT: GitOptionSet
+public struct GitDiffFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -576,7 +576,7 @@ public enum GitDiffLineT: UInt32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_find_t`](https://libgit2.org/docs/reference/main/diff/git_diff_find_t.html)
-public struct GitDiffFindT: GitOptionSet
+public struct GitDiffFindT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -810,7 +810,7 @@ public enum GitDiffFormatT: UInt32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_stats_format_t`](https://libgit2.org/docs/reference/main/diff/git_diff_stats_format_t.html)
-public struct GitDiffStatsFormatT: GitOptionSet
+public struct GitDiffStatsFormatT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

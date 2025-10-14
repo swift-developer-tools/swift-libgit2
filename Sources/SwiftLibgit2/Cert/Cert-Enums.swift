@@ -82,7 +82,7 @@ public enum GitCertT: UInt32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_cert_ssh_t`](https://libgit2.org/docs/reference/main/cert/git_cert_ssh_t.html)
-public struct GitCertSSHT: GitOptionSet
+public struct GitCertSSHT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

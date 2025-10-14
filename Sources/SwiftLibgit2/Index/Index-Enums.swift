@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_index_entry_flag_t`](https://libgit2.org/docs/reference/main/index/git_index_entry_flag_t.html)
-public struct GitIndexEntryFlagT: GitOptionSet
+public struct GitIndexEntryFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -81,7 +81,7 @@ public struct GitIndexEntryFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_index_entry_extended_flag_t`](https://libgit2.org/docs/reference/main/index/git_index_entry_extended_flag_t.html)
-public struct GitIndexEntryExtendedFlagT: GitOptionSet
+public struct GitIndexEntryExtendedFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -200,7 +200,7 @@ public enum GitIndexCapabilityT: Int32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_index_add_option_t`](https://libgit2.org/docs/reference/main/index/git_index_add_option_t.html)
-public struct GitIndexAddOptionT: GitOptionSet
+public struct GitIndexAddOptionT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

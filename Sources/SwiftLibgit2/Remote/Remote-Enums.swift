@@ -78,7 +78,7 @@ public enum GitRemoteRedirectT: UInt32, CEnum
 /// ## C Equivalent
 ///
 /// [`git_remote_create_flags`](https://libgit2.org/docs/reference/main/remote/git_remote_create_flags.html)
-public struct GitRemoteCreateFlags: GitOptionSet
+public struct GitRemoteCreateFlags: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
@@ -133,7 +133,7 @@ public struct GitRemoteCreateFlags: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_remote_update_flags`](https://libgit2.org/docs/reference/main/remote/git_remote_update_flags.html)
-public struct GitRemoteUpdateFlags: GitOptionSet
+public struct GitRemoteUpdateFlags: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

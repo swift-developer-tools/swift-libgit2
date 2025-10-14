@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_email_create_flags_t`](https://libgit2.org/docs/reference/main/email/git_email_create_flags_t.html)
-public struct GitEmailCreateFlagsT: GitOptionSet
+public struct GitEmailCreateFlagsT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

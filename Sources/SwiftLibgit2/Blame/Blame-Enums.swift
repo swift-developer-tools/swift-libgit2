@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_flag_t`](https://libgit2.org/docs/reference/main/blame/git_blame_flag_t.html)
-public struct GitBlameFlagT: GitOptionSet
+public struct GitBlameFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32

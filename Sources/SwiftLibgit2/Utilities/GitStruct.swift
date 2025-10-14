@@ -25,7 +25,7 @@
 /// - ``GitStructInternalMutable`` (public read-only, internal mutable)
 ///
 /// The exception is Swift structs that act as bindings for C bitset enums.
-/// These Swift structs must conform to the ``GitOptionSet`` protocol instead.
+/// These Swift structs must conform to the ``COptionSet`` protocol instead.
 ///
 /// The only structs that may conform directly to ``GitStruct`` are structs
 /// which are unused by other bindings, but exist for documentation purposes.
