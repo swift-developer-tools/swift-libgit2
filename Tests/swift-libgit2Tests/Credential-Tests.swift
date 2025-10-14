@@ -35,7 +35,8 @@ final class CredentialTests: XCTestCaseStopOnFail
                 let payload : UnsafeMutableRawPointer                                       = payload
             else
             {
-                return -1
+                XCTFail("The payload was nil.")
+                return GitErrorCode.gitUnknown(-123).rawValue
             }
             
             let payloadPointer: UnsafeMutablePointer<CallbackData>

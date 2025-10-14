@@ -37,7 +37,8 @@ final class CredentialHelpersTests: XCTestCaseStopOnFail
                 let payload     : UnsafeMutableRawPointer                                       = payload
             else
             {
-                return -1
+                XCTFail("The payload was nil.")
+                return GitErrorCode.gitUnknown(-123).rawValue
             }
             
             return gitCredentialUserPass(

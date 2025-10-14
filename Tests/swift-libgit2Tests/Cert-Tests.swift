@@ -346,14 +346,14 @@ final class CertTests: XCTestCaseStopOnFail
         {
             _, _, _, _ in
             
-            return 0
+            return GitErrorCode.gitOK.rawValue
         }
         
         let rejectCallback: GitTransportCertificateCheckCB =
         {
             _, _, _, _ in
             
-            return -1
+            return GitErrorCode.gitUnknown(-123).rawValue
         }
         
         let deferCallback: GitTransportCertificateCheckCB =
@@ -378,7 +378,7 @@ final class CertTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertEqual(acceptCallbackResult, 0)
+            XCTAssertEqual(acceptCallbackResult, GitErrorCode.gitOK.rawValue)
         }
         
         host.withCString
@@ -392,7 +392,7 @@ final class CertTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertEqual(rejectCallbackResult, -1)
+            XCTAssertEqual(rejectCallbackResult, -123)
         }
         
         host.withCString

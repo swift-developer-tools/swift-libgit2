@@ -169,7 +169,7 @@ final class CloneTests: XCTestCaseStopOnFail
                 else
                 {
                     XCTFail("The payload was nil.")
-                    return GitErrorCode.gitEUser.rawValue
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -194,7 +194,7 @@ final class CloneTests: XCTestCaseStopOnFail
                 else
                 {
                     XCTFail("The payload was nil.")
-                    return GitErrorCode.gitEUser.rawValue
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>

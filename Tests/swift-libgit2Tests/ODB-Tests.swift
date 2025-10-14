@@ -490,7 +490,8 @@ final class ODBTests: XCTestCaseStopOnFail
                     let oidPointer  : UnsafePointer<git_oid>    = oidPointer
                 else
                 {
-                    return -1
+                    XCTFail("The payload was nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -502,7 +503,7 @@ final class ODBTests: XCTestCaseStopOnFail
                     GitOID(cValue: oidPointer.pointee)
                 )
                 
-                return 0
+                return GitErrorCode.gitOK.rawValue
             }
             
             
@@ -1002,7 +1003,8 @@ final class ODBTests: XCTestCaseStopOnFail
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
-                    return -1
+                    XCTFail("The payload was nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -1010,7 +1012,7 @@ final class ODBTests: XCTestCaseStopOnFail
                 
                 payloadPointer.pointee.callCount += 1
                 
-                return 0
+                return GitErrorCode.gitOK.rawValue
             }
             
             

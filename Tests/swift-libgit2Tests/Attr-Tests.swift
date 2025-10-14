@@ -498,17 +498,14 @@ extension AttrTests
                     let cPayload    : UnsafeMutableRawPointer   = cPayload
                 else
                 {
-                    return GitErrorCode.gitOK.rawValue
+                    XCTFail("The payload was nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
-                
-                
                 
                 let payloadPointer: UnsafeMutablePointer<[String : String]>
                     = cPayload.assumingMemoryBound(to: [String : String].self)
                 
                 payloadPointer.pointee[name] = value
-                
-                
                 
                 return GitErrorCode.gitOK.rawValue
             }
