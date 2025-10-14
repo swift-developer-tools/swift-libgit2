@@ -1137,7 +1137,7 @@ public func gitConfigDeleteMultivar(
 
 
 
-/// Performs an operation on each configuration variable.
+/// Loops over each configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
