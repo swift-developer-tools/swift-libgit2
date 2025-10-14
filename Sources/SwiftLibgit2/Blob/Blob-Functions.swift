@@ -146,19 +146,36 @@ public func gitBlobOwner(
 
 
 
-/// Gets a read-only buffer containing the raw content of the given blob.
+/// Gets the raw content of the given blob.
 /// - Parameter blob: The blob for which to get the raw content. The underlying
 /// type must be `git_blob`.
-/// - Returns: A read-only buffer containing the raw content of the given blob.
+/// - Returns: The raw content of the given blob.
 ///
 /// ## C Equivalent
 ///
 /// [`git_blob_rawcontent()`](https://libgit2.org/docs/reference/main/blob/git_blob_rawcontent.html)
 public func gitBlobRawContent(
     blob: OpaquePointer
-) -> UnsafeRawPointer
+) -> Data?
 {
-    return git_blob_rawcontent(blob)
+    guard let blobRawContent: UnsafeRawPointer = git_blob_rawcontent(blob)
+    else
+    {
+        return nil
+    }
+    
+    let blobRawContentSize: UInt64 = gitBlobRawSize(blob: blob)
+    
+    guard blobRawContentSize <= Int.max
+    else
+    {
+        return nil
+    }
+    
+    return Data(
+        bytes:  blobRawContent,
+        count:  Int(blobRawContentSize)
+    )
 }
 
 

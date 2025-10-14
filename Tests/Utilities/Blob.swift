@@ -142,26 +142,15 @@ enum Blob
         
         
         
-        let blobRawContent  : UnsafeRawPointer  = gitBlobRawContent(blob: blobPointer)
-        let blobRawSize     : UInt64            = gitBlobRawSize(blob: blobPointer)
-        
-        guard blobRawSize <= Int.max
+        guard let blobRawContent: Data = gitBlobRawContent(blob: blobPointer)
         else
         {
-            /// The blob's raw size being greater than or equal to `Int.max`
-            /// is not necessarily a failing condition, but if this is the
-            /// case, it cannot be cast to `Int` for the assertion.
+            XCTFail("The blob raw content was nil.")
             return
         }
         
-        
-        let blobData = Data(
-            bytes:  blobRawContent,
-            count:  Int(blobRawSize)
-        )
-        
         let blobContent = String(
-            data:       blobData,
+            data:       blobRawContent,
             encoding:   .utf8
         )
         
