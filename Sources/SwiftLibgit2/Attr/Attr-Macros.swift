@@ -26,7 +26,9 @@ public func gitAttrIsTrue(
     attr: UnsafePointer<CChar>?
 ) -> Bool
 {
-    return gitAttrValue(attr: attr) == .gitAttrValueTrue
+    let attrValue: GitAttrValueT? = gitAttrValue(attr: attr)
+    
+    return attrValue == .gitAttrValueTrue
 }
 
 
@@ -51,7 +53,9 @@ public func gitAttrIsFalse(
     attr: UnsafePointer<CChar>?
 ) -> Bool
 {
-    return gitAttrValue(attr: attr) == .gitAttrValueFalse
+    let attrValue: GitAttrValueT? = gitAttrValue(attr: attr)
+    
+    return attrValue == .gitAttrValueFalse
 }
 
 
@@ -81,7 +85,9 @@ public func gitAttrIsUnspecified(
     attr: UnsafePointer<CChar>?
 ) -> Bool
 {
-    return gitAttrValue(attr: attr) == .gitAttrValueUnspecified
+    let attrValue: GitAttrValueT? = gitAttrValue(attr: attr)
+    
+    return attrValue == .gitAttrValueUnspecified
 }
 
 
@@ -106,7 +112,9 @@ public func gitAttrHasValue(
     attr: UnsafePointer<CChar>?
 ) -> Bool
 {
-    return gitAttrValue(attr: attr) == .gitAttrValueString
+    let attrValue: GitAttrValueT? = gitAttrValue(attr: attr)
+    
+    return attrValue == .gitAttrValueString
 }
 
 
