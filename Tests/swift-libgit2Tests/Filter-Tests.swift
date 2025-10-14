@@ -405,10 +405,9 @@ extension FilterTests
                 gitBlobFree(blob: blobPointer)
                 gitFilterListFree(filters: filterListPointer)
                 
-                if let free: (UnsafeMutablePointer<git_writestream>?) -> Void
-                    = streamPointer?.pointee.free
+                if streamPointer != nil
                 {
-                    free(streamPointer)
+                    streamPointer?.pointee.free(streamPointer)
                 }
             }
             
