@@ -1155,6 +1155,11 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
     /// `git_diff_parse_options` instance.
     /// - Parameter diffParseOptions: The `git_diff_parse_options` instance
     /// to use.
+    ///
+    /// ## Discussion
+    ///
+    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
+    /// is encountered, although this should never occur.
     internal init(
         cValue diffParseOptions: git_diff_parse_options
     )
