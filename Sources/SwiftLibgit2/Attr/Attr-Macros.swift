@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// Checks whether the given attribute is set.
 /// - Parameter attr: The attribute to check.
 /// - Returns: Whether the given attribute is set.

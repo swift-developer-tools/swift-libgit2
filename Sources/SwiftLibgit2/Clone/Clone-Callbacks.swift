@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The callback to add a remote with the default fetch refspec to the
 /// repository's configuration.
 /// - Parameters:

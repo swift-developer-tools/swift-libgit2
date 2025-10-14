@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 // TODO: Replace `git_remote_create_options` in documentation.
 /// The current version for `git_remote_create_options`.
 ///

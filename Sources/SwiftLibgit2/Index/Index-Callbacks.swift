@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The callback for adding, removing, or updating files matching a pathspec.
 /// - Parameters:
 ///   - path: The matching path.

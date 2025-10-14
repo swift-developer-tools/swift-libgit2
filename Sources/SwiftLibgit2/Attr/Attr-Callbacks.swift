@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The callback to invoke for each attribute name and value during attribute
 /// iteration.
 /// - Parameters:
