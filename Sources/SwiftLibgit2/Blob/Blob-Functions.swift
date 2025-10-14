@@ -342,7 +342,7 @@ public func gitBlobCreateFromDisk(
 // TODO: Replace `git_odb_open_wstream()` in documentation.
 /// Creates a stream to write a new blob into the object database.
 /// - Parameters:
-///   - out: The stream into which to write.
+///   - out: The pointer in which to store the write stream.
 ///   - repo: The repository where the blob should be written. The underlying
 ///   type must be `git_repository`. This repository may be bare.
 ///   - hintPath: The path to use when selecting data filters to apply onto the
