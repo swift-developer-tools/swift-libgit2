@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options.html)
-public struct GitBlobFilterOptions: GitStructMutable, WithCConvertible
+public struct GitBlobFilterOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

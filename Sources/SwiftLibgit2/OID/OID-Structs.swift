@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_oid`](https://libgit2.org/docs/reference/main/oid/git_oid.html)
-public struct GitOID: GitStructInternalMutable, CConvertible
+public struct GitOID: CStructInternalMutable, CConvertible
 {
     /// The raw binary-formatted ID.
     ///

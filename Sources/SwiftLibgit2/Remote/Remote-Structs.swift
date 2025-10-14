@@ -18,7 +18,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_remote_callbacks`](https://libgit2.org/docs/reference/main/remote/git_remote_callbacks.html)
-public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
+public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -231,7 +231,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
-public struct GitFetchOptions: GitStructMutable, WithCConvertible
+public struct GitFetchOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

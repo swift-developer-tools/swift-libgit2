@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_entry`](https://libgit2.org/docs/reference/main/config/git_config_entry.html)
-public struct GitConfigEntry: CFreeable, GitStructInternalMutable, WithCConvertible
+public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertible
 {
     /// The normalized name of the configuration entry.
     ///
@@ -166,7 +166,7 @@ public struct GitConfigEntry: CFreeable, GitStructInternalMutable, WithCConverti
 /// ## C Equivalent
 ///
 /// [`git_configmap`](https://libgit2.org/docs/reference/main/config/git_configmap.html)
-public struct GitConfigMap: GitStructMutable, WithCConvertible
+public struct GitConfigMap: CStructMutable, WithCConvertible
 {
     /// The type of configuration value to match.
     ///

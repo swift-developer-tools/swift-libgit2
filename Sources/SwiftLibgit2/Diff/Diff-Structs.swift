@@ -23,7 +23,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile: GitStructReadable, WithCConvertible
+public struct GitDiffFile: CStructReadable, WithCConvertible
 {
     /// The ID of the item.
     ///
@@ -158,7 +158,7 @@ public struct GitDiffFile: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta: GitStructReadable, WithCConvertible
+public struct GitDiffDelta: CStructReadable, WithCConvertible
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -243,7 +243,7 @@ public struct GitDiffDelta: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_options`](https://libgit2.org/docs/reference/main/diff/git_diff_options.html)
-public struct GitDiffOptions: GitStructMutable, WithCConvertible
+public struct GitDiffOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -470,7 +470,7 @@ public struct GitDiffOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_binary_file`](https://libgit2.org/docs/reference/main/diff/git_diff_binary_file.html)
-public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
+public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
 {
     /// The type of binary data.
     public let type         : GitDiffBinaryT
@@ -559,7 +559,7 @@ public struct GitDiffBinaryFile: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_binary`](https://libgit2.org/docs/reference/main/diff/git_diff_binary.html)
-public struct GitDiffBinary: GitStructReadable, WithCConvertible
+public struct GitDiffBinary: CStructReadable, WithCConvertible
 {
     /// Whether there is data in the binary.
     ///
@@ -639,7 +639,7 @@ public struct GitDiffBinary: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_hunk`](https://libgit2.org/docs/reference/main/diff/git_diff_hunk.html)
-public struct GitDiffHunk: GitStructInternalMutable, CConvertible
+public struct GitDiffHunk: CStructInternalMutable, CConvertible
 {
     /// The starting line number in the old file.
     ///
@@ -753,7 +753,7 @@ public struct GitDiffHunk: GitStructInternalMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_line`](https://libgit2.org/docs/reference/main/diff/git_diff_line.html)
-public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
+public struct GitDiffLine: CStructInternalMutable, WithCConvertible
 {
     /// The type of line origin.
     ///
@@ -909,7 +909,7 @@ public struct GitDiffLine: GitStructInternalMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
-public struct GitDiffSimilarityMetric: GitStruct
+public struct GitDiffSimilarityMetric: CStruct
 {
     /// The function to generate a signature for a file.
     public let fileSignature: @convention(c)
@@ -974,7 +974,7 @@ public struct GitDiffSimilarityMetric: GitStruct
 /// ## C Equivalent
 ///
 /// [`git_diff_find_options`](https://libgit2.org/docs/reference/main/diff/git_diff_find_options.html)
-public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
+public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///
@@ -1123,7 +1123,7 @@ public struct GitDiffFindOptions: GitStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_parse_options`](https://libgit2.org/docs/reference/main/diff/git_diff_parse_options.html)
-public struct GitDiffParseOptions: GitStructMutable, CConvertible
+public struct GitDiffParseOptions: CStructMutable, CConvertible
 {
     /// The version to use.
     ///
@@ -1190,7 +1190,7 @@ public struct GitDiffParseOptions: GitStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_patchid_options`](https://libgit2.org/docs/reference/main/diff/git_diff_patchid_options.html)
-public struct GitDiffPatchIDOptions: GitStructMutable, ThrowingCConvertible
+public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///

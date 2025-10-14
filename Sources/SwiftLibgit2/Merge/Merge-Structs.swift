@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_merge_file_input`](https://libgit2.org/docs/reference/main/merge/git_merge_file_input.html)
-public struct GitMergeFileInput: GitStructMutable, WithCConvertible
+public struct GitMergeFileInput: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -128,7 +128,7 @@ public struct GitMergeFileInput: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_options`](https://libgit2.org/docs/reference/main/merge/git_merge_file_options.html)
-public struct GitMergeFileOptions: GitStructMutable, WithCConvertible
+public struct GitMergeFileOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -273,7 +273,7 @@ public struct GitMergeFileOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_result`](https://libgit2.org/docs/reference/main/merge/git_merge_file_result.html)
-public struct GitMergeFileResult: CFreeable, GitStructInternalMutable, WithCConvertible
+public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConvertible
 {
     /// Whether the output was auto-merged.
     ///
@@ -405,7 +405,7 @@ public struct GitMergeFileResult: CFreeable, GitStructInternalMutable, WithCConv
 /// ## C Equivalent
 ///
 /// [`git_merge_options`](https://libgit2.org/docs/reference/main/merge/git_merge_options.html)
-public struct GitMergeOptions: GitStructMutable, WithCConvertible
+public struct GitMergeOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

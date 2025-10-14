@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
+public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
@@ -135,7 +135,7 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_commitarray`](https://libgit2.org/docs/reference/main/commit/git_commitarray.html)
-public struct GitCommitArray: GitStruct
+public struct GitCommitArray: CStruct
 {
     /// The array of commits.
     public let commits  : [OpaquePointer]

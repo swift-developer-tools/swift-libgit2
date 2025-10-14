@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_indexer_progress`](https://libgit2.org/docs/reference/main/indexer/git_indexer_progress.html)
-public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
+public struct GitIndexerProgress: CStructInternalMutable, CConvertible
 {
     /// The number of objects being indexed.
     ///
@@ -125,7 +125,7 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_indexer_options`](https://libgit2.org/docs/reference/main/indexer/git_indexer_options.html)
-public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
+public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///

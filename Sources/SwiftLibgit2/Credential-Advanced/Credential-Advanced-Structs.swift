@@ -23,7 +23,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_credential`](https://libgit2.org/docs/reference/main/sys/credential/git_credential.html)
-public struct GitCredential: GitStruct
+public struct GitCredential: CStruct
 {
     /// The type of supported credential.
     public let credType: GitCredentialT

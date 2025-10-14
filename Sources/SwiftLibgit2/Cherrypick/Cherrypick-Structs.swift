@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_options`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options.html)
-public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
+public struct GitCherrypickOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///

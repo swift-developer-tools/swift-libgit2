@@ -28,7 +28,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf: GitStructInternalMutable, WithCConvertible
+public struct GitBuf: CStructInternalMutable, WithCConvertible
 {
     /// The buffer contents.
     ///

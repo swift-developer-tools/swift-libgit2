@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_message_trailer`](https://libgit2.org/docs/reference/main/message/git_message_trailer.html)
-public struct GitMessageTrailer: GitStructReadable, WithCConvertible
+public struct GitMessageTrailer: CStructReadable, WithCConvertible
 {
     /// The message trailer key.
     public let key      : String?
@@ -80,7 +80,7 @@ public struct GitMessageTrailer: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_message_trailer_array`](https://libgit2.org/docs/reference/main/message/git_message_trailer_array.html)
-public struct GitMessageTrailerArray: GitStruct
+public struct GitMessageTrailerArray: CStruct
 {
     /// The array of message trailers.
     public let trailers         : [GitMessageTrailer]

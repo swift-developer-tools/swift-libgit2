@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_time`](https://libgit2.org/docs/reference/main/types/git_time.html)
-public struct GitTime: GitStructReadable, CConvertible
+public struct GitTime: CStructReadable, CConvertible
 {
     /// The UNIX timestamp in seconds.
     public let time     : GitTimeT
@@ -70,7 +70,7 @@ public struct GitTime: GitStructReadable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_writestream`](https://libgit2.org/docs/reference/main/types/git_writestream.html)
-public struct GitWritestream: GitStruct
+public struct GitWritestream: CStruct
 {
     /// The function to write to the stream.
     public let write: @convention(c)

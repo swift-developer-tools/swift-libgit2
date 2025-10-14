@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// MARK: - GitStruct
+// MARK: - CStruct
 
 /// A type that can be initialized from the equivalent C value.
 ///
@@ -20,37 +20,37 @@
 ///
 /// All Swift binding structs must conform to one of the following protocols:
 ///
-/// - ``GitStructReadable`` (read-only)
-/// - ``GitStructMutable`` (mutable)
-/// - ``GitStructInternalMutable`` (public read-only, internal mutable)
+/// - ``CStructReadable`` (read-only)
+/// - ``CStructMutable`` (mutable)
+/// - ``CStructInternalMutable`` (public read-only, internal mutable)
 ///
 /// The exception is Swift structs that act as bindings for C bitset enums.
 /// These Swift structs must conform to the ``COptionSet`` protocol instead.
 ///
-/// The only structs that may conform directly to ``GitStruct`` are structs
+/// The only structs that may conform directly to ``CStruct`` are structs
 /// which are unused by other bindings, but exist for documentation purposes.
-/// ``GitStructReadable`` does not define any additional requirements other
-/// than those of ``GitStruct``, but exists for semantic purposes.
+/// ``CStructReadable`` does not define any additional requirements other
+/// than those of ``CStruct``, but exists for semantic purposes.
 ///
 /// ## Protocol Choice
 ///
 /// The protocol used by a struct depends on how that struct will be used.
 ///
-/// ``GitStructReadable``:
+/// ``CStructReadable``:
 /// - Generally represents Git data.
 /// - Uses `public let` properties.
 /// - Provides no default property values.
 /// - Provides no public initializer.
 /// - Examples: ``GitBlameLine`` and ``GitDiffDelta``.
 ///
-/// ``GitStructMutable``:
+/// ``CStructMutable``:
 /// - Generally represents caller-configurable options.
 /// - Uses `public var` properties.
 /// - Provides default property values.
 /// - Provides a `public init()` method with an empty body.
 /// - Examples: ``GitCheckoutOptions`` and ``GitMergeOptions``.
 ///
-/// ``GitStructInternalMutable``:
+/// ``CStructInternalMutable``:
 /// - Generally used as `inout` function parameters.
 /// - Uses `public private(set) var` or `public internal(set) var` properties.
 /// - Provides default property values,.
@@ -68,8 +68,8 @@
 /// For example, the three protocols described above require different property
 /// access levels, but this is not definable through Swift protocols.
 ///
-/// Finally, structs that conform to ``GitStructReadable``,
-/// ``GitStructMutable``, or ``GitStructInternalMutable`` must implement a
+/// Finally, structs that conform to ``CStructReadable``,
+/// ``CStructMutable``, or ``CStructInternalMutable`` must implement a
 /// method to convert the Swift struct to its C equivalent. Structs must
 /// implement this method by conforming to one of the following protocols:
 ///
@@ -77,22 +77,22 @@
 /// - ``ThrowingCConvertible`` (throwing, without memory management)
 /// - ``WithCConvertible`` (throwing, with memory management)
 ///
-/// ``GitStruct`` does not directly conform to the C convertible protocols due
+/// ``CStruct`` does not directly conform to the C convertible protocols due
 /// to the level of variation required by conforming structs. A single protocol
 /// cannot define this level of variation, and multiple protocols would be less
 /// effective from a semantic standpoint. Conforming structs must adopt one of
-/// the convertible protocols, unless they conform directly to ``GitStruct``
+/// the convertible protocols, unless they conform directly to ``CStruct``
 /// (and are unused by other bindings).
 ///
 /// Some structs may also need to implement a mutating Swift-to-C conversion
-/// method. These structs are often used as `inout` parameters. ``GitStruct``
+/// method. These structs are often used as `inout` parameters. ``CStruct``
 /// provides default implementations of these mutating methods, which are
 /// designed for use with C functions that expect parameters of the type
 /// `C *`, `C **`, or`const C **`.
 ///
 /// ## CFreeable Structs
 ///
-/// A struct that conforms to ``GitStructInternalMutable`` may also need to
+/// A struct that conforms to ``CStructInternalMutable`` may also need to
 /// conform to ``CFreeable`` if libgit2 provides a corresponding memory-freeing
 /// function.
 ///
@@ -126,7 +126,7 @@
 ///
 /// ## CFreeable Exceptions
 ///
-/// ``GitBuf`` conforms to ``GitStructInternalMutable`` and has an associated
+/// ``GitBuf`` conforms to ``CStructInternalMutable`` and has an associated
 /// memory-freeing function in libgit2, but does not conform to ``CFreeable``.
 /// This is because ``GitBuf`` acts as a pointer container with a lifecycle
 /// managed by the API user rather than by the binding API.
@@ -136,7 +136,7 @@
 /// `git_buf->ptr` with heap-allocated memory, which is copied into the Swift
 /// struct. To free this memory, the API user must call
 /// ``gitBufDispose(buffer:)`` when done with the buffer.
-internal protocol GitStruct
+internal protocol CStruct
 {
     /// The type of the equivalent C value.
     associatedtype C
@@ -157,12 +157,12 @@ internal protocol GitStruct
 // MARK: - Refining Protocols
 
 /// A read-only type that can be initialized from the equivalent C value.
-internal protocol GitStructReadable: GitStruct { }
+internal protocol CStructReadable: CStruct { }
 
 
 
 /// A mutable type that can be initialized from the equivalent C value.
-internal protocol GitStructMutable: GitStruct
+internal protocol CStructMutable: CStruct
 {
     /// Creates an instance with the default configuration.
     ///
@@ -176,7 +176,7 @@ internal protocol GitStructMutable: GitStruct
 
 /// A publicly-readable and internally-mutable type that can be initialized
 /// from the equivalent C value.
-internal protocol GitStructInternalMutable: GitStruct
+internal protocol CStructInternalMutable: CStruct
 {
     /// Creates an instance with the default configuration.
     ///
@@ -190,7 +190,7 @@ internal protocol GitStructInternalMutable: GitStruct
 
 // MARK: - Extensions
 
-internal extension GitStruct where Self: CConvertible
+internal extension CStruct where Self: CConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
@@ -294,7 +294,7 @@ internal extension GitStruct where Self: CConvertible
 
 
 
-internal extension GitStruct where Self: ThrowingCConvertible
+internal extension CStruct where Self: ThrowingCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
@@ -399,7 +399,7 @@ internal extension GitStruct where Self: ThrowingCConvertible
 
 
 
-internal extension GitStruct where Self: WithCConvertible
+internal extension CStruct where Self: WithCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
@@ -500,7 +500,7 @@ internal extension GitStruct where Self: WithCConvertible
 
 
 
-internal extension GitStruct where Self: WithCConvertible & CFreeable
+internal extension CStruct where Self: WithCConvertible & CFreeable
 {
     /// Calls the given closure with a mutable pointer to an optional mutable
     /// pointer to a `C` instance, and updates the receiver with any changes
