@@ -275,7 +275,7 @@ extension IndexerTests
         defer
         {
             gitIndexerFree(idx: indexerPointer)
-            Free.freeODB(odbPointer)
+            gitODBFree(db: odbPointer)
             
             try? FileManager.default.removeItem(at: indexerURL)
         }

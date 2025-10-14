@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_odb` instance.
-    /// - Parameter odb: The object database to free. The underlying type must
-    /// be  `git_odb`.
-    static func freeODB(
-        _ odb: OpaquePointer?
-    )
-    {
-        guard let odb: OpaquePointer = odb
-        else
-        {
-            return
-        }
-        
-        git_odb_free(odb)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_packbuilder` instance.
     /// - Parameter packBuilder: The pack builder to free. The underlying type
     /// must be `git_packbuilder`.
