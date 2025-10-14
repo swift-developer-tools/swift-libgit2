@@ -56,7 +56,7 @@ public func gitObjectLookup(
 ///   type must be `git_object`.
 ///   - repo: The repository containing the object. The underlying type must
 ///   be `git_repository`.
-///   - id: The ID of the object to lookup.
+///   - id: The The prefix of the ID of the object to lookup.
 ///   - len: The length of the object's ID prefix.
 ///   - type: The type of the object to look up. Pass
 ///   ``GitObjectT/gitObjectAny`` to guess the type of the object.

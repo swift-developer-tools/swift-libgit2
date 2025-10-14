@@ -51,7 +51,7 @@ public func gitBlobLookup(
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The ID of the blob to look up.
+///   - id: The The prefix of the ID of the blob to look up.
 ///   - len: The length of the blob's ID prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
