@@ -322,7 +322,7 @@ public func gitObjectPeel(
 /// - Parameters:
 ///   - dest: The pointer in which to store the copied object. The underlying
 ///   type must be `git_object`.
-///   - source: The object to copy. The underlying type must be `git_object.
+///   - source: The object to copy. The underlying type must be `git_object`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
