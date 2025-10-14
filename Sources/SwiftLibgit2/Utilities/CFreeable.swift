@@ -13,9 +13,9 @@
 /// ## Discussion
 ///
 /// A struct that conforms to ``GitStructInternalMutable`` may also need to
-/// conform to ``Freeable`` if libgit2 provides a corresponding memory-freeing
+/// conform to ``CFreeable`` if libgit2 provides a corresponding memory-freeing
 /// function. See the ``GitStruct`` documenation for more information.
-internal protocol Freeable: GitStruct
+internal protocol CFreeable: GitStruct
 {
     /// The type of the pointer passed to ``freeCValue(_:)`` to free the memory
     /// allocated for the C value.

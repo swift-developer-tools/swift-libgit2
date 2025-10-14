@@ -90,18 +90,18 @@
 /// designed for use with C functions that expect parameters of the type
 /// `C *`, `C **`, or`const C **`.
 ///
-/// ## Freeable Structs
+/// ## CFreeable Structs
 ///
 /// A struct that conforms to ``GitStructInternalMutable`` may also need to
-/// conform to ``Freeable`` if libgit2 provides a corresponding memory-freeing
+/// conform to ``CFreeable`` if libgit2 provides a corresponding memory-freeing
 /// function.
 ///
-/// Conforming to ``Freeable`` enables automatic memory management when using
+/// Conforming to ``CFreeable`` enables automatic memory management when using
 /// ``withMutatingCValue(_:)`` with C functions that expect `C **` parameters
 /// and follow the allocating pattern, where libgit2 allocates new memory that
 /// the caller must free.
 ///
-/// Structs that do not conform to ``Freeable`` cannot use
+/// Structs that do not conform to ``CFreeable`` cannot use
 /// ``withMutatingCValue(_:)`` with `C **` parameters. Instead, they must use
 /// ``withBorrowingCValue(_:)``, which is appropriate for functions that follow
 /// the borrowing pattern.
@@ -114,7 +114,7 @@
 /// The allocating pattern involves the function allocating new memory on the
 /// heap and transferring ownership to the caller. The caller must free this
 /// memory. The libgit2 documentation for these functions usually states this
-/// responsibility. The struct must conform to ``Freeable``, and the caller
+/// responsibility. The struct must conform to ``CFreeable``, and the caller
 /// must use ``withMutatingCValue(_:)``.
 ///
 /// The borrowing pattern involves the function returning a pointer to memory
@@ -124,10 +124,10 @@
 /// lifecycle/validity of the returned pointer (for example, a pointer being
 /// valid until the next call to the iterator, or until the iterator is freed).
 ///
-/// ## Freeable Exceptions
+/// ## CFreeable Exceptions
 ///
 /// ``GitBuf`` conforms to ``GitStructInternalMutable`` and has an associated
-/// memory-freeing function in libgit2, but does not conform to ``Freeable``.
+/// memory-freeing function in libgit2, but does not conform to ``CFreeable``.
 /// This is because ``GitBuf`` acts as a pointer container with a lifecycle
 /// managed by the API user rather than by the binding API.
 ///
@@ -500,7 +500,7 @@ internal extension GitStruct where Self: WithCConvertible
 
 
 
-internal extension GitStruct where Self: WithCConvertible & Freeable
+internal extension GitStruct where Self: WithCConvertible & CFreeable
 {
     /// Calls the given closure with a mutable pointer to an optional mutable
     /// pointer to a `C` instance, and updates the receiver with any changes

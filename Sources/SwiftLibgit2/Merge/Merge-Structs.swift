@@ -273,7 +273,7 @@ public struct GitMergeFileOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_result`](https://libgit2.org/docs/reference/main/merge/git_merge_file_result.html)
-public struct GitMergeFileResult: Freeable, GitStructInternalMutable, WithCConvertible
+public struct GitMergeFileResult: CFreeable, GitStructInternalMutable, WithCConvertible
 {
     /// Whether the output was auto-merged.
     ///
