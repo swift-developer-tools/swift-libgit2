@@ -1037,8 +1037,8 @@ public func gitCommitDup(
 ///
 /// ## Discussion
 ///
-/// This function does not free the `git_commitarray` itself, since libgit2
-/// will never allocate that object directly.
+/// This function does not free the `git_commitarray` instance itself, since
+/// libgit2 will never allocate that object directly.
 ///
 /// ## C Equivalent
 ///
