@@ -22,7 +22,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_oidarray`](https://libgit2.org/docs/reference/main/oidarray/git_oidarray.html)
-public struct GitOIDArray: CStruct
+public struct GitOIDArray: CStruct, Sendable
 {
     /// The IDs.
     public private(set) var ids : [GitOID]

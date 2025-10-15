@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_odb_options`](https://libgit2.org/docs/reference/main/odb/git_odb_options.html)
-public struct GitODBOptions: CStructMutable, CConvertible
+public struct GitODBOptions: CStructMutable, CConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -87,7 +87,7 @@ public struct GitODBOptions: CStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_odb_expand_id`](https://libgit2.org/docs/reference/main/odb/git_odb_expand_id.html)
-public struct GitODBExpandID: CStructMutable, CConvertible
+public struct GitODBExpandID: CStructMutable, CConvertible, Sendable
 {
     /// The ID to expand.
     ///

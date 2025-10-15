@@ -17,7 +17,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_head`](https://libgit2.org/docs/reference/main/net/git_remote_head.html)
-public struct GitRemoteHEAD: CStructReadable, WithCConvertible
+public struct GitRemoteHEAD: CStructReadable, WithCConvertible, Sendable
 {
     /// Whether the reference exists locally.
     public let local        : Bool

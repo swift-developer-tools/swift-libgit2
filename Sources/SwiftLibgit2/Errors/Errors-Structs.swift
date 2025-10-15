@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_error`](https://libgit2.org/docs/reference/main/errors/git_error.html)
-public struct GitError: CStructReadable, WithCConvertible
+public struct GitError: CStructReadable, WithCConvertible, Sendable
 {
     /// The error message.
     public let message  : String?

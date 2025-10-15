@@ -23,7 +23,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile: CStructReadable, WithCConvertible
+public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
 {
     /// The ID of the item.
     ///
@@ -159,7 +159,7 @@ public struct GitDiffFile: CStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta: CStructReadable, WithCConvertible
+public struct GitDiffDelta: CStructReadable, WithCConvertible, Sendable
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -500,7 +500,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_binary_file`](https://libgit2.org/docs/reference/main/diff/git_diff_binary_file.html)
-public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
+public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
 {
     /// The type of binary data.
     public let type         : GitDiffBinaryT
@@ -589,7 +589,7 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_binary`](https://libgit2.org/docs/reference/main/diff/git_diff_binary.html)
-public struct GitDiffBinary: CStructReadable, WithCConvertible
+public struct GitDiffBinary: CStructReadable, WithCConvertible, Sendable
 {
     /// Whether there is data in the binary.
     ///
@@ -670,7 +670,7 @@ public struct GitDiffBinary: CStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_hunk`](https://libgit2.org/docs/reference/main/diff/git_diff_hunk.html)
-public struct GitDiffHunk: CStructInternalMutable, CConvertible
+public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
 {
     /// The starting line number in the old file.
     ///
@@ -785,7 +785,7 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_line`](https://libgit2.org/docs/reference/main/diff/git_diff_line.html)
-public struct GitDiffLine: CStructInternalMutable, WithCConvertible
+public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
 {
     /// The type of line origin.
     ///
@@ -1172,7 +1172,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_parse_options`](https://libgit2.org/docs/reference/main/diff/git_diff_parse_options.html)
-public struct GitDiffParseOptions: CStructMutable, CConvertible
+public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -1247,7 +1247,7 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_patchid_options`](https://libgit2.org/docs/reference/main/diff/git_diff_patchid_options.html)
-public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible
+public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible, Sendable
 {
     /// The version to use.
     ///

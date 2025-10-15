@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_checkout_perfdata`](https://libgit2.org/docs/reference/main/checkout/git_checkout_perfdata.html)
-public struct GitCheckoutPerfData: CStructReadable, CConvertible
+public struct GitCheckoutPerfData: CStructReadable, CConvertible, Sendable
 {
     /// The number of times `mkdir` was called during the checkout operation.
     public let mkdirCalls   : Int

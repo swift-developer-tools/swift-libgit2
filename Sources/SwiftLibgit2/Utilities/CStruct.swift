@@ -66,6 +66,11 @@
 /// While the refining protocols do not define additional requirements due to
 /// these limitations, they provide semantic meaning to conforming structs.
 ///
+/// Additionally, structs must conform to `Sendable` if possible. Structs that
+/// contain shared mutable state such as pointers cannot be `Sendable`.
+/// ``CStruct`` and its refining protocols do not require `Sendable`
+/// conformance due to the level of variation among conforming structs.
+///
 /// Finally, structs that conform to ``CStructReadable``,
 /// ``CStructMutable``, or ``CStructInternalMutable`` must implement a
 /// method to convert the Swift struct to its C equivalent. Structs must

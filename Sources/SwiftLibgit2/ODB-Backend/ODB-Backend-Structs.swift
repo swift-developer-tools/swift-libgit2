@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_odb_backend_pack_options`](https://libgit2.org/docs/reference/main/odb_backend/git_odb_backend_pack_options.html)
-public struct GitODBBackendPackOptions: CStructMutable, CConvertible
+public struct GitODBBackendPackOptions: CStructMutable, CConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -87,7 +87,7 @@ public struct GitODBBackendPackOptions: CStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_odb_backend_loose_options`](https://libgit2.org/docs/reference/main/odb_backend/git_odb_backend_loose_options.html)
-public struct GitODBBackendLooseOptions: CStructMutable, CConvertible
+public struct GitODBBackendLooseOptions: CStructMutable, CConvertible, Sendable
 {
     /// The version to use.
     ///

@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_index_time`](https://libgit2.org/docs/reference/main/index/git_index_time.html)
-public struct GitIndexTime: CStructMutable, CConvertible
+public struct GitIndexTime: CStructMutable, CConvertible, Sendable
 {
     /// The number of seconds since the UNIX epoch.
     ///
@@ -81,7 +81,7 @@ public struct GitIndexTime: CStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_index_entry`](https://libgit2.org/docs/reference/main/index/git_index_entry.html)
-public struct GitIndexEntry: CStructMutable, WithCConvertible
+public struct GitIndexEntry: CStructMutable, WithCConvertible, Sendable
 {
     /// The last time the file's metadata changed.
     ///

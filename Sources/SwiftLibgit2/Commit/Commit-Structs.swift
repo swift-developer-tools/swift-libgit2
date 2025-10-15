@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
+public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
