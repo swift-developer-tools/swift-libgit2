@@ -682,15 +682,8 @@ public func gitODBStreamRead(
 
 
 
-// TODO: Replace second `git_odb_stream` with ``GitODBStream`` in documentation note.
 /// Frees the memory allocated for the given `git_odb_stream` instance.
 /// - Parameter stream: The stream to free.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_odb_stream` instances allocated by libgit2. `git_odb_stream`
-/// instances do not need to be freed.
 ///
 /// ## C Equivalent
 ///

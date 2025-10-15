@@ -1040,10 +1040,6 @@ public func gitCommitDup(
 /// This function does not free the `git_commitarray` itself, since libgit2
 /// will never allocate that object directly.
 ///
-/// - Note: This function is only needed when working directly with
-/// `git_commitarray` instances allocated by libgit2. ``GitCommitArray``
-/// instances do not need to be freed.
-///
 /// ## C Equivalent
 ///
 /// [`git_commitarray_dispose()`](https://libgit2.org/docs/reference/main/commit/git_commitarray_dispose.html)

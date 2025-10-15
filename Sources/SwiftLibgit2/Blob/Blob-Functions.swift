@@ -203,12 +203,6 @@ public func gitBlobRawSize(
 ///   - version: The version to use. Pass ``gitBlobFilterOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_blob_filter_options` instances. ``GitBlobFilterOptions`` instances
-/// do not need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options_init()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options_init.html)

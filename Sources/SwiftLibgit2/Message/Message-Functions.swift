@@ -97,12 +97,6 @@ public func gitMessageTrailers(
 /// instance.
 /// - Parameter arr: The message trailer array to free.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_message_trailer_array` instances allocated by libgit2.
-/// ``GitMessageTrailerArray`` instances do not need to be freed.
-///
 /// ## C Equivalent
 ///
 /// [`git_message_trailer_array_free()`](https://libgit2.org/docs/reference/main/message/git_message_trailer_array_free.html)

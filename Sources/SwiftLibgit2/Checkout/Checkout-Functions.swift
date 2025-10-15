@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitCheckoutOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_checkout_options` instances. ``GitCheckoutOptions`` instances do not
-/// need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_checkout_options_init()`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options_init.html)

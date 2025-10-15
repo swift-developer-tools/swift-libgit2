@@ -18,12 +18,6 @@ import Foundation
 ///   - version: The version to use. Pass ``gitIndexerOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_indexer_options` instances. ``GitIndexerOptions`` instances do not
-/// need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_indexer_options_init()`](https://libgit2.org/docs/reference/main/indexer/git_indexer_options_init.html)

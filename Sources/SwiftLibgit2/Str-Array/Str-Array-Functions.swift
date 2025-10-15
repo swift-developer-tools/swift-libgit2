@@ -19,10 +19,6 @@ import CLibgit2
 /// This function does not free the `git_strarray` itself, since libgit2 will
 /// never allocate that object directly.
 ///
-/// - Note: This function is only needed when working directly with
-/// `git_strarray` instances allocated by libgit2. ``GitStrArray`` instances
-/// do not need to be freed.
-///
 /// ## C Equivalent
 ///
 /// [`git_strarray_dispose()`](https://libgit2.org/docs/reference/main/strarray/git_strarray_dispose.html)

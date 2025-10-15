@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitProxyOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_proxy_options` instances. ``GitProxyOptions`` instances do not need
-/// to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_proxy_options_init()`](https://libgit2.org/docs/reference/main/proxy/git_proxy_options_init.html)

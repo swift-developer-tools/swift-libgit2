@@ -18,12 +18,6 @@ import Foundation
 ///   - version: The version to use. Pass ``gitDiffOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_diff_options` instances.``GitDiffOptions`` instances do not need to
-/// be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_diff_options_init()`](https://libgit2.org/docs/reference/main/diff/git_diff_options_init.html)
@@ -48,12 +42,6 @@ public func gitDiffOptionsInit(
 ///   - opts: The `git_diff_find_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffFindOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_diff_find_options` instances. ``GitDiffFindOptions`` instances do
-/// not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -1124,12 +1112,6 @@ public func gitDiffStatsFree(
 ///   - opts: The `git_diff_patchid_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffPatchIDOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_diff_patchid_options` instances. ``GitDiffPatchIDOptions`` instances
-/// do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///

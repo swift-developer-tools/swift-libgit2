@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitDescribeOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_describe_options` instances. ``GitDescribeOptions`` instances do not
-/// need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_describe_options_init()`](https://libgit2.org/docs/reference/main/describe/git_describe_options_init.html)
@@ -47,12 +41,6 @@ public func gitDescribeOptionsInit(
 ///   - opts: The `git_describe_format_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDescribeFormatOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_describe_format_options` instances. ``GitDescribeFormatOptions``
-/// instances do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///

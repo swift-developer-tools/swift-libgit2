@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitRemoteCallbacksVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_remote_callbacks` instances. ``GitRemoteCallbacks`` instances
-/// do not need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_remote_init_callbacks()`](https://libgit2.org/docs/reference/main/remote/git_remote_init_callbacks.html)
@@ -47,12 +41,6 @@ public func gitRemoteInitCallbacks(
 ///   - opts: The `git_fetch_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitFetchOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_fetch_options` instances. ``GitFetchOptions`` instances do not
-/// need to be initialized this way.
 ///
 /// ## C Equivalent
 ///

@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitApplyOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_apply_options` instances. ``GitApplyOptions`` instances do not need
-/// to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_apply_options_init()`](https://libgit2.org/docs/reference/main/apply/git_apply_options_init.html)

@@ -14,12 +14,6 @@ import CLibgit2
 /// Frees the memory allocated for the given `git_config_entry` instance.
 /// - Parameter entry: The configuration entry to free.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_config_entry` instances allocated by libgit2. ``GitConfigEntry``
-/// instances do not need to be freed.
-///
 /// ## C Equivalent
 ///
 /// [`git_config_entry_free()`](https://libgit2.org/docs/reference/main/config/git_config_entry_free.html)
