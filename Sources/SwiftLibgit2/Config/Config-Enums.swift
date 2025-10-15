@@ -34,7 +34,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_level_t`](https://libgit2.org/docs/reference/main/config/git_config_level_t.html)
-public enum GitConfigLevelT: Int32, GitEnum
+public enum GitConfigLevelT: Int32, CEnum
 {
     /// System-wide on Windows.
     ///
@@ -97,8 +97,8 @@ public enum GitConfigLevelT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitConfigLevelT`` instance from a `git_config_level_t`
-    /// instance.
+    /// Initializes a ``GitConfigLevelT`` instance from the given
+    /// `git_config_level_t` instance.
     /// - Parameter configLevel: The `git_config_level_t` instance to use.
     internal init?(
         cValue configLevel: git_config_level_t
@@ -153,7 +153,7 @@ public enum GitConfigLevelT: Int32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_configmap_t`](https://libgit2.org/docs/reference/main/config/git_configmap_t.html)
-public enum GitConfigMapT: UInt32, GitEnum
+public enum GitConfigMapT: UInt32, CEnum
 {
     /// The configuration variable matches boolean false values.
     ///
@@ -179,7 +179,8 @@ public enum GitConfigMapT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitConfigMapT`` instance from a `git_configmap_t` instance.
+    /// Initializes a ``GitConfigMapT`` instance from the given
+    /// `git_configmap_t` instance.
     /// - Parameter git_configmap_t: The `git_configmap_t` instance to use.
     internal init?(
         cValue configMap: git_configmap_t

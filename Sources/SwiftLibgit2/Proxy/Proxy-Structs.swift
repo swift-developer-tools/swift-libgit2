@@ -17,41 +17,41 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_proxy_options`](https://libgit2.org/docs/reference/main/proxy/git_proxy_options.html)
-public struct GitProxyOptions: GitStructMutable, WithCConvertible
+public struct GitProxyOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitProxyOptionsVersion``.
-    public var version          : UInt32                            = gitProxyOptionsVersion
+    public var version          : UInt32
     
     /// The type of proxy.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitProxyT/gitProxyNone``.
-    public var type             : GitProxyT                         = .gitProxyNone
+    public var type             : GitProxyT
     
     /// The URL of the proxy.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var url              : String?                           = nil
+    public var url              : String?
     
-    /// The callback for credential acquisition.
+    /// The callback invoked to acquire credentials.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
     /// This function will be called if the remote host requires authentication
-    /// in order to connect. Returning `GIT_PASSTHROUGH` will make libgit2
-    /// behave as though this field were not set.
-    public var credentials      : GitCredentialAcquireCB?           = nil
+    /// in order to connect. Returning ``GitErrorCode/gitPassthrough`` will
+    /// make libgit2 behave as if this field were not set.
+    public var credentials      : GitCredentialAcquireCB?
     
-    /// The callback for the user's custom certificate checks.
+    /// The callback invoked to check custom certificates.
     ///
     /// ## Discussion
     ///
@@ -60,29 +60,40 @@ public struct GitProxyOptions: GitStructMutable, WithCConvertible
     /// If  certificate verification fails, this function will be called to
     /// let the user make the final decision of whether to allow the connection
     /// to proceed.
-    public var certificateCheck : GitTransportCertificateCheckCB?   = nil
+    public var certificateCheck : GitTransportCertificateCheckCB?
     
-    /// The caller-specified payload passed to ``credentials`` and
-    /// ``certificateCheck``.
+    /// The payload passed to ``credentials`` and ``certificateCheck``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload          : UnsafeMutableRawPointer?          = nil
+    public var payload          : UnsafeMutableRawPointer?
     
     
     
-    /// Creates a ``GitProxyOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitProxyOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                            = gitProxyOptionsVersion,
+        type                : GitProxyT                         = .gitProxyNone,
+        url                 : String?                           = nil,
+        credentials         : GitCredentialAcquireCB?           = nil,
+        certificateCheck    : GitTransportCertificateCheckCB?   = nil,
+        payload             : UnsafeMutableRawPointer?          = nil
+    )
+    {
+        self.version            = version
+        self.type               = type
+        self.url                = url
+        self.credentials        = credentials
+        self.certificateCheck   = certificateCheck
+        self.payload            = payload
+    }
     
     
     
-    /// Creates a ``GitProxyOptions`` instance from a `git_proxy_options`
-    /// instance.
+    /// Initializes a ``GitProxyOptions`` instance from the given
+    /// `git_proxy_options` instance.
     /// - Parameter proxyOptions: The `git_proxy_options` instance to use.
     ///
     /// ## Discussion

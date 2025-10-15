@@ -16,14 +16,15 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_email_create_flags_t`](https://libgit2.org/docs/reference/main/email/git_email_create_flags_t.html)
-public struct GitEmailCreateFlagsT: GitOptionSet
+public struct GitEmailCreateFlagsT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitEmailCreateFlagsT`` instance from a raw value.
+    /// Initializes a ``GitEmailCreateFlagsT`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +35,7 @@ public struct GitEmailCreateFlagsT: GitOptionSet
     
     
     
-    /// Creates a ``GitEmailCreateFlagsT`` instance from a
+    /// Initializes a ``GitEmailCreateFlagsT`` instance from the given
     /// `git_email_create_flags_t` instance.
     /// - Parameter emailCreateFlags: The `git_email_create_flags_t` instance
     /// to use.

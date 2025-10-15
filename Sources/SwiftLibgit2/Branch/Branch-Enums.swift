@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_branch_t`](https://libgit2.org/docs/reference/main/branch/git_branch_t.html)
-public enum GitBranchT: UInt32, GitEnum
+public enum GitBranchT: UInt32, CEnum
 {
     /// A local branch.
     case gitBranchLocal     = 1
@@ -29,7 +29,8 @@ public enum GitBranchT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitBranchT`` instance from a `git_branch_t` instance.
+    /// Initializes a ``GitBranchT`` instance from the given `git_branch_t`
+    /// instance.
     /// - Parameter branch: The `git_branch_t` instance to use.
     internal init?(
         cValue branch: git_branch_t

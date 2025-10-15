@@ -21,21 +21,21 @@ import Foundation
 ///
 /// ### Conforming Structs
 ///
-/// All Swift binding structs that indirectly conform to ``GitStruct`` must
+/// All Swift binding structs that indirectly conform to ``CStruct`` must
 /// also conform to one of the following protocols:
 ///
 /// - ``CConvertible`` (non-throwing, without memory management)
 /// - ``ThrowingCConvertible`` (throwing, without memory management)
 /// - ``WithCConvertible`` (throwing, with memory management)
 ///
-/// Structs that directly conform to ``GitStruct`` (and are unused by other
-/// bindings) must not conform to any of these protocols. See the ``GitStruct``
+/// Structs that directly conform to ``CStruct`` (and are unused by other
+/// bindings) must not conform to any of these protocols. See the ``CStruct``
 /// documentation for more information.
 ///
 /// None of the C convertible protocols define requirements to convert from a
 /// given C value to the equivalent Swift value (by using an `init(cValue:)`
 /// method) in order to maintain flexibility. The `init(cValue:)` requirement
-/// is defined by ``GitStruct``.
+/// is defined by ``CStruct``.
 ///
 /// ### Protocol Choice
 ///

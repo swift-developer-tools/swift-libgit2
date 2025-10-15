@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_flag_t`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_flag_t.html)
-public struct GitBlobFilterFlagT: GitOptionSet
+public struct GitBlobFilterFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitBlobFilterFlagT`` instance from a raw value.
+    /// Initializes a ``GitBlobFilterFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,7 @@ public struct GitBlobFilterFlagT: GitOptionSet
     
     
     
-    /// Creates a ``GitBlobFilterFlagT`` instance from a
+    /// Initializes a ``GitBlobFilterFlagT`` instance from the given
     /// `git_blob_filter_flag_t` instance.
     /// - Parameter blobFilterFlag: The `git_blob_filter_flag_t` instance
     /// to use.

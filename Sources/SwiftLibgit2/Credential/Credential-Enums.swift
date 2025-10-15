@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_credential_t`](https://libgit2.org/docs/reference/main/credential/git_credential_t.html)
-public struct GitCredentialT: GitOptionSet
+public struct GitCredentialT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitCredentialT`` instance from a raw value.
+    /// Initializes a ``GitCredentialT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,8 +34,8 @@ public struct GitCredentialT: GitOptionSet
     
     
     
-    /// Creates a ``GitCredentialT`` instance from a `git_credential_t`
-    /// instance.
+    /// Initializes a ``GitCredentialT`` instance from the given
+    /// `git_credential_t` instance.
     /// - Parameter credential: The `git_credential_t` instance to use.
     internal init(
         cValue credential: git_credential_t

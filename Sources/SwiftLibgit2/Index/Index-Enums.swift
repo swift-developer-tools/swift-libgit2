@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_index_entry_flag_t`](https://libgit2.org/docs/reference/main/index/git_index_entry_flag_t.html)
-public struct GitIndexEntryFlagT: GitOptionSet
+public struct GitIndexEntryFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitIndexEntryFlagT`` instance from a raw value.
+    /// Initializes a ``GitIndexEntryFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,7 @@ public struct GitIndexEntryFlagT: GitOptionSet
     
     
     
-    /// Creates a ``GitIndexEntryFlagT`` instance from a
+    /// Initializes a ``GitIndexEntryFlagT`` instance from the given
     /// `git_index_entry_flag_t` instance.
     /// - Parameter indexEntryFlag: The `git_index_entry_flag_t` instance to
     /// use.
@@ -81,14 +81,15 @@ public struct GitIndexEntryFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_index_entry_extended_flag_t`](https://libgit2.org/docs/reference/main/index/git_index_entry_extended_flag_t.html)
-public struct GitIndexEntryExtendedFlagT: GitOptionSet
+public struct GitIndexEntryExtendedFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a raw value.
+    /// Initializes a ``GitIndexEntryExtendedFlagT`` instance from the given
+    /// raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -99,7 +100,7 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
     
     
     
-    /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a
+    /// Initializes a ``GitIndexEntryExtendedFlagT`` instance from the given
     /// `git_index_entry_extended_flag_t` instance.
     /// - Parameter indexEntryExtendedFlag: The
     /// `git_index_entry_extended_flag_t` instance to use.
@@ -142,7 +143,7 @@ public struct GitIndexEntryExtendedFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_index_capability_t`](https://libgit2.org/docs/reference/main/index/git_index_capability_t.html)
-public enum GitIndexCapabilityT: Int32, GitEnum
+public enum GitIndexCapabilityT: Int32, CEnum
 {
     /// Ignore case when comparing file names.
     case gitIndexCapabilityIgnoreCase   = 1
@@ -158,7 +159,7 @@ public enum GitIndexCapabilityT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitIndexCapabilityT`` instance from a
+    /// Initializes a ``GitIndexCapabilityT`` instance from the given
     /// `git_index_capability_t` instance.
     /// - Parameter indexCapability: The `git_index_capability_t` instance to
     /// use.
@@ -200,14 +201,14 @@ public enum GitIndexCapabilityT: Int32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_index_add_option_t`](https://libgit2.org/docs/reference/main/index/git_index_add_option_t.html)
-public struct GitIndexAddOptionT: GitOptionSet
+public struct GitIndexAddOptionT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitIndexAddOptionT`` instance from a raw value.
+    /// Initializes a ``GitIndexAddOptionT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -218,7 +219,7 @@ public struct GitIndexAddOptionT: GitOptionSet
     
     
     
-    /// Creates a ``GitIndexAddOptionT`` instance from a
+    /// Initializes a ``GitIndexAddOptionT`` instance from the given
     /// `git_index_add_option_t` instance.
     /// - Parameter indexAddOption: The `git_index_add_option_t` instance to
     /// use.
@@ -266,7 +267,7 @@ public struct GitIndexAddOptionT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_index_stage_t`](https://libgit2.org/docs/reference/main/index/git_index_stage_t.html)
-public enum GitIndexStageT: Int32, GitEnum
+public enum GitIndexStageT: Int32, CEnum
 {
     /// Match any entry matching the path, regardless of stage.
     case gitIndexStageAny       = -1
@@ -285,8 +286,8 @@ public enum GitIndexStageT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitIndexStageT`` instance from a `git_index_stage_t`
-    /// instance.
+    /// Initializes a ``GitIndexStageT`` instance from the given
+    /// `git_index_stage_t` instance.
     /// - Parameter indexStage: The `git_index_stage_t` instance to use.
     internal init?(
         cValue indexStage: git_index_stage_t

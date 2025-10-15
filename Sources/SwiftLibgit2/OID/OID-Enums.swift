@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_oid_t`](https://libgit2.org/docs/reference/main/oid/git_oid_t.html)
-public enum GitOIDT: UInt32, GitEnum
+public enum GitOIDT: UInt32, CEnum
 {
     /// SHA-1.
     case gitOIDSHA1 = 1
     
     
     
-    /// Creates a ``GitOIDT`` instance from a `git_oid_t` instance.
+    /// Initializes a ``GitOIDT`` instance from the given `git_oid_t` instance.
     /// - Parameter oid: The `git_oid_t` instance to use.
     internal init?(
         cValue oid: git_oid_t

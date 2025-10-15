@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_direction`](https://libgit2.org/docs/reference/main/net/git_direction.html)
-public enum GitDirection: UInt32, GitEnum
+public enum GitDirection: UInt32, CEnum
 {
     /// The remote connection is for fetching.
     case gitDirectionFetch  = 0
@@ -26,7 +26,8 @@ public enum GitDirection: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDirection`` instance from a `git_direction` instance.
+    /// Initializes a ``GitDirection`` instance from the given `git_direction`
+    /// instance.
     /// - Parameter direction: The `git_direction` instance to use.
     internal init?(
         cValue direction: git_direction

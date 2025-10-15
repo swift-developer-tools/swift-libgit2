@@ -21,7 +21,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_redirect_t`](https://libgit2.org/docs/reference/main/remote/git_remote_redirect_t.html)
-public enum GitRemoteRedirectT: UInt32, GitEnum
+public enum GitRemoteRedirectT: UInt32, CEnum
 {
     /// Do not follow any off-site redirects at any stage of the fetch or push
     /// operation.
@@ -39,8 +39,8 @@ public enum GitRemoteRedirectT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitRemoteRedirectT`` instance from a `git_remote_redirect_t`
-    /// instance.
+    /// Initializes a ``GitRemoteRedirectT`` instance from the given
+    /// `git_remote_redirect_t` instance.
     /// - Parameter remoteRedirect: The `git_remote_redirect_t` instance to use.
     internal init?(
         cValue remoteRedirect: git_remote_redirect_t
@@ -78,14 +78,15 @@ public enum GitRemoteRedirectT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_remote_create_flags`](https://libgit2.org/docs/reference/main/remote/git_remote_create_flags.html)
-public struct GitRemoteCreateFlags: GitOptionSet
+public struct GitRemoteCreateFlags: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitRemoteCreateFlags`` instance from a raw value.
+    /// Initializes a ``GitRemoteCreateFlags`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -96,7 +97,7 @@ public struct GitRemoteCreateFlags: GitOptionSet
     
     
     
-    /// Creates a ``GitRemoteCreateFlags`` instance from a
+    /// Initializes a ``GitRemoteCreateFlags`` instance from the given
     /// `git_remote_create_flags` instance.
     /// - Parameter remoteCreateFlags: The `git_remote_create_flags` instance
     /// to use.
@@ -133,14 +134,14 @@ public struct GitRemoteCreateFlags: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_remote_update_flags`](https://libgit2.org/docs/reference/main/remote/git_remote_update_flags.html)
-public struct GitRemoteUpdateFlags: GitOptionSet
+public struct GitRemoteUpdateFlags: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitRemoteUpdateFlags`` instance from a raw value.
+    /// Initializes a ``GitRemoteUpdateFlags`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -151,7 +152,7 @@ public struct GitRemoteUpdateFlags: GitOptionSet
     
     
     
-    /// Creates a ``GitRemoteUpdateFlags`` instance from a
+    /// Initializes a ``GitRemoteUpdateFlags`` instance from the given
     /// `git_remote_update_flags` instance.
     /// - Parameter remoteUpdateFlags: The `git_remote_update_flags` instance
     /// to use.
@@ -188,7 +189,7 @@ public struct GitRemoteUpdateFlags: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_remote_completion_t`](https://libgit2.org/docs/reference/main/remote/git_remote_completion_t.html)
-public enum GitRemoteCompletionT: UInt32, GitEnum
+public enum GitRemoteCompletionT: UInt32, CEnum
 {
     /// Remote downloading has completed.
     case gitRemoteCompletionDownload    = 0
@@ -201,7 +202,7 @@ public enum GitRemoteCompletionT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitRemoteCompletionT`` instance from a
+    /// Initializes a ``GitRemoteCompletionT`` instance from the given
     /// `git_remote_completion_t` instance.
     /// - Parameter remoteCompletion: The `git_remote_completion_t` instance
     /// to use.
@@ -241,7 +242,7 @@ public enum GitRemoteCompletionT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_fetch_prune_t`](https://libgit2.org/docs/reference/main/remote/git_fetch_prune_t.html)
-public enum GitFetchPruneT: UInt32, GitEnum
+public enum GitFetchPruneT: UInt32, CEnum
 {
     /// Use the setting from the configuration.
     case gitFetchPruneUnspecified   = 0
@@ -254,8 +255,8 @@ public enum GitFetchPruneT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitFetchPruneT`` instance from a `git_fetch_prune_t`
-    /// instance.
+    /// Initializes a ``GitFetchPruneT`` instance from the given
+    /// `git_fetch_prune_t` instance.
     /// - Parameter fetchPrune: The `git_fetch_prune_t` instance to use.
     internal init?(
         cValue fetchPrune: git_fetch_prune_t
@@ -294,7 +295,7 @@ public enum GitFetchPruneT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_remote_autotag_option_t`](https://libgit2.org/docs/reference/main/remote/git_remote_autotag_option_t.html)
-public enum GitRemoteAutoTagOptionT: UInt32, GitEnum
+public enum GitRemoteAutoTagOptionT: UInt32, CEnum
 {
     /// Use the setting from the configuration.
     case gitRemoteDownloadTagsUnspecified   = 0
@@ -311,7 +312,7 @@ public enum GitRemoteAutoTagOptionT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitRemoteAutoTagOptionT`` instance from a
+    /// Initializes a ``GitRemoteAutoTagOptionT`` instance from the given
     /// `git_remote_autotag_option_t` instance.
     /// - Parameter remoteAutotagOption: The `git_remote_autotag_option_t`
     /// instance to use.
@@ -353,7 +354,7 @@ public enum GitRemoteAutoTagOptionT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_fetch_depth_t`](https://libgit2.org/docs/reference/main/remote/git_fetch_depth_t.html)
-public enum GitFetchDepthT: UInt32, GitEnum
+public enum GitFetchDepthT: UInt32, CEnum
 {
     /// Perform a full fetch operation.
     ///
@@ -367,8 +368,8 @@ public enum GitFetchDepthT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitFetchDepthT`` instance from a `git_fetch_depth_t`
-    /// instance.
+    /// Initializes a ``GitFetchDepthT`` instance from the given
+    /// `git_fetch_depth_t` instance.
     /// - Parameter fetchDepth: The `git_fetch_depth_t` instance to use.
     internal init?(
         cValue fetchDepth: git_fetch_depth_t

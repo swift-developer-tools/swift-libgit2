@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_message_trailer`](https://libgit2.org/docs/reference/main/message/git_message_trailer.html)
-public struct GitMessageTrailer: GitStructReadable, WithCConvertible
+public struct GitMessageTrailer: CStructReadable, WithCConvertible
 {
     /// The message trailer key.
     public let key      : String?
@@ -26,8 +26,8 @@ public struct GitMessageTrailer: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitMessageTrailer`` instance from a `git_message_trailer`
-    /// instance.
+    /// Initializes a ``GitMessageTrailer`` instance from the given
+    /// `git_message_trailer` instance.
     /// - Parameter messageTrailer: The `git_message_trailer` instance to use.
     internal init(
         cValue messageTrailer: git_message_trailer
@@ -80,7 +80,7 @@ public struct GitMessageTrailer: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_message_trailer_array`](https://libgit2.org/docs/reference/main/message/git_message_trailer_array.html)
-public struct GitMessageTrailerArray: GitStruct
+public struct GitMessageTrailerArray: CStruct
 {
     /// The array of message trailers.
     public let trailers         : [GitMessageTrailer]
@@ -101,7 +101,7 @@ public struct GitMessageTrailerArray: GitStruct
     
     
     
-    /// Creates a ``GitMessageTrailerArray`` instance from a
+    /// Initializes a ``GitMessageTrailerArray`` instance from the given
     /// `git_message_trailer_array` instance.
     /// - Parameter messageTrailerArray: The `git_message_trailer_array`
     /// instance to use.

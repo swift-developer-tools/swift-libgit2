@@ -56,13 +56,19 @@ public func gitObjectLookup(
 ///   type must be `git_object`.
 ///   - repo: The repository containing the object. The underlying type must
 ///   be `git_repository`.
-///   - id: The ID of the object to lookup.
-///   - len: The length of the object's ID prefix. This must be greater than
-///   or equal to `GIT_OID_MINPREFIXLEN`, and long enough to identify a unique
-///   object matching the prefix.
+///   - id: The The prefix of the ID of the object to lookup.
+///   - len: The length of the object's ID prefix.
 ///   - type: The type of the object to look up. Pass
 ///   ``GitObjectT/gitObjectAny`` to guess the type of the object.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// This function will try to match the first `len` hexadecimal characters of
+/// the given ID. The remaining characters must be zeros.
+///
+/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// enough to identify a unique object matching the prefix.
 ///
 /// ## C Equivalent
 ///
@@ -316,7 +322,7 @@ public func gitObjectPeel(
 /// - Parameters:
 ///   - dest: The pointer in which to store the copied object. The underlying
 ///   type must be `git_object`.
-///   - source: The object to copy. The underlying type must be `git_object.
+///   - source: The object to copy. The underlying type must be `git_object`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

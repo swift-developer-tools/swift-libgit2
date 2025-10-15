@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_error`](https://libgit2.org/docs/reference/main/errors/git_error.html)
-public struct GitError: GitStructReadable, WithCConvertible
+public struct GitError: CStructReadable, WithCConvertible
 {
     /// The error message.
     public let message  : String?
@@ -26,7 +26,7 @@ public struct GitError: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitError`` instance from a `git_error` instance.
+    /// Initializes a ``GitError`` instance from the given `git_error` instance.
     /// - Parameter error: The `git_error` instance to use.
     internal init(
         cValue error: git_error

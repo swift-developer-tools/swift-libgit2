@@ -28,7 +28,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_submodule_ignore_t`](https://libgit2.org/docs/reference/main/submodule/git_submodule_ignore_t.html)
-public enum GitSubmoduleIgnoreT: Int32, GitEnum
+public enum GitSubmoduleIgnoreT: Int32, CEnum
 {
     /// Use the submodule's configuration.
     case gitSubmoduleIgnoreUnspecified  = -1
@@ -53,7 +53,7 @@ public enum GitSubmoduleIgnoreT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitSubmoduleIgnoreT`` instance from a
+    /// Initializes a ``GitSubmoduleIgnoreT`` instance from the given
     /// `git_submodule_ignore_t` instance.
     /// - Parameter submoduleIgnore: The `git_submodule_ignore_t` instance to
     /// use.

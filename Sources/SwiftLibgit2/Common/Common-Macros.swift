@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The separator used in path list strings, like the `PATH` environment
 /// variable.
 ///

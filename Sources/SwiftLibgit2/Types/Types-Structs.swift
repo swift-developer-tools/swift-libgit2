@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_time`](https://libgit2.org/docs/reference/main/types/git_time.html)
-public struct GitTime: GitStructReadable, CConvertible
+public struct GitTime: CStructReadable, CConvertible
 {
     /// The UNIX timestamp in seconds.
     public let time     : GitTimeT
@@ -29,7 +29,7 @@ public struct GitTime: GitStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitTime`` instance from a `git_time` instance.
+    /// Initializes a ``GitTime`` instance from the given `git_time` instance.
     /// - Parameter time: The `git_time` instance to use.
     internal init(
         cValue time: git_time
@@ -70,7 +70,7 @@ public struct GitTime: GitStructReadable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_writestream`](https://libgit2.org/docs/reference/main/types/git_writestream.html)
-public struct GitWritestream: GitStruct
+public struct GitWritestream: CStruct
 {
     /// The function to write to the stream.
     public let write: @convention(c)
@@ -94,7 +94,8 @@ public struct GitWritestream: GitStruct
     
     
     
-    /// Creates a ``GitWritestream`` instance from a `git_writestream` instance.
+    /// Initializes a ``GitWritestream`` instance from the given
+    /// `git_writestream` instance.
     /// - Parameter writeStream: The `git_writestream` instance to use.
     internal init(
         cValue writeStream: git_writestream

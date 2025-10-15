@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_filemode_t`](https://libgit2.org/docs/reference/main/tree/git_filemode_t.html)
-public enum GitFileModeT: UInt16, GitEnum
+public enum GitFileModeT: UInt16, CEnum
 {
     /// The unreadable file mode.
     case gitFileModeUnreadable      = 0
@@ -38,7 +38,8 @@ public enum GitFileModeT: UInt16, GitEnum
 
     
     
-    /// Creates a ``GitFileModeT`` instance from a `git_filemode_t` instance.
+    /// Initializes a ``GitFileModeT`` instance from the given `git_filemode_t`
+    /// instance.
     /// - Parameter fileMode: The `git_filemode_t` instance to use.
     internal init?(
         cValue fileMode: git_filemode_t

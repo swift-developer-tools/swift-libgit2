@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_cert_t`](https://libgit2.org/docs/reference/main/cert/git_cert_t.html)
-public enum GitCertT: UInt32, GitEnum
+public enum GitCertT: UInt32, CEnum
 {
     /// No information about the certificate is available.
     ///
@@ -43,7 +43,8 @@ public enum GitCertT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitCertT`` instance from a `git_cert_t` instance.
+    /// Initializes a ``GitCertT`` instance from the given `git_cert_t`
+    /// instance.
     /// - Parameter cert: The `git_cert_t` instance to use.
     internal init?(
         cValue cert: git_cert_t
@@ -82,14 +83,14 @@ public enum GitCertT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_cert_ssh_t`](https://libgit2.org/docs/reference/main/cert/git_cert_ssh_t.html)
-public struct GitCertSSHT: GitOptionSet
+public struct GitCertSSHT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitCertSSHT`` instance from a raw value.
+    /// Initializes a ``GitCertSSHT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -100,7 +101,8 @@ public struct GitCertSSHT: GitOptionSet
     
     
     
-    /// Creates a ``GitCertSSHT`` instance from a `git_cert_ssh_t` instance.
+    /// Initializes a ``GitCertSSHT`` instance from the given `git_cert_ssh_t`
+    /// instance.
     /// - Parameter certSSH: The `git_cert_ssh_t` instance to use.
     internal init(
         cValue certSSH: git_cert_ssh_t
@@ -140,7 +142,7 @@ public struct GitCertSSHT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_cert_ssh_raw_type_t`](https://libgit2.org/docs/reference/main/cert/git_cert_ssh_raw_type_t.html)
-public enum GitCertSSHRawTypeT: UInt32, GitEnum
+public enum GitCertSSHRawTypeT: UInt32, CEnum
 {
     /// The raw host key type is unknown.
     case gitCertSSHRawTypeUnknown       = 0
@@ -165,7 +167,7 @@ public enum GitCertSSHRawTypeT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitCertSSHRawTypeT`` instance from a
+    /// Initializes a ``GitCertSSHRawTypeT`` instance from the given
     /// `git_cert_ssh_raw_type_t` instance.
     /// - Parameter certSSHRawType: The `git_cert_ssh_raw_type_t` instance
     /// to use.

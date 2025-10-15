@@ -21,7 +21,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_credential_userpass_payload`](https://libgit2.org/docs/reference/main/credential_helpers/git_credential_userpass_payload.html)
-public struct GitCredentialUserPassPayload: GitStruct
+public struct GitCredentialUserPassPayload: CStruct
 {
     /// The username of the credential.
     public let username : String
@@ -31,7 +31,7 @@ public struct GitCredentialUserPassPayload: GitStruct
 
     
     
-    /// Creates a ``GitCredentialUserPassPayload`` instance from a
+    /// Initializes a ``GitCredentialUserPassPayload`` instance from the given
     /// `git_credential_userpass_payload` instance.
     /// - Parameter payload: The `git_credential_userpass_payload` instance
     /// to use.

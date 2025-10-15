@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_proxy_t`](https://libgit2.org/docs/reference/main/proxy/git_proxy_t.html)
-public enum GitProxyT: UInt32, GitEnum
+public enum GitProxyT: UInt32, CEnum
 {
     /// Do not attempt to connect through a proxy.
     case gitProxyNone       = 0
@@ -29,7 +29,8 @@ public enum GitProxyT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitProxyT`` instance from a `git_proxy_t` instance.
+    /// Initializes a ``GitProxyT`` instance from the given `git_proxy_t`
+    /// instance.
     /// - Parameter attrValue: The `git_proxy_t` instance to use.
     internal init?(
         cValue proxy: git_proxy_t

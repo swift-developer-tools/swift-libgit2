@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The default protocol port number.
 ///
 /// ## C Equivalent

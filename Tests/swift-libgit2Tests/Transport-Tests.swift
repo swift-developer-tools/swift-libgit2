@@ -28,6 +28,8 @@ final class TransportTests: XCTestCaseStopOnFail
             return GitErrorCode.gitOK.rawValue
         }
         
+        
+        
         let errorCallback: GitTransportCB =
         {
             out, owner, payload in
@@ -42,7 +44,7 @@ final class TransportTests: XCTestCaseStopOnFail
                 out.pointee = nil
             }
             
-            return -1
+            return GitErrorCode.gitUnknown(-123).rawValue
         }
         
         
@@ -55,7 +57,7 @@ final class TransportTests: XCTestCaseStopOnFail
             nil
         )
         
-        XCTAssertEqual(successCallbackResult, 0)
+        XCTAssertEqual(successCallbackResult, GitErrorCode.gitOK.rawValue)
         
         let errorCallbackResult: Int32 = errorCallback(
             &transportPointer,
@@ -63,7 +65,7 @@ final class TransportTests: XCTestCaseStopOnFail
             nil
         )
         
-        XCTAssertEqual(errorCallbackResult, -1)
+        XCTAssertEqual(errorCallbackResult, -123)
         
         XCTAssertNil(transportPointer)
     }
@@ -72,7 +74,7 @@ final class TransportTests: XCTestCaseStopOnFail
     
     func testGitTransportMessageCB() throws
     {
-        let message         : String    = "123"
+        let message         : String    = "abc"
         let messageCount    : Int32     = Int32(message.count)
         
         
@@ -84,16 +86,18 @@ final class TransportTests: XCTestCaseStopOnFail
             guard let str = String(optionalCString: strPointer)
             else
             {
-                XCTFail("The string parameter was nil.")
-                return 0
+                XCTFail("The string pointer was nil.")
+                return GitErrorCode.gitUnknown(-123).rawValue
             }
             
-            XCTAssertEqual(str, "123")
+            XCTAssertEqual(str, "abc")
             XCTAssertEqual(len, 3)
             XCTAssertNil(payload)
             
-            return 0
+            return GitErrorCode.gitOK.rawValue
         }
+        
+        
         
         let errorCallback: GitTransportMessageCB =
         {
@@ -102,15 +106,15 @@ final class TransportTests: XCTestCaseStopOnFail
             guard let str = String(optionalCString: strPointer)
             else
             {
-                XCTFail("The string parameter was nil.")
-                return -1
+                XCTFail("The string pointer was nil.")
+                return GitErrorCode.gitUnknown(-123).rawValue
             }
             
-            XCTAssertEqual(str, "123")
+            XCTAssertEqual(str, "abc")
             XCTAssertEqual(len, 3)
             XCTAssertNil(payload)
             
-            return -1
+            return GitErrorCode.gitUnknown(-123).rawValue
         }
         
         
@@ -125,7 +129,7 @@ final class TransportTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertEqual(successCallbackResult, 0)
+            XCTAssertEqual(successCallbackResult, GitErrorCode.gitOK.rawValue)
             
             let errorCallbackResult: Int32 = errorCallback(
                 cMessage,
@@ -133,7 +137,7 @@ final class TransportTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertEqual(errorCallbackResult, -1)
+            XCTAssertEqual(errorCallbackResult, -123)
         }
     }
 }

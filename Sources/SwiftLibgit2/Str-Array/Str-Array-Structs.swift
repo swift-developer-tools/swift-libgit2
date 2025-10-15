@@ -21,7 +21,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_strarray`](https://libgit2.org/docs/reference/main/strarray/git_strarray.html)
-public struct GitStrArray: GitStruct
+public struct GitStrArray: CStruct
 {
     /// The array of strings.
     public let strings  : [String]
@@ -34,7 +34,8 @@ public struct GitStrArray: GitStruct
     
     
     
-    /// Creates a ``GitStrArray`` instance from a `git_strarray` instance.
+    /// Initializes a ``GitStrArray`` instance from the given `git_strarray`
+    /// instance.
     /// - Parameter strArray: The `git_strarray` instance to use.
     internal init(
         cValue strArray: git_strarray

@@ -32,14 +32,14 @@ import CLibgit2
 /// [`GIT_ATTR_CHECK_INCLUDE_HEAD`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_HEAD.html)
 ///
 /// [`GIT_ATTR_CHECK_INCLUDE_COMMIT`](https://libgit2.org/docs/reference/main/attr/GIT_ATTR_CHECK_INCLUDE_COMMIT.html)
-public struct GitAttrCheckFlagsT: GitOptionSet
+public struct GitAttrCheckFlagsT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
+    /// Initializes a ``GitAttrCheckFlagsT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -50,7 +50,7 @@ public struct GitAttrCheckFlagsT: GitOptionSet
     
     
     
-    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
+    /// Initializes a ``GitAttrCheckFlagsT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     internal init(
         cValue rawValue: UInt32
@@ -101,7 +101,7 @@ public struct GitAttrCheckFlagsT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_attr_value_t`](https://libgit2.org/docs/reference/main/attr/git_attr_value_t.html)
-public enum GitAttrValueT: UInt32, GitEnum
+public enum GitAttrValueT: UInt32, CEnum
 {
     /// The attribute has been left unspecified.
     case gitAttrValueUnspecified    = 0
@@ -117,7 +117,8 @@ public enum GitAttrValueT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitAttrValueT`` instance from a `git_attr_value_t` instance.
+    /// Initializes a ``GitAttrValueT`` instance from the given
+    /// `git_attr_value_t` instance.
     /// - Parameter attrValue: The `git_attr_value_t` instance to use.
     internal init?(
         cValue attrValue: git_attr_value_t

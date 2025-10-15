@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_filter_mode_t`](https://libgit2.org/docs/reference/main/filter/git_filter_mode_t.html)
-public enum GitFilterModeT: UInt32, GitEnum
+public enum GitFilterModeT: UInt32, CEnum
 {
     /// Filters are applied when exporting a file from the object database to
     /// the working directory (smudging).
@@ -37,8 +37,8 @@ public enum GitFilterModeT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitFilterModeT`` instance from a `git_filter_mode_t`
-    /// instance.
+    /// Initializes a ``GitFilterModeT`` instance from the given
+    /// `git_filter_mode_t` instance.
     /// - Parameter filterMode: The `git_filter_mode_t` instance to use.
     internal init?(
         cValue filterMode: git_filter_mode_t
@@ -76,14 +76,14 @@ public enum GitFilterModeT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_filter_flag_t`](https://libgit2.org/docs/reference/main/filter/git_filter_flag_t.html)
-public struct GitFilterFlagT: GitOptionSet
+public struct GitFilterFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitFilterFlagT`` instance from a raw value.
+    /// Initializes a ``GitFilterFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -94,8 +94,8 @@ public struct GitFilterFlagT: GitOptionSet
     
     
     
-    /// Creates a ``GitFilterFlagT`` instance from a `git_filter_flag_t`
-    /// instance.
+    /// Initializes a ``GitFilterFlagT`` instance from the given
+    /// `git_filter_flag_t` instance.
     /// - Parameter filterFlags: The `git_filter_flag_t` instance to use.
     internal init(
         cValue filterFlags: git_filter_flag_t

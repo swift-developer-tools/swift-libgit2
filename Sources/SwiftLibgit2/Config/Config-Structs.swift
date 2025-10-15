@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_entry`](https://libgit2.org/docs/reference/main/config/git_config_entry.html)
-public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertible
+public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertible
 {
     /// The normalized name of the configuration entry.
     ///
@@ -66,7 +66,8 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     
     
     
-    /// Creates a ``GitConfigEntry`` instance with the default configuration.
+    /// Initializes a ``GitConfigEntry`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -75,8 +76,8 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
     
     
     
-    /// Creates a ``GitConfigEntry`` instance from a `git_config_entry`
-    /// instance.
+    /// Initializes a ``GitConfigEntry`` instance from the given
+    /// `git_config_entry` instance.
     /// - Parameter configEntry: The `git_config_entry` instance to use.
     ///
     /// ## Discussion
@@ -166,14 +167,14 @@ public struct GitConfigEntry: Freeable, GitStructInternalMutable, WithCConvertib
 /// ## C Equivalent
 ///
 /// [`git_configmap`](https://libgit2.org/docs/reference/main/config/git_configmap.html)
-public struct GitConfigMap: GitStructMutable, WithCConvertible
+public struct GitConfigMap: CStructMutable, WithCConvertible
 {
     /// The type of configuration value to match.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitConfigMapT/gitConfigMapFalse``.
-    public var type     : GitConfigMapT     = .gitConfigMapFalse
+    public var type     : GitConfigMapT
     
     /// The specific string to match against.
     ///
@@ -184,27 +185,34 @@ public struct GitConfigMap: GitStructMutable, WithCConvertible
     /// When ``type`` is ``GitConfigMapT/gitConfigMapString``, this specifies
     /// the exact string value to match using case-insensitive comparison.
     /// This is ignored for other types.
-    public var strMatch : String?           = nil
+    public var strMatch : String?
     
     /// The integer value to return when a match is found.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var mapValue : Int32             = 0
+    public var mapValue : Int32
     
     
     
-    /// Creates a ``GitConfigMap`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitConfigMap`` instance, optionally specifying values
+    /// for its properties.
+    public init(
+        type        : GitConfigMapT     = .gitConfigMapFalse,
+        strMatch    : String?           = nil,
+        mapValue    : Int32             = 0
+    )
+    {
+        self.type       = type
+        self.strMatch   = strMatch
+        self.mapValue   = mapValue
+    }
     
     
     
-    /// Creates a ``GitConfigMap`` instance from a `git_configmap` instance.
+    /// Initializes a ``GitConfigMap`` instance from the given `git_configmap`
+    /// instance.
     /// - Parameter configMap: The `git_configmap` instance to use.
     ///
     /// ## Discussion

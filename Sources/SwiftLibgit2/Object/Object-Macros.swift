@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The maximum size of a Git object.
 ///
 /// ## C Equivalent

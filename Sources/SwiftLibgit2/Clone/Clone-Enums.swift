@@ -23,7 +23,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_clone_local_t`](https://libgit2.org/docs/reference/main/clone/git_clone_local_t.html)
-public enum GitCloneLocalT: UInt32, GitEnum
+public enum GitCloneLocalT: UInt32, CEnum
 {
     /// Bypass the Git-aware transport for local paths, but use a normal fetch
     /// for `file://` URLs.
@@ -44,8 +44,8 @@ public enum GitCloneLocalT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitCloneLocalT`` instance from a `git_clone_local_t`
-    /// instance.
+    /// Initializes a ``GitCloneLocalT`` instance from the given
+    /// `git_clone_local_t` instance.
     /// - Parameter cloneLocal: The `git_clone_local_t` instance to use.
     internal init?(
         cValue cloneLocal: git_clone_local_t

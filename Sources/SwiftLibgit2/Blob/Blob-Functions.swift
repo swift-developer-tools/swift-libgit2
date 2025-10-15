@@ -51,11 +51,17 @@ public func gitBlobLookup(
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The ID of the blob to look up.
-///   - len: The length of the blob's ID prefix. This must be greater than
-///   or equal to `GIT_OID_MINPREFIXLEN`, and long enough to identify a unique
-///   blob matching the prefix.
+///   - id: The The prefix of the ID of the blob to look up.
+///   - len: The length of the blob's ID prefix.
 /// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// This function will try to match the first `len` hexadecimal characters of
+/// the given ID. The remaining characters must be zeros.
+///
+/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// enough to identify a unique blob matching the prefix.
 ///
 /// ## C Equivalent
 ///
@@ -140,19 +146,36 @@ public func gitBlobOwner(
 
 
 
-/// Gets a read-only buffer containing the raw content of the given blob.
+/// Gets the raw content of the given blob.
 /// - Parameter blob: The blob for which to get the raw content. The underlying
 /// type must be `git_blob`.
-/// - Returns: A read-only buffer containing the raw content of the given blob.
+/// - Returns: The raw content of the given blob.
 ///
 /// ## C Equivalent
 ///
 /// [`git_blob_rawcontent()`](https://libgit2.org/docs/reference/main/blob/git_blob_rawcontent.html)
 public func gitBlobRawContent(
     blob: OpaquePointer
-) -> UnsafeRawPointer
+) -> Data?
 {
-    return git_blob_rawcontent(blob)
+    guard let blobRawContent: UnsafeRawPointer = git_blob_rawcontent(blob)
+    else
+    {
+        return nil
+    }
+    
+    let blobRawContentSize: UInt64 = gitBlobRawSize(blob: blob)
+    
+    guard blobRawContentSize <= Int.max
+    else
+    {
+        return nil
+    }
+    
+    return Data(
+        bytes:  blobRawContent,
+        count:  Int(blobRawContentSize)
+    )
 }
 
 
@@ -333,10 +356,9 @@ public func gitBlobCreateFromDisk(
 
 
 
-// TODO: Replace `git_odb_open_wstream()` in documentation.
 /// Creates a stream to write a new blob into the object database.
 /// - Parameters:
-///   - out: The stream into which to write.
+///   - out: The pointer in which to store the write stream.
 ///   - repo: The repository where the blob should be written. The underlying
 ///   type must be `git_repository`. This repository may be bare.
 ///   - hintPath: The path to use when selecting data filters to apply onto the
@@ -352,7 +374,7 @@ public func gitBlobCreateFromDisk(
 /// ``gitBlobCreateFromBuffer(id:repo:buffer:len:)`` instead.
 ///
 /// Otherwise, if the size of the contents are known (and filtering is not
-/// needed), use `git_odb_open_wstream()` instead.
+/// needed), use ``gitODBOpenWStream(out:db:size:type:)`` instead.
 ///
 /// - Important: Do not manually close this stream. Instead, pass it to
 /// ``gitBlobCreateFromStreamCommit(out:stream:)`` to commit the write to the

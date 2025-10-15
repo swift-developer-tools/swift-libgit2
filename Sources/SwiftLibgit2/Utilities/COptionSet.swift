@@ -8,7 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 /// A sendable type that presents a mathematical set interface to a bitset.
-internal protocol GitOptionSet: CConvertible, GitStruct, OptionSet, Sendable
+internal protocol COptionSet: CConvertible, CStruct, OptionSet, Sendable
     where RawValue == UInt32
 {
     /// Creates an instance from a raw value.

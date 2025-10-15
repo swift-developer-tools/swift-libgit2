@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The callback to iterate over packed objects.
 /// - Parameters:
 ///   - buf: The object's data.

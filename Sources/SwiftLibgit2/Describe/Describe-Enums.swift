@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_describe_strategy_t`](https://libgit2.org/docs/reference/main/describe/git_describe_strategy_t.html)
-public enum GitDescribeStrategyT: UInt32, GitEnum
+public enum GitDescribeStrategyT: UInt32, CEnum
 {
     /// Show any annotated tag reference.
     ///
@@ -41,7 +41,7 @@ public enum GitDescribeStrategyT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDescribeStrategyT`` instance from a
+    /// Initializes a ``GitDescribeStrategyT`` instance from the given
     /// `git_describe_strategy_t` instance.
     /// - Parameter describeStrategy: The `git_describe_strategy_t` instance
     /// to use.
@@ -60,7 +60,8 @@ public enum GitDescribeStrategyT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDescribeStrategyT`` instance from a raw value.
+    /// Initializes a ``GitDescribeStrategyT`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     /// - Returns: The equivalent ``GitDescribeStrategyT`` instance.
     ///
@@ -73,7 +74,7 @@ public enum GitDescribeStrategyT: UInt32, GitEnum
     /// This is a factory method  instead of an initializer since
     /// `init(rawValue:)` matches a requirement in the public `RawRepresentable`
     /// protocol, and the initializer would need to be public as well.
-    /// ``GitEnum`` initializers are required to be internal.
+    /// ``CEnum`` initializers are required to be internal.
     internal static func makeStrategy(
         rawValue: UInt32
     ) -> GitDescribeStrategyT?

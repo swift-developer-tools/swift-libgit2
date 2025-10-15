@@ -7,214 +7,33 @@
 //
 //===----------------------------------------------------------------------===//
 
-// MARK: - GitStruct
+// MARK: - CMutable
 
-/// A type that can be initialized from the equivalent C value.
-///
-/// ## Discussion
-///
-/// These protocols standardize the implementation of Swift binding structs
-/// that can be initialized from their C equivalents.
-///
-/// ### Conforming Structs
-///
-/// All Swift binding structs must conform to one of the following protocols:
-///
-/// - ``GitStructReadable`` (read-only)
-/// - ``GitStructMutable`` (mutable)
-/// - ``GitStructInternalMutable`` (public read-only, internal mutable)
-///
-/// The exception is Swift structs that act as bindings for C bitset enums.
-/// These Swift structs must conform to the ``GitOptionSet`` protocol instead.
-///
-/// The only structs that may conform directly to ``GitStruct`` are structs
-/// which are unused by other bindings, but exist for documentation purposes.
-/// ``GitStructReadable`` does not define any additional requirements other
-/// than those of ``GitStruct``, but exists for semantic purposes.
-///
-/// ## Protocol Choice
-///
-/// The protocol used by a struct depends on how that struct will be used.
-///
-/// ``GitStructReadable``:
-/// - Generally represents Git data.
-/// - Uses `public let` properties.
-/// - Provides no default property values.
-/// - Provides no public initializer.
-/// - Examples: ``GitBlameLine`` and ``GitDiffDelta``.
-///
-/// ``GitStructMutable``:
-/// - Generally represents caller-configurable options.
-/// - Uses `public var` properties.
-/// - Provides default property values.
-/// - Provides a `public init()` method with an empty body.
-/// - Examples: ``GitCheckoutOptions`` and ``GitMergeOptions``.
-///
-/// ``GitStructInternalMutable``:
-/// - Generally used as `inout` function parameters.
-/// - Uses `public private(set) var` or `public internal(set) var` properties.
-/// - Provides default property values,.
-/// - Provides a `public init()` method with an empty body.
-/// - Examples: ``GitOID`` and ``GitSignature``.
-///
-/// ## Additional Requirements
-///
-/// In addition to the requirements actually defined by this protocol,
-/// conforming structs must also follow the rules described above. These
-/// protocols cannot be more specific due to limitations of what Swift
-/// protocols can define, and also because the conforming structs have
-/// different requirements based on the C struct they are translating.
-///
-/// For example, the three protocols described above require different property
-/// access levels, but this is not definable through Swift protocols.
-///
-/// Finally, structs that conform to ``GitStructReadable``,
-/// ``GitStructMutable``, or ``GitStructInternalMutable`` must implement a
-/// method to convert the Swift struct to its C equivalent. Structs must
-/// implement this method by conforming to one of the following protocols:
-///
-/// - ``CConvertible`` (non-throwing, without memory management)
-/// - ``ThrowingCConvertible`` (throwing, without memory management)
-/// - ``WithCConvertible`` (throwing, with memory management)
-///
-/// ``GitStruct`` does not directly conform to the C convertible protocols due
-/// to the level of variation required by conforming structs. A single protocol
-/// cannot define this level of variation, and multiple protocols would be less
-/// effective from a semantic standpoint. Conforming structs must adopt one of
-/// the convertible protocols, unless they conform directly to ``GitStruct``
-/// (and are unused by other bindings).
-///
-/// Some structs may also need to implement a mutating Swift-to-C conversion
-/// method. These structs are often used as `inout` parameters. ``GitStruct``
-/// provides default implementations of these mutating methods, which are
-/// designed for use with C functions that expect parameters of the type
-/// `C *`, `C **`, or`const C **`.
-///
-/// ## Freeable Structs
-///
-/// A struct that conforms to ``GitStructInternalMutable`` may also need to
-/// conform to ``Freeable`` if libgit2 provides a corresponding memory-freeing
-/// function.
-///
-/// Conforming to ``Freeable`` enables automatic memory management when using
-/// ``withMutatingCValue(_:)`` with C functions that expect `C **` parameters
-/// and follow the allocating pattern, where libgit2 allocates new memory that
-/// the caller must free.
-///
-/// Structs that do not conform to ``Freeable`` cannot use
-/// ``withMutatingCValue(_:)`` with `C **` parameters. Instead, they must use
-/// ``withBorrowingCValue(_:)``, which is appropriate for functions that follow
-/// the borrowing pattern.
-///
-/// ### Memory Ownership Patterns
-///
-/// libgit2 uses two distinct patterns for functions with `C **` output
-/// parameters: the allocating pattern and the borrowing pattern.
-///
-/// The allocating pattern involves the function allocating new memory on the
-/// heap and transferring ownership to the caller. The caller must free this
-/// memory. The libgit2 documentation for these functions usually states this
-/// responsibility. The struct must conform to ``Freeable``, and the caller
-/// must use ``withMutatingCValue(_:)``.
-///
-/// The borrowing pattern involves the function returning a pointer to memory
-/// managed by libgit2, usually through use of an iterator, container, or other
-/// object. The caller does not own this memory and must not free it. The
-/// libgit2 documentation for these functions usually mentions the
-/// lifecycle/validity of the returned pointer (for example, a pointer being
-/// valid until the next call to the iterator, or until the iterator is freed).
-///
-/// ## Freeable Exceptions
-///
-/// ``GitBuf`` conforms to ``GitStructInternalMutable`` and has an associated
-/// memory-freeing function in libgit2, but does not conform to ``Freeable``.
-/// This is because ``GitBuf`` acts as a pointer container with a lifecycle
-/// managed by the API user rather than by the binding API.
-///
-/// ``GitBuf`` uses the `C *` version of ``withMutatingCValue(_:)``, which
-/// passes a pointer to a stack-allocated `git_buf` struct. libgit2 populates
-/// `git_buf->ptr` with heap-allocated memory, which is copied into the Swift
-/// struct. To free this memory, the API user must call
-/// ``gitBufDispose(buffer:)`` when done with the buffer.
-internal protocol GitStruct
+/// A type that can be converted to and from the equivalent C value, and can
+/// be mutated.
+internal protocol CMutable
 {
     /// The type of the equivalent C value.
     associatedtype C
     
-    /// Creates an instance from a C value.
+    
+    
+    /// Creates an instance from the equivalent C value.
     /// - Parameter cValue: The C value to use.
     ///
     /// ## Discussion
     ///
     /// This must have an `internal` access level.
-    init(
+    init?(
         cValue: C
     )
 }
 
 
 
-// MARK: - Refining Protocols
-
-/// A read-only type that can be initialized from the equivalent C value.
-internal protocol GitStructReadable: GitStruct { }
-
-
-
-/// A mutable type that can be initialized from the equivalent C value.
-internal protocol GitStructMutable: GitStruct
-{
-    /// Creates an instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// This must have a `public` access level and an empty body.
-    init()
-}
-
-
-
-/// A publicly-readable and internally-mutable type that can be initialized
-/// from the equivalent C value.
-internal protocol GitStructInternalMutable: GitStruct
-{
-    /// Creates an instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// This must have a `public` access level and an empty body.
-    init()
-}
-
-
-
 // MARK: - Extensions
 
-internal extension GitStruct
-{
-    /// Checks if the given libgit2 operation result indicates success.
-    /// - Parameters:
-    ///   - result: The libgit2 operation result.
-    ///   - defaultSuccess: Whether a result that is not of the type
-    ///   ``GitErrorCode`` should be considered successful.
-    /// - Returns: Whether the given libgit2 operation result indicates success.
-    private func isSuccess<T>(
-        _ result        : T,
-        defaultSuccess  : Bool  = true
-    ) -> Bool
-    {
-        if let errorCode = result as? GitErrorCode
-        {
-            return errorCode == .gitOK
-        }
-        
-        return defaultSuccess
-    }
-}
-
-
-
-internal extension GitStruct where Self: CConvertible
+internal extension CMutable where Self: CConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
@@ -237,9 +56,11 @@ internal extension GitStruct where Self: CConvertible
             
             let result: T = try body(cValuePointer)
             
-            if isSuccess(result)
+            if
+                isSuccess(result),
+                let mutated = Self.init(cValue: cValuePointer.pointee)
             {
-                self = Self.init(cValue: cValuePointer.pointee)
+                self = mutated
             }
             
             return result
@@ -275,10 +96,10 @@ internal extension GitStruct where Self: CConvertible
             
             if
                 isSuccess(result),
-                let finalCValuePointer: UnsafeMutablePointer<C>
-                    = optionalCValuePointer
+                let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer,
+                let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
-                self = Self.init(cValue: finalCValuePointer.pointee)
+                self = mutated
             }
             
             return result
@@ -307,9 +128,10 @@ internal extension GitStruct where Self: CConvertible
         
         if
             isSuccess(result),
-            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer,
+            let mutated = Self.init(cValue: finalCValuePointer.pointee)
         {
-            self = Self.init(cValue: finalCValuePointer.pointee)
+            self = mutated
         }
         
         return result
@@ -318,7 +140,7 @@ internal extension GitStruct where Self: CConvertible
 
 
 
-internal extension GitStruct where Self: ThrowingCConvertible
+internal extension CMutable where Self: ThrowingCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
@@ -342,9 +164,11 @@ internal extension GitStruct where Self: ThrowingCConvertible
             
             let result: T = try body(cValuePointer)
             
-            if isSuccess(result)
+            if
+                isSuccess(result),
+                let mutated = Self.init(cValue: cValuePointer.pointee)
             {
-                self = Self.init(cValue: cValuePointer.pointee)
+                self = mutated
             }
             
             return result
@@ -380,10 +204,10 @@ internal extension GitStruct where Self: ThrowingCConvertible
             
             if
                 isSuccess(result),
-                let finalCValuePointer: UnsafeMutablePointer<C>
-                    = optionalCValuePointer
+                let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer,
+                let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
-                self = Self.init(cValue: finalCValuePointer.pointee)
+                self = mutated
             }
             
             return result
@@ -412,9 +236,10 @@ internal extension GitStruct where Self: ThrowingCConvertible
         
         if
             isSuccess(result),
-            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer,
+            let mutated = Self.init(cValue: finalCValuePointer.pointee)
         {
-            self = Self.init(cValue: finalCValuePointer.pointee)
+            self = mutated
         }
         
         return result
@@ -423,7 +248,7 @@ internal extension GitStruct where Self: ThrowingCConvertible
 
 
 
-internal extension GitStruct where Self: WithCConvertible
+internal extension CMutable where Self: WithCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
@@ -445,9 +270,11 @@ internal extension GitStruct where Self: WithCConvertible
             
             let result: T = try body(cValuePointer)
             
-            if isSuccess(result)
+            if
+                isSuccess(result),
+                let mutated = Self.init(cValue: cValuePointer.pointee)
             {
-                self = Self.init(cValue: cValuePointer.pointee)
+                self = mutated
             }
             
             return result
@@ -481,10 +308,10 @@ internal extension GitStruct where Self: WithCConvertible
             
             if
                 isSuccess(result),
-                let finalCValuePointer: UnsafeMutablePointer<C>
-                    = optionalCValuePointer
+                let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer,
+                let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
-                self = Self.init(cValue: finalCValuePointer.pointee)
+                self = mutated
             }
             
             return result
@@ -513,9 +340,10 @@ internal extension GitStruct where Self: WithCConvertible
         
         if
             isSuccess(result),
-            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer
+            let finalCValuePointer: UnsafePointer<C> = optionalCValuePointer,
+            let mutated = Self.init(cValue: finalCValuePointer.pointee)
         {
-            self = Self.init(cValue: finalCValuePointer.pointee)
+            self = mutated
         }
         
         return result
@@ -524,7 +352,7 @@ internal extension GitStruct where Self: WithCConvertible
 
 
 
-internal extension GitStruct where Self: WithCConvertible & Freeable
+internal extension CMutable where Self: WithCConvertible & CFreeable
 {
     /// Calls the given closure with a mutable pointer to an optional mutable
     /// pointer to a `C` instance, and updates the receiver with any changes
@@ -562,9 +390,11 @@ internal extension GitStruct where Self: WithCConvertible & Freeable
             
             
             
-            if isSuccess(result)
+            if
+                isSuccess(result),
+                let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
-                self = Self.init(cValue: finalCValuePointer.pointee)
+                self = mutated
             }
             
             if finalCValuePointer != cValuePointer

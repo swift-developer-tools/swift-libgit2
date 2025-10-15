@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The default maximum number of candidate tags.
 ///
 /// ## C Equivalent

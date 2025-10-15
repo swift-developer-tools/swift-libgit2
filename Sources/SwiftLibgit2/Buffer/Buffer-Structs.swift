@@ -28,7 +28,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf: GitStructInternalMutable, WithCConvertible
+public struct GitBuf: CStructInternalMutable, WithCConvertible
 {
     /// The buffer contents.
     ///
@@ -68,7 +68,7 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBuf`` instance with the default configuration.
+    /// Initializes a ``GitBuf`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -77,7 +77,7 @@ public struct GitBuf: GitStructInternalMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBuf`` instance from a `git_buf` instance.
+    /// Initializes a ``GitBuf`` instance from the given `git_buf` instance.
     /// - Parameter buf: The `git_buf` instance to use.
     internal init(
         cValue buf: git_buf

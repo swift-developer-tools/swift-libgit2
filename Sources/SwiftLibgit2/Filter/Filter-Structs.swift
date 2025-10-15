@@ -16,28 +16,28 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_filter_options`](https://libgit2.org/docs/reference/main/filter/git_filter_options.html)
-public struct GitFilterOptions: GitStructMutable, WithCConvertible
+public struct GitFilterOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitFilterOptionsVersion``.
-    public var version      : UInt32            = gitFilterOptionsVersion
+    public var version      : UInt32
     
     /// The flags controlling the filtering process.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitFilterFlagT/gitFilterDefault``.
-    public var flags        : GitFilterFlagT    = .gitFilterDefault
+    public var flags        : GitFilterFlagT
     
     /// The commit ID.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var commitID     : GitOID?           = nil
+    public var commitID     : GitOID?
     
     /// The commit to load attributes from when
     /// ``GitFilterFlagT/gitFilterAttributesFromCommit`` is specified.
@@ -45,21 +45,29 @@ public struct GitFilterOptions: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is a zero-initialized ``GitOID`` instance.
-    public var attrCommitID : GitOID            = GitOID()
+    public var attrCommitID : GitOID
     
     
     
-    /// Creates a ``GitFilterOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitFilterOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32            = gitFilterOptionsVersion,
+        flags           : GitFilterFlagT    = .gitFilterDefault,
+        commitID        : GitOID?           = nil,
+        attrCommitID    : GitOID            = GitOID()
+    )
+    {
+        self.version        = version
+        self.flags          = flags
+        self.commitID       = commitID
+        self.attrCommitID   = attrCommitID
+    }
     
     
     
-    /// Creates a ``GitFilterOptions`` instance from a `git_filter_options`
-    /// instance.
+    /// Initializes a ``GitFilterOptions`` instance from the given
+    /// `git_filter_options` instance.
     /// - Parameter filterOptions: The `git_filter_options` instance
     /// to use.
     internal init(

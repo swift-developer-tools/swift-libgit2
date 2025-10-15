@@ -17,21 +17,21 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions: GitStructMutable, WithCConvertible
+public struct GitBlameOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitBlameOptionsVersion``.
-    public var version              : UInt32            = gitBlameOptionsVersion
+    public var version              : UInt32
     
     /// The flags to use during the blame operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitBlameFlagT/gitBlameNormal``.
-    public var flags                : GitBlameFlagT     = .gitBlameNormal
+    public var flags                : GitBlameFlagT
     
     /// The lower bound on the number of alphanumeric characters that must be
     /// detected as moving/copying within a file for it to associate those
@@ -46,30 +46,31 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitMoves``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitCopies``, or
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` are specified.
-    public var minMatchCharacters   : UInt16            = 20
+    public var minMatchCharacters   : UInt16
     
     /// The ID of the newest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using HEAD.
-    public var newestCommit         : GitOID?           = nil
+    /// The default value is a zero-initialized ``GitOID`` instance. If this
+    /// is zero-initialized at runtime, libgit2 defaults to using HEAD.
+    public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the first commit encountered with a `nil` parent.
-    public var oldestCommit         : GitOID?           = nil
+    /// The default value is a zero-initialized ``GitOID`` instance. If this
+    /// is zero-initialized at runtime, libgit2 defaults to using the first
+    /// commit encountered with a `nil` parent.
+    public var oldestCommit         : GitOID
     
     /// The first line in the file to blame.
     ///
     /// ## Discussion
     ///
     /// The default value is `1` (line numbers are 1-indexed).
-    public var minLine              : Int               = 1
+    public var minLine              : Int
     
     /// The last line in the file to blame.
     ///
@@ -77,21 +78,35 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using last line of the file.
-    public var maxLine              : Int?              = nil
+    public var maxLine              : Int?
     
     
     
-    /// Creates a ``GitBlameOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitBlameOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32            = gitBlameOptionsVersion,
+        flags               : GitBlameFlagT     = .gitBlameNormal,
+        minMatchCharacters  : UInt16            = 20,
+        newestCommit        : GitOID            = GitOID(),
+        oldestCommit        : GitOID            = GitOID(),
+        minLine             : Int               = 1,
+        maxLine             : Int?              = nil
+    )
+    {
+        self.version                = version
+        self.flags                  = flags
+        self.minMatchCharacters     = minMatchCharacters
+        self.newestCommit           = newestCommit
+        self.oldestCommit           = oldestCommit
+        self.minLine                = minLine
+        self.maxLine                = maxLine
+    }
     
     
     
-    /// Creates a ``GitBlameOptions`` instance from a `git_blame_options`
-    /// instance.
+    /// Initializes a ``GitBlameOptions`` instance from the given
+    /// `git_blame_options` instance.
     /// - Parameter blameOptions: The `git_blame_options` instance to use.
     internal init(
         cValue blameOptions: git_blame_options
@@ -130,8 +145,8 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
         }
         
         blameOptions.flags                  = flags.rawValue
-        blameOptions.newest_commit          = newestCommit?.cValue() ?? git_oid()
-        blameOptions.oldest_commit          = oldestCommit?.cValue() ?? git_oid()
+        blameOptions.newest_commit          = newestCommit.cValue()
+        blameOptions.oldest_commit          = oldestCommit.cValue()
         blameOptions.min_match_characters   = minMatchCharacters
         blameOptions.min_line               = minLine
         
@@ -151,7 +166,7 @@ public struct GitBlameOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-public struct GitBlameHunk: GitStructReadable, WithCConvertible
+public struct GitBlameHunk: CStructReadable, WithCConvertible
 {
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
@@ -227,7 +242,8 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameHunk`` instance from a `git_blame_hunk` instance.
+    /// Initializes a ``GitBlameHunk`` instance from the given `git_blame_hunk`
+    /// instance.
     /// - Parameter blameHunk: The `git_blame_hunk` instance to use.
     ///
     /// ## Discussion
@@ -328,7 +344,7 @@ public struct GitBlameHunk: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: GitStructReadable, WithCConvertible
+public struct GitBlameLine: CStructReadable, WithCConvertible
 {
     /// The line content.
     public let ptr  : Data?
@@ -341,7 +357,8 @@ public struct GitBlameLine: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameLine`` instance from a `git_blame_line` instance.
+    /// Initializes a ``GitBlameLine`` instance from the given `git_blame_line`
+    /// instance.
     /// - Parameter blameLine: The `git_blame_line` instance to use.
     internal init(
         cValue blameLine: git_blame_line

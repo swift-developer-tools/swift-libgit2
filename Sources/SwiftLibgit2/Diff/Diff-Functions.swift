@@ -554,7 +554,8 @@ public func gitDiffIsSortedICase(
 ///   - binaryCB: The callback to invoke for binary content in a diff.
 ///   - hunkCB: The callback to invoke for each hunk in a diff.
 ///   - lineCB: The callback to invoke for each line in a diff.
-///   - payload: The payload to pass to the callbacks.
+///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
+///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -695,7 +696,8 @@ public func gitDiffToBuf(
 ///   - binaryCB: The callback to invoke for binary content in a diff.
 ///   - hunkCB: The callback to invoke for each hunk in a diff.
 ///   - lineCB: The callback to invoke for each line in a diff.
-///   - payload: The payload to pass to the callbacks.
+///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
+///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -776,7 +778,8 @@ public func gitDiffBlobs(
 ///   - binaryCB: The callback to invoke for binary content in a diff.
 ///   - hunkCB: The callback to invoke for each hunk in a diff.
 ///   - lineCB: The callback to invoke for each line in a diff.
-///   - payload: The payload to pass to the callbacks.
+///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
+///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -855,7 +858,8 @@ public func gitDiffBlobToBuffer(
 ///   - binaryCB: The callback to invoke for binary content in a diff.
 ///   - hunkCB: The callback to invoke for each hunk in a diff.
 ///   - lineCB: The callback to invoke for each line in a diff.
-///   - payload: The payload to pass to the callbacks.
+///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
+///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

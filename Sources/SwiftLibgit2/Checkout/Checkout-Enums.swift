@@ -50,14 +50,15 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_checkout_strategy_t`](https://libgit2.org/docs/reference/main/checkout/git_checkout_strategy_t.html)
-public struct GitCheckoutStrategyT: GitOptionSet
+public struct GitCheckoutStrategyT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitCheckoutStrategyT`` instance from a raw value.
+    /// Initializes a ``GitCheckoutStrategyT`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -68,7 +69,7 @@ public struct GitCheckoutStrategyT: GitOptionSet
     
     
     
-    /// Creates a ``GitCheckoutStrategyT`` instance from a
+    /// Initializes a ``GitCheckoutStrategyT`` instance from the given
     /// `git_checkout_strategy_t` instance.
     /// - Parameter checkoutStrategy: The `git_checkout_strategy_t` instance
     /// to use.
@@ -232,14 +233,14 @@ public struct GitCheckoutStrategyT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_checkout_notify_t`](https://libgit2.org/docs/reference/main/checkout/git_checkout_notify_t.html)
-public struct GitCheckoutNotifyT: GitOptionSet
+public struct GitCheckoutNotifyT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitCheckoutNotifyT`` instance from a raw value.
+    /// Initializes a ``GitCheckoutNotifyT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -250,8 +251,8 @@ public struct GitCheckoutNotifyT: GitOptionSet
     
     
     
-    /// Creates a ``GitCheckoutNotifyT`` instance from a `git_checkout_notify_t`
-    /// instance.
+    /// Initializes a ``GitCheckoutNotifyT`` instance from the given
+    /// `git_checkout_notify_t` instance.
     /// - Parameter checkoutNotify: The `git_checkout_notify_t` instance to use.
     internal init(
         cValue checkoutNotify: git_checkout_notify_t

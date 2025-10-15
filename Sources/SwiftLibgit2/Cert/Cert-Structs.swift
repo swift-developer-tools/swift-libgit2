@@ -17,14 +17,14 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cert`](https://libgit2.org/docs/reference/main/cert/git_cert.html)
-public struct GitCert: GitStructReadable, CConvertible
+public struct GitCert: CStructReadable, CConvertible
 {
     /// The type of host certificate.
     public let certType: GitCertT
     
     
     
-    /// Creates a ``GitCert`` instance from a `git_cert` instance.
+    /// Initializes a ``GitCert`` instance from the given `git_cert` instance.
     /// - Parameter cert: The `git_cert` instance to use.
     ///
     /// ## Discussion
@@ -59,7 +59,7 @@ public struct GitCert: GitStructReadable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_cert_hostkey`](https://libgit2.org/docs/reference/main/cert/git_cert_hostkey.html)
-public struct GitCertHostKey: GitStructReadable, WithCConvertible
+public struct GitCertHostKey: CStructReadable, WithCConvertible
 {
     /// The parent certificate.
     public let parent       : GitCert
@@ -131,8 +131,8 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitCertHostKey`` instance from a `git_cert_hostkey`
-    /// instance.
+    /// Initializes a ``GitCertHostKey`` instance from the given
+    /// `git_cert_hostkey` instance.
     /// - Parameter certHostKey: The `git_cert_hostkey` instance to use.
     ///
     /// ## Discussion
@@ -234,7 +234,7 @@ public struct GitCertHostKey: GitStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_cert_x509`](https://libgit2.org/docs/reference/main/cert/git_cert_x509.html)
-public struct GitCertX509: GitStructReadable, CConvertible
+public struct GitCertX509: CStructReadable, CConvertible
 {
     /// The parent certificate.
     public let parent   : GitCert
@@ -247,7 +247,8 @@ public struct GitCertX509: GitStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitCertX509`` instance from a `git_cert_x509` instance.
+    /// Initializes a ``GitCertX509`` instance from the given `git_cert_x509`
+    /// instance.
     /// - Parameter certX509: The `git_cert_x509` instance to use.
     internal init(
         cValue certX509: git_cert_x509

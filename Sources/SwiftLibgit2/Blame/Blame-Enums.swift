@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_blame_flag_t`](https://libgit2.org/docs/reference/main/blame/git_blame_flag_t.html)
-public struct GitBlameFlagT: GitOptionSet
+public struct GitBlameFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitBlameFlagT`` instance from a raw value.
+    /// Initializes a ``GitBlameFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,8 @@ public struct GitBlameFlagT: GitOptionSet
     
     
     
-    /// Creates a ``GitBlameFlagT`` instance from a `git_blame_flag_t` instance.
+    /// Initializes a ``GitBlameFlagT`` instance from the given
+    /// `git_blame_flag_t` instance.
     /// - Parameter blameFlag: The `git_blame_flag_t` instance to use.
     internal init(
         cValue blameFlag: git_blame_flag_t

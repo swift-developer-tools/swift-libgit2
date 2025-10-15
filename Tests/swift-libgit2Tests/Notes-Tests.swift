@@ -530,7 +530,8 @@ final class NotesTests: XCTestCaseStopOnFail
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
-                    return -1
+                    XCTFail("The payload was nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -552,7 +553,7 @@ final class NotesTests: XCTestCaseStopOnFail
                     )
                 }
                 
-                return 0
+                return GitErrorCode.gitOK.rawValue
             }
             
             

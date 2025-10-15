@@ -7,10 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
-
-
-
 /// The current version for ``GitFilterOptions``.
 ///
 /// ## C Equivalent

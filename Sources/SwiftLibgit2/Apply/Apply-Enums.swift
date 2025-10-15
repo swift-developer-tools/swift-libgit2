@@ -17,14 +17,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_apply_flags_t`](https://libgit2.org/docs/reference/main/apply/git_apply_flags_t.html)
-public struct GitApplyFlagsT: GitOptionSet
+public struct GitApplyFlagsT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitApplyFlagsT`` instance from a raw value.
+    /// Initializes a ``GitApplyFlagsT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -35,8 +35,8 @@ public struct GitApplyFlagsT: GitOptionSet
     
     
     
-    /// Creates a ``GitApplyFlagsT`` instance from a `git_apply_flags_t`
-    /// instance.
+    /// Initializes a ``GitApplyFlagsT`` instance from the given
+    /// `git_apply_flags_t` instance.
     /// - Parameter applyFlags: The `git_apply_flags_t` instance to use.
     internal init(
         cValue applyFlags: git_apply_flags_t
@@ -72,14 +72,14 @@ public struct GitApplyFlagsT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_apply_location_t`](https://libgit2.org/docs/reference/main/apply/git_apply_location_t.html)
-public struct GitApplyLocationT: GitOptionSet
+public struct GitApplyLocationT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitApplyLocationT`` instance from a raw value.
+    /// Initializes a ``GitApplyLocationT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -90,8 +90,8 @@ public struct GitApplyLocationT: GitOptionSet
     
     
     
-    /// Creates a ``GitApplyLocationT`` instance from a `git_apply_location_t`
-    /// instance.
+    /// Initializes a ``GitApplyLocationT`` instance from the given
+    /// `git_apply_location_t` instance.
     /// - Parameter applyLocation: The `git_apply_location_t` instance to use.
     internal init(
         cValue applyLocation: git_apply_location_t

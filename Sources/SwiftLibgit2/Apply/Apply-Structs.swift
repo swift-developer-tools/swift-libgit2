@@ -17,57 +17,66 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
-public struct GitApplyOptions: GitStructMutable, WithCConvertible
+public struct GitApplyOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitApplyOptionsVersion``.
-    public var version : UInt32                     = gitApplyOptionsVersion
+    public var version : UInt32
     
-    /// The callback that will be made per delta (file) when applying a patch.
+    /// The callback invoked for each delta (file).
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var deltaCB : GitApplyDeltaCB?           = nil
+    public var deltaCB : GitApplyDeltaCB?
     
-    /// The callback that will be made per hunk when applying a patch.
+    /// The callback invoked for each hunk.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var hunkCB  : GitApplyHunkCB?            = nil
+    public var hunkCB  : GitApplyHunkCB?
     
-    /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB``
-    /// and ``GitApplyOptions/hunkCB``.
+    /// The payload passed to ``deltaCB`` and ``hunkCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload : UnsafeMutableRawPointer?   = nil
+    public var payload : UnsafeMutableRawPointer?
     
     /// The flags to use when applying.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty option set.
-    public var flags   : GitApplyFlagsT             = []
+    public var flags   : GitApplyFlagsT
     
     
     
-    /// Creates a ``GitApplyOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitApplyOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version : UInt32                    = gitApplyOptionsVersion,
+        deltaCB : GitApplyDeltaCB?          = nil,
+        hunkCB  : GitApplyHunkCB?           = nil,
+        payload : UnsafeMutableRawPointer?  = nil,
+        flags   : GitApplyFlagsT            = []
+    )
+    {
+        self.version    = version
+        self.deltaCB    = deltaCB
+        self.hunkCB     = hunkCB
+        self.payload    = payload
+        self.flags      = flags
+    }
     
     
     
-    /// Creates a ``GitApplyOptions`` instance from a `git_apply_options`
-    /// instance.
+    /// Initializes a ``GitApplyOptions`` instance from the given
+    /// `git_apply_options` instance.
     /// - Parameter applyOptions: The `git_apply_options` instance to use.
     internal init(
         cValue applyOptions: git_apply_options

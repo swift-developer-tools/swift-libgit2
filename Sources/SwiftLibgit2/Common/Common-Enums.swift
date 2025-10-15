@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_feature_t`](https://libgit2.org/docs/reference/main/common/git_feature_t.html)
-public struct GitFeatureT: GitOptionSet
+public struct GitFeatureT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitFeatureT`` instance from a raw value.
+    /// Initializes a ``GitFeatureT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,8 @@ public struct GitFeatureT: GitOptionSet
     
     
     
-    /// Creates a ``GitFeatureT`` instance from a `git_feature_t` instance.
+    /// Initializes a ``GitFeatureT`` instance from the given `git_feature_t`
+    /// instance.
     /// - Parameter feature: The `git_feature_t` instance to use.
     internal init(
         cValue feature: git_feature_t
@@ -127,7 +128,7 @@ public struct GitFeatureT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_libgit2_opt_t`](https://libgit2.org/docs/reference/main/common/git_libgit2_opt_t.html)
-public enum GitLibgit2OptT: UInt32, GitEnum
+public enum GitLibgit2OptT: UInt32, CEnum
 {
     /// Gets the maximum `mmap()` window size.
     ///
@@ -523,8 +524,8 @@ public enum GitLibgit2OptT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitLibgit2OptT`` instance from a `git_libgit2_opt_t`
-    /// instance.
+    /// Initializes a ``GitLibgit2OptT`` instance from the given
+    /// `git_libgit2_opt_t` instance.
     /// - Parameter libgit2Opt: The `git_libgit2_opt_t` instance to use.
     internal init?(
         cValue libgit2Opt: git_libgit2_opt_t

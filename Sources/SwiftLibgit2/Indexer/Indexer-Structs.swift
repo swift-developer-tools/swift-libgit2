@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_indexer_progress`](https://libgit2.org/docs/reference/main/indexer/git_indexer_progress.html)
-public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
+public struct GitIndexerProgress: CStructInternalMutable, CConvertible
 {
     /// The number of objects being indexed.
     ///
@@ -71,7 +71,7 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance with the default
+    /// Initializes a ``GitIndexerProgress`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -81,8 +81,8 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance from a `git_indexer_progress`
-    /// instance.
+    /// Initializes a ``GitIndexerProgress`` instance from the given
+    /// `git_indexer_progress` instance.
     /// - Parameter indexerProgress: The `git_indexer_progress` instance to use.
     internal init(
         cValue indexerProgress: git_indexer_progress
@@ -125,49 +125,57 @@ public struct GitIndexerProgress: GitStructInternalMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_indexer_options`](https://libgit2.org/docs/reference/main/indexer/git_indexer_options.html)
-public struct GitIndexerOptions: GitStructMutable, ThrowingCConvertible
+public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitIndexerOptionsVersion``.
-    public var version              : UInt32                    = gitIndexerOptionsVersion
+    public var version              : UInt32
     
-    /// The callback to report progress during the indexing operation.
+    /// The callback invoked to report progress during the indexing operation.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressCB           : GitIndexerProgressCB?     = nil
+    public var progressCB           : GitIndexerProgressCB?
     
-    /// The caller-specified payload passed to ``progressCB``.
+    /// The payload passed to ``progressCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressCBPayload    : UnsafeMutableRawPointer?  = nil
+    public var progressCBPayload    : UnsafeMutableRawPointer?
     
     /// Whether connectivity checks should be performed for the received pack.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var verify               : Bool                      = false
+    public var verify               : Bool
     
     
     
-    /// Creates a ``GitIndexerOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitIndexerOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                    = gitIndexerOptionsVersion,
+        progressCB          : GitIndexerProgressCB?     = nil,
+        progressCBPayload   : UnsafeMutableRawPointer?  = nil,
+        verify              : Bool                      = false
+    )
+    {
+        self.version            = version
+        self.progressCB         = progressCB
+        self.progressCBPayload  = progressCBPayload
+        self.verify             = verify
+    }
     
     
     
-    /// Creates a ``GitIndexerOptions`` instance from a `git_indexer_options`
-    /// instance.
+    /// Initializes a ``GitIndexerOptions`` instance from the given
+    /// `git_indexer_options` instance.
     /// - Parameter indexerOptions: The `git_indexer_options` instance
     /// to use.
     internal init(

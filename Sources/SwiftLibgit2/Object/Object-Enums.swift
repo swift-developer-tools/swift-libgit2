@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_object_t`](https://libgit2.org/docs/reference/main/object/git_object_t.html)
-public enum GitObjectT: Int32, GitEnum
+public enum GitObjectT: Int32, CEnum
 {
     /// Any object.
     case gitObjectAny       = -2
@@ -38,7 +38,8 @@ public enum GitObjectT: Int32, GitEnum
     
     
     
-    /// Creates a ``GitObjectT`` instance from a `git_object_t` instance.
+    /// Initializes a ``GitObjectT`` instance from the given `git_object_t`
+    /// instance.
     /// - Parameter configLevel: The `git_object_t` instance to use.
     internal init?(
         cValue object: git_object_t

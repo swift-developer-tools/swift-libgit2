@@ -22,7 +22,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_oidarray`](https://libgit2.org/docs/reference/main/oidarray/git_oidarray.html)
-public struct GitOIDArray: GitStruct
+public struct GitOIDArray: CStruct
 {
     /// The IDs.
     public private(set) var ids : [GitOID]
@@ -35,7 +35,8 @@ public struct GitOIDArray: GitStruct
     
     
     
-    /// Creates a ``GitOIDArray`` instance from a `git_oidarray` instance.
+    /// Initializes a ``GitOIDArray`` instance from the given `git_oidarray`
+    /// instance.
     /// - Parameter oidArray: The `git_oidarray` instance to use.
     internal init(
         cValue oidArray: git_oidarray

@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_oid`](https://libgit2.org/docs/reference/main/oid/git_oid.html)
-public struct GitOID: GitStructInternalMutable, CConvertible
+public struct GitOID: CStructInternalMutable, CConvertible
 {
     /// The raw binary-formatted ID.
     ///
@@ -31,7 +31,7 @@ public struct GitOID: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitOID`` instance with the default configuration.
+    /// Initializes a ``GitOID`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -40,7 +40,7 @@ public struct GitOID: GitStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitOID`` instance from a `git_oid` instance.
+    /// Initializes a ``GitOID`` instance from the given `git_oid` instance.
     /// - Parameter oid: The `git_oid` instance to use.
     internal init(
         cValue oid: git_oid

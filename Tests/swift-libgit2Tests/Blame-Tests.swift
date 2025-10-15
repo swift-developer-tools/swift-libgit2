@@ -270,8 +270,8 @@ final class BlameTests: XCTestCaseStopOnFail
         XCTAssertEqual(blameOptions.version, gitBlameOptionsVersion)
         XCTAssertEqual(blameOptions.flags, .gitBlameNormal)
         XCTAssertEqual(blameOptions.minMatchCharacters, 20)
-        XCTAssertNil(blameOptions.newestCommit)
-        XCTAssertNil(blameOptions.oldestCommit)
+        XCTAssertZeroOID(blameOptions.newestCommit)
+        XCTAssertZeroOID(blameOptions.oldestCommit)
         XCTAssertEqual(blameOptions.minLine, 1)
         XCTAssertNil(blameOptions.maxLine)
         

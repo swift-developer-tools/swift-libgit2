@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
+public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitCommitCreateOptionsVersion``.
-    public var version          : UInt32            = gitCommitCreateOptionsVersion
+    public var version          : UInt32
     
     /// Whether a commit with no changes from the prior commit (an empty commit)
     /// should be allowed.
@@ -31,21 +31,21 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var allowEmptyCommit : Bool              = false
+    public var allowEmptyCommit : Bool
     
     /// The commit author.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var author           : GitSignature?     = nil
+    public var author           : GitSignature?
     
     /// The committer.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var committer        : GitSignature?     = nil
+    public var committer        : GitSignature?
     
     /// The encoding for the commit message.
     ///
@@ -53,21 +53,30 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using UTF-8.
-    public var messageEncoding  : String?           = nil
+    public var messageEncoding  : String?
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitCommitCreateOptions`` instance, optionally
+    /// specifying values for its properties.
+    public init(
+        version             : UInt32            = gitCommitCreateOptionsVersion,
+        allowEmptyCommit    : Bool              = false,
+        author              : GitSignature?     = nil,
+        committer           : GitSignature?     = nil,
+        messageEncoding     : String?           = nil
+    )
+    {
+        self.version            = version
+        self.allowEmptyCommit   = allowEmptyCommit
+        self.author             = author
+        self.committer          = committer
+        self.messageEncoding    = messageEncoding
+    }
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance from a
+    /// Initializes a ``GitCommitCreateOptions`` instance from the given
     /// `git_commit_create_options` instance.
     /// - Parameter commitCreateOptions: The `git_commit_create_options`
     /// instance to use.
@@ -135,7 +144,7 @@ public struct GitCommitCreateOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_commitarray`](https://libgit2.org/docs/reference/main/commit/git_commitarray.html)
-public struct GitCommitArray: GitStruct
+public struct GitCommitArray: CStruct
 {
     /// The array of commits.
     public let commits  : [OpaquePointer]
@@ -148,7 +157,8 @@ public struct GitCommitArray: GitStruct
     
     
     
-    /// Creates a ``GitCommitArray`` instance from a `git_commitarray` instance.
+    /// Initializes a ``GitCommitArray`` instance from the given
+    /// `git_commitarray` instance.
     /// - Parameter commitArray: The `git_commitarray` instance to use.
     internal init(
         cValue commitArray: git_commitarray

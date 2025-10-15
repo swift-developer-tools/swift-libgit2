@@ -16,14 +16,14 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_diff_option_t`](https://libgit2.org/docs/reference/main/diff/git_diff_option_t.html)
-public struct GitDiffOptionT: GitOptionSet
+public struct GitDiffOptionT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitDiffOptionT`` instance from a raw value.
+    /// Initializes a ``GitDiffOptionT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,8 +34,8 @@ public struct GitDiffOptionT: GitOptionSet
     
     
     
-    /// Creates a ``GitDiffOptionT`` instance from a `git_diff_option_t`
-    /// instance.
+    /// Initializes a ``GitDiffOptionT`` instance from the given
+    /// `git_diff_option_t` instance.
     /// - Parameter diffOption: The `git_diff_option_t` instance to use.
     internal init(
         cValue diffOption: git_diff_option_t
@@ -275,14 +275,14 @@ public struct GitDiffOptionT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_diff_flag_t`](https://libgit2.org/docs/reference/main/diff/git_diff_flag_t.html)
-public struct GitDiffFlagT: GitOptionSet
+public struct GitDiffFlagT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitDiffFlagT`` instance from a raw value.
+    /// Initializes a ``GitDiffFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -293,7 +293,8 @@ public struct GitDiffFlagT: GitOptionSet
     
     
     
-    /// Creates a ``GitDiffFlagT`` instance from a `git_diff_flag_t` instance.
+    /// Initializes a ``GitDiffFlagT`` instance from the given
+    /// `git_diff_flag_t` instance.
     /// - Parameter diffFlag: The `git_diff_flag_t` instance to use.
     internal init(
         cValue diffFlag: git_diff_flag_t
@@ -346,7 +347,7 @@ public struct GitDiffFlagT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_delta_t`](https://libgit2.org/docs/reference/main/diff/git_delta_t.html)
-public enum GitDeltaT: UInt32, GitEnum
+public enum GitDeltaT: UInt32, CEnum
 {
     /// There are no changes.
     case gitDeltaUnmodified     = 0
@@ -384,7 +385,8 @@ public enum GitDeltaT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDeltaT`` instance from a `git_delta_t` instance.
+    /// Initializes a ``GitDeltaT`` instance from the given `git_delta_t`
+    /// instance.
     /// - Parameter delta: The `git_delta_t` instance to use.
     internal init?(
         cValue delta: git_delta_t
@@ -443,7 +445,7 @@ public enum GitDeltaT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_binary_t`](https://libgit2.org/docs/reference/main/diff/git_diff_binary_t.html)
-public enum GitDiffBinaryT: UInt32, GitEnum
+public enum GitDiffBinaryT: UInt32, CEnum
 {
     /// There is no binary delta.
     case gitDiffBinaryNone      = 0
@@ -456,8 +458,8 @@ public enum GitDiffBinaryT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDiffBinaryT`` instance from a `git_diff_binary_t`
-    /// instance.
+    /// Initializes a ``GitDiffBinaryT`` instance from the given
+    /// `git_diff_binary_t` instance.
     /// - Parameter diffBinary: The `git_diff_binary_t` instance to use.
     internal init?(
         cValue diffBinary: git_diff_binary_t
@@ -495,7 +497,7 @@ public enum GitDiffBinaryT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_line_t`](https://libgit2.org/docs/reference/main/diff/git_diff_line_t.html)
-public enum GitDiffLineT: UInt32, GitEnum
+public enum GitDiffLineT: UInt32, CEnum
 {
     /// The line is unchanged and shown as context.
     case gitDiffLineContext         = 32
@@ -526,7 +528,8 @@ public enum GitDiffLineT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDiffLineT`` instance from a `git_diff_line_t` instance.
+    /// Initializes a ``GitDiffLineT`` instance from the given `git_diff_line_t`
+    /// instance.
     /// - Parameter diffLine: The `git_diff_line_t` instance to use.
     internal init?(
         cValue diffLine: git_diff_line_t
@@ -576,14 +579,14 @@ public enum GitDiffLineT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_find_t`](https://libgit2.org/docs/reference/main/diff/git_diff_find_t.html)
-public struct GitDiffFindT: GitOptionSet
+public struct GitDiffFindT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitDiffFindT`` instance from a raw value.
+    /// Initializes a ``GitDiffFindT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -594,7 +597,8 @@ public struct GitDiffFindT: GitOptionSet
     
     
     
-    /// Creates a ``GitDiffFindT`` instance from a `git_diff_find_t` instance.
+    /// Initializes a ``GitDiffFindT`` instance from the given `git_diff_find_t`
+    /// instance.
     /// - Parameter diffFind: The `git_diff_find_t` instance to use.
     internal init(
         cValue diffFind: git_diff_find_t
@@ -730,7 +734,7 @@ public struct GitDiffFindT: GitOptionSet
 /// ## C Equivalent
 ///
 /// [`git_diff_format_t`](https://libgit2.org/docs/reference/main/diff/git_diff_format_t.html)
-public enum GitDiffFormatT: UInt32, GitEnum
+public enum GitDiffFormatT: UInt32, CEnum
 {
     /// Show the full Git diff.
     case gitDiffFormatPatch         = 1
@@ -765,8 +769,8 @@ public enum GitDiffFormatT: UInt32, GitEnum
     
     
     
-    /// Creates a ``GitDiffFormatT`` instance from a `git_diff_format_t`
-    /// instance.
+    /// Initializes a ``GitDiffFormatT`` instance from the given
+    /// `git_diff_format_t` instance.
     /// - Parameter diffFormat: The `git_diff_format_t` instance to use.
     internal init?(
         cValue diffFormat: git_diff_format_t
@@ -810,14 +814,14 @@ public enum GitDiffFormatT: UInt32, GitEnum
 /// ## C Equivalent
 ///
 /// [`git_diff_stats_format_t`](https://libgit2.org/docs/reference/main/diff/git_diff_stats_format_t.html)
-public struct GitDiffStatsFormatT: GitOptionSet
+public struct GitDiffStatsFormatT: COptionSet
 {
     /// The raw value to use.
     public let rawValue: UInt32
     
     
     
-    /// Creates a ``GitDiffStatsFormatT`` instance from a raw value.
+    /// Initializes a ``GitDiffStatsFormatT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -828,7 +832,7 @@ public struct GitDiffStatsFormatT: GitOptionSet
     
     
     
-    /// Creates a ``GitDiffStatsFormatT`` instance from a
+    /// Initializes a ``GitDiffStatsFormatT`` instance from the given
     /// `git_diff_stats_format_t` instance.
     /// - Parameter diffStatsFormat: The `git_diff_stats_format_t` instance
     /// to use.

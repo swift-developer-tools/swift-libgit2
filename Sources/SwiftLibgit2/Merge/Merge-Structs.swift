@@ -17,21 +17,21 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_merge_file_input`](https://libgit2.org/docs/reference/main/merge/git_merge_file_input.html)
-public struct GitMergeFileInput: GitStructMutable, WithCConvertible
+public struct GitMergeFileInput: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitMergeFileInputVersion``.
-    public var version  : UInt32    = gitMergeFileInputVersion
+    public var version  : UInt32
     
     /// The contents of the file.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var ptr      : Data?     = nil
+    public var ptr      : Data?
     
     /// The length of ``ptr``.
     public var size     : Int
@@ -44,28 +44,36 @@ public struct GitMergeFileInput: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`. Pass `nil` to not merge the path.
-    public var path     : String?   = nil
+    public var path     : String?
     
     /// The file mode of the conflicted file.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`. Pass `0` to not merge the mode.
-    public var mode     : UInt32    = 0
+    public var mode     : UInt32
     
     
     
-    /// Creates a ``GitMergeFileInput`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitMergeFileInput`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version : UInt32    = gitMergeFileInputVersion,
+        ptr     : Data?     = nil,
+        path    : String?   = nil,
+        mode    : UInt32    = 0
+    )
+    {
+        self.version    = version
+        self.ptr        = ptr
+        self.path       = path
+        self.mode       = mode
+    }
     
     
     
-    /// Creates a ``GitMergeFileInput`` instance from a `git_merge_file_input`
-    /// instance.
+    /// Initializes a ``GitMergeFileInput`` instance from the given
+    /// `git_merge_file_input` instance.
     /// - Parameter mergeFileInput: The `git_merge_file_input` instance to use.
     internal init(
         cValue mergeFileInput: git_merge_file_input
@@ -128,35 +136,35 @@ public struct GitMergeFileInput: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_options`](https://libgit2.org/docs/reference/main/merge/git_merge_file_options.html)
-public struct GitMergeFileOptions: GitStructMutable, WithCConvertible
+public struct GitMergeFileOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitMergeFileOptionsVersion``.
-    public var version          : UInt32                = gitMergeFileOptionsVersion
+    public var version          : UInt32
     
     /// The name of the common ancestor of conflicts
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var ancestorLabel    : String?               = nil
+    public var ancestorLabel    : String?
     
     /// The name of "our" side of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var ourLabel         : String?               = nil
+    public var ourLabel         : String?
     
     /// The name of "their" side of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var theirLabel       : String?               = nil
+    public var theirLabel       : String?
     
     /// How to handle conflicting file regions during file-level merge
     /// operations.
@@ -164,35 +172,48 @@ public struct GitMergeFileOptions: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``GitMergeFileFavorT/gitMergeFileFavorNormal``.
-    public var favor            : GitMergeFileFavorT    = .gitMergeFileFavorNormal
+    public var favor            : GitMergeFileFavorT
     
     /// The flags controlling the behavior of the file-merging operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitMergeFileFlagT/gitMergeFileDefault``.
-    public var flags            : GitMergeFileFlagT     = .gitMergeFileDefault
+    public var flags            : GitMergeFileFlagT
     
     /// The size of conflict markers.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitMergeConflictMarkerSize``.
-    public var markerSize       : UInt16                = gitMergeConflictMarkerSize
+    public var markerSize       : UInt16
     
     
     
-    /// Creates a ``GitMergeFileOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitMergeFileOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32                = gitMergeFileOptionsVersion,
+        ancestorLabel   : String?               = nil,
+        ourLabel        : String?               = nil,
+        theirLabel      : String?               = nil,
+        favor           : GitMergeFileFavorT    = .gitMergeFileFavorNormal,
+        flags           : GitMergeFileFlagT     = .gitMergeFileDefault,
+        markerSize      : UInt16                = gitMergeConflictMarkerSize
+    )
+    {
+        self.version        = version
+        self.ancestorLabel  = ancestorLabel
+        self.ourLabel       = ourLabel
+        self.theirLabel     = theirLabel
+        self.favor          = favor
+        self.flags          = flags
+        self.markerSize     = markerSize
+    }
     
     
     
-    /// Creates a ``GitMergeFileOptions`` instance from a
+    /// Initializes a ``GitMergeFileOptions`` instance from the given
     /// `git_merge_file_options` instance.
     /// - Parameter mergeFileOptions: The `git_merge_file_options` instance
     /// to use.
@@ -273,7 +294,7 @@ public struct GitMergeFileOptions: GitStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_result`](https://libgit2.org/docs/reference/main/merge/git_merge_file_result.html)
-public struct GitMergeFileResult: Freeable, GitStructInternalMutable, WithCConvertible
+public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConvertible
 {
     /// Whether the output was auto-merged.
     ///
@@ -318,7 +339,7 @@ public struct GitMergeFileResult: Freeable, GitStructInternalMutable, WithCConve
     
     
     
-    /// Creates a ``GitMergeFileResult`` instance with the default
+    /// Initializes a ``GitMergeFileResult`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -328,7 +349,7 @@ public struct GitMergeFileResult: Freeable, GitStructInternalMutable, WithCConve
     
     
     
-    /// Creates a ``GitMergeFileResult`` instance from a
+    /// Initializes a ``GitMergeFileResult`` instance from the given
     /// `git_merge_file_result` instance.
     /// - Parameter mergeFileResult: The `git_merge_file_result` instance to
     /// use.
@@ -405,21 +426,21 @@ public struct GitMergeFileResult: Freeable, GitStructInternalMutable, WithCConve
 /// ## C Equivalent
 ///
 /// [`git_merge_options`](https://libgit2.org/docs/reference/main/merge/git_merge_options.html)
-public struct GitMergeOptions: GitStructMutable, WithCConvertible
+public struct GitMergeOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitMergeOptionsVersion``.
-    public var version          : UInt32                            = gitMergeOptionsVersion
+    public var version          : UInt32
     
     /// The flags controlling the behavior of the merge operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitMergeFlagT/gitMergeFindRenames``.
-    public var flags            : GitMergeFlagT                     = .gitMergeFindRenames
+    public var flags            : GitMergeFlagT
     
     /// The similarity percentage beyond which a file should be treated as
     /// a rename.
@@ -432,7 +453,7 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     /// be compared with deleted files to determine their similarity. Files
     /// that are more similar than the rename threshold (percentage-wise) will
     /// be treated as a rename.
-    public var renameThreshold  : UInt32                            = 50
+    public var renameThreshold  : UInt32
     
     /// Maximum similarity sources to examine for renames.
     ///
@@ -444,7 +465,7 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     /// this value, exact rename detection will be aborted.
     ///
     /// This overrides the `merge.renameLimit` configuration value.
-    public var targetLimit      : UInt32                            = 200
+    public var targetLimit      : UInt32
     
     /// The pluggable similarity metric.
     ///
@@ -453,7 +474,7 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the internal metric.
     public var metric           : UnsafeMutablePointer<
-                                    git_diff_similarity_metric>?    = nil
+                                    git_diff_similarity_metric>?
     
     /// The maximum number of times to merge common ancestors to build a
     /// virtual merge base when faced with criss-cross merges.
@@ -464,7 +485,7 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     ///
     /// When this limit is reached, the next ancestor will simply be used
     /// instead of attempting to merge it.
-    public var recursionLimit   : UInt32                            = 0
+    public var recursionLimit   : UInt32
     
     /// The default merge driver to be used when both sides of a merge have
     /// changed.
@@ -473,7 +494,7 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the `text` driver.
-    public var defaultDriver    : String?                           = nil
+    public var defaultDriver    : String?
     
     /// How to handle conflicting file regions during file-level merge
     /// operations.
@@ -481,28 +502,47 @@ public struct GitMergeOptions: GitStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``GitMergeFileFavorT/gitMergeFileFavorNormal``.
-    public var fileFavor        : GitMergeFileFavorT                = .gitMergeFileFavorNormal
+    public var fileFavor        : GitMergeFileFavorT
     
     /// The flags controlling the behavior of the file-merging operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitMergeFileFlagT/gitMergeFileDefault``.
-    public var fileFlags        : GitMergeFileFlagT                 = .gitMergeFileDefault
+    public var fileFlags        : GitMergeFileFlagT
     
     
     
-    /// Creates a ``GitMergeOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitMergeOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32                            = gitMergeOptionsVersion,
+        flags           : GitMergeFlagT                     = .gitMergeFindRenames,
+        renameThreshold : UInt32                            = 50,
+        targetLimit     : UInt32                            = 200,
+        metric          : UnsafeMutablePointer<
+                            git_diff_similarity_metric>?    = nil,
+        recursionLimit  : UInt32                            = 0,
+        defaultDriver   : String?                           = nil,
+        fileFavor       : GitMergeFileFavorT                = .gitMergeFileFavorNormal,
+        fileFlags       : GitMergeFileFlagT                 = .gitMergeFileDefault
+    )
+    {
+        self.version            = version
+        self.flags              = flags
+        self.renameThreshold    = renameThreshold
+        self.targetLimit        = targetLimit
+        self.metric             = metric
+        self.recursionLimit     = recursionLimit
+        self.defaultDriver      = defaultDriver
+        self.fileFavor          = fileFavor
+        self.fileFlags          = fileFlags
+    }
     
     
     
-    /// Creates a ``GitMergeOptions`` instance from a `git_merge_options`
-    /// instance.
+    /// Initializes a ``GitMergeOptions`` instance from the given
+    /// `git_merge_options` instance.
     /// - Parameter mergeOptions: The `git_merge_options` instance to use.
     ///
     /// ## Discussion

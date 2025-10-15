@@ -17,7 +17,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_head`](https://libgit2.org/docs/reference/main/net/git_remote_head.html)
-public struct GitRemoteHEAD: GitStructReadable, WithCConvertible
+public struct GitRemoteHEAD: CStructReadable, WithCConvertible
 {
     /// Whether the reference exists locally.
     public let local        : Bool
@@ -37,7 +37,8 @@ public struct GitRemoteHEAD: GitStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitRemoteHEAD`` instance from a `git_remote_head` instance.
+    /// Initializes a ``GitRemoteHEAD`` instance from the given
+    /// `git_remote_head` instance.
     /// - Parameter remoteHEAD: The `git_remote_head` instance to use.
     internal init(
         cValue remoteHEAD: git_remote_head

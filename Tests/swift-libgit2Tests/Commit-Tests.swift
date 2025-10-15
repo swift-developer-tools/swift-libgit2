@@ -218,7 +218,8 @@ final class CommitTests: XCTestCaseStopOnFail
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
-                    return GIT_PASSTHROUGH.rawValue
+                    XCTFail("The payload was nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
@@ -232,7 +233,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 }
                 
                 /// Let the rebase create the commit normally.
-                return GIT_PASSTHROUGH.rawValue
+                return GitErrorCode.gitPassthrough.rawValue
             }
             
             

@@ -18,16 +18,16 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_remote_callbacks`](https://libgit2.org/docs/reference/main/remote/git_remote_callbacks.html)
-public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
+public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitRemoteCallbacksVersion``.
-    public var version              : UInt32                            = gitRemoteCallbacksVersion
+    public var version              : UInt32
     
-    /// The callback for messages received by the transport.
+    /// The callback invoked for messages received by the transport.
     ///
     /// ## Discussion
     ///
@@ -35,7 +35,7 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// Text sent over the progress side-band will be passed to this function.
     /// This is the "counting objects" output.
-    public var sidebandProgress     : GitTransportMessageCB?            = nil
+    public var sidebandProgress     : GitTransportMessageCB?
     
     /// The callback invoked when different parts of the download process are
     /// completed.
@@ -45,28 +45,28 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     ///
     /// This callback is currently unused.
-    public var completion           : GitRemoteCompletionCB?            = nil
+    public var completion           : GitRemoteCompletionCB?
     
-    /// The callback for credential acquisition.
+    /// The callback invoked to acquire credentials.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var credentials          : GitCredentialAcquireCB?           = nil
+    public var credentials          : GitCredentialAcquireCB?
     
-    /// The callback for the user's custom certificate checks.
+    /// The callback invoked to check custom certificates.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var certificateCheck     : GitTransportCertificateCheckCB?   = nil
+    public var certificateCheck     : GitTransportCertificateCheckCB?
     
-    /// The callback to report progress during the indexing process.
+    /// The callback invoked to report progress during the indexing process.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var transferProgress     : GitIndexerProgressCB?             = nil
+    public var transferProgress     : GitIndexerProgressCB?
     
     /// The callback invoked for local reference updates.
     ///
@@ -76,42 +76,42 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// - Warning: This is deprecated in libgit2 and will be removed in the
     /// next major release. Use ``updateRefs`` instead.
-    public var updateTips           : GitRemoteUpdateTipsCB?            = nil
+    public var updateTips           : GitRemoteUpdateTipsCB?
     
-    /// The callback for progress notifications.
+    /// The callback invoked for progress notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var packProgress         : GitPackbuilderProgressCB?         = nil
+    public var packProgress         : GitPackbuilderProgressCB?
     
-    /// The callback to push network progress notifications.
+    /// The callback invoked to push network progress notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var pushTransferProgress : GitPushTransferProgressCB?        = nil
+    public var pushTransferProgress : GitPushTransferProgressCB?
     
-    /// The callback to inform of the update status from the remote.
+    /// The callback invoked to inform of the update status from the remote.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var pushUpdateReference  : GitPushUpdateReferenceCB?         = nil
+    public var pushUpdateReference  : GitPushUpdateReferenceCB?
     
-    /// The callback to inform of upcoming updates.
+    /// The callback invoked to inform of upcoming updates.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var pushNegotation       : GitPushNegotiationCB?             = nil
+    public var pushNegotation       : GitPushNegotiationCB?
     
-    /// The callback to create a transport.
+    /// The callback invoked to create a transport.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var transport            : GitTransportCB?                   = nil
+    public var transport            : GitTransportCB?
     
     /// The callback invoked immediately before attempting to connect to the
     /// given URL.
@@ -119,17 +119,16 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var remoteReady          : GitRemoteReadyCB?                 = nil
+    public var remoteReady          : GitRemoteReadyCB?
     
-    /// The caller-specified payload passed to each callback in
-    /// ``GitRemoteCallbacks``.
+    /// The payload passed to the callbacks of ``GitRemoteCallbacks``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload              : UnsafeMutableRawPointer?          = nil
+    public var payload              : UnsafeMutableRawPointer?
     
-    /// The callback to resolve URLs before connecting to the remote.
+    /// The callback invoked to resolve URLs before connecting to the remote.
     ///
     /// ## Discussion
     ///
@@ -137,29 +136,60 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
     ///
     /// - Warning: This is deprecated in libgit2 and will be removed in the
     /// next major release. Use ``remoteReady`` instead.
-    public var resolveURL           : GitURLResolveCB?                  = nil
+    public var resolveURL           : GitURLResolveCB?
     
     /// The callback invoked for local reference updates.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var updateRefs           : GitRemoteUpdateRefsCB?            = nil
+    public var updateRefs           : GitRemoteUpdateRefsCB?
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitRemoteCallbacks`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version                 : UInt32                            = gitRemoteCallbacksVersion,
+        sidebandProgress        : GitTransportMessageCB?            = nil,
+        completion              : GitRemoteCompletionCB?            = nil,
+        credentials             : GitCredentialAcquireCB?           = nil,
+        certificateCheck        : GitTransportCertificateCheckCB?   = nil,
+        transferProgress        : GitIndexerProgressCB?             = nil,
+        updateTips              : GitRemoteUpdateTipsCB?            = nil,
+        packProgress            : GitPackbuilderProgressCB?         = nil,
+        pushTransferProgress    : GitPushTransferProgressCB?        = nil,
+        pushUpdateReference     : GitPushUpdateReferenceCB?         = nil,
+        pushNegotation          : GitPushNegotiationCB?             = nil,
+        transport               : GitTransportCB?                   = nil,
+        remoteReady             : GitRemoteReadyCB?                 = nil,
+        payload                 : UnsafeMutableRawPointer?          = nil,
+        resolveURL              : GitURLResolveCB?                  = nil,
+        updateRefs              : GitRemoteUpdateRefsCB?            = nil
+    )
+    {
+        self.version                = version
+        self.sidebandProgress       = sidebandProgress
+        self.completion             = completion
+        self.credentials            = credentials
+        self.certificateCheck       = certificateCheck
+        self.transferProgress       = transferProgress
+        self.updateTips             = updateTips
+        self.packProgress           = packProgress
+        self.pushTransferProgress   = pushTransferProgress
+        self.pushUpdateReference    = pushUpdateReference
+        self.pushNegotation         = pushNegotation
+        self.transport              = transport
+        self.remoteReady            = remoteReady
+        self.payload                = payload
+        self.resolveURL             = resolveURL
+        self.updateRefs             = updateRefs
+    }
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance from a `git_remote_callbacks`
-    /// instance.
+    /// Initializes a ``GitRemoteCallbacks`` instance from the given
+    /// `git_remote_callbacks` instance.
     /// - Parameter remoteCallbacks: The `git_remote_callbacks` instance to use.
     internal init(
         cValue remoteCallbacks: git_remote_callbacks
@@ -231,32 +261,32 @@ public struct GitRemoteCallbacks: GitStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
-public struct GitFetchOptions: GitStructMutable, WithCConvertible
+public struct GitFetchOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitFetchOptionsVersion``.
-    public var version          : Int32                     = gitFetchOptionsVersion
+    public var version          : Int32
     
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
-    public var callbacks        : GitRemoteCallbacks?       = nil
+    public var callbacks        : GitRemoteCallbacks?
     
     /// The acceptable prune settings when performing a fetch operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitFetchPruneT/gitFetchPruneUnspecified``.
-    public var prune            : GitFetchPruneT            = .gitFetchPruneUnspecified
+    public var prune            : GitFetchPruneT
     
     /// The flags controlling remote updates.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFetchHEAD``.
-    public var updateFetchHEAD  : GitRemoteUpdateFlags      = .gitRemoteUpdateFetchHEAD
+    public var updateFetchHEAD  : GitRemoteUpdateFlags
     
     /// The automatic tag-following option used to determine which `--tags`
     /// option to use.
@@ -265,7 +295,7 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is
     /// ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsAuto``.
-    public var downloadTags     : GitRemoteAutoTagOptionT   = .gitRemoteDownloadTagsAuto
+    public var downloadTags     : GitRemoteAutoTagOptionT
     
     /// The options for connecting through a proxy.
     ///
@@ -273,42 +303,60 @@ public struct GitFetchOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the default proxy options.
-    public var proxyOpts        : GitProxyOptions?          = nil
+    public var proxyOpts        : GitProxyOptions?
     
     /// The shallowness of the fetch operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitFetchDepthT/gitFetchDepthFull``.
-    public var depth            : GitFetchDepthT            = .gitFetchDepthFull
+    public var depth            : GitFetchDepthT
     
     /// The remote redirection settings.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitRemoteRedirectT/gitRemoteRedirectNone``.
-    public var followRedirects  : GitRemoteRedirectT        = .gitRemoteRedirectNone
+    public var followRedirects  : GitRemoteRedirectT
     
     /// The extra headers for the fetch operation.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty array.
-    public var customHeaders    : [String]                  = []
+    public var customHeaders    : [String]
     
     
     
-    /// Creates a ``GitFetchOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitFetchOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : Int32                     = gitFetchOptionsVersion,
+        callbacks       : GitRemoteCallbacks?       = nil,
+        prune           : GitFetchPruneT            = .gitFetchPruneUnspecified,
+        updateFetchHEAD : GitRemoteUpdateFlags      = .gitRemoteUpdateFetchHEAD,
+        downloadTags    : GitRemoteAutoTagOptionT   = .gitRemoteDownloadTagsAuto,
+        proxyOpts       : GitProxyOptions?          = nil,
+        depth           : GitFetchDepthT            = .gitFetchDepthFull,
+        followRedirects : GitRemoteRedirectT        = .gitRemoteRedirectNone,
+        customHeaders   : [String]                  = []
+    )
+    {
+        self.version            = version
+        self.callbacks          = callbacks
+        self.prune              = prune
+        self.updateFetchHEAD    = updateFetchHEAD
+        self.downloadTags       = downloadTags
+        self.proxyOpts          = proxyOpts
+        self.depth              = depth
+        self.followRedirects    = followRedirects
+        self.customHeaders      = customHeaders
+    }
     
     
     
-    /// Creates a ``GitFetchOptions`` instance from a `git_fetch_options`
-    /// instance.
+    /// Initializes a ``GitFetchOptions`` instance from the given
+    /// `git_fetch_options` instance.
     /// - Parameter fetchOptions: The `git_fetch_options` instance to use.
     ///
     /// ## Discussion

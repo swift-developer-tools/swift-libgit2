@@ -17,21 +17,21 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cherrypick_options`](https://libgit2.org/docs/reference/main/cherrypick/git_cherrypick_options.html)
-public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
+public struct GitCherrypickOptions: CStructMutable, WithCConvertible
 {
     /// The version to use.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitCherrypickOptionsVersion``.
-    public var version      : UInt32                = gitCherrypickOptionsVersion
+    public var version      : UInt32
     
     /// The parent for merge commits.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var mainline     : UInt32                = 0
+    public var mainline     : UInt32
     
     /// The options for the merge operation.
     ///
@@ -39,7 +39,7 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the default merge options.
-    public var mergeOpts    : GitMergeOptions?      = nil
+    public var mergeOpts    : GitMergeOptions?
     
     /// The options for the checkout operation.
     ///
@@ -47,21 +47,28 @@ public struct GitCherrypickOptions: GitStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the default checkout options.
-    public var checkoutOpts : GitCheckoutOptions?   = nil
+    public var checkoutOpts : GitCheckoutOptions?
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitCherrypickOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32                = gitCherrypickOptionsVersion,
+        mainline        : UInt32                = 0,
+        mergeOpts       : GitMergeOptions?      = nil,
+        checkoutOpts    : GitCheckoutOptions?   = nil
+    )
+    {
+        self.version        = version
+        self.mainline       = mainline
+        self.mergeOpts      = mergeOpts
+        self.checkoutOpts   = checkoutOpts
+    }
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance from a
+    /// Initializes a ``GitCherrypickOptions`` instance from the given
     /// `git_cherrypick_options` instance.
     /// - Parameter cherrypickOptions: The `git_cherrypick_options` instance
     /// to use.
