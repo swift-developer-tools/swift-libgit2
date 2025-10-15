@@ -944,7 +944,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible
 /// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
 public struct GitDiffSimilarityMetric: CStruct
 {
-    /// The function to generate a signature for a file.
+    /// Generates a signature for the given file.
     public let fileSignature: @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
@@ -953,7 +953,7 @@ public struct GitDiffSimilarityMetric: CStruct
         UnsafeMutableRawPointer?
     ) -> Int32
     
-    /// The function to generate a signature for a buffer.
+    /// Generates a signature for the given buffer.
     public let bufferSignature: @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
@@ -963,14 +963,14 @@ public struct GitDiffSimilarityMetric: CStruct
         UnsafeMutableRawPointer?
     ) -> Int32
     
-    /// The function to free a signature.
+    /// Frees the memory allocated for the given signature.
     public let freeSignature: @convention(c)
     (
         UnsafeMutableRawPointer?,
         UnsafeMutableRawPointer?
     ) -> Void
     
-    /// The function to determine the similarity score of two files.
+    /// Generates a similarity score.
     public let similarity: @convention(c)
     (
         UnsafeMutablePointer<Int32>?,

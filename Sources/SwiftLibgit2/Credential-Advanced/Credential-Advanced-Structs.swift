@@ -28,7 +28,7 @@ public struct GitCredential: CStruct
     /// The type of supported credential.
     public let credType: GitCredentialT
     
-    /// The function to free a credential.
+    /// Frees the memory allocated for the given `git_credential` instance.
     public let free: @convention(c)
     (
         UnsafeMutablePointer<git_credential>?

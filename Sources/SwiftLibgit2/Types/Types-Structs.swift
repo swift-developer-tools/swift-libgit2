@@ -72,7 +72,7 @@ public struct GitTime: CStructReadable, CConvertible
 /// [`git_writestream`](https://libgit2.org/docs/reference/main/types/git_writestream.html)
 public struct GitWritestream: CStruct
 {
-    /// The function to write to the stream.
+    /// Writes to the stream.
     public let write: @convention(c)
     (
         UnsafeMutablePointer<git_writestream>?,
@@ -80,13 +80,13 @@ public struct GitWritestream: CStruct
         Int
     ) -> Int32
     
-    /// The function to close the stream.
+    /// Closes the stream.
     public let close: @convention(c)
     (
         UnsafeMutablePointer<git_writestream>?
     ) -> Int32
     
-    /// The function to free the stream.
+    /// Frees the memory allocated for the given `git_writestream` instance.
     public let free: @convention(c)
     (
         UnsafeMutablePointer<git_writestream>?
