@@ -66,12 +66,7 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
     
     
     
-    /// Initializes a ``GitConfigEntry`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitConfigEntry`` instance.
     public init() { }
     
     

@@ -31,11 +31,7 @@ public struct GitOID: CStructInternalMutable, CConvertible, Sendable
     
     
     
-    /// Initializes a ``GitOID`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitOID`` instance.
     public init() { }
     
     

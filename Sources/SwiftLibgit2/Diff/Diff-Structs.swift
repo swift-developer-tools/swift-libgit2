@@ -719,11 +719,7 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
     
     
     
-    /// Initializes a ``GitDiffHunk`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitDiffHunk``.
     public init() { }
     
     
@@ -841,11 +837,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
     
     
     
-    /// Initializes a ``GitDiffLine`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitDiffLine`` instance.
     public init() { }
     
     

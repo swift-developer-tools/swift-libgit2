@@ -71,12 +71,7 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible, Sendable
     
     
     
-    /// Initializes a ``GitIndexerProgress`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitIndexerProgress`` instance.
     public init() { }
     
     

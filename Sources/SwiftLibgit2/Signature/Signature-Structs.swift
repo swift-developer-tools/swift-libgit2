@@ -46,11 +46,7 @@ public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible,
     
     
     
-    /// Initializes a ``GitSignature`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitSignature`` instance.
     public init() { }
     
     

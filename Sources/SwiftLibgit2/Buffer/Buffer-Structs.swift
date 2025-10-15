@@ -68,11 +68,7 @@ public struct GitBuf: CStructInternalMutable, WithCConvertible
     
     
     
-    /// Initializes a ``GitBuf`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitBuf`` instance.
     public init() { }
     
     

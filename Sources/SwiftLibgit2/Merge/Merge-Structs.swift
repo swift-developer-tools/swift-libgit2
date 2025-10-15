@@ -339,12 +339,7 @@ public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConver
     
     
     
-    /// Initializes a ``GitMergeFileResult`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitMergeFileResult`` instance.
     public init() { }
     
     
