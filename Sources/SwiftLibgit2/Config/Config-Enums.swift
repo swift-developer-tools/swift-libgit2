@@ -97,8 +97,8 @@ public enum GitConfigLevelT: Int32, CEnum
     
     
     
-    /// Creates a ``GitConfigLevelT`` instance from a `git_config_level_t`
-    /// instance.
+    /// Initializes a ``GitConfigLevelT`` instance from the given
+    /// `git_config_level_t` instance.
     /// - Parameter configLevel: The `git_config_level_t` instance to use.
     internal init?(
         cValue configLevel: git_config_level_t
@@ -179,7 +179,8 @@ public enum GitConfigMapT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitConfigMapT`` instance from a `git_configmap_t` instance.
+    /// Initializes a ``GitConfigMapT`` instance from the given
+    /// `git_configmap_t` instance.
     /// - Parameter git_configmap_t: The `git_configmap_t` instance to use.
     internal init?(
         cValue configMap: git_configmap_t

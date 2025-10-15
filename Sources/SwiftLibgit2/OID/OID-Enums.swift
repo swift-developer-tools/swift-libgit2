@@ -23,7 +23,7 @@ public enum GitOIDT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitOIDT`` instance from a `git_oid_t` instance.
+    /// Initializes a ``GitOIDT`` instance from the given `git_oid_t` instance.
     /// - Parameter oid: The `git_oid_t` instance to use.
     internal init?(
         cValue oid: git_oid_t

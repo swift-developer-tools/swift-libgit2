@@ -72,7 +72,7 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitProxyOptions`` instance with the default configuration.
+    /// Initializes a ``GitProxyOptions`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -81,8 +81,8 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitProxyOptions`` instance from a `git_proxy_options`
-    /// instance.
+    /// Initializes a ``GitProxyOptions`` instance from the given
+    /// `git_proxy_options` instance.
     /// - Parameter proxyOptions: The `git_proxy_options` instance to use.
     ///
     /// ## Discussion

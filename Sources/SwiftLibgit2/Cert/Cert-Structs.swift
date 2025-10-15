@@ -24,7 +24,7 @@ public struct GitCert: CStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitCert`` instance from a `git_cert` instance.
+    /// Initializes a ``GitCert`` instance from the given `git_cert` instance.
     /// - Parameter cert: The `git_cert` instance to use.
     ///
     /// ## Discussion
@@ -131,8 +131,8 @@ public struct GitCertHostKey: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitCertHostKey`` instance from a `git_cert_hostkey`
-    /// instance.
+    /// Initializes a ``GitCertHostKey`` instance from the given
+    /// `git_cert_hostkey` instance.
     /// - Parameter certHostKey: The `git_cert_hostkey` instance to use.
     ///
     /// ## Discussion
@@ -247,7 +247,8 @@ public struct GitCertX509: CStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitCertX509`` instance from a `git_cert_x509` instance.
+    /// Initializes a ``GitCertX509`` instance from the given `git_cert_x509`
+    /// instance.
     /// - Parameter certX509: The `git_cert_x509` instance to use.
     internal init(
         cValue certX509: git_cert_x509

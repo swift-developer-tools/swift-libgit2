@@ -23,7 +23,7 @@ public struct GitODBLookupFlagsT: COptionSet
     
     
     
-    /// Creates a ``GitODBLookupFlagsT`` instance from a raw value.
+    /// Initializes a ``GitODBLookupFlagsT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,7 @@ public struct GitODBLookupFlagsT: COptionSet
     
     
     
-    /// Creates a ``GitODBLookupFlagsT`` instance from a
+    /// Initializes a ``GitODBLookupFlagsT`` instance from the given
     /// `git_odb_lookup_flags_t` instance.
     /// - Parameter odbLookupFlags: The `git_odb_lookup_flags_t` instance to
     /// use.

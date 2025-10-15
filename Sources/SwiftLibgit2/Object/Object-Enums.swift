@@ -38,7 +38,8 @@ public enum GitObjectT: Int32, CEnum
     
     
     
-    /// Creates a ``GitObjectT`` instance from a `git_object_t` instance.
+    /// Initializes a ``GitObjectT`` instance from the given `git_object_t`
+    /// instance.
     /// - Parameter configLevel: The `git_object_t` instance to use.
     internal init?(
         cValue object: git_object_t

@@ -52,7 +52,7 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlobFilterOptions`` instance with the default
+    /// Initializes a ``GitBlobFilterOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -62,7 +62,7 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlobFilterOptions`` instance from a
+    /// Initializes a ``GitBlobFilterOptions`` instance from the given
     /// `git_blob_filter_options` instance.
     /// - Parameter blobFilterOptions: The `git_blob_filter_options` instance
     /// to use.

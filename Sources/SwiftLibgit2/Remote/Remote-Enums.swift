@@ -39,8 +39,8 @@ public enum GitRemoteRedirectT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitRemoteRedirectT`` instance from a `git_remote_redirect_t`
-    /// instance.
+    /// Initializes a ``GitRemoteRedirectT`` instance from the given
+    /// `git_remote_redirect_t` instance.
     /// - Parameter remoteRedirect: The `git_remote_redirect_t` instance to use.
     internal init?(
         cValue remoteRedirect: git_remote_redirect_t
@@ -85,7 +85,8 @@ public struct GitRemoteCreateFlags: COptionSet
     
     
     
-    /// Creates a ``GitRemoteCreateFlags`` instance from a raw value.
+    /// Initializes a ``GitRemoteCreateFlags`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -96,7 +97,7 @@ public struct GitRemoteCreateFlags: COptionSet
     
     
     
-    /// Creates a ``GitRemoteCreateFlags`` instance from a
+    /// Initializes a ``GitRemoteCreateFlags`` instance from the given
     /// `git_remote_create_flags` instance.
     /// - Parameter remoteCreateFlags: The `git_remote_create_flags` instance
     /// to use.
@@ -140,7 +141,7 @@ public struct GitRemoteUpdateFlags: COptionSet
     
     
     
-    /// Creates a ``GitRemoteUpdateFlags`` instance from a raw value.
+    /// Initializes a ``GitRemoteUpdateFlags`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -151,7 +152,7 @@ public struct GitRemoteUpdateFlags: COptionSet
     
     
     
-    /// Creates a ``GitRemoteUpdateFlags`` instance from a
+    /// Initializes a ``GitRemoteUpdateFlags`` instance from the given
     /// `git_remote_update_flags` instance.
     /// - Parameter remoteUpdateFlags: The `git_remote_update_flags` instance
     /// to use.
@@ -201,7 +202,7 @@ public enum GitRemoteCompletionT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitRemoteCompletionT`` instance from a
+    /// Initializes a ``GitRemoteCompletionT`` instance from the given
     /// `git_remote_completion_t` instance.
     /// - Parameter remoteCompletion: The `git_remote_completion_t` instance
     /// to use.
@@ -254,8 +255,8 @@ public enum GitFetchPruneT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitFetchPruneT`` instance from a `git_fetch_prune_t`
-    /// instance.
+    /// Initializes a ``GitFetchPruneT`` instance from the given
+    /// `git_fetch_prune_t` instance.
     /// - Parameter fetchPrune: The `git_fetch_prune_t` instance to use.
     internal init?(
         cValue fetchPrune: git_fetch_prune_t
@@ -311,7 +312,7 @@ public enum GitRemoteAutoTagOptionT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitRemoteAutoTagOptionT`` instance from a
+    /// Initializes a ``GitRemoteAutoTagOptionT`` instance from the given
     /// `git_remote_autotag_option_t` instance.
     /// - Parameter remoteAutotagOption: The `git_remote_autotag_option_t`
     /// instance to use.
@@ -367,8 +368,8 @@ public enum GitFetchDepthT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitFetchDepthT`` instance from a `git_fetch_depth_t`
-    /// instance.
+    /// Initializes a ``GitFetchDepthT`` instance from the given
+    /// `git_fetch_depth_t` instance.
     /// - Parameter fetchDepth: The `git_fetch_depth_t` instance to use.
     internal init?(
         cValue fetchDepth: git_fetch_depth_t

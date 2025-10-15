@@ -167,7 +167,7 @@ public enum GitErrorCode: CEnum, Equatable, Hashable, RawRepresentable
     
     
     
-    /// Creates a ``GitErrorCode`` instance from a raw value.
+    /// Initializes a ``GitErrorCode`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: Int32
@@ -262,7 +262,8 @@ public enum GitErrorCode: CEnum, Equatable, Hashable, RawRepresentable
     
     
     
-    /// Creates a ``GitErrorCode`` instance from a `git_error_code` instance.
+    /// Initializes a ``GitErrorCode`` instance from the given `git_error_code`
+    /// instance.
     /// - Parameter error: The `git_error_code` instance to use.
     internal init?(
         cValue error: git_error_code
@@ -499,7 +500,7 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
     
     
     
-    /// Creates a ``GitError`` instance from a raw value.
+    /// Initializes a ``GitError`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: Int32
@@ -598,7 +599,8 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
     
     
     
-    /// Creates a ``GitErrorT`` instance from a `git_error_t` instance.
+    /// Initializes a ``GitErrorT`` instance from the given `git_error_t`
+    /// instance.
     /// - Parameter error: The `git_error_t` instance to use.
     internal init?(
         cValue error: git_error_t

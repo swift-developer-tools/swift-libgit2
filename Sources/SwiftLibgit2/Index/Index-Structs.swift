@@ -35,7 +35,7 @@ public struct GitIndexTime: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexTime`` instance with the default configuration.
+    /// Initializes a ``GitIndexTime`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -44,7 +44,8 @@ public struct GitIndexTime: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexTime`` instance from a `git_index_time` instance.
+    /// Initializes a ``GitIndexTime`` instance from the given `git_index_time`
+    /// instance.
     /// - Parameter indexTime: The `git_index_time` instance to use.
     internal init(
         cValue indexTime: git_index_time
@@ -164,7 +165,7 @@ public struct GitIndexEntry: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitIndexEntry`` instance with the default configuration.
+    /// Initializes a ``GitIndexEntry`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -173,7 +174,8 @@ public struct GitIndexEntry: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitIndexEntry`` instance from a `git_index_entry` instance.
+    /// Initializes a ``GitIndexEntry`` instance from the given
+    /// `git_index_entry` instance.
     /// - Parameter indexEntry: The `git_index_entry` instance to use.
     ///
     /// ## Discussion

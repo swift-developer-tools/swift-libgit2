@@ -31,7 +31,7 @@ public struct GitCredentialUserPassPayload: CStruct
 
     
     
-    /// Creates a ``GitCredentialUserPassPayload`` instance from a
+    /// Initializes a ``GitCredentialUserPassPayload`` instance from the given
     /// `git_credential_userpass_payload` instance.
     /// - Parameter payload: The `git_credential_userpass_payload` instance
     /// to use.

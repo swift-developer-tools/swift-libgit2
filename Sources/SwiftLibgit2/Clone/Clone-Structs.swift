@@ -104,7 +104,8 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCloneOptions`` instance with the default configuration.
+    /// Initializes a ``GitCloneOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -113,8 +114,8 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCloneOptions`` instance from a `git_clone_options`
-    /// instance.
+    /// Initializes a ``GitCloneOptions`` instance from the given
+    /// `git_clone_options` instance.
     /// - Parameter cloneOptions: The `git_clone_options` instance to use.
     internal init(
         cValue cloneOptions: git_clone_options

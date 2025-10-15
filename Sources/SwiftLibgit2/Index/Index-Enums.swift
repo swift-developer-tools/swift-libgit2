@@ -23,7 +23,7 @@ public struct GitIndexEntryFlagT: COptionSet
     
     
     
-    /// Creates a ``GitIndexEntryFlagT`` instance from a raw value.
+    /// Initializes a ``GitIndexEntryFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,7 @@ public struct GitIndexEntryFlagT: COptionSet
     
     
     
-    /// Creates a ``GitIndexEntryFlagT`` instance from a
+    /// Initializes a ``GitIndexEntryFlagT`` instance from the given
     /// `git_index_entry_flag_t` instance.
     /// - Parameter indexEntryFlag: The `git_index_entry_flag_t` instance to
     /// use.
@@ -88,7 +88,8 @@ public struct GitIndexEntryExtendedFlagT: COptionSet
     
     
     
-    /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a raw value.
+    /// Initializes a ``GitIndexEntryExtendedFlagT`` instance from the given
+    /// raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -99,7 +100,7 @@ public struct GitIndexEntryExtendedFlagT: COptionSet
     
     
     
-    /// Creates a ``GitIndexEntryExtendedFlagT`` instance from a
+    /// Initializes a ``GitIndexEntryExtendedFlagT`` instance from the given
     /// `git_index_entry_extended_flag_t` instance.
     /// - Parameter indexEntryExtendedFlag: The
     /// `git_index_entry_extended_flag_t` instance to use.
@@ -158,7 +159,7 @@ public enum GitIndexCapabilityT: Int32, CEnum
     
     
     
-    /// Creates a ``GitIndexCapabilityT`` instance from a
+    /// Initializes a ``GitIndexCapabilityT`` instance from the given
     /// `git_index_capability_t` instance.
     /// - Parameter indexCapability: The `git_index_capability_t` instance to
     /// use.
@@ -207,7 +208,7 @@ public struct GitIndexAddOptionT: COptionSet
     
     
     
-    /// Creates a ``GitIndexAddOptionT`` instance from a raw value.
+    /// Initializes a ``GitIndexAddOptionT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -218,7 +219,7 @@ public struct GitIndexAddOptionT: COptionSet
     
     
     
-    /// Creates a ``GitIndexAddOptionT`` instance from a
+    /// Initializes a ``GitIndexAddOptionT`` instance from the given
     /// `git_index_add_option_t` instance.
     /// - Parameter indexAddOption: The `git_index_add_option_t` instance to
     /// use.
@@ -285,8 +286,8 @@ public enum GitIndexStageT: Int32, CEnum
     
     
     
-    /// Creates a ``GitIndexStageT`` instance from a `git_index_stage_t`
-    /// instance.
+    /// Initializes a ``GitIndexStageT`` instance from the given
+    /// `git_index_stage_t` instance.
     /// - Parameter indexStage: The `git_index_stage_t` instance to use.
     internal init?(
         cValue indexStage: git_index_stage_t

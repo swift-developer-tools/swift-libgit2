@@ -51,7 +51,7 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance with the default
+    /// Initializes a ``GitCherrypickOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -61,7 +61,7 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCherrypickOptions`` instance from a
+    /// Initializes a ``GitCherrypickOptions`` instance from the given
     /// `git_cherrypick_options` instance.
     /// - Parameter cherrypickOptions: The `git_cherrypick_options` instance
     /// to use.

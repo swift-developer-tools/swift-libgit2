@@ -23,7 +23,7 @@ public struct GitMergeFlagT: COptionSet
     
     
     
-    /// Creates a ``GitMergeFlagT`` instance from a raw value.
+    /// Initializes a ``GitMergeFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,8 @@ public struct GitMergeFlagT: COptionSet
     
     
     
-    /// Creates a ``GitMergeFlagT`` instance from a `git_merge_flag_t` instance.
+    /// Initializes a ``GitMergeFlagT`` instance from the given `git_merge_flag_t`
+    /// instance.
     /// - Parameter mergeFlag: The `git_merge_flag_t` instance to use.
     internal init(
         cValue mergeFlag: git_merge_flag_t
@@ -131,7 +132,7 @@ public enum GitMergeFileFavorT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitMergeFileFavorT`` instance from a
+    /// Initializes a ``GitMergeFileFavorT`` instance from the given
     /// `git_merge_file_favor_t` instance.
     /// - Parameter mergeFileFavor: The `git_merge_file_favor_t` instance to
     /// use.
@@ -180,7 +181,7 @@ public struct GitMergeFileFlagT: COptionSet
     
     
     
-    /// Creates a ``GitMergeFileFlagT`` instance from a raw value.
+    /// Initializes a ``GitMergeFileFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -191,8 +192,8 @@ public struct GitMergeFileFlagT: COptionSet
     
     
     
-    /// Creates a ``GitMergeFileFlagT`` instance from a `git_merge_file_flag_t`
-    /// instance.
+    /// Initializes a ``GitMergeFileFlagT`` instance from the given
+    /// `git_merge_file_flag_t` instance.
     /// - Parameter mergeFileFlag: The `git_merge_file_flag_t` instance to use.
     internal init(
         cValue mergeFileFlag: git_merge_file_flag_t
@@ -263,7 +264,7 @@ public struct GitMergeAnalysisT: COptionSet
     
     
     
-    /// Creates a ``GitMergeAnalysisT`` instance from a raw value.
+    /// Initializes a ``GitMergeAnalysisT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -274,8 +275,8 @@ public struct GitMergeAnalysisT: COptionSet
     
     
     
-    /// Creates a ``GitMergeAnalysisT`` instance from a `git_merge_analysis_t`
-    /// instance.
+    /// Initializes a ``GitMergeAnalysisT`` instance from the given
+    /// `git_merge_analysis_t` instance.
     /// - Parameter mergeAnalysis: The `git_merge_analysis_t` instance to use.
     internal init(
         cValue mergeAnalysis: git_merge_analysis_t
@@ -342,7 +343,7 @@ public struct GitMergePreferenceT: COptionSet
     
     
     
-    /// Creates a ``GitMergePreferenceT`` instance from a raw value.
+    /// Initializes a ``GitMergePreferenceT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -353,7 +354,7 @@ public struct GitMergePreferenceT: COptionSet
     
     
     
-    /// Creates a ``GitMergePreferenceT`` instance from a
+    /// Initializes a ``GitMergePreferenceT`` instance from the given
     /// `git_merge_preference_t` instance.
     /// - Parameter mergePreference: The `git_merge_preference_t` instance
     /// to use.

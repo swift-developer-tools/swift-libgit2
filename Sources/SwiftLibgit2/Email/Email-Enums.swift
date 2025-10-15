@@ -23,7 +23,8 @@ public struct GitEmailCreateFlagsT: COptionSet
     
     
     
-    /// Creates a ``GitEmailCreateFlagsT`` instance from a raw value.
+    /// Initializes a ``GitEmailCreateFlagsT`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +35,7 @@ public struct GitEmailCreateFlagsT: COptionSet
     
     
     
-    /// Creates a ``GitEmailCreateFlagsT`` instance from a
+    /// Initializes a ``GitEmailCreateFlagsT`` instance from the given
     /// `git_email_create_flags_t` instance.
     /// - Parameter emailCreateFlags: The `git_email_create_flags_t` instance
     /// to use.

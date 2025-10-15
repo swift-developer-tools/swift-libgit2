@@ -57,7 +57,7 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance with the default
+    /// Initializes a ``GitCommitCreateOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -67,7 +67,7 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCommitCreateOptions`` instance from a
+    /// Initializes a ``GitCommitCreateOptions`` instance from the given
     /// `git_commit_create_options` instance.
     /// - Parameter commitCreateOptions: The `git_commit_create_options`
     /// instance to use.
@@ -148,7 +148,8 @@ public struct GitCommitArray: CStruct
     
     
     
-    /// Creates a ``GitCommitArray`` instance from a `git_commitarray` instance.
+    /// Initializes a ``GitCommitArray`` instance from the given
+    /// `git_commitarray` instance.
     /// - Parameter commitArray: The `git_commitarray` instance to use.
     internal init(
         cValue commitArray: git_commitarray

@@ -37,8 +37,8 @@ public enum GitFilterModeT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitFilterModeT`` instance from a `git_filter_mode_t`
-    /// instance.
+    /// Initializes a ``GitFilterModeT`` instance from the given
+    /// `git_filter_mode_t` instance.
     /// - Parameter filterMode: The `git_filter_mode_t` instance to use.
     internal init?(
         cValue filterMode: git_filter_mode_t
@@ -83,7 +83,7 @@ public struct GitFilterFlagT: COptionSet
     
     
     
-    /// Creates a ``GitFilterFlagT`` instance from a raw value.
+    /// Initializes a ``GitFilterFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -94,8 +94,8 @@ public struct GitFilterFlagT: COptionSet
     
     
     
-    /// Creates a ``GitFilterFlagT`` instance from a `git_filter_flag_t`
-    /// instance.
+    /// Initializes a ``GitFilterFlagT`` instance from the given
+    /// `git_filter_flag_t` instance.
     /// - Parameter filterFlags: The `git_filter_flag_t` instance to use.
     internal init(
         cValue filterFlags: git_filter_flag_t

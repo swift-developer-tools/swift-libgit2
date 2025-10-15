@@ -29,7 +29,8 @@ public enum GitBranchT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitBranchT`` instance from a `git_branch_t` instance.
+    /// Initializes a ``GitBranchT`` instance from the given `git_branch_t`
+    /// instance.
     /// - Parameter branch: The `git_branch_t` instance to use.
     internal init?(
         cValue branch: git_branch_t

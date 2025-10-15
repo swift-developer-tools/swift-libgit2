@@ -49,7 +49,8 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitFilterOptions`` instance with the default configuration.
+    /// Initializes a ``GitFilterOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -58,8 +59,8 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitFilterOptions`` instance from a `git_filter_options`
-    /// instance.
+    /// Initializes a ``GitFilterOptions`` instance from the given
+    /// `git_filter_options` instance.
     /// - Parameter filterOptions: The `git_filter_options` instance
     /// to use.
     internal init(

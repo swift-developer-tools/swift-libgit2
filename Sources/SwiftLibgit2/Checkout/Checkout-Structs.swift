@@ -30,7 +30,7 @@ public struct GitCheckoutPerfData: CStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitCheckoutPerfData`` instance from a
+    /// Initializes a ``GitCheckoutPerfData`` instance from the given
     /// `git_checkout_perfdata` instance.
     /// - Parameter checkoutPerfData: The `git_checkout_perfdata` instance to
     /// use.
@@ -228,7 +228,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCheckoutOptions`` instance with the default
+    /// Initializes a ``GitCheckoutOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -238,8 +238,8 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitCheckoutOptions`` instance from a `git_checkout_options`
-    /// instance.
+    /// Initializes a ``GitCheckoutOptions`` instance from the given
+    /// `git_checkout_options` instance.
     /// - Parameter checkoutOptions: The `git_checkout_options` instance to use.
     internal init(
         cValue checkoutOptions: git_checkout_options

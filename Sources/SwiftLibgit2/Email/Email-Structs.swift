@@ -77,7 +77,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitEmailCreateOptions`` instance with the default
+    /// Initializes a ``GitEmailCreateOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -87,7 +87,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitEmailCreateOptions`` instance from a
+    /// Initializes a ``GitEmailCreateOptions`` instance from the given
     /// `git_email_create_options` instance.
     /// - Parameter emailCreateOptions: The `git_email_create_options` instance
     /// to use.

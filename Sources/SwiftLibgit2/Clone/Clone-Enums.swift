@@ -44,8 +44,8 @@ public enum GitCloneLocalT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitCloneLocalT`` instance from a `git_clone_local_t`
-    /// instance.
+    /// Initializes a ``GitCloneLocalT`` instance from the given
+    /// `git_clone_local_t` instance.
     /// - Parameter cloneLocal: The `git_clone_local_t` instance to use.
     internal init?(
         cValue cloneLocal: git_clone_local_t

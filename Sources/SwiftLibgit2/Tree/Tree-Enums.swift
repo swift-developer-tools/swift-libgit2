@@ -38,7 +38,8 @@ public enum GitFileModeT: UInt16, CEnum
 
     
     
-    /// Creates a ``GitFileModeT`` instance from a `git_filemode_t` instance.
+    /// Initializes a ``GitFileModeT`` instance from the given `git_filemode_t`
+    /// instance.
     /// - Parameter fileMode: The `git_filemode_t` instance to use.
     internal init?(
         cValue fileMode: git_filemode_t

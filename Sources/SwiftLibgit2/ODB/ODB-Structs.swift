@@ -34,7 +34,7 @@ public struct GitODBOptions: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitODBOptions`` instance with the default configuration.
+    /// Initializes a ``GitODBOptions`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -43,7 +43,8 @@ public struct GitODBOptions: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitODBOptions`` instance from a `git_odb_options` instance.
+    /// Initializes a ``GitODBOptions`` instance from the given
+    /// `git_odb_options` instance.
     /// - Parameter odbOptions: The `git_odb_options`
     /// instance to use.
     ///
@@ -107,7 +108,7 @@ public struct GitODBExpandID: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitODBExpandID`` instance with the default configuration.
+    /// Initializes a ``GitODBExpandID`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -116,8 +117,8 @@ public struct GitODBExpandID: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitODBExpandID`` instance from a `git_odb_expand_id`
-    /// instance.
+    /// Initializes a ``GitODBExpandID`` instance from the given
+    /// `git_odb_expand_id` instance.
     /// - Parameter odbExpandID: The `git_odb_expand_id` instance to use.
     ///
     /// ## Discussion

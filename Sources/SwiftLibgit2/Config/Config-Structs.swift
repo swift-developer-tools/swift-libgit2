@@ -66,7 +66,8 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
     
     
     
-    /// Creates a ``GitConfigEntry`` instance with the default configuration.
+    /// Initializes a ``GitConfigEntry`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -75,8 +76,8 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
     
     
     
-    /// Creates a ``GitConfigEntry`` instance from a `git_config_entry`
-    /// instance.
+    /// Initializes a ``GitConfigEntry`` instance from the given
+    /// `git_config_entry` instance.
     /// - Parameter configEntry: The `git_config_entry` instance to use.
     ///
     /// ## Discussion
@@ -195,7 +196,7 @@ public struct GitConfigMap: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitConfigMap`` instance with the default configuration.
+    /// Initializes a ``GitConfigMap`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -204,7 +205,8 @@ public struct GitConfigMap: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitConfigMap`` instance from a `git_configmap` instance.
+    /// Initializes a ``GitConfigMap`` instance from the given `git_configmap`
+    /// instance.
     /// - Parameter configMap: The `git_configmap` instance to use.
     ///
     /// ## Discussion

@@ -46,7 +46,7 @@ public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitSignature`` instance with the default configuration.
+    /// Initializes a ``GitSignature`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -55,7 +55,8 @@ public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitSignature`` instance from a `git_signature` instance.
+    /// Initializes a ``GitSignature`` instance from the given `git_signature`
+    /// instance.
     /// - Parameter signature: The `git_signature` instance to use.
     ///
     /// ## Discussion

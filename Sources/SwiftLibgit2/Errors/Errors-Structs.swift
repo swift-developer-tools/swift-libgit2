@@ -26,7 +26,7 @@ public struct GitError: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitError`` instance from a `git_error` instance.
+    /// Initializes a ``GitError`` instance from the given `git_error` instance.
     /// - Parameter error: The `git_error` instance to use.
     internal init(
         cValue error: git_error

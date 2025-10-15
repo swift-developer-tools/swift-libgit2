@@ -39,7 +39,7 @@ public struct GitAttrCheckFlagsT: COptionSet
     
     
     
-    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
+    /// Initializes a ``GitAttrCheckFlagsT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -50,7 +50,7 @@ public struct GitAttrCheckFlagsT: COptionSet
     
     
     
-    /// Creates a ``GitAttrCheckFlagsT`` instance from a raw value.
+    /// Initializes a ``GitAttrCheckFlagsT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     internal init(
         cValue rawValue: UInt32
@@ -117,7 +117,8 @@ public enum GitAttrValueT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitAttrValueT`` instance from a `git_attr_value_t` instance.
+    /// Initializes a ``GitAttrValueT`` instance from the given
+    /// `git_attr_value_t` instance.
     /// - Parameter attrValue: The `git_attr_value_t` instance to use.
     internal init?(
         cValue attrValue: git_attr_value_t

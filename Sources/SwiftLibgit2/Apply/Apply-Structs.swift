@@ -57,7 +57,8 @@ public struct GitApplyOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitApplyOptions`` instance with the default configuration.
+    /// Initializes a ``GitApplyOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -66,8 +67,8 @@ public struct GitApplyOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitApplyOptions`` instance from a `git_apply_options`
-    /// instance.
+    /// Initializes a ``GitApplyOptions`` instance from the given
+    /// `git_apply_options` instance.
     /// - Parameter applyOptions: The `git_apply_options` instance to use.
     internal init(
         cValue applyOptions: git_apply_options

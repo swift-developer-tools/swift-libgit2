@@ -71,7 +71,7 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance with the default
+    /// Initializes a ``GitIndexerProgress`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -81,8 +81,8 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitIndexerProgress`` instance from a `git_indexer_progress`
-    /// instance.
+    /// Initializes a ``GitIndexerProgress`` instance from the given
+    /// `git_indexer_progress` instance.
     /// - Parameter indexerProgress: The `git_indexer_progress` instance to use.
     internal init(
         cValue indexerProgress: git_indexer_progress
@@ -157,7 +157,8 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitIndexerOptions`` instance with the default configuration.
+    /// Initializes a ``GitIndexerOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -166,8 +167,8 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitIndexerOptions`` instance from a `git_indexer_options`
-    /// instance.
+    /// Initializes a ``GitIndexerOptions`` instance from the given
+    /// `git_indexer_options` instance.
     /// - Parameter indexerOptions: The `git_indexer_options` instance
     /// to use.
     internal init(

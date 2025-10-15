@@ -68,7 +68,7 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDescribeOptions`` instance with the default
+    /// Initializes a ``GitDescribeOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -78,8 +78,8 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDescribeOptions`` instance from a `git_describe_options`
-    /// instance.
+    /// Initializes a ``GitDescribeOptions`` instance from the given
+    /// `git_describe_options` instance.
     /// - Parameter describeOptions: The `git_describe_options` instance to use.
     ///
     /// ## Discussion
@@ -179,7 +179,7 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDescribeFormatOptions`` instance with the default
+    /// Initializes a ``GitDescribeFormatOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -189,7 +189,7 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDescribeFormatOptions`` instance from a
+    /// Initializes a ``GitDescribeFormatOptions`` instance from the given
     /// `git_describe_format_options` instance.
     /// - Parameter describeFormatOptions: The `git_describe_format_options`
     /// instance to use.

@@ -35,7 +35,8 @@ public struct GitOIDArray: CStruct
     
     
     
-    /// Creates a ``GitOIDArray`` instance from a `git_oidarray` instance.
+    /// Initializes a ``GitOIDArray`` instance from the given `git_oidarray`
+    /// instance.
     /// - Parameter oidArray: The `git_oidarray` instance to use.
     internal init(
         cValue oidArray: git_oidarray

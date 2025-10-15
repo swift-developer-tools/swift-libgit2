@@ -36,7 +36,8 @@ public struct GitCredential: CStruct
     
     
     
-    /// Creates a ``GitCredential`` instance from a `git_credential` instance.
+    /// Initializes a ``GitCredential`` instance from the given
+    /// `git_credential` instance.
     /// - Parameter credential: The `git_credential` instance to use.
     internal init(
         cValue credential: git_credential

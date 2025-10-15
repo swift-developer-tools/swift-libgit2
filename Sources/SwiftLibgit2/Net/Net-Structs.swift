@@ -37,7 +37,8 @@ public struct GitRemoteHEAD: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitRemoteHEAD`` instance from a `git_remote_head` instance.
+    /// Initializes a ``GitRemoteHEAD`` instance from the given
+    /// `git_remote_head` instance.
     /// - Parameter remoteHEAD: The `git_remote_head` instance to use.
     internal init(
         cValue remoteHEAD: git_remote_head

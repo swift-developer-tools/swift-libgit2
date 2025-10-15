@@ -43,7 +43,8 @@ public enum GitCertT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitCertT`` instance from a `git_cert_t` instance.
+    /// Initializes a ``GitCertT`` instance from the given `git_cert_t`
+    /// instance.
     /// - Parameter cert: The `git_cert_t` instance to use.
     internal init?(
         cValue cert: git_cert_t
@@ -89,7 +90,7 @@ public struct GitCertSSHT: COptionSet
     
     
     
-    /// Creates a ``GitCertSSHT`` instance from a raw value.
+    /// Initializes a ``GitCertSSHT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -100,7 +101,8 @@ public struct GitCertSSHT: COptionSet
     
     
     
-    /// Creates a ``GitCertSSHT`` instance from a `git_cert_ssh_t` instance.
+    /// Initializes a ``GitCertSSHT`` instance from the given `git_cert_ssh_t`
+    /// instance.
     /// - Parameter certSSH: The `git_cert_ssh_t` instance to use.
     internal init(
         cValue certSSH: git_cert_ssh_t
@@ -165,7 +167,7 @@ public enum GitCertSSHRawTypeT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitCertSSHRawTypeT`` instance from a
+    /// Initializes a ``GitCertSSHRawTypeT`` instance from the given
     /// `git_cert_ssh_raw_type_t` instance.
     /// - Parameter certSSHRawType: The `git_cert_ssh_raw_type_t` instance
     /// to use.

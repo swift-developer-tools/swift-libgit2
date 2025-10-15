@@ -26,8 +26,8 @@ public struct GitMessageTrailer: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitMessageTrailer`` instance from a `git_message_trailer`
-    /// instance.
+    /// Initializes a ``GitMessageTrailer`` instance from the given
+    /// `git_message_trailer` instance.
     /// - Parameter messageTrailer: The `git_message_trailer` instance to use.
     internal init(
         cValue messageTrailer: git_message_trailer
@@ -101,7 +101,7 @@ public struct GitMessageTrailerArray: CStruct
     
     
     
-    /// Creates a ``GitMessageTrailerArray`` instance from a
+    /// Initializes a ``GitMessageTrailerArray`` instance from the given
     /// `git_message_trailer_array` instance.
     /// - Parameter messageTrailerArray: The `git_message_trailer_array`
     /// instance to use.

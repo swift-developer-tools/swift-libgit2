@@ -41,7 +41,7 @@ public enum GitDescribeStrategyT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitDescribeStrategyT`` instance from a
+    /// Initializes a ``GitDescribeStrategyT`` instance from the given
     /// `git_describe_strategy_t` instance.
     /// - Parameter describeStrategy: The `git_describe_strategy_t` instance
     /// to use.
@@ -60,7 +60,8 @@ public enum GitDescribeStrategyT: UInt32, CEnum
     
     
     
-    /// Creates a ``GitDescribeStrategyT`` instance from a raw value.
+    /// Initializes a ``GitDescribeStrategyT`` instance from the given raw
+    /// value.
     /// - Parameter rawValue: The raw value to use.
     /// - Returns: The equivalent ``GitDescribeStrategyT`` instance.
     ///

@@ -29,7 +29,7 @@ public struct GitTime: CStructReadable, CConvertible
     
     
     
-    /// Creates a ``GitTime`` instance from a `git_time` instance.
+    /// Initializes a ``GitTime`` instance from the given `git_time` instance.
     /// - Parameter time: The `git_time` instance to use.
     internal init(
         cValue time: git_time
@@ -94,7 +94,8 @@ public struct GitWritestream: CStruct
     
     
     
-    /// Creates a ``GitWritestream`` instance from a `git_writestream` instance.
+    /// Initializes a ``GitWritestream`` instance from the given
+    /// `git_writestream` instance.
     /// - Parameter writeStream: The `git_writestream` instance to use.
     internal init(
         cValue writeStream: git_writestream

@@ -31,7 +31,7 @@ public struct GitOID: CStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitOID`` instance with the default configuration.
+    /// Initializes a ``GitOID`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -40,7 +40,7 @@ public struct GitOID: CStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitOID`` instance from a `git_oid` instance.
+    /// Initializes a ``GitOID`` instance from the given `git_oid` instance.
     /// - Parameter oid: The `git_oid` instance to use.
     internal init(
         cValue oid: git_oid

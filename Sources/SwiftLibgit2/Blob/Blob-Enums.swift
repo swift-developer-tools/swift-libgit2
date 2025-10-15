@@ -23,7 +23,7 @@ public struct GitBlobFilterFlagT: COptionSet
     
     
     
-    /// Creates a ``GitBlobFilterFlagT`` instance from a raw value.
+    /// Initializes a ``GitBlobFilterFlagT`` instance from the given raw value.
     /// - Parameter rawValue: The raw value to use.
     public init(
         rawValue: UInt32
@@ -34,7 +34,7 @@ public struct GitBlobFilterFlagT: COptionSet
     
     
     
-    /// Creates a ``GitBlobFilterFlagT`` instance from a
+    /// Initializes a ``GitBlobFilterFlagT`` instance from the given
     /// `git_blob_filter_flag_t` instance.
     /// - Parameter blobFilterFlag: The `git_blob_filter_flag_t` instance
     /// to use.

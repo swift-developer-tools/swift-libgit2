@@ -81,7 +81,8 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameOptions`` instance with the default configuration.
+    /// Initializes a ``GitBlameOptions`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -90,8 +91,8 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameOptions`` instance from a `git_blame_options`
-    /// instance.
+    /// Initializes a ``GitBlameOptions`` instance from the given
+    /// `git_blame_options` instance.
     /// - Parameter blameOptions: The `git_blame_options` instance to use.
     internal init(
         cValue blameOptions: git_blame_options
@@ -227,7 +228,8 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameHunk`` instance from a `git_blame_hunk` instance.
+    /// Initializes a ``GitBlameHunk`` instance from the given `git_blame_hunk`
+    /// instance.
     /// - Parameter blameHunk: The `git_blame_hunk` instance to use.
     ///
     /// ## Discussion
@@ -341,7 +343,8 @@ public struct GitBlameLine: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitBlameLine`` instance from a `git_blame_line` instance.
+    /// Initializes a ``GitBlameLine`` instance from the given `git_blame_line`
+    /// instance.
     /// - Parameter blameLine: The `git_blame_line` instance to use.
     internal init(
         cValue blameLine: git_blame_line

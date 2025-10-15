@@ -148,7 +148,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance with the default
+    /// Initializes a ``GitRemoteCallbacks`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -158,8 +158,8 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitRemoteCallbacks`` instance from a `git_remote_callbacks`
-    /// instance.
+    /// Initializes a ``GitRemoteCallbacks`` instance from the given
+    /// `git_remote_callbacks` instance.
     /// - Parameter remoteCallbacks: The `git_remote_callbacks` instance to use.
     internal init(
         cValue remoteCallbacks: git_remote_callbacks
@@ -298,7 +298,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitFetchOptions`` instance with the default configuration.
+    /// Initializes a ``GitFetchOptions`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -307,8 +307,8 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitFetchOptions`` instance from a `git_fetch_options`
-    /// instance.
+    /// Initializes a ``GitFetchOptions`` instance from the given
+    /// `git_fetch_options` instance.
     /// - Parameter fetchOptions: The `git_fetch_options` instance to use.
     ///
     /// ## Discussion

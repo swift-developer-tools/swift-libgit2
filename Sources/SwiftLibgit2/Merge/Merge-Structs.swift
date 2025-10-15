@@ -55,7 +55,8 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitMergeFileInput`` instance with the default configuration.
+    /// Initializes a ``GitMergeFileInput`` instance with the default
+    /// configuration.
     ///
     /// ## Discussion
     ///
@@ -64,8 +65,8 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitMergeFileInput`` instance from a `git_merge_file_input`
-    /// instance.
+    /// Initializes a ``GitMergeFileInput`` instance from the given
+    /// `git_merge_file_input` instance.
     /// - Parameter mergeFileInput: The `git_merge_file_input` instance to use.
     internal init(
         cValue mergeFileInput: git_merge_file_input
@@ -182,7 +183,7 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitMergeFileOptions`` instance with the default
+    /// Initializes a ``GitMergeFileOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -192,7 +193,7 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitMergeFileOptions`` instance from a
+    /// Initializes a ``GitMergeFileOptions`` instance from the given
     /// `git_merge_file_options` instance.
     /// - Parameter mergeFileOptions: The `git_merge_file_options` instance
     /// to use.
@@ -318,7 +319,7 @@ public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConver
     
     
     
-    /// Creates a ``GitMergeFileResult`` instance with the default
+    /// Initializes a ``GitMergeFileResult`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -328,7 +329,7 @@ public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConver
     
     
     
-    /// Creates a ``GitMergeFileResult`` instance from a
+    /// Initializes a ``GitMergeFileResult`` instance from the given
     /// `git_merge_file_result` instance.
     /// - Parameter mergeFileResult: The `git_merge_file_result` instance to
     /// use.
@@ -492,7 +493,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitMergeOptions`` instance with the default configuration.
+    /// Initializes a ``GitMergeOptions`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -501,8 +502,8 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitMergeOptions`` instance from a `git_merge_options`
-    /// instance.
+    /// Initializes a ``GitMergeOptions`` instance from the given
+    /// `git_merge_options` instance.
     /// - Parameter mergeOptions: The `git_merge_options` instance to use.
     ///
     /// ## Discussion

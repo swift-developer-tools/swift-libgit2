@@ -34,7 +34,8 @@ public struct GitStrArray: CStruct
     
     
     
-    /// Creates a ``GitStrArray`` instance from a `git_strarray` instance.
+    /// Initializes a ``GitStrArray`` instance from the given `git_strarray`
+    /// instance.
     /// - Parameter strArray: The `git_strarray` instance to use.
     internal init(
         cValue strArray: git_strarray

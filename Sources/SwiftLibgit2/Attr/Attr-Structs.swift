@@ -49,7 +49,7 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitAttrOptions`` instance with the default configuration.
+    /// Initializes a ``GitAttrOptions`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -58,8 +58,8 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitAttrOptions`` instance from a `git_attr_options`
-    /// instance.
+    /// Initializes a ``GitAttrOptions`` instance from the given
+    /// `git_attr_options` instance.
     /// - Parameter attrOptions: The `git_attr_options` instance to use.
     internal init(
         cValue attrOptions: git_attr_options

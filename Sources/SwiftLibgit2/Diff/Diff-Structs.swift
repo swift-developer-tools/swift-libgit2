@@ -60,7 +60,8 @@ public struct GitDiffFile: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffFile`` instance from a `git_diff_file` instance.
+    /// Initializes a ``GitDiffFile`` instance from the given `git_diff_file`
+    /// instance.
     /// - Parameter diffFile: The `git_diff_file` instance to use.
     ///
     /// ## Discussion
@@ -182,7 +183,8 @@ public struct GitDiffDelta: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffDelta`` instance from a `git_diff_delta` instance.
+    /// Initializes a ``GitDiffDelta`` instance from the given `git_diff_delta`
+    /// instance.
     /// - Parameter diffDelta: The `git_diff_delta` instance to use.
     ///
     /// ## Discussion
@@ -363,7 +365,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffOptions`` instance with the default configuration.
+    /// Initializes a ``GitDiffOptions`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -372,8 +374,8 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffOptions`` instance from a `git_diff_options`
-    /// instance.
+    /// Initializes a ``GitDiffOptions`` instance from the given
+    /// `git_diff_options` instance.
     /// - Parameter diffOptions: The `git_diff_options` instance to use.
     ///
     /// ## Discussion
@@ -489,8 +491,8 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffBinaryFile`` instance from a `git_diff_binary_file`
-    /// instance.
+    /// Initializes a ``GitDiffBinaryFile`` instance from the given
+    /// `git_diff_binary_file` instance.
     /// - Parameter diffBinaryFile: The `git_diff_binary_file` instance to use.
     ///
     /// ## Discussion
@@ -577,7 +579,8 @@ public struct GitDiffBinary: CStructReadable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffBinary`` instance from a `git_diff_binary` instance.
+    /// Initializes a ``GitDiffBinary`` instance from the given
+    /// `git_diff_binary` instance.
     /// - Parameter diffBinary: The `git_diff_binary` instance to use.
     ///
     /// ## Discussion
@@ -688,7 +691,7 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitDiffHunk`` instance with the default configuration.
+    /// Initializes a ``GitDiffHunk`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -697,7 +700,8 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible
     
     
     
-    /// Creates a ``GitDiffHunk`` instance from a `git_diff_hunk` instance.
+    /// Initializes a ``GitDiffHunk`` instance from the given `git_diff_hunk`
+    /// instance.
     /// - Parameter diffHunk: The `git_diff_hunk` instance to use.
     ///
     /// ## Discussion
@@ -809,7 +813,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffLine`` instance with the default configuration.
+    /// Initializes a ``GitDiffLine`` instance with the default configuration.
     ///
     /// ## Discussion
     ///
@@ -818,7 +822,8 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible
     
     
     
-    /// Creates a ``GitDiffLine`` instance from a `git_diff_line` instance.
+    /// Initializes a ``GitDiffLine`` instance from the given `git_diff_line`
+    /// instance.
     /// - Parameter diffLine: The `git_diff_line` instance to use.
     ///
     /// ## Discussion
@@ -951,7 +956,7 @@ public struct GitDiffSimilarityMetric: CStruct
     
     
     
-    /// Creates a ``GitDiffSimilarityMetric`` instance from a
+    /// Initializes a ``GitDiffSimilarityMetric`` instance from the given
     /// `git_diff_similarity_metric` instance.
     /// - Parameter diffSimilarityMetric: The `git_diff_similarity_metric`
     /// instance to use.
@@ -1056,7 +1061,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffFindOptions`` instance with the default
+    /// Initializes a ``GitDiffFindOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -1066,8 +1071,8 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffFindOptions`` instance from a `git_diff_find_options`
-    /// instance.
+    /// Initializes a ``GitDiffFindOptions`` instance from the given
+    /// `git_diff_find_options` instance.
     /// - Parameter diffFindOptions: The `git_diff_find_options` instance to
     /// use.
     internal init(
@@ -1141,7 +1146,7 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitDiffParseOptions`` instance with the default
+    /// Initializes a ``GitDiffParseOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -1151,7 +1156,7 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
     
     
     
-    /// Creates a ``GitDiffParseOptions`` instance from a
+    /// Initializes a ``GitDiffParseOptions`` instance from the given
     /// `git_diff_parse_options` instance.
     /// - Parameter diffParseOptions: The `git_diff_parse_options` instance
     /// to use.
@@ -1206,7 +1211,7 @@ public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffPatchIDOptions`` instance with the default
+    /// Initializes a ``GitDiffPatchIDOptions`` instance with the default
     /// configuration.
     ///
     /// ## Discussion
@@ -1216,7 +1221,7 @@ public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible
     
     
     
-    /// Creates a ``GitDiffPatchIDOptions`` instance from a
+    /// Initializes a ``GitDiffPatchIDOptions`` instance from the given
     /// `git_diff_patchid_options` instance.
     /// - Parameter diffPatchIDOptions: The `git_diff_patchid_options` instance
     /// to use.
