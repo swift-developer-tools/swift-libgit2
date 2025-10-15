@@ -17,27 +17,19 @@ final class MessageTests: XCTestCaseStopOnFail
 {
     func testGitMessagePrettify() throws
     {
-        var buffer = GitBuf()
-        
-        defer
-        {
-            XCTAssertOK(gitBufDispose(buffer: &buffer))
-        }
-        
-        
-        
+        var data            : Data      = Data()
         let whitespace      : String    = "   "
         let shortMessage    : String    = "Hello World!"
         
         let shortMessagePrettifyResult: GitErrorCode = gitMessagePrettify(
-            out:            &buffer,
+            out:            &data,
             message:        whitespace + shortMessage + whitespace,
             stripComments:  false,
             commentChar:    nil
         )
         
         XCTAssertOK(shortMessagePrettifyResult)
-        XCTAssertEqual(buffer, whitespace + shortMessage + "\n")
+        XCTAssertEqual(data, whitespace + shortMessage + "\n")
         
         
         
@@ -50,34 +42,34 @@ final class MessageTests: XCTestCaseStopOnFail
         """
         
         var longMessagePrettifyResult: GitErrorCode = gitMessagePrettify(
-            out:            &buffer,
+            out:            &data,
             message:        longMessage,
             stripComments:  true,
             commentChar:    commentCharacter
         )
         
         XCTAssertOK(longMessagePrettifyResult)
-        XCTAssertEqual(buffer, shortMessage + "\n")
+        XCTAssertEqual(data, shortMessage + "\n")
         
         
         
         longMessage += "\n"
         
         longMessagePrettifyResult = gitMessagePrettify(
-            out:            &buffer,
+            out:            &data,
             message:        longMessage,
             stripComments:  false,
             commentChar:    commentCharacter
         )
         
         XCTAssertOK(longMessagePrettifyResult)
-        XCTAssertEqual(buffer, longMessage)
+        XCTAssertEqual(data, longMessage)
         
         
         
         /// If `stripComments` is `true`, `commentChar` must not be `nil`.
         let invalidMessagePrettifyResult: GitErrorCode = gitMessagePrettify(
-            out:            &buffer,
+            out:            &data,
             message:        shortMessage,
             stripComments:  true,
             commentChar:    nil

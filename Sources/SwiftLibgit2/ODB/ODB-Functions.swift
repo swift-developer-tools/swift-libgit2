@@ -825,7 +825,7 @@ public func gitODBWriteMultiPackIndex(
 
 
 
-/// Gets the object ID of the given data buffer.
+/// Gets the object ID of the given data.
 /// - Parameters:
 ///   - oid: The ``GitOID`` instance in which to store the object ID.
 ///   - data: The data to hash.
@@ -835,8 +835,8 @@ public func gitODBWriteMultiPackIndex(
 ///
 /// ## Discussion
 ///
-/// The resulting ID will be the identifier of the given data buffer as if
-/// the data buffer were written to the object database.
+/// The resulting ID will be the identifier of the given data as if the data
+/// were written to the object database.
 ///
 /// ## C Equivalent
 ///

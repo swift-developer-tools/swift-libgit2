@@ -222,10 +222,9 @@ public func gitBlobFilterOptionsInit(
 
 
 
-/// Gets a buffer with the filtered content of the given blob.
+/// Gets the filtered content of the given blob.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should
-///   be written.
+///   - out: The `Data` instance to update with the filtered content.
 ///   - blob: The blob for which to get the filtered content. The underlying
 ///   type must be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.
@@ -239,16 +238,14 @@ public func gitBlobFilterOptionsInit(
 /// other types of changes depending on the file attributes set for the blob
 /// and the content detected in it.
 ///
-/// If no filters need to be applied, then the `out` buffer will just be
-/// populated with a pointer to the raw content of the blob. In that case, be
-/// careful to either copy the buffer into memory not owned by libgit2, or to
-/// not free the blob until the buffer is no longer needed.
+/// If no filters need to be applied, then the `out` parameter will be updated
+/// with the raw content of the blob.
 ///
 /// ## C Equivalent
 ///
 /// [`git_blob_filter()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter.html)
 public func gitBlobFilter(
-    out     : inout GitBuf,
+    out     : inout Data,
     blob    : OpaquePointer,
     asPath  : String,
     opts    : GitBlobFilterOptions?
@@ -260,7 +257,7 @@ public func gitBlobFilter(
         {
             cOpts in
             
-            return try out.withMutatingCValue
+            return try out.withMutatingGitBuf
             {
                 cOut in
                 
@@ -426,7 +423,7 @@ public func gitBlobCreateFromStreamCommit(
 
 
 
-/// Writes an in-memory buffer to the object database as a blob.
+/// Writes in-memory data to the object database as a blob.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.

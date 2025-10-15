@@ -154,19 +154,12 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigFindPaths() throws
     {
-        var buffer = GitBuf()
+        var data = Data()
         
-        defer
-        {
-            XCTAssertOK(gitBufDispose(buffer: &buffer))
-        }
-        
-        
-        
-        _ = gitConfigFindGlobal(out: &buffer)
-        _ = gitConfigFindXDG(out: &buffer)
-        _ = gitConfigFindSystem(out: &buffer)
-        _ = gitConfigFindProgramData(out: &buffer)
+        _ = gitConfigFindGlobal(out: &data)
+        _ = gitConfigFindXDG(out: &data)
+        _ = gitConfigFindSystem(out: &data)
+        _ = gitConfigFindProgramData(out: &data)
     }
     
     
@@ -1111,41 +1104,29 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        var pathBuffer = GitBuf()
-        
-        defer
-        {
-            XCTAssertOK(gitBufDispose(buffer: &pathBuffer))
-        }
-        
-        
+        var path                : Data      = Data()
+        let pathExtension       : String    = "/test"
+        let pathExpectedValue   : String    = "~" + pathExtension
         
         let configParsePathResult: GitErrorCode = gitConfigParsePath(
-            out:    &pathBuffer,
-            value:  "~/test"
+            out:    &path,
+            value:  pathExpectedValue
         )
         
         XCTAssertOK(configParsePathResult)
         
-        guard let pathBufferPointer: UnsafeMutablePointer<CChar>
-                = pathBuffer.ptr
-        else
-        {
-            XCTFail("The path buffer pointer was nil.")
-            return
-        }
         
-        guard let pathBufferContent = String(optionalCString: pathBufferPointer)
-        else
-        {
-            XCTFail("The path buffer content was nil.")
-            return
-        }
+        
+        let pathValue: String? = String(
+            data:       path,
+            encoding:   .utf8
+        )
         
         /// The path should be expanded. The exact value depends on the
         /// environment.
-        XCTAssertNotEqual(pathBufferContent, "~/test")
-        XCTAssertTrue(pathBufferContent.hasSuffix("/test"))
+        XCTAssertNotNil(pathValue)
+        XCTAssertNotEqual(pathValue, pathExpectedValue)
+        XCTAssertTrue(pathValue?.hasSuffix(pathExtension) ?? false)
     }
     
     
@@ -1242,24 +1223,17 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                var stringBuffer: GitBuf = GitBuf()
-                
-                defer
-                {
-                    XCTAssertOK(gitBufDispose(buffer: &stringBuffer))
-                }
-                
-                
+                var stringValue = Data()
                 
                 let configGetStringBufResult: GitErrorCode
                     = gitConfigGetStringBuf(
-                        out:    &stringBuffer,
+                        out:    &stringValue,
                         cfg:    configPointer,
                         name:   stringName
                     )
                 
                 XCTAssertOK(configGetStringBufResult)
-                XCTAssertEqual(stringBuffer, stringExpectedValue)
+                XCTAssertEqual(stringValue, stringExpectedValue)
                 
                 
                 
@@ -1341,7 +1315,8 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                let pathExpectedValue   : String    = "~/Documents"
+                let pathExtension       : String    = "/Documents"
+                let pathExpectedValue   : String    = "~" + pathExtension
                 let pathName            : String    = "test.path"
                 
                 let configSetPathResult: GitErrorCode = gitConfigSetString(
@@ -1354,43 +1329,28 @@ final class ConfigTests: XCTestCaseStopOnFail
                 
                 
                 
-                var pathBuffer = GitBuf()
-                
-                defer
-                {
-                    XCTAssertOK(gitBufDispose(buffer: &pathBuffer))
-                }
-                
-                
+                var path = Data()
                 
                 let configGetPathResult: GitErrorCode = gitConfigGetPath(
-                    out:    &pathBuffer,
+                    out:    &path,
                     cfg:    configPointer,
                     name:   pathName
                 )
                 
                 XCTAssertOK(configGetPathResult)
                 
-                guard let pathBufferPointer: UnsafeMutablePointer<CChar>
-                        = pathBuffer.ptr
-                else
-                {
-                    XCTFail("The path buffer pointer was nil.")
-                    return
-                }
                 
-                guard let pathBufferContent
-                        = String(optionalCString: pathBufferPointer)
-                else
-                {
-                    XCTFail("The path buffer content was nil.")
-                    return
-                }
+                
+                let pathValue: String? = String(
+                    data:       path,
+                    encoding:   .utf8
+                )
                 
                 /// The path should be expanded. The exact value depends on
                 /// the environment.
-                XCTAssertNotEqual(pathBufferContent, pathExpectedValue)
-                XCTAssertTrue(pathBufferContent.hasSuffix("/Documents"))
+                XCTAssertNotNil(pathValue)
+                XCTAssertNotEqual(pathValue, pathExpectedValue)
+                XCTAssertTrue(pathValue?.hasSuffix(pathExtension) ?? false)
             }
         }
     }

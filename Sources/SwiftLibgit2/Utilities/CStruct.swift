@@ -95,9 +95,8 @@
 ///
 /// ## CFreeable Structs
 ///
-/// A struct that conforms to ``CStructInternalMutable`` may also need to
-/// conform to ``CFreeable`` if libgit2 provides a corresponding memory-freeing
-/// function.
+/// Any struct that conforms to ``CStructInternalMutable`` must also conform to
+/// ``CFreeable``, if libgit2 provides a corresponding memory-freeing function.
 ///
 /// Conforming to ``CFreeable`` enables automatic memory management when using
 /// ``withMutatingCValue(_:)`` with C functions that expect `C **` parameters
@@ -126,19 +125,6 @@
 /// libgit2 documentation for these functions usually mentions the
 /// lifecycle/validity of the returned pointer (for example, a pointer being
 /// valid until the next call to the iterator, or until the iterator is freed).
-///
-/// ## CFreeable Exceptions
-///
-/// ``GitBuf`` conforms to ``CStructInternalMutable`` and has an associated
-/// memory-freeing function in libgit2, but does not conform to ``CFreeable``.
-/// This is because ``GitBuf`` acts as a pointer container with a lifecycle
-/// managed by the API user rather than by the binding API.
-///
-/// ``GitBuf`` uses the `C *` version of ``withMutatingCValue(_:)``, which
-/// passes a pointer to a stack-allocated `git_buf` struct. libgit2 populates
-/// `git_buf->ptr` with heap-allocated memory, which is copied into the Swift
-/// struct. To free this memory, the API user must call
-/// ``gitBufDispose(buffer:)`` when done with the buffer.
 internal protocol CStruct: CMutable
 {
     /// The type of the equivalent C value.

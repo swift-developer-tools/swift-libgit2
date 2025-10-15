@@ -136,13 +136,12 @@ public func gitFilterListContains(
 
 
 
-/// Applies the given filter list to the given data buffer.
+/// Applies the given filter list to the given input.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should
-///   be written.
+///   - out: The `Data` instance to update with the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
-///   - input: The buffer containing the data to filter.
+///   - input: The data to filter.
 ///   - inputLen: The length of `input`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -150,7 +149,7 @@ public func gitFilterListContains(
 ///
 /// [`git_filter_list_apply_to_buffer()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_buffer.html)
 public func gitFilterListApplyToBuffer(
-    out                     : inout GitBuf,
+    out                     : inout Data,
     filters                 : OpaquePointer?,
     in          input       : Data,
     inLen       inputLen    : Int
@@ -158,7 +157,7 @@ public func gitFilterListApplyToBuffer(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -181,8 +180,7 @@ public func gitFilterListApplyToBuffer(
 
 /// Applies the given filter list to the contents of the specified on-disk file.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should
-///   be written.
+///   - out: The `Data` instance to update with the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
 ///   - repo: The repository containing the specified file. The underlying
@@ -199,7 +197,7 @@ public func gitFilterListApplyToBuffer(
 ///
 /// [`git_filter_list_apply_to_file()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_file.html)
 public func gitFilterListApplyToFile(
-    out     : inout GitBuf,
+    out     : inout Data,
     filters : OpaquePointer?,
     repo    : OpaquePointer,
     path    : String
@@ -207,7 +205,7 @@ public func gitFilterListApplyToFile(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -225,8 +223,7 @@ public func gitFilterListApplyToFile(
 
 /// Applies the given filter list to the contents of the given blob.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should
-///   be written.
+///   - out: The `Data` instance to update with the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
 ///   - blob: The blob to filter. The underlying type must be `git_blob`.
@@ -236,14 +233,14 @@ public func gitFilterListApplyToFile(
 ///
 /// [`git_filter_list_apply_to_blob()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_blob.html)
 public func gitFilterListApplyToBlob(
-    out     : inout GitBuf,
+    out     : inout Data,
     filters : OpaquePointer?,
     blob    : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -258,11 +255,11 @@ public func gitFilterListApplyToBlob(
 
 
 
-/// Applies the given filter list to the given buffer as a stream.
+/// Applies the given filter list to the given data as a stream.
 /// - Parameters:
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
-///   - buffer: The buffer containing the data to filter.
+///   - buffer: The the data to filter.
 ///   - len: The length of `buffer`.
 ///   - target: The stream into which the data should be written.
 /// - Returns: A ``GitErrorCode`` instance.

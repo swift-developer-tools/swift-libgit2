@@ -636,11 +636,9 @@ public func gitDiffPrint(
 
 
 
-/// Writes the complete formatted text from the given diff into the given
-/// buffer.
+/// Gets the complete formatted text from the given diff.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the formatted text should be
-///   written.
+///   - out: The `Data` instance to update with the formatted text.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The diff data output format to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -649,14 +647,14 @@ public func gitDiffPrint(
 ///
 /// [`git_diff_to_buf()`](https://libgit2.org/docs/reference/main/diff/git_diff_to_buf.html)
 public func gitDiffToBuf(
-    out     : inout GitBuf,
+    out     : inout Data,
     diff    : OpaquePointer,
     format  : GitDiffFormatT
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1042,10 +1040,9 @@ public func gitDiffStatsDeletions(
 
 
 
-/// Writes the given diff statistics into the given buffer.
+/// Updates the given `Data` instance with the given diff statistics.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the given diff statistics
-///   should be written.
+///   - out: The `Data` instance to update with the given diff statistics.
 ///   - stats: The diff statistics to write. The underlying type must be
 ///   `git_diff_stats`.
 ///   - format: The diff stats format to use.
@@ -1061,7 +1058,7 @@ public func gitDiffStatsDeletions(
 ///
 /// [`git_diff_stats_to_buf()`](https://libgit2.org/docs/reference/main/diff/git_diff_stats_to_buf.html)
 public func gitDiffStatsToBuf(
-    out     : inout GitBuf,
+    out     : inout Data,
     stats   : OpaquePointer,
     format  : GitDiffStatsFormatT,
     width   : Int
@@ -1069,7 +1066,7 @@ public func gitDiffStatsToBuf(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

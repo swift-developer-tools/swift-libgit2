@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -585,8 +586,7 @@ public func gitCommitNthGenAncestor(
 
 /// Gets the specified header field from the given commit.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the header field should be
-///   written.
+///   - out: The `Data` instance to update with the header field.
 ///   - commit: The commit for which to get the specified header field. The
 ///   underlying type must be `git_commit`.
 ///   - field: The header field to return.
@@ -596,14 +596,14 @@ public func gitCommitNthGenAncestor(
 ///
 /// [`git_commit_header_field()`](https://libgit2.org/docs/reference/main/commit/git_commit_header_field.html)
 public func gitCommitHeaderField(
-    out     : inout GitBuf,
+    out     : inout Data,
     commit  : OpaquePointer,
     field   : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -620,10 +620,9 @@ public func gitCommitHeaderField(
 
 /// Extracts the signature from a commit.
 /// - Parameters:
-///   - signature: The ``GitBuf`` instance into which the signature block
-///   should be written.
-///   - signedData: The ``GitBuf`` instance into which the signed data (the
-///   commit content less the signature block) should be written.
+///   - signature: The `Data` instance to update with the signature block.
+///   - signedData: The `Data` instance to update with the signed data (the
+///   commit content less the signature block).
 ///   - repo: The repository containing the commit. The underlying type must
 ///   be `git_repository`.
 ///   - commitID: The commit from which to extract the data.
@@ -643,8 +642,8 @@ public func gitCommitHeaderField(
 ///
 /// [`git_commit_extract_signature()`](https://libgit2.org/docs/reference/main/commit/git_commit_extract_signature.html)
 public func gitCommitExtractSignature(
-    signature   : inout GitBuf,
-    signedData  : inout GitBuf,
+    signature   : inout Data,
+    signedData  : inout Data,
     repo        : OpaquePointer,
     commitID    : GitOID,
     field       : String?
@@ -654,11 +653,11 @@ public func gitCommitExtractSignature(
     {
         var cCommitID: git_oid = commitID.cValue()
         
-        return try signature.withMutatingCValue
+        return try signature.withMutatingGitBuf
         {
             cSignature in
             
-            return try signedData.withMutatingCValue
+            return try signedData.withMutatingGitBuf
             {
                 cSignedData in
                 
@@ -889,10 +888,10 @@ public func gitCommitAmend(
 
 
 
-/// Creates a new commit in the given repository and writes it into a buffer.
+/// Creates a new commit in the given repository and updates the given `Data`
+/// instance with the commit content.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the commit content should be
-///   written.
+///   - out: The `Data` instance to update with the commit content.
 ///   - repo: The repository in which to store the commit. The underlying type
 ///   must be `git_repository`.
 ///   - author: The author signature to use.
@@ -914,13 +913,13 @@ public func gitCommitAmend(
 /// This function is similar to
 /// ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
 /// except instead of writing the new commit into the object database, it
-/// writes the commit content into the given buffer.
+/// updates the given `Data` instance with the commit content.
 ///
 /// ## C Equivalent
 ///
 /// [`git_commit_create_buffer()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_buffer.html)
 public func gitCommitCreateBuffer(
-    out             : inout GitBuf,
+    out             : inout Data,
     repo            : OpaquePointer,
     author          : GitSignature,
     committer       : GitSignature,
@@ -933,7 +932,7 @@ public func gitCommitCreateBuffer(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

@@ -9,6 +9,7 @@
 
 import CLibgit2
 import CLibgit2Opts
+import Foundation
 
 
 
@@ -214,8 +215,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// Gets the search path for the given level of configuration data.
 /// - Parameters:
 ///   - level: The priority level for which to get the search path.
-///   - buf: The ``GitBuf`` instance into which the search path should be
-///   written.
+///   - buf: The `Data` instance to update with the search path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -235,12 +235,12 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetSearchPath(
     level   : GitConfigLevelT,
-    buf     : inout GitBuf
+    buf     : inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try buf.withMutatingCValue
+        return try buf.withMutatingGitBuf
         {
             cBuf in
             
@@ -425,8 +425,7 @@ public func gitLibgit2OptGetCachedMemory(
 
 
 /// Gets the default template path.
-/// - Parameter out: The ``GitBuf`` instance into which the template path
-/// should be written.
+/// - Parameter out: The `Data` instance to update with the template path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -438,12 +437,12 @@ public func gitLibgit2OptGetCachedMemory(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetTemplatePath(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -638,8 +637,8 @@ public func gitLibgit2OptSetSSLCiphers(
 
 
 /// Gets the value of the comment section of the User-Agent header.
-/// - Parameter out: The ``GitBuf`` instance into which the comment section
-/// of the User-Agent header should be written.
+/// - Parameter out: The `Data` instance to update with the comment section
+/// of the User-Agent header.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -651,12 +650,12 @@ public func gitLibgit2OptSetSSLCiphers(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetUserAgent(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1210,8 +1209,7 @@ public func gitLibgit2OptSetOwnerValidation(
 
 
 /// Gets the current user's home directory to be used for file lookups.
-/// - Parameter out: The ``GitBuf`` instance into which the home directory
-/// path should be written.
+/// - Parameter out: The `Data` instance to update with the home directory path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1223,12 +1221,12 @@ public func gitLibgit2OptSetOwnerValidation(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetHomeDir(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1396,8 +1394,8 @@ public func gitLibgit2OptSetUserAgentProduct(
 
 
 /// Gets the value of the product section of the User-Agent header.
-/// - Parameter out: The ``GitBuf`` instance into which the product section
-/// of the User-Agent header should be written.
+/// - Parameter out: The `Data` instance to update with the product section
+/// of the User-Agent header.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1409,12 +1407,12 @@ public func gitLibgit2OptSetUserAgentProduct(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetUserAgentProduct(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

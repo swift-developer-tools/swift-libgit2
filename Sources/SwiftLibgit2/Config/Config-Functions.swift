@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -33,8 +34,7 @@ public func gitConfigEntryFree(
 
 
 /// Locates the path to the global configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -51,12 +51,12 @@ public func gitConfigEntryFree(
 ///
 /// [`git_config_find_global()`](https://libgit2.org/docs/reference/main/config/git_config_find_global.html)
 public func gitConfigFindGlobal(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -68,8 +68,7 @@ public func gitConfigFindGlobal(
 
 
 /// Locates the path to the global XDG-compatible configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -85,12 +84,12 @@ public func gitConfigFindGlobal(
 ///
 /// [`git_config_find_xdg()`](https://libgit2.org/docs/reference/main/config/git_config_find_xdg.html)
 public func gitConfigFindXDG(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -102,8 +101,7 @@ public func gitConfigFindXDG(
 
 
 /// Locates the path to the system configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -115,12 +113,12 @@ public func gitConfigFindXDG(
 ///
 /// [`git_config_find_system()`](https://libgit2.org/docs/reference/main/config/git_config_find_system.html)
 public func gitConfigFindSystem(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -132,8 +130,7 @@ public func gitConfigFindSystem(
 
 
 /// Locates the path to the ProgramData configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -145,12 +142,12 @@ public func gitConfigFindSystem(
 ///
 /// [`git_config_find_programdata()`](https://libgit2.org/docs/reference/main/config/git_config_find_programdata.html)
 public func gitConfigFindProgramData(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -628,7 +625,7 @@ public func gitConfigGetBool(
 
 /// Gets the value of a path configuration variable.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the path should be written.
+///   - out: The `Data` instance to update with the path should be written.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -648,14 +645,14 @@ public func gitConfigGetBool(
 ///
 /// [`git_config_get_path()`](https://libgit2.org/docs/reference/main/config/git_config_get_path.html)
 public func gitConfigGetPath(
-    out     : inout GitBuf,
+    out     : inout Data,
     cfg     : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -718,7 +715,7 @@ public func gitConfigGetString(
 
 /// Gets the value of a string configuration variable.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the string should be written.
+///   - out: The `Data` instance to update with the string.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -734,14 +731,14 @@ public func gitConfigGetString(
 ///
 /// [`git_config_get_string_buf()`](https://libgit2.org/docs/reference/main/config/git_config_get_string_buf.html)
 public func gitConfigGetStringBuf(
-    out     : inout GitBuf,
+    out     : inout Data,
     cfg     : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1496,7 +1493,7 @@ public func gitConfigParseInt64(
 
 /// Parses a string value as a path.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the path should be written.
+///   - out: The `Data` instance to update with the path.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1512,13 +1509,13 @@ public func gitConfigParseInt64(
 ///
 /// [`git_config_parse_path()`](https://libgit2.org/docs/reference/main/config/git_config_parse_path.html)
 public func gitConfigParsePath(
-    out     : inout GitBuf,
+    out     : inout Data,
     value   : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

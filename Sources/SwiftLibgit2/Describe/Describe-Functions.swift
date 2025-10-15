@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -136,11 +137,10 @@ public func gitDescribeWorkdir(
 
 
 
-/// Writes the given commit description to a buffer.
+/// Updates the given `Data` instance with the given description.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the description should be
-///   written.
-///   - result: The commit description to write. The underlying type must be
+///   - out: The `Data` instance to update with the description.
+///   - result: The description to use. The underlying type must be
 ///   `git_describe_result`.
 ///   - opts: The describe format options to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -149,14 +149,14 @@ public func gitDescribeWorkdir(
 ///
 /// [`git_describe_format()`](https://libgit2.org/docs/reference/main/describe/git_describe_format.html)
 public func gitDescribeFormat(
-    out     : inout GitBuf,
+    out     : inout Data,
     result  : OpaquePointer,
     opts    : GitDescribeFormatOptions?
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

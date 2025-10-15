@@ -541,22 +541,15 @@ extension ObjectTests
             
             
             
-            var buffer = GitBuf()
-            
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
-            }
-            
-            
+            var shortOID = Data()
             
             let objectShortIDResult: GitErrorCode = gitObjectShortID(
-                out:    &buffer,
+                out:    &shortOID,
                 obj:    objectPointer
             )
             
             XCTAssertOK(objectShortIDResult)
-            XCTAssertEqual(buffer, headOIDStringPrefix)
+            XCTAssertEqual(shortOID, headOIDStringPrefix)
         }
     }
 }

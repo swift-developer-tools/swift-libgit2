@@ -334,17 +334,10 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            var buffer = GitBuf()
-            
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &buffer)
-)            }
-            
-            
+            var data = Data()
             
             let branchRemoteNameResult: GitErrorCode = gitBranchRemoteName(
-                out:        &buffer,
+                out:        &data,
                 repo:       repository.pointer,
                 refName:    referenceName
             )
@@ -357,7 +350,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             let branchUpstreamRemoteResult: GitErrorCode
                 = gitBranchUpstreamRemote(
-                    buf:        &buffer,
+                    buf:        &data,
                     repo:       repository.pointer,
                     refName:    referenceName
                 )
@@ -369,7 +362,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             let branchUpstreamMergeResult: GitErrorCode
                 = gitBranchUpstreamMerge(
-                    buf:        &buffer,
+                    buf:        &data,
                     repo:       repository.pointer,
                     refName:    referenceName
                 )
@@ -380,7 +373,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
-                out:        &buffer,
+                out:        &data,
                 repo:       repository.pointer,
                 refName:    referenceName
             )

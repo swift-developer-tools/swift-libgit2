@@ -40,12 +40,10 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            var buffer      : GitBuf            = GitBuf()
-            var treePointer : OpaquePointer?    = nil
+            var treePointer: OpaquePointer? = nil
             
             defer
             {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 Free.freeTree(treePointer)
             }
             
@@ -82,8 +80,10 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
+            var data = Data()
+            
             let commitCreateBufferResult: GitErrorCode = gitCommitCreateBuffer(
-                out:                &buffer,
+                out:                &data,
                 repo:               repository.pointer,
                 author:             repository.signature,
                 committer:          repository.signature,
@@ -95,10 +95,11 @@ final class CommitTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(commitCreateBufferResult)
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
             
-            guard let commitContent = String(optionalCString: buffer.ptr)
+            guard let commitContent = String(
+                bytes:      data,
+                encoding:   .utf8
+            )
             else
             {
                 XCTFail("The commit content was nil.")
@@ -134,16 +135,8 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            var extractedSignature      = GitBuf()
-            var extractedSignedData     = GitBuf()
-            
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &extractedSignature))
-                XCTAssertOK(gitBufDispose(buffer: &extractedSignedData))
-            }
-            
-            
+            var extractedSignature      = Data()
+            var extractedSignedData     = Data()
             
             let commitExtractSignatureResult: GitErrorCode
                 = gitCommitExtractSignature(
@@ -155,20 +148,8 @@ final class CommitTests: XCTestCaseStopOnFail
                 )
             
             XCTAssertOK(commitExtractSignatureResult)
-            XCTAssertNotNil(extractedSignature.ptr)
-            XCTAssertGreaterThan(extractedSignature.size, 0)
-            XCTAssertNotNil(extractedSignedData.ptr)
-            XCTAssertGreaterThan(extractedSignedData.size, 0)
-            
-            guard let extractedSignatureContent
-                    = String(optionalCString: extractedSignature.ptr)
-            else
-            {
-                XCTFail("The extracted signature content was nil.")
-                return
-            }
-            
-            XCTAssertEqual(extractedSignatureContent, fakeSignatureContent)
+            XCTAssertEqual(extractedSignature, fakeSignatureContent)
+            XCTAssertGreaterThan(extractedSignedData.count, 0)
         }
     }
     
@@ -435,14 +416,7 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var buffer: GitBuf = GitBuf()
-
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
-            }
-            
-            
+            var commitHeaderField = Data()
             
             let commitHeaderFieldResult: GitErrorCode
                 = try Commit.withHEADCommit(in: repository)
@@ -450,15 +424,14 @@ final class CommitTests: XCTestCaseStopOnFail
                 commitPointer in
 
                 return gitCommitHeaderField(
-                    out:        &buffer,
+                    out:        &commitHeaderField,
                     commit:     commitPointer,
                     field:      "tree"
                 )
             }
             
             XCTAssertOK(commitHeaderFieldResult)
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
+            XCTAssertGreaterThan(commitHeaderField.count, 0)
         }
     }
     

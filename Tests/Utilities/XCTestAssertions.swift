@@ -81,63 +81,54 @@ func XCTAssertNotOK(
 
 
 
-// MARK: - Buffers
+// MARK: - Data
 
-/// Asserts that the content and size of the given buffer is equal to the
-/// content and length of the given string, respectively.
+/// Asserts that the UTF-8 content of the given data is equal to the given
+/// string.
 /// - Parameters:
-///   - buffer: The buffer to evaluate.
-///   - content: The content to compare against.
+///   - data: The data to compare.
+///   - content: The content to compare against the given data.
 func XCTAssertEqual(
-    _   buffer:     GitBuf,
+    _   data:       Data,
     _   content:    String
 )
 {
-    guard let bufferPointer: UnsafeMutablePointer<CChar> = buffer.ptr
+    guard let dataString = String(
+        data:       data,
+        encoding:   .utf8
+    )
     else
     {
-        XCTFail("The buffer pointer was nil.")
+        XCTFail("The data string was nil.")
         return
     }
     
-    guard let bufferContent = String(optionalCString: bufferPointer)
-    else
-    {
-        XCTFail("The buffer content was nil.")
-        return
-    }
-    
-    XCTAssertEqual(bufferContent, content)
-    XCTAssertEqual(buffer.size, content.count)
+    XCTAssertEqual(dataString, content)
 }
 
 
 
-/// Asserts that the content the given buffer is non-`nil` and not equal to
-/// the given string.
+/// Asserts that the UTF-8 content of the given data is not equal to the
+/// given string.
 /// - Parameters:
-///   - buffer: The buffer to evaluate.
-///   - content: The content to compare against.
+///   - data: The data to compare.
+///   - content: The content to compare against the given data.
 func XCTAssertNotEqual(
-    _   buffer:     GitBuf,
+    _   data:       Data,
     _   content:    String
 )
 {
-    guard let bufferPointer: UnsafeMutablePointer<CChar> = buffer.ptr
+    guard let dataString = String(
+        data:       data,
+        encoding:   .utf8
+    )
     else
     {
-        XCTFail("The buffer pointer was nil.")
+        XCTFail("The data string was nil.")
         return
     }
     
-    guard let bufferContent = String(optionalCString: bufferPointer)
-    else
-    {
-        XCTFail("The buffer content was nil.")
-        return
-    }
-    
-    XCTAssertNotEqual(bufferContent, content)
+    XCTAssertNotEqual(dataString, content)
 }
 
 
@@ -210,7 +201,7 @@ func XCTAssertNotEqual(
 
 
 
-/// Asserts that the given OID is non-`nil` and zero-initialized.
+/// Asserts that the given OID is not `nil` and is zero-initialized.
 /// - Parameter oid: The OID.
 func XCTAssertZeroOID(
     _ oid : GitOID?
@@ -228,7 +219,7 @@ func XCTAssertZeroOID(
 
 
 
-/// Asserts that the given OID is non-`nil` and not zero-initialized.
+/// Asserts that the given OID is not `nil` and is not zero-initialized.
 /// - Parameter oid: The OID.
 func XCTAssertNotZeroOID(
     _ oid : GitOID?

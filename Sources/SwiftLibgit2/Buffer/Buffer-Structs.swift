@@ -11,24 +11,17 @@ import CLibgit2
 
 
 
-/// A data buffer for exporting data from libgit2.
+/// A data buffer for exporting data.
 ///
 /// ## Discussion
 ///
-/// A ``GitBuf`` contains a pointer to a null-terminated C string and the
-/// length of the string, in bytes. The length of the string does not include
-/// the null terminator.
-///
-/// - Important: Sometimes libgit2 wants to return an allocated data buffer to
-/// the caller, and have the caller take responsibility for freeing that memory.
-/// To make ownership clear in these cases, swift-libgit2 uses ``GitBuf`` to
-/// return this data. Callers must use``gitBufDispose(buffer:)`` to free the
-/// memory when the buffer is no longer needed.
+/// - Note: This struct is provided for documentation purposes, but is not used
+/// by other bindings. All bindings use `Data` instead.
 ///
 /// ## C Equivalent
 ///
 /// [`git_buf`](https://libgit2.org/docs/reference/main/buffer/git_buf.html)
-public struct GitBuf: CStructInternalMutable, WithCConvertible
+public struct GitBuf: CStruct
 {
     /// The buffer contents.
     ///
@@ -36,27 +29,17 @@ public struct GitBuf: CStructInternalMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// ``ptr`` points to the start of the buffer being returned. The buffer's
+    /// This points to the start of the buffer being returned. The buffer's
     /// length, in bytes, is specified by the ``size`` property. The buffer
     /// contains a null terminator at position `size + 1`.
-    ///
-    /// In libgit2, `git_buf->ptr` has the following lifecycle:
-    ///
-    /// - Initial state: `NULL`.
-    /// - After population: points to allocated, zero-terminated memory.
-    /// - After disposal: points to a static single-character array sentinel
-    /// value.
-    ///
-    /// In swift-libgit2, ``ptr`` uses `nil` to represent both the initial
-    /// state and the disposed state.
-    public internal(set) var ptr        : UnsafeMutablePointer<CChar>?  = nil
+    public let ptr      : UnsafeMutablePointer<CChar>?
     
     /// This property is unused, but is reserved for API compatibility.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public internal(set) var reserved   : Int                           = 0
+    public let reserved : Int
     
     /// The length, in bytes, of the buffer pointed to by ``ptr``, not
     /// including the null terminator.
@@ -64,12 +47,7 @@ public struct GitBuf: CStructInternalMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public internal(set) var size       : Int                           = 0
-    
-    
-    
-    /// Initializes a default ``GitBuf`` instance.
-    public init() { }
+    public let size     : Int
     
     
     
@@ -82,23 +60,5 @@ public struct GitBuf: CStructInternalMutable, WithCConvertible
         self.ptr        = buf.ptr
         self.reserved   = buf.reserved
         self.size       = buf.size
-    }
-    
-    
-    
-    /// Calls the given closure with a mutable pointer to a `git_buf` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    internal func withCValue<T>(
-        _ body: (UnsafeMutablePointer<git_buf>) throws -> T
-    ) rethrows -> T
-    {
-        var buffer = git_buf()
-        
-        buffer.ptr          = ptr
-        buffer.reserved     = reserved
-        buffer.size         = size
-        
-        return try body(&buffer)
     }
 }

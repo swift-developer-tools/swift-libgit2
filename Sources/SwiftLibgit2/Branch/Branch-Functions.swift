@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -396,8 +397,7 @@ public func gitBranchSetUpstream(
 
 /// Gets the upstream name of the given local branch.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the upstream name should be
-///   written.
+///   - out: The `Data` instance to update with the upstream name.
 ///   - repo: The repository containing the branches. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The name of the local branch for which to get the upstream
@@ -416,14 +416,14 @@ public func gitBranchSetUpstream(
 ///
 /// [`git_branch_upstream_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_name.html)
 public func gitBranchUpstreamName(
-    out     : inout GitBuf,
+    out     : inout Data,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -495,8 +495,7 @@ public func gitBranchIsCheckedOut(
 
 /// Gets the remote name of the given remote-tracking branch.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the remote name should be
-///   written.
+///   - out: The `Data` instance to update with the remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -517,14 +516,14 @@ public func gitBranchIsCheckedOut(
 ///
 /// [`git_branch_remote_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_remote_name.html)
 public func gitBranchRemoteName(
-    out     : inout GitBuf,
+    out     : inout Data,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -541,8 +540,7 @@ public func gitBranchRemoteName(
 
 /// Gets the upstream remote name of the given local branch.
 /// - Parameters:
-///   - buf: The ``GitBuf`` instance into which the upstream remote name
-///   should be written.
+///   - buf: The `Data` instance to update with the upstream remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -558,14 +556,14 @@ public func gitBranchRemoteName(
 ///
 /// [`git_branch_upstream_remote()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_remote.html)
 public func gitBranchUpstreamRemote(
-    buf     : inout GitBuf,
+    buf     : inout Data,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try buf.withMutatingCValue
+        return try buf.withMutatingGitBuf
         {
             cBuf in
             
@@ -582,8 +580,7 @@ public func gitBranchUpstreamRemote(
 
 /// Gets the upstream merge name of the given local branch.
 /// - Parameters:
-///   - buf: The ``GitBuf`` instance into which the upstream merge name should
-///   be written.
+///   - buf: The `Data` instance to update with the upstream merge name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -599,14 +596,14 @@ public func gitBranchUpstreamRemote(
 ///
 /// [`git_branch_upstream_merge()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_merge.html)
 public func gitBranchUpstreamMerge(
-    buf     : inout GitBuf,
+    buf     : inout Data,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try buf.withMutatingCValue
+        return try buf.withMutatingGitBuf
         {
             cBuf in
             
