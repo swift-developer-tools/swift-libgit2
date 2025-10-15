@@ -44,8 +44,8 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is a ``GitDiffFindOptions`` instance with the
-    /// default configuration.
+    /// The default value is a default-initialized ``GitDiffFindOptions``
+    /// instance.
     public var diffFindOpts     : GitDiffFindOptions
     
     /// The subject prefix.
