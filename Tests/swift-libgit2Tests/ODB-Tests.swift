@@ -73,16 +73,16 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let looseBackendResult: Int32 = git_odb_backend_loose(
-                &looseBackendPointer,
-                alternateDirectoryURL.path(),
-                -1,
-                0,
-                0,
-                0
+            let looseBackendResult: GitErrorCode = gitODBBackendLoose(
+                out:                &looseBackendPointer,
+                objectsDir:         alternateDirectoryURL.path(),
+                compressionLevel:   -1,
+                doFSync:            false,
+                dirMode:            0,
+                fileMode:           0
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: looseBackendResult))
+            XCTAssertOK(looseBackendResult)
             
             guard let looseBackendPointer: UnsafeMutablePointer<git_odb_backend>
                     = looseBackendPointer
@@ -169,19 +169,19 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let looseBackendResult: Int32 = git_odb_backend_loose(
-                &looseBackendPointer,
-                objectsDirectoryURL.path(),
-                -1,
-                0,
-                0,
-                0
+            let looseBackendResult: GitErrorCode = gitODBBackendLoose(
+                out:                &looseBackendPointer,
+                objectsDir:         objectsDirectoryURL.path(),
+                compressionLevel:   -1,
+                doFSync:            false,
+                dirMode:            0,
+                fileMode:           0
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: looseBackendResult))
+            XCTAssertOK(looseBackendResult)
             
             guard let looseBackendPointer: UnsafeMutablePointer<git_odb_backend>
-                = looseBackendPointer
+                    = looseBackendPointer
             else
             {
                 XCTFail("The loose ODB backend pointer was nil.")
