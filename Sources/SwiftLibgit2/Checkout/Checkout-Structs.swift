@@ -90,7 +90,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is `false`.
     public var disableFilters   : Bool
     
-    /// The directory mode.
+    /// The permission to use when creating directories.
     ///
     /// ## Discussion
     ///
@@ -98,7 +98,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// to using `0o755`.
     public var dirMode          : UInt32
     
-    /// The file mode.
+    /// The permission to use when creating files.
     ///
     /// ## Discussion
     ///
