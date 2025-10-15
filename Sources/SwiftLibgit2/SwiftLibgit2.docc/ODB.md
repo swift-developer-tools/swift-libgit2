@@ -1,6 +1,6 @@
 # ODB
 
-The object database.
+Object databases.
 
 ## Topics
 
