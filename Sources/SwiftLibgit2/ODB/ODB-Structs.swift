@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The options for configuring a loose object backend.
+/// The options for configuring an object database.
 ///
 /// ## C Equivalent
 ///

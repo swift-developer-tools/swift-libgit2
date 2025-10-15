@@ -43,8 +43,8 @@ public func gitODBNew(
 /// Creates a new obejct database, and automatically adds two default backends.
 /// - Parameters:
 ///   - odbOut: The pointer in which to store the object database. The
-/// underlying type must be `git_odb`.
-///   - objectsDir: The path to the Objects directory of the backends.
+///   underlying type must be `git_odb`.
+///   - objectsDir: The path to the Objects directory of the repository.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -52,9 +52,9 @@ public func gitODBNew(
 /// The two default backends are:
 ///
 /// - A backend for loose objects: Read and write loose object files from the
-/// disk, assuming `objects_dir` is the Objects directory.
+/// disk, assuming `objectsDir` is the Objects directory.
 /// - A backend for packfiles: Read objects from packfiles, assuming
-/// `objects_dir` is the Objects directory containing a `pack/` directory with
+/// `objectsDir` is the Objects directory containing a `pack/` directory with
 /// the corresponding data.
 ///
 /// - Note: This function supports only SHA-1 object databases.
