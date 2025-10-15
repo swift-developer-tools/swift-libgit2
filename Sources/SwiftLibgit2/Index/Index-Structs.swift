@@ -111,7 +111,7 @@ public struct GitIndexEntry: CStructMutable, WithCConvertible
     /// The default value is `0`.
     public var ino              : UInt32
     
-    /// The file mode and object type (regular file, symbolic link, or gitlink).
+    /// The file mode and object type (regular file, symbolic link, or Gitlink).
     ///
     /// ## Discussion
     ///
