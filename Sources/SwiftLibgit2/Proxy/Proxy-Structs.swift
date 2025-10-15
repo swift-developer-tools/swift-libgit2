@@ -40,7 +40,7 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var url              : String?
     
-    /// The callback for credential acquisition.
+    /// The callback invoked to acquire credentials.
     ///
     /// ## Discussion
     ///
@@ -51,7 +51,7 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// make libgit2 behave as if this field were not set.
     public var credentials      : GitCredentialAcquireCB?
     
-    /// The callback for the user's custom certificate checks.
+    /// The callback invoked to check custom certificates.
     ///
     /// ## Discussion
     ///
@@ -62,8 +62,7 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// to proceed.
     public var certificateCheck : GitTransportCertificateCheckCB?
     
-    /// The caller-specified payload passed to ``credentials`` and
-    /// ``certificateCheck``.
+    /// The payload passed to ``credentials`` and ``certificateCheck``.
     ///
     /// ## Discussion
     ///

@@ -26,22 +26,21 @@ public struct GitApplyOptions: CStructMutable, WithCConvertible
     /// The default value is ``gitApplyOptionsVersion``.
     public var version : UInt32
     
-    /// The callback that will be made per delta (file) when applying a patch.
+    /// The callback invoked for each delta (file).
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var deltaCB : GitApplyDeltaCB?
     
-    /// The callback that will be made per hunk when applying a patch.
+    /// The callback invoked for each hunk.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var hunkCB  : GitApplyHunkCB?
     
-    /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB``
-    /// and ``GitApplyOptions/hunkCB``.
+    /// The payload passed to ``deltaCB`` and ``hunkCB``.
     ///
     /// ## Discussion
     ///

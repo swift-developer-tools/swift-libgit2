@@ -121,28 +121,28 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is ``GitCheckoutNotifyT/gitCheckoutNotifyNone``.
     public var notifyFlags      : GitCheckoutNotifyT
     
-    /// The callback for checkout notifications.
+    /// The callback invoked for checkout notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var notifyCB         : GitCheckoutNotifyCB?
     
-    /// The caller-specified payload passed to ``notifyCB``.
+    /// The payload passed to ``notifyCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var notifyPayload    : UnsafeMutableRawPointer?
     
-    /// The callback for checkout progress.
+    /// The callback invoked for checkout progress.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var progressCB       : GitCheckoutProgressCB?
     
-    /// The caller-specified payload passed to ``progressCB``.
+    /// The payload passed to ``progressCB``.
     ///
     /// ## Discussion
     ///
@@ -212,14 +212,14 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var theirLabel       : String?
     
-    /// The callback for reporting checkout performance data.
+    /// The callback invoked for reporting checkout performance data.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var perfDataCB       : GitCheckoutPerfDataCB?
     
-    /// The caller-specified payload passed to ``perfDataCB``.
+    /// The payload passed to ``perfDataCB``.
     ///
     /// ## Discussion
     ///

@@ -27,7 +27,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// The default value is ``gitRemoteCallbacksVersion``.
     public var version              : UInt32
     
-    /// The callback for messages received by the transport.
+    /// The callback invoked for messages received by the transport.
     ///
     /// ## Discussion
     ///
@@ -47,21 +47,21 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// This callback is currently unused.
     public var completion           : GitRemoteCompletionCB?
     
-    /// The callback for credential acquisition.
+    /// The callback invoked to acquire credentials.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var credentials          : GitCredentialAcquireCB?
     
-    /// The callback for the user's custom certificate checks.
+    /// The callback invoked to check custom certificates.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var certificateCheck     : GitTransportCertificateCheckCB?
     
-    /// The callback to report progress during the indexing process.
+    /// The callback invoked to report progress during the indexing process.
     ///
     /// ## Discussion
     ///
@@ -78,35 +78,35 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// next major release. Use ``updateRefs`` instead.
     public var updateTips           : GitRemoteUpdateTipsCB?
     
-    /// The callback for progress notifications.
+    /// The callback invoked for progress notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var packProgress         : GitPackbuilderProgressCB?
     
-    /// The callback to push network progress notifications.
+    /// The callback invoked to push network progress notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var pushTransferProgress : GitPushTransferProgressCB?
     
-    /// The callback to inform of the update status from the remote.
+    /// The callback invoked to inform of the update status from the remote.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var pushUpdateReference  : GitPushUpdateReferenceCB?
     
-    /// The callback to inform of upcoming updates.
+    /// The callback invoked to inform of upcoming updates.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var pushNegotation       : GitPushNegotiationCB?
     
-    /// The callback to create a transport.
+    /// The callback invoked to create a transport.
     ///
     /// ## Discussion
     ///
@@ -121,15 +121,14 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     public var remoteReady          : GitRemoteReadyCB?
     
-    /// The caller-specified payload passed to each callback in
-    /// ``GitRemoteCallbacks``.
+    /// The payload passed to the callbacks of ``GitRemoteCallbacks``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var payload              : UnsafeMutableRawPointer?
     
-    /// The callback to resolve URLs before connecting to the remote.
+    /// The callback invoked to resolve URLs before connecting to the remote.
     ///
     /// ## Discussion
     ///

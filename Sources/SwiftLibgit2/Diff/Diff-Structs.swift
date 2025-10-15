@@ -284,15 +284,15 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var notifyCB         : GitDiffNotifyCB?
     
-    /// The callback for notifications of which files are being examined
-    /// during the diff operation.
+    /// The callback invoked for notifications of which files are being
+    /// examined during the diff operation.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var progressCB       : GitDiffProgressCB?
     
-    /// The caller-specified payload passed to ``notifyCB`` and ``progressCB``.
+    /// The payload passed to ``notifyCB`` and ``progressCB``.
     ///
     /// ## Discussion
     ///

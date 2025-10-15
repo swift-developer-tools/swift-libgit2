@@ -134,14 +134,14 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     /// The default value is ``gitIndexerOptionsVersion``.
     public var version              : UInt32
     
-    /// The callback to report progress during the indexing operation.
+    /// The callback invoked to report progress during the indexing operation.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var progressCB           : GitIndexerProgressCB?
     
-    /// The caller-specified payload passed to ``progressCB``.
+    /// The payload passed to ``progressCB``.
     ///
     /// ## Discussion
     ///
