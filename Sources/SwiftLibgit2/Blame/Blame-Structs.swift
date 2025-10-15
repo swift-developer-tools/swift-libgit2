@@ -24,14 +24,14 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitBlameOptionsVersion``.
-    public var version              : UInt32            = gitBlameOptionsVersion
+    public var version              : UInt32
     
     /// The flags to use during the blame operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitBlameFlagT/gitBlameNormal``.
-    public var flags                : GitBlameFlagT     = .gitBlameNormal
+    public var flags                : GitBlameFlagT
     
     /// The lower bound on the number of alphanumeric characters that must be
     /// detected as moving/copying within a file for it to associate those
@@ -46,7 +46,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitMoves``,
     /// ``GitBlameFlagT/gitBlameTrackCopiesSameCommitCopies``, or
     /// ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` are specified.
-    public var minMatchCharacters   : UInt16            = 20
+    public var minMatchCharacters   : UInt16
     
     /// The ID of the newest commit to consider.
     ///
@@ -54,7 +54,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using HEAD.
-    public var newestCommit         : GitOID?           = nil
+    public var newestCommit         : GitOID?
     
     /// The ID of the oldest commit to consider.
     ///
@@ -62,14 +62,14 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the first commit encountered with a `nil` parent.
-    public var oldestCommit         : GitOID?           = nil
+    public var oldestCommit         : GitOID?
     
     /// The first line in the file to blame.
     ///
     /// ## Discussion
     ///
     /// The default value is `1` (line numbers are 1-indexed).
-    public var minLine              : Int               = 1
+    public var minLine              : Int
     
     /// The last line in the file to blame.
     ///
@@ -77,17 +77,30 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using last line of the file.
-    public var maxLine              : Int?              = nil
+    public var maxLine              : Int?
     
     
     
-    /// Initializes a ``GitBlameOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitBlameOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32            = gitBlameOptionsVersion,
+        flags               : GitBlameFlagT     = .gitBlameNormal,
+        minMatchCharacters  : UInt16            = 20,
+        newestCommit        : GitOID?           = nil,
+        oldestCommit        : GitOID?           = nil,
+        minLine             : Int               = 1,
+        maxLine             : Int?              = nil
+    )
+    {
+        self.version                = version
+        self.flags                  = flags
+        self.minMatchCharacters     = minMatchCharacters
+        self.newestCommit           = newestCommit
+        self.oldestCommit           = oldestCommit
+        self.minLine                = minLine
+        self.maxLine                = maxLine
+    }
     
     
     

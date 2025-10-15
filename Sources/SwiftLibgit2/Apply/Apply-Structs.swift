@@ -24,21 +24,21 @@ public struct GitApplyOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitApplyOptionsVersion``.
-    public var version : UInt32                     = gitApplyOptionsVersion
+    public var version : UInt32
     
     /// The callback that will be made per delta (file) when applying a patch.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var deltaCB : GitApplyDeltaCB?           = nil
+    public var deltaCB : GitApplyDeltaCB?
     
     /// The callback that will be made per hunk when applying a patch.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var hunkCB  : GitApplyHunkCB?            = nil
+    public var hunkCB  : GitApplyHunkCB?
     
     /// The caller-specified payload passed to both ``GitApplyOptions/deltaCB``
     /// and ``GitApplyOptions/hunkCB``.
@@ -46,24 +46,33 @@ public struct GitApplyOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload : UnsafeMutableRawPointer?   = nil
+    public var payload : UnsafeMutableRawPointer?
     
     /// The flags to use when applying.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty option set.
-    public var flags   : GitApplyFlagsT             = []
+    public var flags   : GitApplyFlagsT
     
     
     
-    /// Initializes a ``GitApplyOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitApplyOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version : UInt32                    = gitApplyOptionsVersion,
+        deltaCB : GitApplyDeltaCB?          = nil,
+        hunkCB  : GitApplyHunkCB?           = nil,
+        payload : UnsafeMutableRawPointer?  = nil,
+        flags   : GitApplyFlagsT            = []
+    )
+    {
+        self.version    = version
+        self.deltaCB    = deltaCB
+        self.hunkCB     = hunkCB
+        self.payload    = payload
+        self.flags      = flags
+    }
     
     
     

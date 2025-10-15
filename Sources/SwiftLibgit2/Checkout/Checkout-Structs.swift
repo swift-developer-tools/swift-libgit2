@@ -74,21 +74,21 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitCheckoutOptionsVersion``.
-    public var version          : UInt32                    = gitCheckoutOptionsVersion
+    public var version          : UInt32
     
     /// The checkout strategy.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitCheckoutStrategyT/gitCheckoutSafe``.
-    public var checkoutStrategy : GitCheckoutStrategyT      = .gitCheckoutSafe
+    public var checkoutStrategy : GitCheckoutStrategyT
     
     /// Whether filters like CRLF conversion should be disabled.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var disableFilters   : Bool                      = false
+    public var disableFilters   : Bool
     
     /// The directory mode.
     ///
@@ -96,7 +96,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
     /// to using `0o755`.
-    public var dirMode          : UInt32                    = 0
+    public var dirMode          : UInt32
     
     /// The file mode.
     ///
@@ -104,7 +104,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
     /// to using `0o644` or `0o755`, as dictated by the blob.
-    public var fileMode         : UInt32                    = 0
+    public var fileMode         : UInt32
     
     /// The flags controlling the file opening process.
     ///
@@ -112,42 +112,42 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
     /// to using `O_CREAT | O_TRUNC | O_WRONLY`.
-    public var fileOpenFlags    : Int32                     = 0
+    public var fileOpenFlags    : Int32
     
     /// The flags controlling the behavior of checkout notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitCheckoutNotifyT/gitCheckoutNotifyNone``.
-    public var notifyFlags      : GitCheckoutNotifyT        = .gitCheckoutNotifyNone
+    public var notifyFlags      : GitCheckoutNotifyT
     
     /// The callback for checkout notifications.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var notifyCB         : GitCheckoutNotifyCB?      = nil
+    public var notifyCB         : GitCheckoutNotifyCB?
     
     /// The caller-specified payload passed to ``notifyCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var notifyPayload    : UnsafeMutableRawPointer?  = nil
+    public var notifyPayload    : UnsafeMutableRawPointer?
     
     /// The callback for checkout progress.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressCB       : GitCheckoutProgressCB?    = nil
+    public var progressCB       : GitCheckoutProgressCB?
     
     /// The caller-specified payload passed to ``progressCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressPayload  : UnsafeMutableRawPointer?  = nil
+    public var progressPayload  : UnsafeMutableRawPointer?
     
     /// A list of wildmatch patterns or paths.
     ///
@@ -160,7 +160,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.
-    public var paths            : [String]                  = []
+    public var paths            : [String]
     
     /// The expected content of the working directory. The underlying type
     /// must be `git_tree`.
@@ -172,7 +172,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// A checkout conflict will occur if the working directory does not match
     /// this baseline information.
-    public var baseline         : OpaquePointer?            = nil
+    public var baseline         : OpaquePointer?
     
     /// The expected content of the working directory, expressed as an index.
     /// The underlying type must be `git_index`.
@@ -182,59 +182,98 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     /// 
     /// This overrides ``baseline``.
-    public var baselineIndex    : OpaquePointer?            = nil
+    public var baselineIndex    : OpaquePointer?
     
     /// The alternative checkout path to the working directory.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var targetDirectory  : String?                   = nil
+    public var targetDirectory  : String?
     
     /// The name of the common ancestor of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var ancestorLabel    : String?                   = nil
+    public var ancestorLabel    : String?
     
     /// The name of "our" side of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var ourLabel         : String?                   = nil
+    public var ourLabel         : String?
     
     /// The name of "their" side of conflicts.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var theirLabel       : String?                   = nil
+    public var theirLabel       : String?
     
     /// The callback for reporting checkout performance data.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var perfDataCB       : GitCheckoutPerfDataCB?    = nil
+    public var perfDataCB       : GitCheckoutPerfDataCB?
     
     /// The caller-specified payload passed to ``perfDataCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var perfDataPayload  : UnsafeMutableRawPointer?  = nil
+    public var perfDataPayload  : UnsafeMutableRawPointer?
     
     
     
-    /// Initializes a ``GitCheckoutOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitCheckoutOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                    = gitCheckoutOptionsVersion,
+        checkoutStrategy    : GitCheckoutStrategyT      = .gitCheckoutSafe,
+        disableFilters      : Bool                      = false,
+        dirMode             : UInt32                    = 0,
+        fileMode            : UInt32                    = 0,
+        fileOpenFlags       : Int32                     = 0,
+        notifyFlags         : GitCheckoutNotifyT        = .gitCheckoutNotifyNone,
+        notifyCB            : GitCheckoutNotifyCB?      = nil,
+        notifyPayload       : UnsafeMutableRawPointer?  = nil,
+        progressCB          : GitCheckoutProgressCB?    = nil,
+        progressPayload     : UnsafeMutableRawPointer?  = nil,
+        paths               : [String]                  = [],
+        baseline            : OpaquePointer?            = nil,
+        baselineIndex       : OpaquePointer?            = nil,
+        targetDirectory     : String?                   = nil,
+        ancestorLabel       : String?                   = nil,
+        ourLabel            : String?                   = nil,
+        theirLabel          : String?                   = nil,
+        perfDataCB          : GitCheckoutPerfDataCB?    = nil,
+        perfDataPayload     : UnsafeMutableRawPointer?  = nil
+    )
+    {
+        self.version            = version
+        self.checkoutStrategy   = checkoutStrategy
+        self.disableFilters     = disableFilters
+        self.dirMode            = dirMode
+        self.fileMode           = fileMode
+        self.fileOpenFlags      = fileOpenFlags
+        self.notifyFlags        = notifyFlags
+        self.notifyCB           = notifyCB
+        self.notifyPayload      = notifyPayload
+        self.progressCB         = progressCB
+        self.progressPayload    = progressPayload
+        self.paths              = paths
+        self.baseline           = baseline
+        self.baselineIndex      = baselineIndex
+        self.targetDirectory    = targetDirectory
+        self.ancestorLabel      = ancestorLabel
+        self.ourLabel           = ourLabel
+        self.theirLabel         = theirLabel
+        self.perfDataCB         = perfDataCB
+        self.perfDataPayload    = perfDataPayload
+    }
     
     
     

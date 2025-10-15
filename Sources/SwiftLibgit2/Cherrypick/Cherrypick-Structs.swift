@@ -24,14 +24,14 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitCherrypickOptionsVersion``.
-    public var version      : UInt32                = gitCherrypickOptionsVersion
+    public var version      : UInt32
     
     /// The parent for merge commits.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var mainline     : UInt32                = 0
+    public var mainline     : UInt32
     
     /// The options for the merge operation.
     ///
@@ -39,7 +39,7 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the default merge options.
-    public var mergeOpts    : GitMergeOptions?      = nil
+    public var mergeOpts    : GitMergeOptions?
     
     /// The options for the checkout operation.
     ///
@@ -47,17 +47,24 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the default checkout options.
-    public var checkoutOpts : GitCheckoutOptions?   = nil
+    public var checkoutOpts : GitCheckoutOptions?
     
     
     
-    /// Initializes a ``GitCherrypickOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitCherrypickOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32                = gitCherrypickOptionsVersion,
+        mainline        : UInt32                = 0,
+        mergeOpts       : GitMergeOptions?      = nil,
+        checkoutOpts    : GitCheckoutOptions?   = nil
+    )
+    {
+        self.version        = version
+        self.mainline       = mainline
+        self.mergeOpts      = mergeOpts
+        self.checkoutOpts   = checkoutOpts
+    }
     
     
     

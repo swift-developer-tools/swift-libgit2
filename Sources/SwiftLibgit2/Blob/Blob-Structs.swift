@@ -24,14 +24,14 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitBlobFilterOptionsVersion``.
-    public var version      : Int32                 = gitBlobFilterOptionsVersion
+    public var version      : Int32
     
     /// The flags to use during the blob filtering operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitBlobFilterFlagT/gitBlobFilterCheckForBinary``.
-    public var flags        : GitBlobFilterFlagT    = .gitBlobFilterCheckForBinary
+    public var flags        : GitBlobFilterFlagT
     
     /// The commit ID.
     ///
@@ -40,7 +40,7 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     ///
     /// - Note: This property is unused, but is reserved for API compatibility.
-    public var commitID     : GitOID?               = nil
+    public var commitID     : GitOID?
     
     /// The commit from which to load attributes when
     /// ``GitBlobFilterFlagT/gitBlobFilterAttributesFromCommit`` is specified.
@@ -48,17 +48,24 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is a zero-initialized ``GitOID`` instance.
-    public var attrCommitID : GitOID                = GitOID()
+    public var attrCommitID : GitOID
     
     
     
-    /// Initializes a ``GitBlobFilterOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitBlobFilterOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : Int32                 = gitBlobFilterOptionsVersion,
+        flags           : GitBlobFilterFlagT    = .gitBlobFilterCheckForBinary,
+        commitID        : GitOID?               = nil,
+        attrCommitID    : GitOID                = GitOID()
+    )
+    {
+        self.version        = version
+        self.flags          = flags
+        self.commitID       = commitID
+        self.attrCommitID   = attrCommitID
+    }
     
     
     

@@ -24,21 +24,21 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitProxyOptionsVersion``.
-    public var version          : UInt32                            = gitProxyOptionsVersion
+    public var version          : UInt32
     
     /// The type of proxy.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitProxyT/gitProxyNone``.
-    public var type             : GitProxyT                         = .gitProxyNone
+    public var type             : GitProxyT
     
     /// The URL of the proxy.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var url              : String?                           = nil
+    public var url              : String?
     
     /// The callback for credential acquisition.
     ///
@@ -47,9 +47,9 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     ///
     /// This function will be called if the remote host requires authentication
-    /// in order to connect. Returning `GIT_PASSTHROUGH` will make libgit2
-    /// behave as though this field were not set.
-    public var credentials      : GitCredentialAcquireCB?           = nil
+    /// in order to connect. Returning ``GitErrorCode/gitPassthrough`` will
+    /// make libgit2 behave as if this field were not set.
+    public var credentials      : GitCredentialAcquireCB?
     
     /// The callback for the user's custom certificate checks.
     ///
@@ -60,7 +60,7 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// If  certificate verification fails, this function will be called to
     /// let the user make the final decision of whether to allow the connection
     /// to proceed.
-    public var certificateCheck : GitTransportCertificateCheckCB?   = nil
+    public var certificateCheck : GitTransportCertificateCheckCB?
     
     /// The caller-specified payload passed to ``credentials`` and
     /// ``certificateCheck``.
@@ -68,16 +68,28 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload          : UnsafeMutableRawPointer?          = nil
+    public var payload          : UnsafeMutableRawPointer?
     
     
     
-    /// Initializes a ``GitProxyOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitProxyOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                            = gitProxyOptionsVersion,
+        type                : GitProxyT                         = .gitProxyNone,
+        url                 : String?                           = nil,
+        credentials         : GitCredentialAcquireCB?           = nil,
+        certificateCheck    : GitTransportCertificateCheckCB?   = nil,
+        payload             : UnsafeMutableRawPointer?          = nil
+    )
+    {
+        self.version            = version
+        self.type               = type
+        self.url                = url
+        self.credentials        = credentials
+        self.certificateCheck   = certificateCheck
+        self.payload            = payload
+    }
     
     
     

@@ -23,14 +23,14 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitEmailCreateOptionsVersion``.
-    public var version          : UInt32                = gitEmailCreateOptionsVersion
+    public var version          : UInt32
     
     /// The flags controlling the formatting of generated emails.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitEmailCreateFlagsT/gitEmailCreateDefault``.
-    public var flags            : GitEmailCreateFlagsT  = .gitEmailCreateDefault
+    public var flags            : GitEmailCreateFlagsT
     
     /// The options for the diff operation.
     ///
@@ -38,7 +38,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is a ``GitDiffOptions`` instance with the default
     /// configuration.
-    public var diffOpts         : GitDiffOptions        = GitDiffOptions()
+    public var diffOpts         : GitDiffOptions
     
     /// The options for diff rename and copy detection.
     ///
@@ -46,7 +46,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is a ``GitDiffFindOptions`` instance with the
     /// default configuration.
-    public var diffFindOpts     : GitDiffFindOptions    = GitDiffFindOptions()
+    public var diffFindOpts     : GitDiffFindOptions
     
     /// The subject prefix.
     ///
@@ -57,7 +57,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     /// If the subject prefix is set to an empty string, only the patch
     /// numbers will be shown in the prefix. If patch numbers are not being
     /// shown, the prefix will be omitted entirely.
-    public var subjectPrefix    : String                = "PATCH"
+    public var subjectPrefix    : String
     
     /// The starting patch number.
     ///
@@ -66,24 +66,37 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     /// The default value is `1`.
     ///
     /// - Important: The starting patch number must not be `0`.
-    public var startNumber      : Int                   = 1
+    public var startNumber      : Int
     
     /// The reroll number.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var rerollNumber     : Int                   = 0
+    public var rerollNumber     : Int
     
     
     
-    /// Initializes a ``GitEmailCreateOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitEmailCreateOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32                = gitEmailCreateOptionsVersion,
+        flags           : GitEmailCreateFlagsT  = .gitEmailCreateDefault,
+        diffOpts        : GitDiffOptions        = GitDiffOptions(),
+        diffFindOpts    : GitDiffFindOptions    = GitDiffFindOptions(),
+        subjectPrefix   : String                = "PATCH",
+        startNumber     : Int                   = 1,
+        rerollNumber    : Int                   = 0
+    )
+    {
+        self.version        = version
+        self.flags          = flags
+        self.diffOpts       = diffOpts
+        self.diffFindOpts   = diffFindOpts
+        self.subjectPrefix  = subjectPrefix
+        self.startNumber    = startNumber
+        self.rerollNumber   = rerollNumber
+    }
     
     
     

@@ -252,14 +252,14 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitDiffOptionsVersion``.
-    public var version          : UInt32                    = gitDiffOptionsVersion
+    public var version          : UInt32
     
     /// The flags controlling the diff operation.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitDiffOptionT/gitDiffNormal``.
-    public var flags            : GitDiffOptionT            = .gitDiffNormal
+    public var flags            : GitDiffOptionT
     
     /// The submodule ignore options.
     ///
@@ -267,14 +267,14 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is
     /// ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``.
-    public var ignoreSubmodules : GitSubmoduleIgnoreT       = .gitSubmoduleIgnoreUnspecified
+    public var ignoreSubmodules : GitSubmoduleIgnoreT
     
     /// The paths or `fnmatch` patterns to constrain the diff.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty array.
-    public var pathspec         : [String]                  = []
+    public var pathspec         : [String]
     
     /// The callback for notifications of new diff deltas being added during
     /// the diff operation.
@@ -282,7 +282,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var notifyCB         : GitDiffNotifyCB?          = nil
+    public var notifyCB         : GitDiffNotifyCB?
     
     /// The callback for notifications of which files are being examined
     /// during the diff operation.
@@ -290,14 +290,14 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressCB       : GitDiffProgressCB?        = nil
+    public var progressCB       : GitDiffProgressCB?
     
     /// The caller-specified payload passed to ``notifyCB`` and ``progressCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload          : UnsafeMutableRawPointer?  = nil
+    public var payload          : UnsafeMutableRawPointer?
     
     /// The number of unchanged lines that define the boundaries of a diff hunk,
     /// and should be displayed before and after each hunk.
@@ -305,7 +305,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `3`.
-    public var contextLines     : UInt32                    = 3
+    public var contextLines     : UInt32
     
     /// The maximum number of unchanged lines between diff hunk boundaries
     /// before the hunks should be merged.
@@ -313,7 +313,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var interHunkLines   : UInt32                    = 0
+    public var interHunkLines   : UInt32
     
     /// The type of ID to emit in diffs.
     ///
@@ -328,7 +328,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// If this is specified and a repository is available, the specified type
     /// should match the repository's ID format.
-    public var oidType          : GitOIDT?                  = nil
+    public var oidType          : GitOIDT?
     
     /// The abbreviation length to use when formatting IDs.
     ///
@@ -337,7 +337,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the value of `core.abbrev` from the configuration
     /// file, or `7` if that value is unset.
-    public var idAbbrev         : UInt16?                   = nil
+    public var idAbbrev         : UInt16?
     
     /// The maximum size, in bytes, above which a blob will be automatically
     /// marked as binary.
@@ -347,30 +347,58 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The default value is 512 MB.
     ///
     /// Pass a negative value to disable the limit.
-    public var maxSize          : GitOffT                   = 536_870_912
+    public var maxSize          : GitOffT
     
     /// The virtual directory prefix for old file names in diff hunk headers.
     ///
     /// ## Discussion
     ///
     /// The default value is `a`.
-    public var oldPrefix        : String                    = "a"
+    public var oldPrefix        : String
     
     /// The virtual directory prefix for new file names in diff hunk headers.
     ///
     /// ## Discussion
     ///
     /// The default value is `b`.
-    public var newPrefix        : String                    = "b"
+    public var newPrefix        : String
     
     
     
-    /// Initializes a ``GitDiffOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitDiffOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                    = gitDiffOptionsVersion,
+        flags               : GitDiffOptionT            = .gitDiffNormal,
+        ignoreSubmodules    : GitSubmoduleIgnoreT       = .gitSubmoduleIgnoreUnspecified,
+        pathspec            : [String]                  = [],
+        notifyCB            : GitDiffNotifyCB?          = nil,
+        progressCB          : GitDiffProgressCB?        = nil,
+        payload             : UnsafeMutableRawPointer?  = nil,
+        contextLines        : UInt32                    = 3,
+        interHunkLines      : UInt32                    = 0,
+        oidType             : GitOIDT?                  = nil,
+        idAbbrev            : UInt16?                   = nil,
+        maxSize             : GitOffT                   = 536_870_912,
+        oldPrefix           : String                    = "a",
+        newPrefix           : String                    = "b"
+    )
+    {
+        self.version            = version
+        self.flags              = flags
+        self.ignoreSubmodules   = ignoreSubmodules
+        self.pathspec           = pathspec
+        self.notifyCB           = notifyCB
+        self.progressCB         = progressCB
+        self.payload            = payload
+        self.contextLines       = contextLines
+        self.interHunkLines     = interHunkLines
+        self.oidType            = oidType
+        self.idAbbrev           = idAbbrev
+        self.maxSize            = maxSize
+        self.oldPrefix          = oldPrefix
+        self.newPrefix          = newPrefix
+    }
     
     
     
@@ -986,14 +1014,14 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitDiffFindOptionsVersion``.
-    public var version                      : UInt32                            = gitDiffFindOptionsVersion
+    public var version                      : UInt32
     
     /// The flags controlling diff rename and copy detection.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitDiffFindT/gitDiffFindByConfig``.
-    public var flags                        : GitDiffFindT                      = .gitDiffFindByConfig
+    public var flags                        : GitDiffFindT
     
     /// The threshold above which similar files will be considered renames.
     ///
@@ -1002,7 +1030,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// The default value is `50`.
     ///
     /// This is equivalent to `git diff --find-renames`.
-    public var renameThreshold              : UInt16                            = 50
+    public var renameThreshold              : UInt16
     
     /// The threshold below which similar files will be eligible to be a
     /// rename source.
@@ -1012,7 +1040,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// The default value is `50`.
     ///
     /// This is equivalent to the first part of `git diff --break-rewrites`.
-    public var renameFromRewriteThreshold   : UInt16                            = 50
+    public var renameFromRewriteThreshold   : UInt16
     
     /// The threshold above which similar files will be considered copies.
     ///
@@ -1021,7 +1049,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// The default value is `50`.
     ///
     /// This is equivalent to `git diff --find-copies`.
-    public var copyThreshold                : UInt16                            = 50
+    public var copyThreshold                : UInt16
     
     /// The threshold below which similar files will be split into an
     /// add/delete pair.
@@ -1031,7 +1059,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// The default value is `50`.
     ///
     /// This is equivalent to the last part of `git diff --break-rewrites`.
-    public var breakRewriteThreshold        : UInt16                            = 50
+    public var breakRewriteThreshold        : UInt16
     
     /// The maximum number of matches to consider for a particular file.
     ///
@@ -1042,7 +1070,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// This is slightly different from `git diff -l`, since libgit2 will
     /// still process up to the specified number of matches before abandoning
     /// the search.
-    public var renameLimit                  : Int                               = 1000
+    public var renameLimit                  : Int
     
     /// The pluggable similarity metric.
     ///
@@ -1057,17 +1085,33 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// - Important: If a custom metric is provided, the caller will be
     /// responsible for memory management.
     public var metric                       : UnsafeMutablePointer<
-                                                git_diff_similarity_metric>?    = nil
+                                                git_diff_similarity_metric>?
     
     
     
-    /// Initializes a ``GitDiffFindOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitDiffFindOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version                     : UInt32                            = gitDiffFindOptionsVersion,
+        flags                       : GitDiffFindT                      = .gitDiffFindByConfig,
+        renameThreshold             : UInt16                            = 50,
+        renameFromRewriteThreshold  : UInt16                            = 50,
+        copyThreshold               : UInt16                            = 50,
+        breakRewriteThreshold       : UInt16                            = 50,
+        renameLimit                 : Int                               = 1000,
+        metric                      : UnsafeMutablePointer<
+                                        git_diff_similarity_metric>?    = nil
+    )
+    {
+        self.version                        = version
+        self.flags                          = flags
+        self.renameThreshold                = renameThreshold
+        self.renameFromRewriteThreshold     = renameFromRewriteThreshold
+        self.copyThreshold                  = copyThreshold
+        self.breakRewriteThreshold          = breakRewriteThreshold
+        self.renameLimit                    = renameLimit
+        self.metric                         = metric
+    }
     
     
     
@@ -1135,24 +1179,27 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitDiffParseOptionsVersion``.
-    public var version  : UInt32    = gitDiffParseOptionsVersion
+    public var version  : UInt32
     
     /// The ID type used in the patch file.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitOIDT/gitOIDSHA1``.
-    public var oidType  : GitOIDT   = .gitOIDSHA1
+    public var oidType  : GitOIDT
     
     
     
-    /// Initializes a ``GitDiffParseOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitDiffParseOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version : UInt32    = gitDiffParseOptionsVersion,
+        oidType : GitOIDT   = .gitOIDSHA1
+    )
+    {
+        self.version    = version
+        self.oidType    = oidType
+    }
     
     
     
@@ -1207,17 +1254,18 @@ public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitDiffPatchIDOptionsVersion``.
-    public var version  : UInt32    = gitDiffPatchIDOptionsVersion
+    public var version  : UInt32
     
     
     
-    /// Initializes a ``GitDiffPatchIDOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitDiffPatchIDOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version: UInt32 = gitDiffPatchIDOptionsVersion
+    )
+    {
+        self.version = version
+    }
     
     
     

@@ -23,7 +23,7 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitCommitCreateOptionsVersion``.
-    public var version          : UInt32            = gitCommitCreateOptionsVersion
+    public var version          : UInt32
     
     /// Whether a commit with no changes from the prior commit (an empty commit)
     /// should be allowed.
@@ -31,21 +31,21 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var allowEmptyCommit : Bool              = false
+    public var allowEmptyCommit : Bool
     
     /// The commit author.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var author           : GitSignature?     = nil
+    public var author           : GitSignature?
     
     /// The committer.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var committer        : GitSignature?     = nil
+    public var committer        : GitSignature?
     
     /// The encoding for the commit message.
     ///
@@ -53,17 +53,26 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using UTF-8.
-    public var messageEncoding  : String?           = nil
+    public var messageEncoding  : String?
     
     
     
-    /// Initializes a ``GitCommitCreateOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitCommitCreateOptions`` instance, optionally
+    /// specifying values for its properties.
+    public init(
+        version             : UInt32            = gitCommitCreateOptionsVersion,
+        allowEmptyCommit    : Bool              = false,
+        author              : GitSignature?     = nil,
+        committer           : GitSignature?     = nil,
+        messageEncoding     : String?           = nil
+    )
+    {
+        self.version            = version
+        self.allowEmptyCommit   = allowEmptyCommit
+        self.author             = author
+        self.committer          = committer
+        self.messageEncoding    = messageEncoding
+    }
     
     
     

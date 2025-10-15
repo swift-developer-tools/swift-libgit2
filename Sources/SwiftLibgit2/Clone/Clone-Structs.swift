@@ -24,7 +24,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitCloneOptionsVersion``.
-    public var version              : UInt32                    = gitCloneOptionsVersion
+    public var version              : UInt32
     
     /// The options for the checkout operation.
     ///
@@ -32,7 +32,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the default checkout options.
-    public var checkoutOpts         : GitCheckoutOptions?       = nil
+    public var checkoutOpts         : GitCheckoutOptions?
     
     /// The options for the fetch operation, including callbacks.
     ///
@@ -43,21 +43,21 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///
     /// The callbacks are used for reporting fetch progress and for acquiring
     ///  credentials in the event that they are needed.
-    public var fetchOpts            : GitFetchOptions?          = nil
+    public var fetchOpts            : GitFetchOptions?
     
     /// Whether a bare repository should be created.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var bare                 : Bool                      = false
+    public var bare                 : Bool
     
     /// The option for bypassing the Git-aware transport on clone.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitCloneLocalT/gitCloneLocalAuto``.
-    public var local                : GitCloneLocalT            = .gitCloneLocalAuto
+    public var local                : GitCloneLocalT
     
     /// The name of the branch to checkout.
     ///
@@ -65,7 +65,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the remote's default branch.
-    public var checkoutBranch       : String?                   = nil
+    public var checkoutBranch       : String?
     
     /// A callback used to create the new repository into which to clone.
     ///
@@ -74,7 +74,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using ``bare`` property to determine whether to create a
     /// bare repository.
-    public var repositoryCB         : GitRepositoryCreateCB?    = nil
+    public var repositoryCB         : GitRepositoryCreateCB?
     
     /// The caller-specified payload passed to ``repositoryCB``.
     ///
@@ -83,7 +83,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     ///
     /// This property will be ignored unless ``repositoryCB`` is not `nil`.
-    public var repositoryCBPayload  : UnsafeMutableRawPointer?  = nil
+    public var repositoryCBPayload  : UnsafeMutableRawPointer?
     
     /// A callback used to create the remote, prior to its being used to
     /// perform the clone operation.
@@ -91,7 +91,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var remoteCB             : GitRemoteCreateCB?        = nil
+    public var remoteCB             : GitRemoteCreateCB?
     
     /// The caller-specified payload passed to ``remoteCB``.
     ///
@@ -100,17 +100,36 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     ///
     /// This property will be ignored unless ``remoteCB`` is not `nil`.
-    public var remoteCBPayload      : UnsafeMutableRawPointer?  = nil
+    public var remoteCBPayload      : UnsafeMutableRawPointer?
     
     
     
-    /// Initializes a ``GitCloneOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitCloneOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                    = gitCloneOptionsVersion,
+        checkoutOpts        : GitCheckoutOptions?       = nil,
+        fetchOpts           : GitFetchOptions?          = nil,
+        bare                : Bool                      = false,
+        local               : GitCloneLocalT            = .gitCloneLocalAuto,
+        checkoutBranch      : String?                   = nil,
+        repositoryCB        : GitRepositoryCreateCB?    = nil,
+        repositoryCBPayload : UnsafeMutableRawPointer?  = nil,
+        remoteCB            : GitRemoteCreateCB?        = nil,
+        remoteCBPayload     : UnsafeMutableRawPointer?  = nil
+    )
+    {
+        self.version                = version
+        self.checkoutOpts           = checkoutOpts
+        self.fetchOpts              = fetchOpts
+        self.bare                   = bare
+        self.local                  = local
+        self.checkoutBranch         = checkoutBranch
+        self.repositoryCB           = repositoryCB
+        self.repositoryCBPayload    = repositoryCBPayload
+        self.remoteCB               = remoteCB
+        self.remoteCBPayload        = remoteCBPayload
+    }
     
     
     

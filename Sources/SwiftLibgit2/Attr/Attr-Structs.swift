@@ -23,21 +23,21 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitAttrOptionsVersion``.
-    public var version      : UInt32                = gitAttrOptionsVersion
+    public var version      : UInt32
     
     /// The flags to use when querying the attributes.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty option set.
-    public var flags        : GitAttrCheckFlagsT    = []
+    public var flags        : GitAttrCheckFlagsT
     
     /// The commit ID.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var commitID     : GitOID?               = nil
+    public var commitID     : GitOID?
     
     /// The commit to load attributes from when
     /// ``GitAttrCheckFlagsT/gitAttrCheckIncludeCommit`` is specified.
@@ -45,16 +45,24 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is a zero-initialized ``GitOID`` instance.
-    public var attrCommitID : GitOID                = GitOID()
+    public var attrCommitID : GitOID                
     
     
     
-    /// Initializes a ``GitAttrOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitAttrOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version         : UInt32                = gitAttrOptionsVersion,
+        flags           : GitAttrCheckFlagsT    = [],
+        commitID        : GitOID?               = nil,
+        attrCommitID    : GitOID                = GitOID()
+    )
+    {
+        self.version        = version
+        self.flags          = flags
+        self.commitID       = commitID
+        self.attrCommitID   = attrCommitID
+    }
     
     
     

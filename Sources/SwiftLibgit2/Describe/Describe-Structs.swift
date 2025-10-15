@@ -24,28 +24,28 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitDescribeOptionsVersion``.
-    public var version                  : UInt32                = gitDescribeOptionsVersion
+    public var version                  : UInt32
     
     /// The maximum number of candidate tags.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitDescribeDefaultMaxCandidatesTags``.
-    public var maxCandidatesTags        : UInt32                = gitDescribeDefaultMaxCandidatesTags
+    public var maxCandidatesTags        : UInt32
     
     /// The reference lookup strategy.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitDescribeStrategyT/gitDescribeDefault``.
-    public var describeStrategy         : GitDescribeStrategyT  = .gitDescribeDefault
+    public var describeStrategy         : GitDescribeStrategyT
     
     /// The pattern to match.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var pattern                  : String?               = nil
+    public var pattern                  : String?
     
     /// Whether to walk down only the first parent's ancestry when calculating
     /// the distance from the matching tag or reference.
@@ -53,7 +53,7 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var onlyFollowFirstParent    : Bool                  = false
+    public var onlyFollowFirstParent    : Bool
     
     /// Whether the full commit ID should be shown if no matching tag or
     /// reference is found.
@@ -64,17 +64,28 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     ///
     /// The describe operation will fail if this is `false` and no matching
     /// tag or reference is found.
-    public var showCommitOIDAsFallback  : Bool                  = false
+    public var showCommitOIDAsFallback  : Bool
     
     
     
-    /// Initializes a ``GitDescribeOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitDescribeOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version                 : UInt32                = gitDescribeOptionsVersion,
+        maxCandidatesTags       : UInt32                = gitDescribeDefaultMaxCandidatesTags,
+        describeStrategy        : GitDescribeStrategyT  = .gitDescribeDefault,
+        pattern                 : String?               = nil,
+        onlyFollowFirstParent   : Bool                  = false,
+        showCommitOIDAsFallback : Bool                  = false
+    )
+    {
+        self.version                    = version
+        self.maxCandidatesTags          = maxCandidatesTags
+        self.describeStrategy           = describeStrategy
+        self.pattern                    = pattern
+        self.onlyFollowFirstParent      = onlyFollowFirstParent
+        self.showCommitOIDAsFallback    = showCommitOIDAsFallback
+    }
     
     
     
@@ -152,14 +163,14 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitDescribeFormatOptionsVersion``.
-    public var version              : UInt32    = gitDescribeFormatOptionsVersion
+    public var version              : UInt32
     
     /// The lower bound of the size of the abbreviated commit ID.
     ///
     /// ## Discussion
     ///
     /// The default value is ``gitDescribeDefaultAbbreviatedSize``.
-    public var abbreviatedSize      : UInt32    = gitDescribeDefaultAbbreviatedSize
+    public var abbreviatedSize      : UInt32
     
     /// Whether the long format should always be used even when a shorter name
     /// is possible.
@@ -167,7 +178,7 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var alwaysUseLongFormat  : Bool      = false
+    public var alwaysUseLongFormat  : Bool
     
     /// The suffix to append to the description if the working directory is
     /// dirty.
@@ -175,17 +186,24 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var dirtySuffix          : String?   = nil
+    public var dirtySuffix          : String?
     
     
     
-    /// Initializes a ``GitDescribeFormatOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitDescribeFormatOptions`` instance, optionally
+    /// specifying values for its properties.
+    public init(
+        version             : UInt32    = gitDescribeFormatOptionsVersion,
+        abbreviatedSize     : UInt32    = gitDescribeDefaultAbbreviatedSize,
+        alwaysUseLongFormat : Bool      = false,
+        dirtySuffix         : String?   = nil
+    )
+    {
+        self.version                = version
+        self.abbreviatedSize        = abbreviatedSize
+        self.alwaysUseLongFormat    = alwaysUseLongFormat
+        self.dirtySuffix            = dirtySuffix
+    }
     
     
     

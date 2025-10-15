@@ -24,23 +24,27 @@ public struct GitIndexTime: CStructMutable, CConvertible
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var seconds      : Int32     = 0
+    public var seconds      : Int32
     
     /// The nanoseconds fraction of the timestamp.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var nanoseconds  : UInt32    = 0
+    public var nanoseconds  : UInt32
     
     
     
-    /// Initializes a ``GitIndexTime`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitIndexTime`` instance, optionally specifying values
+    /// for its properties.
+    public init(
+        seconds     : Int32     = 0,
+        nanoseconds : UInt32    = 0
+    )
+    {
+        self.seconds        = seconds
+        self.nanoseconds    = nanoseconds
+    }
     
     
     
@@ -84,93 +88,119 @@ public struct GitIndexEntry: CStructMutable, WithCConvertible
     /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitIndexTime`` instance.
-    public var cTime            : GitIndexTime                  = GitIndexTime(cValue: git_index_time())
+    public var cTime            : GitIndexTime
     
     /// The last time the file's data changed.
     ///
     /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitIndexTime`` instance.
-    public var mTime            : GitIndexTime                  = GitIndexTime(cValue: git_index_time())
+    public var mTime            : GitIndexTime
     
     /// The device ID containing the file.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var dev              : UInt32                        = 0
+    public var dev              : UInt32
     
     /// The inode number of the file.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var ino              : UInt32                        = 0
+    public var ino              : UInt32
     
     /// The file mode and object type (regular file, symbolic link, or gitlink).
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var mode             : UInt32                        = 0
+    public var mode             : UInt32
     
     /// The user ID of the file owner.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var uid              : UInt32                        = 0
+    public var uid              : UInt32
     
     /// The group ID of the file owner.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var gid              : UInt32                        = 0
+    public var gid              : UInt32
     
     /// The on-disk file size.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var fileSize         : UInt32                        = 0
+    public var fileSize         : UInt32
     
     /// The ID of the Git object.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var id               : GitOID                        = GitOID()
+    public var id               : GitOID
     
     /// The flags for index entries.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty option set.
-    public var flags            : GitIndexEntryFlagT            = []
+    public var flags            : GitIndexEntryFlagT
     
     /// The flags for on-disk fields of an index entry.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty option set.
-    public var flagsExtended    : GitIndexEntryExtendedFlagT    = []
+    public var flagsExtended    : GitIndexEntryExtendedFlagT
     
     /// The entry path name, relative to the repository's root folder.
     ///
     /// ## Discussion
     ///
     /// The default value is an empty string.
-    public  var path            : String                        = ""
+    public  var path            : String
     
     
     
-    /// Initializes a ``GitIndexEntry`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitIndexEntry`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        cTime           : GitIndexTime?                 = nil,
+        mTime           : GitIndexTime?                 = nil,
+        dev             : UInt32                        = 0,
+        ino             : UInt32                        = 0,
+        mode            : UInt32                        = 0,
+        uid             : UInt32                        = 0,
+        gid             : UInt32                        = 0,
+        fileSize        : UInt32                        = 0,
+        id              : GitOID                        = GitOID(),
+        flags           : GitIndexEntryFlagT            = [],
+        flagsExtended   : GitIndexEntryExtendedFlagT    = [],
+        path            : String                        = ""
+    )
+    {
+        let indexTime = GitIndexTime(cValue: git_index_time())
+        
+        self.cTime          = cTime ?? indexTime
+        self.mTime          = mTime ?? indexTime
+        self.dev            = dev
+        self.ino            = ino
+        self.mode           = mode
+        self.uid            = uid
+        self.gid            = gid
+        self.fileSize       = fileSize
+        self.id             = id
+        self.flags          = flags
+        self.flagsExtended  = flagsExtended
+        self.path           = path
+    }
     
     
     

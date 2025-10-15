@@ -23,23 +23,27 @@ public struct GitODBOptions: CStructMutable, CConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitODBOptionsVersion``.
-    public var version  : UInt32    = gitODBOptionsVersion
+    public var version  : UInt32
     
     /// The type of ID to use for the object database.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitOIDT/gitOIDSHA1``.
-    public var oidType  : GitOIDT   = .gitOIDSHA1
+    public var oidType  : GitOIDT
     
     
     
-    /// Initializes a ``GitODBOptions`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitODBOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version : UInt32    = gitODBOptionsVersion,
+        oidType : GitOIDT   = .gitOIDSHA1
+    )
+    {
+        self.version    = version
+        self.oidType    = oidType
+    }
     
     
     
@@ -90,30 +94,36 @@ public struct GitODBExpandID: CStructMutable, CConvertible
     /// ## Discussion
     ///
     /// The default value is a zero-initialized ``GitOID`` instance.
-    public var id       : GitOID        = GitOID()
+    public var id       : GitOID
     
     /// The length of the object ID.
     ///
     /// ## Discussion
     ///
     /// The default value is `0`.
-    public var length   : UInt16        = 0
+    public var length   : UInt16
     
     /// The type of object for which to search.
     ///
     /// ## Discussion
     ///
     /// The default value is ``GitObjectT/gitObjectAny``.
-    public var type    : GitObjectT     = .gitObjectAny
+    public var type    : GitObjectT
     
     
     
-    /// Initializes a ``GitODBExpandID`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitODBExpandID`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        id      : GitOID        = GitOID(),
+        length  : UInt16        = 0,
+        type    : GitObjectT    = .gitObjectAny
+    )
+    {
+        self.id         = id
+        self.length     = length
+        self.type       = type
+    }
     
     
     

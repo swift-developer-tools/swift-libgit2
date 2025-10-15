@@ -132,38 +132,45 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     /// ## Discussion
     ///
     /// The default value is ``gitIndexerOptionsVersion``.
-    public var version              : UInt32                    = gitIndexerOptionsVersion
+    public var version              : UInt32
     
     /// The callback to report progress during the indexing operation.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressCB           : GitIndexerProgressCB?     = nil
+    public var progressCB           : GitIndexerProgressCB?
     
     /// The caller-specified payload passed to ``progressCB``.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var progressCBPayload    : UnsafeMutableRawPointer?  = nil
+    public var progressCBPayload    : UnsafeMutableRawPointer?
     
     /// Whether connectivity checks should be performed for the received pack.
     ///
     /// ## Discussion
     ///
     /// The default value is `false`.
-    public var verify               : Bool                      = false
+    public var verify               : Bool
     
     
     
-    /// Initializes a ``GitIndexerOptions`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
-    public init() { }
+    /// Initializes a ``GitIndexerOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                    = gitIndexerOptionsVersion,
+        progressCB          : GitIndexerProgressCB?     = nil,
+        progressCBPayload   : UnsafeMutableRawPointer?  = nil,
+        verify              : Bool                      = false
+    )
+    {
+        self.version            = version
+        self.progressCB         = progressCB
+        self.progressCBPayload  = progressCBPayload
+        self.verify             = verify
+    }
     
     
     

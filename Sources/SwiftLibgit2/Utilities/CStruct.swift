@@ -29,8 +29,6 @@
 ///
 /// The only structs that may conform directly to ``CStruct`` are structs
 /// which are unused by other bindings, but exist for documentation purposes.
-/// ``CStructReadable`` does not define any additional requirements other
-/// than those of ``CStruct``, but exists for semantic purposes.
 ///
 /// ## Protocol Choice
 ///
@@ -39,21 +37,18 @@
 /// ``CStructReadable``:
 /// - Generally represents Git data.
 /// - Uses `public let` properties.
-/// - Provides no default property values.
-/// - Provides no public initializer.
+/// - Provides no public initializer and no default property values.
 /// - Examples: ``GitBlameLine`` and ``GitDiffDelta``.
 ///
 /// ``CStructMutable``:
 /// - Generally represents caller-configurable options.
 /// - Uses `public var` properties.
-/// - Provides default property values.
-/// - Provides a `public init()` method with an empty body.
+/// - Provides a public memberwise initializer with default values.
 /// - Examples: ``GitCheckoutOptions`` and ``GitMergeOptions``.
 ///
 /// ``CStructInternalMutable``:
 /// - Generally used as `inout` function parameters.
 /// - Uses `public private(set) var` or `public internal(set) var` properties.
-/// - Provides default property values,.
 /// - Provides a `public init()` method with an empty body.
 /// - Examples: ``GitOID`` and ``GitSignature``.
 ///
@@ -67,6 +62,9 @@
 ///
 /// For example, the three protocols described above require different property
 /// access levels, but this is not definable through Swift protocols.
+///
+/// While the refining protocols do not define additional requirements due to
+/// these limitations, they provide semantic meaning to conforming structs.
 ///
 /// Finally, structs that conform to ``CStructReadable``,
 /// ``CStructMutable``, or ``CStructInternalMutable`` must implement a
@@ -157,34 +155,14 @@ internal protocol CStruct: CMutable
 // MARK: - Refining Protocols
 
 /// A read-only type that can be initialized from the equivalent C value.
-internal protocol CStructReadable: CStruct { }
-
-
+internal protocol CStructReadable           : CStruct { }
 
 /// A mutable type that can be initialized from the equivalent C value.
-internal protocol CStructMutable: CStruct
-{
-    /// Creates an instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// This must have a `public` access level and an empty body.
-    init()
-}
-
-
+internal protocol CStructMutable            : CStruct { }
 
 /// A publicly-readable and internally-mutable type that can be initialized
 /// from the equivalent C value.
-internal protocol CStructInternalMutable: CStruct
-{
-    /// Creates an instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// This must have a `public` access level and an empty body.
-    init()
-}
+internal protocol CStructInternalMutable    : CStruct { }
 
 
 
