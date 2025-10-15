@@ -52,17 +52,18 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using HEAD.
-    public var newestCommit         : GitOID?
+    /// The default value is a zero-initialized ``GitOID`` instance. If this
+    /// is zero-initialized at runtime, libgit2 defaults to using HEAD.
+    public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the first commit encountered with a `nil` parent.
-    public var oldestCommit         : GitOID?
+    /// The default value is a zero-initialized ``GitOID`` instance. If this
+    /// is zero-initialized at runtime, libgit2 defaults to using the first
+    /// commit encountered with a `nil` parent.
+    public var oldestCommit         : GitOID
     
     /// The first line in the file to blame.
     ///
@@ -87,8 +88,8 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
         version             : UInt32            = gitBlameOptionsVersion,
         flags               : GitBlameFlagT     = .gitBlameNormal,
         minMatchCharacters  : UInt16            = 20,
-        newestCommit        : GitOID?           = nil,
-        oldestCommit        : GitOID?           = nil,
+        newestCommit        : GitOID            = GitOID(),
+        oldestCommit        : GitOID            = GitOID(),
         minLine             : Int               = 1,
         maxLine             : Int?              = nil
     )
@@ -144,8 +145,8 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
         }
         
         blameOptions.flags                  = flags.rawValue
-        blameOptions.newest_commit          = newestCommit?.cValue() ?? git_oid()
-        blameOptions.oldest_commit          = oldestCommit?.cValue() ?? git_oid()
+        blameOptions.newest_commit          = newestCommit.cValue()
+        blameOptions.oldest_commit          = oldestCommit.cValue()
         blameOptions.min_match_characters   = minMatchCharacters
         blameOptions.min_line               = minLine
         
