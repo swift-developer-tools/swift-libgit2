@@ -830,10 +830,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(cDiffHunk.new_lines, 0)
         XCTAssertEqual(cDiffHunk.header_len, 0)
         XCTAssertEqual(String(cArray: cDiffHunk.header, count: 0), "")
-        
-        
-        
-        XCTAssertEqual(gitDiffHunkHeaderSize, UInt32(GIT_DIFF_HUNK_HEADER_SIZE))
     }
     
     

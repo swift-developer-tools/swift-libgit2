@@ -21,7 +21,7 @@ public let gitDiffOptionsVersion: UInt32 = 1
 /// ## C Equivalent
 ///
 /// [`GIT_DIFF_HUNK_HEADER_SIZE`](https://libgit2.org/docs/reference/main/diff/GIT_DIFF_HUNK_HEADER_SIZE.html)
-public let gitDiffHunkHeaderSize: UInt32 = 128
+public let gitDiffHunkHeaderSize: Int = 128
 
 
 
