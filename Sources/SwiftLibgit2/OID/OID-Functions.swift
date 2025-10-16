@@ -12,11 +12,11 @@ import Foundation
 
 
 
-/// Parses the given hex-formatted ID string into the given ``GitOID`` instance.
+/// Parses the given ID hex string into the given ``GitOID`` instance.
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID.
-///   - str: The hex-formatted ID string to parse. This must have at least
-///   40 bytes for SHA-1 or 256 bytes for SHA-256.
+///   - str: The ID hex string to parse. This must have at least 40 bytes for
+///   SHA-1 or 256 bytes for SHA-256.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -43,10 +43,10 @@ public func gitOIDFromStr(
 
 
 
-/// Parses the given hex-formatted ID string into the given ``GitOID`` instance.
+/// Parses the given ID hex string into the given ``GitOID`` instance.
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID.
-///   - str: The hex-formatted ID string to parse.
+///   - str: The ID hex string to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -73,11 +73,11 @@ public func gitOIDFromStrP(
 
 
 
-/// Parses the specified number of characters of the given hex-formatted ID
-/// string into the given ``GitOID`` instance.
+/// Parses the specified number of characters of the given ID hex string into
+/// the given ``GitOID`` instance.
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID.
-///   - str: The hex-formatted ID string to parse. This must have at least
+///   - str: The ID hex string to parse. This must have at least
 ///   the number of characters specified by `length`.
 ///   - length: The number of characters of `str` to parse.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -183,9 +183,9 @@ public func gitOIDFmt(
 
 
 
-/// Formats the given ID into a partial hex-formatted string.
+/// Formats the given ID into a partial hex string.
 /// - Parameters:
-///   - out: The pointer in which to store the partial hex-formatted string.
+///   - out: The pointer in which to store the partial hex string.
 ///   - n: The number of characters to write.
 ///   - id: The ID to format.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -277,7 +277,7 @@ public func gitOIDToStrS(
 
 
 
-/// Formats the given ID into a hex-formatted string.
+/// Formats the given ID into a hex string.
 /// - Parameters:
 ///   - out: The pointer in which to store the hex string.
 ///   - n: The number of characters to write.
@@ -286,9 +286,9 @@ public func gitOIDToStrS(
 ///
 /// ## Discussion
 ///
-/// If the given buffer is smaller than the size of a hex-formatted ID string
-/// plus an additional byte, then the resulting hex-formatted ID string will
-/// be truncated to `n - 1` characters, but will still be null terminated.
+/// If the given buffer is smaller than the size of an ID hex string plus
+/// an additional byte, then the resulting ID hex string will be truncated
+/// to `n - 1` characters, but will still be null terminated.
 ///
 /// ## C Equivalent
 ///
@@ -438,11 +438,11 @@ public func gitOIDNCmp(
 
 
 
-/// Checks whether the given ID and hex-formatted ID string are equal.
+/// Checks whether the given ID and ID hex string are equal.
 /// - Parameters:
 ///   - id: The ID to compare.
-///   - str: The hex-formatted ID string to compare.
-/// - Returns: Whether the given ID and hex-formatted ID string are equal.
+///   - str: The ID hex string to compare.
+/// - Returns: Whether the given ID and ID hex string are equal.
 ///
 /// ## C Equivalent
 ///
@@ -467,10 +467,10 @@ public func gitOIDStrEq(
 
 
 
-/// Compares the given ID and hex-formatted ID string.
+/// Compares the given ID and ID hex string.
 /// - Parameters:
 ///   - id: The ID to compare.
-///   - str: The hex-formatted ID string to compare.
+///   - str: The ID hex string to compare.
 /// - Returns: `-1` if `str` is not valid, `1` if `id` sorts after `str`, or
 /// `0` if `id` sorts before `str`.
 ///
