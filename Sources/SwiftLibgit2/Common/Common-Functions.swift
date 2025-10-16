@@ -892,7 +892,7 @@ public func gitLibgit2OptGetPackMaxObjects(
 ///
 /// ## Discussion
 ///
-/// This option can be used to limit maximum memory usage when fetching from
+/// Setting a maximum object limit can reduce memory usage when fetching from
 /// an untrusted remote.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
