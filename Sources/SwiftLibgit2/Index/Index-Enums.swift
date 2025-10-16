@@ -152,7 +152,7 @@ public enum GitIndexCapabilityT: Int32, CEnum
     case gitIndexCapabilityNoFileMode   = 2
     
     /// Do not support symbolic links.
-    case gitIndexCapabilityNoSymLinks   = 3
+    case gitIndexCapabilityNoSymLinks   = 4
     
     /// Read capabilities from the repository configuration.
     case gitIndexCapabilityFromOwner    = -1
