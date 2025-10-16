@@ -12,7 +12,7 @@ import CLibgit2
 
 
 /// Frees the memory allocated for the given `git_buf` instance.
-/// - Parameter stream: The buffer to free.
+/// - Parameter buffer: The buffer to free.
 ///
 /// ## Discussion
 ///
