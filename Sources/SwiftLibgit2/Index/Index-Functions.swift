@@ -498,7 +498,7 @@ public func gitIndexGetByIndex(
     n       : Int
 ) -> GitIndexEntry?
 {
-    /// The entry is owned by libgit2 and does not need to be freed.
+    /// The memory is owned by libgit2 and must not be freed.
     guard let indexEntryPointer: UnsafePointer<git_index_entry>
             = git_index_get_byindex(
                 index,
@@ -530,7 +530,7 @@ public func gitIndexGetByPath(
     stage   : GitIndexStageT
 ) -> GitIndexEntry?
 {
-    /// The entry is owned by libgit2 and does not need to be freed.
+    /// The memory is owned by libgit2 and must not be freed.
     guard let indexEntryPointer: UnsafePointer<git_index_entry>
             = git_index_get_bypath(
                 index,

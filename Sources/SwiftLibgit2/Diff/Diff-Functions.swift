@@ -503,7 +503,7 @@ public func gitDiffGetDelta(
     idx     : Int
 ) -> GitDiffDelta?
 {
-    /// The pointer is owned by libgit2 and does not need to be freed.
+    /// The memory is owned by libgit2 and must not be freed.
     guard let diffDelta: UnsafePointer<git_diff_delta>
             = git_diff_get_delta(diff, idx)
     else
