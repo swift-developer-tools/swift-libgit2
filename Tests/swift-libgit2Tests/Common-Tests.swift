@@ -302,6 +302,6 @@ final class CommonTests: XCTestCaseStopOnFail
     
     func testGitPathMax() throws
     {
-        XCTAssertEqual(gitPathMax, GIT_PATH_MAX)
+        XCTAssertEqual(Int32(gitPathMax), GIT_PATH_MAX)
     }
 }
