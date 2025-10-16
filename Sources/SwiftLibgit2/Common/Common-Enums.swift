@@ -363,7 +363,7 @@ public enum GitLibgit2OptT: UInt32, CEnum
     ///
     /// ## Discussion
     ///
-    /// - Note: Use ``gitLibgit2OptDisablePackKeepFileChecks(enabled:)`` to
+    /// - Note: Use ``gitLibgit2OptDisablePackKeepFileChecks(skip:)`` to
     /// interact with this option.
     case gitOptDisablePackKeepFileChecks        = 27
     
