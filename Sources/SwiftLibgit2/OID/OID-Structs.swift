@@ -27,7 +27,7 @@ public struct GitOID: CStructInternalMutable, CConvertible, Sendable
     public private(set) var id: Data = Data(count: Self.size)
     
     /// The size of a Git ID in bytes.
-    internal static let size: Int = 20
+    internal static let size: Int = gitOIDSHA1Size
     
     
     
