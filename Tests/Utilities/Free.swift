@@ -69,6 +69,24 @@ enum Free
     
     
     
+    /// Frees the memory allocated for the given `git_revwalk` instance.
+    /// - Parameter revwalk: The revwalk to free. The underlying type must
+    /// be `git_revwalk`.
+    static func freeRevwalk(
+        _ revwalk: OpaquePointer?
+    )
+    {
+        guard let revwalk: OpaquePointer = revwalk
+        else
+        {
+            return
+        }
+        
+        git_revwalk_free(revwalk)
+    }
+    
+    
+    
     /// Frees the memory allocated for the given `git_repository` instance.
     /// - Parameter repository: The repository to free. The underlying type
     /// must be `git_repository`.
