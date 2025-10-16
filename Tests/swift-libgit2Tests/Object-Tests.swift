@@ -494,13 +494,7 @@ extension ObjectTests
             
             let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
-            // TODO: Replace once `git_oid_tostr_s()` has a binding.
-            var cHeadOID: git_oid = headOID.cValue()
-            
-            let headOIDCString: UnsafeMutablePointer<CChar>?
-                = git_oid_tostr_s(&cHeadOID)
-            
-            guard let headOIDString = String(optionalCString: headOIDCString)
+            guard let headOIDString: String = gitOIDToStrS(oid: headOID)
             else
             {
                 XCTFail("The HEAD OID string was nil.")

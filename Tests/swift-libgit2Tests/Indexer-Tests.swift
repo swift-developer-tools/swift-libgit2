@@ -197,7 +197,7 @@ extension IndexerTests
         
         let headOID: GitOID = OID.getHEADCommitOID(in: repository)
         
-        // TODO: Remove once `git_backbuilder_insert_commit()` has a binding.
+        // TODO: Remove once `git_packbuilder_insert_commit()` has a binding.
         var cHeadOID: git_oid = headOID.cValue()
         
         let packBuilderInsertCommitResult: Int32

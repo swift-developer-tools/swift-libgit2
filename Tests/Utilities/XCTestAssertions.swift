@@ -201,7 +201,7 @@ func XCTAssertNotEqual(
 
 
 
-/// Asserts that the given OID is not `nil` and is zero-initialized.
+/// Asserts that the given OID is not `nil` and all zeros.
 /// - Parameter oid: The OID.
 func XCTAssertZeroOID(
     _ oid : GitOID?
@@ -214,12 +214,14 @@ func XCTAssertZeroOID(
         return
     }
     
-    XCTAssertEqual(oid, GitOID())
+    let isZeroOID: Bool = gitOIDIsZero(id: oid)
+    
+    XCTAssertTrue(isZeroOID)
 }
 
 
 
-/// Asserts that the given OID is not `nil` and is not zero-initialized.
+/// Asserts that the given OID is not `nil` and is not all zeros.
 /// - Parameter oid: The OID.
 func XCTAssertNotZeroOID(
     _ oid : GitOID?
@@ -232,5 +234,7 @@ func XCTAssertNotZeroOID(
         return
     }
     
-    XCTAssertNotEqual(oid, GitOID())
+    let isZeroOID: Bool = gitOIDIsZero(id: oid)
+    
+    XCTAssertFalse(isZeroOID)
 }
