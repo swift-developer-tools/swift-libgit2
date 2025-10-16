@@ -346,10 +346,6 @@ public func gitSignatureDup(
 /// manually, but be sure to free the `name` and `email` strings in addition
 /// to the `git_signature` struct itself.
 ///
-/// -  Note: This function is only needed when working directly with
-/// `git_signature` instances allocated by libgit2. ``GitSignature`` instances
-/// do not need to be freed.
-///
 /// ## C Equivalent
 ///
 /// [`git_signature_free()`](https://libgit2.org/docs/reference/main/signature/git_signature_free.html)
