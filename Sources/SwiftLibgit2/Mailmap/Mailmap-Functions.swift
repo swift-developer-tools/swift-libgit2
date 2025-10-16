@@ -97,7 +97,7 @@ public func gitMailmapAddEntry(
 /// - Parameters:
 ///   - out: The pointer in which to store the mailmap. The underlying type
 ///   must be `git_mailmap`.
-///   - buf: The buffer from which to parse the mailmap.
+///   - buf: The data from which to parse the mailmap.
 ///   - len: The length of `buf`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

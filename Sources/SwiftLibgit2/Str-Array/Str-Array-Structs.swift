@@ -21,7 +21,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_strarray`](https://libgit2.org/docs/reference/main/strarray/git_strarray.html)
-public struct GitStrArray: CStruct
+public struct GitStrArray: CStruct, Sendable
 {
     /// The array of strings.
     public let strings  : [String]

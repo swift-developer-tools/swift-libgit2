@@ -9,6 +9,7 @@
 
 import CLibgit2
 import CLibgit2Opts
+import Foundation
 
 
 
@@ -214,8 +215,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// Gets the search path for the given level of configuration data.
 /// - Parameters:
 ///   - level: The priority level for which to get the search path.
-///   - buf: The ``GitBuf`` instance into which the search path should be
-///   written.
+///   - buf: The `Data` instance to update with the search path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -235,12 +235,12 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetSearchPath(
     level   : GitConfigLevelT,
-    buf     : inout GitBuf
+    buf     : inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try buf.withMutatingCValue
+        return try buf.withMutatingGitBuf
         {
             cBuf in
             
@@ -364,7 +364,7 @@ public func gitLibgit2OptSetCacheMaxSize(
 
 
 /// Enables or disable caching completely.
-/// - Parameter enabled: Whether caching should be enabled.
+/// - Parameter enabled: Whether to enable caching.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -425,8 +425,7 @@ public func gitLibgit2OptGetCachedMemory(
 
 
 /// Gets the default template path.
-/// - Parameter out: The ``GitBuf`` instance into which the template path
-/// should be written.
+/// - Parameter out: The `Data` instance to update with the template path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -438,12 +437,12 @@ public func gitLibgit2OptGetCachedMemory(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetTemplatePath(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -550,7 +549,7 @@ public func gitLibgit2OptSetUserAgent(
 
 /// Enables strict input validation when creating new objects to ensure that
 /// all inputs to the new objects are valid.
-/// - Parameter enabled: Whether strict object creation should be enabled.
+/// - Parameter enabled: Whether to enable strict object creation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -579,8 +578,7 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 
 
 /// Enables validation of the target of a symbolic reference during creation.
-/// - Parameter enabled: Whether strict symbolic reference creation should be
-/// enabled.
+/// - Parameter enabled: Whether to enable strict symbolic reference creation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -638,8 +636,8 @@ public func gitLibgit2OptSetSSLCiphers(
 
 
 /// Gets the value of the comment section of the User-Agent header.
-/// - Parameter out: The ``GitBuf`` instance into which the comment section
-/// of the User-Agent header should be written.
+/// - Parameter out: The `Data` instance to update with the comment section
+/// of the User-Agent header.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -651,12 +649,12 @@ public func gitLibgit2OptSetSSLCiphers(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetUserAgent(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -669,7 +667,7 @@ public func gitLibgit2OptGetUserAgent(
 
 /// Enables or disables the use of offset deltas when creating packfiles,
 /// and the negotiation of them when talking to a remote server.
-/// - Parameter enabled: Whether offset deltas should be enabled.
+/// - Parameter enabled: Whether to enable offset deltas.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -701,8 +699,8 @@ public func gitLibgit2OptEnableOFSDelta(
 /// Enables synchronized writes of files in the Git directory using `fsync`
 /// (or the platform equivalent) to ensure that new object data is written to
 /// permanent storage, not simply cached.
-/// - Parameter enabled: Whether synchronized writes of files in the Git
-/// directory should be enabled.
+/// - Parameter enabled: Whether to enable synchronized writes of files in the
+/// Git directory.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -781,7 +779,7 @@ public func gitLibgit2OptSetWindowsShareMode(
 
 /// Enables strict verification of object hash sums when reading objects from
 /// disk.
-/// - Parameter enabled: Whether strict hash verification should be enabled.
+/// - Parameter enabled: Whether to enable strict hash verification.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -836,7 +834,7 @@ public func gitLibgit2OptSetAllocator(
 /// Ensures that there are no unsaved changes in the index before beginning
 /// any operation that reloads the index from disk (for example, the checkout
 /// operation).
-/// - Parameter enabled: Whether unsaved index safety should be enabled.
+/// - Parameter enabled: Whether to enable unsaved index safety.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -894,7 +892,7 @@ public func gitLibgit2OptGetPackMaxObjects(
 ///
 /// ## Discussion
 ///
-/// This option can be used to limit maximum memory usage when fetching from
+/// Setting a maximum object limit can reduce memory usage when fetching from
 /// an untrusted remote.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
@@ -916,13 +914,13 @@ public func gitLibgit2OptSetPackMaxObjects(
 
 
 /// Skips `.keep` file existence checks when accessing packfiles.
-/// - Parameter enabled: Whether `.keep` file existence checks should be
-/// disabled.
+/// - Parameter skip: Whether to skip `.keep` file existence checks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This option can be used to improve performance with remote file systems.
+/// Skipping file existence checks can improve performance with remote file
+/// systems.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
@@ -931,12 +929,12 @@ public func gitLibgit2OptSetPackMaxObjects(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptDisablePackKeepFileChecks(
-    enabled: Bool
+    skip: Bool
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return git_libgit2_opt_disable_pack_keep_file_checks(enabled.int32Value)
+        return git_libgit2_opt_disable_pack_keep_file_checks(skip.int32Value)
     }
 }
 
@@ -944,7 +942,7 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
 
 /// Uses `expect`/`continue` when connecting to a server using NTLM or
 /// Negotiate authentication.
-/// - Parameter enabled: Whether HTTP `expect`/`continue` should be enabled.
+/// - Parameter enabled: Whether to enable HTTP `expect`/`continue`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1210,8 +1208,7 @@ public func gitLibgit2OptSetOwnerValidation(
 
 
 /// Gets the current user's home directory to be used for file lookups.
-/// - Parameter out: The ``GitBuf`` instance into which the home directory
-/// path should be written.
+/// - Parameter out: The `Data` instance to update with the home directory path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1223,12 +1220,12 @@ public func gitLibgit2OptSetOwnerValidation(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetHomeDir(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1396,8 +1393,8 @@ public func gitLibgit2OptSetUserAgentProduct(
 
 
 /// Gets the value of the product section of the User-Agent header.
-/// - Parameter out: The ``GitBuf`` instance into which the product section
-/// of the User-Agent header should be written.
+/// - Parameter out: The `Data` instance to update with the product section
+/// of the User-Agent header.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1409,12 +1406,12 @@ public func gitLibgit2OptSetUserAgentProduct(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetUserAgentProduct(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

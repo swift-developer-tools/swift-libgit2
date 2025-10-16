@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_attr_options`](https://libgit2.org/docs/reference/main/attr/git_attr_options.html)
-public struct GitAttrOptions: CStructMutable, WithCConvertible
+public struct GitAttrOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///

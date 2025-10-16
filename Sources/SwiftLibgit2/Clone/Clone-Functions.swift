@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitCloneOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_clone_options` instances. ``GitCloneOptions`` instances do not need
-/// to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_clone_options_init()`](https://libgit2.org/docs/reference/main/clone/git_clone_options_init.html)

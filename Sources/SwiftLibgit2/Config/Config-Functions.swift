@@ -8,17 +8,12 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
 /// Frees the memory allocated for the given `git_config_entry` instance.
 /// - Parameter entry: The configuration entry to free.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_config_entry` instances allocated by libgit2. ``GitConfigEntry``
-/// instances do not need to be freed.
 ///
 /// ## C Equivalent
 ///
@@ -39,8 +34,7 @@ public func gitConfigEntryFree(
 
 
 /// Locates the path to the global configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -57,12 +51,12 @@ public func gitConfigEntryFree(
 ///
 /// [`git_config_find_global()`](https://libgit2.org/docs/reference/main/config/git_config_find_global.html)
 public func gitConfigFindGlobal(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -74,8 +68,7 @@ public func gitConfigFindGlobal(
 
 
 /// Locates the path to the global XDG-compatible configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -91,12 +84,12 @@ public func gitConfigFindGlobal(
 ///
 /// [`git_config_find_xdg()`](https://libgit2.org/docs/reference/main/config/git_config_find_xdg.html)
 public func gitConfigFindXDG(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -108,8 +101,7 @@ public func gitConfigFindXDG(
 
 
 /// Locates the path to the system configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -121,12 +113,12 @@ public func gitConfigFindXDG(
 ///
 /// [`git_config_find_system()`](https://libgit2.org/docs/reference/main/config/git_config_find_system.html)
 public func gitConfigFindSystem(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -138,8 +130,7 @@ public func gitConfigFindSystem(
 
 
 /// Locates the path to the ProgramData configuration file.
-/// - Parameter out: The ``GitBuf`` instance into which the path should be
-/// written.
+/// - Parameter out: The `Data` instance to update with the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -151,12 +142,12 @@ public func gitConfigFindSystem(
 ///
 /// [`git_config_find_programdata()`](https://libgit2.org/docs/reference/main/config/git_config_find_programdata.html)
 public func gitConfigFindProgramData(
-    out: inout GitBuf
+    out: inout Data
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -220,14 +211,14 @@ public func gitConfigNew(
 
 /// Adds an on-disk configuration file to an existing configuration object.
 /// - Parameters:
-///   - cfg: The configuration object to which the file should be added. The
-///   underlying type must be `git_config`.
+///   - cfg: The configuration object to which to add the file. The underlying
+///   type must be `git_config`.
 ///   - path: The path to the configuration file to add.
 ///   - level: The priority level of the backend.
 ///   - repo: The optional repository to allow parsing of conditional includes.
 ///   The underlying type must be `git_repository`.
-///   - force: Whether the configuration file should be replaced at the given
-///   priority level.
+///   - force: Whether to replace the configuration file at the given priority
+///   level.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -485,7 +476,7 @@ public func gitConfigFree(
 
 
 
-/// Gets the configuration entry of a configuration variable.
+/// Gets the configuration entry of the specified configuration variable.
 /// - Parameters:
 ///   - out: The ``GitConfigEntry`` instance in which to store the
 ///   configuration entry.
@@ -521,7 +512,7 @@ public func gitConfigGetEntry(
 
 
 
-/// Gets the value of a 32-bit integer configuration variable.
+/// Gets the value of the specified 32-bit integer configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -556,7 +547,7 @@ public func gitConfigGetInt32(
 
 
 
-/// Gets the value of a 64-bit integer configuration variable.
+/// Gets the value of the specified 64-bit integer configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -591,7 +582,7 @@ public func gitConfigGetInt64(
 
 
 
-/// Gets the value of a boolean configuration variable.
+/// Gets the value of the specified boolean configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting boolean.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -632,9 +623,9 @@ public func gitConfigGetBool(
 
 
 
-/// Gets the value of a path configuration variable.
+/// Gets the value of the specified path configuration variable.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the path should be written.
+///   - out: The `Data` instance to update with the path value.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -654,14 +645,14 @@ public func gitConfigGetBool(
 ///
 /// [`git_config_get_path()`](https://libgit2.org/docs/reference/main/config/git_config_get_path.html)
 public func gitConfigGetPath(
-    out     : inout GitBuf,
+    out     : inout Data,
     cfg     : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -676,7 +667,7 @@ public func gitConfigGetPath(
 
 
 
-/// Gets the value of a string configuration variable.
+/// Gets the value of the specified string configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting string.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -722,9 +713,9 @@ public func gitConfigGetString(
 
 
 
-/// Gets the value of a string configuration variable.
+/// Gets the value of the specified string configuration variable.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the string should be written.
+///   - out: The `Data` instance to update with the string.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -740,14 +731,14 @@ public func gitConfigGetString(
 ///
 /// [`git_config_get_string_buf()`](https://libgit2.org/docs/reference/main/config/git_config_get_string_buf.html)
 public func gitConfigGetStringBuf(
-    out     : inout GitBuf,
+    out     : inout Data,
     cfg     : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -762,7 +753,7 @@ public func gitConfigGetStringBuf(
 
 
 
-/// Gets each value of a multivar in a for-each callback.
+/// Gets each value of the specified multivar in a for-each callback.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -803,7 +794,7 @@ public func gitConfigGetMultivarForEach(
 
 
 
-/// Gets each value of a multivar.
+/// Gets each value of the specified multivar.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -898,7 +889,7 @@ public func gitConfigIteratorFree(
 
 
 
-/// Sets the value of a 32-bit integer configuration variable.
+/// Sets the value of the specified 32-bit integer configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -932,7 +923,7 @@ public func gitConfigSetInt32(
 
 
 
-/// Sets the value of a 64-bit integer configuration variable.
+/// Sets the value of the specified 64-bit integer configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -966,7 +957,7 @@ public func gitConfigSetInt64(
 
 
 
-/// Sets the value of a boolean configuration variable.
+/// Sets the value of the specified boolean configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1000,7 +991,7 @@ public func gitConfigSetBool(
 
 
 
-/// Sets the value of a string configuration variable.
+/// Sets the value of the specified string configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1034,7 +1025,7 @@ public func gitConfigSetString(
 
 
 
-/// Sets the value of a mutlivar in the local configuration file.
+/// Sets the value of the specified mutlivar in the local configuration file.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1070,7 +1061,7 @@ public func gitConfigSetMultivar(
 
 
 
-/// Deletes a configuration variable.
+/// Deletes the specified configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1102,8 +1093,8 @@ public func gitConfigDeleteEntry(
 
 
 
-/// Deletes one of several entries from a multivar in the local configuration
-/// file.
+/// Deletes one of several entries from the specified multivar in the local
+/// configuration file.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1137,7 +1128,7 @@ public func gitConfigDeleteMultivar(
 
 
 
-/// Loops over each configuration variable.
+/// Loops over all configuration variables in the configuration backend.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1176,7 +1167,7 @@ public func gitConfigForEach(
 
 
 
-/// Loops over all the configuration variables.
+/// Loops over all configuration variables.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1207,7 +1198,7 @@ public func gitConfigIteratorNew(
 
 
 
-/// Loops over all the configuration variables.
+/// Loops over all configuration variables matching the given pattern.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1245,8 +1236,8 @@ public func gitConfigIteratorGlobNew(
 
 
 
-/// Performs an operation on each configuration variable matching a regular
-/// expression.
+/// Performs an operation on all configuration variables matching the given
+/// pattern.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1288,8 +1279,8 @@ public func gitConfigForEachMatch(
 
 
 
-/// Queries the value of a configuration variable and maps it to an integer
-/// constant.
+/// Queries the value of the specified configuration variable and maps it to
+/// an integer constant.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting map.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1355,7 +1346,7 @@ public func gitConfigGetMapped(
 
 
 
-/// Maps a string value to an integer constant.
+/// Maps the given string value to an integer constant.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting map.
 ///   - maps: The configuration map objects specifying the possible mappings.
@@ -1391,7 +1382,7 @@ public func gitConfigLookupMapValue(
 
 
 
-/// Parses a string value as a boolean.
+/// Parses the given string value as a boolean.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting boolean.
 ///   - value: The value to parse.
@@ -1430,7 +1421,7 @@ public func gitConfigParseBool(
 
 
 
-/// Parses a string value as a signed 32-bit integer.
+/// Parses the given string value as a signed 32-bit integer.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - value: The value to parse.
@@ -1465,7 +1456,7 @@ public func gitConfigParseInt32(
 
 
 
-/// Parses a string value as a signed 64-bit integer.
+/// Parses the given string value as a signed 64-bit integer.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - value: The value to parse.
@@ -1500,9 +1491,9 @@ public func gitConfigParseInt64(
 
 
 
-/// Parses a string value as a path.
+/// Parses the given string value as a path.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the path should be written.
+///   - out: The `Data` instance to update with the path.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1518,13 +1509,13 @@ public func gitConfigParseInt64(
 ///
 /// [`git_config_parse_path()`](https://libgit2.org/docs/reference/main/config/git_config_parse_path.html)
 public func gitConfigParsePath(
-    out     : inout GitBuf,
+    out     : inout Data,
     value   : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1538,8 +1529,8 @@ public func gitConfigParsePath(
 
 
 
-/// Performs an operation on each configuration variable matching a regular
-/// expression.
+/// Performs an operation on all configuration variables matching the given
+/// pattern.
 /// - Parameters:
 ///   - backend: The configuration backend to search.
 ///   - regExp: The regular expression used to match the configuration names.

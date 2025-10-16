@@ -260,7 +260,7 @@ public func gitSignatureDefault(
 
 
 
-/// Creates a new signature by parsing the given buffer.
+/// Creates a new signature by parsing the given string.
 /// - Parameters:
 ///   - out: The ``GitSignature`` instance in which to store the new signature.
 ///   - buf: The signature string to parse.
@@ -268,7 +268,7 @@ public func gitSignatureDefault(
 ///
 /// ## Discussion
 ///
-/// The buffer is expected to be in the format
+/// The string is expected to be in the format
 /// `Real Name <email> timestamp tzoffset`, where `timestamp` is the number
 /// of seconds since the UNIX epoch and `tzoffset` is the timezone offset in
 /// `hhmm` format (without colon separators).
@@ -345,10 +345,6 @@ public func gitSignatureDup(
 /// Since `git_signature` is not an opaque struct, it is legal to free it
 /// manually, but be sure to free the `name` and `email` strings in addition
 /// to the `git_signature` struct itself.
-///
-/// -  Note: This function is only needed when working directly with
-/// `git_signature` instances allocated by libgit2. ``GitSignature`` instances
-/// do not need to be freed.
 ///
 /// ## C Equivalent
 ///

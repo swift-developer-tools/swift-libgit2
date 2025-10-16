@@ -273,17 +273,10 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            var buffer = GitBuf()
-            
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
-            }
-            
-            
+            var filteredBlobContent = Data()
             
             var blobFilterResult: GitErrorCode = gitBlobFilter(
-                out:        &buffer,
+                out:        &filteredBlobContent,
                 blob:       blobPointer,
                 asPath:     Repository.readmeFileName,
                 opts:       nil
@@ -296,7 +289,7 @@ final class BlobTests: XCTestCaseStopOnFail
             let blobFilterOptions = GitBlobFilterOptions()
             
             blobFilterResult = gitBlobFilter(
-                out:        &buffer,
+                out:        &filteredBlobContent,
                 blob:       blobPointer,
                 asPath:     Repository.readmeFileName,
                 opts:       blobFilterOptions

@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_odb_options`](https://libgit2.org/docs/reference/main/odb/git_odb_options.html)
-public struct GitODBOptions: CStructMutable, CConvertible
+public struct GitODBOptions: CStructMutable, CConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -51,11 +51,6 @@ public struct GitODBOptions: CStructMutable, CConvertible
     /// `git_odb_options` instance.
     /// - Parameter odbOptions: The `git_odb_options`
     /// instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue odbOptions: git_odb_options
     )
@@ -87,7 +82,7 @@ public struct GitODBOptions: CStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_odb_expand_id`](https://libgit2.org/docs/reference/main/odb/git_odb_expand_id.html)
-public struct GitODBExpandID: CStructMutable, CConvertible
+public struct GitODBExpandID: CStructMutable, CConvertible, Sendable
 {
     /// The ID to expand.
     ///
@@ -130,11 +125,6 @@ public struct GitODBExpandID: CStructMutable, CConvertible
     /// Initializes a ``GitODBExpandID`` instance from the given
     /// `git_odb_expand_id` instance.
     /// - Parameter odbExpandID: The `git_odb_expand_id` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitObjectT/gitObjectAny`` if an unexpected
-    /// value is encountered, although this should never occur.
     internal init(
         cValue odbExpandID: git_odb_expand_id
     )

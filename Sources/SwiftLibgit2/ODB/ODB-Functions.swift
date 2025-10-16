@@ -167,7 +167,6 @@ public func gitODBRead(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Reads the specified object from the given object database, using a prefix
 /// of the object's ID.
 /// - Parameters:
@@ -184,7 +183,7 @@ public func gitODBRead(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique object matching the prefix.
 ///
 /// - Note: This function will query all available object database backends.
@@ -316,7 +315,6 @@ public func gitODBExistsExt(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Checks whether the specified object can be found the given object database,
 /// using a prefix of the object's ID.
 /// - Parameters:
@@ -333,7 +331,7 @@ public func gitODBExistsExt(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique object matching the prefix.
 ///
 /// - Note: This function will query all available object database backends.
@@ -682,15 +680,8 @@ public func gitODBStreamRead(
 
 
 
-// TODO: Replace second `git_odb_stream` with ``GitODBStream`` in documentation note.
 /// Frees the memory allocated for the given `git_odb_stream` instance.
 /// - Parameter stream: The stream to free.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_odb_stream` instances allocated by libgit2. `git_odb_stream`
-/// instances do not need to be freed.
 ///
 /// ## C Equivalent
 ///
@@ -832,7 +823,7 @@ public func gitODBWriteMultiPackIndex(
 
 
 
-/// Gets the object ID of the given data buffer.
+/// Gets the object ID of the given data.
 /// - Parameters:
 ///   - oid: The ``GitOID`` instance in which to store the object ID.
 ///   - data: The data to hash.
@@ -842,8 +833,8 @@ public func gitODBWriteMultiPackIndex(
 ///
 /// ## Discussion
 ///
-/// The resulting ID will be the identifier of the given data buffer as if
-/// the data buffer were written to the object database.
+/// The resulting ID will be the identifier of the given data as if the data
+/// were written to the object database.
 ///
 /// ## C Equivalent
 ///

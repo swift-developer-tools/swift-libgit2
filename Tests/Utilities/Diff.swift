@@ -91,7 +91,7 @@ enum Diff
     
     /// Calls the given closure with a pointer to a diff between two trees.
     /// - Parameters:
-    ///   - repository: The repository in which the diff should be created.
+    ///   - repository: The repository in which to create the diff.
     ///   - oldCommitOID: The old commit ID.
     ///   - newCommitOID: The new commit ID.
     ///   - body: The closure to call.
@@ -203,7 +203,7 @@ enum Diff
     /// Calls the given closure with a pointer to a diff between HEAD and the
     /// working directory.
     /// - Parameters:
-    ///   - repository: The repository in which the diff should be created.
+    ///   - repository: The repository in which to create the diff.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
     static func withTreeToWorkdirDiffPointer(

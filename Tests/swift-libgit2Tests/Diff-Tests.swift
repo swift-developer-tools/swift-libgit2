@@ -792,25 +792,17 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                var buffer = GitBuf()
-                
-                defer
-                {
-                    XCTAssertOK(gitBufDispose(buffer: &buffer))
-                }
-                
-                
+                var diffStatistics = Data()
                 
                 let diffStatsToBufResult: GitErrorCode = gitDiffStatsToBuf(
-                    out:        &buffer,
+                    out:        &diffStatistics,
                     stats:      diffStatsPointer,
                     format:     .gitDiffStatsFull,
                     width:      80
                 )
                 
                 XCTAssertOK(diffStatsToBufResult)
-                XCTAssertNotNil(buffer.ptr)
-                XCTAssertGreaterThan(buffer.size, 0)
+                XCTAssertGreaterThan(diffStatistics.count, 0)
             }
         }
     }
@@ -838,10 +830,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(cDiffHunk.new_lines, 0)
         XCTAssertEqual(cDiffHunk.header_len, 0)
         XCTAssertEqual(String(cArray: cDiffHunk.header, count: 0), "")
-        
-        
-        
-        XCTAssertEqual(gitDiffHunkHeaderSize, UInt32(GIT_DIFF_HUNK_HEADER_SIZE))
     }
     
     
@@ -1378,24 +1366,16 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                var buffer = GitBuf()
-                
-                defer
-                {
-                    XCTAssertOK(gitBufDispose(buffer: &buffer))
-                }
-                
-                
+                var diff = Data()
                 
                 let diffToBufResult: GitErrorCode = gitDiffToBuf(
-                    out:        &buffer,
+                    out:        &diff,
                     diff:       diffPointer,
                     format:     .gitDiffFormatPatch
                 )
                 
                 XCTAssertOK(diffToBufResult)
-                XCTAssertNotNil(buffer.ptr)
-                XCTAssertGreaterThan(buffer.size, 0)
+                XCTAssertGreaterThan(diff.count, 0)
             }
         }
     }

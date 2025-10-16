@@ -306,13 +306,11 @@ extension FilterTests
             
             var blobPointer         : OpaquePointer?    = nil
             var filterListPointer   : OpaquePointer?    = nil
-            var buffer              : GitBuf            = GitBuf()
             
             defer
             {
                 gitBlobFree(blob: blobPointer)
                 gitFilterListFree(filters: filterListPointer)
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
             }
             
             
@@ -344,6 +342,8 @@ extension FilterTests
             XCTAssertNotNil(filterListPointer)
             
             
+            var filteredContent = Data()
+            
             var filterListApplyResult: GitErrorCode
             
             switch type
@@ -351,7 +351,7 @@ extension FilterTests
                 case .blob:
                     
                     filterListApplyResult = gitFilterListApplyToBlob(
-                        out:        &buffer,
+                        out:        &filteredContent,
                         filters:    filterListPointer,
                         blob:       blobPointer
                     )
@@ -361,7 +361,7 @@ extension FilterTests
                     let inputData = Data(Self.fileContent.utf8)
                     
                     filterListApplyResult = gitFilterListApplyToBuffer(
-                        out:        &buffer,
+                        out:        &filteredContent,
                         filters:    filterListPointer,
                         in:         inputData,
                         inLen:      inputData.count
@@ -370,7 +370,7 @@ extension FilterTests
                 case .file:
                     
                     filterListApplyResult = gitFilterListApplyToFile(
-                        out:        &buffer,
+                        out:        &filteredContent,
                         filters:    filterListPointer,
                         repo:       repository.pointer,
                         path:       fileURL.path()
@@ -378,8 +378,7 @@ extension FilterTests
             }
             
             XCTAssertOK(filterListApplyResult)
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
+            XCTAssertGreaterThan(filteredContent.count, 0)
         }
     }
     

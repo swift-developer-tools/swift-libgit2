@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)
-public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
+public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -25,8 +25,7 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible
     /// The default value is ``gitCommitCreateOptionsVersion``.
     public var version          : UInt32
     
-    /// Whether a commit with no changes from the prior commit (an empty commit)
-    /// should be allowed.
+    /// Whether to allow a commit with no changes from the prior commit.
     ///
     /// ## Discussion
     ///

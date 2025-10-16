@@ -44,14 +44,13 @@ public func gitBlobLookup(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Looks up a blob in the given repository, using a prefix of the blob's ID.
 /// - Parameters:
 ///   - blob: The pointer in which to store the blob. The underlying type must
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
-///   - id: The The prefix of the ID of the blob to look up.
+///   - id: The prefix of the ID of the blob to look up.
 ///   - len: The length of the blob's ID prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -60,7 +59,7 @@ public func gitBlobLookup(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique blob matching the prefix.
 ///
 /// ## C Equivalent
@@ -203,12 +202,6 @@ public func gitBlobRawSize(
 ///   - version: The version to use. Pass ``gitBlobFilterOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_blob_filter_options` instances. ``GitBlobFilterOptions`` instances
-/// do not need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_blob_filter_options_init()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter_options_init.html)
@@ -228,10 +221,9 @@ public func gitBlobFilterOptionsInit(
 
 
 
-/// Gets a buffer with the filtered content of the given blob.
+/// Gets the filtered content of the given blob.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the filtered content should
-///   be written.
+///   - out: The `Data` instance to update with the filtered content.
 ///   - blob: The blob for which to get the filtered content. The underlying
 ///   type must be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.
@@ -245,16 +237,14 @@ public func gitBlobFilterOptionsInit(
 /// other types of changes depending on the file attributes set for the blob
 /// and the content detected in it.
 ///
-/// If no filters need to be applied, then the `out` buffer will just be
-/// populated with a pointer to the raw content of the blob. In that case, be
-/// careful to either copy the buffer into memory not owned by libgit2, or to
-/// not free the blob until the buffer is no longer needed.
+/// If no filters need to be applied, then the `out` parameter will be updated
+/// with the raw content of the blob.
 ///
 /// ## C Equivalent
 ///
 /// [`git_blob_filter()`](https://libgit2.org/docs/reference/main/blob/git_blob_filter.html)
 public func gitBlobFilter(
-    out     : inout GitBuf,
+    out     : inout Data,
     blob    : OpaquePointer,
     asPath  : String,
     opts    : GitBlobFilterOptions?
@@ -266,7 +256,7 @@ public func gitBlobFilter(
         {
             cOpts in
             
-            return try out.withMutatingCValue
+            return try out.withMutatingGitBuf
             {
                 cOut in
                 
@@ -288,10 +278,10 @@ public func gitBlobFilter(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`. This repository may not be bare.
-///   - relativePath: The path to the file from which the blob should be
-///   created, relative to the repository's working directory.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may not be bare.
+///   - relativePath: The path to the file from which to create the blob. The
+///   path must be relative to the repository's working directory.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -325,9 +315,9 @@ public func gitBlobCreateFromWorkdir(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`. This repository may be bare.
-///   - path: The path to the file from which the blob should be created.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may be bare.
+///   - path: The path to the file from which to create the blob.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -359,8 +349,8 @@ public func gitBlobCreateFromDisk(
 /// Creates a stream to write a new blob into the object database.
 /// - Parameters:
 ///   - out: The pointer in which to store the write stream.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`. This repository may be bare.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may be bare.
 ///   - hintPath: The path to use when selecting data filters to apply onto the
 ///   content of the blob to be created.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -432,12 +422,12 @@ public func gitBlobCreateFromStreamCommit(
 
 
 
-/// Writes an in-memory buffer to the object database as a blob.
+/// Writes in-memory data to the object database as a blob.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`.
 ///   - buffer: The data to to write into the blob.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.

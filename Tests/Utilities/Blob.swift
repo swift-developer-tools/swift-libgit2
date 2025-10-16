@@ -26,8 +26,8 @@ enum Blob
         /// Reads a file from the file system (not necessarily inside the
         /// working directory of the repository) and writes it to the object
         /// database.
-        /// - Parameter path: The path to the file from which the blob should
-        /// be created.
+        /// - Parameter path: The path to the file from which to create the
+        /// blob.
         case disk(
             path: String
         )

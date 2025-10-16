@@ -98,8 +98,8 @@ struct Repository
     ///   - path: The path to the file to modify, relative to the repository's
     ///   root.
     ///   - message: The commit message.
-    ///   - appending: Whether the new content should be appended to the
-    ///   existing content.
+    ///   - appending: Whether to append the new content to the existing
+    ///   content.
     /// - Returns: The ID of the created commit.
     /// - Throws: An error if an operation fails.
     @discardableResult
@@ -151,7 +151,7 @@ struct Repository
     /// - Parameters:
     ///   - message: The commit message.
     ///   - options: The options for commit creation.
-    ///   - fromStage: Whether the commit should be created from staged changes.
+    ///   - fromStage: Whether to create the commit from staged changes.
     ///   - path: The path to the file to modify. This will be appended to the
     ///   repository's URL.
     /// - Returns: The ID of the created commit.
@@ -453,8 +453,8 @@ struct Repository
     ///   repository's URL.
     ///   - content: The new content of the file. This is ignored when creating
     ///   a directory.
-    ///   - appending: Whether the new content should be appended to the
-    ///   existing content.
+    ///   - appending: Whether to append the new content to the existing
+    ///   content.
     /// - Returns: The URL to which the content was written.
     /// - Throws: An error if an operation fails.
     @discardableResult

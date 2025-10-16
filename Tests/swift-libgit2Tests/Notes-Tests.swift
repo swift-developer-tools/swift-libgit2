@@ -440,32 +440,24 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var buffer = GitBuf()
-            
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
-            }
-            
-            
+            var notesReference = Data()
             
             let noteDefaultResult: GitErrorCode = gitNoteDefaultRef(
-                out:    &buffer,
+                out:    &notesReference,
                 repo:   repository.pointer
             )
             
             XCTAssertOK(noteDefaultResult)
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
             
-            guard let defaultReference = String(optionalCString: buffer.ptr)
-            else
-            {
-                XCTFail("The default reference was nil.")
-                return
-            }
             
-            XCTAssertTrue(defaultReference.hasPrefix("refs/notes"))
+            
+            let notesReferenceValue: String? = String(
+                data:       notesReference,
+                encoding:   .utf8
+            )
+            
+            XCTAssertNotNil(notesReferenceValue)
+            XCTAssertTrue(notesReferenceValue?.hasPrefix("refs/notes") ?? false)
         }
     }
     

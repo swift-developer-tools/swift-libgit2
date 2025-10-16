@@ -48,7 +48,6 @@ public func gitObjectLookup(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Looks up a reference to the specified object in the given repository,
 /// using a prefix of the object's ID.
 /// - Parameters:
@@ -56,7 +55,7 @@ public func gitObjectLookup(
 ///   type must be `git_object`.
 ///   - repo: The repository containing the object. The underlying type must
 ///   be `git_repository`.
-///   - id: The The prefix of the ID of the object to lookup.
+///   - id: The prefix of the ID of the object to lookup.
 ///   - len: The length of the object's ID prefix.
 ///   - type: The type of the object to look up. Pass
 ///   ``GitObjectT/gitObjectAny`` to guess the type of the object.
@@ -67,7 +66,7 @@ public func gitObjectLookup(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique object matching the prefix.
 ///
 /// ## C Equivalent
@@ -152,8 +151,7 @@ public func gitObjectID(
 
 /// Gets the abbreviated ID for the given object.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the abbreviated ID should
-///   be written.
+///   - out: The `Data` instance to update with the abbreviated ID.
 ///   - obj: The object for which to get the abbreviated ID. The underlying
 ///   type must be `git_object`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -169,13 +167,13 @@ public func gitObjectID(
 ///
 /// [`git_object_short_id()`](https://libgit2.org/docs/reference/main/object/git_object_short_id.html)
 public func gitObjectShortID(
-    out : inout GitBuf,
+    out : inout Data,
     obj : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

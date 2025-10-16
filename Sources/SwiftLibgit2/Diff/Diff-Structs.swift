@@ -23,7 +23,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_diff_file`](https://libgit2.org/docs/reference/main/diff/git_diff_file.html)
-public struct GitDiffFile: CStructReadable, WithCConvertible
+public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
 {
     /// The ID of the item.
     ///
@@ -48,14 +48,13 @@ public struct GitDiffFile: CStructReadable, WithCConvertible
     /// Approximately the `stat() st_mode` value for the item.
     public let mode     : GitFileModeT
     
-    // TODO: Replace `GIT_OID_SHA1_HEXSIZE` in documentation.
     /// The known length of the ID field, when converted to a hex string.
     ///
     /// ## Discussion
     ///
-    /// This is generally `GIT_OID_SHA1_HEXSIZE`, unless this delta was
-    /// created from reading a patch file, in which case it may be abbreviated
-    /// to something reasonable, like seven characters.
+    /// This is generally the value of ``gitOIDSHA1HexSize``, unless the delta
+    /// was created from reading a patch file, in which case it may be
+    /// abbreviated to something reasonable, like seven characters.
     public let idAbbrev : UInt16
     
     
@@ -63,11 +62,6 @@ public struct GitDiffFile: CStructReadable, WithCConvertible
     /// Initializes a ``GitDiffFile`` instance from the given `git_diff_file`
     /// instance.
     /// - Parameter diffFile: The `git_diff_file` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``mode`` defaults to ``GitFileModeT/gitFileModeUnreadable`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffFile: git_diff_file
     )
@@ -159,7 +153,7 @@ public struct GitDiffFile: CStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_delta`](https://libgit2.org/docs/reference/main/diff/git_diff_delta.html)
-public struct GitDiffDelta: CStructReadable, WithCConvertible
+public struct GitDiffDelta: CStructReadable, WithCConvertible, Sendable
 {
     /// The type of change described by a diff delta.
     public let status       : GitDeltaT
@@ -186,11 +180,6 @@ public struct GitDiffDelta: CStructReadable, WithCConvertible
     /// Initializes a ``GitDiffDelta`` instance from the given `git_diff_delta`
     /// instance.
     /// - Parameter diffDelta: The `git_diff_delta` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``status`` defaults to ``GitDeltaT/gitDeltaUnmodified`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffDelta: git_diff_delta
     )
@@ -300,7 +289,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     public var payload          : UnsafeMutableRawPointer?
     
     /// The number of unchanged lines that define the boundaries of a diff hunk,
-    /// and should be displayed before and after each hunk.
+    /// displayed before and after each hunk.
     ///
     /// ## Discussion
     ///
@@ -308,7 +297,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     public var contextLines     : UInt32
     
     /// The maximum number of unchanged lines between diff hunk boundaries
-    /// before the hunks should be merged.
+    /// before the hunks are merged.
     ///
     /// ## Discussion
     ///
@@ -327,7 +316,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// runtime, libgit2 defaults to using ``GitOIDT/gitOIDSHA1``.
     ///
     /// If this is specified and a repository is available, the specified type
-    /// should match the repository's ID format.
+    /// must match the repository's ID format.
     public var oidType          : GitOIDT?
     
     /// The abbreviation length to use when formatting IDs.
@@ -405,15 +394,6 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitDiffOptions`` instance from the given
     /// `git_diff_options` instance.
     /// - Parameter diffOptions: The `git_diff_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// If unexpected values are encountered, the following defaults are used,
-    /// although this should never occur.
-    ///
-    /// - ``ignoreSubmodules``: ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``
-    /// - ``oldPrefix``: `a`
-    /// - ``newPrefix``: `b`
     internal init(
         cValue diffOptions: git_diff_options
     )
@@ -500,7 +480,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_binary_file`](https://libgit2.org/docs/reference/main/diff/git_diff_binary_file.html)
-public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
+public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
 {
     /// The type of binary data.
     public let type         : GitDiffBinaryT
@@ -522,11 +502,6 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
     /// Initializes a ``GitDiffBinaryFile`` instance from the given
     /// `git_diff_binary_file` instance.
     /// - Parameter diffBinaryFile: The `git_diff_binary_file` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffBinaryFile: git_diff_binary_file
     )
@@ -583,13 +558,13 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible
 /// ## Discussion
 ///
 /// A binary file or binary delta is a file (or pair of files) for which no
-/// text diffs should be generated. A diff can contain delta entries that are
-/// binary, but no diff content will be output for those files.
+/// text diffs are generated. A diff can contain delta entries that are binary,
+/// but no diff content is output for those files.
 ///
 /// ## C Equivalent
 ///
 /// [`git_diff_binary`](https://libgit2.org/docs/reference/main/diff/git_diff_binary.html)
-public struct GitDiffBinary: CStructReadable, WithCConvertible
+public struct GitDiffBinary: CStructReadable, WithCConvertible, Sendable
 {
     /// Whether there is data in the binary.
     ///
@@ -610,11 +585,6 @@ public struct GitDiffBinary: CStructReadable, WithCConvertible
     /// Initializes a ``GitDiffBinary`` instance from the given
     /// `git_diff_binary` instance.
     /// - Parameter diffBinary: The `git_diff_binary` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffBinary: git_diff_binary
     )
@@ -670,7 +640,7 @@ public struct GitDiffBinary: CStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_hunk`](https://libgit2.org/docs/reference/main/diff/git_diff_hunk.html)
-public struct GitDiffHunk: CStructInternalMutable, CConvertible
+public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
 {
     /// The starting line number in the old file.
     ///
@@ -719,11 +689,7 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible
     
     
     
-    /// Initializes a ``GitDiffHunk`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitDiffHunk``.
     public init() { }
     
     
@@ -731,11 +697,6 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible
     /// Initializes a ``GitDiffHunk`` instance from the given `git_diff_hunk`
     /// instance.
     /// - Parameter diffHunk: The `git_diff_hunk` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffHunk: git_diff_hunk
     )
@@ -785,7 +746,7 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_line`](https://libgit2.org/docs/reference/main/diff/git_diff_line.html)
-public struct GitDiffLine: CStructInternalMutable, WithCConvertible
+public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
 {
     /// The type of line origin.
     ///
@@ -841,11 +802,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible
     
     
     
-    /// Initializes a ``GitDiffLine`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitDiffLine`` instance.
     public init() { }
     
     
@@ -853,11 +810,6 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible
     /// Initializes a ``GitDiffLine`` instance from the given `git_diff_line`
     /// instance.
     /// - Parameter diffLine: The `git_diff_line` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``origin`` defaults to ``GitDiffLineT/gitDiffLineContext`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffLine: git_diff_line
     )
@@ -1172,7 +1124,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_parse_options`](https://libgit2.org/docs/reference/main/diff/git_diff_parse_options.html)
-public struct GitDiffParseOptions: CStructMutable, CConvertible
+public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -1207,11 +1159,6 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
     /// `git_diff_parse_options` instance.
     /// - Parameter diffParseOptions: The `git_diff_parse_options` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue diffParseOptions: git_diff_parse_options
     )
@@ -1247,7 +1194,7 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_diff_patchid_options`](https://libgit2.org/docs/reference/main/diff/git_diff_patchid_options.html)
-public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible
+public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible, Sendable
 {
     /// The version to use.
     ///

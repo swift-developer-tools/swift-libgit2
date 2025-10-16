@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
-public struct GitBlameOptions: CStructMutable, WithCConvertible
+public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -166,7 +166,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_hunk`](https://libgit2.org/docs/reference/main/blame/git_blame_hunk.html)
-public struct GitBlameHunk: CStructReadable, WithCConvertible
+public struct GitBlameHunk: CStructReadable, WithCConvertible, Sendable
 {
     /// The number of lines in this hunk.
     public let linesInHunk          : Int
@@ -344,7 +344,7 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_blame_line`](https://libgit2.org/docs/reference/main/blame/git_blame_line.html)
-public struct GitBlameLine: CStructReadable, WithCConvertible
+public struct GitBlameLine: CStructReadable, WithCConvertible, Sendable
 {
     /// The line content.
     public let ptr  : Data?

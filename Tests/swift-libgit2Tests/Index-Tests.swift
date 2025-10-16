@@ -948,7 +948,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexEntryStageShift() throws
     {
-        XCTAssertEqual(gitIndexEntryStageShift, GIT_INDEX_ENTRY_STAGESHIFT)
+        XCTAssertEqual(Int32(gitIndexEntryStageShift), GIT_INDEX_ENTRY_STAGESHIFT)
     }
     
     

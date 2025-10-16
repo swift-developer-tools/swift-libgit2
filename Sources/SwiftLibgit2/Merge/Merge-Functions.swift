@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitMergeFileInputVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_merge_file_input` instances. ``GitMergeFileInput`` instances do not
-/// need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_merge_file_input_init()`](https://libgit2.org/docs/reference/main/merge/git_merge_file_input_init.html)
@@ -48,12 +42,6 @@ public func gitMergeFileInputInit(
 ///   - version: The version to use. Pass ``gitMergeFileOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_merge_file_options` instances. ``GitMergeFileOptions`` instances
-/// do not need to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_merge_file_options_init()`](https://libgit2.org/docs/reference/main/merge/git_merge_file_options_init.html)
@@ -78,12 +66,6 @@ public func gitMergeFileOptionsInit(
 ///   - opts: The `git_merge_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitMergeOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_merge_options` instances. ``GitMergeOptions`` instances do not need
-/// to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -579,12 +561,6 @@ public func gitMergeFileFromIndex(
 
 /// Frees the memory allocated for the given `git_merge_file_result` instance.
 /// - Parameter result: The merge file result to free.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_merge_file_result` instances allocated by libgit2.
-/// ``GitMergeFileResult`` instances do not need to be freed.
 ///
 /// ## C Equivalent
 ///

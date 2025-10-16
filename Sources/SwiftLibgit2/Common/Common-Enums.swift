@@ -363,7 +363,7 @@ public enum GitLibgit2OptT: UInt32, CEnum
     ///
     /// ## Discussion
     ///
-    /// - Note: Use ``gitLibgit2OptDisablePackKeepFileChecks(enabled:)`` to
+    /// - Note: Use ``gitLibgit2OptDisablePackKeepFileChecks(skip:)`` to
     /// interact with this option.
     case gitOptDisablePackKeepFileChecks        = 27
     
@@ -437,8 +437,7 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// with this option.
     case gitOptGetOwnerValidation               = 35
     
-    /// Specifies that repository directories should be owned by the current
-    /// user.
+    /// Specifies that the current user owns the repository directories.
     ///
     /// ## Discussion
     ///

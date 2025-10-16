@@ -15,9 +15,9 @@ import CLibgit2
 /// - Parameters:
 ///   - delta: The delta to apply.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if the apply operation should be aborted, a
-/// positive value if the delta should not be applied but the operation should
-/// continue, or `0` if the delta should be applied.
+/// - Returns: A negative value to abort the apply operation, a positive value
+/// to not apply the delta but to continue the operation, or `0` to apply the
+/// delta.
 ///
 /// ## C Equivalent
 ///
@@ -34,9 +34,9 @@ public typealias GitApplyDeltaCB = @convention(c)
 /// - Parameters:
 ///   - hunk: The hunk to apply.
 ///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if the apply operation should be aborted, a
-/// positive value if the hunk should not be applied but the operation should
-/// continue, or `0` if the hunk should be applied.
+/// - Returns: A negative value to abort the apply operation, a positive value
+/// to not apply the hunk but to continue the operation, or `0` to apply the
+/// hunk.
 ///
 /// ## C Equivalent
 ///

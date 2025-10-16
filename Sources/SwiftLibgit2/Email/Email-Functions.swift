@@ -8,13 +8,13 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
 /// Creates a diff from the given commit in `mbox` format to send via email.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the email patch should be
-///   written.
+///   - out: The `Data` instance to update with the email patch.
 ///   - commit: The commit for which to create a patch. The underlying type
 ///   must be `git_commit`.
 ///   - opts: The email creation options to use.
@@ -28,14 +28,14 @@ import CLibgit2
 ///
 /// [`git_email_create_from_commit()`](https://libgit2.org/docs/reference/main/email/git_email_create_from_commit.html)
 public func gitEmailCreateFromCommit(
-    out     : inout GitBuf,
+    out     : inout Data,
     commit  : OpaquePointer,
     opts    : GitEmailCreateOptions?
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

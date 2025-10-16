@@ -35,12 +35,10 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            var buffer                  : GitBuf            = GitBuf()
-            var describeResultPointer   : OpaquePointer?    = nil
+            var describeResultPointer: OpaquePointer? = nil
             
             defer
             {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 gitDescribeResultFree(result: describeResultPointer)
             }
             
@@ -70,15 +68,16 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
+            var description = Data()
+            
             let describeFormatResult: GitErrorCode = gitDescribeFormat(
-                out:        &buffer,
+                out:        &description,
                 result:     describeResultPointer,
                 opts:       nil
             )
             
             XCTAssertOK(describeFormatResult)
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
+            XCTAssertGreaterThan(description.count, 0)
         }
     }
     
@@ -104,12 +103,10 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            var buffer                  : GitBuf            = GitBuf()
-            var describeResultPointer   : OpaquePointer?    = nil
+            var describeResultPointer: OpaquePointer? = nil
             
             defer
             {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
                 gitDescribeResultFree(result: describeResultPointer)
             }
             
@@ -154,15 +151,16 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
+            var description = Data()
+            
             let describeFormatResult: GitErrorCode = gitDescribeFormat(
-                out:        &buffer,
+                out:        &description,
                 result:     describeResultPointer,
                 opts:       describeFormatOptions
             )
             
             XCTAssertOK(describeFormatResult)
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
+            XCTAssertGreaterThan(description.count, 0)
         }
     }
     

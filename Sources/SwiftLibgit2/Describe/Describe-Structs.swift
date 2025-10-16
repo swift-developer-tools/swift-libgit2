@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_describe_options`](https://libgit2.org/docs/reference/main/describe/git_describe_options.html)
-public struct GitDescribeOptions: CStructMutable, WithCConvertible
+public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -55,8 +55,8 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     /// The default value is `false`.
     public var onlyFollowFirstParent    : Bool
     
-    /// Whether the full commit ID should be shown if no matching tag or
-    /// reference is found.
+    /// Whether to show the full commit ID if no matching tag or reference is
+    /// found.
     ///
     /// ## Discussion
     ///
@@ -92,12 +92,6 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitDescribeOptions`` instance from the given
     /// `git_describe_options` instance.
     /// - Parameter describeOptions: The `git_describe_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``describeStrategy`` defaults to
-    /// ``GitDescribeStrategyT/gitDescribeDefault`` if an unexpected value is
-    /// encountered, although this should never occur.
     internal init(
         cValue describeOptions: git_describe_options
     )
@@ -156,7 +150,7 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_describe_format_options`](https://libgit2.org/docs/reference/main/describe/git_describe_format_options.html)
-public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
+public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -172,8 +166,8 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible
     /// The default value is ``gitDescribeDefaultAbbreviatedSize``.
     public var abbreviatedSize      : UInt32
     
-    /// Whether the long format should always be used even when a shorter name
-    /// is possible.
+    /// Whether to always use the long format, even when a shorter name is
+    /// possible.
     ///
     /// ## Discussion
     ///

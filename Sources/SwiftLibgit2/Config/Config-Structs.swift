@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_entry`](https://libgit2.org/docs/reference/main/config/git_config_entry.html)
-public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertible
+public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertible, Sendable
 {
     /// The normalized name of the configuration entry.
     ///
@@ -66,12 +66,7 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
     
     
     
-    /// Initializes a ``GitConfigEntry`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitConfigEntry`` instance.
     public init() { }
     
     
@@ -79,11 +74,6 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
     /// Initializes a ``GitConfigEntry`` instance from the given
     /// `git_config_entry` instance.
     /// - Parameter configEntry: The `git_config_entry` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``level`` defaults to ``GitConfigLevelT/gitConfigLevelLocal`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue configEntry: git_config_entry
     )
@@ -160,14 +150,14 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
 ///
 /// ## Discussion
 ///
-/// This defines how configuration values should be mapped to integer
-/// constants by specifying the type of value ot match, an optional string
-/// to match against, and the integer value to map when a match is found.
+/// This defines how to map configuration values to integer constants by
+/// specifying the type of value ot match, an optional string to match against,
+/// and the integer value to map when a match is found.
 ///
 /// ## C Equivalent
 ///
 /// [`git_configmap`](https://libgit2.org/docs/reference/main/config/git_configmap.html)
-public struct GitConfigMap: CStructMutable, WithCConvertible
+public struct GitConfigMap: CStructMutable, WithCConvertible, Sendable
 {
     /// The type of configuration value to match.
     ///
@@ -214,11 +204,6 @@ public struct GitConfigMap: CStructMutable, WithCConvertible
     /// Initializes a ``GitConfigMap`` instance from the given `git_configmap`
     /// instance.
     /// - Parameter configMap: The `git_configmap` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``certType`` defaults to ``GitCertT/gitCertNone`` if an unexpected
-    /// value is encountered, although this should never occur.
     internal init(
         cValue configMap: git_configmap
     )

@@ -38,10 +38,9 @@ public typealias GitRemoteCreateCB = @convention(c)
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
 ///   - path: The path to the repository.
-///   - isBare: Whether a Git repository without a working directory should be
-///   created at the given path. If `false`, the provided path will be
-///   considered the working directory in which the `.git` directory will be
-///   created.
+///   - isBare: Whether to create a Git repository without a working directory
+///   at the given path. If `false`, the provided path will be considered the
+///   working directory in which to create the `.git` directory.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///

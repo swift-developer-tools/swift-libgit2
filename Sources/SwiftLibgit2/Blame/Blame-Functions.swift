@@ -18,12 +18,6 @@ import Foundation
 ///   - version: The version to use. Pass ``gitBlameOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_blame_options` instances. ``GitBlameOptions`` instances do not need
-/// to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_blame_options_init()`](https://libgit2.org/docs/reference/main/blame/git_blame_options_init.html)
@@ -308,7 +302,7 @@ public func gitBlameFile(
 /// database) history of the file. This means that once a file blame is
 /// completed (which can be expensive), updating the buffer blame is very fast.
 ///
-/// Lines that differ between the buffer and the committed version are marked
+/// Lines that differ between `buffer` and the committed version are marked
 /// as having a zero ID for their ``GitBlameHunk/finalCommitID``.
 ///
 /// - Note: The cached blame from the history of the file is usually the output

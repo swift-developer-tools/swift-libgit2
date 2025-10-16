@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_indexer_progress`](https://libgit2.org/docs/reference/main/indexer/git_indexer_progress.html)
-public struct GitIndexerProgress: CStructInternalMutable, CConvertible
+public struct GitIndexerProgress: CStructInternalMutable, CConvertible, Sendable
 {
     /// The number of objects being indexed.
     ///
@@ -71,12 +71,7 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible
     
     
     
-    /// Initializes a ``GitIndexerProgress`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitIndexerProgress`` instance.
     public init() { }
     
     
@@ -148,7 +143,7 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     public var progressCBPayload    : UnsafeMutableRawPointer?
     
-    /// Whether connectivity checks should be performed for the received pack.
+    /// Whether to perform connectivity checks for the received pack.
     ///
     /// ## Discussion
     ///

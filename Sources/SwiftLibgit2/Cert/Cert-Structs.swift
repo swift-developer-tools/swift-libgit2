@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_cert`](https://libgit2.org/docs/reference/main/cert/git_cert.html)
-public struct GitCert: CStructReadable, CConvertible
+public struct GitCert: CStructReadable, CConvertible, Sendable
 {
     /// The type of host certificate.
     public let certType: GitCertT
@@ -26,11 +26,6 @@ public struct GitCert: CStructReadable, CConvertible
     
     /// Initializes a ``GitCert`` instance from the given `git_cert` instance.
     /// - Parameter cert: The `git_cert` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``certType`` defaults to ``GitCertT/gitCertNone`` if an unexpected
-    /// value is encountered, although this should never occur.
     internal init(
         cValue cert: git_cert
     )
@@ -59,7 +54,7 @@ public struct GitCert: CStructReadable, CConvertible
 /// ## C Equivalent
 ///
 /// [`git_cert_hostkey`](https://libgit2.org/docs/reference/main/cert/git_cert_hostkey.html)
-public struct GitCertHostKey: CStructReadable, WithCConvertible
+public struct GitCertHostKey: CStructReadable, WithCConvertible, Sendable
 {
     /// The parent certificate.
     public let parent       : GitCert
@@ -134,12 +129,6 @@ public struct GitCertHostKey: CStructReadable, WithCConvertible
     /// Initializes a ``GitCertHostKey`` instance from the given
     /// `git_cert_hostkey` instance.
     /// - Parameter certHostKey: The `git_cert_hostkey` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``GitCertHostKey/rawType`` defaults to
-    /// ``GitCertSSHRawTypeT/gitCertSSHRawTypeUnknown`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue certHostKey: git_cert_hostkey
     )

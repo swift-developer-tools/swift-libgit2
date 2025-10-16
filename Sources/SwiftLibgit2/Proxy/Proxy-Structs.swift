@@ -95,11 +95,6 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitProxyOptions`` instance from the given
     /// `git_proxy_options` instance.
     /// - Parameter proxyOptions: The `git_proxy_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitProxyT/gitProxyNone`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue proxyOptions: git_proxy_options
     )

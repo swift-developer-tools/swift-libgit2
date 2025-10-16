@@ -8,18 +8,18 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
 /// Cleans up excess whitespace in the given message, and adds a trailing
 /// newline if necessary.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the prettified message should
-///   be written.
+///   - out: The `Data` instance to update with the prettified message.
 ///   - message: The message to prettify.
-///   - stripComments: Whether comment lines should be removed.
-///   - commentChar: The comment character at the start of lines that should
-///   be removed, if `stripComments` is `true`.
+///   - stripComments: Whether to remove comment lines.
+///   - commentChar: The comment character at the start of lines to remove,
+///   if `stripComments` is `true`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -31,7 +31,7 @@ import CLibgit2
 ///
 /// [`git_message_prettify()`](https://libgit2.org/docs/reference/main/message/git_message_prettify.html)
 public func gitMessagePrettify(
-    out             : inout GitBuf,
+    out             : inout Data,
     message         : String,
     stripComments   : Bool,
     commentChar     : CChar?
@@ -39,7 +39,7 @@ public func gitMessagePrettify(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -96,12 +96,6 @@ public func gitMessageTrailers(
 /// Frees the memory allocated for the given `git_message_trailer_array`
 /// instance.
 /// - Parameter arr: The message trailer array to free.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_message_trailer_array` instances allocated by libgit2.
-/// ``GitMessageTrailerArray`` instances do not need to be freed.
 ///
 /// ## C Equivalent
 ///

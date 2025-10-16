@@ -358,16 +358,6 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitFetchOptions`` instance from the given
     /// `git_fetch_options` instance.
     /// - Parameter fetchOptions: The `git_fetch_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// If unexpected values are encountered, the following defaults are used,
-    /// although this should never occur.
-    ///
-    /// - ``prune``: ``GitFetchPruneT/gitFetchPruneUnspecified``
-    /// - ``downloadTags``: ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsUnspecified``
-    /// - ``depth``: ``GitFetchDepthT/gitFetchDepthFull``
-    /// - ``followRedirects``: ``GitRemoteRedirectT/gitRemoteRedirectInitial``
     internal init(
         cValue fetchOptions: git_fetch_options
     )

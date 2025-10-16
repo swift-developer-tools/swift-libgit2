@@ -30,7 +30,7 @@ public let gitIndexEntryStageMask: UInt32 = 0x3000
 /// ## C Equivalent
 ///
 /// [`GIT_INDEX_ENTRY_STAGESHIFT`](https://libgit2.org/docs/reference/main/index/GIT_INDEX_ENTRY_STAGESHIFT.html)
-public let gitIndexEntryStageShift: Int32 = 12
+public let gitIndexEntryStageShift: Int = 12
 
 
 

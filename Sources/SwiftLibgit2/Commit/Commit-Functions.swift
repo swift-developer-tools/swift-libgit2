@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -44,7 +45,6 @@ public func gitCommitLookup(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Looks up a commit in the given repository, using a prefix of the commit's
 /// ID.
 /// - Parameters:
@@ -52,7 +52,7 @@ public func gitCommitLookup(
 ///   must be `git_commit`.
 ///   - repo: The repository in which to look up the commit. The underlying
 ///   type must be `git_repository`.
-///   - id: The The prefix of the ID of the commit to lookup. If the object is
+///   - id: The prefix of the ID of the commit to lookup. If the object is
 ///   an annotated tag, it will be peeled back to the commit.
 ///   - len: The length of the commit's ID prefix.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -62,7 +62,7 @@ public func gitCommitLookup(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique commit matching the prefix.
 ///
 /// ## C Equivalent
@@ -585,8 +585,7 @@ public func gitCommitNthGenAncestor(
 
 /// Gets the specified header field from the given commit.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the header field should be
-///   written.
+///   - out: The `Data` instance to update with the header field.
 ///   - commit: The commit for which to get the specified header field. The
 ///   underlying type must be `git_commit`.
 ///   - field: The header field to return.
@@ -596,14 +595,14 @@ public func gitCommitNthGenAncestor(
 ///
 /// [`git_commit_header_field()`](https://libgit2.org/docs/reference/main/commit/git_commit_header_field.html)
 public func gitCommitHeaderField(
-    out     : inout GitBuf,
+    out     : inout Data,
     commit  : OpaquePointer,
     field   : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -620,10 +619,9 @@ public func gitCommitHeaderField(
 
 /// Extracts the signature from a commit.
 /// - Parameters:
-///   - signature: The ``GitBuf`` instance into which the signature block
-///   should be written.
-///   - signedData: The ``GitBuf`` instance into which the signed data (the
-///   commit content less the signature block) should be written.
+///   - signature: The `Data` instance to update with the signature block.
+///   - signedData: The `Data` instance to update with the signed data (the
+///   commit content less the signature block).
 ///   - repo: The repository containing the commit. The underlying type must
 ///   be `git_repository`.
 ///   - commitID: The commit from which to extract the data.
@@ -643,8 +641,8 @@ public func gitCommitHeaderField(
 ///
 /// [`git_commit_extract_signature()`](https://libgit2.org/docs/reference/main/commit/git_commit_extract_signature.html)
 public func gitCommitExtractSignature(
-    signature   : inout GitBuf,
-    signedData  : inout GitBuf,
+    signature   : inout Data,
+    signedData  : inout Data,
     repo        : OpaquePointer,
     commitID    : GitOID,
     field       : String?
@@ -654,11 +652,11 @@ public func gitCommitExtractSignature(
     {
         var cCommitID: git_oid = commitID.cValue()
         
-        return try signature.withMutatingCValue
+        return try signature.withMutatingGitBuf
         {
             cSignature in
             
-            return try signedData.withMutatingCValue
+            return try signedData.withMutatingGitBuf
             {
                 cSignedData in
                 
@@ -889,10 +887,10 @@ public func gitCommitAmend(
 
 
 
-/// Creates a new commit in the given repository and writes it into a buffer.
+/// Creates a new commit in the given repository and updates the given `Data`
+/// instance with the commit content.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the commit content should be
-///   written.
+///   - out: The `Data` instance to update with the commit content.
 ///   - repo: The repository in which to store the commit. The underlying type
 ///   must be `git_repository`.
 ///   - author: The author signature to use.
@@ -914,13 +912,13 @@ public func gitCommitAmend(
 /// This function is similar to
 /// ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
 /// except instead of writing the new commit into the object database, it
-/// writes the commit content into the given buffer.
+/// updates the given `Data` instance with the commit content.
 ///
 /// ## C Equivalent
 ///
 /// [`git_commit_create_buffer()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_buffer.html)
 public func gitCommitCreateBuffer(
-    out             : inout GitBuf,
+    out             : inout Data,
     repo            : OpaquePointer,
     author          : GitSignature,
     committer       : GitSignature,
@@ -933,7 +931,7 @@ public func gitCommitCreateBuffer(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -972,7 +970,7 @@ public func gitCommitCreateBuffer(
 ///   must be `git_repository`.
 ///   - commitContent: The content of the unsigned commit to use.
 ///   - signature: The signature to add to the commit.
-///   - signatureField: The header field which should contain the signature.
+///   - signatureField: The header field containing the signature.
 ///   Pass `nil` to use `gpgsig`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1037,12 +1035,8 @@ public func gitCommitDup(
 ///
 /// ## Discussion
 ///
-/// This function does not free the `git_commitarray` itself, since libgit2
-/// will never allocate that object directly.
-///
-/// - Note: This function is only needed when working directly with
-/// `git_commitarray` instances allocated by libgit2. ``GitCommitArray``
-/// instances do not need to be freed.
+/// This function does not free the `git_commitarray` instance itself, since
+/// libgit2 will never allocate that object directly.
 ///
 /// ## C Equivalent
 ///

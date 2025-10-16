@@ -55,15 +55,6 @@ final class EmailTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var buffer = GitBuf()
-            
-            defer
-            {
-                XCTAssertOK(gitBufDispose(buffer: &buffer))
-            }
-            
-            
-            
             var emailCreateOptions = GitEmailCreateOptions()
             
             emailCreateOptions.flags            = .gitEmailCreateOmitNumbers
@@ -71,21 +62,23 @@ final class EmailTests: XCTestCaseStopOnFail
             
             
             
+            var emailPatch = Data()
+            
             try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                let emailCreateFromCommitResult: GitErrorCode = gitEmailCreateFromCommit(
-                    out:        &buffer,
-                    commit:     commitPointer,
-                    opts:       emailCreateOptions
-                )
+                let emailCreateFromCommitResult: GitErrorCode
+                    = gitEmailCreateFromCommit(
+                        out:        &emailPatch,
+                        commit:     commitPointer,
+                        opts:       emailCreateOptions
+                    )
                 
                 XCTAssertOK(emailCreateFromCommitResult)
             }
             
-            XCTAssertNotNil(buffer.ptr)
-            XCTAssertGreaterThan(buffer.size, 0)
+            XCTAssertGreaterThan(emailPatch.count, 0)
         }
     }
     

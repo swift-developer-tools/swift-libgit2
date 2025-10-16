@@ -81,7 +81,7 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 // TODO: Replace `git_direction` and `git_remote_set_instance_url()` in documentation.
 /// The callback to resolve URLs before connecting to the remote.
 /// - Parameters:
-///   - urlResolved: The buffer to which the resolved URL should be written.
+///   - urlResolved: The buffer to which to write the resolved URL.
 ///   - url: The URL to resolve.
 ///   - direction: The direction of the connection. See `git_direction`.
 ///   - payload: The payload provided by the caller.

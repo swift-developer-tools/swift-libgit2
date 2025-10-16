@@ -19,12 +19,11 @@ enum Branch
     /// Creates a local branch from the HEAD commit.
     /// - Parameters:
     ///   - branchName: The branch name.
-    ///   - repository: The repository in which the branch should be created.
+    ///   - repository: The repository in which to create the branch.
     ///   - force: Whether to overwrite an existing branch.
-    ///   - annotated: Whether the branch should be created from an annotated
-    ///   commit.
-    ///   - free: Whether the branch should be freed. Use this to create a
-    ///   branch without access to the resulting pointer.
+    ///   - annotated: Whether to create the branch from an annotated commit.
+    ///   - free: Whether to free the branch. Use this to create a branch
+    ///   without access to the resulting pointer.
     /// - Returns: A pointer to the branch. If `free` is `true`, the pointer
     /// will be `nil`.
     /// - Throws: An error if an operation fails.
@@ -156,10 +155,9 @@ enum Branch
     /// the HEAD commit.
     /// - Parameters:
     ///   - branchName: The branch name.
-    ///   - repository: The repository in which the branch should be created.
+    ///   - repository: The repository in which to create the branch.
     ///   - force: Whether to overwrite an existing branch.
-    ///   - annotated: Whether the branch should be created from an annotated
-    ///   commit.
+    ///   - annotated: Whether to create the branch from an annotated commit.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
     static func withNewLocalBranchPointer(

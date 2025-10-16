@@ -147,8 +147,8 @@ public enum GitConfigLevelT: Int32, CEnum
 /// ## Discussion
 ///
 /// This defines the different types of values that can be matched when using
-/// configuration mapping functions. Each type determines how the configuration
-/// value should be interpreted during the mapping operation.
+/// configuration mapping functions. Each type determines how to interpret the
+/// configuration value during the mapping operation.
 ///
 /// ## C Equivalent
 ///

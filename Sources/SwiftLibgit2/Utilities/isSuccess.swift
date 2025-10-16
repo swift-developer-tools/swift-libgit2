@@ -10,8 +10,8 @@
 /// Checks whether the given libgit2 operation result indicates success.
 /// - Parameters:
 ///   - result: The libgit2 operation result.
-///   - defaultSuccess: Whether a result that is not of the type
-///   ``GitErrorCode`` should be considered successful.
+///   - defaultSuccess: Whether to consider a result that is not a
+///   ``GitErrorCode`` instance successful.
 /// - Returns: Whether the given libgit2 operation result indicates success.
 internal func isSuccess<T>(
     _ result        : T,

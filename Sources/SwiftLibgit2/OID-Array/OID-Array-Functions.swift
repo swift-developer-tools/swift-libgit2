@@ -16,12 +16,8 @@ import CLibgit2
 ///
 /// ## Discussion
 ///
-/// This function does not free the `git_oidarray` itself, since libgit2 will
-/// never allocate that object directly.
-///
-/// - Note: This function is only needed when working directly with
-/// `git_oidarray` instances allocated by libgit2. ``GitOIDArray`` instances
-/// do not need to be freed.
+/// This function does not free the `git_oidarray` instance itself, since
+/// libgit2 will never allocate that object directly.
 ///
 /// ## C Equivalent
 ///

@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_filter_options`](https://libgit2.org/docs/reference/main/filter/git_filter_options.html)
-public struct GitFilterOptions: CStructMutable, WithCConvertible
+public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///

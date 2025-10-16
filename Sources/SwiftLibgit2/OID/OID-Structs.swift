@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_oid`](https://libgit2.org/docs/reference/main/oid/git_oid.html)
-public struct GitOID: CStructInternalMutable, CConvertible
+public struct GitOID: CStructInternalMutable, CConvertible, Sendable
 {
     /// The raw binary-formatted ID.
     ///
@@ -27,15 +27,11 @@ public struct GitOID: CStructInternalMutable, CConvertible
     public private(set) var id: Data = Data(count: Self.size)
     
     /// The size of a Git ID in bytes.
-    internal static let size: Int = 20
+    internal static let size: Int = gitOIDSHA1Size
     
     
     
-    /// Initializes a ``GitOID`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitOID`` instance.
     public init() { }
     
     

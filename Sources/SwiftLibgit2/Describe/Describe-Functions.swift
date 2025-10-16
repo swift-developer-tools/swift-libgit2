@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import Foundation
 
 
 
@@ -16,12 +17,6 @@ import CLibgit2
 ///   - opts: The `git_describe_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDescribeOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_describe_options` instances. ``GitDescribeOptions`` instances do not
-/// need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -47,12 +42,6 @@ public func gitDescribeOptionsInit(
 ///   - opts: The `git_describe_format_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDescribeFormatOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_describe_format_options` instances. ``GitDescribeFormatOptions``
-/// instances do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -148,11 +137,10 @@ public func gitDescribeWorkdir(
 
 
 
-/// Writes the given commit description to a buffer.
+/// Updates the given `Data` instance with the given description.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the description should be
-///   written.
-///   - result: The commit description to write. The underlying type must be
+///   - out: The `Data` instance to update with the description.
+///   - result: The description to use. The underlying type must be
 ///   `git_describe_result`.
 ///   - opts: The describe format options to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -161,14 +149,14 @@ public func gitDescribeWorkdir(
 ///
 /// [`git_describe_format()`](https://libgit2.org/docs/reference/main/describe/git_describe_format.html)
 public func gitDescribeFormat(
-    out     : inout GitBuf,
+    out     : inout Data,
     result  : OpaquePointer,
     opts    : GitDescribeFormatOptions?
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             

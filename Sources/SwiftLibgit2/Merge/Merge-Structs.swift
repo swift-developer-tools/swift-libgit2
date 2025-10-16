@@ -17,7 +17,7 @@ import Foundation
 /// ## C Equivalent
 ///
 /// [`git_merge_file_input`](https://libgit2.org/docs/reference/main/merge/git_merge_file_input.html)
-public struct GitMergeFileInput: CStructMutable, WithCConvertible
+public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -136,7 +136,7 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_options`](https://libgit2.org/docs/reference/main/merge/git_merge_file_options.html)
-public struct GitMergeFileOptions: CStructMutable, WithCConvertible
+public struct GitMergeFileOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The version to use.
     ///
@@ -217,11 +217,6 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible
     /// `git_merge_file_options` instance.
     /// - Parameter mergeFileOptions: The `git_merge_file_options` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``favor`` defaults to ``GitMergeFileFavorT/gitMergeFileFavorNormal``
-    /// if an unexpected value is encountered, although this should never occur.
     internal init(
         cValue mergeFileOptions: git_merge_file_options
     )
@@ -294,7 +289,7 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible
 /// ## C Equivalent
 ///
 /// [`git_merge_file_result`](https://libgit2.org/docs/reference/main/merge/git_merge_file_result.html)
-public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConvertible
+public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConvertible, Sendable
 {
     /// Whether the output was auto-merged.
     ///
@@ -305,15 +300,15 @@ public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConver
     /// If the output contains conflict markers, it cannot be auto-merged.
     public private(set) var automergeable   : Bool      = false
     
-    /// The path that should be used by the resulting file, or `nil` if a
-    /// filename conflict would have otherwise occurred.
+    /// The path of resulting file, or `nil` if a filename conflict would
+    /// have otherwise occurred.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var path            : String?   = nil
     
-    /// The file mode that should be used by the resulting file.
+    /// The file mode of the resulting file.
     ///
     /// ## Discussion
     ///
@@ -339,12 +334,7 @@ public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConver
     
     
     
-    /// Initializes a ``GitMergeFileResult`` instance with the default
-    /// configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitMergeFileResult`` instance.
     public init() { }
     
     
@@ -442,8 +432,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// The default value is ``GitMergeFlagT/gitMergeFindRenames``.
     public var flags            : GitMergeFlagT
     
-    /// The similarity percentage beyond which a file should be treated as
-    /// a rename.
+    /// The similarity percentage beyond which to treat a file as a rename.
     ///
     /// ## Discussion
     ///
@@ -544,11 +533,6 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitMergeOptions`` instance from the given
     /// `git_merge_options` instance.
     /// - Parameter mergeOptions: The `git_merge_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``fileFavor`` defaults to ``GitMergeFileFavorT/gitMergeFileFavorNormal``
-    /// if an unexpected value is encountered, although this should never occur.
     internal init(
         cValue mergeOptions: git_merge_options
     )

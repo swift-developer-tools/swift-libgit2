@@ -17,12 +17,6 @@ import CLibgit2
 ///   - version: The version to use. Pass ``gitApplyOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_apply_options` instances. ``GitApplyOptions`` instances do not need
-/// to be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_apply_options_init()`](https://libgit2.org/docs/reference/main/apply/git_apply_options_init.html)
@@ -48,8 +42,8 @@ public func gitApplyOptionsInit(
 ///   The underlying type must be `git_index`.
 ///   - repo: The repository to apply. The underlying type must be
 ///   `git_repository`.
-///   - preimage: The tree to which the diff should be applied. The underlying
-///   type must be `git_tree`.
+///   - preimage: The tree to which to apply the diff. The underlying type
+///   must be `git_tree`.
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
 ///   - options: The apply options to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -87,8 +81,8 @@ public func gitApplyToTree(
 /// Applies a diff to the given repository, making changes directly in the
 /// working directory, the index, or both.
 /// - Parameters:
-///   - repo: The repository to which the diff should be applied. The
-///   underlying type must be `git_repository`.
+///   - repo: The repository to which to apply the diff. The underlying type
+///   must be `git_repository`.
 ///   - diff: The diff to apply. The underlying type must be `git_diff`.
 ///   - location: The location to apply (the working directory, the index,
 ///   or both).

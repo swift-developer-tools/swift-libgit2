@@ -18,12 +18,6 @@ import Foundation
 ///   - version: The version to use. Pass ``gitDiffOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_diff_options` instances.``GitDiffOptions`` instances do not need to
-/// be initialized this way.
-///
 /// ## C Equivalent
 ///
 /// [`git_diff_options_init()`](https://libgit2.org/docs/reference/main/diff/git_diff_options_init.html)
@@ -48,12 +42,6 @@ public func gitDiffOptionsInit(
 ///   - opts: The `git_diff_find_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffFindOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_diff_find_options` instances. ``GitDiffFindOptions`` instances do
-/// not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///
@@ -515,7 +503,7 @@ public func gitDiffGetDelta(
     idx     : Int
 ) -> GitDiffDelta?
 {
-    /// The pointer is owned by libgit2 and does not need to be freed.
+    /// The memory is owned by libgit2 and must not be freed.
     guard let diffDelta: UnsafePointer<git_diff_delta>
             = git_diff_get_delta(diff, idx)
     else
@@ -648,11 +636,9 @@ public func gitDiffPrint(
 
 
 
-/// Writes the complete formatted text from the given diff into the given
-/// buffer.
+/// Gets the complete formatted text from the given diff.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the formatted text should be
-///   written.
+///   - out: The `Data` instance to update with the formatted text.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The diff data output format to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -661,14 +647,14 @@ public func gitDiffPrint(
 ///
 /// [`git_diff_to_buf()`](https://libgit2.org/docs/reference/main/diff/git_diff_to_buf.html)
 public func gitDiffToBuf(
-    out     : inout GitBuf,
+    out     : inout Data,
     diff    : OpaquePointer,
     format  : GitDiffFormatT
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1054,10 +1040,9 @@ public func gitDiffStatsDeletions(
 
 
 
-/// Writes the given diff statistics into the given buffer.
+/// Updates the given `Data` instance with the given diff statistics.
 /// - Parameters:
-///   - out: The ``GitBuf`` instance into which the given diff statistics
-///   should be written.
+///   - out: The `Data` instance to update with the given diff statistics.
 ///   - stats: The diff statistics to write. The underlying type must be
 ///   `git_diff_stats`.
 ///   - format: The diff stats format to use.
@@ -1073,7 +1058,7 @@ public func gitDiffStatsDeletions(
 ///
 /// [`git_diff_stats_to_buf()`](https://libgit2.org/docs/reference/main/diff/git_diff_stats_to_buf.html)
 public func gitDiffStatsToBuf(
-    out     : inout GitBuf,
+    out     : inout Data,
     stats   : OpaquePointer,
     format  : GitDiffStatsFormatT,
     width   : Int
@@ -1081,7 +1066,7 @@ public func gitDiffStatsToBuf(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return try out.withMutatingGitBuf
         {
             cOut in
             
@@ -1124,12 +1109,6 @@ public func gitDiffStatsFree(
 ///   - opts: The `git_diff_patchid_options` instance to initialize.
 ///   - version: The version to use. Pass ``gitDiffPatchIDOptionsVersion``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is only needed when working directly with
-/// `git_diff_patchid_options` instances. ``GitDiffPatchIDOptions`` instances
-/// do not need to be initialized this way.
 ///
 /// ## C Equivalent
 ///

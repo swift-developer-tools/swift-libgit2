@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_signature`](https://libgit2.org/docs/reference/main/signature/git_signature.html)
-public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible
+public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible, Sendable
 {
     /// The full name of the actor.
     ///
@@ -46,11 +46,7 @@ public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible
     
     
     
-    /// Initializes a ``GitSignature`` instance with the default configuration.
-    ///
-    /// ## Discussion
-    ///
-    /// See the individual property documentation for specific default values.
+    /// Initializes a default ``GitSignature`` instance.
     public init() { }
     
     

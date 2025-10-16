@@ -45,7 +45,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///  credentials in the event that they are needed.
     public var fetchOpts            : GitFetchOptions?
     
-    /// Whether a bare repository should be created.
+    /// Whether to create a bare repository.
     ///
     /// ## Discussion
     ///
