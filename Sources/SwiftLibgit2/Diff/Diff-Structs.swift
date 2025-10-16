@@ -63,11 +63,6 @@ public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
     /// Initializes a ``GitDiffFile`` instance from the given `git_diff_file`
     /// instance.
     /// - Parameter diffFile: The `git_diff_file` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``mode`` defaults to ``GitFileModeT/gitFileModeUnreadable`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffFile: git_diff_file
     )
@@ -186,11 +181,6 @@ public struct GitDiffDelta: CStructReadable, WithCConvertible, Sendable
     /// Initializes a ``GitDiffDelta`` instance from the given `git_diff_delta`
     /// instance.
     /// - Parameter diffDelta: The `git_diff_delta` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``status`` defaults to ``GitDeltaT/gitDeltaUnmodified`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffDelta: git_diff_delta
     )
@@ -405,15 +395,6 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitDiffOptions`` instance from the given
     /// `git_diff_options` instance.
     /// - Parameter diffOptions: The `git_diff_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// If unexpected values are encountered, the following defaults are used,
-    /// although this should never occur.
-    ///
-    /// - ``ignoreSubmodules``: ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``
-    /// - ``oldPrefix``: `a`
-    /// - ``newPrefix``: `b`
     internal init(
         cValue diffOptions: git_diff_options
     )
@@ -522,11 +503,6 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
     /// Initializes a ``GitDiffBinaryFile`` instance from the given
     /// `git_diff_binary_file` instance.
     /// - Parameter diffBinaryFile: The `git_diff_binary_file` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffBinaryFile: git_diff_binary_file
     )
@@ -610,11 +586,6 @@ public struct GitDiffBinary: CStructReadable, WithCConvertible, Sendable
     /// Initializes a ``GitDiffBinary`` instance from the given
     /// `git_diff_binary` instance.
     /// - Parameter diffBinary: The `git_diff_binary` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffBinary: git_diff_binary
     )
@@ -727,11 +698,6 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
     /// Initializes a ``GitDiffHunk`` instance from the given `git_diff_hunk`
     /// instance.
     /// - Parameter diffHunk: The `git_diff_hunk` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitDiffBinaryT/gitDiffBinaryNone`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffHunk: git_diff_hunk
     )
@@ -845,11 +811,6 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
     /// Initializes a ``GitDiffLine`` instance from the given `git_diff_line`
     /// instance.
     /// - Parameter diffLine: The `git_diff_line` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``origin`` defaults to ``GitDiffLineT/gitDiffLineContext`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue diffLine: git_diff_line
     )
@@ -1199,11 +1160,6 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
     /// `git_diff_parse_options` instance.
     /// - Parameter diffParseOptions: The `git_diff_parse_options` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue diffParseOptions: git_diff_parse_options
     )

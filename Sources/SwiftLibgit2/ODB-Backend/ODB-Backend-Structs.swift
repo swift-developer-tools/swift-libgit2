@@ -51,11 +51,6 @@ public struct GitODBBackendPackOptions: CStructMutable, CConvertible, Sendable
     /// `git_odb_backend_pack_options` instance.
     /// - Parameter odbBackendPackOptions: The `git_odb_backend_pack_options`
     /// instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue odbBackendPackOptions: git_odb_backend_pack_options
     )
@@ -122,11 +117,6 @@ public struct GitODBBackendLooseOptions: CStructMutable, CConvertible, Sendable
     /// `git_odb_backend_loose_options` instance.
     /// - Parameter odbBackendLooseOptions: The `git_odb_backend_loose_options`
     /// instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue odbBackendLooseOptions: git_odb_backend_loose_options
     )

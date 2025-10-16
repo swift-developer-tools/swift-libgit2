@@ -217,11 +217,6 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible, Sendable
     /// `git_merge_file_options` instance.
     /// - Parameter mergeFileOptions: The `git_merge_file_options` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``favor`` defaults to ``GitMergeFileFavorT/gitMergeFileFavorNormal``
-    /// if an unexpected value is encountered, although this should never occur.
     internal init(
         cValue mergeFileOptions: git_merge_file_options
     )
@@ -538,11 +533,6 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitMergeOptions`` instance from the given
     /// `git_merge_options` instance.
     /// - Parameter mergeOptions: The `git_merge_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``fileFavor`` defaults to ``GitMergeFileFavorT/gitMergeFileFavorNormal``
-    /// if an unexpected value is encountered, although this should never occur.
     internal init(
         cValue mergeOptions: git_merge_options
     )

@@ -51,11 +51,6 @@ public struct GitODBOptions: CStructMutable, CConvertible, Sendable
     /// `git_odb_options` instance.
     /// - Parameter odbOptions: The `git_odb_options`
     /// instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``oidType`` defaults to ``GitOIDT/gitOIDSHA1`` if an unexpected value
-    /// is encountered, although this should never occur.
     internal init(
         cValue odbOptions: git_odb_options
     )
@@ -130,11 +125,6 @@ public struct GitODBExpandID: CStructMutable, CConvertible, Sendable
     /// Initializes a ``GitODBExpandID`` instance from the given
     /// `git_odb_expand_id` instance.
     /// - Parameter odbExpandID: The `git_odb_expand_id` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``type`` defaults to ``GitObjectT/gitObjectAny`` if an unexpected
-    /// value is encountered, although this should never occur.
     internal init(
         cValue odbExpandID: git_odb_expand_id
     )

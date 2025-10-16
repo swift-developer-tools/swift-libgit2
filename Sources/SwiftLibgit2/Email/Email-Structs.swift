@@ -104,11 +104,6 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     /// `git_email_create_options` instance.
     /// - Parameter emailCreateOptions: The `git_email_create_options` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``subjectPrefix`` defaults to `PATCH` if an unexpected value is
-    /// encountered, although this should never occur.
     internal init(
         cValue emailCreateOptions: git_email_create_options
     )

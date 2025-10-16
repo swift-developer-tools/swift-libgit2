@@ -35,11 +35,6 @@ public struct GitCredentialUserPassPayload: CStruct, Sendable
     /// `git_credential_userpass_payload` instance.
     /// - Parameter payload: The `git_credential_userpass_payload` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``username`` and ``password`` default to empty strings if unexpected
-    /// values are encountered, although this should never occur.
     internal init(
         cValue payload: git_credential_userpass_payload
     )

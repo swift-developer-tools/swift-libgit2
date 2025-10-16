@@ -74,11 +74,6 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
     /// Initializes a ``GitConfigEntry`` instance from the given
     /// `git_config_entry` instance.
     /// - Parameter configEntry: The `git_config_entry` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``level`` defaults to ``GitConfigLevelT/gitConfigLevelLocal`` if an
-    /// unexpected value is encountered, although this should never occur.
     internal init(
         cValue configEntry: git_config_entry
     )
@@ -209,11 +204,6 @@ public struct GitConfigMap: CStructMutable, WithCConvertible, Sendable
     /// Initializes a ``GitConfigMap`` instance from the given `git_configmap`
     /// instance.
     /// - Parameter configMap: The `git_configmap` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``certType`` defaults to ``GitCertT/gitCertNone`` if an unexpected
-    /// value is encountered, although this should never occur.
     internal init(
         cValue configMap: git_configmap
     )

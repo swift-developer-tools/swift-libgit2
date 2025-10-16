@@ -92,12 +92,6 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
     /// Initializes a ``GitDescribeOptions`` instance from the given
     /// `git_describe_options` instance.
     /// - Parameter describeOptions: The `git_describe_options` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// ``describeStrategy`` defaults to
-    /// ``GitDescribeStrategyT/gitDescribeDefault`` if an unexpected value is
-    /// encountered, although this should never occur.
     internal init(
         cValue describeOptions: git_describe_options
     )
