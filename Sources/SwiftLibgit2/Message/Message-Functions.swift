@@ -17,9 +17,9 @@ import Foundation
 /// - Parameters:
 ///   - out: The `Data` instance to update with the prettified message.
 ///   - message: The message to prettify.
-///   - stripComments: Whether comment lines should be removed.
-///   - commentChar: The comment character at the start of lines that should
-///   be removed, if `stripComments` is `true`.
+///   - stripComments: Whether to remove comment lines.
+///   - commentChar: The comment character at the start of lines to remove,
+///   if `stripComments` is `true`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

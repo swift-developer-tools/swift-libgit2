@@ -971,7 +971,7 @@ public func gitCommitCreateBuffer(
 ///   must be `git_repository`.
 ///   - commitContent: The content of the unsigned commit to use.
 ///   - signature: The signature to add to the commit.
-///   - signatureField: The header field which should contain the signature.
+///   - signatureField: The header field containing the signature.
 ///   Pass `nil` to use `gpgsig`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

@@ -20,8 +20,8 @@ import Foundation
 ///   must be `git_repository`.
 ///   - branchName: The branch name. The name will be validated for consistency
 ///   and must not conflict with an existing branch name.
-///   - target: The commit to which the branch should point. The underlying
-///   type must be `git_commit`. The commit must belong to the given repository.
+///   - target: The commit to which to point the branch. The underlying type
+///   must be `git_commit`. The commit must belong to the given repository.
 ///   - force: Whether to overwrite an existing branch.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -63,8 +63,8 @@ public func gitBranchCreate(
 ///   must be `git_repository`.
 ///   - branchName: The branch name. The name will be validated for consistency
 ///   and must not conflict with an existing branch name.
-///   - target: The commit to which the branch should point. The underlying
-///   type must be `git_annotated_commit`. The commit must belong to the given
+///   - target: The commit to which to point the branch. The underlying type
+///   must be `git_annotated_commit`. The commit must belong to the given
 ///   repository.
 ///   - force: Whether to overwrite an existing branch.
 /// - Returns: A ``GitErrorCode`` instance.

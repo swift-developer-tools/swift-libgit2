@@ -143,7 +143,7 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     public var progressCBPayload    : UnsafeMutableRawPointer?
     
-    /// Whether connectivity checks should be performed for the received pack.
+    /// Whether to perform connectivity checks for the received pack.
     ///
     /// ## Discussion
     ///

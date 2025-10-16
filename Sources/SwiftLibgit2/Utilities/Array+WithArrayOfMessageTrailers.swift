@@ -45,7 +45,7 @@ internal extension Array where Element == GitMessageTrailer
         
         
         /// Collect the instances with non-`nil` `key` and `value` properties.
-        /// Message trailers should not have `nil` `key` and `value`
+        /// Valid message trailers do not have `nil` `key` and `value`
         /// properties. The optional typing of these properties in
         /// ``GitMessageTrailer`` is used to to safeguard against
         /// force-unwrapping `nil` C strings.

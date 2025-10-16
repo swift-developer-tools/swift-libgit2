@@ -55,8 +55,8 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
     /// The default value is `false`.
     public var onlyFollowFirstParent    : Bool
     
-    /// Whether the full commit ID should be shown if no matching tag or
-    /// reference is found.
+    /// Whether to show the full commit ID if no matching tag or reference is
+    /// found.
     ///
     /// ## Discussion
     ///
@@ -172,8 +172,8 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible, Sendab
     /// The default value is ``gitDescribeDefaultAbbreviatedSize``.
     public var abbreviatedSize      : UInt32
     
-    /// Whether the long format should always be used even when a shorter name
-    /// is possible.
+    /// Whether to always use the long format, even when a shorter name is
+    /// possible.
     ///
     /// ## Discussion
     ///

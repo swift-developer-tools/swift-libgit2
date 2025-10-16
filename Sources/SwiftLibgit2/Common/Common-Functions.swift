@@ -364,7 +364,7 @@ public func gitLibgit2OptSetCacheMaxSize(
 
 
 /// Enables or disable caching completely.
-/// - Parameter enabled: Whether caching should be enabled.
+/// - Parameter enabled: Whether to enable caching.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -549,7 +549,7 @@ public func gitLibgit2OptSetUserAgent(
 
 /// Enables strict input validation when creating new objects to ensure that
 /// all inputs to the new objects are valid.
-/// - Parameter enabled: Whether strict object creation should be enabled.
+/// - Parameter enabled: Whether to enable strict object creation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -578,8 +578,7 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 
 
 /// Enables validation of the target of a symbolic reference during creation.
-/// - Parameter enabled: Whether strict symbolic reference creation should be
-/// enabled.
+/// - Parameter enabled: Whether to enable strict symbolic reference creation.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -668,7 +667,7 @@ public func gitLibgit2OptGetUserAgent(
 
 /// Enables or disables the use of offset deltas when creating packfiles,
 /// and the negotiation of them when talking to a remote server.
-/// - Parameter enabled: Whether offset deltas should be enabled.
+/// - Parameter enabled: Whether to enable offset deltas.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -700,8 +699,8 @@ public func gitLibgit2OptEnableOFSDelta(
 /// Enables synchronized writes of files in the Git directory using `fsync`
 /// (or the platform equivalent) to ensure that new object data is written to
 /// permanent storage, not simply cached.
-/// - Parameter enabled: Whether synchronized writes of files in the Git
-/// directory should be enabled.
+/// - Parameter enabled: Whether to enable synchronized writes of files in the
+/// Git directory.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -780,7 +779,7 @@ public func gitLibgit2OptSetWindowsShareMode(
 
 /// Enables strict verification of object hash sums when reading objects from
 /// disk.
-/// - Parameter enabled: Whether strict hash verification should be enabled.
+/// - Parameter enabled: Whether to enable strict hash verification.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -835,7 +834,7 @@ public func gitLibgit2OptSetAllocator(
 /// Ensures that there are no unsaved changes in the index before beginning
 /// any operation that reloads the index from disk (for example, the checkout
 /// operation).
-/// - Parameter enabled: Whether unsaved index safety should be enabled.
+/// - Parameter enabled: Whether to enable unsaved index safety.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -915,8 +914,7 @@ public func gitLibgit2OptSetPackMaxObjects(
 
 
 /// Skips `.keep` file existence checks when accessing packfiles.
-/// - Parameter enabled: Whether `.keep` file existence checks should be
-/// disabled.
+/// - Parameter enabled: Whether to disable `.keep` file existence checks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -943,7 +941,7 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
 
 /// Uses `expect`/`continue` when connecting to a server using NTLM or
 /// Negotiate authentication.
-/// - Parameter enabled: Whether HTTP `expect`/`continue` should be enabled.
+/// - Parameter enabled: Whether to enable HTTP `expect`/`continue`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

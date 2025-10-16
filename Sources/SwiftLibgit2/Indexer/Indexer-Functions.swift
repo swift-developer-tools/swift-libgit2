@@ -41,7 +41,7 @@ public func gitIndexerOptionsInit(
 /// - Parameters:
 ///   - out: The pointer in which to store the indexer. The underlying type
 ///   must be `git_indexer`.
-///   - path: The path to the directory in which the packfile should be stored.
+///   - path: The path to the directory in which to store the packfile.
 ///   - mode: The permissions to use when creating the packfile. Pass `0` for
 ///   the default permissions.
 ///   - odb: The object database from which to read objects when fixing thin

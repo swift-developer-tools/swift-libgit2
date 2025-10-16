@@ -40,7 +40,7 @@ internal protocol CFreeable: CStruct
     ///
     /// This function will be called automatically when
     /// ``withMutatingCValue(_:)`` is used with C  functions that expect `C **`
-    /// parameters, and libgit2 allocates new memory. Implementations should
+    /// parameters, and libgit2 allocates new memory. Implementations must
     /// call the appropriate memory-freeing function.
     static func freeCValue(
         _ pointer: P

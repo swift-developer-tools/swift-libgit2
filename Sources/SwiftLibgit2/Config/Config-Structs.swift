@@ -155,9 +155,9 @@ public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertibl
 ///
 /// ## Discussion
 ///
-/// This defines how configuration values should be mapped to integer
-/// constants by specifying the type of value ot match, an optional string
-/// to match against, and the integer value to map when a match is found.
+/// This defines how to map configuration values to integer constants by
+/// specifying the type of value ot match, an optional string to match against,
+/// and the integer value to map when a match is found.
 ///
 /// ## C Equivalent
 ///

@@ -83,7 +83,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is ``GitCheckoutStrategyT/gitCheckoutSafe``.
     public var checkoutStrategy : GitCheckoutStrategyT
     
-    /// Whether filters like CRLF conversion should be disabled.
+    /// Whether to disable filters such as CRLF conversion.
     ///
     /// ## Discussion
     ///
@@ -156,7 +156,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is an empty array. If this is empty at runtime,
     /// libgit2 defaults to processing all paths. If an array of wildmatch
     /// patterns is provided, those patterns will be used to determine which
-    /// paths should be taken into account.
+    /// paths to take into account.
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.

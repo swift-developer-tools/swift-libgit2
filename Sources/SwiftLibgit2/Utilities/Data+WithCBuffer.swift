@@ -21,7 +21,7 @@ internal extension Data
     ///
     /// ## Discussion
     ///
-    /// Callers should ensure that the receiver is not empty before calling
+    /// Callers must ensure that the receiver is not empty before calling
     /// this method when:
     ///
     /// - Empty data has semantic meaning other than an error. For example,
@@ -29,7 +29,7 @@ internal extension Data
     /// data may be valid.
     /// - The receiver represents data returned by libgit2.
     ///
-    /// In these cases, callers should handle the empty data by passing `nil`
+    /// In these cases, callers must handle the empty data by passing `nil`
     /// for the buffer and `0` for the buffer count.
     ///
     /// Callers may call this method without checking whether the receiver is

@@ -18,8 +18,8 @@ import Foundation
 ///   type must be `git_filter_list`.
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
-///   - blob: The blob to which the filter should be applied. The underlying
-///   type must be `git_blob`.
+///   - blob: The blob to which to apply the filter. The underlying type must
+///   be `git_blob`.
 ///   - path: The relative path to the file to filter.
 ///   - mode: The filtering direction to use.
 ///   - flags: The flags controlling the filtering process.
@@ -63,8 +63,8 @@ public func gitFilterListLoad(
 ///   type must be `git_filter_list`.
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
-///   - blob: The blob to which the filter should be applied. The underlying
-///   type must be `git_blob`.
+///   - blob: The blob to which to apply the filter. The underlying type must
+///   be `git_blob`.
 ///   - path: The relative path to the file to filter.
 ///   - mode: The filtering direction to use.
 ///   - opts: The filtering options to use.
@@ -259,9 +259,9 @@ public func gitFilterListApplyToBlob(
 /// - Parameters:
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
-///   - buffer: The the data to filter.
+///   - buffer: The data to filter.
 ///   - len: The length of `buffer`.
-///   - target: The stream into which the data should be written.
+///   - target: The stream in which to write the data.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -299,7 +299,7 @@ public func gitFilterListStreamBuffer(
 ///   - repo: The repository containing the specified file. The underlying
 ///   type must be `git_repository`.
 ///   - path: The path to the file to filter.
-///   - target: The stream into which the data should be written.
+///   - target: The stream in which to write the data.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -335,7 +335,7 @@ public func gitFilterListStreamFile(
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
 ///   - blob: The blob to filter. The underlying type must be `git_blob`.
-///   - target: The stream into which the data should be written.
+///   - target: The stream in which to write the data.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

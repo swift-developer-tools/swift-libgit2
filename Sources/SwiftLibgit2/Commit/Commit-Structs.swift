@@ -25,8 +25,7 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
     /// The default value is ``gitCommitCreateOptionsVersion``.
     public var version          : UInt32
     
-    /// Whether a commit with no changes from the prior commit (an empty commit)
-    /// should be allowed.
+    /// Whether to allow a commit with no changes from the prior commit.
     ///
     /// ## Discussion
     ///

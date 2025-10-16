@@ -300,7 +300,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     public var payload          : UnsafeMutableRawPointer?
     
     /// The number of unchanged lines that define the boundaries of a diff hunk,
-    /// and should be displayed before and after each hunk.
+    /// displayed before and after each hunk.
     ///
     /// ## Discussion
     ///
@@ -308,7 +308,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     public var contextLines     : UInt32
     
     /// The maximum number of unchanged lines between diff hunk boundaries
-    /// before the hunks should be merged.
+    /// before the hunks are merged.
     ///
     /// ## Discussion
     ///
@@ -327,7 +327,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// runtime, libgit2 defaults to using ``GitOIDT/gitOIDSHA1``.
     ///
     /// If this is specified and a repository is available, the specified type
-    /// should match the repository's ID format.
+    /// must match the repository's ID format.
     public var oidType          : GitOIDT?
     
     /// The abbreviation length to use when formatting IDs.
@@ -583,8 +583,8 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
 /// ## Discussion
 ///
 /// A binary file or binary delta is a file (or pair of files) for which no
-/// text diffs should be generated. A diff can contain delta entries that are
-/// binary, but no diff content will be output for those files.
+/// text diffs are generated. A diff can contain delta entries that are binary,
+/// but no diff content is output for those files.
 ///
 /// ## C Equivalent
 ///

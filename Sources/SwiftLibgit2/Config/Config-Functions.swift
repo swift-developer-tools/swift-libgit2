@@ -211,14 +211,14 @@ public func gitConfigNew(
 
 /// Adds an on-disk configuration file to an existing configuration object.
 /// - Parameters:
-///   - cfg: The configuration object to which the file should be added. The
-///   underlying type must be `git_config`.
+///   - cfg: The configuration object to which to add the file. The underlying
+///   type must be `git_config`.
 ///   - path: The path to the configuration file to add.
 ///   - level: The priority level of the backend.
 ///   - repo: The optional repository to allow parsing of conditional includes.
 ///   The underlying type must be `git_repository`.
-///   - force: Whether the configuration file should be replaced at the given
-///   priority level.
+///   - force: Whether to replace the configuration file at the given priority
+///   level.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -625,7 +625,7 @@ public func gitConfigGetBool(
 
 /// Gets the value of a path configuration variable.
 /// - Parameters:
-///   - out: The `Data` instance to update with the path should be written.
+///   - out: The `Data` instance to update with the path value.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.

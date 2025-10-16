@@ -305,15 +305,15 @@ public struct GitMergeFileResult: CFreeable, CStructInternalMutable, WithCConver
     /// If the output contains conflict markers, it cannot be auto-merged.
     public private(set) var automergeable   : Bool      = false
     
-    /// The path that should be used by the resulting file, or `nil` if a
-    /// filename conflict would have otherwise occurred.
+    /// The path of resulting file, or `nil` if a filename conflict would
+    /// have otherwise occurred.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var path            : String?   = nil
     
-    /// The file mode that should be used by the resulting file.
+    /// The file mode of the resulting file.
     ///
     /// ## Discussion
     ///
@@ -437,8 +437,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// The default value is ``GitMergeFlagT/gitMergeFindRenames``.
     public var flags            : GitMergeFlagT
     
-    /// The similarity percentage beyond which a file should be treated as
-    /// a rename.
+    /// The similarity percentage beyond which to treat a file as a rename.
     ///
     /// ## Discussion
     ///

@@ -32,8 +32,7 @@ internal extension String
     /// could contain meaningless zero-initialized fields, unpopulated fields
     /// after an error, or empty values. In these cases, `nil` is more
     /// semantically correct than an empty string. Similarly, while libgit2
-    /// should generally provide valid UTF-8 data, the encoding may fail in
-    /// some scenarios.
+    /// generally provides valid UTF-8 data, the encoding may sometimes fail.
     ///
     /// - Note: A generic type is used for `cArray` because Swift represents
     /// fixed-size C character arrays as `CChar` tuples. The generic type

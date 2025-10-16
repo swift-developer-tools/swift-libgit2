@@ -279,10 +279,10 @@ public func gitBlobFilter(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`. This repository may not be bare.
-///   - relativePath: The path to the file from which the blob should be
-///   created, relative to the repository's working directory.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may not be bare.
+///   - relativePath: The path to the file from which to create the blob. The
+///   path must be relative to the repository's working directory.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -316,9 +316,9 @@ public func gitBlobCreateFromWorkdir(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`. This repository may be bare.
-///   - path: The path to the file from which the blob should be created.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may be bare.
+///   - path: The path to the file from which to create the blob.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -350,8 +350,8 @@ public func gitBlobCreateFromDisk(
 /// Creates a stream to write a new blob into the object database.
 /// - Parameters:
 ///   - out: The pointer in which to store the write stream.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`. This repository may be bare.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may be bare.
 ///   - hintPath: The path to use when selecting data filters to apply onto the
 ///   content of the blob to be created.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -427,8 +427,8 @@ public func gitBlobCreateFromStreamCommit(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
-///   - repo: The repository where the blob should be written. The underlying
-///   type must be `git_repository`.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`.
 ///   - buffer: The data to to write into the blob.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.

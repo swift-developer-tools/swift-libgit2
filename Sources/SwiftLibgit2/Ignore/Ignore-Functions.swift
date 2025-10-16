@@ -13,8 +13,8 @@ import CLibgit2
 
 /// Adds internal ignore rules in the given repository.
 /// - Parameters:
-///   - repo: The repository to which the ignore rules should be added. The
-///   underlying type must be `git_repository`.
+///   - repo: The repository to which to add the ignore rules. The underlying
+///   type must be `git_repository`.
 ///   - rules: The text of rules to add, with each rule terminated by a
 ///   newline character.
 /// - Returns: A ``GitErrorCode`` instance.

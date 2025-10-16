@@ -226,7 +226,7 @@ public func gitIndexSetVersion(
 /// Updates the contents of the given index in memory, by reading from the disk.
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
-///   - force: Whether the index should always be reloaded.
+///   - force: Whether to always reload the index.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -411,8 +411,7 @@ public func gitIndexWriteTree(
 /// ## Discussion
 ///
 /// This function behaves the same as ``gitIndexWriteTree(out:index:)``, but
-/// allows the caller to choose the repository in which the given tree should
-/// be written.
+/// allows the caller to choose the repository in which to write the given tree.
 ///
 /// The given index instance cannot be bare, must be associated with an
 /// existing repository, and must not contain any conflicted files.

@@ -116,7 +116,7 @@ public struct GitIndexEntryExtendedFlagT: COptionSet
     /// The entry was added with `git add -N` and represents a placeholder.
     public static let gitIndexEntryIntentToAdd      = GitIndexEntryExtendedFlagT(rawValue: GIT_INDEX_ENTRY_INTENT_TO_ADD.rawValue)
     
-    /// The entry should be skipped in the working tree.
+    /// Skip the entry in the working tree.
     public static let gitIndexEntrySkipWorktree     = GitIndexEntryExtendedFlagT(rawValue: GIT_INDEX_ENTRY_SKIP_WORKTREE.rawValue)
     
     /// The combined mask of flags that are persisted to the disk.

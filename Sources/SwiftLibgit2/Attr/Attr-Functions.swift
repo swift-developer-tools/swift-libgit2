@@ -134,8 +134,8 @@ public func gitAttrGetExt(
 
 /// Looks up the values of a list of attributes for the given path.
 /// - Parameters:
-///   - valueOut: An array of length `numAttr`, into which the attribute values
-///   should be written.
+///   - valueOut: The array in which to store the attribute values. This must
+///   have a length of `numAttr`.
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
@@ -188,8 +188,8 @@ public func gitAttrGetMany(
 /// Looks up the values of a list of attributes for the given path, with
 /// extended options.
 /// - Parameters:
-///   - valueOut: An array of length `numAttr`, into which the attribute values
-///   should be written.
+///   - valueOut: The array in which to store the attribute values. This must
+///   have a length of `numAttr`.
 ///   - repo: The repository containing the given path. The underlying type
 ///   must be `git_repository`.
 ///   - opts: The attribute options to use.
