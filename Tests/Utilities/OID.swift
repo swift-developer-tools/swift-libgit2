@@ -23,16 +23,22 @@ enum OID
         in repository: Repository
     ) -> GitOID
     {
-        var headOID = git_oid()
+        var cHeadOID = git_oid()
         
         let referenceNameToIDResult: Int32 = git_reference_name_to_id(
-            &headOID,
+            &cHeadOID,
             repository.pointer,
             "HEAD"
         )
         
         XCTAssertOK(GitErrorCode(rawValue: referenceNameToIDResult))
         
-        return GitOID(cValue: headOID)
+        
+        
+        let headOID = GitOID(cValue: cHeadOID)
+        
+        XCTAssertNotZeroOID(headOID)
+        
+        return headOID
     }
 }
