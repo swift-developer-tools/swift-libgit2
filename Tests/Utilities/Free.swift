@@ -16,19 +16,19 @@ import CLibgit2
 enum Free
 {
     /// Frees the memory allocated for the given `git_packbuilder` instance.
-    /// - Parameter packBuilder: The pack builder to free. The underlying type
+    /// - Parameter packbuilder: The pack builder to free. The underlying type
     /// must be `git_packbuilder`.
     static func freePackBuilder(
-        _ packBuilder: OpaquePointer?
+        _ packbuilder: OpaquePointer?
     )
     {
-        guard let packBuilder: OpaquePointer = packBuilder
+        guard let packbuilder: OpaquePointer = packbuilder
         else
         {
             return
         }
         
-        git_packbuilder_free(packBuilder)
+        git_packbuilder_free(packbuilder)
     }
     
     

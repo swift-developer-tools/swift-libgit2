@@ -171,26 +171,26 @@ extension IndexerTests
         from repository: Repository
     ) throws -> Data
     {
-        var packBuilderPointer: OpaquePointer? = nil
+        var packbuilderPointer: OpaquePointer? = nil
         
         defer
         {
-            Free.freePackBuilder(packBuilderPointer)
+            Free.freePackBuilder(packbuilderPointer)
         }
         
         
         
-        let packBuilderNewResult: Int32 = git_packbuilder_new(
-            &packBuilderPointer,
+        let packbuilderNewResult: Int32 = git_packbuilder_new(
+            &packbuilderPointer,
             repository.pointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: packBuilderNewResult))
+        XCTAssertOK(GitErrorCode(rawValue: packbuilderNewResult))
         
-        guard let packBuilderPointer: OpaquePointer = packBuilderPointer
+        guard let packbuilderPointer: OpaquePointer = packbuilderPointer
         else
         {
-            throw NSError.makeError("The pack builder pointer was nil.")
+            throw NSError.makeError("The packbuilder pointer was nil.")
         }
         
         
@@ -200,19 +200,19 @@ extension IndexerTests
         // TODO: Remove once `git_packbuilder_insert_commit()` has a binding.
         var cHeadOID: git_oid = headOID.cValue()
         
-        let packBuilderInsertCommitResult: Int32
+        let packbuilderInsertCommitResult: Int32
             = git_packbuilder_insert_commit(
-                packBuilderPointer,
+                packbuilderPointer,
                 &cHeadOID
             )
         
-        XCTAssertOK(GitErrorCode(rawValue: packBuilderInsertCommitResult))
+        XCTAssertOK(GitErrorCode(rawValue: packbuilderInsertCommitResult))
         
         
         
         var packData = Data()
         
-        let packBuilderForEachCB: git_packbuilder_foreach_cb =
+        let packbuilderForEachCB: git_packbuilder_foreach_cb =
         {
             data, size, payload in
             
@@ -243,13 +243,13 @@ extension IndexerTests
         {
             packDataPointer in
             
-            let packBuilderForEachResult: Int32 = git_packbuilder_foreach(
-                packBuilderPointer,
-                packBuilderForEachCB,
+            let packbuilderForEachResult: Int32 = git_packbuilder_foreach(
+                packbuilderPointer,
+                packbuilderForEachCB,
                 packDataPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: packBuilderForEachResult))
+            XCTAssertOK(GitErrorCode(rawValue: packbuilderForEachResult))
         }
         
         return packData
