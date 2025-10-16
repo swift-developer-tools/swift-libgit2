@@ -48,14 +48,13 @@ public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
     /// Approximately the `stat() st_mode` value for the item.
     public let mode     : GitFileModeT
     
-    // TODO: Replace `GIT_OID_SHA1_HEXSIZE` in documentation.
     /// The known length of the ID field, when converted to a hex string.
     ///
     /// ## Discussion
     ///
-    /// This is generally `GIT_OID_SHA1_HEXSIZE`, unless this delta was
-    /// created from reading a patch file, in which case it may be abbreviated
-    /// to something reasonable, like seven characters.
+    /// This is generally the value of ``gitOIDSHA1HexSize``, unless the delta
+    /// was created from reading a patch file, in which case it may be
+    /// abbreviated to something reasonable, like seven characters.
     public let idAbbrev : UInt16
     
     

@@ -45,7 +45,6 @@ public func gitCommitLookup(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Looks up a commit in the given repository, using a prefix of the commit's
 /// ID.
 /// - Parameters:
@@ -63,7 +62,7 @@ public func gitCommitLookup(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique commit matching the prefix.
 ///
 /// ## C Equivalent

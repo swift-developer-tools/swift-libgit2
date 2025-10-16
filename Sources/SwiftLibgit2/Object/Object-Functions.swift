@@ -48,7 +48,6 @@ public func gitObjectLookup(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Looks up a reference to the specified object in the given repository,
 /// using a prefix of the object's ID.
 /// - Parameters:
@@ -67,7 +66,7 @@ public func gitObjectLookup(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique object matching the prefix.
 ///
 /// ## C Equivalent

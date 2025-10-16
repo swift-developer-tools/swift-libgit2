@@ -167,7 +167,6 @@ public func gitODBRead(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Reads the specified object from the given object database, using a prefix
 /// of the object's ID.
 /// - Parameters:
@@ -184,7 +183,7 @@ public func gitODBRead(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique object matching the prefix.
 ///
 /// - Note: This function will query all available object database backends.
@@ -316,7 +315,6 @@ public func gitODBExistsExt(
 
 
 
-// TODO: Replace `GIT_OID_MINPREFIXLEN` in documentation.
 /// Checks whether the specified object can be found the given object database,
 /// using a prefix of the object's ID.
 /// - Parameters:
@@ -333,7 +331,7 @@ public func gitODBExistsExt(
 /// This function will try to match the first `len` hexadecimal characters of
 /// the given ID. The remaining characters must be zeros.
 ///
-/// `len` must be greater than or equal to `GIT_OID_MINPREFIXLEN`, and long
+/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
 /// enough to identify a unique object matching the prefix.
 ///
 /// - Note: This function will query all available object database backends.
