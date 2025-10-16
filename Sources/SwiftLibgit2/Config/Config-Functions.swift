@@ -476,7 +476,7 @@ public func gitConfigFree(
 
 
 
-/// Gets the configuration entry of a configuration variable.
+/// Gets the configuration entry of the specified configuration variable.
 /// - Parameters:
 ///   - out: The ``GitConfigEntry`` instance in which to store the
 ///   configuration entry.
@@ -512,7 +512,7 @@ public func gitConfigGetEntry(
 
 
 
-/// Gets the value of a 32-bit integer configuration variable.
+/// Gets the value of the specified 32-bit integer configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -547,7 +547,7 @@ public func gitConfigGetInt32(
 
 
 
-/// Gets the value of a 64-bit integer configuration variable.
+/// Gets the value of the specified 64-bit integer configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -582,7 +582,7 @@ public func gitConfigGetInt64(
 
 
 
-/// Gets the value of a boolean configuration variable.
+/// Gets the value of the specified boolean configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting boolean.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -623,7 +623,7 @@ public func gitConfigGetBool(
 
 
 
-/// Gets the value of a path configuration variable.
+/// Gets the value of the specified path configuration variable.
 /// - Parameters:
 ///   - out: The `Data` instance to update with the path value.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -667,7 +667,7 @@ public func gitConfigGetPath(
 
 
 
-/// Gets the value of a string configuration variable.
+/// Gets the value of the specified string configuration variable.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting string.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -713,7 +713,7 @@ public func gitConfigGetString(
 
 
 
-/// Gets the value of a string configuration variable.
+/// Gets the value of the specified string configuration variable.
 /// - Parameters:
 ///   - out: The `Data` instance to update with the string.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -753,7 +753,7 @@ public func gitConfigGetStringBuf(
 
 
 
-/// Gets each value of a multivar in a for-each callback.
+/// Gets each value of the specified multivar in a for-each callback.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -794,7 +794,7 @@ public func gitConfigGetMultivarForEach(
 
 
 
-/// Gets each value of a multivar.
+/// Gets each value of the specified multivar.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -889,7 +889,7 @@ public func gitConfigIteratorFree(
 
 
 
-/// Sets the value of a 32-bit integer configuration variable.
+/// Sets the value of the specified 32-bit integer configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -923,7 +923,7 @@ public func gitConfigSetInt32(
 
 
 
-/// Sets the value of a 64-bit integer configuration variable.
+/// Sets the value of the specified 64-bit integer configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -957,7 +957,7 @@ public func gitConfigSetInt64(
 
 
 
-/// Sets the value of a boolean configuration variable.
+/// Sets the value of the specified boolean configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -991,7 +991,7 @@ public func gitConfigSetBool(
 
 
 
-/// Sets the value of a string configuration variable.
+/// Sets the value of the specified string configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1025,7 +1025,7 @@ public func gitConfigSetString(
 
 
 
-/// Sets the value of a mutlivar in the local configuration file.
+/// Sets the value of the specified mutlivar in the local configuration file.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1061,7 +1061,7 @@ public func gitConfigSetMultivar(
 
 
 
-/// Deletes a configuration variable.
+/// Deletes the specified configuration variable.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1093,8 +1093,8 @@ public func gitConfigDeleteEntry(
 
 
 
-/// Deletes one of several entries from a multivar in the local configuration
-/// file.
+/// Deletes one of several entries from the specified multivar in the local
+/// configuration file.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1128,7 +1128,7 @@ public func gitConfigDeleteMultivar(
 
 
 
-/// Loops over each configuration variable.
+/// Loops over all configuration variables in the configuration backend.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1167,7 +1167,7 @@ public func gitConfigForEach(
 
 
 
-/// Loops over all the configuration variables.
+/// Loops over all configuration variables.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1198,7 +1198,7 @@ public func gitConfigIteratorNew(
 
 
 
-/// Loops over all the configuration variables.
+/// Loops over all configuration variables matching the given pattern.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1236,8 +1236,8 @@ public func gitConfigIteratorGlobNew(
 
 
 
-/// Performs an operation on each configuration variable matching a regular
-/// expression.
+/// Performs an operation on all configuration variables matching the given
+/// pattern.
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
@@ -1279,8 +1279,8 @@ public func gitConfigForEachMatch(
 
 
 
-/// Queries the value of a configuration variable and maps it to an integer
-/// constant.
+/// Queries the value of the specified configuration variable and maps it to
+/// an integer constant.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting map.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1346,7 +1346,7 @@ public func gitConfigGetMapped(
 
 
 
-/// Maps a string value to an integer constant.
+/// Maps the given string value to an integer constant.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting map.
 ///   - maps: The configuration map objects specifying the possible mappings.
@@ -1382,7 +1382,7 @@ public func gitConfigLookupMapValue(
 
 
 
-/// Parses a string value as a boolean.
+/// Parses the given string value as a boolean.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting boolean.
 ///   - value: The value to parse.
@@ -1421,7 +1421,7 @@ public func gitConfigParseBool(
 
 
 
-/// Parses a string value as a signed 32-bit integer.
+/// Parses the given string value as a signed 32-bit integer.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - value: The value to parse.
@@ -1456,7 +1456,7 @@ public func gitConfigParseInt32(
 
 
 
-/// Parses a string value as a signed 64-bit integer.
+/// Parses the given string value as a signed 64-bit integer.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting integer.
 ///   - value: The value to parse.
@@ -1491,7 +1491,7 @@ public func gitConfigParseInt64(
 
 
 
-/// Parses a string value as a path.
+/// Parses the given string value as a path.
 /// - Parameters:
 ///   - out: The `Data` instance to update with the path.
 ///   - value: The value to parse.
@@ -1529,8 +1529,8 @@ public func gitConfigParsePath(
 
 
 
-/// Performs an operation on each configuration variable matching a regular
-/// expression.
+/// Performs an operation on all configuration variables matching the given
+/// pattern.
 /// - Parameters:
 ///   - backend: The configuration backend to search.
 ///   - regExp: The regular expression used to match the configuration names.
