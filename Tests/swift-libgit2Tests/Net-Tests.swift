@@ -24,10 +24,13 @@ final class NetTests: XCTestCaseStopOnFail
     
     func testGitDirection() throws
     {
-        XCTAssertEqual(GitDirection.gitDirectionFetch.cValue(), GIT_DIRECTION_FETCH)
-        XCTAssertEqual(GitDirection.gitDirectionPush.cValue(), GIT_DIRECTION_PUSH)
+        XCTAssertEqual(GitDirection.gitDirectionFetch.rawValue, GIT_DIRECTION_FETCH.rawValue)
+        XCTAssertEqual(GitDirection.gitDirectionPush.rawValue, GIT_DIRECTION_PUSH.rawValue)
         
         XCTAssertNil(GitMergeFileFavorT(rawValue: 123))
+        
+        XCTAssertEqual(GitDirection.gitDirectionFetch.cValue(), GIT_DIRECTION_FETCH)
+        XCTAssertEqual(GitDirection.gitDirectionPush.cValue(), GIT_DIRECTION_PUSH)
         
         XCTAssertEqual(GitDirection(cValue: GIT_DIRECTION_FETCH), .gitDirectionFetch)
         XCTAssertEqual(GitDirection(cValue: GIT_DIRECTION_PUSH), .gitDirectionPush)

@@ -374,6 +374,7 @@ final class PackTests: XCTestCaseStopOnFail
     {
         XCTAssertEqual(GitPackbuilderStageT.gitPackbuilderAddingObjects.rawValue, GIT_PACKBUILDER_ADDING_OBJECTS.rawValue)
         XCTAssertEqual(GitPackbuilderStageT.gitPackbuilderDeltafication.rawValue, GIT_PACKBUILDER_DELTAFICATION.rawValue)
+        
         XCTAssertNil(GitPackbuilderStageT(rawValue: 123))
         
         XCTAssertEqual(GitPackbuilderStageT.gitPackbuilderAddingObjects.cValue(), GIT_PACKBUILDER_ADDING_OBJECTS)

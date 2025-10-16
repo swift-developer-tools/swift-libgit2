@@ -255,6 +255,7 @@ final class ODBBackendTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitODBStreamT.gitStreamRDOnly.rawValue, GIT_STREAM_RDONLY.rawValue)
         XCTAssertEqual(GitODBStreamT.gitStreamWROnly.rawValue, GIT_STREAM_WRONLY.rawValue)
         XCTAssertEqual(GitODBStreamT.gitStreamRW.rawValue, GIT_STREAM_RW.rawValue)
+        
         XCTAssertNil(GitAttrValueT(rawValue: 123))
         
         XCTAssertEqual(GitODBStreamT.gitStreamRDOnly.cValue(), GIT_STREAM_RDONLY)

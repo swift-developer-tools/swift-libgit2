@@ -696,12 +696,17 @@ final class MergeTests: XCTestCaseStopOnFail
     
     func testGitMergeFileFavorT() throws
     {
+        XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorNormal.rawValue, GIT_MERGE_FILE_FAVOR_NORMAL.rawValue)
+        XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorOurs.rawValue, GIT_MERGE_FILE_FAVOR_OURS.rawValue)
+        XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorTheirs.rawValue, GIT_MERGE_FILE_FAVOR_THEIRS.rawValue)
+        XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorUnion.rawValue, GIT_MERGE_FILE_FAVOR_UNION.rawValue)
+        
+        XCTAssertNil(GitMergeFileFavorT(rawValue: 123))
+        
         XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorNormal.cValue(), GIT_MERGE_FILE_FAVOR_NORMAL)
         XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorOurs.cValue(), GIT_MERGE_FILE_FAVOR_OURS)
         XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorTheirs.cValue(), GIT_MERGE_FILE_FAVOR_THEIRS)
         XCTAssertEqual(GitMergeFileFavorT.gitMergeFileFavorUnion.cValue(), GIT_MERGE_FILE_FAVOR_UNION)
-        
-        XCTAssertNil(GitMergeFileFavorT(rawValue: 123))
         
         XCTAssertEqual(GitMergeFileFavorT(cValue: GIT_MERGE_FILE_FAVOR_NORMAL), .gitMergeFileFavorNormal)
         XCTAssertEqual(GitMergeFileFavorT(cValue: GIT_MERGE_FILE_FAVOR_OURS), .gitMergeFileFavorOurs)

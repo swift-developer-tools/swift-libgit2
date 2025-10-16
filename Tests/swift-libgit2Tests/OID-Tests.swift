@@ -732,9 +732,11 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDT() throws
     {
-        XCTAssertEqual(GitOIDT.gitOIDSHA1.cValue(), GIT_OID_SHA1)
+        XCTAssertEqual(GitOIDT.gitOIDSHA1.rawValue, GIT_OID_SHA1.rawValue)
         
         XCTAssertNil(GitOIDT(rawValue: 123))
+        
+        XCTAssertEqual(GitOIDT.gitOIDSHA1.cValue(), GIT_OID_SHA1)
         
         XCTAssertEqual(GitOIDT(cValue: GIT_OID_SHA1), .gitOIDSHA1)
     }

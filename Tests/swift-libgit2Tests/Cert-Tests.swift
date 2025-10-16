@@ -191,6 +191,8 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyECDSA521.rawValue, GIT_CERT_SSH_RAW_TYPE_KEY_ECDSA_521.rawValue)
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeKeyED25519.rawValue, GIT_CERT_SSH_RAW_TYPE_KEY_ED25519.rawValue)
         
+        XCTAssertNil(GitCertSSHRawTypeT(rawValue: 123))
+        
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeUnknown.cValue(), GIT_CERT_SSH_RAW_TYPE_UNKNOWN)
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeRSA.cValue(), GIT_CERT_SSH_RAW_TYPE_RSA)
         XCTAssertEqual(GitCertSSHRawTypeT.gitCertSSHRawTypeDSS.cValue(), GIT_CERT_SSH_RAW_TYPE_DSS)
@@ -273,6 +275,8 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertT.gitCertHostKeyLibSSH2.rawValue, GIT_CERT_HOSTKEY_LIBSSH2.rawValue)
         XCTAssertEqual(GitCertT.gitCertStrArray.rawValue, GIT_CERT_STRARRAY.rawValue)
         
+        XCTAssertNil(GitCertT(rawValue: 123))
+        
         XCTAssertEqual(GitCertT.gitCertNone.cValue(), GIT_CERT_NONE)
         XCTAssertEqual(GitCertT.gitCertX509.cValue(), GIT_CERT_X509)
         XCTAssertEqual(GitCertT.gitCertHostKeyLibSSH2.cValue(), GIT_CERT_HOSTKEY_LIBSSH2)
@@ -282,7 +286,6 @@ final class CertTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCertT(cValue: GIT_CERT_X509), .gitCertX509)
         XCTAssertEqual(GitCertT(cValue: GIT_CERT_HOSTKEY_LIBSSH2), .gitCertHostKeyLibSSH2)
         XCTAssertEqual(GitCertT(cValue: GIT_CERT_STRARRAY), .gitCertStrArray)
-        XCTAssertNil(GitCertT(cValue: git_cert_t(rawValue: 123)))
     }
     
     

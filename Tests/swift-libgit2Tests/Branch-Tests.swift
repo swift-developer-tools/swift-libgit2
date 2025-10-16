@@ -390,6 +390,7 @@ final class BranchTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitBranchT.gitBranchLocal.rawValue, GIT_BRANCH_LOCAL.rawValue)
         XCTAssertEqual(GitBranchT.gitBranchRemote.rawValue, GIT_BRANCH_REMOTE.rawValue)
         XCTAssertEqual(GitBranchT.gitBranchAll.rawValue, GIT_BRANCH_ALL.rawValue)
+        
         XCTAssertNil(GitBranchT(rawValue: 123))
         
         XCTAssertEqual(GitBranchT.gitBranchLocal.cValue(), GIT_BRANCH_LOCAL)
