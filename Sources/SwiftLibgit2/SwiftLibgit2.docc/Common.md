@@ -47,7 +47,7 @@ Common platform functionality, including libgit2 itself.
 - ``gitLibgit2OptEnableUnsavedIndexSafety(enabled:)``
 - ``gitLibgit2OptGetPackMaxObjects(out:)``
 - ``gitLibgit2OptSetPackMaxObjects(objects:)``
-- ``gitLibgit2OptDisablePackKeepFileChecks(enabled:)``
+- ``gitLibgit2OptDisablePackKeepFileChecks(skip:)``
 - ``gitLibgit2OptEnableHTTPExpectContinue(enabled:)``
 - ``gitLibgit2OptGetMWindowFileLimit(limit:)``
 - ``gitLibgit2OptSetMWindowFileLimit(limit:)``
