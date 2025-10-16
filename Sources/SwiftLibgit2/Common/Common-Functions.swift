@@ -914,12 +914,13 @@ public func gitLibgit2OptSetPackMaxObjects(
 
 
 /// Skips `.keep` file existence checks when accessing packfiles.
-/// - Parameter enabled: Whether to disable `.keep` file existence checks.
+/// - Parameter skip: Whether to skip `.keep` file existence checks.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This option can be used to improve performance with remote file systems.
+/// Skipping file existence checks can improve performance with remote file
+/// systems.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
@@ -928,12 +929,12 @@ public func gitLibgit2OptSetPackMaxObjects(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptDisablePackKeepFileChecks(
-    enabled: Bool
+    skip: Bool
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return git_libgit2_opt_disable_pack_keep_file_checks(enabled.int32Value)
+        return git_libgit2_opt_disable_pack_keep_file_checks(skip.int32Value)
     }
 }
 
