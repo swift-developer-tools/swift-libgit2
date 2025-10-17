@@ -402,10 +402,10 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDisablePathspecMatch.cValue(), GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH)
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddCheckPathspec.cValue(), GIT_INDEX_ADD_CHECK_PATHSPEC)
         
-        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DEFAULT).cValue(), GIT_INDEX_ADD_DEFAULT)
-        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_FORCE).cValue(), GIT_INDEX_ADD_FORCE)
-        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH).cValue(), GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH)
-        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_CHECK_PATHSPEC).cValue(), GIT_INDEX_ADD_CHECK_PATHSPEC)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DEFAULT), .gitIndexAddDefault)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_FORCE), .gitIndexAddForce)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH), .gitIndexAddDisablePathspecMatch)
+        XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_CHECK_PATHSPEC), .gitIndexAddCheckPathspec)
         
         
         
@@ -790,10 +790,10 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitIndexEntryExtendedFlagT.gitIndexEntryExtendedFlags.cValue(), GIT_INDEX_ENTRY_EXTENDED_FLAGS)
         XCTAssertEqual(GitIndexEntryExtendedFlagT.gitIndexEntryUpToDate.cValue(), GIT_INDEX_ENTRY_UPTODATE)
         
-        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_INTENT_TO_ADD).cValue(), GIT_INDEX_ENTRY_INTENT_TO_ADD)
-        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_SKIP_WORKTREE).cValue(), GIT_INDEX_ENTRY_SKIP_WORKTREE)
-        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_EXTENDED_FLAGS).cValue(), GIT_INDEX_ENTRY_EXTENDED_FLAGS)
-        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_UPTODATE).cValue(), GIT_INDEX_ENTRY_UPTODATE)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_INTENT_TO_ADD), .gitIndexEntryIntentToAdd)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_SKIP_WORKTREE), .gitIndexEntrySkipWorktree)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_EXTENDED_FLAGS), .gitIndexEntryExtendedFlags)
+        XCTAssertEqual(GitIndexEntryExtendedFlagT(cValue: GIT_INDEX_ENTRY_UPTODATE), .gitIndexEntryUpToDate)
         
         
         
@@ -820,8 +820,8 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitIndexEntryFlagT.gitIndexEntryExtended.cValue(), GIT_INDEX_ENTRY_EXTENDED)
         XCTAssertEqual(GitIndexEntryFlagT.gitIndexEntryValid.cValue(), GIT_INDEX_ENTRY_VALID)
         
-        XCTAssertEqual(GitIndexEntryFlagT(cValue: GIT_INDEX_ENTRY_EXTENDED).cValue(), GIT_INDEX_ENTRY_EXTENDED)
-        XCTAssertEqual(GitIndexEntryFlagT(cValue: GIT_INDEX_ENTRY_VALID).cValue(), GIT_INDEX_ENTRY_VALID)
+        XCTAssertEqual(GitIndexEntryFlagT(cValue: GIT_INDEX_ENTRY_EXTENDED), .gitIndexEntryExtended)
+        XCTAssertEqual(GitIndexEntryFlagT(cValue: GIT_INDEX_ENTRY_VALID), .gitIndexEntryValid)
         
         
         

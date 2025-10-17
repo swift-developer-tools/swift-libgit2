@@ -145,11 +145,11 @@ final class MergeTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitMergeAnalysisT.gitMergeAnalysisFastForward.cValue(), GIT_MERGE_ANALYSIS_FASTFORWARD)
         XCTAssertEqual(GitMergeAnalysisT.gitMergeAnalysisUnborn.cValue(), GIT_MERGE_ANALYSIS_UNBORN)
         
-        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_NONE).cValue(), GIT_MERGE_ANALYSIS_NONE)
-        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_NORMAL).cValue(), GIT_MERGE_ANALYSIS_NORMAL)
-        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_UP_TO_DATE).cValue(), GIT_MERGE_ANALYSIS_UP_TO_DATE)
-        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_FASTFORWARD).cValue(), GIT_MERGE_ANALYSIS_FASTFORWARD)
-        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_UNBORN).cValue(), GIT_MERGE_ANALYSIS_UNBORN)
+        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_NONE), .gitMergeAnalysisNone)
+        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_NORMAL), .gitMergeAnalysisNormal)
+        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_UP_TO_DATE), .gitMergeAnalysisUpToDate)
+        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_FASTFORWARD), .gitMergeAnalysisFastForward)
+        XCTAssertEqual(GitMergeAnalysisT(cValue: GIT_MERGE_ANALYSIS_UNBORN), .gitMergeAnalysisUnborn)
         
         
         
@@ -744,17 +744,17 @@ final class MergeTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitMergeFileFlagT.gitMergeFileStyleZDiff3.cValue(), GIT_MERGE_FILE_STYLE_ZDIFF3)
         XCTAssertEqual(GitMergeFileFlagT.gitMergeFileAcceptConflicts.cValue(), GIT_MERGE_FILE_ACCEPT_CONFLICTS)
         
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_DEFAULT).cValue(), GIT_MERGE_FILE_DEFAULT)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_STYLE_MERGE).cValue(), GIT_MERGE_FILE_STYLE_MERGE)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_STYLE_DIFF3).cValue(), GIT_MERGE_FILE_STYLE_DIFF3)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_SIMPLIFY_ALNUM).cValue(), GIT_MERGE_FILE_SIMPLIFY_ALNUM)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_IGNORE_WHITESPACE).cValue(), GIT_MERGE_FILE_IGNORE_WHITESPACE)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_IGNORE_WHITESPACE_CHANGE).cValue(), GIT_MERGE_FILE_IGNORE_WHITESPACE_CHANGE)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_IGNORE_WHITESPACE_EOL).cValue(), GIT_MERGE_FILE_IGNORE_WHITESPACE_EOL)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_DIFF_PATIENCE).cValue(), GIT_MERGE_FILE_DIFF_PATIENCE)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_DIFF_MINIMAL).cValue(), GIT_MERGE_FILE_DIFF_MINIMAL)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_STYLE_ZDIFF3).cValue(), GIT_MERGE_FILE_STYLE_ZDIFF3)
-        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_ACCEPT_CONFLICTS).cValue(), GIT_MERGE_FILE_ACCEPT_CONFLICTS)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_DEFAULT), .gitMergeFileDefault)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_STYLE_MERGE), .gitMergeFileStyleMerge)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_STYLE_DIFF3), .gitMergeFileStyleDiff3)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_SIMPLIFY_ALNUM), .gitMergeFileSimplifyAlnum)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_IGNORE_WHITESPACE), .gitMergeFileIgnoreWhitespace)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_IGNORE_WHITESPACE_CHANGE), .gitMergeFileIgnoreWhitespaceChange)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_IGNORE_WHITESPACE_EOL), .gitMergeFileIgnoreWhitespaceEOL)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_DIFF_PATIENCE), .gitMergeFileDiffPatience)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_DIFF_MINIMAL), .gitMergeFileDiffMinimal)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_STYLE_ZDIFF3), .gitMergeFileStyleZDiff3)
+        XCTAssertEqual(GitMergeFileFlagT(cValue: GIT_MERGE_FILE_ACCEPT_CONFLICTS), .gitMergeFileAcceptConflicts)
         
         
         
@@ -916,11 +916,11 @@ final class MergeTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitMergeFlagT.gitMergeNoRecursive.cValue(), GIT_MERGE_NO_RECURSIVE)
         XCTAssertEqual(GitMergeFlagT.gitMergeVirtualBase.cValue(), GIT_MERGE_VIRTUAL_BASE)
         
-        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_FIND_RENAMES).cValue(), GIT_MERGE_FIND_RENAMES)
-        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_FAIL_ON_CONFLICT).cValue(), GIT_MERGE_FAIL_ON_CONFLICT)
-        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_SKIP_REUC).cValue(), GIT_MERGE_SKIP_REUC)
-        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_NO_RECURSIVE).cValue(), GIT_MERGE_NO_RECURSIVE)
-        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_VIRTUAL_BASE).cValue(), GIT_MERGE_VIRTUAL_BASE)
+        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_FIND_RENAMES), .gitMergeFindRenames)
+        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_FAIL_ON_CONFLICT), .gitMergeFailOnConflict)
+        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_SKIP_REUC), .gitMergeSkipREUC)
+        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_NO_RECURSIVE), .gitMergeNoRecursive)
+        XCTAssertEqual(GitMergeFlagT(cValue: GIT_MERGE_VIRTUAL_BASE), .gitMergeVirtualBase)
         
         
         
@@ -1002,9 +1002,9 @@ final class MergeTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitMergePreferenceT.gitMergePreferenceNoFastForward.cValue(), GIT_MERGE_PREFERENCE_NO_FASTFORWARD)
         XCTAssertEqual(GitMergePreferenceT.gitMergePreferenceFastForwardOnly.cValue(), GIT_MERGE_PREFERENCE_FASTFORWARD_ONLY)
         
-        XCTAssertEqual(GitMergePreferenceT(cValue: GIT_MERGE_PREFERENCE_NONE).cValue(), GIT_MERGE_PREFERENCE_NONE)
-        XCTAssertEqual(GitMergePreferenceT(cValue: GIT_MERGE_PREFERENCE_NO_FASTFORWARD).cValue(), GIT_MERGE_PREFERENCE_NO_FASTFORWARD)
-        XCTAssertEqual(GitMergePreferenceT(cValue: GIT_MERGE_PREFERENCE_FASTFORWARD_ONLY).cValue(), GIT_MERGE_PREFERENCE_FASTFORWARD_ONLY)
+        XCTAssertEqual(GitMergePreferenceT(cValue: GIT_MERGE_PREFERENCE_NONE), .gitMergePreferenceNone)
+        XCTAssertEqual(GitMergePreferenceT(cValue: GIT_MERGE_PREFERENCE_NO_FASTFORWARD), .gitMergePreferenceNoFastForward)
+        XCTAssertEqual(GitMergePreferenceT(cValue: GIT_MERGE_PREFERENCE_FASTFORWARD_ONLY), .gitMergePreferenceFastForwardOnly)
         
         
         
