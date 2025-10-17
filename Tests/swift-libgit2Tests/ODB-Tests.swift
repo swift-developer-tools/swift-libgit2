@@ -990,6 +990,32 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBWritePack() throws
     {
+        try testGitODBWritePackFlow(withCallback: true)
+        try testGitODBWritePackFlow(withCallback: false)
+    }
+}
+
+
+
+// MARK: - Extensions
+
+extension ODBTests
+{
+    struct CallbackData
+    {
+        var callCount   : Int       = 0
+        var oids        : [GitOID]  = []
+    }
+    
+    
+    
+    /// Tests writing a packfile with or without a callback.
+    /// - Parameter withCallback: Whether to write the packfile with a callback.
+    /// - Throws: An error if an operation fails.
+    private func testGitODBWritePackFlow(
+        withCallback: Bool
+    ) throws
+    {
         try withOpenedODBPointer
         {
             repository, odbPointer in
@@ -1033,35 +1059,37 @@ final class ODBTests: XCTestCaseStopOnFail
             {
                 callbackDataPointer in
                 
-                let odbWritePackResult: GitErrorCode = gitODBWritePack(
-                    out:                &writePackPointer,
-                    db:                 odbPointer,
-                    progressCB:         indexerProgressCB,
-                    progressPayload:    UnsafeMutableRawPointer(callbackDataPointer)
-                )
+                let odbWritePackResult: GitErrorCode
+                
+                if withCallback
+                {
+                    odbWritePackResult = gitODBWritePack(
+                        out:                &writePackPointer,
+                        db:                 odbPointer,
+                        progressCB:         indexerProgressCB,
+                        progressPayload:    UnsafeMutableRawPointer(callbackDataPointer)
+                    )
+                }
+                else
+                {
+                    odbWritePackResult = gitODBWritePack(
+                        out:                &writePackPointer,
+                        db:                 odbPointer,
+                        progressCB:         nil,
+                        progressPayload:    nil
+                    )
+                }
                 
                 XCTAssertOK(odbWritePackResult)
                 XCTAssertNotNil(writePackPointer)
             }
             
             
+            
             /// This result is not checked, nor is the callback count checked,
             /// since packfiles may not exist in the repository.
             _ = gitODBWriteMultiPackIndex(db: odbPointer)
         }
-    }
-}
-
-
-
-// MARK: - Extensions
-
-extension ODBTests
-{
-    struct CallbackData
-    {
-        var callCount   : Int       = 0
-        var oids        : [GitOID]  = []
     }
     
     

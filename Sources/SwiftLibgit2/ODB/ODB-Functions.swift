@@ -460,7 +460,7 @@ public func gitODBRefresh(
 /// [`git_note_foreach()`](https://libgit2.org/docs/reference/main/notes/git_note_foreach.html)
 public func gitODBForEach(
     db:         OpaquePointer,
-    cb:         GitODBForEachCB?,
+    cb:         GitODBForEachCB,
     payload:    UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {

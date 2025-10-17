@@ -168,6 +168,21 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
+            _ = gitDiffBlobs(
+                oldBlob:    oldBlobPointer,
+                oldAsPath:  "old.txt",
+                newBlob:     newBlobPointer,
+                newAsPath:  "new.txt",
+                options:    nil,
+                fileCB:     nil,
+                binaryCB:   nil,
+                hunkCB:     nil,
+                lineCB:     nil,
+                payload:    nil
+            )
+            
+            
+            
             var callbackData = CallbackData()
             
             withUnsafeMutablePointer(to: &callbackData)
@@ -239,6 +254,22 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
+            _ = gitDiffBlobToBuffer(
+                oldBlob:        blobPointer,
+                oldAsPath:      "blob.txt",
+                buffer:         bufferData,
+                bufferLen:      bufferData.count,
+                bufferAsPath:   "buffer.txt",
+                options:        nil,
+                fileCB:         nil,
+                binaryCB:       nil,
+                hunkCB:         nil,
+                lineCB:         nil,
+                payload:        nil
+            )
+            
+            
+            
             var callbackData = CallbackData()
             
             withUnsafeMutablePointer(to: &callbackData)
@@ -282,6 +313,23 @@ final class DiffTests: XCTestCaseStopOnFail
     {
         let oldBufferData   = Data("Old buffer".utf8)
         let newBufferData   = Data("New buffer".utf8)
+        
+        
+        
+        _ = gitDiffBuffers(
+            oldBuffer:          oldBufferData,
+            oldBufferLen:       oldBufferData.count,
+            oldBufferAsPath:    "old.txt",
+            newBuffer:          newBufferData,
+            newBufferLen:       newBufferData.count,
+            newBufferAsPath:    "new.txt",
+            options:            nil,
+            fileCB:             nil,
+            binaryCB:           nil,
+            hunkCB:             nil,
+            lineCB:             nil,
+            payload:            nil
+        )
         
         
         
@@ -656,6 +704,17 @@ final class DiffTests: XCTestCaseStopOnFail
             try Diff.withTreeToWorkdirDiffPointer(in: repository)
             {
                 diffPointer in
+                
+                _ = gitDiffForEach(
+                    diff:       diffPointer,
+                    fileCB:     nil,
+                    binaryCB:   nil,
+                    hunkCB:     nil,
+                    lineCB:     nil,
+                    payload:    nil
+                )
+                
+                
                 
                 var callbackData = CallbackData()
                 

@@ -267,7 +267,7 @@ public func gitAttrForEach(
     repo        : OpaquePointer,
     flags       : GitAttrCheckFlagsT,
     path        : String,
-    callback    : GitAttrForEachCB?,
+    callback    : GitAttrForEachCB,
     payload     : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {
@@ -308,7 +308,7 @@ public func gitAttrForEachExt(
     repo        : OpaquePointer,
     opts        : GitAttrOptions?,
     path        : String,
-    callback    : GitAttrForEachCB?,
+    callback    : GitAttrForEachCB,
     payload     : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {

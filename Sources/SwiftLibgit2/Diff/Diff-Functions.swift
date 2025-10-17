@@ -619,7 +619,7 @@ public func gitDiffStatusChar(
 public func gitDiffPrint(
     diff    : OpaquePointer,
     format  : GitDiffFormatT,
-    printCB : GitDiffLineCB?,
+    printCB : GitDiffLineCB,
     payload : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {
@@ -713,7 +713,7 @@ public func gitDiffBlobs(
     fileCB      : GitDiffFileCB?,
     binaryCB    : GitDiffBinaryCB?,
     hunkCB      : GitDiffHunkCB?,
-    lineCB      : GitDiffLineCB,
+    lineCB      : GitDiffLineCB?,
     payload     : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {
@@ -787,7 +787,7 @@ public func gitDiffBlobToBuffer(
     fileCB          : GitDiffFileCB?,
     binaryCB        : GitDiffBinaryCB?,
     hunkCB          : GitDiffHunkCB?,
-    lineCB          : GitDiffLineCB,
+    lineCB          : GitDiffLineCB?,
     payload         : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {
@@ -868,7 +868,7 @@ public func gitDiffBuffers(
     fileCB          : GitDiffFileCB?,
     binaryCB        : GitDiffBinaryCB?,
     hunkCB          : GitDiffHunkCB?,
-    lineCB          : GitDiffLineCB,
+    lineCB          : GitDiffLineCB?,
     payload         : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {

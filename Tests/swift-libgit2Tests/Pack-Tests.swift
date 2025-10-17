@@ -388,50 +388,8 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderWrite() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
-        {
-            _, packbuilderPointer in
-            
-            var callbackData = CallbackData()
-            
-            let indexerProgressCB: GitIndexerProgressCB =
-            {
-                stats, payload in
-                
-                guard let payload: UnsafeMutableRawPointer = payload
-                else
-                {
-                    XCTFail("The payload was nil.")
-                    return GitErrorCode.gitUnknown(-123).rawValue
-                }
-                
-                let payloadPointer: UnsafeMutablePointer<CallbackData>
-                    = payload.assumingMemoryBound(to: CallbackData.self)
-                
-                payloadPointer.pointee.callCount += 1
-                
-                return GitErrorCode.gitOK.rawValue
-            }
-            
-            
-            
-            withUnsafeMutablePointer(to: &callbackData)
-            {
-                callbackDataPointer in
-                
-                let packbuilderWriteResult: GitErrorCode = gitPackbuilderWrite(
-                    pb:                 packbuilderPointer,
-                    path:               nil,
-                    mode:               0,
-                    progressCB:         indexerProgressCB,
-                    progressCBPayload:  UnsafeMutableRawPointer(callbackDataPointer)
-                )
-                
-                XCTAssertOK(packbuilderWriteResult)
-            }
-            
-            XCTAssertGreaterThan(callbackData.callCount, 0)
-        }
+        try testGitWithPackbuilderWriteFlow(withCallback: true)
+        try testGitWithPackbuilderWriteFlow(withCallback: false)
     }
     
     
@@ -511,6 +469,79 @@ extension PackTests
     {
         case standard
         case recursive
+    }
+    
+    
+    
+    /// Tests writing a packfile with or without a callback.
+    /// - Parameter withCallback: Whether to write the packfile with a callback.
+    /// - Throws: An error if an operation fails.
+    private func testGitWithPackbuilderWriteFlow(
+        withCallback: Bool
+    ) throws
+    {
+        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        {
+            _, packbuilderPointer in
+            
+            var callbackData = CallbackData()
+            
+            let indexerProgressCB: GitIndexerProgressCB =
+            {
+                stats, payload in
+                
+                guard let payload: UnsafeMutableRawPointer = payload
+                else
+                {
+                    XCTFail("The payload was nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
+                }
+                
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
+                
+                payloadPointer.pointee.callCount += 1
+                
+                return GitErrorCode.gitOK.rawValue
+            }
+            
+            
+            
+            withUnsafeMutablePointer(to: &callbackData)
+            {
+                callbackDataPointer in
+                
+                let packbuilderWriteResult: GitErrorCode
+                
+                if withCallback
+                {
+                    packbuilderWriteResult = gitPackbuilderWrite(
+                        pb:                 packbuilderPointer,
+                        path:               nil,
+                        mode:               0,
+                        progressCB:         indexerProgressCB,
+                        progressCBPayload:  UnsafeMutableRawPointer(callbackDataPointer)
+                    )
+                }
+                else
+                {
+                    packbuilderWriteResult = gitPackbuilderWrite(
+                        pb:                 packbuilderPointer,
+                        path:               nil,
+                        mode:               0,
+                        progressCB:         nil,
+                        progressCBPayload:  nil
+                    )
+                }
+                
+                XCTAssertOK(packbuilderWriteResult)
+            }
+            
+            if withCallback
+            {
+                XCTAssertGreaterThan(callbackData.callCount, 0)
+            }
+        }
     }
     
     

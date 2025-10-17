@@ -603,7 +603,7 @@ public func gitNoteDefaultRef(
 public func gitNoteForEach(
     repo        : OpaquePointer,
     notesRef    : String?,
-    noteCB      : GitNoteForEachCB?,
+    noteCB      : GitNoteForEachCB,
     payload     : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {
