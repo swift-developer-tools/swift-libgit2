@@ -69,9 +69,11 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             
             
-            let sourceOID       : GitOID    = gitObjectID(obj: sourceObjectPointer)
-            let duplicatedOID   : GitOID    = gitObjectID(obj: duplicatedObjectPointer)
+            let sourceOID       : GitOID?   = gitObjectID(obj: sourceObjectPointer)
+            let duplicatedOID   : GitOID?   = gitObjectID(obj: duplicatedObjectPointer)
             
+            XCTAssertNotNil(sourceOID)
+            XCTAssertNotNil(duplicatedOID)
             XCTAssertEqual(sourceOID, duplicatedOID)
             
             
@@ -332,14 +334,21 @@ final class ObjectTests: XCTestCaseStopOnFail
     
     func testGitObjectT() throws
     {
+        XCTAssertEqual(GitObjectT.gitObjectAny.rawValue, GIT_OBJECT_ANY.rawValue)
+        XCTAssertEqual(GitObjectT.gitObjectInvalid.rawValue, GIT_OBJECT_INVALID.rawValue)
+        XCTAssertEqual(GitObjectT.gitObjectCommit.rawValue, GIT_OBJECT_COMMIT.rawValue)
+        XCTAssertEqual(GitObjectT.gitObjectTree.rawValue, GIT_OBJECT_TREE.rawValue)
+        XCTAssertEqual(GitObjectT.gitObjectBlob.rawValue, GIT_OBJECT_BLOB.rawValue)
+        XCTAssertEqual(GitObjectT.gitObjectTag.rawValue, GIT_OBJECT_TAG.rawValue)
+        
+        XCTAssertNil(GitObjectT(rawValue: 123))
+        
         XCTAssertEqual(GitObjectT.gitObjectAny.cValue(), GIT_OBJECT_ANY)
         XCTAssertEqual(GitObjectT.gitObjectInvalid.cValue(), GIT_OBJECT_INVALID)
         XCTAssertEqual(GitObjectT.gitObjectCommit.cValue(), GIT_OBJECT_COMMIT)
         XCTAssertEqual(GitObjectT.gitObjectTree.cValue(), GIT_OBJECT_TREE)
         XCTAssertEqual(GitObjectT.gitObjectBlob.cValue(), GIT_OBJECT_BLOB)
         XCTAssertEqual(GitObjectT.gitObjectTag.cValue(), GIT_OBJECT_TAG)
-        
-        XCTAssertNil(GitObjectT(rawValue: 123))
         
         XCTAssertEqual(GitObjectT(cValue: GIT_OBJECT_ANY), .gitObjectAny)
         XCTAssertEqual(GitObjectT(cValue: GIT_OBJECT_INVALID), .gitObjectInvalid)
@@ -442,8 +451,9 @@ extension ObjectTests
             
             
             
-            let objectOID: GitOID = gitObjectID(obj: objectPointer)
+            let objectOID: GitOID? = gitObjectID(obj: objectPointer)
             
+            XCTAssertNotNil(objectOID)
             XCTAssertEqual(objectOID, headOID)
             
             

@@ -424,12 +424,17 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitCapabilityT() throws
     {
+        XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityIgnoreCase.rawValue, GIT_INDEX_CAPABILITY_IGNORE_CASE.rawValue)
+        XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityNoFileMode.rawValue, GIT_INDEX_CAPABILITY_NO_FILEMODE.rawValue)
+        XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityNoSymLinks.rawValue, GIT_INDEX_CAPABILITY_NO_SYMLINKS.rawValue)
+        XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityFromOwner.rawValue, GIT_INDEX_CAPABILITY_FROM_OWNER.rawValue)
+        
+        XCTAssertNil(GitIndexCapabilityT(rawValue: 123))
+        
         XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityIgnoreCase.cValue(), GIT_INDEX_CAPABILITY_IGNORE_CASE)
         XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityNoFileMode.cValue(), GIT_INDEX_CAPABILITY_NO_FILEMODE)
         XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityNoSymLinks.cValue(), GIT_INDEX_CAPABILITY_NO_SYMLINKS)
         XCTAssertEqual(GitIndexCapabilityT.gitIndexCapabilityFromOwner.cValue(), GIT_INDEX_CAPABILITY_FROM_OWNER)
-        
-        XCTAssertNil(GitIndexCapabilityT(rawValue: 123))
         
         XCTAssertEqual(GitIndexCapabilityT(cValue: GIT_INDEX_CAPABILITY_IGNORE_CASE), .gitIndexCapabilityIgnoreCase)
         XCTAssertEqual(GitIndexCapabilityT(cValue: GIT_INDEX_CAPABILITY_NO_FILEMODE), .gitIndexCapabilityNoFileMode)
@@ -476,9 +481,10 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let indexChecksum: GitOID = gitIndexChecksum(index: indexPointer)
+            let indexOID: GitOID? = gitIndexChecksum(index: indexPointer)
             
-            XCTAssertNotZeroOID(indexChecksum)
+            XCTAssertNotNil(indexOID)
+            XCTAssertNotZeroOID(indexOID)
         }
     }
     
@@ -1583,6 +1589,31 @@ final class IndexTests: XCTestCaseStopOnFail
     
     
     
+    func testGitStageT() throws
+    {
+        XCTAssertEqual(GitIndexStageT.gitIndexStageAny.rawValue, GIT_INDEX_STAGE_ANY.rawValue)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageNormal.rawValue, GIT_INDEX_STAGE_NORMAL.rawValue)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageAncestor.rawValue, GIT_INDEX_STAGE_ANCESTOR.rawValue)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageOurs.rawValue, GIT_INDEX_STAGE_OURS.rawValue)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageTheirs.rawValue, GIT_INDEX_STAGE_THEIRS.rawValue)
+        
+        XCTAssertNil(GitIndexStageT(rawValue: 123))
+        
+        XCTAssertEqual(GitIndexStageT.gitIndexStageAny.cValue(), GIT_INDEX_STAGE_ANY)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageNormal.cValue(), GIT_INDEX_STAGE_NORMAL)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageAncestor.cValue(), GIT_INDEX_STAGE_ANCESTOR)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageOurs.cValue(), GIT_INDEX_STAGE_OURS)
+        XCTAssertEqual(GitIndexStageT.gitIndexStageTheirs.cValue(), GIT_INDEX_STAGE_THEIRS)
+        
+        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_ANY), .gitIndexStageAny)
+        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_NORMAL), .gitIndexStageNormal)
+        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_ANCESTOR), .gitIndexStageAncestor)
+        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_OURS), .gitIndexStageOurs)
+        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_THEIRS), .gitIndexStageTheirs)
+    }
+    
+    
+    
     func testGitIndexTime() throws
     {
         let indexTime = GitIndexTime(cValue: git_index_time())
@@ -1728,25 +1759,6 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertEqual(updatedVersion, 3)
         }
-    }
-    
-    
-    
-    func testGitStageT() throws
-    {
-        XCTAssertEqual(GitIndexStageT.gitIndexStageAny.cValue(), GIT_INDEX_STAGE_ANY)
-        XCTAssertEqual(GitIndexStageT.gitIndexStageNormal.cValue(), GIT_INDEX_STAGE_NORMAL)
-        XCTAssertEqual(GitIndexStageT.gitIndexStageAncestor.cValue(), GIT_INDEX_STAGE_ANCESTOR)
-        XCTAssertEqual(GitIndexStageT.gitIndexStageOurs.cValue(), GIT_INDEX_STAGE_OURS)
-        XCTAssertEqual(GitIndexStageT.gitIndexStageTheirs.cValue(), GIT_INDEX_STAGE_THEIRS)
-        
-        XCTAssertNil(GitIndexStageT(rawValue: 123))
-        
-        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_ANY), .gitIndexStageAny)
-        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_NORMAL), .gitIndexStageNormal)
-        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_ANCESTOR), .gitIndexStageAncestor)
-        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_OURS), .gitIndexStageOurs)
-        XCTAssertEqual(GitIndexStageT(cValue: GIT_INDEX_STAGE_THEIRS), .gitIndexStageTheirs)
     }
 }
 

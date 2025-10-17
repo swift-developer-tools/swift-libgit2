@@ -265,8 +265,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The default value is an empty array.
     public var pathspec         : [String]
     
-    /// The callback for notifications of new diff deltas being added during
-    /// the diff operation.
+    /// The callback for notifications of new diff deltas being added.
     ///
     /// ## Discussion
     ///
@@ -274,7 +273,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     public var notifyCB         : GitDiffNotifyCB?
     
     /// The callback invoked for notifications of which files are being
-    /// examined during the diff operation.
+    /// examined.
     ///
     /// ## Discussion
     ///

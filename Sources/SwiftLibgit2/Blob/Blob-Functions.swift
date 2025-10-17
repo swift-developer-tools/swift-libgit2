@@ -118,9 +118,13 @@ public func gitBlobFree(
 /// [`git_blob_id()`](https://libgit2.org/docs/reference/main/blob/git_blob_id.html)
 public func gitBlobID(
     blob: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let blobOID: UnsafePointer<git_oid> = git_blob_id(blob)
+    guard let blobOID: UnsafePointer<git_oid> = git_blob_id(blob)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: blobOID.pointee)
 }

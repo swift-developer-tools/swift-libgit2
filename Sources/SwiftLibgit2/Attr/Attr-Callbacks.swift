@@ -7,8 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// The callback to invoke for each attribute name and value during attribute
-/// iteration.
+/// The callback invoked for each attribute name and value.
 /// - Parameters:
 ///   - name: The name of the attribute being iterated.
 ///   - value: The value of the attribute being iterated. This may be `nil` if

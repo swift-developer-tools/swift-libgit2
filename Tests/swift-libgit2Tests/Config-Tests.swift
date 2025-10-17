@@ -427,6 +427,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitConfigLevelT.gitConfigLevelWorktree.rawValue, GIT_CONFIG_LEVEL_WORKTREE.rawValue)
         XCTAssertEqual(GitConfigLevelT.gitConfigLevelApp.rawValue, GIT_CONFIG_LEVEL_APP.rawValue)
         XCTAssertEqual(GitConfigLevelT.gitConfigHighestLevel.rawValue, GIT_CONFIG_HIGHEST_LEVEL.rawValue)
+        
         XCTAssertNil(GitConfigLevelT(rawValue: 123))
         
         XCTAssertEqual(GitConfigLevelT.gitConfigLevelProgramData.cValue(), GIT_CONFIG_LEVEL_PROGRAMDATA)
@@ -437,6 +438,15 @@ final class ConfigTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitConfigLevelT.gitConfigLevelWorktree.cValue(), GIT_CONFIG_LEVEL_WORKTREE)
         XCTAssertEqual(GitConfigLevelT.gitConfigLevelApp.cValue(), GIT_CONFIG_LEVEL_APP)
         XCTAssertEqual(GitConfigLevelT.gitConfigHighestLevel.cValue(), GIT_CONFIG_HIGHEST_LEVEL)
+        
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_PROGRAMDATA), .gitConfigLevelProgramData)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_SYSTEM), .gitConfigLevelSystem)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_XDG), .gitConfigLevelXDG)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_GLOBAL), .gitConfigLevelGlobal)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_LOCAL), .gitConfigLevelLocal)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_WORKTREE), .gitConfigLevelWorktree)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_LEVEL_APP), .gitConfigLevelApp)
+        XCTAssertEqual(GitConfigLevelT(cValue: GIT_CONFIG_HIGHEST_LEVEL), .gitConfigHighestLevel)
     }
     
     
@@ -796,12 +806,18 @@ final class ConfigTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitConfigMapT.gitConfigMapTrue.rawValue, GIT_CONFIGMAP_TRUE.rawValue)
         XCTAssertEqual(GitConfigMapT.gitConfigMapInt32.rawValue, GIT_CONFIGMAP_INT32.rawValue)
         XCTAssertEqual(GitConfigMapT.gitConfigMapString.rawValue, GIT_CONFIGMAP_STRING.rawValue)
+        
         XCTAssertNil(GitConfigMapT(rawValue: 123))
         
         XCTAssertEqual(GitConfigMapT.gitConfigMapFalse.cValue(), GIT_CONFIGMAP_FALSE)
         XCTAssertEqual(GitConfigMapT.gitConfigMapTrue.cValue(), GIT_CONFIGMAP_TRUE)
         XCTAssertEqual(GitConfigMapT.gitConfigMapInt32.cValue(), GIT_CONFIGMAP_INT32)
         XCTAssertEqual(GitConfigMapT.gitConfigMapString.cValue(), GIT_CONFIGMAP_STRING)
+        
+        XCTAssertEqual(GitConfigMapT(cValue: GIT_CONFIGMAP_FALSE), .gitConfigMapFalse)
+        XCTAssertEqual(GitConfigMapT(cValue: GIT_CONFIGMAP_TRUE), .gitConfigMapTrue)
+        XCTAssertEqual(GitConfigMapT(cValue: GIT_CONFIGMAP_INT32), .gitConfigMapInt32)
+        XCTAssertEqual(GitConfigMapT(cValue: GIT_CONFIGMAP_STRING), .gitConfigMapString)
     }
     
     

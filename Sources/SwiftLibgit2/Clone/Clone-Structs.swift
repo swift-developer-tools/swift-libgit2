@@ -67,7 +67,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// defaults to using the remote's default branch.
     public var checkoutBranch       : String?
     
-    /// The callback invoked to create the new repository into which to clone.
+    /// The callback invoked to create a new repository.
     ///
     /// ## Discussion
     ///
@@ -85,8 +85,8 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// This property will be ignored unless ``repositoryCB`` is not `nil`.
     public var repositoryCBPayload  : UnsafeMutableRawPointer?
     
-    /// The callback invoked to create the remote, prior to its being used to
-    /// perform the clone operation.
+    /// The callback invoked to add a remote with the default fetch refspec to
+    /// the repository's configuration.
     ///
     /// ## Discussion
     ///

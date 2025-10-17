@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback for creating commits.
+/// The callback invoked to create a commit.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting commit.
 ///   - author: The author's signature.

@@ -193,6 +193,15 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         
         
+        _ = gitCredentialSSHInteractiveNew(
+            out:                &credentialPointer,
+            username:           Repository.commitAuthorName,
+            promptCallback:     nil,
+            payload:            nil
+        )
+        
+        
+        
         let credentialSSHInteractiveNewResult: GitErrorCode
             = gitCredentialSSHInteractiveNew(
                 out:                &credentialPointer,

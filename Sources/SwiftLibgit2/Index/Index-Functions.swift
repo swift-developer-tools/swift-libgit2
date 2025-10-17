@@ -319,9 +319,14 @@ public func gitIndexPath(
 /// [`git_index_checksum()`](https://libgit2.org/docs/reference/main/index/git_index_checksum.html)
 public func gitIndexChecksum(
     index: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let indexChecksumOID: UnsafePointer<git_oid> = git_index_checksum(index)
+    guard let indexChecksumOID: UnsafePointer<git_oid>
+            = git_index_checksum(index)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: indexChecksumOID.pointee)
 }
@@ -903,7 +908,7 @@ public func gitIndexRemoveByPath(
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - pathspec: The path patterns to use.
 ///   - flags: The flags for adding files that match a pathspec.
-///   - callback: The callback for adding or updating files matching a pathspec.
+///   - callback: The callback invoked to add, remove, or update files.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -971,7 +976,7 @@ public func gitIndexAddAll(
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - pathspec: The path patterns to use.
-///   - callback: The callback for removing files matching a pathspec.
+///   - callback: The callback invoked to add, remove, or update files.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1008,7 +1013,7 @@ public func gitIndexRemoveAll(
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - pathspec: The path patterns to use.
-///   - callback: The callback for updating files matching a pathspec.
+///   - callback: The callback invoked to add, remove, or update files.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

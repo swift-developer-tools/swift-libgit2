@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback for custom certificate checks.
+/// The callback invoked to check custom certificates.
 /// - Parameters:
 ///   - cert: The host certificate.
 ///   - valid: Whether OpenSSL thinks this certificate is valid.

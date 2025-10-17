@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_packbuilder` instance.
-    /// - Parameter packBuilder: The pack builder to free. The underlying type
-    /// must be `git_packbuilder`.
-    static func freePackBuilder(
-        _ packBuilder: OpaquePointer?
-    )
-    {
-        guard let packBuilder: OpaquePointer = packBuilder
-        else
-        {
-            return
-        }
-        
-        git_packbuilder_free(packBuilder)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_rebase` instance.
     /// - Parameter rebase: The rebase to free. The underlying type must be
     /// `git_rebase`.
@@ -65,6 +47,24 @@ enum Free
         }
         
         git_reference_free(reference)
+    }
+    
+    
+    
+    /// Frees the memory allocated for the given `git_revwalk` instance.
+    /// - Parameter revwalk: The revwalk to free. The underlying type must
+    /// be `git_revwalk`.
+    static func freeRevwalk(
+        _ revwalk: OpaquePointer?
+    )
+    {
+        guard let revwalk: OpaquePointer = revwalk
+        else
+        {
+            return
+        }
+        
+        git_revwalk_free(revwalk)
     }
     
     

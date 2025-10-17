@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback to push network progress notifications.
+/// The callback invoked to report push network progress.
 /// - Parameters:
 ///   - current: The number of objects pushed so far.
 ///   - total: The total number of objects to push.
@@ -32,7 +32,7 @@ public typealias GitPushTransferProgressCB = @convention(c)
 
 
 
-/// The callback to inform of upcoming updates.
+/// The callback invoked for upcoming update notifications.
 /// - Parameters:
 ///   - updates: An array containing the updates to send as commands to the
 ///   destination.
@@ -52,7 +52,7 @@ public typealias GitPushNegotiationCB = @convention(c)
 
 
 
-/// The callback to inform of the update status from the remote.
+/// The callback invoked for remote status update notifications.
 /// - Parameters:
 ///   - refname: The reference name specifying the remote reference that was
 ///   updated.
@@ -78,12 +78,12 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 
 
 
-// TODO: Replace `git_direction` and `git_remote_set_instance_url()` in documentation.
-/// The callback to resolve URLs before connecting to the remote.
+// TODO: Replace `git_remote_set_instance_url()` in documentation.
+/// The callback invoked to resolve URLs.
 /// - Parameters:
 ///   - urlResolved: The buffer to which to write the resolved URL.
 ///   - url: The URL to resolve.
-///   - direction: The direction of the connection. See `git_direction`.
+///   - direction: The direction of the connection. See ``GitDirection``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -105,13 +105,12 @@ public typealias GitURLResolveCB = @convention(c)
 
 
 
-// TODO: Replace `git_direction` and `git_remote_set_instance_url()` in documentation.
-/// The callback invoked immediately before attempting to connect to the given
-/// URL.
+// TODO: Replace `git_remote_set_instance_url()` in documentation.
+/// The callback invoked immediately before attempting a remote connection.
 /// - Parameters:
 ///   - remote: The remote to be connected. The underlying type must be
 ///   `git_remote`.
-///   - direction: The direction of the connection. See `git_direction`.
+///   - direction: The direction of the connection. See ``GitDirection``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -132,8 +131,7 @@ public typealias GitRemoteReadyCB = @convention(c)
 
 
 
-/// The callback invoked when different parts of the download process are
-/// completed.
+/// The callback invoked to report download progress.
 /// - Parameters:
 ///   - type: The type of remote operation that was completed.
 ///   - payload: The payload provided by the caller.
@@ -155,7 +153,7 @@ public typealias GitRemoteCompletionCB = @convention(c)
 
 
 
-/// The callback invoked for local reference updates.
+/// The callback invoked for local reference update notifications.
 /// - Parameters:
 ///   - refname: The reference name specifying the remote reference that was
 ///   updated.
@@ -186,7 +184,7 @@ public typealias GitRemoteUpdateTipsCB = @convention(c)
 
 
 
-/// The callback invoked for local reference updates.
+/// The callback invoked for local reference update notifications.
 /// - Parameters:
 ///   - refname: The reference name specifying the remote reference that was
 ///    updated.

@@ -283,6 +283,7 @@ final class DescribeTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDescribeStrategyT.gitDescribeDefault.rawValue, GIT_DESCRIBE_DEFAULT.rawValue)
         XCTAssertEqual(GitDescribeStrategyT.gitDescribeTags.rawValue, GIT_DESCRIBE_TAGS.rawValue)
         XCTAssertEqual(GitDescribeStrategyT.gitDescribeAll.rawValue, GIT_DESCRIBE_ALL.rawValue)
+        
         XCTAssertNil(GitDescribeStrategyT(rawValue: 123))
         
         XCTAssertEqual(GitDescribeStrategyT.gitDescribeDefault.cValue(), GIT_DESCRIBE_DEFAULT)

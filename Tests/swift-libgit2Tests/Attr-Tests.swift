@@ -454,6 +454,7 @@ final class AttrTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitAttrValueT.gitAttrValueTrue.rawValue, GIT_ATTR_VALUE_TRUE.rawValue)
         XCTAssertEqual(GitAttrValueT.gitAttrValueFalse.rawValue, GIT_ATTR_VALUE_FALSE.rawValue)
         XCTAssertEqual(GitAttrValueT.gitAttrValueString.rawValue, GIT_ATTR_VALUE_STRING.rawValue)
+        
         XCTAssertNil(GitAttrValueT(rawValue: 123))
         
         XCTAssertEqual(GitAttrValueT.gitAttrValueUnspecified.cValue(), GIT_ATTR_VALUE_UNSPECIFIED)

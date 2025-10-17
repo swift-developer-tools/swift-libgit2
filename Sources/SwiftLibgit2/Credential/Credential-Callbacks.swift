@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback for credential acquisition.
+/// The callback invoked to acquire credentials.
 /// - Parameters:
 ///   - out: The pointer in which to store the acquired credential.
 ///   - url: The resource for which a credential is being demanded.
@@ -47,7 +47,7 @@ public typealias GitCredentialAcquireCB = @convention(c)
 
 
 
-/// The callback for interactive SSH credentials.
+/// The callback invoked for interactive SSH credentials.
 /// - Parameters:
 ///   - name: The name of the authentication instruction.
 ///   - nameLen: The length of the authentication instruction.
@@ -77,7 +77,7 @@ public typealias GitCredentialSSHInteractiveCB = @convention(c)
 
 
 
-/// The callback for credential signing.
+/// The callback invoked to sign credentials.
 /// - Parameters:
 ///   - session: The libssh2 session. The underlying type must be
 ///   `LIBSSH_SESSION`.

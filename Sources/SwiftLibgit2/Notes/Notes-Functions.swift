@@ -222,7 +222,11 @@ public func gitNoteAuthor(
     note: OpaquePointer
 ) -> GitSignature?
 {
-    let signature: UnsafePointer<git_signature> = git_note_author(note)
+    guard let signature: UnsafePointer<git_signature> = git_note_author(note)
+    else
+    {
+        return nil
+    }
     
     return GitSignature(cValue: signature.pointee)
 }
@@ -241,7 +245,12 @@ public func gitNoteCommitter(
     note: OpaquePointer
 ) -> GitSignature?
 {
-    let signature: UnsafePointer<git_signature> = git_note_committer(note)
+    guard let signature: UnsafePointer<git_signature>
+            = git_note_committer(note)
+    else
+    {
+        return nil
+    }
     
     return GitSignature(cValue: signature.pointee)
 }
@@ -277,9 +286,13 @@ public func gitNoteMessage(
 /// [`git_note_id()`](https://libgit2.org/docs/reference/main/notes/git_note_id.html)
 public func gitNoteID(
     note: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let noteOID: UnsafePointer<git_oid> = git_note_id(note)
+    guard let noteOID: UnsafePointer<git_oid> = git_note_id(note)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: noteOID.pointee)
 }
@@ -603,7 +616,7 @@ public func gitNoteDefaultRef(
 public func gitNoteForEach(
     repo        : OpaquePointer,
     notesRef    : String?,
-    noteCB      : GitNoteForEachCB?,
+    noteCB      : GitNoteForEachCB,
     payload     : UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {

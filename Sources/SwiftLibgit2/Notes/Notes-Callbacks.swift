@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback invoked when iterating notes.
+/// The callback invoked for each note.
 /// - Parameters:
 ///   - blobID: The ID of the blob containing the message.
 ///   - annotatedObjectID: The ID of the object being annotated.

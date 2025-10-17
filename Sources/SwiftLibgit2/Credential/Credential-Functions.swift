@@ -227,7 +227,7 @@ public func gitCredentialSSHKeyMemoryNew(
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting credential.
 ///   - username: The username of the credential.
-///   - promptCallback: The callback to invoke for authentication prompts.
+///   - promptCallback: The callback to invoke interactive SSH credentials.
 ///   - payload: The payload to pass to `promptCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -293,8 +293,7 @@ public func gitCredentialSSHKeyFromAgent(
 ///   - username: The username of the credential.
 ///   - publicKey: The public key of the credential.
 ///   - publicKeyLen: The length of `publicKey`.
-///   - signCallback: The callback to invoke to sign the data during the
-///   authentication challenge.
+///   - signCallback: The callback to invoke to sign credentials.
 ///   - payload: The payload to pass to `signCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

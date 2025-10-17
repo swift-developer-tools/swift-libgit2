@@ -62,9 +62,10 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitOID: GitOID
+            let annotatedCommitOID: GitOID?
                 = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
+            XCTAssertNotNil(annotatedCommitOID)
             XCTAssertEqual(headOID, annotatedCommitOID)
         }
     }
@@ -232,9 +233,10 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             
             
-            let annotatedCommitOID: GitOID
+            let annotatedCommitOID: GitOID?
                 = gitAnnotatedCommitID(commit: annotatedCommitPointer)
             
+            XCTAssertNotNil(annotatedCommitOID)
             XCTAssertEqual(headOID, annotatedCommitOID)
         }
     }

@@ -171,57 +171,60 @@ extension IndexerTests
         from repository: Repository
     ) throws -> Data
     {
-        var packBuilderPointer: OpaquePointer? = nil
+        var packbuilderPointer: OpaquePointer? = nil
         
         defer
         {
-            Free.freePackBuilder(packBuilderPointer)
+            gitPackbuilderFree(pb: packbuilderPointer)
         }
         
         
         
-        let packBuilderNewResult: Int32 = git_packbuilder_new(
-            &packBuilderPointer,
-            repository.pointer
+        let packbuilderNewResult: GitErrorCode = gitPackbuilderNew(
+            out:    &packbuilderPointer,
+            repo:   repository.pointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: packBuilderNewResult))
+        XCTAssertOK(packbuilderNewResult)
         
-        guard let packBuilderPointer: OpaquePointer = packBuilderPointer
+        guard let packbuilderPointer: OpaquePointer = packbuilderPointer
         else
         {
-            throw NSError.makeError("The pack builder pointer was nil.")
+            throw NSError.makeError("The packbuilder pointer was nil.")
         }
         
         
         
         let headOID: GitOID = OID.getHEADCommitOID(in: repository)
         
-        // TODO: Remove once `git_packbuilder_insert_commit()` has a binding.
-        var cHeadOID: git_oid = headOID.cValue()
-        
-        let packBuilderInsertCommitResult: Int32
-            = git_packbuilder_insert_commit(
-                packBuilderPointer,
-                &cHeadOID
+        let packbuilderInsertCommitResult: GitErrorCode
+            = gitPackbuilderInsertCommit(
+                pb: packbuilderPointer,
+                id: headOID
             )
         
-        XCTAssertOK(GitErrorCode(rawValue: packBuilderInsertCommitResult))
+        XCTAssertOK(packbuilderInsertCommitResult)
         
         
         
         var packData = Data()
         
-        let packBuilderForEachCB: git_packbuilder_foreach_cb =
+        let packbuilderForEachCB: GitPackbuilderForEachCB =
         {
             data, size, payload in
             
-            guard
-                let data    : UnsafeMutableRawPointer   = data,
-                let payload : UnsafeMutableRawPointer   = payload
+            guard let data: UnsafeMutableRawPointer = data
             else
             {
-                return -1
+                XCTFail("The data was nil.")
+                return GitErrorCode.gitUnknown(-123).rawValue
+            }
+            
+            guard let payload: UnsafeMutableRawPointer = payload
+            else
+            {
+                XCTFail("The payload was nil.")
+                return GitErrorCode.gitUnknown(-123).rawValue
             }
             
             let payloadPointer: UnsafeMutablePointer<Data>
@@ -234,7 +237,7 @@ extension IndexerTests
             
             payloadPointer.pointee.append(bytes)
             
-            return 0
+            return GitErrorCode.gitOK.rawValue
         }
         
         
@@ -243,13 +246,13 @@ extension IndexerTests
         {
             packDataPointer in
             
-            let packBuilderForEachResult: Int32 = git_packbuilder_foreach(
-                packBuilderPointer,
-                packBuilderForEachCB,
-                packDataPointer
+            let packbuilderForEachResult: GitErrorCode = gitPackbuilderForEach(
+                pb:         packbuilderPointer,
+                cb:         packbuilderForEachCB,
+                payload:    packDataPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: packBuilderForEachResult))
+            XCTAssertOK(packbuilderForEachResult)
         }
         
         return packData
@@ -344,8 +347,9 @@ extension IndexerTests
         
         
         
-        let packfileHash: GitOID = gitIndexerHash(idx: indexerPointer)
+        let packfileOID: GitOID? = gitIndexerHash(idx: indexerPointer)
         
-        XCTAssertNotZeroOID(packfileHash)
+        XCTAssertNotNil(packfileOID)
+        XCTAssertNotZeroOID(packfileOID)
     }
 }

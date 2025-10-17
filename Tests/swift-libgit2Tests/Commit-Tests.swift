@@ -481,8 +481,9 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let retrievedOID: GitOID = gitCommitID(commit: commitPointer)
+            let retrievedOID: GitOID? = gitCommitID(commit: commitPointer)
             
+            XCTAssertNotNil(retrievedOID)
             XCTAssertEqual(retrievedOID, commitOID)
             
             
@@ -522,17 +523,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let author: GitSignature = gitCommitAuthor(commit: commitPointer)
-            
-            XCTAssertEqual(author.name, Repository.commitAuthorName)
-            XCTAssertEqual(author.email, Repository.commitAuthorEmail)
-            
-            
-            
-            let committer: GitSignature = gitCommitCommitter(commit: commitPointer)
-            
-            XCTAssertEqual(committer.name, Repository.commitAuthorName)
-            XCTAssertEqual(committer.email, Repository.commitAuthorEmail)
+            validateAuthorAndCommitterSignatures(commitPointer)
         }
     }
     
@@ -719,11 +710,12 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let parentCommitOID: GitOID = gitCommitParentID(
+            let parentCommitOID: GitOID? = gitCommitParentID(
                 commit:     commitPointer,
                 n:          0
             )
             
+            XCTAssertNotNil(parentCommitOID)
             XCTAssertNotEqual(parentCommitOID, commitOID)
         }
     }
@@ -774,8 +766,9 @@ final class CommitTests: XCTestCaseStopOnFail
             {
                 commitPointer in
 
-                let treeOID: GitOID = gitCommitTreeID(commit: commitPointer)
+                let treeOID: GitOID? = gitCommitTreeID(commit: commitPointer)
                 
+                XCTAssertNotNil(treeOID)
                 XCTAssertNotZeroOID(treeOID)
                 
                 
@@ -911,9 +904,10 @@ extension CommitTests
             
             if type == .amend
             {
-                let retrievedOID: GitOID
+                let retrievedOID: GitOID?
                     = gitCommitID(commit: newCommitPointer)
                 
+                XCTAssertNotNil(retrievedOID)
                 XCTAssertEqual(retrievedOID, newCommitOID)
             }
             
@@ -971,17 +965,32 @@ extension CommitTests
             
             
             
-            let author: GitSignature = gitCommitAuthor(commit: newCommitPointer)
-            
-            XCTAssertEqual(author.name, Repository.commitAuthorName)
-            XCTAssertEqual(author.email, Repository.commitAuthorEmail)
-            
-            
-            
-            let committer: GitSignature = gitCommitCommitter(commit: newCommitPointer)
-            
-            XCTAssertEqual(committer.name, Repository.commitAuthorName)
-            XCTAssertEqual(committer.email, Repository.commitAuthorEmail)
+            validateAuthorAndCommitterSignatures(newCommitPointer)
         }
+    }
+    
+    
+    
+    /// Checks whether the author and committer signatures of the given commit
+    /// are not `nil` and are equal to the default ``Repository`` commit author
+    /// name and email.
+    /// - Parameter commitPointer: The commit to check.
+    private func validateAuthorAndCommitterSignatures(
+        _ commitPointer: OpaquePointer
+    )
+    {
+        let author: GitSignature? = gitCommitAuthor(commit: commitPointer)
+        
+        XCTAssertNotNil(author)
+        XCTAssertEqual(author?.name, Repository.commitAuthorName)
+        XCTAssertEqual(author?.email, Repository.commitAuthorEmail)
+        
+        
+        
+        let committer: GitSignature? = gitCommitCommitter(commit: commitPointer)
+        
+        XCTAssertNotNil(committer)
+        XCTAssertEqual(committer?.name, Repository.commitAuthorName)
+        XCTAssertEqual(committer?.email, Repository.commitAuthorEmail)
     }
 }

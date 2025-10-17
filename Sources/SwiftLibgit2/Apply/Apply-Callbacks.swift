@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback to invoke for each delta (file) when applying a patch.
+/// The callback invoked for each delta (file).
 /// - Parameters:
 ///   - delta: The delta to apply.
 ///   - payload: The payload provided by the caller.
@@ -30,7 +30,7 @@ public typealias GitApplyDeltaCB = @convention(c)
 
 
 
-/// The callback that to invoke for each hunk when applying a patch.
+/// The callback invoked for each hunk.
 /// - Parameters:
 ///   - hunk: The hunk to apply.
 ///   - payload: The payload provided by the caller.

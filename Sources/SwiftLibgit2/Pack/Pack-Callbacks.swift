@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// The callback to iterate over packed objects.
+/// The callback invoked for each packed object.
 /// - Parameters:
 ///   - buf: The object's data.
 ///   - size: The size of the underlying object.
@@ -26,7 +26,7 @@ public typealias GitPackbuilderForEachCB = @convention(c)
 
 
 
-/// The callback for progress notifications.
+/// The callback invoked to report packfile iteration progress.
 /// - Parameters:
 ///   - stage: The stage of the packbuilder.
 ///   - current: The current object.

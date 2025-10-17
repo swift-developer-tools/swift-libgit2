@@ -460,7 +460,7 @@ public func gitODBRefresh(
 /// [`git_note_foreach()`](https://libgit2.org/docs/reference/main/notes/git_note_foreach.html)
 public func gitODBForEach(
     db:         OpaquePointer,
-    cb:         GitODBForEachCB?,
+    cb:         GitODBForEachCB,
     payload:    UnsafeMutableRawPointer?
 ) -> GitErrorCode
 {
@@ -757,7 +757,7 @@ public func gitODBOpenRStream(
 /// - Parameters:
 ///   - out: The writepack functions.
 ///   - db: The object database to read. The underlying type must be `git_odb`.
-///   - progressCB: The callback to invoke with progress information.
+///   - progressCB: The callback to invoke to report indexing progress.
 ///   - progressPayload: The payload to pass to `progressCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -970,9 +970,14 @@ public func gitODBObjectFree(
 /// [`git_odb_object_id()`](https://libgit2.org/docs/reference/main/odb/git_odb_object_id.html)
 public func gitODBObjectID(
     object: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let databaseObjectOID: UnsafePointer<git_oid> = git_odb_object_id(object)
+    guard let databaseObjectOID: UnsafePointer<git_oid>
+            = git_odb_object_id(object)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: databaseObjectOID.pointee)
 }

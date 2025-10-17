@@ -187,12 +187,17 @@ final class FilterTests: XCTestCaseStopOnFail
     
     func testGitFilterModeT() throws
     {
+        XCTAssertEqual(GitFilterModeT.gitFilterToWorktree.rawValue, GIT_FILTER_TO_WORKTREE.rawValue)
+        XCTAssertEqual(GitFilterModeT.gitFilterToWorktree.rawValue, GIT_FILTER_SMUDGE.rawValue)
+        XCTAssertEqual(GitFilterModeT.gitFilterToODB.rawValue, GIT_FILTER_TO_ODB.rawValue)
+        XCTAssertEqual(GitFilterModeT.gitFilterToODB.rawValue, GIT_FILTER_CLEAN.rawValue)
+        
+        XCTAssertNil(GitFilterModeT(rawValue: 123))
+        
         XCTAssertEqual(GitFilterModeT.gitFilterToWorktree.cValue(), GIT_FILTER_TO_WORKTREE)
         XCTAssertEqual(GitFilterModeT.gitFilterToWorktree.cValue(), GIT_FILTER_SMUDGE)
         XCTAssertEqual(GitFilterModeT.gitFilterToODB.cValue(), GIT_FILTER_TO_ODB)
         XCTAssertEqual(GitFilterModeT.gitFilterToODB.cValue(), GIT_FILTER_CLEAN)
-        
-        XCTAssertNil(GitFilterModeT(rawValue: 123))
         
         XCTAssertEqual(GitFilterModeT(cValue: GIT_FILTER_TO_WORKTREE), .gitFilterToWorktree)
         XCTAssertEqual(GitFilterModeT(cValue: GIT_FILTER_SMUDGE), .gitFilterToWorktree)

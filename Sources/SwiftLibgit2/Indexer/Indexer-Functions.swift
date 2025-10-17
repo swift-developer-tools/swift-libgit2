@@ -183,9 +183,13 @@ public func gitIndexerCommit(
 /// [`git_indexer_hash()`](https://libgit2.org/docs/reference/main/indexer/git_indexer_hash.html)
 public func gitIndexerHash(
     idx: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let indexerHashOID: UnsafePointer<git_oid> = git_indexer_hash(idx)
+    guard let indexerHashOID: UnsafePointer<git_oid> = git_indexer_hash(idx)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: indexerHashOID.pointee)
 }

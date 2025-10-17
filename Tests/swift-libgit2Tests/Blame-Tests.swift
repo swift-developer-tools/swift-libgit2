@@ -187,6 +187,61 @@ final class BlameTests: XCTestCaseStopOnFail
             )
             
             XCTAssertNil(invalidLine)
+            
+            
+            
+            /// Test the deprecated functions.
+            
+            let hunkCountDeprecated: UInt32
+                = gitBlameGetHunkCount(blame: blamePointer)
+            
+            XCTAssertEqual(hunkCountDeprecated, UInt32(hunkCount))
+            
+            
+            
+            let firstHunkDeprecated: GitBlameHunk? = gitBlameGetHunkByIndex(
+                blame:  blamePointer,
+                index:  0
+            )
+            
+            guard let firstHunkDeprecated: GitBlameHunk = firstHunkDeprecated
+            else
+            {
+                XCTFail("The deprecated first hunk was nil.")
+                return
+            }
+            
+            XCTAssertGreaterThan(firstHunkDeprecated.linesInHunk, 0)
+            XCTAssertNotZeroOID(firstHunkDeprecated.finalCommitID)
+            XCTAssertGreaterThan(firstHunkDeprecated.finalStartLineNumber, 0)
+            XCTAssertNotNil(firstHunkDeprecated.finalSignature)
+            XCTAssertNotNil(firstHunkDeprecated.finalCommitter)
+            XCTAssertNotZeroOID(firstHunkDeprecated.origCommitID)
+            XCTAssertNotNil(firstHunkDeprecated.origPath)
+            XCTAssertGreaterThan(firstHunkDeprecated.origStartLineNumber, 0)
+            XCTAssertNotNil(firstHunkDeprecated.origSignature)
+            XCTAssertNotNil(firstHunkDeprecated.origCommitter)
+            XCTAssertNotNil(firstHunkDeprecated.summary)
+            XCTAssertFalse(firstHunkDeprecated.boundary)
+            
+            
+            
+            let hunkForFirstLineDeprecated: GitBlameHunk?
+                = gitBlameGetHunkByLine(
+                    blame:      blamePointer,
+                    lineNo:     1
+                )
+            
+            XCTAssertNotNil(hunkForFirstLineDeprecated)
+            
+            
+            
+            let invalidHunkDeprecated: GitBlameHunk? = gitBlameGetHunkByIndex(
+                blame:  blamePointer,
+                index:  hunkCountDeprecated + 10
+            )
+            
+            XCTAssertNil(invalidHunkDeprecated)
         }
     }
     

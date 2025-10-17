@@ -140,9 +140,13 @@ public func gitObjectLookupByPath(
 /// [`git_object_id()`](https://libgit2.org/docs/reference/main/object/git_object_id.html)
 public func gitObjectID(
     obj: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let objectOID: UnsafePointer<git_oid> = git_object_id(obj)
+    guard let objectOID: UnsafePointer<git_oid> = git_object_id(obj)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: objectOID.pointee)
 }

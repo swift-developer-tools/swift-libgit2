@@ -166,10 +166,14 @@ public func gitAnnotatedCommitFromRevspec(
 /// [`git_annotated_commit_id()`](https://libgit2.org/docs/reference/main/annotated_commit/git_annotated_commit_id.html)
 public func gitAnnotatedCommitID(
     commit: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let annotatedCommitOID: UnsafePointer<git_oid>
-        = git_annotated_commit_id(commit)
+    guard let annotatedCommitOID: UnsafePointer<git_oid>
+            = git_annotated_commit_id(commit)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: annotatedCommitOID.pointee)
 }

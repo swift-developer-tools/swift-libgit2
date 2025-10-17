@@ -257,18 +257,20 @@ struct Repository
             
             
             
-            let author: GitSignature = gitCommitAuthor(commit: commitPointer)
+            let author: GitSignature? = gitCommitAuthor(commit: commitPointer)
             
-            XCTAssertEqual(author.name, options?.author?.name)
-            XCTAssertEqual(author.email, options?.author?.email)
+            XCTAssertNotNil(author)
+            XCTAssertEqual(author?.name, options?.author?.name)
+            XCTAssertEqual(author?.email, options?.author?.email)
             
             
             
-            let committer: GitSignature
+            let committer: GitSignature?
                 = gitCommitCommitter(commit: commitPointer)
             
-            XCTAssertEqual(committer.name, options?.committer?.name)
-            XCTAssertEqual(committer.email, options?.committer?.email)
+            XCTAssertNotNil(committer)
+            XCTAssertEqual(committer?.name, options?.committer?.name)
+            XCTAssertEqual(committer?.email, options?.committer?.email)
             
             
             

@@ -17,6 +17,20 @@ final class DiffTests: XCTestCaseStopOnFail
 {
     func testGitDeltaT() throws
     {
+        XCTAssertEqual(GitDeltaT.gitDeltaUnmodified.rawValue, GIT_DELTA_UNMODIFIED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaAdded.rawValue, GIT_DELTA_ADDED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaDeleted.rawValue, GIT_DELTA_DELETED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaModified.rawValue, GIT_DELTA_MODIFIED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaRenamed.rawValue, GIT_DELTA_RENAMED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaCopied.rawValue, GIT_DELTA_COPIED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaIgnored.rawValue, GIT_DELTA_IGNORED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaUntracked.rawValue, GIT_DELTA_UNTRACKED.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaTypeChange.rawValue, GIT_DELTA_TYPECHANGE.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaUnreadable.rawValue, GIT_DELTA_UNREADABLE.rawValue)
+        XCTAssertEqual(GitDeltaT.gitDeltaConflicted.rawValue, GIT_DELTA_CONFLICTED.rawValue)
+        
+        XCTAssertNil(GitDeltaT(rawValue: 123))
+        
         XCTAssertEqual(GitDeltaT.gitDeltaUnmodified.cValue(), GIT_DELTA_UNMODIFIED)
         XCTAssertEqual(GitDeltaT.gitDeltaAdded.cValue(), GIT_DELTA_ADDED)
         XCTAssertEqual(GitDeltaT.gitDeltaDeleted.cValue(), GIT_DELTA_DELETED)
@@ -28,8 +42,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDeltaT.gitDeltaTypeChange.cValue(), GIT_DELTA_TYPECHANGE)
         XCTAssertEqual(GitDeltaT.gitDeltaUnreadable.cValue(), GIT_DELTA_UNREADABLE)
         XCTAssertEqual(GitDeltaT.gitDeltaConflicted.cValue(), GIT_DELTA_CONFLICTED)
-        
-        XCTAssertNil(GitDeltaT(rawValue: 123))
         
         XCTAssertEqual(GitDeltaT(cValue: GIT_DELTA_UNMODIFIED), .gitDeltaUnmodified)
         XCTAssertEqual(GitDeltaT(cValue: GIT_DELTA_ADDED), .gitDeltaAdded)
@@ -90,11 +102,15 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffBinaryT() throws
     {
+        XCTAssertEqual(GitDiffBinaryT.gitDiffBinaryNone.rawValue, GIT_DIFF_BINARY_NONE.rawValue)
+        XCTAssertEqual(GitDiffBinaryT.gitDiffBinaryLiteral.rawValue, GIT_DIFF_BINARY_LITERAL.rawValue)
+        XCTAssertEqual(GitDiffBinaryT.gitDiffBinaryDelta.rawValue, GIT_DIFF_BINARY_DELTA.rawValue)
+        
+        XCTAssertNil(GitDiffBinaryT(rawValue: 123))
+        
         XCTAssertEqual(GitDiffBinaryT.gitDiffBinaryNone.cValue(), GIT_DIFF_BINARY_NONE)
         XCTAssertEqual(GitDiffBinaryT.gitDiffBinaryLiteral.cValue(), GIT_DIFF_BINARY_LITERAL)
         XCTAssertEqual(GitDiffBinaryT.gitDiffBinaryDelta.cValue(), GIT_DIFF_BINARY_DELTA)
-        
-        XCTAssertNil(GitDiffBinaryT(rawValue: 123))
         
         XCTAssertEqual(GitDiffBinaryT(cValue: GIT_DIFF_BINARY_NONE), .gitDiffBinaryNone)
         XCTAssertEqual(GitDiffBinaryT(cValue: GIT_DIFF_BINARY_LITERAL), .gitDiffBinaryLiteral)
@@ -149,6 +165,21 @@ final class DiffTests: XCTestCaseStopOnFail
             
             XCTAssertOK(newBlobLookupResult)
             XCTAssertNotNil(newBlobPointer)
+            
+            
+            
+            _ = gitDiffBlobs(
+                oldBlob:    oldBlobPointer,
+                oldAsPath:  "old.txt",
+                newBlob:     newBlobPointer,
+                newAsPath:  "new.txt",
+                options:    nil,
+                fileCB:     nil,
+                binaryCB:   nil,
+                hunkCB:     nil,
+                lineCB:     nil,
+                payload:    nil
+            )
             
             
             
@@ -223,6 +254,22 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
+            _ = gitDiffBlobToBuffer(
+                oldBlob:        blobPointer,
+                oldAsPath:      "blob.txt",
+                buffer:         bufferData,
+                bufferLen:      bufferData.count,
+                bufferAsPath:   "buffer.txt",
+                options:        nil,
+                fileCB:         nil,
+                binaryCB:       nil,
+                hunkCB:         nil,
+                lineCB:         nil,
+                payload:        nil
+            )
+            
+            
+            
             var callbackData = CallbackData()
             
             withUnsafeMutablePointer(to: &callbackData)
@@ -266,6 +313,23 @@ final class DiffTests: XCTestCaseStopOnFail
     {
         let oldBufferData   = Data("Old buffer".utf8)
         let newBufferData   = Data("New buffer".utf8)
+        
+        
+        
+        _ = gitDiffBuffers(
+            oldBuffer:          oldBufferData,
+            oldBufferLen:       oldBufferData.count,
+            oldBufferAsPath:    "old.txt",
+            newBuffer:          newBufferData,
+            newBufferLen:       newBufferData.count,
+            newBufferAsPath:    "new.txt",
+            options:            nil,
+            fileCB:             nil,
+            binaryCB:           nil,
+            hunkCB:             nil,
+            lineCB:             nil,
+            payload:            nil
+        )
         
         
         
@@ -641,6 +705,17 @@ final class DiffTests: XCTestCaseStopOnFail
             {
                 diffPointer in
                 
+                _ = gitDiffForEach(
+                    diff:       diffPointer,
+                    fileCB:     nil,
+                    binaryCB:   nil,
+                    hunkCB:     nil,
+                    lineCB:     nil,
+                    payload:    nil
+                )
+                
+                
+                
                 var callbackData = CallbackData()
                 
                 withUnsafeMutablePointer(to: &callbackData)
@@ -671,14 +746,21 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffFormatT() throws
     {
+        XCTAssertEqual(GitDiffFormatT.gitDiffFormatPatch.rawValue, GIT_DIFF_FORMAT_PATCH.rawValue)
+        XCTAssertEqual(GitDiffFormatT.gitDiffFormatPatchHeader.rawValue, GIT_DIFF_FORMAT_PATCH_HEADER.rawValue)
+        XCTAssertEqual(GitDiffFormatT.gitDiffFormatRaw.rawValue, GIT_DIFF_FORMAT_RAW.rawValue)
+        XCTAssertEqual(GitDiffFormatT.gitDiffFormatNameOnly.rawValue, GIT_DIFF_FORMAT_NAME_ONLY.rawValue)
+        XCTAssertEqual(GitDiffFormatT.gitDiffFormatNameStatus.rawValue, GIT_DIFF_FORMAT_NAME_STATUS.rawValue)
+        XCTAssertEqual(GitDiffFormatT.gitDiffFormatPatchID.rawValue, GIT_DIFF_FORMAT_PATCH_ID.rawValue)
+        
+        XCTAssertNil(GitDiffFormatT(rawValue: 123))
+        
         XCTAssertEqual(GitDiffFormatT.gitDiffFormatPatch.cValue(), GIT_DIFF_FORMAT_PATCH)
         XCTAssertEqual(GitDiffFormatT.gitDiffFormatPatchHeader.cValue(), GIT_DIFF_FORMAT_PATCH_HEADER)
         XCTAssertEqual(GitDiffFormatT.gitDiffFormatRaw.cValue(), GIT_DIFF_FORMAT_RAW)
         XCTAssertEqual(GitDiffFormatT.gitDiffFormatNameOnly.cValue(), GIT_DIFF_FORMAT_NAME_ONLY)
         XCTAssertEqual(GitDiffFormatT.gitDiffFormatNameStatus.cValue(), GIT_DIFF_FORMAT_NAME_STATUS)
         XCTAssertEqual(GitDiffFormatT.gitDiffFormatPatchID.cValue(), GIT_DIFF_FORMAT_PATCH_ID)
-        
-        XCTAssertNil(GitDiffFormatT(rawValue: 123))
         
         XCTAssertEqual(GitDiffFormatT(cValue: GIT_DIFF_FORMAT_PATCH), .gitDiffFormatPatch)
         XCTAssertEqual(GitDiffFormatT(cValue: GIT_DIFF_FORMAT_PATCH_HEADER), .gitDiffFormatPatchHeader)
@@ -994,6 +1076,18 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffLineT() throws
     {
+        XCTAssertEqual(GitDiffLineT.gitDiffLineContext.rawValue, GIT_DIFF_LINE_CONTEXT.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineAddition.rawValue, GIT_DIFF_LINE_ADDITION.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineDeletion.rawValue, GIT_DIFF_LINE_DELETION.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineContextEOFNL.rawValue, GIT_DIFF_LINE_CONTEXT_EOFNL.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineAddEOFNL.rawValue, GIT_DIFF_LINE_ADD_EOFNL.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineDelEOFNL.rawValue, GIT_DIFF_LINE_DEL_EOFNL.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineFileHDR.rawValue, GIT_DIFF_LINE_FILE_HDR.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineHunkHDR.rawValue, GIT_DIFF_LINE_HUNK_HDR.rawValue)
+        XCTAssertEqual(GitDiffLineT.gitDiffLineBinary.rawValue, GIT_DIFF_LINE_BINARY.rawValue)
+        
+        XCTAssertNil(GitDiffLineT(rawValue: 123))
+        
         XCTAssertEqual(GitDiffLineT.gitDiffLineContext.cValue(), GIT_DIFF_LINE_CONTEXT)
         XCTAssertEqual(GitDiffLineT.gitDiffLineAddition.cValue(), GIT_DIFF_LINE_ADDITION)
         XCTAssertEqual(GitDiffLineT.gitDiffLineDeletion.cValue(), GIT_DIFF_LINE_DELETION)
@@ -1003,8 +1097,6 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitDiffLineT.gitDiffLineFileHDR.cValue(), GIT_DIFF_LINE_FILE_HDR)
         XCTAssertEqual(GitDiffLineT.gitDiffLineHunkHDR.cValue(), GIT_DIFF_LINE_HUNK_HDR)
         XCTAssertEqual(GitDiffLineT.gitDiffLineBinary.cValue(), GIT_DIFF_LINE_BINARY)
-        
-        XCTAssertNil(GitDiffLineT(rawValue: 123))
         
         XCTAssertEqual(GitDiffLineT(cValue: GIT_DIFF_LINE_CONTEXT), .gitDiffLineContext)
         XCTAssertEqual(GitDiffLineT(cValue: GIT_DIFF_LINE_ADDITION), .gitDiffLineAddition)

@@ -135,7 +135,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var notifyPayload    : UnsafeMutableRawPointer?
     
-    /// The callback invoked for checkout progress.
+    /// The callback invoked to report checkout progress.
     ///
     /// ## Discussion
     ///
@@ -212,7 +212,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var theirLabel       : String?
     
-    /// The callback invoked for reporting checkout performance data.
+    /// The callback invoked to report checkout performance data.
     ///
     /// ## Discussion
     ///
