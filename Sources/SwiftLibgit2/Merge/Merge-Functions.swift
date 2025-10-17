@@ -275,8 +275,7 @@ public func gitMergeBases(
 ///   - repo: The repository containing the given commits. The underlying
 ///   type must be `git_repository`.
 ///   - length: The length of `inputArray`.
-///   - inputArray: The array of ``GitOID`` instances for which to find a
-///   merge base.
+///   - inputArray: The IDs for which to find a merge base.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -319,8 +318,7 @@ public func gitMergeBaseMany(
 ///   - repo: The repository containing the given commits. The underlying
 ///   type must be `git_repository`.
 ///   - length: The length of `inputArray`.
-///   - inputArray: The array of ``GitOID`` instances for which to find a
-///   merge base.
+///   - inputArray: The IDs for which to find a merge base.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -396,8 +394,7 @@ public func gitMergeBasesMany(
 ///   - repo: The repository containing the given commits. The underlying
 ///   type must be `git_repository`.
 ///   - length: The length of `inputArray`.
-///   - inputArray: The array of ``GitOID`` instances for which to find a
-///   merge base.
+///   - inputArray: The IDs for which to find a merge base.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
