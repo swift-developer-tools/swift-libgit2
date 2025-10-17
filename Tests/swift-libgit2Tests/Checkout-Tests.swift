@@ -319,13 +319,13 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyIgnored.cValue(), GIT_CHECKOUT_NOTIFY_IGNORED)
         XCTAssertEqual(GitCheckoutNotifyT.gitCheckoutNotifyAll.cValue(), GIT_CHECKOUT_NOTIFY_ALL)
         
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_NONE).cValue(), GIT_CHECKOUT_NOTIFY_NONE)
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_CONFLICT).cValue(), GIT_CHECKOUT_NOTIFY_CONFLICT)
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_DIRTY).cValue(), GIT_CHECKOUT_NOTIFY_DIRTY)
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_UPDATED).cValue(), GIT_CHECKOUT_NOTIFY_UPDATED)
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_UNTRACKED).cValue(), GIT_CHECKOUT_NOTIFY_UNTRACKED)
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_IGNORED).cValue(), GIT_CHECKOUT_NOTIFY_IGNORED)
-        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_ALL).cValue(), GIT_CHECKOUT_NOTIFY_ALL)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_NONE), .gitCheckoutNotifyNone)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_CONFLICT), .gitCheckoutNotifyConflict)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_DIRTY), .gitCheckoutNotifyDirty)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_UPDATED), .gitCheckoutNotifyUpdated)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_UNTRACKED), .gitCheckoutNotifyUntracked)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_IGNORED), .gitCheckoutNotifyIgnored)
+        XCTAssertEqual(GitCheckoutNotifyT(cValue: GIT_CHECKOUT_NOTIFY_ALL), .gitCheckoutNotifyAll)
         
         
         
@@ -497,30 +497,30 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateSubmodules.cValue(), GIT_CHECKOUT_UPDATE_SUBMODULES)
         XCTAssertEqual(GitCheckoutStrategyT.gitCheckoutUpdateSubmodulesIfChanged.cValue(), GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED)
         
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_SAFE).cValue(), GIT_CHECKOUT_SAFE)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_FORCE).cValue(), GIT_CHECKOUT_FORCE)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_RECREATE_MISSING).cValue(), GIT_CHECKOUT_RECREATE_MISSING)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_ALLOW_CONFLICTS).cValue(), GIT_CHECKOUT_ALLOW_CONFLICTS)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_REMOVE_UNTRACKED).cValue(), GIT_CHECKOUT_REMOVE_UNTRACKED)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_REMOVE_IGNORED).cValue(), GIT_CHECKOUT_REMOVE_IGNORED)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_UPDATE_ONLY).cValue(), GIT_CHECKOUT_UPDATE_ONLY)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_UPDATE_INDEX).cValue(), GIT_CHECKOUT_DONT_UPDATE_INDEX)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_NO_REFRESH).cValue(), GIT_CHECKOUT_NO_REFRESH)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_SKIP_UNMERGED).cValue(), GIT_CHECKOUT_SKIP_UNMERGED)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_USE_OURS).cValue(), GIT_CHECKOUT_USE_OURS)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_USE_THEIRS).cValue(), GIT_CHECKOUT_USE_THEIRS)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DISABLE_PATHSPEC_MATCH).cValue(), GIT_CHECKOUT_DISABLE_PATHSPEC_MATCH)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_SKIP_LOCKED_DIRECTORIES).cValue(), GIT_CHECKOUT_SKIP_LOCKED_DIRECTORIES)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_OVERWRITE_IGNORED).cValue(), GIT_CHECKOUT_DONT_OVERWRITE_IGNORED)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_CONFLICT_STYLE_MERGE).cValue(), GIT_CHECKOUT_CONFLICT_STYLE_MERGE)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_CONFLICT_STYLE_DIFF3).cValue(), GIT_CHECKOUT_CONFLICT_STYLE_DIFF3)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_REMOVE_EXISTING).cValue(), GIT_CHECKOUT_DONT_REMOVE_EXISTING)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_WRITE_INDEX).cValue(), GIT_CHECKOUT_DONT_WRITE_INDEX)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DRY_RUN).cValue(), GIT_CHECKOUT_DRY_RUN)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_CONFLICT_STYLE_ZDIFF3).cValue(), GIT_CHECKOUT_CONFLICT_STYLE_ZDIFF3)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_NONE).cValue(), GIT_CHECKOUT_NONE)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_UPDATE_SUBMODULES).cValue(), GIT_CHECKOUT_UPDATE_SUBMODULES)
-        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED).cValue(), GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_SAFE), .gitCheckoutSafe)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_FORCE), .gitCheckoutForce)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_RECREATE_MISSING), .gitCheckoutRecreateMissing)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_ALLOW_CONFLICTS), .gitCheckoutAllowConflicts)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_REMOVE_UNTRACKED), .gitCheckoutRemoveUntracked)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_REMOVE_IGNORED), .gitCheckoutRemoveIgnored)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_UPDATE_ONLY), .gitCheckoutUpdateOnly)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_UPDATE_INDEX), .gitCheckoutDontUpdateIndex)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_NO_REFRESH), .gitCheckoutNoRefresh)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_SKIP_UNMERGED), .gitCheckoutSkipUnmerged)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_USE_OURS), .gitCheckoutUseOurs)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_USE_THEIRS), .gitCheckoutUseTheirs)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DISABLE_PATHSPEC_MATCH), .gitCheckoutDisablePathspecMatch)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_SKIP_LOCKED_DIRECTORIES), .gitCheckoutSkipLockedDirectories)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_OVERWRITE_IGNORED), .gitCheckoutDontOverwriteIgnored)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_CONFLICT_STYLE_MERGE), .gitCheckoutConflictStyleMerge)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_CONFLICT_STYLE_DIFF3), .gitCheckoutConflictStyleDiff3)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_REMOVE_EXISTING), .gitCheckoutDontRemoveExisting)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DONT_WRITE_INDEX), .gitCheckoutDontWriteIndex)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_DRY_RUN), .gitCheckoutDryRun)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_CONFLICT_STYLE_ZDIFF3), .gitCheckoutConflictStyleZDiff3)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_NONE), .gitCheckoutNone)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_UPDATE_SUBMODULES), .gitCheckoutUpdateSubmodules)
+        XCTAssertEqual(GitCheckoutStrategyT(cValue: GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED), .gitCheckoutUpdateSubmodulesIfChanged)
         
         
         
@@ -552,18 +552,17 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(commitTreeResult)
             }
-            
-            XCTAssertOK(commitTreeResult)
             
             
             

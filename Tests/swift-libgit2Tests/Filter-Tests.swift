@@ -31,11 +31,11 @@ final class FilterTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitFilterFlagT.gitFilterAttributesFromHEAD.cValue(), GIT_FILTER_ATTRIBUTES_FROM_HEAD)
         XCTAssertEqual(GitFilterFlagT.gitFilterAttributesFromCommit.cValue(), GIT_FILTER_ATTRIBUTES_FROM_COMMIT)
         
-        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_DEFAULT).cValue(), GIT_FILTER_DEFAULT)
-        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ALLOW_UNSAFE).cValue(), GIT_FILTER_ALLOW_UNSAFE)
-        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_NO_SYSTEM_ATTRIBUTES).cValue(), GIT_FILTER_NO_SYSTEM_ATTRIBUTES)
-        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ATTRIBUTES_FROM_HEAD).cValue(), GIT_FILTER_ATTRIBUTES_FROM_HEAD)
-        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ATTRIBUTES_FROM_COMMIT).cValue(), GIT_FILTER_ATTRIBUTES_FROM_COMMIT)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_DEFAULT), .gitFilterDefault)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ALLOW_UNSAFE), .gitFilterAllowUnsafe)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_NO_SYSTEM_ATTRIBUTES), .gitFilterNoSystemAttributes)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ATTRIBUTES_FROM_HEAD), .gitFilterAttributesFromHEAD)
+        XCTAssertEqual(GitFilterFlagT(cValue: GIT_FILTER_ATTRIBUTES_FROM_COMMIT), .gitFilterAttributesFromCommit)
         
         
         

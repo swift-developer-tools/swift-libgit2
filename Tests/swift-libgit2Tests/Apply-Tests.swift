@@ -23,7 +23,7 @@ final class ApplyTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(GitApplyFlagsT.gitApplyCheck.cValue(), GIT_APPLY_CHECK)
         
-        XCTAssertEqual(GitApplyFlagsT(cValue: GIT_APPLY_CHECK).cValue(), GIT_APPLY_CHECK)
+        XCTAssertEqual(GitApplyFlagsT(cValue: GIT_APPLY_CHECK), .gitApplyCheck)
         
         
         
@@ -52,9 +52,9 @@ final class ApplyTests: XCTestCaseStopOnFail
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationIndex.cValue(), GIT_APPLY_LOCATION_INDEX)
         XCTAssertEqual(GitApplyLocationT.gitApplyLocationBoth.cValue(), GIT_APPLY_LOCATION_BOTH)
         
-        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_INDEX).cValue(), GIT_APPLY_LOCATION_INDEX)
-        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_INDEX).cValue(), GIT_APPLY_LOCATION_INDEX)
-        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_BOTH).cValue(), GIT_APPLY_LOCATION_BOTH)
+        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_WORKDIR), .gitApplyLocationWorkdir)
+        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_INDEX), .gitApplyLocationIndex)
+        XCTAssertEqual(GitApplyLocationT(cValue: GIT_APPLY_LOCATION_BOTH), .gitApplyLocationBoth)
         
         
         
@@ -131,18 +131,17 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(commitTreeResult)
             }
-            
-            XCTAssertOK(commitTreeResult)
             
             guard let treePointer: OpaquePointer = treePointer
             else
@@ -289,22 +288,21 @@ extension ApplyTests
             
             
             
-            let commitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &oldTreePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(commitTreeResult)
             }
             
-            XCTAssertOK(commitTreeResult)
             
             
-            
-            let modifiedContent: String 
+            let modifiedContent: String
                 = "\(Repository.readmeFileContent) Goodbye World!"
             
             try repository.modifyFile(
@@ -384,19 +382,19 @@ extension ApplyTests
             
             
             
-            let resetResult: Int32 = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return git_reset(
+                let resetResult: Int32 =  git_reset(
                     repository.pointer,
                     commitPointer,
                     GIT_RESET_HARD,
                     nil
                 )
+                
+                XCTAssertOK(GitErrorCode(rawValue: resetResult))
             }
-            
-            XCTAssertOK(GitErrorCode(rawValue: resetResult))
             
             
             

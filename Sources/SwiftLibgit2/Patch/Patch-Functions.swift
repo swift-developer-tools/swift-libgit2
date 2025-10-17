@@ -282,7 +282,6 @@ public func gitPatchGetDelta(
     patch: OpaquePointer
 ) -> GitDiffDelta?
 {
-    /// The memory is owned by libgit2 and must not be freed.
     guard let diffDelta: UnsafePointer<git_diff_delta>
             = git_patch_get_delta(patch)
     else

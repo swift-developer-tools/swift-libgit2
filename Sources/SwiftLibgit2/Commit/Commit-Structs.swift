@@ -145,7 +145,7 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
 /// [`git_commitarray`](https://libgit2.org/docs/reference/main/commit/git_commitarray.html)
 public struct GitCommitArray: CStruct
 {
-    /// The array of commits.
+    /// The commits.
     public let commits  : [OpaquePointer]
     
     /// The length of ``commits``.

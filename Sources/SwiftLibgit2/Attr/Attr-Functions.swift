@@ -141,7 +141,7 @@ public func gitAttrGetExt(
 ///   - flags: The flags to use when querying the attributes.
 ///   - path: The path within the repository to check for attributes.
 ///   - numAttr: The number of attributes to look up.
-///   - names: An array of length `numAttr`, containing the attribute names.
+///   - names: The names of the attributes to look up.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -195,7 +195,7 @@ public func gitAttrGetMany(
 ///   - opts: The attribute options to use.
 ///   - path: The path within the repository to check for attributes.
 ///   - numAttr: The number of attributes to look up.
-///   - names: An array of length `numAttr`, containing the attribute names.
+///   - names: The names of the attributes to look up.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

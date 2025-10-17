@@ -91,7 +91,7 @@ final class ODBBackendTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(GitODBBackendLooseFlagT.gitODBBackendLooseFSync.cValue(), GIT_ODB_BACKEND_LOOSE_FSYNC)
         
-        XCTAssertEqual(GitODBBackendLooseFlagT(cValue: GIT_ODB_BACKEND_LOOSE_FSYNC).cValue(), GIT_ODB_BACKEND_LOOSE_FSYNC)
+        XCTAssertEqual(GitODBBackendLooseFlagT(cValue: GIT_ODB_BACKEND_LOOSE_FSYNC), .gitODBBackendLooseFSync)
         
         
         

@@ -227,19 +227,18 @@ enum Diff
         
         
         
-        let commitTreeResult: GitErrorCode
-            = try Commit.withHEADCommit(in: repository)
+        try Commit.withHEADCommit(in: repository)
         {
             commitPointer in
 
-            return gitCommitTree(
+            let commitTreeResult: GitErrorCode = gitCommitTree(
                 out:        &treePointer,
                 commit:     commitPointer
             )
+            
+            XCTAssertOK(commitTreeResult)
+            XCTAssertNotNil(treePointer)
         }
-        
-        XCTAssertOK(commitTreeResult)
-        XCTAssertNotNil(treePointer)
         
         
         

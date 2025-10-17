@@ -82,7 +82,7 @@ public struct GitMessageTrailer: CStructReadable, WithCConvertible, Sendable
 /// [`git_message_trailer_array`](https://libgit2.org/docs/reference/main/message/git_message_trailer_array.html)
 public struct GitMessageTrailerArray: CStruct, Sendable
 {
-    /// The array of message trailers.
+    /// The message trailers.
     public let trailers         : [GitMessageTrailer]
     
     /// The length of ``trailers``.

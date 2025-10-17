@@ -13,34 +13,23 @@ import CLibgit2
 
 internal extension Array where Element == String
 {
-    /// Calls the given closure with a mutable pointer to a `git_strarray`
-    /// instance.
+    /// Calls the given closure with a pointer to a `git_strarray` instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
     ///
     /// ## Discussion
     ///
-    /// ``gitStrArrayDispose(array:)`` cannot be used here, since that function
+    /// ``gitStrArrayDispose(array:)`` is not used here, since that function
     /// is intended to free the strings of a `git_strarray` which was allocated
-    /// by libgit2.
+    /// by libgit2. In this case, the strings are allocated by this method and
+    /// must be manually freed. If the receiver is empty, the `body` closure is
+    /// called with an empty read-only `git_strarray`, with no strings to free.
     func withGitStrArray<T>(
-        _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
+        _ body: (UnsafePointer<git_strarray>) throws -> T
     ) throws -> T
     {
         var strArray = git_strarray()
-        
-        defer
-        {
-            if
-                strArray.count > 0,
-                strArray.strings != nil
-            {
-                strArray.strings?.deallocate()
-            }
-        }
-        
-        
         
         guard !self.isEmpty
         else
@@ -57,13 +46,24 @@ internal extension Array where Element == String
             let pointers = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
                 .allocate(capacity: cStrings.count)
             
-            for (index, cString) in cStrings.enumerated()
+            defer
+            {
+                pointers.deallocate()
+            }
+            
+            
+            
+            /// ``Array<String>/withArrayOfCStrings(_:)`` appends a null
+            /// terminator as the last element of the array, but `git_strarray`
+            /// must not include this terminator, otherwise it will cause a
+            /// runtime crash when libgit2 tries to read invalid memory.
+            for (index, cString) in cStrings.dropLast().enumerated()
             {
                 pointers[index] = cString
             }
             
             strArray.strings    = pointers
-            strArray.count      = cStrings.count
+            strArray.count      = cStrings.count - 1
             
             return try body(&strArray)
         }

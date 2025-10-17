@@ -603,7 +603,7 @@ final class ODBTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(GitODBLookupFlagsT.gitODBLookupNoRefresh.cValue(), GIT_ODB_LOOKUP_NO_REFRESH)
         
-        XCTAssertEqual(GitODBLookupFlagsT(cValue: GIT_ODB_LOOKUP_NO_REFRESH).cValue(), GIT_ODB_LOOKUP_NO_REFRESH)
+        XCTAssertEqual(GitODBLookupFlagsT(cValue: GIT_ODB_LOOKUP_NO_REFRESH), .gitODBLookupNoRefresh)
         
         
         

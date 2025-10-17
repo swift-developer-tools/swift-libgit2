@@ -149,7 +149,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The default value is `nil`.
     public var progressPayload  : UnsafeMutableRawPointer?
     
-    /// A list of wildmatch patterns or paths.
+    /// The wildmatch patterns or paths.
     ///
     /// ## Discussion
     ///

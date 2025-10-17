@@ -377,7 +377,7 @@ public func gitIndexReadTree(
 /// root tree. The resulting ID can be used for operations such as creating
 /// a commit.
 ///
-/// The given index cannot be bare, must be associated with an existing
+/// The given index must not be bare, must be associated with an existing
 /// repository, and must not contain any conflicted files.
 ///
 /// ## C Equivalent
@@ -418,7 +418,7 @@ public func gitIndexWriteTree(
 /// This function behaves the same as ``gitIndexWriteTree(out:index:)``, but
 /// allows the caller to choose the repository in which to write the given tree.
 ///
-/// The given index instance cannot be bare, must be associated with an
+/// The given index instance must not be bare, must be associated with an
 /// existing repository, and must not contain any conflicted files.
 ///
 /// ## C Equivalent
@@ -503,7 +503,6 @@ public func gitIndexGetByIndex(
     n       : Int
 ) -> GitIndexEntry?
 {
-    /// The memory is owned by libgit2 and must not be freed.
     guard let indexEntryPointer: UnsafePointer<git_index_entry>
             = git_index_get_byindex(
                 index,
@@ -535,7 +534,6 @@ public func gitIndexGetByPath(
     stage   : GitIndexStageT
 ) -> GitIndexEntry?
 {
-    /// The memory is owned by libgit2 and must not be freed.
     guard let indexEntryPointer: UnsafePointer<git_index_entry>
             = git_index_get_bypath(
                 index,
@@ -917,7 +915,7 @@ public func gitIndexRemoveByPath(
 /// `pathspec` must be a list of file names or shell glob patterns to match
 /// against files in the repository's working directory. Each matching file
 /// will be added to the index (either updating an existing entry or adding a
-/// new entry). Use the ``GitIndexAddOptionT/gitIndexAddDisablePatchspecMatch``
+/// new entry). Use the ``GitIndexAddOptionT/gitIndexAddDisablePathspecMatch``
 /// flag to disable glob expansion and force exact matching.
 ///
 /// Unlike ``gitIndexAddByPath(index:path:)``, ignored files will be skipped.

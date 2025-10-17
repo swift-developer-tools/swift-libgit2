@@ -91,15 +91,30 @@ final class AttrTests: XCTestCaseStopOnFail
     
     
     
-    func testGitAttrCheckFlags() throws
+    func testGitAttrCheckFlagsT() throws
     {
-        XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckFileThenIndex.rawValue, UInt32(GIT_ATTR_CHECK_FILE_THEN_INDEX))
-        XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIndexThenFile.rawValue, UInt32(GIT_ATTR_CHECK_INDEX_THEN_FILE))
-        XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIndexOnly.rawValue, UInt32(GIT_ATTR_CHECK_INDEX_ONLY))
-        XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckNoSystem.rawValue, UInt32(GIT_ATTR_CHECK_NO_SYSTEM))
-        XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIncludeHEAD.rawValue, UInt32(GIT_ATTR_CHECK_INCLUDE_HEAD))
-        XCTAssertEqual(GitAttrCheckFlagsT.gitAttrCheckIncludeCommit.rawValue, UInt32(GIT_ATTR_CHECK_INCLUDE_COMMIT))
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckFileThenIndex.rawValue), GIT_ATTR_CHECK_FILE_THEN_INDEX)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIndexThenFile.rawValue), GIT_ATTR_CHECK_INDEX_THEN_FILE)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIndexOnly.rawValue), GIT_ATTR_CHECK_INDEX_ONLY)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckNoSystem.rawValue), GIT_ATTR_CHECK_NO_SYSTEM)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIncludeHEAD.rawValue), GIT_ATTR_CHECK_INCLUDE_HEAD)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIncludeCommit.rawValue), GIT_ATTR_CHECK_INCLUDE_COMMIT)
+        
         XCTAssertEqual(GitAttrCheckFlagsT(rawValue: 123).rawValue, 123)
+        
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckFileThenIndex.cValue()), GIT_ATTR_CHECK_FILE_THEN_INDEX)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIndexThenFile.cValue()), GIT_ATTR_CHECK_INDEX_THEN_FILE)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIndexOnly.cValue()), GIT_ATTR_CHECK_INDEX_ONLY)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckNoSystem.cValue()), GIT_ATTR_CHECK_NO_SYSTEM)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIncludeHEAD.cValue()), GIT_ATTR_CHECK_INCLUDE_HEAD)
+        XCTAssertEqual(Int32(GitAttrCheckFlagsT.gitAttrCheckIncludeCommit.cValue()), GIT_ATTR_CHECK_INCLUDE_COMMIT)
+        
+        XCTAssertEqual(GitAttrCheckFlagsT(cValue: UInt32(GIT_ATTR_CHECK_FILE_THEN_INDEX)), .gitAttrCheckFileThenIndex)
+        XCTAssertEqual(GitAttrCheckFlagsT(cValue: UInt32(GIT_ATTR_CHECK_INDEX_THEN_FILE)), .gitAttrCheckIndexThenFile)
+        XCTAssertEqual(GitAttrCheckFlagsT(cValue: UInt32(GIT_ATTR_CHECK_INDEX_ONLY)), .gitAttrCheckIndexOnly)
+        XCTAssertEqual(GitAttrCheckFlagsT(cValue: UInt32(GIT_ATTR_CHECK_NO_SYSTEM)), .gitAttrCheckNoSystem)
+        XCTAssertEqual(GitAttrCheckFlagsT(cValue: UInt32(GIT_ATTR_CHECK_INCLUDE_HEAD)), .gitAttrCheckIncludeHEAD)
+        XCTAssertEqual(GitAttrCheckFlagsT(cValue: UInt32(GIT_ATTR_CHECK_INCLUDE_COMMIT)), .gitAttrCheckIncludeCommit)
         
         
         

@@ -23,7 +23,7 @@ import CLibgit2
 /// [`git_strarray`](https://libgit2.org/docs/reference/main/strarray/git_strarray.html)
 public struct GitStrArray: CStruct, Sendable
 {
-    /// The array of strings.
+    /// The strings.
     public let strings  : [String]
     
     /// The length of ``strings``.
