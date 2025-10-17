@@ -392,14 +392,14 @@ final class IndexTests: XCTestCaseStopOnFail
     {
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDefault.rawValue, GIT_INDEX_ADD_DEFAULT.rawValue)
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddForce.rawValue, GIT_INDEX_ADD_FORCE.rawValue)
-        XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDisablePatchspecMatch.rawValue, GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH.rawValue)
+        XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDisablePathspecMatch.rawValue, GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH.rawValue)
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddCheckPathspec.rawValue, GIT_INDEX_ADD_CHECK_PATHSPEC.rawValue)
         
         XCTAssertEqual(GitIndexAddOptionT(rawValue: 123).cValue().rawValue, 123)
         
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDefault.cValue(), GIT_INDEX_ADD_DEFAULT)
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddForce.cValue(), GIT_INDEX_ADD_FORCE)
-        XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDisablePatchspecMatch.cValue(), GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH)
+        XCTAssertEqual(GitIndexAddOptionT.gitIndexAddDisablePathspecMatch.cValue(), GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH)
         XCTAssertEqual(GitIndexAddOptionT.gitIndexAddCheckPathspec.cValue(), GIT_INDEX_ADD_CHECK_PATHSPEC)
         
         XCTAssertEqual(GitIndexAddOptionT(cValue: GIT_INDEX_ADD_DEFAULT).cValue(), GIT_INDEX_ADD_DEFAULT)
@@ -417,7 +417,7 @@ final class IndexTests: XCTestCaseStopOnFail
         
         XCTAssertTrue(flags.contains(.gitIndexAddForce))
         XCTAssertTrue(flags.contains(.gitIndexAddCheckPathspec))
-        XCTAssertFalse(flags.contains(.gitIndexAddDisablePatchspecMatch))
+        XCTAssertFalse(flags.contains(.gitIndexAddDisablePathspecMatch))
     }
     
     

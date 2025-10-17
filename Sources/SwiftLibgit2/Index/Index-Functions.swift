@@ -915,7 +915,7 @@ public func gitIndexRemoveByPath(
 /// `pathspec` must be a list of file names or shell glob patterns to match
 /// against files in the repository's working directory. Each matching file
 /// will be added to the index (either updating an existing entry or adding a
-/// new entry). Use the ``GitIndexAddOptionT/gitIndexAddDisablePatchspecMatch``
+/// new entry). Use the ``GitIndexAddOptionT/gitIndexAddDisablePathspecMatch``
 /// flag to disable glob expansion and force exact matching.
 ///
 /// Unlike ``gitIndexAddByPath(index:path:)``, ignored files will be skipped.

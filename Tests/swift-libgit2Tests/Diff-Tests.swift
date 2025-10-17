@@ -1826,7 +1826,7 @@ extension DiffTests
     
     private static let notifyCB: GitDiffNotifyCB =
     {
-        diffSoFar, deltaToAdd, matchedPatchspec, payload in
+        diffSoFar, deltaToAdd, matchedPathspec, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else

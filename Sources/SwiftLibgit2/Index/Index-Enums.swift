@@ -243,7 +243,7 @@ public struct GitIndexAddOptionT: COptionSet
     public static let gitIndexAddForce                  = GitIndexAddOptionT(rawValue: GIT_INDEX_ADD_FORCE.rawValue)
     
     /// Disable pathspec matching.
-    public static let gitIndexAddDisablePatchspecMatch  = GitIndexAddOptionT(rawValue: GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH.rawValue)
+    public static let gitIndexAddDisablePathspecMatch   = GitIndexAddOptionT(rawValue: GIT_INDEX_ADD_DISABLE_PATHSPEC_MATCH.rawValue)
     
     /// Check that each pathspec entry either matches a file or is already
     /// in the index.
