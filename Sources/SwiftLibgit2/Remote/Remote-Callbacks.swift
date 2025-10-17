@@ -78,12 +78,12 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 
 
 
-// TODO: Replace `git_direction` and `git_remote_set_instance_url()` in documentation.
+// TODO: Replace `git_remote_set_instance_url()` in documentation.
 /// The callback invoked to resolve URLs.
 /// - Parameters:
 ///   - urlResolved: The buffer to which to write the resolved URL.
 ///   - url: The URL to resolve.
-///   - direction: The direction of the connection. See `git_direction`.
+///   - direction: The direction of the connection. See ``GitDirection``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -105,12 +105,12 @@ public typealias GitURLResolveCB = @convention(c)
 
 
 
-// TODO: Replace `git_direction` and `git_remote_set_instance_url()` in documentation.
+// TODO: Replace `git_remote_set_instance_url()` in documentation.
 /// The callback invoked immediately before attempting a remote connection.
 /// - Parameters:
 ///   - remote: The remote to be connected. The underlying type must be
 ///   `git_remote`.
-///   - direction: The direction of the connection. See `git_direction`.
+///   - direction: The direction of the connection. See ``GitDirection``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///
