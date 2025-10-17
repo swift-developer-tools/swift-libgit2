@@ -283,7 +283,7 @@ public func gitBlobFilter(
 ///   - id: The ``GitOID`` instance in which to store the ID of the written
 ///   blob.
 ///   - repo: The repository in which to write the blob. The underlying type
-///   must be `git_repository`. This repository may not be bare.
+///   must be `git_repository`. This repository must not be bare.
 ///   - relativePath: The path to the file from which to create the blob. The
 ///   path must be relative to the repository's working directory.
 /// - Returns: A ``GitErrorCode`` instance.

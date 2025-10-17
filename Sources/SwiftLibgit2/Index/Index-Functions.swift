@@ -377,7 +377,7 @@ public func gitIndexReadTree(
 /// root tree. The resulting ID can be used for operations such as creating
 /// a commit.
 ///
-/// The given index cannot be bare, must be associated with an existing
+/// The given index must not be bare, must be associated with an existing
 /// repository, and must not contain any conflicted files.
 ///
 /// ## C Equivalent
@@ -418,7 +418,7 @@ public func gitIndexWriteTree(
 /// This function behaves the same as ``gitIndexWriteTree(out:index:)``, but
 /// allows the caller to choose the repository in which to write the given tree.
 ///
-/// The given index instance cannot be bare, must be associated with an
+/// The given index instance must not be bare, must be associated with an
 /// existing repository, and must not contain any conflicted files.
 ///
 /// ## C Equivalent
