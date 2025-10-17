@@ -99,6 +99,7 @@ enum Blob
         
         
         XCTAssertOK(blobCreateResult)
+        XCTAssertNotZeroOID(blobOID)
         
         return blobOID
     }

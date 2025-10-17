@@ -33,16 +33,11 @@ public func gitNoteIteratorNew(
 {
     return withCConversion
     {
-        return notesRef.withOptionalCString
-        {
-            cNotesRef in
-            
-            return git_note_iterator_new(
-                out,
-                repo,
-                cNotesRef
-            )
-        }
+        return git_note_iterator_new(
+            out,
+            repo,
+            notesRef
+        )
     }
 }
 
