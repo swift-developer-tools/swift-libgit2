@@ -479,10 +479,10 @@ public func gitDiffNumDeltasOfType(
 
 
 
-/// Gets the diff delta for a specified entry in the given diff.
+/// Gets the diff delta for the specified entry in the given diff.
 /// - Parameters:
 ///   - diff: The diff to query. The underlying type must be `git_diff`.
-///   - idx: The index of the entry in the diff list.
+///   - idx: The index of the entry in the given diff.
 /// - Returns: The diff delta for the specified entry in the given diff.
 ///
 /// ## Discussion
