@@ -22,7 +22,10 @@ internal extension String
     /// actual runtime behavior. libgit2 functions annotated as returning
     /// non-`nil` pointers may return `nil` under certain conditions.
     /// For example, `git_annotated_commit_ref()` returns `nil` if the given
-    /// commit was created from a revspec.
+    /// commit was created from a revspec, and `git_pathspec_match_list_entry()`
+    /// returns `nil` if the given pathspec match list was created by matching
+    /// against a diff. The latter behavior is documented, but the headers do
+    /// not reflect the possibility of a `nil` value.
     ///
     /// - Important: When converting C string pointers to Swift strings,
     /// always use this initializer to prevent runtime crashes, unless an
