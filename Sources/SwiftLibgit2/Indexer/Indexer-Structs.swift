@@ -129,7 +129,7 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
     /// The default value is ``gitIndexerOptionsVersion``.
     public var version              : UInt32
     
-    /// The callback invoked to report progress during the indexing operation.
+    /// The callback invoked to report indexing progress.
     ///
     /// ## Discussion
     ///

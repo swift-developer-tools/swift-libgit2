@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback invoked when iterating the object database.
+/// The callback invoked for each object.
 /// - Parameters:
 ///   - blobID: The ID of an object in the object database.
 ///   - payload: The payload provided by the caller.

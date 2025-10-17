@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// The callback to add a remote with the default fetch refspec to the
+/// The callback invoked to add a remote with the default fetch refspec to the
 /// repository's configuration.
 /// - Parameters:
 ///   - out: The pointer in which to store the remote. The underlying type
@@ -33,7 +33,7 @@ public typealias GitRemoteCreateCB = @convention(c)
 
 
 
-/// The callback to create a new Git repository in the given folder.
+/// The callback invoked to create a new repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.

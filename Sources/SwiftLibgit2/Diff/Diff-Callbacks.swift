@@ -11,8 +11,7 @@ import CLibgit2
 
 
 
-/// The callback for notifications of new diff deltas being added during the
-/// diff operation.
+/// The callback invoked for notifications of new diff deltas being added.
 /// - Parameters:
 ///   - diffSoFar: The current diff. The underlying type must be `git_diff`.
 ///   - deltaToAdd: The delta to add.
@@ -34,8 +33,7 @@ public typealias GitDiffNotifyCB = @convention(c)
 
 
 
-/// The callback for notifications of which files are being examined during
-/// the diff operation.
+/// The callback invoked for notifications of which files are being examined.
 /// - Parameters:
 ///   - diffSoFar: The current diff. The underlying type must be `git_diff`.
 ///   - oldPath: The path to the old file.

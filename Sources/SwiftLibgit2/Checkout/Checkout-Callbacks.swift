@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback for checkout notifications.
+/// The callback invoked for checkout notifications.
 /// - Parameters:
 ///   - why: The notification reason.
 ///   - path: The path to the file being checked out.
@@ -36,7 +36,7 @@ public typealias GitCheckoutNotifyCB = @convention(c)
 
 
 
-/// The callback for checkout progress.
+/// The callback invoked to report checkout progress.
 /// - Parameters:
 ///   - path: The path to the file being checked out.
 ///   - completedSteps: The number of checkout steps completed.
@@ -56,7 +56,7 @@ public typealias GitCheckoutProgressCB = @convention(c)
 
 
 
-/// The callback for reporting checkout performance data.
+/// The callback invoked to report checkout performance data.
 /// - Parameters:
 ///   - perfData: The checkout performance data.
 ///   - payload: The payload provided by the caller.

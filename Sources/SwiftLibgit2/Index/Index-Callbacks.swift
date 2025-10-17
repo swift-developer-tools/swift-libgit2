@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// The callback for adding, removing, or updating files matching a pathspec.
+/// The callback invoked to add, remove, or update files.
 /// - Parameters:
 ///   - path: The matching path.
 ///   - matchedPathspec: The given path to match.

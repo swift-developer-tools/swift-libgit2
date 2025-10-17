@@ -757,7 +757,7 @@ public func gitODBOpenRStream(
 /// - Parameters:
 ///   - out: The writepack functions.
 ///   - db: The object database to read. The underlying type must be `git_odb`.
-///   - progressCB: The callback to invoke with progress information.
+///   - progressCB: The callback to invoke to report indexing progress.
 ///   - progressPayload: The payload to pass to `progressCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

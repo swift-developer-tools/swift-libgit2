@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The callback for configuration iteration.
+/// The callback invoked for each configuration entry.
 /// - Parameters:
 ///   - entry: The entry being iterated.
 ///   - payload: The payload provided by the caller.
