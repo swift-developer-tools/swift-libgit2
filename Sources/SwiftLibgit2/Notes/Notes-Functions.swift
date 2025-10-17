@@ -222,7 +222,11 @@ public func gitNoteAuthor(
     note: OpaquePointer
 ) -> GitSignature?
 {
-    let signature: UnsafePointer<git_signature> = git_note_author(note)
+    guard let signature: UnsafePointer<git_signature> = git_note_author(note)
+    else
+    {
+        return nil
+    }
     
     return GitSignature(cValue: signature.pointee)
 }
@@ -241,7 +245,12 @@ public func gitNoteCommitter(
     note: OpaquePointer
 ) -> GitSignature?
 {
-    let signature: UnsafePointer<git_signature> = git_note_committer(note)
+    guard let signature: UnsafePointer<git_signature>
+            = git_note_committer(note)
+    else
+    {
+        return nil
+    }
     
     return GitSignature(cValue: signature.pointee)
 }

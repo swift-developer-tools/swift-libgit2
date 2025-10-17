@@ -523,17 +523,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let author: GitSignature = gitCommitAuthor(commit: commitPointer)
-            
-            XCTAssertEqual(author.name, Repository.commitAuthorName)
-            XCTAssertEqual(author.email, Repository.commitAuthorEmail)
-            
-            
-            
-            let committer: GitSignature = gitCommitCommitter(commit: commitPointer)
-            
-            XCTAssertEqual(committer.name, Repository.commitAuthorName)
-            XCTAssertEqual(committer.email, Repository.commitAuthorEmail)
+            validateAuthorAndCommitterSignatures(commitPointer)
         }
     }
     
@@ -975,17 +965,32 @@ extension CommitTests
             
             
             
-            let author: GitSignature = gitCommitAuthor(commit: newCommitPointer)
-            
-            XCTAssertEqual(author.name, Repository.commitAuthorName)
-            XCTAssertEqual(author.email, Repository.commitAuthorEmail)
-            
-            
-            
-            let committer: GitSignature = gitCommitCommitter(commit: newCommitPointer)
-            
-            XCTAssertEqual(committer.name, Repository.commitAuthorName)
-            XCTAssertEqual(committer.email, Repository.commitAuthorEmail)
+            validateAuthorAndCommitterSignatures(newCommitPointer)
         }
+    }
+    
+    
+    
+    /// Checks whether the author and committer signatures of the given commit
+    /// are not `nil` and are equal to the default ``Repository`` commit author
+    /// name and email.
+    /// - Parameter commitPointer: The commit to check.
+    private func validateAuthorAndCommitterSignatures(
+        _ commitPointer: OpaquePointer
+    )
+    {
+        let author: GitSignature? = gitCommitAuthor(commit: commitPointer)
+        
+        XCTAssertNotNil(author)
+        XCTAssertEqual(author?.name, Repository.commitAuthorName)
+        XCTAssertEqual(author?.email, Repository.commitAuthorEmail)
+        
+        
+        
+        let committer: GitSignature? = gitCommitCommitter(commit: commitPointer)
+        
+        XCTAssertNotNil(committer)
+        XCTAssertEqual(committer?.name, Repository.commitAuthorName)
+        XCTAssertEqual(committer?.email, Repository.commitAuthorEmail)
     }
 }

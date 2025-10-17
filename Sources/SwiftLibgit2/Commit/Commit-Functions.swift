@@ -307,9 +307,14 @@ public func gitCommitTimeOffset(
 /// [`git_commit_committer()`](https://libgit2.org/docs/reference/main/commit/git_commit_committer.html)
 public func gitCommitCommitter(
     commit: OpaquePointer
-) -> GitSignature
+) -> GitSignature?
 {
-    let committer: UnsafePointer<git_signature> = git_commit_committer(commit)
+    guard let committer: UnsafePointer<git_signature>
+            = git_commit_committer(commit)
+    else
+    {
+        return nil
+    }
     
     return GitSignature(cValue: committer.pointee)
 }
@@ -326,9 +331,13 @@ public func gitCommitCommitter(
 /// [`git_commit_author()`](https://libgit2.org/docs/reference/main/commit/git_commit_author.html)
 public func gitCommitAuthor(
     commit: OpaquePointer
-) -> GitSignature
+) -> GitSignature?
 {
-    let author: UnsafePointer<git_signature> = git_commit_author(commit)
+    guard let author: UnsafePointer<git_signature> = git_commit_author(commit)
+    else
+    {
+        return nil
+    }
     
     return GitSignature(cValue: author.pointee)
 }
