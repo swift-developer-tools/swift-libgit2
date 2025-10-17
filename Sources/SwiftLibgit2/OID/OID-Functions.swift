@@ -269,7 +269,6 @@ public func gitOIDToStrS(
 {
     var cOID: git_oid = oid.cValue()
     
-    /// The memory is owned by libgit2 and must not be freed.
     let oidString: UnsafeMutablePointer<CChar>? = git_oid_tostr_s(&cOID)
     
     return String(optionalCString: oidString)
