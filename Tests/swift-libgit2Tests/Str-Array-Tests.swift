@@ -34,8 +34,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
         {
             strArray in
             
-            /// Adjust for the null terminator in `git_strArray`.
-            XCTAssertEqual(strArray.pointee.count - 1, strings.count)
+            XCTAssertEqual(strArray.pointee.count, strings.count)
             
             guard let cStrings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
                     = strArray.pointee.strings
@@ -82,8 +81,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
         {
             outerStrArray in
             
-            /// Adjust for the null terminator in `git_strArray`.
-            XCTAssertEqual(outerStrArray.pointee.count - 1, outerArray.count)
+            XCTAssertEqual(outerStrArray.pointee.count, outerArray.count)
             XCTAssertNotNil(outerStrArray.pointee.strings)
             
             guard let outerCStrings = outerStrArray.pointee.strings
@@ -112,8 +110,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
             {
                 innerStrArray in
                 
-                /// Adjust for the null terminator in `git_strArray`.
-                XCTAssertEqual(innerStrArray.pointee.count - 1, innerArray.count)
+                XCTAssertEqual(innerStrArray.pointee.count, innerArray.count)
                 XCTAssertNotNil(innerStrArray.pointee.strings)
                 
                 guard let innerCStrings = innerStrArray.pointee.strings
@@ -139,8 +136,7 @@ final class StrArrayTests: XCTestCaseStopOnFail
                 
                 
                 /// Test `outerArray` again within the `innerArray` closure.
-                /// Adjust for the null terminator in `git_strArray`.
-                XCTAssertEqual(outerStrArray.pointee.count - 1, outerArray.count)
+                XCTAssertEqual(outerStrArray.pointee.count, outerArray.count)
                 XCTAssertNotNil(outerStrArray.pointee.strings)
                 
                 guard let outerCStrings = outerStrArray.pointee.strings
