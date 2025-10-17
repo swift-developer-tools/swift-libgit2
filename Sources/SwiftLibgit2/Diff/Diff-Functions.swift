@@ -719,32 +719,22 @@ public func gitDiffBlobs(
 {
     return withCConversion
     {
-        return try oldAsPath.withOptionalCString
+        return try options.withOptionalCValue
         {
-            cOldAsPath in
+            cOptions in
             
-            return try newAsPath.withOptionalCString
-            {
-                cNewAsPath in
-                
-                return try options.withOptionalCValue
-                {
-                    cOptions in
-                    
-                    return git_diff_blobs(
-                        oldBlob,
-                        cOldAsPath,
-                        newBlob,
-                        cNewAsPath,
-                        cOptions,
-                        fileCB,
-                        binaryCB,
-                        hunkCB,
-                        lineCB,
-                        payload
-                    )
-                }
-            }
+            return git_diff_blobs(
+                oldBlob,
+                oldAsPath,
+                newBlob,
+                newAsPath,
+                cOptions,
+                fileCB,
+                binaryCB,
+                hunkCB,
+                lineCB,
+                payload
+            )
         }
     }
 }
@@ -793,37 +783,27 @@ public func gitDiffBlobToBuffer(
 {
     return withCConversion
     {
-        return try oldAsPath.withOptionalCString
+        return try options.withOptionalCValue
         {
-            cOldAsPath in
+            cOptions in
             
-            return try bufferAsPath.withOptionalCString
+            return try buffer.withOptionalCBuffer
             {
-                cBufferAsPath in
+                cBuffer, cBufferLength in
                 
-                return try options.withOptionalCValue
-                {
-                    cOptions in
-                    
-                    return try buffer.withOptionalCBuffer
-                    {
-                        cBuffer, cBufferLength in
-                        
-                        return git_diff_blob_to_buffer(
-                            oldBlob,
-                            cOldAsPath,
-                            cBuffer,
-                            cBufferLength,
-                            cBufferAsPath,
-                            cOptions,
-                            fileCB,
-                            binaryCB,
-                            hunkCB,
-                            lineCB,
-                            payload
-                        )
-                    }
-                }
+                return git_diff_blob_to_buffer(
+                    oldBlob,
+                    oldAsPath,
+                    cBuffer,
+                    cBufferLength,
+                    bufferAsPath,
+                    cOptions,
+                    fileCB,
+                    binaryCB,
+                    hunkCB,
+                    lineCB,
+                    payload
+                )
             }
         }
     }
@@ -878,38 +858,28 @@ public func gitDiffBuffers(
         {
             cOldBuffer, cOldBufferCount in
             
-            return try oldBufferAsPath.withOptionalCString
+            return try newBuffer.withOptionalCBuffer
             {
-                cOldBufferAsPath in
+                cNewBuffer, cNewBufferCount in
                 
-                return try newBuffer.withOptionalCBuffer
+                return try options.withOptionalCValue
                 {
-                    cNewBuffer, cNewBufferCount in
+                    cOptions in
                     
-                    return try newBufferAsPath.withOptionalCString
-                    {
-                        cNewBufferAsPath in
-                        
-                        return try options.withOptionalCValue
-                        {
-                            cOptions in
-                            
-                            return git_diff_buffers(
-                                cOldBuffer,
-                                cOldBufferCount,
-                                cOldBufferAsPath,
-                                cNewBuffer,
-                                cNewBufferCount,
-                                cNewBufferAsPath,
-                                cOptions,
-                                fileCB,
-                                binaryCB,
-                                hunkCB,
-                                lineCB,
-                                payload
-                            )
-                        }
-                    }
+                    return git_diff_buffers(
+                        cOldBuffer,
+                        cOldBufferCount,
+                        oldBufferAsPath,
+                        cNewBuffer,
+                        cNewBufferCount,
+                        newBufferAsPath,
+                        cOptions,
+                        fileCB,
+                        binaryCB,
+                        hunkCB,
+                        lineCB,
+                        payload
+                    )
                 }
             }
         }
