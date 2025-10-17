@@ -55,18 +55,18 @@ final class EmailTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var emailCreateOptions = GitEmailCreateOptions()
-            
-            emailCreateOptions.flags            = .gitEmailCreateOmitNumbers
-            emailCreateOptions.subjectPrefix    = ""
-            
-            
-            
-            var emailPatch = Data()
-            
             try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
+                
+                var emailCreateOptions = GitEmailCreateOptions()
+                
+                emailCreateOptions.flags            = .gitEmailCreateOmitNumbers
+                emailCreateOptions.subjectPrefix    = ""
+                
+                
+                
+                var emailPatch = Data()
                 
                 let emailCreateFromCommitResult: GitErrorCode
                     = gitEmailCreateFromCommit(
@@ -76,9 +76,8 @@ final class EmailTests: XCTestCaseStopOnFail
                     )
                 
                 XCTAssertOK(emailCreateFromCommitResult)
+                XCTAssertGreaterThan(emailPatch.count, 0)
             }
-            
-            XCTAssertGreaterThan(emailPatch.count, 0)
         }
     }
     

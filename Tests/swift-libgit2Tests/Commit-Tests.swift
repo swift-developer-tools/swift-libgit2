@@ -416,22 +416,22 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var commitHeaderField = Data()
-            
-            let commitHeaderFieldResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
-
-                return gitCommitHeaderField(
-                    out:        &commitHeaderField,
-                    commit:     commitPointer,
-                    field:      "tree"
-                )
+                
+                var commitHeaderField = Data()
+                
+                let commitHeaderFieldResult: GitErrorCode
+                    = gitCommitHeaderField(
+                        out:        &commitHeaderField,
+                        commit:     commitPointer,
+                        field:      "tree"
+                    )
+                
+                XCTAssertOK(commitHeaderFieldResult)
+                XCTAssertGreaterThan(commitHeaderField.count, 0)
             }
-            
-            XCTAssertOK(commitHeaderFieldResult)
-            XCTAssertGreaterThan(commitHeaderField.count, 0)
         }
     }
     
@@ -631,20 +631,20 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let commitNthGenAncestorResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
 
-                return gitCommitNthGenAncestor(
-                    ancestor:   &ancestorCommitPointer,
-                    commit:     commitPointer,
-                    n:          2
-                )
+                let commitNthGenAncestorResult: GitErrorCode
+                    = gitCommitNthGenAncestor(
+                        ancestor:   &ancestorCommitPointer,
+                        commit:     commitPointer,
+                        n:          2
+                    )
+                
+                XCTAssertOK(commitNthGenAncestorResult)
+                XCTAssertNotNil(ancestorCommitPointer)
             }
-            
-            XCTAssertOK(commitNthGenAncestorResult)
-            XCTAssertNotNil(ancestorCommitPointer)
         }
     }
     

@@ -1040,18 +1040,18 @@ final class MergeTests: XCTestCaseStopOnFail
             
             
             
-            let ancestorCommitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let ancestorCommitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &ancestorTreePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(ancestorCommitTreeResult)
+                XCTAssertNotNil(ancestorTreePointer)
             }
-            
-            XCTAssertOK(ancestorCommitTreeResult)
             
             
             
@@ -1063,18 +1063,17 @@ final class MergeTests: XCTestCaseStopOnFail
             
             
             
-            let ourCommitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let ourCommitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &ourTreePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(ourCommitTreeResult)
             }
-            
-            XCTAssertOK(ourCommitTreeResult)
             
             guard let ourTreePointer: OpaquePointer = ourTreePointer
             else
@@ -1099,18 +1098,17 @@ final class MergeTests: XCTestCaseStopOnFail
             
             
             
-            let theirCommitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let theirCommitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &theirTreePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(theirCommitTreeResult)
             }
-            
-            XCTAssertOK(theirCommitTreeResult)
             
             guard let theirTreePointer: OpaquePointer = theirTreePointer
             else

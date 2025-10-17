@@ -44,19 +44,18 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeCommitResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitDescribeCommit(
+                let describeCommitResult: GitErrorCode = gitDescribeCommit(
                     result:         &describeResultPointer,
                     committish:     commitPointer,
                     opts:           nil
                 )
+                
+                XCTAssertOK(describeCommitResult)
             }
-            
-            XCTAssertOK(describeCommitResult)
             
             guard let describeResultPointer: OpaquePointer
                     = describeResultPointer
@@ -119,19 +118,18 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            let describeCommitResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitDescribeCommit(
+                let describeCommitResult: GitErrorCode = gitDescribeCommit(
                     result:         &describeResultPointer,
                     committish:     commitPointer,
                     opts:           describeOptions
                 )
+                
+                XCTAssertOK(describeCommitResult)
             }
-            
-            XCTAssertOK(describeCommitResult)
             
             guard let describeResultPointer: OpaquePointer
                     = describeResultPointer

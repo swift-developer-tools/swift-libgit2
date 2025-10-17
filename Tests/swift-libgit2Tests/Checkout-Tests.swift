@@ -552,18 +552,17 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            let commitTreeResult: GitErrorCode
-                = try Commit.withHEADCommit(in: repository)
+            try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
-                return gitCommitTree(
+                let commitTreeResult: GitErrorCode = gitCommitTree(
                     out:        &treePointer,
                     commit:     commitPointer
                 )
+                
+                XCTAssertOK(commitTreeResult)
             }
-            
-            XCTAssertOK(commitTreeResult)
             
             
             
