@@ -318,9 +318,11 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let sourceOID       : GitOID    = gitODBObjectID(object: sourceObjectPointer)
-            let duplicatedOID   : GitOID    = gitODBObjectID(object: duplicatedObjectPointer)
+            let sourceOID       : GitOID?   = gitODBObjectID(object: sourceObjectPointer)
+            let duplicatedOID   : GitOID?   = gitODBObjectID(object: duplicatedObjectPointer)
             
+            XCTAssertNotNil(sourceOID)
+            XCTAssertNotNil(duplicatedOID)
             XCTAssertEqual(sourceOID, headOID)
             XCTAssertEqual(sourceOID, duplicatedOID)
             
@@ -711,8 +713,9 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let objectOID: GitOID = gitODBObjectID(object: objectPointer)
+            let objectOID: GitOID? = gitODBObjectID(object: objectPointer)
             
+            XCTAssertNotNil(objectOID)
             XCTAssertEqual(objectOID, headOID)
             
             

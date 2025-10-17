@@ -98,11 +98,18 @@ final class PackTests: XCTestCaseStopOnFail
             
             
             
-            let treeOID: GitOID = try Commit.withHEADCommit(in: repository)
+            let treeOID: GitOID? = try Commit.withHEADCommit(in: repository)
             {
                 commitPointer in
                 
                 return gitCommitTreeID(commit: commitPointer)
+            }
+            
+            guard let treeOID: GitOID = treeOID
+            else
+            {
+                XCTFail("The tree OID was nil.")
+                return
             }
             
             

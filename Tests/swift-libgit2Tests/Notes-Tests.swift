@@ -115,8 +115,9 @@ final class NotesTests: XCTestCaseStopOnFail
             
             
             
-            let retrievedNoteOID: GitOID = gitNoteID(note: notePointer)
+            let retrievedNoteOID: GitOID? = gitNoteID(note: notePointer)
             
+            XCTAssertNotNil(retrievedNoteOID)
             XCTAssertEqual(retrievedNoteOID, notesBlobOID)
         }
     }
@@ -426,8 +427,9 @@ final class NotesTests: XCTestCaseStopOnFail
             
             
             
-            let retrievedNoteOID: GitOID = gitNoteID(note: notePointer)
+            let retrievedNoteOID: GitOID? = gitNoteID(note: notePointer)
             
+            XCTAssertNotNil(retrievedNoteOID)
             XCTAssertEqual(retrievedNoteOID, noteOID)
         }
     }

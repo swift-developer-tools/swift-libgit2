@@ -319,9 +319,14 @@ public func gitIndexPath(
 /// [`git_index_checksum()`](https://libgit2.org/docs/reference/main/index/git_index_checksum.html)
 public func gitIndexChecksum(
     index: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let indexChecksumOID: UnsafePointer<git_oid> = git_index_checksum(index)
+    guard let indexChecksumOID: UnsafePointer<git_oid>
+            = git_index_checksum(index)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: indexChecksumOID.pointee)
 }

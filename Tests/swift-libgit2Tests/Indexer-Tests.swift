@@ -347,8 +347,9 @@ extension IndexerTests
         
         
         
-        let packfileHash: GitOID = gitIndexerHash(idx: indexerPointer)
+        let packfileOID: GitOID? = gitIndexerHash(idx: indexerPointer)
         
-        XCTAssertNotZeroOID(packfileHash)
+        XCTAssertNotNil(packfileOID)
+        XCTAssertNotZeroOID(packfileOID)
     }
 }

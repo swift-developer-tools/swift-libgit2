@@ -69,9 +69,11 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             
             
-            let sourceOID       : GitOID    = gitObjectID(obj: sourceObjectPointer)
-            let duplicatedOID   : GitOID    = gitObjectID(obj: duplicatedObjectPointer)
+            let sourceOID       : GitOID?   = gitObjectID(obj: sourceObjectPointer)
+            let duplicatedOID   : GitOID?   = gitObjectID(obj: duplicatedObjectPointer)
             
+            XCTAssertNotNil(sourceOID)
+            XCTAssertNotNil(duplicatedOID)
             XCTAssertEqual(sourceOID, duplicatedOID)
             
             
@@ -449,8 +451,9 @@ extension ObjectTests
             
             
             
-            let objectOID: GitOID = gitObjectID(obj: objectPointer)
+            let objectOID: GitOID? = gitObjectID(obj: objectPointer)
             
+            XCTAssertNotNil(objectOID)
             XCTAssertEqual(objectOID, headOID)
             
             

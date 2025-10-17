@@ -277,9 +277,13 @@ public func gitNoteMessage(
 /// [`git_note_id()`](https://libgit2.org/docs/reference/main/notes/git_note_id.html)
 public func gitNoteID(
     note: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let noteOID: UnsafePointer<git_oid> = git_note_id(note)
+    guard let noteOID: UnsafePointer<git_oid> = git_note_id(note)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: noteOID.pointee)
 }

@@ -481,8 +481,9 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let retrievedOID: GitOID = gitCommitID(commit: commitPointer)
+            let retrievedOID: GitOID? = gitCommitID(commit: commitPointer)
             
+            XCTAssertNotNil(retrievedOID)
             XCTAssertEqual(retrievedOID, commitOID)
             
             
@@ -719,11 +720,12 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            let parentCommitOID: GitOID = gitCommitParentID(
+            let parentCommitOID: GitOID? = gitCommitParentID(
                 commit:     commitPointer,
                 n:          0
             )
             
+            XCTAssertNotNil(parentCommitOID)
             XCTAssertNotEqual(parentCommitOID, commitOID)
         }
     }
@@ -774,8 +776,9 @@ final class CommitTests: XCTestCaseStopOnFail
             {
                 commitPointer in
 
-                let treeOID: GitOID = gitCommitTreeID(commit: commitPointer)
+                let treeOID: GitOID? = gitCommitTreeID(commit: commitPointer)
                 
+                XCTAssertNotNil(treeOID)
                 XCTAssertNotZeroOID(treeOID)
                 
                 
@@ -911,9 +914,10 @@ extension CommitTests
             
             if type == .amend
             {
-                let retrievedOID: GitOID
+                let retrievedOID: GitOID?
                     = gitCommitID(commit: newCommitPointer)
                 
+                XCTAssertNotNil(retrievedOID)
                 XCTAssertEqual(retrievedOID, newCommitOID)
             }
             

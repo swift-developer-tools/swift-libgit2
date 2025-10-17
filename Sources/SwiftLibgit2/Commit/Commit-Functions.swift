@@ -122,9 +122,13 @@ public func gitCommitFree(
 /// [`git_commit_id()`](https://libgit2.org/docs/reference/main/commit/git_commit_id.html)
 public func gitCommitID(
     commit: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let commitOID: UnsafePointer<git_oid> = git_commit_id(commit)
+    guard let commitOID: UnsafePointer<git_oid> = git_commit_id(commit)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: commitOID.pointee)
 }
@@ -466,9 +470,13 @@ public func gitCommitTree(
 /// [`git_commit_tree_id()`](https://libgit2.org/docs/reference/main/commit/git_commit_tree_id.html)
 public func gitCommitTreeID(
     commit: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let treeOID: UnsafePointer<git_oid> = git_commit_tree_id(commit)
+    guard let treeOID: UnsafePointer<git_oid> = git_commit_tree_id(commit)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: treeOID.pointee)
 }
@@ -535,12 +543,17 @@ public func gitCommitParent(
 public func gitCommitParentID(
     commit  : OpaquePointer,
     n       : UInt32
-) -> GitOID
+) -> GitOID?
 {
-    let parentCommitOID: UnsafePointer<git_oid> = git_commit_parent_id(
-        commit,
-        n
-    )
+    guard let parentCommitOID: UnsafePointer<git_oid>
+            = git_commit_parent_id(
+                commit,
+                n
+            )
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: parentCommitOID.pointee)
 }

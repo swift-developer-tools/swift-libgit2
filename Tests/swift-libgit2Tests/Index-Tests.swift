@@ -481,9 +481,10 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let indexChecksum: GitOID = gitIndexChecksum(index: indexPointer)
+            let indexOID: GitOID? = gitIndexChecksum(index: indexPointer)
             
-            XCTAssertNotZeroOID(indexChecksum)
+            XCTAssertNotNil(indexOID)
+            XCTAssertNotZeroOID(indexOID)
         }
     }
     

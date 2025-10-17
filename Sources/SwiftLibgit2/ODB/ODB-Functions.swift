@@ -970,9 +970,14 @@ public func gitODBObjectFree(
 /// [`git_odb_object_id()`](https://libgit2.org/docs/reference/main/odb/git_odb_object_id.html)
 public func gitODBObjectID(
     object: OpaquePointer
-) -> GitOID
+) -> GitOID?
 {
-    let databaseObjectOID: UnsafePointer<git_oid> = git_odb_object_id(object)
+    guard let databaseObjectOID: UnsafePointer<git_oid>
+            = git_odb_object_id(object)
+    else
+    {
+        return nil
+    }
     
     return GitOID(cValue: databaseObjectOID.pointee)
 }

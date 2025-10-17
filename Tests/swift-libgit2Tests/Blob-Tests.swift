@@ -201,9 +201,10 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let blobID: GitOID = gitBlobID(blob: blobPointer)
+            let retrievedBlobOID: GitOID? = gitBlobID(blob: blobPointer)
             
-            XCTAssertEqual(blobOID, blobID)
+            XCTAssertNotNil(retrievedBlobOID)
+            XCTAssertEqual(retrievedBlobOID, blobOID)
             
             
             
@@ -444,10 +445,12 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let originalBlobID      : GitOID    = gitBlobID(blob: originalBlobPointer)
-            let duplicatedBlobID    : GitOID    = gitBlobID(blob: duplicatedBlobPointer)
+            let originalBlobOID     : GitOID?   = gitBlobID(blob: originalBlobPointer)
+            let duplicatedBlobOID   : GitOID?   = gitBlobID(blob: duplicatedBlobPointer)
             
-            XCTAssertEqual(originalBlobID, duplicatedBlobID)
+            XCTAssertNotNil(originalBlobOID)
+            XCTAssertNotNil(duplicatedBlobOID)
+            XCTAssertEqual(originalBlobOID, duplicatedBlobOID)
             
             
             
