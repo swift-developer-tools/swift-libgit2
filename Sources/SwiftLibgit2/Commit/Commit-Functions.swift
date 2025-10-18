@@ -707,7 +707,8 @@ public func gitCommitExtractSignature(
 ///   the commit.
 ///   - author: The author signature to use.
 ///   - committer: The committer signature to use.
-///   - messageEncoding: The commit message encoding to use.
+///   - messageEncoding: The commit message encoding to use. Pass `nil` to
+///   use the original message encoding.
 ///   - message: The commit message to use.
 ///   - tree: The tree object to use as the tree for the commit. The underlying
 ///   type must be `git_tree`.
@@ -842,7 +843,8 @@ public func gitCommitCreateFromStage(
 ///   - updateRef: The name of the reference to update to point to the commit.
 ///   - author: The author signature to use.
 ///   - committer: The committer signature to use.
-///   - messageEncoding: The commit message encoding to use.
+///   - messageEncoding: The commit message encoding to use. Pass `nil` to
+///   use the original message encoding.
 ///   - message: The commit message to use.
 ///   - tree: The tree object to use as the tree for the commit. The underlying
 ///   type must be `git_tree`.
@@ -917,7 +919,8 @@ public func gitCommitAmend(
 ///   must be `git_repository`.
 ///   - author: The author signature to use.
 ///   - committer: The committer signature to use.
-///   - messageEncoding: The commit message encoding to use.
+///   - messageEncoding: The commit message encoding to use. Pass `nil` to
+///   use the original message encoding.
 ///   - message: The commit message to use.
 ///   - tree: The tree object to use as the tree for the commit. The underlying
 ///   type must be `git_tree`.

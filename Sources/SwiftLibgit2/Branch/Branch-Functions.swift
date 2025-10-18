@@ -451,14 +451,14 @@ public func gitBranchIsHEAD(
     branch: OpaquePointer
 ) -> Bool?
 {
-    let branchIsHead: Int32 = git_branch_is_head(branch)
+    let branchIsHEAD: Int32 = git_branch_is_head(branch)
     
-    if branchIsHead < 0
+    if branchIsHEAD < 0
     {
         return nil
     }
     
-    return Bool(branchIsHead)
+    return Bool(branchIsHEAD)
 }
 
 

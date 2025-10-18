@@ -270,7 +270,12 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
-    public var callbacks        : GitRemoteCallbacks?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is a default-initialized ``GitRemoteCallbacks``
+    /// instance.
+    public var callbacks        : GitRemoteCallbacks
     
     /// The acceptable prune settings when performing a fetch operation.
     ///
@@ -283,8 +288,8 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFetchHEAD``.
-    public var updateFetchHEAD  : GitRemoteUpdateFlags
+    /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFETCHHEAD``.
+    public var updateFETCHHEAD  : GitRemoteUpdateFlags
     
     /// The automatic tag-following option used to determine which `--tags`
     /// option to use.
@@ -299,9 +304,9 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the default proxy options.
-    public var proxyOpts        : GitProxyOptions?
+    /// The default value is a default-initialized ``GitProxyOptions``
+    /// instance.
+    public var proxyOpts        : GitProxyOptions
     
     /// The shallowness of the fetch operation.
     ///
@@ -330,11 +335,11 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version         : Int32                     = gitFetchOptionsVersion,
-        callbacks       : GitRemoteCallbacks?       = nil,
+        callbacks       : GitRemoteCallbacks        = GitRemoteCallbacks(),
         prune           : GitFetchPruneT            = .gitFetchPruneUnspecified,
-        updateFetchHEAD : GitRemoteUpdateFlags      = .gitRemoteUpdateFetchHEAD,
+        updateFETCHHEAD : GitRemoteUpdateFlags      = .gitRemoteUpdateFETCHHEAD,
         downloadTags    : GitRemoteAutoTagOptionT   = .gitRemoteDownloadTagsAuto,
-        proxyOpts       : GitProxyOptions?          = nil,
+        proxyOpts       : GitProxyOptions           = GitProxyOptions(),
         depth           : GitFetchDepthT            = .gitFetchDepthFull,
         followRedirects : GitRemoteRedirectT        = .gitRemoteRedirectNone,
         customHeaders   : [String]                  = []
@@ -343,7 +348,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         self.version            = version
         self.callbacks          = callbacks
         self.prune              = prune
-        self.updateFetchHEAD    = updateFetchHEAD
+        self.updateFETCHHEAD    = updateFETCHHEAD
         self.downloadTags       = downloadTags
         self.proxyOpts          = proxyOpts
         self.depth              = depth
@@ -363,7 +368,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         self.version            = fetchOptions.version
         self.callbacks          = GitRemoteCallbacks(cValue: fetchOptions.callbacks)
         self.prune              = GitFetchPruneT(cValue: fetchOptions.prune)                            ?? .gitFetchPruneUnspecified
-        self.updateFetchHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
+        self.updateFETCHHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
         self.downloadTags       = GitRemoteAutoTagOptionT(cValue: fetchOptions.download_tags)           ?? .gitRemoteDownloadTagsUnspecified
         self.proxyOpts          = GitProxyOptions(cValue: fetchOptions.proxy_opts)
         self.followRedirects    = GitRemoteRedirectT(rawValue: fetchOptions.follow_redirects.rawValue)  ?? .gitRemoteRedirectInitial
@@ -412,26 +417,18 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
             throw NSError.makeCConversionError()
         }
         
+        fetchOptions.callbacks          = try callbacks.cValue()
         fetchOptions.prune              = prune.cValue()
-        fetchOptions.update_fetchhead   = updateFetchHEAD.rawValue
+        fetchOptions.update_fetchhead   = updateFETCHHEAD.rawValue
         fetchOptions.download_tags      = downloadTags.cValue()
         fetchOptions.depth              = Int32(depth.rawValue)
         fetchOptions.follow_redirects   = followRedirects.cValue()
         
-        if let cCallbacks: git_remote_callbacks = try callbacks?.cValue()
-        {
-            fetchOptions.callbacks = cCallbacks
-        }
-        
-        return try proxyOpts.withOptionalCValue
+        return try proxyOpts.withCValue
         {
             cProxyOpts in
             
-            if let cProxyOpts: UnsafeMutablePointer<git_proxy_options>
-                = cProxyOpts
-            {
-                fetchOptions.proxy_opts = cProxyOpts.pointee
-            }
+            fetchOptions.proxy_opts = cProxyOpts.pointee
             
             return try customHeaders.withGitStrArray
             {

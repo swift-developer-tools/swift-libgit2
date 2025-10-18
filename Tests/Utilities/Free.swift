@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_rebase` instance.
-    /// - Parameter rebase: The rebase to free. The underlying type must be
-    /// `git_rebase`.
-    static func freeRebase(
-        _ rebase: OpaquePointer?
-    )
-    {
-        guard let rebase: OpaquePointer = rebase
-        else
-        {
-            return
-        }
-        
-        git_rebase_free(rebase)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_reference` instance.
     /// - Parameter reference: The reference to free. The underlying type must
     /// be `git_reference`.

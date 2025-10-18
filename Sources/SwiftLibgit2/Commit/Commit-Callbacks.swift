@@ -16,8 +16,8 @@ import CLibgit2
 ///   - out: The pointer in which to store the resulting commit.
 ///   - author: The author's signature.
 ///   - committer: The committer's signature.
-///   - messageEncoding: The encoding for the commit message. The default
-///   value is UTF-8.
+///   - messageEncoding: The commit message encoding. The default value is
+///   UTF-8.
 ///   - message: The commit message.
 ///   - tree: The tree to commit.
 ///   - parentCount: The length of `parents`.

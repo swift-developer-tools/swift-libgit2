@@ -31,7 +31,7 @@ public enum GitProxyT: UInt32, CEnum
     
     /// Initializes a ``GitProxyT`` instance from the given `git_proxy_t`
     /// instance.
-    /// - Parameter attrValue: The `git_proxy_t` instance to use.
+    /// - Parameter proxy: The `git_proxy_t` instance to use.
     internal init?(
         cValue proxy: git_proxy_t
     )

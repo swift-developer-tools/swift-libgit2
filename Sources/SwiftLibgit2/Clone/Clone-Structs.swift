@@ -30,20 +30,20 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the default checkout options.
-    public var checkoutOpts         : GitCheckoutOptions?
+    /// The default value is a default-initialized ``GitCheckoutOptions``
+    /// instance.
+    public var checkoutOpts         : GitCheckoutOptions
     
     /// The options for the fetch operation, including callbacks.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the default fetch options.
+    /// The default value is a default-initialized ``GitFetchOptions``
+    /// instance.
     ///
     /// The callbacks are used for reporting fetch progress and for acquiring
     ///  credentials in the event that they are needed.
-    public var fetchOpts            : GitFetchOptions?
+    public var fetchOpts            : GitFetchOptions
     
     /// Whether to create a bare repository.
     ///
@@ -108,8 +108,8 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version             : UInt32                    = gitCloneOptionsVersion,
-        checkoutOpts        : GitCheckoutOptions?       = nil,
-        fetchOpts           : GitFetchOptions?          = nil,
+        checkoutOpts        : GitCheckoutOptions        = GitCheckoutOptions(),
+        fetchOpts           : GitFetchOptions           = GitFetchOptions(),
         bare                : Bool                      = false,
         local               : GitCloneLocalT            = .gitCloneLocalAuto,
         checkoutBranch      : String?                   = nil,
@@ -188,25 +188,17 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
             
             cloneOptions.checkout_branch = cCheckoutBranch
             
-            return try checkoutOpts.withOptionalCValue
+            return try checkoutOpts.withCValue
             {
                 cCheckoutOpts in
                 
-                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options>
-                    = cCheckoutOpts
-                {
-                    cloneOptions.checkout_opts = cCheckoutOpts.pointee
-                }
+                cloneOptions.checkout_opts = cCheckoutOpts.pointee
                 
-                return try fetchOpts.withOptionalCValue
+                return try fetchOpts.withCValue
                 {
                     cFetchOpts in
                     
-                    if let cFetchOpts: UnsafeMutablePointer<git_fetch_options>
-                        = cFetchOpts
-                    {
-                        cloneOptions.fetch_opts = cFetchOpts.pointee
-                    }
+                    cloneOptions.fetch_opts = cFetchOpts.pointee
                     
                     return try body(&cloneOptions)
                 }
