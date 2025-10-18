@@ -157,10 +157,6 @@ final class CommitTests: XCTestCaseStopOnFail
     
     func testGitCommitCreateCB() throws
     {
-        /// Simulate a rebase operation to test ``GitCommitCreateCB``,
-        /// which is used only in rebases. An actual rebase would be performed
-        /// differently. This test only attempts to check that the callback
-        /// behaves correctly.
         try Repository.withRepository
         {
             repository in
@@ -225,7 +221,7 @@ final class CommitTests: XCTestCaseStopOnFail
             defer
             {
                 gitAnnotatedCommitFree(commit: annotatedCommitPointer)
-                Free.freeRebase(rebasePointer)
+                gitRebaseFree(rebase: rebasePointer)
             }
             
             
@@ -240,34 +236,27 @@ final class CommitTests: XCTestCaseStopOnFail
             
             
             
-            try withUnsafeMutablePointer(to: &callbackData)
+            withUnsafeMutablePointer(to: &callbackData)
             {
                 callbackDataPointer in
                 
-                var rebaseOptions = git_rebase_options()
+                var rebaseOptions = GitRebaseOptions()
                 
-                let rebaseOptionsInitResult: Int32 = git_rebase_options_init(
-                    &rebaseOptions,
-                    UInt32(GIT_REBASE_OPTIONS_VERSION)
-                )
-                
-                XCTAssertOK(GitErrorCode(rawValue: rebaseOptionsInitResult))
-                
-                rebaseOptions.commit_create_cb  = commitCreateCB
+                rebaseOptions.commitCreateCB    = commitCreateCB
                 rebaseOptions.payload           = UnsafeMutableRawPointer(callbackDataPointer)
                 
                 
                 
-                let rebaseInitResult: Int32 = git_rebase_init(
-                    &rebasePointer,
-                    repository.pointer,
-                    nil,
-                    annotatedCommitPointer,
-                    nil,
-                    &rebaseOptions
+                let rebaseInitResult: GitErrorCode = gitRebaseInit(
+                    out:        &rebasePointer,
+                    repo:       repository.pointer,
+                    branch:     nil,
+                    upstream:   annotatedCommitPointer,
+                    onto:       nil,
+                    opts:       rebaseOptions
                 )
                 
-                XCTAssertOK(GitErrorCode(rawValue: rebaseInitResult))
+                XCTAssertOK(rebaseInitResult)
                 
                 guard let rebasePointer: OpaquePointer = rebasePointer
                 else
@@ -278,54 +267,51 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 
                 
+                var nextRebaseOperation = GitRebaseOperation()
+                
                 while true
                 {
-                    var rebaseOperationPointer: UnsafeMutablePointer<git_rebase_operation>?
-                        = nil
-                    
-                    let rebaseNextResult: Int32 = git_rebase_next(
-                        &rebaseOperationPointer,
-                        rebasePointer
+                    let rebaseNextResult: GitErrorCode = gitRebaseNext(
+                        operation:  &nextRebaseOperation,
+                        rebase:     rebasePointer
                     )
                     
-                    if rebaseNextResult == GitErrorCode.gitIterOver.rawValue
+                    if rebaseNextResult == .gitIterOver
                     {
                         break
                     }
                     
+                    XCTAssertOK(rebaseNextResult)
+                    XCTAssertNotZeroOID(nextRebaseOperation.id)
                     
                     
-                    // TODO: Replace once `git_rebase_commit()` has a binding.
-                    var rebasedCommitOID = git_oid()
                     
-                    try repository.signature.withCValue
+                    var rebasedCommitOID = GitOID()
+                    
+                    let rebaseCommitResult: GitErrorCode = gitRebaseCommit(
+                        id:                 &rebasedCommitOID,
+                        rebase:             rebasePointer,
+                        author:             nil,
+                        committer:          repository.signature,
+                        messageEncoding:    nil,
+                        message:            nil
+                    )
+                    
+                    if rebaseCommitResult != .gitEApplied
                     {
-                        cSignature in
-                        
-                        let rebaseCommitResult: Int32 = git_rebase_commit(
-                            &rebasedCommitOID,
-                            rebasePointer,
-                            nil,
-                            cSignature,
-                            nil,
-                            nil
-                        )
-                        
-                        if rebaseCommitResult != GitErrorCode.gitEApplied.rawValue
-                        {
-                            XCTAssertOK(GitErrorCode(rawValue: rebaseCommitResult))
-                        }
+                        XCTAssertOK(rebaseCommitResult)
+                        XCTAssertNotZeroOID(rebasedCommitOID)
                     }
                 }
                 
                 
                 
-                let rebaseFinishResult: Int32 = git_rebase_finish(
-                    rebasePointer,
-                    nil
+                let rebaseFinishResult: GitErrorCode = gitRebaseFinish(
+                    rebase:     rebasePointer,
+                    signature:  repository.signature
                 )
                 
-                XCTAssertOK(GitErrorCode(rawValue: rebaseFinishResult))
+                XCTAssertOK(rebaseFinishResult)
             }
             
             XCTAssertGreaterThan(callbackData.callCount, 0)
