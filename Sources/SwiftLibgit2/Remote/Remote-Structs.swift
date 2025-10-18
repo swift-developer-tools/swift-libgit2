@@ -288,8 +288,8 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFetchHEAD``.
-    public var updateFetchHEAD  : GitRemoteUpdateFlags
+    /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFETCHHEAD``.
+    public var updateFETCHHEAD  : GitRemoteUpdateFlags
     
     /// The automatic tag-following option used to determine which `--tags`
     /// option to use.
@@ -337,7 +337,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         version         : Int32                     = gitFetchOptionsVersion,
         callbacks       : GitRemoteCallbacks        = GitRemoteCallbacks(),
         prune           : GitFetchPruneT            = .gitFetchPruneUnspecified,
-        updateFetchHEAD : GitRemoteUpdateFlags      = .gitRemoteUpdateFetchHEAD,
+        updateFETCHHEAD : GitRemoteUpdateFlags      = .gitRemoteUpdateFETCHHEAD,
         downloadTags    : GitRemoteAutoTagOptionT   = .gitRemoteDownloadTagsAuto,
         proxyOpts       : GitProxyOptions           = GitProxyOptions(),
         depth           : GitFetchDepthT            = .gitFetchDepthFull,
@@ -348,7 +348,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         self.version            = version
         self.callbacks          = callbacks
         self.prune              = prune
-        self.updateFetchHEAD    = updateFetchHEAD
+        self.updateFETCHHEAD    = updateFETCHHEAD
         self.downloadTags       = downloadTags
         self.proxyOpts          = proxyOpts
         self.depth              = depth
@@ -368,7 +368,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         self.version            = fetchOptions.version
         self.callbacks          = GitRemoteCallbacks(cValue: fetchOptions.callbacks)
         self.prune              = GitFetchPruneT(cValue: fetchOptions.prune)                            ?? .gitFetchPruneUnspecified
-        self.updateFetchHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
+        self.updateFETCHHEAD    = GitRemoteUpdateFlags(rawValue: fetchOptions.update_fetchhead)
         self.downloadTags       = GitRemoteAutoTagOptionT(cValue: fetchOptions.download_tags)           ?? .gitRemoteDownloadTagsUnspecified
         self.proxyOpts          = GitProxyOptions(cValue: fetchOptions.proxy_opts)
         self.followRedirects    = GitRemoteRedirectT(rawValue: fetchOptions.follow_redirects.rawValue)  ?? .gitRemoteRedirectInitial
@@ -419,7 +419,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         
         fetchOptions.callbacks          = try callbacks.cValue()
         fetchOptions.prune              = prune.cValue()
-        fetchOptions.update_fetchhead   = updateFetchHEAD.rawValue
+        fetchOptions.update_fetchhead   = updateFETCHHEAD.rawValue
         fetchOptions.download_tags      = downloadTags.cValue()
         fetchOptions.depth              = Int32(depth.rawValue)
         fetchOptions.follow_redirects   = followRedirects.cValue()

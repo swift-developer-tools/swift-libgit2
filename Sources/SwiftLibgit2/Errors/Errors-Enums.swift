@@ -447,7 +447,7 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
     case gitErrorCheckout
     
     /// The error is related to `FETCH_HEAD`.
-    case gitErrorFetchHEAD
+    case gitErrorFETCHHEAD
     
     /// The error is related to a merge operation.
     case gitErrorMerge
@@ -529,7 +529,7 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
             case 18 : self = .gitErrorThread
             case 19 : self = .gitErrorStash
             case 20 : self = .gitErrorCheckout
-            case 21 : self = .gitErrorFetchHEAD
+            case 21 : self = .gitErrorFETCHHEAD
             case 22 : self = .gitErrorMerge
             case 23 : self = .gitErrorSSH
             case 24 : self = .gitErrorFilter
@@ -577,7 +577,7 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
             case .gitErrorThread        : return 18
             case .gitErrorStash         : return 19
             case .gitErrorCheckout      : return 20
-            case .gitErrorFetchHEAD     : return 21
+            case .gitErrorFETCHHEAD     : return 21
             case .gitErrorMerge         : return 22
             case .gitErrorSSH           : return 23
             case .gitErrorFilter        : return 24
@@ -629,7 +629,7 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
             case GIT_ERROR_THREAD       : self = .gitErrorThread
             case GIT_ERROR_STASH        : self = .gitErrorStash
             case GIT_ERROR_CHECKOUT     : self = .gitErrorCheckout
-            case GIT_ERROR_FETCHHEAD    : self = .gitErrorFetchHEAD
+            case GIT_ERROR_FETCHHEAD    : self = .gitErrorFETCHHEAD
             case GIT_ERROR_MERGE        : self = .gitErrorMerge
             case GIT_ERROR_SSH          : self = .gitErrorSSH
             case GIT_ERROR_FILTER       : self = .gitErrorFilter
@@ -683,7 +683,7 @@ public enum GitErrorT: CEnum, Equatable, Hashable, RawRepresentable
             case .gitErrorThread        : return GIT_ERROR_THREAD
             case .gitErrorStash         : return GIT_ERROR_STASH
             case .gitErrorCheckout      : return GIT_ERROR_CHECKOUT
-            case .gitErrorFetchHEAD     : return GIT_ERROR_FETCHHEAD
+            case .gitErrorFETCHHEAD     : return GIT_ERROR_FETCHHEAD
             case .gitErrorMerge         : return GIT_ERROR_MERGE
             case .gitErrorSSH           : return GIT_ERROR_SSH
             case .gitErrorFilter        : return GIT_ERROR_FILTER
