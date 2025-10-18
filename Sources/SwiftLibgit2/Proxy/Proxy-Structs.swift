@@ -57,7 +57,7 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If  certificate verification fails, this function will be called to
+    /// If certificate verification fails, this function will be called to
     /// let the user make the final decision of whether to allow the connection
     /// to proceed.
     public var certificateCheck : GitTransportCertificateCheckCB?

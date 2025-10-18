@@ -37,17 +37,17 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the default merge options.
-    public var mergeOpts    : GitMergeOptions?
+    /// The default value is a default-initialized ``GitMergeOptions``
+    /// instance.
+    public var mergeOpts    : GitMergeOptions
     
     /// The options for the checkout operation.
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the default checkout options.
-    public var checkoutOpts : GitCheckoutOptions?
+    /// The default value is a default-initialized ``GitCheckoutOptions``
+    /// instance.
+    public var checkoutOpts : GitCheckoutOptions
     
     
     
@@ -56,8 +56,8 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
     public init(
         version         : UInt32                = gitCherrypickOptionsVersion,
         mainline        : UInt32                = 0,
-        mergeOpts       : GitMergeOptions?      = nil,
-        checkoutOpts    : GitCheckoutOptions?   = nil
+        mergeOpts       : GitMergeOptions       = GitMergeOptions(),
+        checkoutOpts    : GitCheckoutOptions    = GitCheckoutOptions()
     )
     {
         self.version        = version
@@ -108,25 +108,17 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
         
         cherrypickOptions.mainline = mainline
         
-        return try mergeOpts.withOptionalCValue
+        return try mergeOpts.withCValue
         {
             cMergeOpts in
             
-            if let cMergeOpts: UnsafeMutablePointer<git_merge_options>
-                = cMergeOpts
-            {
-                cherrypickOptions.merge_opts = cMergeOpts.pointee
-            }
+            cherrypickOptions.merge_opts = cMergeOpts.pointee
             
-            return try checkoutOpts.withOptionalCValue
+            return try checkoutOpts.withCValue
             {
                 cCheckoutOpts in
                 
-                if let cCheckoutOpts: UnsafeMutablePointer<git_checkout_options>
-                    = cCheckoutOpts
-                {
-                    cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
-                }
+                cherrypickOptions.checkout_opts = cCheckoutOpts.pointee
                 
                 return try body(&cherrypickOptions)
             }

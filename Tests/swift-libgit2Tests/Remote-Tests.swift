@@ -20,11 +20,11 @@ final class RemoteTests: XCTestCaseStopOnFail
         let fetchOptions = GitFetchOptions()
         
         XCTAssertEqual(fetchOptions.version, gitFetchOptionsVersion)
-        XCTAssertNil(fetchOptions.callbacks)
+        XCTAssertNotNil(fetchOptions.callbacks)
         XCTAssertEqual(fetchOptions.prune, .gitFetchPruneUnspecified)
         XCTAssertEqual(fetchOptions.updateFetchHEAD, .gitRemoteUpdateFetchHEAD)
         XCTAssertEqual(fetchOptions.downloadTags, .gitRemoteDownloadTagsAuto)
-        XCTAssertNil(fetchOptions.proxyOpts)
+        XCTAssertNotNil(fetchOptions.proxyOpts)
         XCTAssertEqual(fetchOptions.depth, .gitFetchDepthFull)
         XCTAssertEqual(fetchOptions.followRedirects, .gitRemoteRedirectNone)
         XCTAssertEqual(fetchOptions.customHeaders, [])

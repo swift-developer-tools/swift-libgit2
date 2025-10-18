@@ -92,8 +92,8 @@ final class CloneTests: XCTestCaseStopOnFail
         let cloneOptions = GitCloneOptions()
         
         XCTAssertEqual(cloneOptions.version, gitCloneOptionsVersion)
-        XCTAssertNil(cloneOptions.checkoutOpts)
-        XCTAssertNil(cloneOptions.fetchOpts)
+        XCTAssertNotNil(cloneOptions.checkoutOpts)
+        XCTAssertNotNil(cloneOptions.fetchOpts)
         XCTAssertFalse(cloneOptions.bare)
         XCTAssertEqual(cloneOptions.local, .gitCloneLocalAuto)
         XCTAssertNil(cloneOptions.checkoutBranch)

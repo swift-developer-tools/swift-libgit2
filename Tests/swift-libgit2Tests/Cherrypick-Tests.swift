@@ -200,8 +200,8 @@ final class CherrypickTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(cherrypickOptions.version, gitCherrypickOptionsVersion)
         XCTAssertEqual(cherrypickOptions.mainline, 0)
-        XCTAssertNil(cherrypickOptions.mergeOpts)
-        XCTAssertNil(cherrypickOptions.checkoutOpts)
+        XCTAssertNotNil(cherrypickOptions.mergeOpts)
+        XCTAssertNotNil(cherrypickOptions.checkoutOpts)
         
         try cherrypickOptions.withCValue
         {
