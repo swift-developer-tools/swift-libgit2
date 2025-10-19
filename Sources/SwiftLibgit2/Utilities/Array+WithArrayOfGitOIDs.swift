@@ -69,7 +69,11 @@ internal extension Array where Element == GitOID
             
             defer
             {
-                gitOIDArrayDispose(array: &oidArray)
+                if oidArray.count > 0
+                {
+                    /// libgit2 allocated new memory that must be freed.
+                    gitOIDArrayDispose(array: &oidArray)
+                }
             }
             
             let result: T = try body(&oidArray)
