@@ -1223,8 +1223,9 @@ private extension MergeTests
                     = annotatedCommitPointer
             else
             {
-                XCTFail("The annotated commit pointer was nil.")
-                return
+                throw NSError.makeError(
+                    "The annotated commit pointer was nil."
+                )
             }
             
             
@@ -1245,8 +1246,7 @@ private extension MergeTests
                     = headReferencePointer
             else
             {
-                XCTFail("The HEAD reference pointer was nil.")
-                return
+                throw NSError.makeError("The HEAD reference pointer was nil.")
             }
             
             

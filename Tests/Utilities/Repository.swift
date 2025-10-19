@@ -626,8 +626,7 @@ internal extension Repository
         guard let repositoryPointer: OpaquePointer = repositoryPointer
         else
         {
-            XCTFail("Failed to initialize repository.")
-            return
+            throw NSError.makeError("Failed to initialize repository.")
         }
         
         let repository = Repository(

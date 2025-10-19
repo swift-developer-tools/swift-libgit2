@@ -131,8 +131,7 @@ enum Diff
         guard let oldCommitPointer: OpaquePointer = oldCommitPointer
         else
         {
-            XCTFail("The old commit pointer was nil.")
-            return
+            throw NSError.makeError("The old commit pointer was nil.")
         }
         
         
@@ -148,8 +147,7 @@ enum Diff
         guard let newCommitPointer: OpaquePointer = newCommitPointer
         else
         {
-            XCTFail("The new commit pointer was nil.")
-            return
+            throw NSError.makeError("The new commit pointer was nil.")
         }
         
         
@@ -187,8 +185,7 @@ enum Diff
         guard let diffPointer: OpaquePointer = diffPointer
         else
         {
-            XCTFail("The diff pointer was nil.")
-            return
+            throw NSError.makeError("The diff pointer was nil.")
         }
         
         
@@ -267,6 +264,8 @@ enum Diff
         }
         
         assertDiffChanges(diffPointer: diffPointer)
+        
+        
         
         return try body(diffPointer)
     }
