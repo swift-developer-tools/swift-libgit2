@@ -115,7 +115,7 @@ public func gitCommitFree(
 /// Gets the ID of the given commit.
 /// - Parameter commit: The commit for which to get the ID. The underlying
 /// type must be `git_commit`.
-/// - Returns: The commit ID.
+/// - Returns: The ID of the given commit.
 ///
 /// ## C Equivalent
 ///

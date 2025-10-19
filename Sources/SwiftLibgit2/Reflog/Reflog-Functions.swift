@@ -164,7 +164,7 @@ public func gitReflogDelete(
 /// Gets the number of log entries in the given reflog.
 /// - Parameter reflog: The reflog to evaluate. The underlying type must be
 /// `git_reflog`.
-/// - Returns: The number of log entries.
+/// - Returns: The number of log entries in the given reflog.
 ///
 /// ## C Equivalent
 ///
@@ -182,7 +182,7 @@ public func gitReflogEntryCount(
 /// - Parameters:
 ///   - reflog: The reflog to search. The underlying type must be `git_reflog`.
 ///   - idx: The index of the entry within the given reflog.
-/// - Returns: The reflog entry.
+/// - Returns: The reflog entry at the given index.
 ///
 /// ## C Equivalent
 ///
@@ -232,7 +232,7 @@ public func gitReflogDrop(
 /// Gets the old ID of the given reflog entry.
 /// - Parameter entry: The reflog entry to use. The underlying type must be
 /// `git_reflog_entry`.
-/// - Returns: The old ID.
+/// - Returns: The old ID of the given reflog entry.
 ///
 /// ## C Equivalent
 ///
@@ -256,7 +256,7 @@ public func gitReflogEntryIDOld(
 /// Gets the new ID of the given reflog entry.
 /// - Parameter entry: The reflog entry to use. The underlying type must be
 /// `git_reflog_entry`.
-/// - Returns: The new ID.
+/// - Returns: The new ID of the given reflog entry.
 ///
 /// ## C Equivalent
 ///
@@ -280,7 +280,7 @@ public func gitReflogEntryIDNew(
 /// Gets the committer signature of the given reflog entry.
 /// - Parameter entry: The reflog entry to use. The underlying type must be
 /// `git_reflog_entry`.
-/// - Returns: The committer signature.
+/// - Returns: The committer signature of the given reflog entry.
 ///
 /// ## C Equivalent
 ///
@@ -304,7 +304,7 @@ public func gitReflogEntryCommitter(
 /// Gets the log message of the given reflog entry.
 /// - Parameter entry: The reflog entry to use. The underlying type must be
 /// `git_reflog_entry`.
-/// - Returns: The log message.
+/// - Returns: The log message of the given reflog entry.
 ///
 /// ## C Equivalent
 ///

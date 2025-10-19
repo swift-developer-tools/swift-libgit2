@@ -111,7 +111,7 @@ public func gitBlobFree(
 /// Gets the ID of the given blob.
 /// - Parameter blob: The blob for which to get the ID. The underlying type
 /// must be `git_blob`.
-/// - Returns: The ID of the blob.
+/// - Returns: The ID of the given blob.
 ///
 /// ## C Equivalent
 ///

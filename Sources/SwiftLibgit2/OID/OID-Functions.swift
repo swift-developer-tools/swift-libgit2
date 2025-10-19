@@ -258,7 +258,7 @@ public func gitOIDPathFmt(
 
 /// Formats the given ID into a string.
 /// - Parameter oid: The ID to format.
-/// - Returns: The formatted ID.
+/// - Returns: The formatted string representation of the given ID.
 ///
 /// ## C Equivalent
 ///
@@ -281,7 +281,7 @@ public func gitOIDToStrS(
 ///   - out: The pointer in which to store the hex string.
 ///   - n: The number of characters to write.
 ///   - id: The ID to format.
-/// - Returns: The formatted ID.
+/// - Returns: The formatted string representation of the given ID.
 ///
 /// ## Discussion
 ///
