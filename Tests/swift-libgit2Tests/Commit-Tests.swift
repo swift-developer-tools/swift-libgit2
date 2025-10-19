@@ -775,9 +775,9 @@ final class CommitTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension CommitTests
+private extension CommitTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var callCount   : Int       = 0
         var lastMessage : String?   = nil
@@ -785,7 +785,7 @@ extension CommitTests
     
     
     
-    private enum AmendOrDuplicate
+    enum AmendOrDuplicate
     {
         case amend
         case duplicate
@@ -796,7 +796,7 @@ extension CommitTests
     /// Amends or duplicates a commit.
     /// - Parameter type: Whether to amend or duplicate a commit.
     /// - Throws: An error if an operation fails.
-    private func amendOrDuplicateCommit(
+    func amendOrDuplicateCommit(
         type: AmendOrDuplicate
     ) throws
     {
@@ -961,7 +961,7 @@ extension CommitTests
     /// are not `nil` and are equal to the default ``Repository`` commit author
     /// name and email.
     /// - Parameter commitPointer: The commit to check.
-    private func validateAuthorAndCommitterSignatures(
+    func validateAuthorAndCommitterSignatures(
         _ commitPointer: OpaquePointer
     )
     {

@@ -11,7 +11,7 @@ import Foundation
 
 
 
-extension String
+internal extension String
 {
     /// Atomically writes the contents of the receiver to the `URL` specified
     /// by `url` using UTF-8 encoding. This is a convenience wrapper of

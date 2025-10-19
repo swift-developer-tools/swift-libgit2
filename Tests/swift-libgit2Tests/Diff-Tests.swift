@@ -1705,9 +1705,9 @@ final class DiffTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension DiffTests
+private extension DiffTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var binaryCount     : Int   = 0
         var fileCount       : Int   = 0
@@ -1719,7 +1719,7 @@ extension DiffTests
     
     
     
-    private static let binaryCB: GitDiffBinaryCB =
+    static let binaryCB: GitDiffBinaryCB =
     {
         delta, binary, payload in
         
@@ -1740,7 +1740,7 @@ extension DiffTests
     
     
     
-    private static let fileCB: GitDiffFileCB =
+    static let fileCB: GitDiffFileCB =
     {
         delta, progress, payload in
         
@@ -1761,7 +1761,7 @@ extension DiffTests
     
     
     
-    private static let hunkCB: GitDiffHunkCB =
+    static let hunkCB: GitDiffHunkCB =
     {
         delta, hunk, payload in
         
@@ -1782,7 +1782,7 @@ extension DiffTests
     
     
     
-    private static let lineCB: GitDiffLineCB =
+    static let lineCB: GitDiffLineCB =
     {
         delta, hunk, line, payload in
         
@@ -1803,7 +1803,7 @@ extension DiffTests
     
     
     
-    private static let progressCB: GitDiffProgressCB =
+    static let progressCB: GitDiffProgressCB =
     {
         diffSoFar, oldPath, newPath, payload in
         
@@ -1824,7 +1824,7 @@ extension DiffTests
     
     
     
-    private static let notifyCB: GitDiffNotifyCB =
+    static let notifyCB: GitDiffNotifyCB =
     {
         diffSoFar, deltaToAdd, matchedPathspec, payload in
         

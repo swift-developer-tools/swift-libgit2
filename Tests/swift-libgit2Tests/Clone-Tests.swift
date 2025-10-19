@@ -438,9 +438,9 @@ final class CloneTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension CloneTests
+private extension CloneTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var isRepositoryCreated : Bool  = false
         var isRemoteCreated     : Bool  = false

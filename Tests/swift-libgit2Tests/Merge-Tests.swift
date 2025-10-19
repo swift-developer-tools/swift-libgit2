@@ -1161,7 +1161,7 @@ final class MergeTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension MergeTests
+private extension MergeTests
 {
     /// Calls the given closure with a ``Repository`` instance, a pointer
     /// to the repository's index, a pointer to an annotated commit, and a
@@ -1169,7 +1169,7 @@ extension MergeTests
     /// merge operation.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withPreparedMerge(
+    func withPreparedMerge(
         _ body: (Repository, OpaquePointer, OpaquePointer, OpaquePointer) throws -> Void
     ) throws
     {

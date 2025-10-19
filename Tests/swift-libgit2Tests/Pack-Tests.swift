@@ -465,7 +465,7 @@ final class PackTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension PackTests
+private extension PackTests
 {
     struct CallbackData
     {
@@ -485,7 +485,7 @@ extension PackTests
     /// Tests writing a packfile with or without a callback.
     /// - Parameter withCallback: Whether to write the packfile with a callback.
     /// - Throws: An error if an operation fails.
-    private func testGitWithPackbuilderWriteFlow(
+    func testGitWithPackbuilderWriteFlow(
         withCallback: Bool
     ) throws
     {
@@ -562,7 +562,7 @@ extension PackTests
     ///   insert that commit.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withRepositoryAndNewPackbuilder(
+    func withRepositoryAndNewPackbuilder(
         insertCommit    : CommitInsertType?                             = nil,
         _ body          : (Repository, OpaquePointer) throws -> Void
     ) throws

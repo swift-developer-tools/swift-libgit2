@@ -633,9 +633,9 @@ final class CheckoutTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension CheckoutTests
+private extension CheckoutTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var notifyCallCount     : Int                   = 0
         var lastNotifyReason    : GitCheckoutNotifyT?   = nil

@@ -819,13 +819,13 @@ final class OIDTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension OIDTests
+private extension OIDTests
 {
     /// Calls the given closure with a ``Repository`` instance. the HEAD
     /// OID of that repository, and the string representation of that OID.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withRepositoryAndHeadOID(
+    func withRepositoryAndHeadOID(
         _ body: (Repository, GitOID, String) throws -> Void
     ) throws
     {

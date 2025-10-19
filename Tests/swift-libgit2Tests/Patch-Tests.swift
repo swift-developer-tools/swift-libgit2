@@ -380,7 +380,7 @@ final class PatchTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension PatchTests
+private extension PatchTests
 {
     struct CallbackData
     {
@@ -392,7 +392,7 @@ extension PatchTests
     /// Calls the given closure with a pointer to a patch.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withPatchPointer(
+    func withPatchPointer(
         _ body: (OpaquePointer) throws -> Void
     ) throws
     {

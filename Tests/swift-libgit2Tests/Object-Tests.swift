@@ -397,13 +397,13 @@ final class ObjectTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension ObjectTests
+private extension ObjectTests
 {
     /// Tests looking up an object of the given type and validating its
     /// properties.
     /// - Parameter type: The type of object to look up.
     /// - Throws: An error if an operation fails.
-    private func testGitCommitLookup(
+    func testGitCommitLookup(
         type: GitObjectT
     ) throws
     {
@@ -482,7 +482,7 @@ extension ObjectTests
     ///   - type: The type of object to look up.
     ///   - prefixLength: The prefix length to use.
     /// - Throws: An error if an operation fails.
-    private func testGitCommitLookupPrefix(
+    func testGitCommitLookupPrefix(
         type            : GitObjectT,
         prefixLength    : Int           = 7
     ) throws

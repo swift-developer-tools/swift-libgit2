@@ -1002,7 +1002,7 @@ final class ODBTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension ODBTests
+private extension ODBTests
 {
     struct CallbackData
     {
@@ -1015,7 +1015,7 @@ extension ODBTests
     /// Tests writing a packfile with or without a callback.
     /// - Parameter withCallback: Whether to write the packfile with a callback.
     /// - Throws: An error if an operation fails.
-    private func testGitODBWritePackFlow(
+    func testGitODBWritePackFlow(
         withCallback: Bool
     ) throws
     {
@@ -1101,7 +1101,7 @@ extension ODBTests
     /// to an opened object database.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withOpenedODBPointer(
+    func withOpenedODBPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {

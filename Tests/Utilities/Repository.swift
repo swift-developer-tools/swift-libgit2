@@ -515,12 +515,12 @@ struct Repository
 
 // MARK: - Extensions
 
-extension Repository
+internal extension Repository
 {
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
     /// - Throws: An error if an operation fails.
-    private static func createBlameData(
+    static func createBlameData(
         in repository: Repository
     ) throws
     {

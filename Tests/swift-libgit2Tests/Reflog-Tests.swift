@@ -335,13 +335,13 @@ final class ReflogTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension ReflogTests
+private extension ReflogTests
 {
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a reflog.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withRepositoryAndReflogPointer(
+    func withRepositoryAndReflogPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {

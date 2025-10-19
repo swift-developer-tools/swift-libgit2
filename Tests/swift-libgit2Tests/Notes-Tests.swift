@@ -752,13 +752,13 @@ final class NotesTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension NotesTests
+private extension NotesTests
 {
-    private static let defaultNoteMessage: String = "Hello World!"
+    static let defaultNoteMessage: String = "Hello World!"
     
     
     
-    private struct CallbackData
+    struct CallbackData
     {
         var callCount       : Int       = 0
         var noteOIDs        : [GitOID]  = []
@@ -771,7 +771,7 @@ extension NotesTests
     /// a created, and the ID of that note.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withRepositoryAndNote(
+    func withRepositoryAndNote(
         _ body: (Repository, OpaquePointer, GitOID) throws -> Void
     ) throws
     {

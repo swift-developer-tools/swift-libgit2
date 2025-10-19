@@ -1766,9 +1766,9 @@ final class IndexTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension IndexTests
+private extension IndexTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var callCount: Int = 0
     }
