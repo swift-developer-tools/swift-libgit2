@@ -566,7 +566,7 @@ public func gitNoteFree(
 
 /// Gets the default notes reference for the given repository.
 /// - Parameters:
-///   - out: The `Data` instance to update with the default notes reference.
+///   - out: The `Data` instance in which to store the default notes reference.
 ///   - repo: The repository to check. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.

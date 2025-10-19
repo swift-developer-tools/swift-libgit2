@@ -155,7 +155,7 @@ public func gitObjectID(
 
 /// Gets the abbreviated ID for the given object.
 /// - Parameters:
-///   - out: The `Data` instance to update with the abbreviated ID.
+///   - out: The `Data` instance in which to store the abbreviated ID.
 ///   - obj: The object for which to get the abbreviated ID. The underlying
 ///   type must be `git_object`.
 /// - Returns: A ``GitErrorCode`` instance.

@@ -397,7 +397,7 @@ public func gitBranchSetUpstream(
 
 /// Gets the upstream name of the given local branch.
 /// - Parameters:
-///   - out: The `Data` instance to update with the upstream name.
+///   - out: The `Data` instance in which to store the upstream name.
 ///   - repo: The repository containing the branches. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The name of the local branch for which to get the upstream
@@ -495,7 +495,7 @@ public func gitBranchIsCheckedOut(
 
 /// Gets the remote name of the given remote-tracking branch.
 /// - Parameters:
-///   - out: The `Data` instance to update with the remote name.
+///   - out: The `Data` instance in which to store the remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -540,7 +540,7 @@ public func gitBranchRemoteName(
 
 /// Gets the upstream remote name of the given local branch.
 /// - Parameters:
-///   - buf: The `Data` instance to update with the upstream remote name.
+///   - buf: The `Data` instance in which to store the upstream remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -580,7 +580,7 @@ public func gitBranchUpstreamRemote(
 
 /// Gets the upstream merge name of the given local branch.
 /// - Parameters:
-///   - buf: The `Data` instance to update with the upstream merge name.
+///   - buf: The `Data` instance in which to store the upstream merge name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the

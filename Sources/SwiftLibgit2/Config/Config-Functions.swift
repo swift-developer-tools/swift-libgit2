@@ -34,7 +34,7 @@ public func gitConfigEntryFree(
 
 
 /// Locates the path to the global configuration file.
-/// - Parameter out: The `Data` instance to update with the path.
+/// - Parameter out: The `Data` instance in which to store the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -68,7 +68,7 @@ public func gitConfigFindGlobal(
 
 
 /// Locates the path to the global XDG-compatible configuration file.
-/// - Parameter out: The `Data` instance to update with the path.
+/// - Parameter out: The `Data` instance in which to store the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -101,7 +101,7 @@ public func gitConfigFindXDG(
 
 
 /// Locates the path to the system configuration file.
-/// - Parameter out: The `Data` instance to update with the path.
+/// - Parameter out: The `Data` instance in which to store the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -130,7 +130,7 @@ public func gitConfigFindSystem(
 
 
 /// Locates the path to the ProgramData configuration file.
-/// - Parameter out: The `Data` instance to update with the path.
+/// - Parameter out: The `Data` instance in which to store the path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -625,7 +625,7 @@ public func gitConfigGetBool(
 
 /// Gets the value of the specified path configuration variable.
 /// - Parameters:
-///   - out: The `Data` instance to update with the path value.
+///   - out: The `Data` instance in which to store the path value.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -715,7 +715,7 @@ public func gitConfigGetString(
 
 /// Gets the value of the specified string configuration variable.
 /// - Parameters:
-///   - out: The `Data` instance to update with the string.
+///   - out: The `Data` instance in which to store the string.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -1493,7 +1493,7 @@ public func gitConfigParseInt64(
 
 /// Parses the given string value as a path.
 /// - Parameters:
-///   - out: The `Data` instance to update with the path.
+///   - out: The `Data` instance in which to store the path.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

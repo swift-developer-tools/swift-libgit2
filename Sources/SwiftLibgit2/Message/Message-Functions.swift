@@ -15,7 +15,7 @@ import Foundation
 /// Cleans up excess whitespace in the given message, and adds a trailing
 /// newline if necessary.
 /// - Parameters:
-///   - out: The `Data` instance to update with the prettified message.
+///   - out: The `Data` instance in which to store the prettified message.
 ///   - message: The message to prettify.
 ///   - stripComments: Whether to remove comment lines.
 ///   - commentChar: The comment character at the start of lines to remove,

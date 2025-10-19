@@ -637,7 +637,7 @@ public func gitDiffPrint(
 
 /// Gets the complete formatted text from the given diff.
 /// - Parameters:
-///   - out: The `Data` instance to update with the formatted text.
+///   - out: The `Data` instance in which to store the formatted text.
 ///   - diff: The diff to use. The underlying type must be `git_diff`.
 ///   - format: The diff data output format to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -1009,9 +1009,9 @@ public func gitDiffStatsDeletions(
 
 
 
-/// Updates the given `Data` instance with the given diff statistics.
+/// Stores the given diff statistics in the given `Data` instance.
 /// - Parameters:
-///   - out: The `Data` instance to update with the given diff statistics.
+///   - out: The `Data` instance in which to store the given diff statistics.
 ///   - stats: The diff statistics to write. The underlying type must be
 ///   `git_diff_stats`.
 ///   - format: The diff stats format to use.
