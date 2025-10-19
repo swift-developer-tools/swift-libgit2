@@ -15,25 +15,6 @@ import XCTest
 
 // MARK: - Result Codes
 
-/// Checks whether a libgit2 result code is ``GitErrorCode/gitOK``, or is one
-/// of the given codes.
-/// - Parameters:
-///   - resultCode: The libgit2 result code.
-///   - includedCodes: The libgit2 result codes other than
-///   ``GitErrorCode/gitOK`` to consider successful.
-/// - Returns: Whether the libgit2 result code was ``GitErrorCode/gitOK``,
-/// or was one of the given result codes.
-func isOK(
-    _           resultCode      : GitErrorCode,
-    including   includedCodes   : Set<GitErrorCode> = []
-) -> Bool
-{
-    return resultCode == GitErrorCode.gitOK
-           || includedCodes.contains(resultCode)
-}
-
-
-
 /// Asserts that the given libgit2 operation result code is
 /// ``GitErrorCode/gitOK``.
 /// - Parameter result: The libgit2 operation result code.
@@ -41,13 +22,11 @@ func XCTAssertOK(
     _ result: GitErrorCode
 )
 {
-    guard !isOK(result)
+    guard result != .gitOK
     else
     {
         return
     }
-    
-    
     
     let error   : UnsafePointer<git_error>?     = git_error_last()
     var message : String                        = "Code: \(result)."
@@ -69,7 +48,7 @@ func XCTAssertNotOK(
     _ result: GitErrorCode
 )
 {
-    guard !isOK(result)
+    guard result != .gitOK
     else
     {
         XCTFail("The result was gitOK.")

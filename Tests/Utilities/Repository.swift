@@ -336,7 +336,7 @@ struct Repository
             name:   "HEAD"
         )
         
-        if isOK(referenceToNameToIDResult)
+        if referenceToNameToIDResult == .gitOK
         {
             let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &headCommitPointer,

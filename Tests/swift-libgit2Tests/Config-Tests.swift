@@ -378,7 +378,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 = gitConfigOpenDefault(out: &parentConfigPointer)
             
             guard
-                isOK(configOpenDefaultResult),
+                configOpenDefaultResult == .gitOK,
                 let parentConfigPointer: OpaquePointer = parentConfigPointer
             else
             {
@@ -396,7 +396,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 level:      .gitConfigLevelGlobal
             )
             
-            if isOK(configOpenLevelResult)
+            if configOpenLevelResult == .gitOK
             {
                 XCTAssertNotNil(levelConfigPointer)
             }
@@ -408,7 +408,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 config:     parentConfigPointer
             )
             
-            if isOK(configOpenGlobalResult)
+            if configOpenGlobalResult == .gitOK
             {
                 XCTAssertNotNil(globalConfigPointer)
             }
@@ -995,7 +995,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         let configOpenDefaultResult: GitErrorCode
             = gitConfigOpenDefault(out: &configPointer)
         
-        if isOK(configOpenDefaultResult)
+        if configOpenDefaultResult == .gitOK
         {
             XCTAssertNotNil(configPointer)
         }
