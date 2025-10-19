@@ -37,8 +37,8 @@ public func gitBlameOptionsInit(
 
 
 
-/// Gets the number of lines that exist in the blame.
-/// - Parameter blame: The blame to query. The underlying type must be
+/// Gets the number of lines that exist in the given blame.
+/// - Parameter blame: The blame to evaluate. The underlying type must be
 /// `git_blame`.
 /// - Returns: The number of lines that exist in the blame.
 ///
@@ -54,8 +54,8 @@ public func gitBlameLineCount(
 
 
 
-/// Gets the number of hunks that exist in the blame.
-/// - Parameter blame: The blame to query. The underlying type must be
+/// Gets the number of hunks that exist in the given blame.
+/// - Parameter blame: The blame to evaluate. The underlying type must be
 /// `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
@@ -73,9 +73,9 @@ public func gitBlameHunkCount(
 
 /// Gets the blame hunk at the given index.
 /// - Parameters:
-///   - blame: The blame to query. The underlying type must be `git_blame`.
-///   - index: The index of the hunk to retrieve.
-/// - Returns: The hunk at the given index.
+///   - blame: The blame to search. The underlying type must be `git_blame`.
+///   - index: The index of the blame hunk to retrieve.
+/// - Returns: The blame hunk.
 ///
 /// ## C Equivalent
 ///
@@ -100,11 +100,11 @@ public func gitBlameHunkByIndex(
 
 
 
-/// Gets the hunk that relates to the given line number in the newest commit.
+/// Gets the blame hunk at the given line number in the newest commit.
 /// - Parameters:
-///   - blame: The blame to query. The underlying type must be `git_blame`.
-///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk containing the given line.
+///   - blame: The blame to search. The underlying type must be `git_blame`.
+///   - lineNo: The 1-indexed line number of the blame hunk to retrieve.
+/// - Returns: The blame hunk.
 ///
 /// ## C Equivalent
 ///
@@ -129,11 +129,11 @@ public func gitBlameHunkByLine(
 
 
 
-/// Gets the information about the line in the blame.
+/// Gets the blame line at the given index.
 /// - Parameters:
-///   - blame: The blame to query. The underlying type must be `git_blame`.
-///   - idx: The 1-indexed line number.
-/// - Returns: The blamed line.
+///   - blame: The blame to search. The underlying type must be `git_blame`.
+///   - idx: The 1-indexed line number of the blame line to retrieve.
+/// - Returns: The blame line.
 ///
 /// ## C Equivalent
 ///
@@ -158,8 +158,8 @@ public func gitBlameLineByIndex(
 
 
 
-/// Gets the number of hunks that exist in the blame.
-/// - Parameter blame: The blame to query. The underlying type must be
+/// Gets the number of hunks that exist in the given blame.
+/// - Parameter blame: The blame to search. The underlying type must be
 /// `git_blame`.
 /// - Returns: The number of hunks that exist in the blame.
 ///
@@ -182,9 +182,9 @@ public func gitBlameGetHunkCount(
 
 /// Gets the blame hunk at the given index.
 /// - Parameters:
-///   - blame: The blame to query. The underlying type must be `git_blame`.
-///   - index: The index of the hunk to retrieve.
-/// - Returns: The hunk at the given index.
+///   - blame: The blame to search. The underlying type must be `git_blame`.
+///   - index: The index of the blame hunk to retrieve.
+/// - Returns: The blame hunk.
 ///
 /// ## Discussion
 ///
@@ -214,11 +214,11 @@ public func gitBlameGetHunkByIndex(
 
 
 
-/// Gets the hunk that relates to the given line number in the newest commit.
+/// Gets the blame hunk at the given line number in the newest commit.
 /// - Parameters:
-///   - blame: The blame to query. The underlying type must be `git_blame`.
-///   - lineNo: The 1-indexed line number for which to find a hunk.
-/// - Returns: The hunk containing the given line.
+///   - blame: The blame to search. The underlying type must be `git_blame`.
+///   - lineNo: The 1-indexed line number of the blame hunk to retrieve.
+/// - Returns: The blame hunk.
 ///
 /// ## Discussion
 ///
@@ -248,7 +248,7 @@ public func gitBlameGetHunkByLine(
 
 
 
-/// Gets the blame for a single file in the repository.
+/// Gets the blame for the specified file in the given repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the blame. The underlying type must
 ///   be `git_blame`.

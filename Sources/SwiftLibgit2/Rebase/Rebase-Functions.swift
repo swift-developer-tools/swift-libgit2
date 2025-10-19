@@ -252,7 +252,7 @@ public func gitRebaseOperationCurrent(
 
 
 
-/// Gets the rebase operation specified by the given index.
+/// Gets the rebase operation at the given index.
 /// - Parameters:
 ///   - rebase: The in-progress rebase to use. The underlying type must be
 ///   `git_rebase`.

@@ -110,6 +110,11 @@ enum Branch
         
         
         
+        if freeBranch
+        {
+            return nil
+        }
+        
         return branchPointer
     }
     

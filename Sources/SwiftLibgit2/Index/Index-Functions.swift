@@ -489,7 +489,7 @@ public func gitIndexClear(
 
 
 
-/// Gets the entry at the given position within the given index.
+/// Gets the index entry at the given position.
 /// - Parameters:
 ///   - index: The index to search. The underlying type must be `git_index`.
 ///   - n: The position of the entry within the given index.
