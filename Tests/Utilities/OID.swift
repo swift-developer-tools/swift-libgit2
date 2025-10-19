@@ -17,7 +17,7 @@ import XCTest
 enum OID
 {
     /// Gets the HEAD commit OID.
-    /// - Parameter repository: The repository on which the HEAD commit exists.
+    /// - Parameter repository: The repository to use.
     /// - Returns: The HEAD commit OID.
     static func getHEADCommitOID(
         in repository: Repository

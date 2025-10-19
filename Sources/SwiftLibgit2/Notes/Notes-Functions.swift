@@ -16,7 +16,7 @@ import Foundation
 /// - Parameters:
 ///   - out: The pointer in which to store the note iterator. The underlying
 ///   type must be `git_note_iterator`.
-///   - repo: The repository in which to look up the note. The underlying
+///   - repo: The repository containing the notes to iterate. The underlying
 ///   type must be `git_repository`.
 ///   - notesRef: The canonical name of the reference to use. Pass `nil` to
 ///   use `refs/notes/commits`.
@@ -137,8 +137,8 @@ public func gitNoteNext(
 /// - Parameters:
 ///   - out: The pointer in which to store the note. The underlying type
 ///   must be `git_note`.
-///   - repo: The repository in which to look up the note. The underlying
-///   type must be `git_repository`.
+///   - repo: The repository containing the note. The underlying type must be
+///   `git_repository`.
 ///   - notesRef: The canonical name of the reference to use. Pass `nil` to
 ///   use `refs/notes/commits`.
 ///   - oid: The ID of the object for which to read the note.
@@ -173,8 +173,8 @@ public func gitNoteRead(
 /// - Parameters:
 ///   - out: The pointer in which to store the note. The underlying type
 ///   must be `git_note`.
-///   - repo: The repository in which to look up the note. The underlying
-///   type must be `git_repository`.
+///   - repo: The repository containing the note. The underlying type must be
+///   `git_repository`.
 ///   - notesCommit: The notes commit object to read. The underlying type must
 ///   be `git_commit`.
 ///   - oid: The ID of the object for which to read the note.

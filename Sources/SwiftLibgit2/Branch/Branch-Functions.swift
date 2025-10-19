@@ -132,7 +132,7 @@ public func gitBranchDelete(
 /// - Parameters:
 ///   - out: The pointer in which to store the iterator. The underlying type
 ///   must be `git_branch_iterator`.
-///   - repo: The repository in which the branches exist. The underlying type
+///   - repo: The repository containing the branches. The underlying type
 ///   must be `git_repository`.
 ///   - listFlags: The branch type flags to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -266,7 +266,7 @@ public func gitBranchMove(
 /// - Parameters:
 ///   - out: The pointer in which to store the looked-up branch. The underlying
 ///   type must be `git_reference`.
-///   - repo: The repository in which the branches exist. The underlying type
+///   - repo: The repository containing the branches. The underlying type
 ///   must be `git_repository`.
 ///   - branchName: The name of the branch to lookup. The name will be
 ///   validated for consistency.
