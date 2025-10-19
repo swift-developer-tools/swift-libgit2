@@ -12,8 +12,8 @@ import CLibgit2
 
 
 /// Initializes the global libgit2 state.
-/// - Returns: The number of times the initialization has been called
-/// (including this one) that have not subsequently been shutdown.
+/// - Returns: The number of times libgit2 has been initialized (including
+/// this initialization), without having been subsequently been shutdown.
 ///
 /// ## Discussion
 ///
@@ -31,8 +31,8 @@ public func gitLibgit2Init() -> Int32
 
 
 /// Shuts down the global libgit2 state.
-/// - Returns: The number of remainining initializations that have not been
-/// shutdown (after this one).
+/// - Returns: The number of remainining libgit2 initializations that have not
+/// been shutdown (after this one).
 ///
 /// ## Discussion
 ///
