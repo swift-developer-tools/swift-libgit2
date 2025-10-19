@@ -627,7 +627,7 @@ public func gitBranchUpstreamMerge(
 /// ## C Equivalent
 ///
 /// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
-public func gitBranchIsValid(
+public func gitBranchNameIsValid(
     valid   : UnsafeMutablePointer<Bool>,
     name    : String
 ) -> GitErrorCode
