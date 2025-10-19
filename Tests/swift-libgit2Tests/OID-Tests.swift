@@ -31,7 +31,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDCmpAndEqual() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             repository, headOID, headOIDString in
             
@@ -107,7 +107,7 @@ final class OIDTests: XCTestCaseStopOnFail
 
     func testGitOIDCpy() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -134,7 +134,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDFmt() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, _ in
             
@@ -185,7 +185,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDFromRaw() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, _ in
             
@@ -211,7 +211,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDFromStrAndToStrS() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -231,7 +231,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDFromStrP() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -267,7 +267,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDFromStrN() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -331,7 +331,7 @@ final class OIDTests: XCTestCaseStopOnFail
         
         
         
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, _ in
             
@@ -372,7 +372,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDNCmp() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             repository, headOID, _ in
             
@@ -419,7 +419,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDNFmt() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -469,7 +469,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDPathFmt() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -583,7 +583,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDShortenNewAndAdd() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             repository, headOID, _ in
             
@@ -674,7 +674,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDStrEqAndStrCmp() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -745,7 +745,7 @@ final class OIDTests: XCTestCaseStopOnFail
     
     func testGitOIDToStr() throws
     {
-        try withRepositoryAndHeadOID
+        try withHEADOID
         {
             _, headOID, headOIDString in
             
@@ -821,11 +821,11 @@ final class OIDTests: XCTestCaseStopOnFail
 
 private extension OIDTests
 {
-    /// Calls the given closure with a ``Repository`` instance. the HEAD
+    /// Calls the given closure with a ``Repository`` instance, the HEAD
     /// OID of that repository, and the string representation of that OID.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withRepositoryAndHeadOID(
+    func withHEADOID(
         _ body: (Repository, GitOID, String) throws -> Void
     ) throws
     {

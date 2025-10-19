@@ -275,7 +275,7 @@ private extension ApplyTests
         endContent      : String
     ) throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             

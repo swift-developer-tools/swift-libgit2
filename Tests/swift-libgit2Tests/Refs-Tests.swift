@@ -17,7 +17,7 @@ final class RefsTests: XCTestCaseStopOnFail
 {
     func testGitReferenceCreateAndLookup() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -62,7 +62,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceCreateMatching() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, _ in
             
@@ -136,7 +136,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceDelete() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -151,7 +151,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceDupAndCmp() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -194,7 +194,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceEnsureLog() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, _ in
             
@@ -256,7 +256,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceForEach() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -284,7 +284,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceForEachGlob() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -315,7 +315,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceForEachName() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -411,7 +411,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceHasLog() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, _ in
             
@@ -428,7 +428,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceIsBranch() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -442,7 +442,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceIsNote() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -456,7 +456,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceIsRemote() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -470,7 +470,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceIsTag() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -491,7 +491,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceIteratorGlobNewAndNext() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -557,7 +557,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceIteratorNewAndNext() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -624,7 +624,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceList() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -672,7 +672,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceNameAndShorthand() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -732,7 +732,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceNameToID() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -849,7 +849,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferencePeel() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             _, directRefPointer in
             
@@ -877,7 +877,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceRemove() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, _ in
             
@@ -894,7 +894,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceResolveAndDWIM() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -981,7 +981,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceSetTargetAndName() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -1061,7 +1061,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceSymbolicCreateMatching() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, _ in
             
@@ -1116,7 +1116,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceSymbolicSetTarget() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -1205,7 +1205,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceTargetPeel() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, _ in
             
@@ -1256,7 +1256,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceTypeAndTarget() throws
     {
-        try withRepositoryAndDirectRefPointer
+        try withDirectRefPointer
         {
             repository, directRefPointer in
             
@@ -1391,7 +1391,7 @@ private extension RefsTests
     /// to a direct reference.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withRepositoryAndDirectRefPointer(
+    func withDirectRefPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {

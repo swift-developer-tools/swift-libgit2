@@ -685,7 +685,7 @@ internal extension Repository
     /// the repository's index.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    static func withRepositoryAndIndexPointer(
+    static func withIndexPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {

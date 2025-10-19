@@ -474,7 +474,7 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffFindSimilar() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             
@@ -925,7 +925,7 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffIndexToIndex() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, oldIndexPointer in
             
@@ -1547,7 +1547,7 @@ final class DiffTests: XCTestCaseStopOnFail
     
     func testGitDiffTreeToIndex() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             

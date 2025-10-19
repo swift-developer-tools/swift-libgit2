@@ -17,7 +17,7 @@ final class NotesTests: XCTestCaseStopOnFail
 {
     func testGitNoteAuthor() throws
     {
-        try withRepositoryAndNote
+        try withNotePointer
         {
             _, notePointer, _ in
             
@@ -397,7 +397,7 @@ final class NotesTests: XCTestCaseStopOnFail
     
     func testGitNoteCommitter() throws
     {
-        try withRepositoryAndNote
+        try withNotePointer
         {
             _, notePointer, _ in
             
@@ -415,7 +415,7 @@ final class NotesTests: XCTestCaseStopOnFail
     
     func testGitNoteCreateAndRead() throws
     {
-        try withRepositoryAndNote
+        try withNotePointer
         {
             _, notePointer, noteOID in
             
@@ -708,7 +708,7 @@ final class NotesTests: XCTestCaseStopOnFail
     
     func testGitNoteRemove() throws
     {
-        try withRepositoryAndNote
+        try withNotePointer
         {
             repository, _, _ in
             
@@ -768,10 +768,10 @@ private extension NotesTests
     
     
     /// Calls the given closure with a ``Repository`` instance, a pointer to
-    /// a created, and the ID of that note.
+    /// a created note, and the ID of that note.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withRepositoryAndNote(
+    func withNotePointer(
         _ body: (Repository, OpaquePointer, GitOID) throws -> Void
     ) throws
     {

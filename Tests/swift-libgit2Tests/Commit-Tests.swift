@@ -36,7 +36,7 @@ final class CommitTests: XCTestCaseStopOnFail
     
     func testGitCommitCreateBufferWithSignatureAndExtract() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             

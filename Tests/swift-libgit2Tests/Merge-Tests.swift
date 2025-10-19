@@ -582,7 +582,7 @@ final class MergeTests: XCTestCaseStopOnFail
     
     func testGitMergeFileFromIndex() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             
@@ -1173,7 +1173,7 @@ private extension MergeTests
         _ body: (Repository, OpaquePointer, OpaquePointer, OpaquePointer) throws -> Void
     ) throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             
