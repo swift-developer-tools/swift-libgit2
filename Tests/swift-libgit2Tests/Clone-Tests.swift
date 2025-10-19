@@ -296,7 +296,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeReference(headReferencePointer)
+                gitReferenceFree(ref: headReferencePointer)
             }
             
             
@@ -307,12 +307,19 @@ final class CloneTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
-            XCTAssertNotNil(headReferencePointer)
+            
+            guard let headReferencePointer: OpaquePointer
+                    = headReferencePointer
+            else
+            {
+                XCTFail("The HEAD reference pointer was nil.")
+                return
+            }
             
             
             
-            guard let branchName
-                    = String(optionalCString: git_reference_shorthand(headReferencePointer))
+            guard let branchName: String
+                    = gitReferenceShorthand(ref: headReferencePointer)
             else
             {
                 XCTFail("The branch name was nil.")

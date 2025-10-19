@@ -309,7 +309,7 @@ extension CherrypickTests
         defer
         {
             gitCommitFree(commit: headCommitPointer)
-            Free.freeReference(branchPointer)
+            gitReferenceFree(ref: branchPointer)
         }
         
         
@@ -331,10 +331,13 @@ extension CherrypickTests
         
         XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
         
+        guard let branchPointer: OpaquePointer = branchPointer
+        else
+        {
+            throw NSError.makeError("The branch pointer was nil.")
+        }
         
-        
-        guard let referenceName: UnsafePointer<CChar>
-                = git_reference_name(branchPointer)
+        guard let referenceName: String = gitReferenceName(ref: branchPointer)
         else
         {
             throw NSError.makeError("The branch name was nil.")

@@ -49,7 +49,7 @@ enum Branch
             
             if freeBranch
             {
-                Free.freeReference(branchPointer)
+                gitReferenceFree(ref: branchPointer)
             }
         }
         
@@ -135,7 +135,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(branchPointer)
+            gitReferenceFree(ref: branchPointer)
         }
         
         
@@ -183,7 +183,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(branchPointer)
+            gitReferenceFree(ref: branchPointer)
         }
         
         

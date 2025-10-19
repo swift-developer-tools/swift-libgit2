@@ -327,22 +327,21 @@ struct Repository
         
         
         
-        // TODO: Remove once `git_reference_name_to_id()` has a binding.
-        var cHeadOID = git_oid()
+        var headOID = GitOID()
         
         /// Get the current HEAD commit as the parent commit, if it exists.
-        let referenceToNameToIDResult: Int32 = git_reference_name_to_id(
-            &cHeadOID,
-            pointer,
-            "HEAD"
+        let referenceToNameToIDResult: GitErrorCode = gitReferenceNameToID(
+            out:    &headOID,
+            repo:   pointer,
+            name:   "HEAD"
         )
         
-        if isOK(GitErrorCode(rawValue: referenceToNameToIDResult))
+        if isOK(referenceToNameToIDResult)
         {
             let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &headCommitPointer,
                 repo:       pointer,
-                id:         GitOID(cValue: cHeadOID)
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)

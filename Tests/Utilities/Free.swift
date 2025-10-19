@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_reference` instance.
-    /// - Parameter reference: The reference to free. The underlying type must
-    /// be `git_reference`.
-    static func freeReference(
-        _ reference: OpaquePointer?
-    )
-    {
-        guard let reference: OpaquePointer = reference
-        else
-        {
-            return
-        }
-        
-        git_reference_free(reference)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_revwalk` instance.
     /// - Parameter revwalk: The revwalk to free. The underlying type must
     /// be `git_revwalk`.
