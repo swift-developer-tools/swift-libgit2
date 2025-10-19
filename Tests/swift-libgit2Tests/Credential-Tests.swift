@@ -424,9 +424,9 @@ final class CredentialTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension CredentialTests
+private extension CredentialTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var count           : Int       = 0
         var url             : String?   = nil
@@ -441,7 +441,7 @@ extension CredentialTests
     /// - Parameters:
     ///   - credentialPointer: A mutable pointer to the credential to check.
     ///   - expectedUsername: The expected username.
-    private func validateUsername(
+    func validateUsername(
         of      credentialPointer   : UnsafeMutablePointer<git_credential>?,
         equals  expectedUsername    : String = Repository.commitAuthorName
     )

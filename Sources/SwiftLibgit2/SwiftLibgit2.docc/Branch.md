@@ -27,4 +27,4 @@ Branch creation and management.
 - ``gitBranchRemoteName(out:repo:refName:)``
 - ``gitBranchUpstreamRemote(buf:repo:refName:)``
 - ``gitBranchUpstreamMerge(buf:repo:refName:)``
-- ``gitBranchIsValid(valid:name:)``
+- ``gitBranchNameIsValid(valid:name:)``

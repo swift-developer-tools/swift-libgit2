@@ -15,16 +15,16 @@ import XCTest
 
 final class BranchTests: XCTestCaseStopOnFail
 {
-    func testGitBranchIsValid() throws
+    func testGitBranchNameIsValid() throws
     {
         var isValid: Bool = false
         
-        var branchIsValidResult: GitErrorCode = gitBranchIsValid(
+        var branchNameIsValidResult: GitErrorCode = gitBranchNameIsValid(
             valid:  &isValid,
             name:   "feature/hello-world"
         )
         
-        XCTAssertOK(branchIsValidResult)
+        XCTAssertOK(branchNameIsValidResult)
         XCTAssertTrue(isValid)
         
         
@@ -47,12 +47,12 @@ final class BranchTests: XCTestCaseStopOnFail
         {
             isValid = false
             
-            branchIsValidResult = gitBranchIsValid(
+            branchNameIsValidResult = gitBranchNameIsValid(
                 valid:  &isValid,
                 name:   invalidBranchName
             )
             
-            XCTAssertOK(branchIsValidResult)
+            XCTAssertOK(branchNameIsValidResult)
             XCTAssertFalse(isValid)
         }
     }
@@ -98,7 +98,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeReference(movedBranchPointer)
+                    gitReferenceFree(ref: movedBranchPointer)
                 }
                 
                 
@@ -293,7 +293,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 defer
                 {
-                    Free.freeReference(upstreamPointer)
+                    gitReferenceFree(ref: upstreamPointer)
                 }
                 
                 

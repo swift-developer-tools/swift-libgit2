@@ -69,7 +69,11 @@ internal extension Array where Element == GitOID
             
             defer
             {
-                gitOIDArrayDispose(array: &oidArray)
+                if oidArray.count > 0
+                {
+                    /// libgit2 allocated new memory that must be freed.
+                    gitOIDArrayDispose(array: &oidArray)
+                }
             }
             
             let result: T = try body(&oidArray)
@@ -111,7 +115,8 @@ internal extension Array where Element == GitOID
     
     
     
-    /// Creates an array of ``GitOID`` instances from a `git_oidarray` instance.
+    /// Initializes an array of ``GitOID`` instances from the given
+    /// `git_oidarray` instance.
     /// - Parameter oidArray: The `git_oidarray` instance to convert.
     init(
         _ oidArray: git_oidarray

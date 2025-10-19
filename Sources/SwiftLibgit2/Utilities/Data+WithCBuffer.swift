@@ -60,6 +60,34 @@ internal extension Data
             )
         }
     }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to a buffer, and updates
+    /// the receiver with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    mutating func withMutatingCBuffer<T>(
+        _ body: (UnsafeMutablePointer<CChar>, Int) throws -> T
+    ) throws -> T
+    {
+        return try self.withUnsafeMutableBytes
+        {
+            bytes in
+            
+            guard let baseAddress: UnsafeMutableRawPointer = bytes.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            return try body(
+                baseAddress.assumingMemoryBound(to: CChar.self),
+                bytes.count
+            )
+        }
+    }
 }
 
 

@@ -199,7 +199,7 @@ final class PathspecTests: XCTestCaseStopOnFail
     
     func testGitPathspecMatchIndex() throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             
@@ -500,14 +500,14 @@ final class PathspecTests: XCTestCaseStopOnFail
 
 
 
-extension PathspecTests
+private extension PathspecTests
 {
     /// Calls the given closure with a pointer to a pathspec.
     /// - Parameters:
     ///   - pathspec: The pathspecs to use.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withPathspecPointer(
+    func withPathspecPointer(
         pathspec    : [String] = ["*.txt", "*.md"],
         _ body      : (OpaquePointer) throws -> Void
     ) throws
@@ -548,7 +548,7 @@ extension PathspecTests
     ///   - expectDiffEntries: Whether to expect diff entries instead of
     ///   filenames.
     /// - Throws: An error if an operation fails.
-    private func validateMatchList(
+    func validateMatchList(
         _ matchListPointer  : OpaquePointer?,
         expectedMatches     : [String],
         expectDiffEntries   : Bool

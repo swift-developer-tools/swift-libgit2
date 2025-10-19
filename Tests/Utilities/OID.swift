@@ -17,26 +17,21 @@ import XCTest
 enum OID
 {
     /// Gets the HEAD commit OID.
-    /// - Parameter repository: The repository on which the HEAD commit exists.
+    /// - Parameter repository: The repository to use.
     /// - Returns: The HEAD commit OID.
     static func getHEADCommitOID(
         in repository: Repository
     ) -> GitOID
     {
-        var cHeadOID = git_oid()
+        var headOID = GitOID()
         
-        let referenceNameToIDResult: Int32 = git_reference_name_to_id(
-            &cHeadOID,
-            repository.pointer,
-            "HEAD"
+        let referenceNameToIDResult: GitErrorCode = gitReferenceNameToID(
+            out:    &headOID,
+            repo:   repository.pointer,
+            name:   "HEAD"
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: referenceNameToIDResult))
-        
-        
-        
-        let headOID = GitOID(cValue: cHeadOID)
-        
+        XCTAssertOK(referenceNameToIDResult)
         XCTAssertNotZeroOID(headOID)
         
         return headOID

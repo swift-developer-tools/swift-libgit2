@@ -24,7 +24,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogAppendAndEntryCount() throws
     {
-        try withRepositoryAndReflogPointer
+        try withReflogPointer
         {
             repository, reflogPointer in
             
@@ -156,7 +156,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogDrop() throws
     {
-        try withRepositoryAndReflogPointer
+        try withReflogPointer
         {
             repository, reflogPointer in
             
@@ -221,7 +221,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogEntryByIndexAndGetters() throws
     {
-        try withRepositoryAndReflogPointer
+        try withReflogPointer
         {
             _, reflogPointer in
             
@@ -266,7 +266,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogReadAndWrite() throws
     {
-        try withRepositoryAndReflogPointer
+        try withReflogPointer
         {
             _, reflogPointer in
             
@@ -281,7 +281,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogRename() throws
     {
-        try withRepositoryAndReflogPointer
+        try withReflogPointer
         {
             repository, reflogPointer in
             
@@ -335,13 +335,13 @@ final class ReflogTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension ReflogTests
+private extension ReflogTests
 {
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a reflog.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withRepositoryAndReflogPointer(
+    func withReflogPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {

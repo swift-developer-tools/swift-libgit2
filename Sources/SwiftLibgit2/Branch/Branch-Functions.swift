@@ -101,7 +101,6 @@ public func gitBranchCreateFromAnnotated(
 
 
 
-// TODO: Replace `git_reference_free()` in documentation.
 /// Deletes an existing branch.
 /// - Parameter branch: The branch to delete. The underlying type must be
 /// `git_reference`.
@@ -111,7 +110,7 @@ public func gitBranchCreateFromAnnotated(
 ///
 /// - Important: If the deletion is successful, the given branch reference
 /// will no longer be valid and must be freed immediately with
-/// `git_reference_free()`.
+/// ``gitReferenceFree(ref:)``.
 ///
 /// ## C Equivalent
 ///
@@ -132,7 +131,7 @@ public func gitBranchDelete(
 /// - Parameters:
 ///   - out: The pointer in which to store the iterator. The underlying type
 ///   must be `git_branch_iterator`.
-///   - repo: The repository in which the branches exist. The underlying type
+///   - repo: The repository containing the branches. The underlying type
 ///   must be `git_repository`.
 ///   - listFlags: The branch type flags to use.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -221,7 +220,6 @@ public func gitBranchIteratorFree(
 
 
 
-// TODO: Replace `git_reference_free()` in documentation.
 /// Moves or renames the given local branch.
 /// - Parameters:
 ///   - out: The pointer in which to store the updated name. The underlying
@@ -236,7 +234,7 @@ public func gitBranchIteratorFree(
 ///
 /// - Important: If the move is successful, the given branch reference will
 /// no longer be valid and must be freed immediately with
-/// `git_reference_free()`.
+/// ``gitReferenceFree(ref:)``.
 ///
 /// ## C Equivalent
 ///
@@ -261,12 +259,11 @@ public func gitBranchMove(
 
 
 
-// TODO: Replace `git_reference_free()` in documentation.
 /// Looks up a branch by its name in the given repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the looked-up branch. The underlying
 ///   type must be `git_reference`.
-///   - repo: The repository in which the branches exist. The underlying type
+///   - repo: The repository containing the branches. The underlying type
 ///   must be `git_repository`.
 ///   - branchName: The name of the branch to lookup. The name will be
 ///   validated for consistency.
@@ -397,7 +394,7 @@ public func gitBranchSetUpstream(
 
 /// Gets the upstream name of the given local branch.
 /// - Parameters:
-///   - out: The `Data` instance to update with the upstream name.
+///   - out: The `Data` instance in which to store the upstream name.
 ///   - repo: The repository containing the branches. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The name of the local branch for which to get the upstream
@@ -495,7 +492,7 @@ public func gitBranchIsCheckedOut(
 
 /// Gets the remote name of the given remote-tracking branch.
 /// - Parameters:
-///   - out: The `Data` instance to update with the remote name.
+///   - out: The `Data` instance in which to store the remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -540,7 +537,7 @@ public func gitBranchRemoteName(
 
 /// Gets the upstream remote name of the given local branch.
 /// - Parameters:
-///   - buf: The `Data` instance to update with the upstream remote name.
+///   - buf: The `Data` instance in which to store the upstream remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -580,7 +577,7 @@ public func gitBranchUpstreamRemote(
 
 /// Gets the upstream merge name of the given local branch.
 /// - Parameters:
-///   - buf: The `Data` instance to update with the upstream merge name.
+///   - buf: The `Data` instance in which to store the upstream merge name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -627,7 +624,7 @@ public func gitBranchUpstreamMerge(
 /// ## C Equivalent
 ///
 /// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
-public func gitBranchIsValid(
+public func gitBranchNameIsValid(
     valid   : UnsafeMutablePointer<Bool>,
     name    : String
 ) -> GitErrorCode

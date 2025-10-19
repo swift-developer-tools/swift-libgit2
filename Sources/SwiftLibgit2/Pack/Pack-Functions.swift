@@ -230,8 +230,8 @@ public func gitPackbuilderInsertRecur(
 
 /// Writes the contents of the specified packfile to the given `Data` instance.
 /// - Parameters:
-///   - buf: The `Data` instance to update with the contents of the specified
-///   packfile.
+///   - buf: The `Data` instance in which to store the contents of the
+///   specified packfile.
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
 /// - Returns: A ``GitErrorCode`` instance.

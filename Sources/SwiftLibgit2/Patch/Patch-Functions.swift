@@ -501,7 +501,7 @@ public func gitPatchPrint(
 
 /// Gets the diff text content of the given patch.
 /// - Parameters:
-///   - out: The `Data` instance to update with the diff text content.
+///   - out: The `Data` instance in which to store the diff text content.
 ///   - patch: The patch to use. The underlying type must be `git_patch`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

@@ -371,7 +371,7 @@ final class RebaseTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension RebaseTests
+private extension RebaseTests
 {
     struct CallbackData
     {
@@ -387,7 +387,7 @@ extension RebaseTests
     ///   - options: The rebase options to use.
     ///   - body: The closure to call.
     /// - Throws: An error if an operations fails.
-    private func withPreparedRebase(
+    func withPreparedRebase(
         options : GitRebaseOptions? = nil,
         _ body  : (Repository, OpaquePointer) throws -> Void
     ) throws
@@ -499,7 +499,7 @@ extension RebaseTests
     /// Tests the full rebase operation.
     /// - Parameter options: The rebase options to use.
     /// - Throws: An error if an operation fails.
-    private func testGitRebaseNextFlow(
+    func testGitRebaseNextFlow(
         options: GitRebaseOptions?
     ) throws
     {

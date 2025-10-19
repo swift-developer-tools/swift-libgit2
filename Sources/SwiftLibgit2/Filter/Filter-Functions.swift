@@ -138,7 +138,7 @@ public func gitFilterListContains(
 
 /// Applies the given filter list to the given input.
 /// - Parameters:
-///   - out: The `Data` instance to update with the filtered content.
+///   - out: The `Data` instance in which to store the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
 ///   - input: The data to filter.
@@ -180,7 +180,7 @@ public func gitFilterListApplyToBuffer(
 
 /// Applies the given filter list to the contents of the specified on-disk file.
 /// - Parameters:
-///   - out: The `Data` instance to update with the filtered content.
+///   - out: The `Data` instance in which to store the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
 ///   - repo: The repository containing the specified file. The underlying
@@ -223,7 +223,7 @@ public func gitFilterListApplyToFile(
 
 /// Applies the given filter list to the contents of the given blob.
 /// - Parameters:
-///   - out: The `Data` instance to update with the filtered content.
+///   - out: The `Data` instance in which to store the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
 ///   - blob: The blob to filter. The underlying type must be `git_blob`.

@@ -378,7 +378,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 = gitConfigOpenDefault(out: &parentConfigPointer)
             
             guard
-                isOK(configOpenDefaultResult),
+                configOpenDefaultResult == .gitOK,
                 let parentConfigPointer: OpaquePointer = parentConfigPointer
             else
             {
@@ -396,7 +396,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 level:      .gitConfigLevelGlobal
             )
             
-            if isOK(configOpenLevelResult)
+            if configOpenLevelResult == .gitOK
             {
                 XCTAssertNotNil(levelConfigPointer)
             }
@@ -408,7 +408,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 config:     parentConfigPointer
             )
             
-            if isOK(configOpenGlobalResult)
+            if configOpenGlobalResult == .gitOK
             {
                 XCTAssertNotNil(globalConfigPointer)
             }
@@ -995,7 +995,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         let configOpenDefaultResult: GitErrorCode
             = gitConfigOpenDefault(out: &configPointer)
         
-        if isOK(configOpenDefaultResult)
+        if configOpenDefaultResult == .gitOK
         {
             XCTAssertNotNil(configPointer)
         }
@@ -1467,9 +1467,9 @@ final class ConfigTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension ConfigTests
+private extension ConfigTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var count   : Int       = 0
         var values  : [String]  = []
@@ -1477,7 +1477,7 @@ extension ConfigTests
     
     
     
-    private static let configForEachCB: GitConfigForEachCB =
+    static let configForEachCB: GitConfigForEachCB =
     {
         entry, payload in
         
@@ -1517,7 +1517,7 @@ extension ConfigTests
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    private func withConfigOnDisk<T>(
+    func withConfigOnDisk<T>(
         in  repository  : Repository,
         _   body        : (OpaquePointer) -> T
     ) throws -> T

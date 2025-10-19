@@ -134,7 +134,7 @@ public func gitRebaseOpen(
 /// Gets the original HEAD reference name for the given merge rebase.
 /// - Parameter rebase: The in-progress rebase to use. The underlying type
 /// must be `git_rebase`.
-/// - Returns: The original HEAD reference name.
+/// - Returns: The original HEAD reference name for the given merge rebase.
 ///
 /// ## C Equivalent
 ///
@@ -154,7 +154,7 @@ public func gitRebaseOrigHEADName(
 /// Gets the original HEAD ID for the given merge rebase.
 /// - Parameter rebase: The in-progress rebase to use. The underlying type
 /// must be `git_rebase`.
-/// - Returns: The original HEAD ID.
+/// - Returns: The original HEAD ID for the given merge rebase.
 ///
 /// ## C Equivalent
 ///
@@ -178,7 +178,7 @@ public func gitRebaseOrigHEADID(
 /// Gets the `onto` name for the given merge rebase.
 /// - Parameter rebase: The in-progress rebase to use. The underlying type
 /// must be `git_rebase`.
-/// - Returns: The `onto` name.
+/// - Returns: The `onto` name for the given merge rebase.
 ///
 /// ## C Equivalent
 ///
@@ -198,7 +198,7 @@ public func gitRebaseOntoName(
 /// Gets the `onto` ID for the given merge rebase.
 /// - Parameter rebase: The in-progress rebase to use. The underlying type
 /// must be `git_rebase`.
-/// - Returns: The `onto` ID.
+/// - Returns: The `onto` ID for the given merge rebase.
 ///
 /// ## C Equivalent
 ///
@@ -257,7 +257,7 @@ public func gitRebaseOperationCurrent(
 ///   - rebase: The in-progress rebase to use. The underlying type must be
 ///   `git_rebase`.
 ///   - idx: The index of the rebase operation to retrieve.
-/// - Returns: The rebase operation.
+/// - Returns: The rebase operation at the given index.
 ///
 /// ## C Equivalent
 ///

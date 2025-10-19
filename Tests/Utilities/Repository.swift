@@ -327,22 +327,21 @@ struct Repository
         
         
         
-        // TODO: Remove once `git_reference_name_to_id()` has a binding.
-        var cHeadOID = git_oid()
+        var headOID = GitOID()
         
         /// Get the current HEAD commit as the parent commit, if it exists.
-        let referenceToNameToIDResult: Int32 = git_reference_name_to_id(
-            &cHeadOID,
-            pointer,
-            "HEAD"
+        let referenceToNameToIDResult: GitErrorCode = gitReferenceNameToID(
+            out:    &headOID,
+            repo:   pointer,
+            name:   "HEAD"
         )
         
-        if isOK(GitErrorCode(rawValue: referenceToNameToIDResult))
+        if referenceToNameToIDResult == .gitOK
         {
             let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &headCommitPointer,
                 repo:       pointer,
-                id:         GitOID(cValue: cHeadOID)
+                id:         headOID
             )
             
             XCTAssertOK(commitLookupResult)
@@ -516,12 +515,12 @@ struct Repository
 
 // MARK: - Extensions
 
-extension Repository
+internal extension Repository
 {
     /// Creates blame data in the given repository.
     /// - Parameter repository: The repository.
     /// - Throws: An error if an operation fails.
-    private static func createBlameData(
+    static func createBlameData(
         in repository: Repository
     ) throws
     {
@@ -686,7 +685,7 @@ extension Repository
     /// the repository's index.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    static func withRepositoryAndIndexPointer(
+    static func withIndexPointer(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {

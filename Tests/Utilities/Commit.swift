@@ -18,7 +18,7 @@ enum Commit
 {
     /// Calls the given closure with a pointer to the HEAD commit.
     /// - Parameters:
-    ///   - repository: The repository in which the commit exists.
+    ///   - repository: The repository containing the commit.
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.

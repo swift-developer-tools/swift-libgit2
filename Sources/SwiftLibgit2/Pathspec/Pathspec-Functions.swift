@@ -258,7 +258,7 @@ public func gitPathspecMatchListFree(
 /// Gets the number of entries in the given pathspec match list.
 /// - Parameter m: The pathspec match list to use. The underlying type must be
 /// `git_pathspec_match_list`.
-/// - Returns: The number of entries.
+/// - Returns: The number of entries in the given pathspec match list.
 ///
 /// ## C Equivalent
 ///
@@ -277,7 +277,8 @@ public func gitPathspecMatchListEntryCount(
 ///   - m: The pathspec match list to use. The underlying type must be
 ///   `git_pathspec_match_list`.
 ///   - pos: The index of the entry to retrieve.
-/// - Returns: The filename of the specified entry.
+/// - Returns: The filename of the specified entry in the given pathspec match
+/// list.
 ///
 /// ## Discussion
 ///
@@ -307,7 +308,8 @@ public func gitPathspecMatchListEntry(
 ///   - m: The pathspec match list to use. The underlying type must be
 ///   `git_pathspec_match_list`.
 ///   - pos: The index of the entry to retrieve.
-/// - Returns: The delta of the specified entry.
+/// - Returns: The delta of the specified entry in the given pathspec match
+/// list.
 ///
 /// ## Discussion
 ///
@@ -340,7 +342,7 @@ public func gitPathspecMatchListDiffEntry(
 /// Gets the number of unmatched entries in the given pathspec match list.
 /// - Parameter m: The pathspec match list to use. The underlying type must be
 /// `git_pathspec_match_list`.
-/// - Returns: The number of unmatched entries.
+/// - Returns: The number of unmatched entries in the given pathspec match list.
 ///
 /// ## C Equivalent
 ///
@@ -360,7 +362,8 @@ public func gitPathspecMatchListFailedEntryCount(
 ///   - m: The pathspec match list to use. The underlying type must be
 ///   `git_pathspec_match_list`.
 ///   - pos: The index of the entry to retrieve.
-/// - Returns: The filename of the specified unmatched entry.
+/// - Returns: The filename of the specified unmatched entry in the given
+/// pathspec match list.
 ///
 /// ## C Equivalent
 ///

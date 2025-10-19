@@ -241,10 +241,10 @@ final class CherrypickTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension CherrypickTests
+private extension CherrypickTests
 {
-    private static let mainBranchContent    : String    = "Main branch feature\nHello World\n"
-    private static let featureBranchContent : String    = "Feature branch change\nHello World\nGoodbye World\n"
+    static let mainBranchContent    : String    = "Main branch feature\nHello World\n"
+    static let featureBranchContent : String    = "Feature branch change\nHello World\nGoodbye World\n"
     
     
     
@@ -253,7 +253,7 @@ extension CherrypickTests
     /// - Returns: A tuple containing the main branch commit and the feature
     /// branch commit.
     /// - Throws: An error if an operation fails.
-    private func setupCherrypickScenario(
+    func setupCherrypickScenario(
         in repository: Repository
     ) throws -> (GitOID, GitOID)
     {
@@ -309,7 +309,7 @@ extension CherrypickTests
         defer
         {
             gitCommitFree(commit: headCommitPointer)
-            Free.freeReference(branchPointer)
+            gitReferenceFree(ref: branchPointer)
         }
         
         
@@ -331,10 +331,13 @@ extension CherrypickTests
         
         XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
         
+        guard let branchPointer: OpaquePointer = branchPointer
+        else
+        {
+            throw NSError.makeError("The branch pointer was nil.")
+        }
         
-        
-        guard let referenceName: UnsafePointer<CChar>
-                = git_reference_name(branchPointer)
+        guard let referenceName: String = gitReferenceName(ref: branchPointer)
         else
         {
             throw NSError.makeError("The branch name was nil.")

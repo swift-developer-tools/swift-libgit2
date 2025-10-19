@@ -49,7 +49,7 @@ enum Branch
             
             if freeBranch
             {
-                Free.freeReference(branchPointer)
+                gitReferenceFree(ref: branchPointer)
             }
         }
         
@@ -123,7 +123,7 @@ enum Branch
     /// Calls the given closure with a pointer to an existing local branch.
     /// - Parameters:
     ///   - branchName: The branch name.
-    ///   - repository: The repository in which the branch exists.
+    ///   - repository: The repository containing the branch.
     ///   - body: The closure to call.
     static func withExistingLocalBranchPointer(
         named   branchName  : String,
@@ -135,7 +135,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(branchPointer)
+            gitReferenceFree(ref: branchPointer)
         }
         
         
@@ -183,7 +183,7 @@ enum Branch
         
         defer
         {
-            Free.freeReference(branchPointer)
+            gitReferenceFree(ref: branchPointer)
         }
         
         

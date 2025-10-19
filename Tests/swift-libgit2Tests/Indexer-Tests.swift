@@ -154,9 +154,9 @@ final class IndexerTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension IndexerTests
+private extension IndexerTests
 {
-    private struct CallbackData
+    struct CallbackData
     {
         var callCount: Int = 0
     }
@@ -167,7 +167,7 @@ extension IndexerTests
     /// - Parameter repository: The repository to use.
     /// - Returns: The packfile data.
     /// - Throws: An error if an operation fails.
-    private func createPackfileData(
+    func createPackfileData(
         from repository: Repository
     ) throws -> Data
     {
@@ -266,7 +266,7 @@ extension IndexerTests
     ///   - packfileData: The packfile data to index.
     ///   - indexerOptions: The indexer options.
     /// - Throws: An error if an operation fails.
-    private func testIndexerWithPackfile(
+    func testIndexerWithPackfile(
         in          repository      : Repository,
         data        packfileData    : Data,
         options     indexerOptions  : GitIndexerOptions?

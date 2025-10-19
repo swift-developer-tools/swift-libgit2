@@ -258,7 +258,7 @@ public func gitOIDPathFmt(
 
 /// Formats the given ID into a string.
 /// - Parameter oid: The ID to format.
-/// - Returns: The formatted ID.
+/// - Returns: The formatted string representation of the given ID.
 ///
 /// ## C Equivalent
 ///
@@ -281,7 +281,7 @@ public func gitOIDToStrS(
 ///   - out: The pointer in which to store the hex string.
 ///   - n: The number of characters to write.
 ///   - id: The ID to format.
-/// - Returns: The formatted ID.
+/// - Returns: The formatted string representation of the given ID.
 ///
 /// ## Discussion
 ///
@@ -392,12 +392,12 @@ public func gitOIDEqual(
     var cA  : git_oid   = a.cValue()
     var cB  : git_oid   = b.cValue()
     
-    let oidEqualResult: Int32 = git_oid_equal(
+    let oidsAreEqual: Int32 = git_oid_equal(
         &cA,
         &cB
     )
     
-    return Bool(oidEqualResult)
+    return Bool(oidsAreEqual)
 }
 
 
@@ -423,7 +423,7 @@ public func gitOIDNCmp(
     var cA  : git_oid   = a.cValue()
     var cB  : git_oid   = b.cValue()
     
-    let oidNCmpResult: Int32 = git_oid_ncmp(
+    let oidsAreEqual: Int32 = git_oid_ncmp(
         &cA,
         &cB,
         len
@@ -432,7 +432,7 @@ public func gitOIDNCmp(
     /// The `Bool` initializer follows the C convention that `0` is `false`,
     /// which is applicable throughout most of libgit2. This function returns
     /// `0` if the IDs match, since it uses `memcmp()` in its implementation.
-    return !Bool(oidNCmpResult)
+    return !Bool(oidsAreEqual)
 }
 
 
@@ -453,7 +453,7 @@ public func gitOIDStrEq(
 {
     var cID: git_oid = id.cValue()
     
-    let oidStrEqResult: Int32 = git_oid_streq(
+    let oidsAreEqual: Int32 = git_oid_streq(
         &cID,
         str
     )
@@ -461,7 +461,7 @@ public func gitOIDStrEq(
     /// The `Bool` initializer follows the C convention that `0` is `false`,
     /// which is applicable throughout most of libgit2. This function returns
     /// `0` if the IDs match, since it uses `memcmp()` in its implementation.
-    return !Bool(oidStrEqResult)
+    return !Bool(oidsAreEqual)
 }
 
 
@@ -508,9 +508,9 @@ public func gitOIDIsZero(
 {
     var cID: git_oid = id.cValue()
     
-    let oidIsZeroResult: Int32 = git_oid_is_zero(&cID)
+    let oidIsZero: Int32 = git_oid_is_zero(&cID)
     
-    return Bool(oidIsZeroResult)
+    return Bool(oidIsZero)
 }
 
 

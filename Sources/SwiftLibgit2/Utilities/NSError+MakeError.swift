@@ -14,7 +14,7 @@ import Foundation
 
 internal extension NSError
 {
-    /// Creates an `NSError` from the given information.
+    /// Initializes an `NSError` from the given information.
     /// - Parameters:
     ///   - code: The error code.
     ///   - message: The localized description.
@@ -41,7 +41,7 @@ internal extension NSError
     
     
     
-    /// Creates an `NSError` with the given message and an error code of
+    /// Initializes an `NSError` with the given message and an error code of
     /// ``GitErrorCode/gitEUser``.
     /// - Parameter message: The localized description.
     /// - Returns: The created `NSError`.
@@ -57,7 +57,7 @@ internal extension NSError
     
     
     
-    /// Creates an `NSError` related to a Swift-to-C conversion failure.
+    /// Initializes an `NSError` related to a Swift-to-C conversion failure.
     /// - Returns: The created `NSError`.
     static func makeCConversionError() -> NSError
     {

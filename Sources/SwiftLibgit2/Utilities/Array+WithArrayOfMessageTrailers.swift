@@ -220,7 +220,7 @@ internal extension Array where Element == GitMessageTrailer
     
     
     
-    /// Creates an array of ``GitMessageTrailer`` instances from a
+    /// Initializes an array of ``GitMessageTrailer`` instances from the given
     /// `git_message_trailer_array` instance.
     /// - Parameter messageTrailerArray: The `git_message_trailer_array`
     /// instance to convert.

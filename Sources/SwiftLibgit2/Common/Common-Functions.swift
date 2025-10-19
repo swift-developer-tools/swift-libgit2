@@ -215,7 +215,7 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 /// Gets the search path for the given level of configuration data.
 /// - Parameters:
 ///   - level: The priority level for which to get the search path.
-///   - buf: The `Data` instance to update with the search path.
+///   - buf: The `Data` instance in which to store the search path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -425,7 +425,7 @@ public func gitLibgit2OptGetCachedMemory(
 
 
 /// Gets the default template path.
-/// - Parameter out: The `Data` instance to update with the template path.
+/// - Parameter out: The `Data` instance in which to store the template path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -636,7 +636,7 @@ public func gitLibgit2OptSetSSLCiphers(
 
 
 /// Gets the value of the comment section of the User-Agent header.
-/// - Parameter out: The `Data` instance to update with the comment section
+/// - Parameter out: The `Data` instance in which to store the comment section
 /// of the User-Agent header.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1208,7 +1208,8 @@ public func gitLibgit2OptSetOwnerValidation(
 
 
 /// Gets the current user's home directory to be used for file lookups.
-/// - Parameter out: The `Data` instance to update with the home directory path.
+/// - Parameter out: The `Data` instance in which to store the home directory
+/// path.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1393,7 +1394,7 @@ public func gitLibgit2OptSetUserAgentProduct(
 
 
 /// Gets the value of the product section of the User-Agent header.
-/// - Parameter out: The `Data` instance to update with the product section
+/// - Parameter out: The `Data` instance in which to store the product section
 /// of the User-Agent header.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

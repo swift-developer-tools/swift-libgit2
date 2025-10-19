@@ -75,7 +75,7 @@ public func gitBlameHunkCount(
 /// - Parameters:
 ///   - blame: The blame to search. The underlying type must be `git_blame`.
 ///   - index: The index of the blame hunk to retrieve.
-/// - Returns: The blame hunk.
+/// - Returns: The blame hunk at the given index.
 ///
 /// ## C Equivalent
 ///
@@ -104,7 +104,7 @@ public func gitBlameHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to search. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number of the blame hunk to retrieve.
-/// - Returns: The blame hunk.
+/// - Returns: The blame hunk at the given line number in the newest commit.
 ///
 /// ## C Equivalent
 ///
@@ -133,7 +133,7 @@ public func gitBlameHunkByLine(
 /// - Parameters:
 ///   - blame: The blame to search. The underlying type must be `git_blame`.
 ///   - idx: The 1-indexed line number of the blame line to retrieve.
-/// - Returns: The blame line.
+/// - Returns: The blame line at the given index.
 ///
 /// ## C Equivalent
 ///
@@ -184,7 +184,7 @@ public func gitBlameGetHunkCount(
 /// - Parameters:
 ///   - blame: The blame to search. The underlying type must be `git_blame`.
 ///   - index: The index of the blame hunk to retrieve.
-/// - Returns: The blame hunk.
+/// - Returns: The blame hunk at the given index.
 ///
 /// ## Discussion
 ///
@@ -218,7 +218,7 @@ public func gitBlameGetHunkByIndex(
 /// - Parameters:
 ///   - blame: The blame to search. The underlying type must be `git_blame`.
 ///   - lineNo: The 1-indexed line number of the blame hunk to retrieve.
-/// - Returns: The blame hunk.
+/// - Returns: The blame hunk at the given line number in the newest commit.
 ///
 /// ## Discussion
 ///

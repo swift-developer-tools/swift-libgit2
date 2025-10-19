@@ -82,18 +82,18 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeReference(headReferencePointer)
+                gitReferenceFree(ref: headReferencePointer)
             }
             
             
             
-            let referenceLookupResult: Int32 = git_reference_lookup(
-                &headReferencePointer,
-                repository.pointer,
-                "HEAD"
+            let referenceLookupResult: GitErrorCode = gitReferenceLookup(
+                out:    &headReferencePointer,
+                repo:   repository.pointer,
+                name:   "HEAD"
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: referenceLookupResult))
+            XCTAssertOK(referenceLookupResult)
             
             guard let headReferencePointer: OpaquePointer = headReferencePointer
             else

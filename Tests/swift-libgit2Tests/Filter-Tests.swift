@@ -239,14 +239,14 @@ final class FilterTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension FilterTests
+private extension FilterTests
 {
-    private static let fileName     : String    = "test.txt"
-    private static let fileContent  : String    = "Line 1\nLine 2\nLine 3\n"
+    static let fileName     : String    = "test.txt"
+    static let fileContent  : String    = "Line 1\nLine 2\nLine 3\n"
     
     
     
-    private enum FilerListType
+    enum FilerListType
     {
         case blob
         case buffer
@@ -263,7 +263,7 @@ extension FilterTests
     /// - Returns: The `URL` of the created blob.
     /// - Throws: An error if an operation fails.
     @discardableResult
-    private func createWorkingDirectoryBlob(
+    func createWorkingDirectoryBlob(
         _   blobPointer : UnsafeMutablePointer<OpaquePointer?>,
         in  repository  : Repository
     ) throws -> URL
@@ -301,7 +301,7 @@ extension FilterTests
     /// Tests filter list application for the given type.
     /// - Parameter type: The type of filter list application to test.
     /// - Throws: An error if an operation fails.
-    private func testGitFilterListApplyFlow(
+    func testGitFilterListApplyFlow(
         type: FilerListType
     ) throws
     {
@@ -392,7 +392,7 @@ extension FilterTests
     /// Tests filter list streaming for the given type.
     /// - Parameter type: The type of filter list streaming to test.
     /// - Throws: An error if an operation fails.
-    private func testGitFilterListStreamFlow(
+    func testGitFilterListStreamFlow(
         type: FilerListType
     ) throws
     {

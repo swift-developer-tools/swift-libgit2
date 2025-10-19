@@ -234,9 +234,9 @@ final class ApplyTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension ApplyTests
+private extension ApplyTests
 {
-    private struct CallbackCounts
+    struct CallbackCounts
     {
         var deltaCount  : Int   = 0
         var hunkCount   : Int   = 0
@@ -268,14 +268,14 @@ extension ApplyTests
     /// 6. Check that both the delta and hunk callbacks were invoked.
     /// 7. Check that the final file content is correct.
     /// 8. Optionally check that the index contains staged changes.
-    private func testGitApplyFlow(
+    func testGitApplyFlow(
         location        : GitApplyLocationT,
         flags           : GitApplyFlagsT?,
         checkIndex      : Bool,
         endContent      : String
     ) throws
     {
-        try Repository.withRepositoryAndIndexPointer
+        try Repository.withIndexPointer
         {
             repository, indexPointer in
             

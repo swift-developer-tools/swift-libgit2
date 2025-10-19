@@ -139,7 +139,7 @@ public func gitDescribeWorkdir(
 
 /// Updates the given `Data` instance with the given description.
 /// - Parameters:
-///   - out: The `Data` instance to update with the description.
+///   - out: The `Data` instance in which to store the description.
 ///   - result: The description to use. The underlying type must be
 ///   `git_describe_result`.
 ///   - opts: The describe format options to use.

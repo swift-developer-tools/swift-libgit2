@@ -13,20 +13,13 @@ import CLibgit2
 
 internal extension Array where Element == String
 {
-    /// Calls the given closure with a pointer to a `git_strarray` instance.
+    /// Calls the given closure with a mutable pointer to a `git_strarray`
+    /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
-    ///
-    /// ``gitStrArrayDispose(array:)`` is not used here, since that function
-    /// is intended to free the strings of a `git_strarray` which was allocated
-    /// by libgit2. In this case, the strings are allocated by this method and
-    /// must be manually freed. If the receiver is empty, the `body` closure is
-    /// called with an empty read-only `git_strarray`, with no strings to free.
     func withGitStrArray<T>(
-        _ body: (UnsafePointer<git_strarray>) throws -> T
+        _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
     ) throws -> T
     {
         var strArray = git_strarray()
@@ -34,6 +27,15 @@ internal extension Array where Element == String
         guard !self.isEmpty
         else
         {
+            defer
+            {
+                if strArray.count > 0
+                {
+                    /// libgit2 allocated new memory that must be freed.
+                    gitStrArrayDispose(array: &strArray)
+                }
+            }
+            
             return try body(&strArray)
         }
         
@@ -43,12 +45,12 @@ internal extension Array where Element == String
         {
             cStrings in
             
-            let pointers = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
+            let originalPointers = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
                 .allocate(capacity: cStrings.count)
             
             defer
             {
-                pointers.deallocate()
+                originalPointers.deallocate()
             }
             
             
@@ -59,19 +61,84 @@ internal extension Array where Element == String
             /// runtime crash when libgit2 tries to read invalid memory.
             for (index, cString) in cStrings.dropLast().enumerated()
             {
-                pointers[index] = cString
+                originalPointers[index] = cString
             }
             
-            strArray.strings    = pointers
+            strArray.strings    = originalPointers
             strArray.count      = cStrings.count - 1
             
-            return try body(&strArray)
+            
+            
+            let result: T = try body(&strArray)
+            
+            if strArray.strings != originalPointers
+            {
+                /// libgit2 allocated new memory that must be freed.
+                gitStrArrayDispose(array: &strArray)
+            }
+            
+            return result
         }
     }
     
     
     
-    /// Creates a `[String]` from a `git_strarray` instance.
+    /// Calls the given closure with a mutable pointer to a `git_strarray`
+    /// instance, and updates the receiver with any changes made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    mutating func withMutatingGitStrArray<T>(
+        _ body: (UnsafeMutablePointer<git_strarray>) throws -> T
+    ) throws -> T
+    {
+        guard !self.isEmpty
+        else
+        {
+            var strArray = git_strarray()
+            
+            defer
+            {
+                if strArray.count > 0
+                {
+                    /// libgit2 allocated new memory that must be freed.
+                    gitStrArrayDispose(array: &strArray)
+                }
+            }
+            
+            let result: T = try body(&strArray)
+            
+            self = Array(strArray)
+            
+            return result
+        }
+        
+        
+        
+        return try self.withGitStrArray
+        {
+            strArray in
+            
+            let originalPointer: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>
+                = strArray.pointee.strings
+            
+            let result: T = try body(strArray)
+            
+            self = Array(strArray.pointee)
+            
+            if strArray.pointee.strings != originalPointer
+            {
+                /// libgit2 allocated new memory that must be freed.
+                gitStrArrayDispose(array: strArray)
+            }
+            
+            return result
+        }
+    }
+    
+    
+    
+    /// Initializes an array of strings from the given `git_strarray` instance.
     /// - Parameter strArray: The `git_strarray` instance to convert.
     init(
         _ strArray: git_strarray

@@ -111,7 +111,7 @@ public func gitBlobFree(
 /// Gets the ID of the given blob.
 /// - Parameter blob: The blob for which to get the ID. The underlying type
 /// must be `git_blob`.
-/// - Returns: The ID of the blob.
+/// - Returns: The ID of the given blob.
 ///
 /// ## C Equivalent
 ///
@@ -227,7 +227,7 @@ public func gitBlobFilterOptionsInit(
 
 /// Gets the filtered content of the given blob.
 /// - Parameters:
-///   - out: The `Data` instance to update with the filtered content.
+///   - out: The `Data` instance in which to store the filtered content.
 ///   - blob: The blob for which to get the filtered content. The underlying
 ///   type must be `git_blob`.
 ///   - asPath: The path used for attribute lookups and other operations.

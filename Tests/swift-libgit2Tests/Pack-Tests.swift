@@ -17,7 +17,7 @@ final class PackTests: XCTestCaseStopOnFail
 {
     func testGitPackbuilderForEach() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -73,7 +73,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertCommitAndTree() throws
     {
-        try withRepositoryAndNewPackbuilder
+        try withPackbuilderPointer
         {
             repository, packbuilderPointer in
             
@@ -161,7 +161,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertAndObjectCount() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, _ in
             
@@ -172,7 +172,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertRecur() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .recursive)
+        try withPackbuilderPointer(insertCommit: .recursive)
         {
             _, _ in
             
@@ -183,7 +183,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertWalk() throws
     {
-        try withRepositoryAndNewPackbuilder
+        try withPackbuilderPointer
         {
             repository, packbuilderPointer in
             
@@ -254,7 +254,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderHashAndName() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -290,7 +290,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderNew() throws
     {
-        try withRepositoryAndNewPackbuilder
+        try withPackbuilderPointer
         {
             _, _ in
         }
@@ -300,7 +300,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderSetCallbacks() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -362,7 +362,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderSetThreads() throws
     {
-        try withRepositoryAndNewPackbuilder
+        try withPackbuilderPointer
         {
             _, packbuilderPointer in
             
@@ -403,7 +403,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderWriteBuf() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -424,7 +424,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderWritten() throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -465,7 +465,7 @@ final class PackTests: XCTestCaseStopOnFail
 
 // MARK: - Extensions
 
-extension PackTests
+private extension PackTests
 {
     struct CallbackData
     {
@@ -485,11 +485,11 @@ extension PackTests
     /// Tests writing a packfile with or without a callback.
     /// - Parameter withCallback: Whether to write the packfile with a callback.
     /// - Throws: An error if an operation fails.
-    private func testGitWithPackbuilderWriteFlow(
+    func testGitWithPackbuilderWriteFlow(
         withCallback: Bool
     ) throws
     {
-        try withRepositoryAndNewPackbuilder(insertCommit: .standard)
+        try withPackbuilderPointer(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -562,7 +562,7 @@ extension PackTests
     ///   insert that commit.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    private func withRepositoryAndNewPackbuilder(
+    func withPackbuilderPointer(
         insertCommit    : CommitInsertType?                             = nil,
         _ body          : (Repository, OpaquePointer) throws -> Void
     ) throws
