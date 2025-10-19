@@ -1167,7 +1167,7 @@ public func gitConfigForEach(
 
 
 
-/// Loops over all configuration variables.
+/// Creates a new configuration iterator.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
@@ -1198,7 +1198,7 @@ public func gitConfigIteratorNew(
 
 
 
-/// Loops over all configuration variables matching the given pattern.
+/// Creates a new configuration iterator matching the specified glob.
 /// - Parameters:
 ///   - out: The pointer in which to store the resulting iterator.
 ///   - cfg: The configuration object to search. The underlying type must be
