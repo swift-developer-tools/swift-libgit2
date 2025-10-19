@@ -100,19 +100,13 @@ public func gitReflogAppend(
 
 
 
-// TODO: Replace `git_reference_create_symbolic()` in documentation.
 /// Renames the specified reflog.
 /// - Parameters:
 ///   - repo: The repository containing the specified reflog. The underlying
 ///   type must be `git_reflog`.
 ///   - oldName: The old name of the reference to rename.
-///   - name: The new reference name to use.
+///   - name: The new reference name to use. This will be checked for validity.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The given name will be checked for validity. See
-/// `git_reference_create_symbolic()` for more information.
 ///
 /// ## C Equivalent
 ///
