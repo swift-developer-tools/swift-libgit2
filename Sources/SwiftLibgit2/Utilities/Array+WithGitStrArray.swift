@@ -138,7 +138,7 @@ internal extension Array where Element == String
     
     
     
-    /// Creates a `[String]` from a `git_strarray` instance.
+    /// Initializes an array of strings from the given `git_strarray` instance.
     /// - Parameter strArray: The `git_strarray` instance to convert.
     init(
         _ strArray: git_strarray

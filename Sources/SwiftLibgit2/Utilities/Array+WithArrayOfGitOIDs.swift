@@ -115,7 +115,8 @@ internal extension Array where Element == GitOID
     
     
     
-    /// Creates an array of ``GitOID`` instances from a `git_oidarray` instance.
+    /// Initializes an array of ``GitOID`` instances from the given
+    /// `git_oidarray` instance.
     /// - Parameter oidArray: The `git_oidarray` instance to convert.
     init(
         _ oidArray: git_oidarray

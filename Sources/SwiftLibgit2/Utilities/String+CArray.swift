@@ -13,7 +13,7 @@ import Foundation
 
 internal extension String
 {
-    /// Creates a new string from the given fixed-size C character array.
+    /// Initializes a new string from the given fixed-size C character array.
     /// - Parameters:
     ///   - cArray: The fixed-size C character array.
     ///   - count: The number of meaningful bytes. Pass `nil` to scan for the

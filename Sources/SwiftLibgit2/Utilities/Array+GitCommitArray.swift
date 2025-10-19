@@ -13,7 +13,8 @@ import CLibgit2
 
 internal extension Array where Element == OpaquePointer
 {
-    /// Creates an `[OpaquePointer]` from a `git_commitarray` instance.
+    /// Initializes an array of `OpaquePointer` instances from the given
+    /// `git_commitarray` instance.
     /// - Parameter commitArray: The `git_commitarray` instance to convert.
     init(
         _ commitArray: git_commitarray

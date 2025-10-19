@@ -9,7 +9,7 @@
 
 internal extension String
 {
-    /// Creates a new string from the given optional C string pointer.
+    /// Initializes a new string from the given optional C string pointer.
     /// - Parameter cString: The optional C string pointer.
     ///
     /// ## Discussion
