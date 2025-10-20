@@ -584,7 +584,8 @@ public func gitConfigGetInt64(
 
 /// Gets the value of the specified boolean configuration variable.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting boolean.
+///   - out: The `Bool` instance in which to store the value of the specified
+///   boolean configuration variable.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -600,24 +601,23 @@ public func gitConfigGetInt64(
 ///
 /// [`git_config_get_bool()`](https://libgit2.org/docs/reference/main/config/git_config_get_bool.html)
 public func gitConfigGetBool(
-    out     : UnsafeMutablePointer<Bool>,
+    out     : inout Bool,
     cfg     : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intOut: Int32 = 0
-        
-        let configGetBoolResult: Int32 = git_config_get_bool(
-            &intOut,
-            cfg,
-            name
-        )
-        
-        out.pointee = Bool(intOut)
-        
-        return configGetBoolResult
+        return out.withMutatingBool
+        {
+            cOut in
+            
+            return git_config_get_bool(
+                cOut,
+                cfg,
+                name
+            )
+        }
     }
 }
 
@@ -1384,7 +1384,8 @@ public func gitConfigLookupMapValue(
 
 /// Parses the given string value as a boolean.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting boolean.
+///   - out: The `Bool` instance in which to store the given string value as
+///   a boolean.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1400,22 +1401,21 @@ public func gitConfigLookupMapValue(
 ///
 /// [`git_config_parse_bool()`](https://libgit2.org/docs/reference/main/config/git_config_parse_bool.html)
 public func gitConfigParseBool(
-    out     : UnsafeMutablePointer<Bool>,
+    out     : inout Bool,
     value   : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intOut: Int32 = 0
-        
-        let configParseBoolResult: Int32 = git_config_parse_bool(
-            &intOut,
-            value
-        )
-        
-        out.pointee = Bool(intOut)
-        
-        return configParseBoolResult
+        return out.withMutatingBool
+        {
+            cOut in
+            
+            return git_config_parse_bool(
+                cOut,
+                value
+            )
+        }
     }
 }
 

@@ -1150,8 +1150,8 @@ public func gitLibgit2OptSetExtensions(
 
 
 /// Gets the owner validation setting for repository directories.
-/// - Parameter enabled: The pointer in which to store the owner validation
-/// setting.
+/// - Parameter enabled: The `Bool` instance in which to store the owner
+/// validation setting for repository directories.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1163,19 +1163,17 @@ public func gitLibgit2OptSetExtensions(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetOwnerValidation(
-    enabled: UnsafeMutablePointer<Bool>
+    enabled: inout Bool
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intEnabled: Int32 = 0
-        
-        let getOwnerValidationResult: Int32
-            = git_libgit2_opt_get_owner_validation(&intEnabled)
-        
-        enabled.pointee = Bool(intEnabled)
-        
-        return getOwnerValidationResult
+        return enabled.withMutatingBool
+        {
+            cEnabled in
+            
+            return git_libgit2_opt_get_owner_validation(cEnabled)
+        }
     }
 }
 

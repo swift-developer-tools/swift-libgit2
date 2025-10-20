@@ -617,7 +617,8 @@ public func gitBranchUpstreamMerge(
 
 /// Checks whether the given branch name is valid.
 /// - Parameters:
-///   - valid: The pointer in which to store the resulting boolean.
+///   - valid: The `Bool` instance in which to store whether the given branch
+///   name is valid.
 ///   - name: The branch name to check.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -625,21 +626,20 @@ public func gitBranchUpstreamMerge(
 ///
 /// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
 public func gitBranchNameIsValid(
-    valid   : UnsafeMutablePointer<Bool>,
+    valid   : inout Bool,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intValid: Int32 = 0
-        
-        let branchNameIsValidResult: Int32 = git_branch_name_is_valid(
-            &intValid,
-            name
-        )
-        
-        valid.pointee = Bool(intValid)
-        
-        return branchNameIsValidResult
+        return valid.withMutatingBool
+        {
+            cValid in
+            
+            return git_branch_name_is_valid(
+                cValid,
+                name
+            )
+        }
     }
 }

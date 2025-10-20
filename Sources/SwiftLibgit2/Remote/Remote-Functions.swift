@@ -1424,16 +1424,15 @@ public func gitRemoteNameIsValid(
 {
     return withCConversion
     {
-        var intValid: Int32 = 0
-        
-        let remoteNameIsValidResult: Int32 = git_remote_name_is_valid(
-            &intValid,
-            name
-        )
-        
-        valid = Bool(intValid)
-        
-        return remoteNameIsValidResult
+        return valid.withMutatingBool
+        {
+            cValid in
+            
+            return git_remote_name_is_valid(
+                cValid,
+                name
+            )
+        }
     }
 }
 
