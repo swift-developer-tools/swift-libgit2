@@ -25,13 +25,13 @@ public enum GitRemoteRedirectT: UInt32, CEnum
 {
     /// Do not follow any off-site redirects at any stage of the fetch or push
     /// operation.
-    case gitRemoteRedirectNone      = 0
+    case gitRemoteRedirectNone      = 1
     
     /// Allow off-site redirects only upon the initial request.
-    case gitRemoteRedirectInitial   = 1
+    case gitRemoteRedirectInitial   = 2
     
     /// Allow redirects at any stage in the fetch or push operation.
-    case gitRemoteRedirectAll       = 2
+    case gitRemoteRedirectAll       = 4
     
     
     
