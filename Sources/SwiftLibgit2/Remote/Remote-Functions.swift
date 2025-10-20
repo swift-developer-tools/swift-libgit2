@@ -1409,7 +1409,8 @@ public func gitRemoteRename(
 
 /// Checks whether the given remote name is valid.
 /// - Parameters:
-///   - valid: The `Bool` instance in which to store the result.
+///   - valid: The `Bool` instance in which to store whether the given remote
+///   name is valid.
 ///   - name: The remote name to check.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
