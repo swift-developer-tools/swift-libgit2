@@ -192,7 +192,7 @@ enum Diff
         
         assertDiffChanges(diffPointer: diffPointer)
         
-        return try body(diffPointer)
+        try body(diffPointer)
     }
     
     
@@ -267,6 +267,6 @@ enum Diff
         
         
         
-        return try body(diffPointer)
+        try body(diffPointer)
     }
 }

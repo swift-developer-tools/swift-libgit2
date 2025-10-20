@@ -1447,7 +1447,7 @@ private extension RefsTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 directRefPointer
             )

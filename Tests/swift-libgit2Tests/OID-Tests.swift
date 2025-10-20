@@ -854,7 +854,7 @@ private extension OIDTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 headOID,
                 headOIDString

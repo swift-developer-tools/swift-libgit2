@@ -534,7 +534,7 @@ private extension PathspecTests
             throw NSError.makeError("The pathspec pointer was nil.")
         }
         
-        return try body(pathspecPointer)
+        try body(pathspecPointer)
     }
     
     

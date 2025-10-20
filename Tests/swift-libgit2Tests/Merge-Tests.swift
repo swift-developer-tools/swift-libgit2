@@ -1251,7 +1251,7 @@ private extension MergeTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 indexPointer,
                 annotatedCommitPointer,

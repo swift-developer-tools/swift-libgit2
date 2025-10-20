@@ -675,7 +675,7 @@ internal extension Repository
         
         try createBlameData(in: repository)
         
-        return try body(repository)
+        try body(repository)
     }
     
     
@@ -714,7 +714,7 @@ internal extension Repository
                 throw NSError.makeError("The index pointer was nil.")
             }
             
-            return try body(
+            try body(
                 repository,
                 indexPointer
             )

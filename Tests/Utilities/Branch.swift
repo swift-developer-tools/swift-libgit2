@@ -151,7 +151,7 @@ enum Branch
         
         
         
-        return try body(&branchPointer)
+        try body(&branchPointer)
     }
     
     
@@ -188,6 +188,6 @@ enum Branch
         
         
         
-        return try body(&branchPointer)
+        try body(&branchPointer)
     }
 }

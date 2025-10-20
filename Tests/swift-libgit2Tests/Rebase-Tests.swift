@@ -486,7 +486,7 @@ private extension RebaseTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 rebasePointer
             )

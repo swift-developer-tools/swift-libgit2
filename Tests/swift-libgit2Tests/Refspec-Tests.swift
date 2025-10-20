@@ -349,6 +349,6 @@ private extension RefspecTests
             throw NSError.makeError("The refspec pointer was nil.")
         }
         
-        return try body(refspecPointer)
+        try body(refspecPointer)
     }
 }

@@ -381,7 +381,7 @@ private extension ReflogTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 reflogPointer
             )

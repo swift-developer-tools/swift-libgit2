@@ -451,7 +451,7 @@ private extension PatchTests
                 
                 
                 
-                return try body(patchPointer)
+                try body(patchPointer)
             }
         }
     }

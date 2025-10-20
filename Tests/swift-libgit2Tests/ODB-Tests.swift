@@ -1136,7 +1136,7 @@ private extension ODBTests
                 throw NSError.makeError("The ODB pointer was nil.")
             }
             
-            return try body(
+            try body(
                 repository,
                 odbPointer
             )

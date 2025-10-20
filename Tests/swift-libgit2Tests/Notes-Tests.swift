@@ -825,7 +825,7 @@ private extension NotesTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 notePointer,
                 noteOID

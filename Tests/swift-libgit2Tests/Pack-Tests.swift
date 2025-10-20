@@ -638,7 +638,7 @@ private extension PackTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 packbuilderPointer
             )
