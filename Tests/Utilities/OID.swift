@@ -13,7 +13,7 @@ import XCTest
 
 
 
-/// OID-related testing utilities.
+/// OID-related test utilities.
 enum OID
 {
     /// Gets the HEAD commit OID.

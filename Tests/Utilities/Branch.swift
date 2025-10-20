@@ -13,7 +13,7 @@ import XCTest
 
 
 
-/// Branch-related testing utilities.
+/// Branch-related test utilities.
 enum Branch
 {
     /// Creates a local branch from the HEAD commit.
@@ -125,11 +125,12 @@ enum Branch
     ///   - branchName: The branch name.
     ///   - repository: The repository containing the branch.
     ///   - body: The closure to call.
-    static func withExistingLocalBranchPointer(
+    /// - Returns: The return value of the given closure.
+    static func withExistingLocalBranchPointer<T>(
         named   branchName  : String,
         in      repository  : Repository,
-        _       body        : (inout OpaquePointer?) throws -> Void
-    ) rethrows
+        _       body        : (inout OpaquePointer?) throws -> T
+    ) rethrows -> T
     {
         var branchPointer: OpaquePointer? = nil
         
@@ -151,7 +152,7 @@ enum Branch
         
         
         
-        try body(&branchPointer)
+        return try body(&branchPointer)
     }
     
     
@@ -164,14 +165,15 @@ enum Branch
     ///   - force: Whether to overwrite an existing branch.
     ///   - annotated: Whether to create the branch from an annotated commit.
     ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withNewLocalBranchPointer(
+    static func withNewLocalBranchPointer<T>(
         named       branchName  : String,
         in          repository  : Repository,
         force                   : Bool,
         annotated               : Bool,
-        _           body        : (inout OpaquePointer?) throws -> Void
-    ) throws
+        _           body        : (inout OpaquePointer?) throws -> T
+    ) throws -> T
     {
         var branchPointer: OpaquePointer? = try createLocalBranch(
             named:      branchName,
@@ -188,6 +190,6 @@ enum Branch
         
         
         
-        try body(&branchPointer)
+        return try body(&branchPointer)
     }
 }

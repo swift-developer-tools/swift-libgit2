@@ -349,7 +349,7 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try repository.commitStaged(
+            _ = try repository.commitStaged(
                 message:    "Add Hello World",
                 options:    commitCreateOptions
             )

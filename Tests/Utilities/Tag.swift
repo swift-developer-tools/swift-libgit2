@@ -13,7 +13,7 @@ import XCTest
 
 
 
-/// Tag-related testing utilities.
+/// Tag-related test utilities.
 enum Tag
 {
     /// Creates an annotated tag in the repository.
