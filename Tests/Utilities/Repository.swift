@@ -40,6 +40,10 @@ struct Repository
     static let fetchDestination     : String    = "refs/remotes/origin/*"
     static let fetchRefspec         : String    = "\(fetchSource):\(fetchDestination)"
     
+    static let pushSource           : String    = "refs/heads/*"
+    static let pushDestination      : String    = "refs/heads/origin/*"
+    static let pushRefspec          : String    = "\(pushSource):\(pushDestination)"
+    
     static let gitattributesFiles: [(String, String)] =
     [
         ("test.txt",        "This is a text file\n"),
