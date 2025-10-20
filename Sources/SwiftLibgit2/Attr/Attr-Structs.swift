@@ -44,7 +44,7 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized ``GitOID`` instance.
+    /// The default value is a default-initialized ``GitOID`` instance.
     public var attrCommitID : GitOID                
     
     

@@ -52,17 +52,17 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized ``GitOID`` instance. If this
-    /// is zero-initialized at runtime, libgit2 defaults to using HEAD.
+    /// The default value is a default-initialized ``GitOID`` instance. If
+    /// this is default-initialized at runtime, libgit2 defaults to using HEAD.
     public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized ``GitOID`` instance. If this
-    /// is zero-initialized at runtime, libgit2 defaults to using the first
-    /// commit encountered with a `nil` parent.
+    /// The default value is a default-initialized ``GitOID`` instance. If
+    /// this is default-initialized at runtime, libgit2 defaults to using the
+    /// first commit encountered with a `nil` parent.
     public var oldestCommit         : GitOID
     
     /// The first line in the file to blame.
