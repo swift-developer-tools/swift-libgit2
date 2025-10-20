@@ -1424,8 +1424,9 @@ private extension RefsTests
             guard let directRefPointer: OpaquePointer = directRefPointer
             else
             {
-                XCTFail("The direct reference pointer was nil.")
-                return
+                throw NSError.makeError(
+                    "The direct reference pointer was nil."
+                )
             }
             
             
@@ -1446,7 +1447,7 @@ private extension RefsTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 directRefPointer
             )

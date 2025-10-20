@@ -13,7 +13,7 @@ import XCTest
 
 
 
-/// Commit-related testing utilities.
+/// Commit-related test utilities.
 enum Commit
 {
     /// Calls the given closure with a pointer to the HEAD commit.

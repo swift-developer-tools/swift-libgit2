@@ -820,13 +820,12 @@ private extension NotesTests
             guard let notePointer: OpaquePointer = notePointer
             else
             {
-                XCTFail("The note pointer was nil.")
-                return
+                throw NSError.makeError("The note pointer was nil.")
             }
             
             
             
-            return try body(
+            try body(
                 repository,
                 notePointer,
                 noteOID

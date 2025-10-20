@@ -13,7 +13,7 @@ import XCTest
 
 
 
-/// Blob-related testing utilities.
+/// Blob-related test utilities.
 enum Blob
 {
     /// The source from which to create a blob.

@@ -563,7 +563,7 @@ private extension PackTests
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
     func withPackbuilderPointer(
-        insertCommit    : CommitInsertType?                             = nil,
+        insertCommit    : CommitInsertType? = nil,
         _ body          : (Repository, OpaquePointer) throws -> Void
     ) throws
     {
@@ -590,8 +590,7 @@ private extension PackTests
             guard let packbuilderPointer: OpaquePointer = packbuilderPointer
             else
             {
-                XCTFail("The packbuilder pointer was nil.")
-                return
+                throw NSError.makeError("The packbuilder pointer was nil.")
             }
             
             
@@ -639,7 +638,7 @@ private extension PackTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 packbuilderPointer
             )

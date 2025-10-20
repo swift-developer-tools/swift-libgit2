@@ -14,7 +14,7 @@ import XCTest
 
 
 
-/// Diff-related testing utilities.
+/// Diff-related test utilities.
 enum Diff
 {
     /// Asserts that the given diff meets certain expectations.
@@ -95,13 +95,14 @@ enum Diff
     ///   - oldCommitOID: The old commit ID.
     ///   - newCommitOID: The new commit ID.
     ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTreeToTreeDiffPointer(
+    static func withTreeToTreeDiffPointer<T>(
         in  repository  : Repository,
         oldCommitOID    : GitOID,
         newCommitOID    : GitOID,
-        _   body        : (OpaquePointer) throws -> Void
-    ) throws
+        _   body        : (OpaquePointer) throws -> T
+    ) throws -> T
     {
         var oldCommitPointer    : OpaquePointer?    = nil
         var newCommitPointer    : OpaquePointer?    = nil
@@ -131,8 +132,7 @@ enum Diff
         guard let oldCommitPointer: OpaquePointer = oldCommitPointer
         else
         {
-            XCTFail("The old commit pointer was nil.")
-            return
+            throw NSError.makeError("The old commit pointer was nil.")
         }
         
         
@@ -148,8 +148,7 @@ enum Diff
         guard let newCommitPointer: OpaquePointer = newCommitPointer
         else
         {
-            XCTFail("The new commit pointer was nil.")
-            return
+            throw NSError.makeError("The new commit pointer was nil.")
         }
         
         
@@ -187,8 +186,7 @@ enum Diff
         guard let diffPointer: OpaquePointer = diffPointer
         else
         {
-            XCTFail("The diff pointer was nil.")
-            return
+            throw NSError.makeError("The diff pointer was nil.")
         }
         
         
@@ -205,11 +203,12 @@ enum Diff
     /// - Parameters:
     ///   - repository: The repository in which to create the diff.
     ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTreeToWorkdirDiffPointer(
+    static func withTreeToWorkdirDiffPointer<T>(
         in  repository  : Repository,
-        _   body        : (OpaquePointer) throws -> Void
-    ) throws
+        _   body        : (OpaquePointer) throws -> T
+    ) throws -> T
     {
         try repository.modifyFile(
             at:     Repository.readmeFileName,
@@ -267,6 +266,8 @@ enum Diff
         }
         
         assertDiffChanges(diffPointer: diffPointer)
+        
+        
         
         return try body(diffPointer)
     }

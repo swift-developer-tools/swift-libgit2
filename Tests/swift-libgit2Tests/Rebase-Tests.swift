@@ -455,8 +455,7 @@ private extension RebaseTests
             guard let rebasePointer: OpaquePointer = rebasePointer
             else
             {
-                XCTFail("The rebase pointer was nil.")
-                return
+                throw NSError.makeError("The rebase pointer was nil.")
             }
             
             
@@ -487,7 +486,7 @@ private extension RebaseTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 rebasePointer
             )

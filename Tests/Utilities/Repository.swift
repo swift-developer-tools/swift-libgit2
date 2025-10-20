@@ -14,7 +14,7 @@ import XCTest
 
 
 
-/// Repository-related testing utilities.
+/// Repository-related test utilities.
 struct Repository
 {
     /// The URL of the repository.
@@ -596,12 +596,13 @@ internal extension Repository
     
     
     
-    /// Calls the given closure with a `Repository` instance.
+    /// Calls the given closure with a ``Repository`` instance.
     /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withRepository(
-        _ body: (Repository) throws -> Void
-    ) throws
+    static func withRepository<T>(
+        _ body: (Repository) throws -> T
+    ) throws -> T
     {
         var repositoryPointer   : OpaquePointer?    = nil
         let url                 : URL               = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
@@ -626,8 +627,7 @@ internal extension Repository
         guard let repositoryPointer: OpaquePointer = repositoryPointer
         else
         {
-            XCTFail("Failed to initialize repository.")
-            return
+            throw NSError.makeError("Failed to initialize repository.")
         }
         
         let repository = Repository(
@@ -681,13 +681,14 @@ internal extension Repository
     
     
     
-    /// Calls the given closure with a `Repository` instance and a pointer to
+    /// Calls the given closure with a ``Repository`` instance and a pointer to
     /// the repository's index.
     /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withIndexPointer(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
+    static func withIndexPointer<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
     {
         try withRepository
         {

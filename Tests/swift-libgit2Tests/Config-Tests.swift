@@ -180,176 +180,171 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigIteratorOperations() throws
     {
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            _, configPointer in
             
-            try withConfigOnDisk(in: repository)
+            let testValueCount: Int = 3
+            
+            for index in 0..<testValueCount
             {
-                configPointer in
+                let configSetStringResult: GitErrorCode
+                    = gitConfigSetString(
+                        cfg:    configPointer,
+                        name:   "test.iter\(index)",
+                        value:  "value\(index)"
+                    )
                 
-                let testValueCount: Int = 3
+                XCTAssertOK(configSetStringResult)
+            }
+            
+            
+            
+            var allCallbackData = CallbackData()
+            
+            withUnsafeMutablePointer(to: &allCallbackData)
+            {
+                callbackDataPointer in
                 
-                for index in 0..<testValueCount
-                {
-                    let configSetStringResult: GitErrorCode
-                        = gitConfigSetString(
-                            cfg:    configPointer,
-                            name:   "test.iter\(index)",
-                            value:  "value\(index)"
-                        )
-                    
-                    XCTAssertOK(configSetStringResult)
-                }
+                let configForEachResult: GitErrorCode = gitConfigForEach(
+                    cfg:        configPointer,
+                    callback:   Self.configForEachCB,
+                    payload:    callbackDataPointer
+                )
                 
+                XCTAssertOK(configForEachResult)
+            }
+            
+            XCTAssertGreaterThan(allCallbackData.count, 0)
+            
+            
+            
+            var matchCallbackData = CallbackData()
+            
+            withUnsafeMutablePointer(to: &matchCallbackData)
+            {
+                callbackDataPointer in
                 
-                
-                var allCallbackData = CallbackData()
-                
-                withUnsafeMutablePointer(to: &allCallbackData)
-                {
-                    callbackDataPointer in
-                    
-                    let configForEachResult: GitErrorCode = gitConfigForEach(
+                let configForEachMatchResult: GitErrorCode
+                    = gitConfigForEachMatch(
                         cfg:        configPointer,
+                        regExp:     "test.*",
                         callback:   Self.configForEachCB,
                         payload:    callbackDataPointer
                     )
-                    
-                    XCTAssertOK(configForEachResult)
-                }
                 
-                XCTAssertGreaterThan(allCallbackData.count, 0)
-                
-                
-                
-                var matchCallbackData = CallbackData()
-                
-                withUnsafeMutablePointer(to: &matchCallbackData)
-                {
-                    callbackDataPointer in
-                    
-                    let configForEachMatchResult: GitErrorCode
-                        = gitConfigForEachMatch(
-                            cfg:        configPointer,
-                            regExp:     "test.*",
-                            callback:   Self.configForEachCB,
-                            payload:    callbackDataPointer
-                        )
-                    
-                    XCTAssertOK(configForEachMatchResult)
-                }
-                
-                XCTAssertEqual(matchCallbackData.count, testValueCount)
-                XCTAssertLessThanOrEqual(matchCallbackData.count, allCallbackData.count)
-                
-                
-                
-                var configIterator: UnsafeMutablePointer<git_config_iterator>? = nil
-                
-                defer
-                {
-                    gitConfigIteratorFree(iter: configIterator)
-                }
-                
-                
-                
-                let configIteratorNewResult: GitErrorCode = gitConfigIteratorNew(
-                    out:    &configIterator,
-                    cfg:    configPointer
-                )
-                
-                XCTAssertOK(configIteratorNewResult)
-                
-                guard let configIterator: UnsafeMutablePointer<git_config_iterator>
-                        = configIterator
-                else
-                {
-                    XCTFail("The configuration iterator was nil.")
-                    return
-                }
-                
-                
-                
-                var totalCount  : Int               = 0
-                var configEntry : GitConfigEntry    = GitConfigEntry()
-                
-                while true
-                {
-                    let configNextResult: GitErrorCode = gitConfigNext(
-                        entry:  &configEntry,
-                        iter:   configIterator
-                    )
-                    
-                    if configNextResult == .gitIterOver
-                    {
-                        break
-                    }
-                    
-                    XCTAssertOK(configNextResult)
-                    
-                    totalCount += 1
-                }
-                
-                XCTAssertGreaterThan(totalCount, 0)
-                
-                
-                
-                var configGlobIterator: UnsafeMutablePointer<git_config_iterator>?
-                    = nil
-                
-                defer
-                {
-                    gitConfigIteratorFree(iter: configGlobIterator)
-                }
-                
-                
-                
-                let configIteratorGlobNewResult: GitErrorCode = gitConfigIteratorGlobNew(
-                    out:        &configGlobIterator,
-                    cfg:        configPointer,
-                    regExp:     "test.*"
-                )
-                
-                XCTAssertOK(configIteratorGlobNewResult)
-                
-                guard let configGlobIterator: UnsafeMutablePointer<git_config_iterator>
-                        = configGlobIterator
-                else
-                {
-                    XCTFail("The configuration glob iterator was nil.")
-                    return
-                }
-                
-                
-                
-                var filteredCount: Int = 0
-                
-                while true
-                {
-                    let configNextResult: GitErrorCode = gitConfigNext(
-                        entry:  &configEntry,
-                        iter:   configGlobIterator
-                    )
-                    
-                    if configNextResult == .gitIterOver
-                    {
-                        break
-                    }
-                    
-                    XCTAssertOK(configNextResult)
-                    XCTAssertNotNil(configEntry.name)
-                    XCTAssertNotNil(configEntry.value)
-                    XCTAssertNotNil(configEntry.backendType)
-                    XCTAssertNotNil(configEntry.originPath)
-                    XCTAssertTrue(configEntry.name?.hasPrefix("test.") ?? false)
-                    
-                    filteredCount += 1
-                }
-                
-                XCTAssertEqual(filteredCount, testValueCount)
-                XCTAssertLessThanOrEqual(filteredCount, totalCount)
+                XCTAssertOK(configForEachMatchResult)
             }
+            
+            XCTAssertEqual(matchCallbackData.count, testValueCount)
+            XCTAssertLessThanOrEqual(matchCallbackData.count, allCallbackData.count)
+            
+            
+            
+            var configIterator: UnsafeMutablePointer<git_config_iterator>? = nil
+            
+            defer
+            {
+                gitConfigIteratorFree(iter: configIterator)
+            }
+            
+            
+            
+            let configIteratorNewResult: GitErrorCode = gitConfigIteratorNew(
+                out:    &configIterator,
+                cfg:    configPointer
+            )
+            
+            XCTAssertOK(configIteratorNewResult)
+            
+            guard let configIterator: UnsafeMutablePointer<git_config_iterator>
+                    = configIterator
+            else
+            {
+                XCTFail("The configuration iterator was nil.")
+                return
+            }
+            
+            
+            
+            var totalCount  : Int               = 0
+            var configEntry : GitConfigEntry    = GitConfigEntry()
+            
+            while true
+            {
+                let configNextResult: GitErrorCode = gitConfigNext(
+                    entry:  &configEntry,
+                    iter:   configIterator
+                )
+                
+                if configNextResult == .gitIterOver
+                {
+                    break
+                }
+                
+                XCTAssertOK(configNextResult)
+                
+                totalCount += 1
+            }
+            
+            XCTAssertGreaterThan(totalCount, 0)
+            
+            
+            
+            var configGlobIterator: UnsafeMutablePointer<git_config_iterator>?
+                = nil
+            
+            defer
+            {
+                gitConfigIteratorFree(iter: configGlobIterator)
+            }
+            
+            
+            
+            let configIteratorGlobNewResult: GitErrorCode = gitConfigIteratorGlobNew(
+                out:        &configGlobIterator,
+                cfg:        configPointer,
+                regExp:     "test.*"
+            )
+            
+            XCTAssertOK(configIteratorGlobNewResult)
+            
+            guard let configGlobIterator: UnsafeMutablePointer<git_config_iterator>
+                    = configGlobIterator
+            else
+            {
+                XCTFail("The configuration glob iterator was nil.")
+                return
+            }
+            
+            
+            
+            var filteredCount: Int = 0
+            
+            while true
+            {
+                let configNextResult: GitErrorCode = gitConfigNext(
+                    entry:  &configEntry,
+                    iter:   configGlobIterator
+                )
+                
+                if configNextResult == .gitIterOver
+                {
+                    break
+                }
+                
+                XCTAssertOK(configNextResult)
+                XCTAssertNotNil(configEntry.name)
+                XCTAssertNotNil(configEntry.value)
+                XCTAssertNotNil(configEntry.backendType)
+                XCTAssertNotNil(configEntry.originPath)
+                XCTAssertTrue(configEntry.name?.hasPrefix("test.") ?? false)
+                
+                filteredCount += 1
+            }
+            
+            XCTAssertEqual(filteredCount, testValueCount)
+            XCTAssertLessThanOrEqual(filteredCount, totalCount)
         }
     }
     
@@ -453,31 +448,26 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigLock() throws
     {
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            _, configPointer in
             
-            try withConfigOnDisk(in: repository)
+            var transactionPointer: OpaquePointer? = nil
+            
+            defer
             {
-                configPointer in
-                
-                var transactionPointer: OpaquePointer? = nil
-                
-                defer
-                {
-                    Free.freeTransaction(transactionPointer)
-                }
-                
-                
-                
-                let configLockResult: GitErrorCode = gitConfigLock(
-                    tx:     &transactionPointer,
-                    cfg:    configPointer
-                )
-                
-                XCTAssertOK(configLockResult)
-                XCTAssertNotNil(transactionPointer)
+                Free.freeTransaction(transactionPointer)
             }
+            
+            
+            
+            let configLockResult: GitErrorCode = gitConfigLock(
+                tx:     &transactionPointer,
+                cfg:    configPointer
+            )
+            
+            XCTAssertOK(configLockResult)
+            XCTAssertNotNil(transactionPointer)
         }
     }
     
@@ -551,250 +541,245 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            _, configPointer in
             
-            try withConfigOnDisk(in: repository)
-            {
-                configPointer in
-                
-                /// Test boolean `false` mapping.
-                let configSetBoolFalseResult: GitErrorCode = gitConfigSetBool(
+            /// Test boolean `false` mapping.
+            let configSetBoolFalseResult: GitErrorCode = gitConfigSetBool(
+                cfg:    configPointer,
+                name:   "map.boolfalse",
+                value:  false
+            )
+            
+            XCTAssertOK(configSetBoolFalseResult)
+            
+            
+            
+            var mappedValue: Int32 = -1
+            
+            let configGetBoolFalseResult: GitErrorCode = gitConfigGetMapped(
+                out:    &mappedValue,
+                cfg:    configPointer,
+                name:   "map.boolfalse",
+                maps:   configMaps,
+                mapN:   configMaps.count
+            )
+            
+            XCTAssertOK(configGetBoolFalseResult)
+            XCTAssertEqual(mappedValue, Int32(configMapBoolFalse.mapValue))
+            
+            
+            
+            
+            /// Test boolean `true` mapping.
+            let configSetBoolTrueResult: GitErrorCode = gitConfigSetBool(
+                cfg:    configPointer,
+                name:   "map.booltrue",
+                value:  true
+            )
+            
+            XCTAssertOK(configSetBoolTrueResult)
+            
+            
+            
+            mappedValue = -1
+            
+            let configGetBoolTrueResult: GitErrorCode = gitConfigGetMapped(
+                out:    &mappedValue,
+                cfg:    configPointer,
+                name:   "map.booltrue",
+                maps:   configMaps,
+                mapN:   configMaps.count
+            )
+            
+            XCTAssertOK(configGetBoolTrueResult)
+            XCTAssertEqual(mappedValue, Int32(configMapBoolTrue.mapValue))
+            
+            
+            
+            /// Test string mapping with `customString`.
+            let configSetCustomStringResult: GitErrorCode
+                = gitConfigSetString(
                     cfg:    configPointer,
-                    name:   "map.boolfalse",
-                    value:  false
+                    name:   "map.stringcustom",
+                    value:  customString
                 )
-                
-                XCTAssertOK(configSetBoolFalseResult)
-                
-                
-                
-                var mappedValue: Int32 = -1
-                
-                let configGetBoolFalseResult: GitErrorCode = gitConfigGetMapped(
+            
+            XCTAssertOK(configSetCustomStringResult)
+            
+            
+            
+            mappedValue = -1
+            
+            let configGetCustomStringResult: GitErrorCode
+                = gitConfigGetMapped(
                     out:    &mappedValue,
                     cfg:    configPointer,
-                    name:   "map.boolfalse",
+                    name:   "map.stringcustom",
                     maps:   configMaps,
                     mapN:   configMaps.count
                 )
-                
-                XCTAssertOK(configGetBoolFalseResult)
-                XCTAssertEqual(mappedValue, Int32(configMapBoolFalse.mapValue))
-                
-                
-                
-                
-                /// Test boolean `true` mapping.
-                let configSetBoolTrueResult: GitErrorCode = gitConfigSetBool(
+            
+            XCTAssertOK(configGetCustomStringResult)
+            XCTAssertEqual(mappedValue, Int32(configMapStringCustom.mapValue))
+            
+            
+            
+            /// Test string mapping with `anotherString`.
+            let configSetAnotherStringResult: GitErrorCode
+                = gitConfigSetString(
                     cfg:    configPointer,
-                    name:   "map.booltrue",
-                    value:  true
+                    name:   "map.stringanother",
+                    value:  anotherString
                 )
-                
-                XCTAssertOK(configSetBoolTrueResult)
-                
-                
-                
-                mappedValue = -1
-                
-                let configGetBoolTrueResult: GitErrorCode = gitConfigGetMapped(
+            
+            XCTAssertOK(configSetAnotherStringResult)
+            
+            
+            
+            mappedValue = -1
+            
+            let configGetAnotherStringResult: GitErrorCode
+                = gitConfigGetMapped(
                     out:    &mappedValue,
                     cfg:    configPointer,
-                    name:   "map.booltrue",
+                    name:   "map.stringanother",
                     maps:   configMaps,
                     mapN:   configMaps.count
                 )
-                
-                XCTAssertOK(configGetBoolTrueResult)
-                XCTAssertEqual(mappedValue, Int32(configMapBoolTrue.mapValue))
-                
-                
-                
-                /// Test string mapping with `customString`.
-                let configSetCustomStringResult: GitErrorCode
-                    = gitConfigSetString(
-                        cfg:    configPointer,
-                        name:   "map.stringcustom",
-                        value:  customString
-                    )
-                
-                XCTAssertOK(configSetCustomStringResult)
-                
-                
-                
-                mappedValue = -1
-                
-                let configGetCustomStringResult: GitErrorCode
-                    = gitConfigGetMapped(
-                        out:    &mappedValue,
-                        cfg:    configPointer,
-                        name:   "map.stringcustom",
-                        maps:   configMaps,
-                        mapN:   configMaps.count
-                    )
-                
-                XCTAssertOK(configGetCustomStringResult)
-                XCTAssertEqual(mappedValue, Int32(configMapStringCustom.mapValue))
-                
-                
-                
-                /// Test string mapping with `anotherString`.
-                let configSetAnotherStringResult: GitErrorCode
-                    = gitConfigSetString(
-                        cfg:    configPointer,
-                        name:   "map.stringanother",
-                        value:  anotherString
-                    )
-                
-                XCTAssertOK(configSetAnotherStringResult)
-                
-                
-                
-                mappedValue = -1
-                
-                let configGetAnotherStringResult: GitErrorCode
-                    = gitConfigGetMapped(
-                        out:    &mappedValue,
-                        cfg:    configPointer,
-                        name:   "map.stringanother",
-                        maps:   configMaps,
-                        mapN:   configMaps.count
-                    )
-                
-                XCTAssertOK(configGetAnotherStringResult)
-                XCTAssertEqual(mappedValue, Int32(configMapStringAnother.mapValue))
-                
-                
-                
-                /// Test string lookup with `"false"`.
-                var lookupValue: Int32 = -1
-                
-                let configLookupFalseStringResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   configMaps,
-                        mapN:   configMaps.count,
-                        value:  "false"
-                    )
-                
-                XCTAssertOK(configLookupFalseStringResult)
-                XCTAssertEqual(lookupValue, Int32(configMapBoolFalse.mapValue))
+            
+            XCTAssertOK(configGetAnotherStringResult)
+            XCTAssertEqual(mappedValue, Int32(configMapStringAnother.mapValue))
+            
+            
+            
+            /// Test string lookup with `"false"`.
+            var lookupValue: Int32 = -1
+            
+            let configLookupFalseStringResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  "false"
+                )
+            
+            XCTAssertOK(configLookupFalseStringResult)
+            XCTAssertEqual(lookupValue, Int32(configMapBoolFalse.mapValue))
 
-                
-                
-                /// Test string lookup with `"true"`.
-                lookupValue = -1
-                
-                let configLookupTrueStringResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   configMaps,
-                        mapN:   configMaps.count,
-                        value:  "true"
-                    )
-                
-                XCTAssertOK(configLookupTrueStringResult)
-                XCTAssertEqual(lookupValue, Int32(configMapBoolTrue.mapValue))
-                
-                
-                
-                /// Test string lookup with `customString`.
-                lookupValue = -1
-                
-                let configLookupCustomStringResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   configMaps,
-                        mapN:   configMaps.count,
-                        value:  customString
-                    )
-                
-                XCTAssertOK(configLookupCustomStringResult)
-                XCTAssertEqual(lookupValue, Int32(configMapStringCustom.mapValue))
-                
-                
-                
-                /// Test string lookup with `anotherString`.
-                lookupValue = -1
-                
-                let configLookupAnotherStringResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   configMaps,
-                        mapN:   configMaps.count,
-                        value:  anotherString
-                    )
-                
-                XCTAssertOK(configLookupAnotherStringResult)
-                XCTAssertEqual(lookupValue, Int32(configMapStringAnother.mapValue))
-                
-                
-                
-                /// Test with an empty array.
-                lookupValue = -1
-                
-                let configLookupEmptyResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   [],
-                        mapN:   0,
-                        value:  "empty"
-                    )
-                
-                XCTAssertNotOK(configLookupEmptyResult)
-                
-                
-                
-                /// Test with all `nil` values. This hits the fast path of
-                /// ``withArrayOfGitConfigMaps(_:)``, where there is no buffer
-                /// allocation.
-                lookupValue = -1
-                
-                let configLookupAllNilResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   [configMapBoolFalse, configMapBoolTrue],
-                        mapN:   2,
-                        value:  "false"
-                    )
-                
-                XCTAssertOK(configLookupAllNilResult)
-                XCTAssertEqual(lookupValue, Int32(configMapBoolFalse.mapValue))
-                
-                
-                
-                /// Test with a single string.
-                lookupValue = -1
-                
-                let configLookupSingleStringResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   [configMapStringCustom],
-                        mapN:   1,
-                        value:  customString
-                    )
-                
-                XCTAssertOK(configLookupSingleStringResult)
-                XCTAssertEqual(lookupValue, Int32(configMapStringCustom.mapValue))
-                
-                
-                
-                /// Test with an empty string.
-                lookupValue = -1
-                
-                let configLookupEmptyStringResult: GitErrorCode
-                    = gitConfigLookupMapValue(
-                        out:    &lookupValue,
-                        maps:   [configMapStringEmpty],
-                        mapN:   1,
-                        value:  ""
-                    )
-                
-                XCTAssertOK(configLookupEmptyStringResult)
-                XCTAssertEqual(lookupValue, Int32(configMapStringEmpty.mapValue))
-            }
+            
+            
+            /// Test string lookup with `"true"`.
+            lookupValue = -1
+            
+            let configLookupTrueStringResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  "true"
+                )
+            
+            XCTAssertOK(configLookupTrueStringResult)
+            XCTAssertEqual(lookupValue, Int32(configMapBoolTrue.mapValue))
+            
+            
+            
+            /// Test string lookup with `customString`.
+            lookupValue = -1
+            
+            let configLookupCustomStringResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  customString
+                )
+            
+            XCTAssertOK(configLookupCustomStringResult)
+            XCTAssertEqual(lookupValue, Int32(configMapStringCustom.mapValue))
+            
+            
+            
+            /// Test string lookup with `anotherString`.
+            lookupValue = -1
+            
+            let configLookupAnotherStringResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   configMaps,
+                    mapN:   configMaps.count,
+                    value:  anotherString
+                )
+            
+            XCTAssertOK(configLookupAnotherStringResult)
+            XCTAssertEqual(lookupValue, Int32(configMapStringAnother.mapValue))
+            
+            
+            
+            /// Test with an empty array.
+            lookupValue = -1
+            
+            let configLookupEmptyResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [],
+                    mapN:   0,
+                    value:  "empty"
+                )
+            
+            XCTAssertNotOK(configLookupEmptyResult)
+            
+            
+            
+            /// Test with all `nil` values. This hits the fast path of
+            /// ``withArrayOfGitConfigMaps(_:)``, where there is no buffer
+            /// allocation.
+            lookupValue = -1
+            
+            let configLookupAllNilResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [configMapBoolFalse, configMapBoolTrue],
+                    mapN:   2,
+                    value:  "false"
+                )
+            
+            XCTAssertOK(configLookupAllNilResult)
+            XCTAssertEqual(lookupValue, Int32(configMapBoolFalse.mapValue))
+            
+            
+            
+            /// Test with a single string.
+            lookupValue = -1
+            
+            let configLookupSingleStringResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [configMapStringCustom],
+                    mapN:   1,
+                    value:  customString
+                )
+            
+            XCTAssertOK(configLookupSingleStringResult)
+            XCTAssertEqual(lookupValue, Int32(configMapStringCustom.mapValue))
+            
+            
+            
+            /// Test with an empty string.
+            lookupValue = -1
+            
+            let configLookupEmptyStringResult: GitErrorCode
+                = gitConfigLookupMapValue(
+                    out:    &lookupValue,
+                    maps:   [configMapStringEmpty],
+                    mapN:   1,
+                    value:  ""
+                )
+            
+            XCTAssertOK(configLookupEmptyStringResult)
+            XCTAssertEqual(lookupValue, Int32(configMapStringEmpty.mapValue))
         }
     }
     
@@ -824,139 +809,134 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigMultivarOperations() throws
     {
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            _, configPointer in
             
-            try withConfigOnDisk(in: repository)
+            let multivarName    : String    = "test.multivar"
+            let testValueCount  : Int       = 3
+            
+            for index in 0..<testValueCount
             {
-                configPointer in
-                
-                let multivarName    : String    = "test.multivar"
-                let testValueCount  : Int       = 3
-                
-                for index in 0..<testValueCount
-                {
-                    var configSetMultivarResult: GitErrorCode
-                        = gitConfigSetMultivar(
-                            cfg:        configPointer,
-                            name:       multivarName,
-                            regExp:     "",
-                            value:      "value\(index)"
-                        )
-                    
-                    XCTAssertOK(configSetMultivarResult)
-                    
-                    
-                    
-                    let configDeleteMultivarResult: GitErrorCode
-                        = gitConfigDeleteMultivar(
-                            cfg:        configPointer,
-                            name:       multivarName,
-                            regExp:     "test.multivar*"
-                        )
-                    
-                    XCTAssertOK(configDeleteMultivarResult)
-                    
-                    
-                    
-                    configSetMultivarResult = gitConfigSetMultivar(
+                var configSetMultivarResult: GitErrorCode
+                    = gitConfigSetMultivar(
                         cfg:        configPointer,
                         name:       multivarName,
                         regExp:     "",
                         value:      "value\(index)"
                     )
-                    
-                    XCTAssertOK(configSetMultivarResult)
-                }
+                
+                XCTAssertOK(configSetMultivarResult)
                 
                 
                 
-                var callbackData = CallbackData()
-                
-                withUnsafeMutablePointer(to: &callbackData)
-                {
-                    callbackDataPointer in
-                    
-                    let configGetMultivarForEachResult: GitErrorCode
-                        = gitConfigGetMultivarForEach(
-                            cfg:        configPointer,
-                            name:       multivarName,
-                            regExp:     nil,
-                            callback:   Self.configForEachCB,
-                            payload:    callbackDataPointer
-                        )
-                    
-                    XCTAssertOK(configGetMultivarForEachResult)
-                }
-                
-                XCTAssertGreaterThan(callbackData.count, 0)
-                XCTAssertEqual(callbackData.values.count, 1)
-                
-                for entry in callbackData.values
-                {
-                    XCTAssertTrue(entry.hasPrefix("test."))
-                }
-                
-                
-                
-                var configIterator: UnsafeMutablePointer<git_config_iterator>?
-                    = nil
-                
-                defer
-                {
-                    gitConfigIteratorFree(iter: configIterator)
-                }
-                
-                
-                
-                let configMultivarIteratorNewResult: GitErrorCode
-                    = gitConfigMultivarIteratorNew(
-                        out:        &configIterator,
+                let configDeleteMultivarResult: GitErrorCode
+                    = gitConfigDeleteMultivar(
                         cfg:        configPointer,
                         name:       multivarName,
-                        regExp:     nil
+                        regExp:     "test.multivar*"
                     )
                 
-                XCTAssertOK(configMultivarIteratorNewResult)
-                
-                guard let configIterator: UnsafeMutablePointer<git_config_iterator>
-                        = configIterator
-                else
-                {
-                    XCTFail("The configuration iterator was nil.")
-                    return
-                }
+                XCTAssertOK(configDeleteMultivarResult)
                 
                 
                 
-                var valueCount  : Int               = 0
-                var configEntry : GitConfigEntry    = GitConfigEntry()
+                configSetMultivarResult = gitConfigSetMultivar(
+                    cfg:        configPointer,
+                    name:       multivarName,
+                    regExp:     "",
+                    value:      "value\(index)"
+                )
                 
-                while true
-                {
-                    let configNextResult: GitErrorCode = gitConfigNext(
-                        entry:  &configEntry,
-                        iter:   configIterator
-                    )
-                    
-                    if configNextResult == .gitIterOver
-                    {
-                        break
-                    }
-                    
-                    XCTAssertOK(configNextResult)
-                    XCTAssertNotNil(configEntry.name)
-                    XCTAssertNotNil(configEntry.value)
-                    XCTAssertNotNil(configEntry.backendType)
-                    XCTAssertNotNil(configEntry.originPath)
-                    XCTAssertTrue(configEntry.name?.hasPrefix("test.") ?? false)
-                    
-                    valueCount += 1
-                }
-                
-                XCTAssertGreaterThan(valueCount, 0)
+                XCTAssertOK(configSetMultivarResult)
             }
+            
+            
+            
+            var callbackData = CallbackData()
+            
+            withUnsafeMutablePointer(to: &callbackData)
+            {
+                callbackDataPointer in
+                
+                let configGetMultivarForEachResult: GitErrorCode
+                    = gitConfigGetMultivarForEach(
+                        cfg:        configPointer,
+                        name:       multivarName,
+                        regExp:     nil,
+                        callback:   Self.configForEachCB,
+                        payload:    callbackDataPointer
+                    )
+                
+                XCTAssertOK(configGetMultivarForEachResult)
+            }
+            
+            XCTAssertGreaterThan(callbackData.count, 0)
+            XCTAssertEqual(callbackData.values.count, 1)
+            
+            for entry in callbackData.values
+            {
+                XCTAssertTrue(entry.hasPrefix("test."))
+            }
+            
+            
+            
+            var configIterator: UnsafeMutablePointer<git_config_iterator>?
+                = nil
+            
+            defer
+            {
+                gitConfigIteratorFree(iter: configIterator)
+            }
+            
+            
+            
+            let configMultivarIteratorNewResult: GitErrorCode
+                = gitConfigMultivarIteratorNew(
+                    out:        &configIterator,
+                    cfg:        configPointer,
+                    name:       multivarName,
+                    regExp:     nil
+                )
+            
+            XCTAssertOK(configMultivarIteratorNewResult)
+            
+            guard let configIterator: UnsafeMutablePointer<git_config_iterator>
+                    = configIterator
+            else
+            {
+                XCTFail("The configuration iterator was nil.")
+                return
+            }
+            
+            
+            
+            var valueCount  : Int               = 0
+            var configEntry : GitConfigEntry    = GitConfigEntry()
+            
+            while true
+            {
+                let configNextResult: GitErrorCode = gitConfigNext(
+                    entry:  &configEntry,
+                    iter:   configIterator
+                )
+                
+                if configNextResult == .gitIterOver
+                {
+                    break
+                }
+                
+                XCTAssertOK(configNextResult)
+                XCTAssertNotNil(configEntry.name)
+                XCTAssertNotNil(configEntry.value)
+                XCTAssertNotNil(configEntry.backendType)
+                XCTAssertNotNil(configEntry.originPath)
+                XCTAssertTrue(configEntry.name?.hasPrefix("test.") ?? false)
+                
+                valueCount += 1
+            }
+            
+            XCTAssertGreaterThan(valueCount, 0)
         }
     }
     
@@ -1005,48 +985,43 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigOnDiskOperations() throws
     {
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            repository, configPointer in
             
-            try withConfigOnDisk(in: repository)
+            var newConfigPointer: OpaquePointer? = nil
+            
+            defer
             {
-                configPointer in
-                
-                var newConfigPointer: OpaquePointer? = nil
-                
-                defer
-                {
-                    gitConfigFree(cfg: newConfigPointer)
-                }
-                
-                
-                
-                let configNewResult: GitErrorCode
-                    = gitConfigNew(out: &newConfigPointer)
-                
-                XCTAssertOK(configNewResult)
-                
-                guard let newConfigPointer: OpaquePointer = newConfigPointer
-                else
-                {
-                    XCTFail("The new configuration pointer was nil.")
-                    return
-                }
-                
-                
-                
-                let configAddFileOnDiskResult: GitErrorCode
-                    = gitConfigAddFileOnDisk(
-                        cfg:    newConfigPointer,
-                        path:   repository.configPath,
-                        level:  .gitConfigLevelLocal,
-                        repo:   repository.pointer,
-                        force:  false
-                    )
-                
-                XCTAssertOK(configAddFileOnDiskResult)
+                gitConfigFree(cfg: newConfigPointer)
             }
+            
+            
+            
+            let configNewResult: GitErrorCode
+                = gitConfigNew(out: &newConfigPointer)
+            
+            XCTAssertOK(configNewResult)
+            
+            guard let newConfigPointer: OpaquePointer = newConfigPointer
+            else
+            {
+                XCTFail("The new configuration pointer was nil.")
+                return
+            }
+            
+            
+            
+            let configAddFileOnDiskResult: GitErrorCode
+                = gitConfigAddFileOnDisk(
+                    cfg:    newConfigPointer,
+                    path:   repository.configPath,
+                    level:  .gitConfigLevelLocal,
+                    repo:   repository.pointer,
+                    force:  false
+                )
+            
+            XCTAssertOK(configAddFileOnDiskResult)
         }
     }
     
@@ -1149,225 +1124,220 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSetAndGetOperations() throws
     {
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            _, configPointer in
             
-            try withConfigOnDisk(in: repository)
+            let stringExpectedValue : String    = "hello world"
+            let stringName          : String    = "test.string"
+            
+            var configSetStringResult: GitErrorCode = gitConfigSetString(
+                cfg:    configPointer,
+                name:   stringName,
+                value:  stringExpectedValue
+            )
+            
+            XCTAssertOK(configSetStringResult)
+            
+            
+            
+            let configDeleteEntryResult: GitErrorCode
+                = gitConfigDeleteEntry(
+                    cfg:    configPointer,
+                    name:   stringName
+                )
+            
+            XCTAssertOK(configDeleteEntryResult)
+            
+            
+            
+            var configEntry = GitConfigEntry()
+            
+            var configGetEntryResult: GitErrorCode = gitConfigGetEntry(
+                out:    &configEntry,
+                cfg:    configPointer,
+                name:   stringName
+            )
+            
+            /// The entry was deleted.
+            XCTAssertNotOK(configGetEntryResult)
+            
+            
+            
+            configSetStringResult = gitConfigSetString(
+                cfg:    configPointer,
+                name:   stringName,
+                value:  stringExpectedValue
+            )
+            
+            XCTAssertOK(configSetStringResult)
+            
+            
+            
+            configGetEntryResult = gitConfigGetEntry(
+                out:    &configEntry,
+                cfg:    configPointer,
+                name:   stringName
+            )
+            
+            XCTAssertOK(configGetEntryResult)
+            XCTAssertNotNil(configEntry.name)
+            XCTAssertNotNil(configEntry.value)
+            XCTAssertNotNil(configEntry.backendType)
+            XCTAssertNotNil(configEntry.originPath)
+            XCTAssertEqual(configEntry.name, stringName)
+            XCTAssertEqual(configEntry.value, stringExpectedValue)
+            XCTAssertEqual(configEntry.level, .gitConfigLevelLocal)
+            
+            
+            
+            /// Test freeing a `git_config_entry`.
+            var cConfigEntry: UnsafeMutablePointer<git_config_entry>? = nil
+            
+            defer
             {
-                configPointer in
-                
-                let stringExpectedValue : String    = "hello world"
-                let stringName          : String    = "test.string"
-                
-                var configSetStringResult: GitErrorCode = gitConfigSetString(
-                    cfg:    configPointer,
-                    name:   stringName,
-                    value:  stringExpectedValue
-                )
-                
-                XCTAssertOK(configSetStringResult)
-                
-                
-                
-                let configDeleteEntryResult: GitErrorCode
-                    = gitConfigDeleteEntry(
-                        cfg:    configPointer,
-                        name:   stringName
-                    )
-                
-                XCTAssertOK(configDeleteEntryResult)
-                
-                
-                
-                var configEntry = GitConfigEntry()
-                
-                var configGetEntryResult: GitErrorCode = gitConfigGetEntry(
-                    out:    &configEntry,
-                    cfg:    configPointer,
-                    name:   stringName
-                )
-                
-                /// The entry was deleted.
-                XCTAssertNotOK(configGetEntryResult)
-                
-                
-                
-                configSetStringResult = gitConfigSetString(
-                    cfg:    configPointer,
-                    name:   stringName,
-                    value:  stringExpectedValue
-                )
-                
-                XCTAssertOK(configSetStringResult)
-                
-                
-                
-                configGetEntryResult = gitConfigGetEntry(
-                    out:    &configEntry,
-                    cfg:    configPointer,
-                    name:   stringName
-                )
-                
-                XCTAssertOK(configGetEntryResult)
-                XCTAssertNotNil(configEntry.name)
-                XCTAssertNotNil(configEntry.value)
-                XCTAssertNotNil(configEntry.backendType)
-                XCTAssertNotNil(configEntry.originPath)
-                XCTAssertEqual(configEntry.name, stringName)
-                XCTAssertEqual(configEntry.value, stringExpectedValue)
-                XCTAssertEqual(configEntry.level, .gitConfigLevelLocal)
-                
-                
-                
-                /// Test freeing a `git_config_entry`.
-                var cConfigEntry: UnsafeMutablePointer<git_config_entry>? = nil
-                
-                defer
-                {
-                    gitConfigEntryFree(entry: cConfigEntry)
-                }
-                
-                let cConfigGetEntryResult: Int32 = git_config_get_entry(
-                    &cConfigEntry,
-                    configPointer,
-                    stringName
-                )
-                
-                XCTAssertOK(GitErrorCode(rawValue: cConfigGetEntryResult))
-                XCTAssertNotNil(cConfigEntry)
-                
-                
-                
-                var stringValue = Data()
-                
-                let configGetStringBufResult: GitErrorCode
-                    = gitConfigGetStringBuf(
-                        out:    &stringValue,
-                        cfg:    configPointer,
-                        name:   stringName
-                    )
-                
-                XCTAssertOK(configGetStringBufResult)
-                XCTAssertEqual(stringValue, stringExpectedValue)
-                
-                
-                
-                let int32ExpectedValue  : Int32     = 123
-                let int32Name           : String    = "test.int32"
-                
-                let configSetInt32Result: GitErrorCode = gitConfigSetInt32(
-                    cfg:    configPointer,
-                    name:   int32Name,
-                    value:  int32ExpectedValue
-                )
-                
-                XCTAssertOK(configSetInt32Result)
-                
-                
-                
-                var int32Value: Int32 = 0
-                
-                let configGetInt32Result: GitErrorCode = gitConfigGetInt32(
-                    out:    &int32Value,
-                    cfg:    configPointer,
-                    name:   int32Name
-                )
-                
-                XCTAssertOK(configGetInt32Result)
-                XCTAssertEqual(int32Value, int32ExpectedValue)
-                
-                
-                
-                let int64ExpectedValue  : Int64     = 1234567891234567890
-                let int64Name           : String    = "test.int64"
-                
-                let configSetInt64Result: GitErrorCode = gitConfigSetInt64(
-                    cfg:    configPointer,
-                    name:   int64Name,
-                    value:  int64ExpectedValue
-                )
-                
-                XCTAssertOK(configSetInt64Result)
-                
-                
-                
-                var int64Value: Int64 = 0
-                
-                let configGetInt64Result: GitErrorCode = gitConfigGetInt64(
-                    out:    &int64Value,
-                    cfg:    configPointer,
-                    name:   int64Name
-                )
-                
-                XCTAssertOK(configGetInt64Result)
-                XCTAssertEqual(int64Value, int64ExpectedValue)
-                
-                
-                
-                let boolExpectedValue   : Bool      = true
-                let boolName            : String    = "test.bool"
-                
-                let configSetBoolResult: GitErrorCode = gitConfigSetBool(
-                    cfg:    configPointer,
-                    name:   boolName,
-                    value:  boolExpectedValue
-                )
-                
-                XCTAssertOK(configSetBoolResult)
-                
-                
-                
-                var boolValue: Bool = false
-                
-                let configGetBoolResult: GitErrorCode = gitConfigGetBool(
-                    out:    &boolValue,
-                    cfg:    configPointer,
-                    name:   boolName
-                )
-                
-                XCTAssertOK(configGetBoolResult)
-                XCTAssertEqual(boolValue, boolExpectedValue)
-                
-                
-                
-                let pathExtension       : String    = "/Documents"
-                let pathExpectedValue   : String    = "~" + pathExtension
-                let pathName            : String    = "test.path"
-                
-                let configSetPathResult: GitErrorCode = gitConfigSetString(
-                    cfg:    configPointer,
-                    name:   pathName,
-                    value:  pathExpectedValue
-                )
-                
-                XCTAssertOK(configSetPathResult)
-                
-                
-                
-                var path = Data()
-                
-                let configGetPathResult: GitErrorCode = gitConfigGetPath(
-                    out:    &path,
-                    cfg:    configPointer,
-                    name:   pathName
-                )
-                
-                XCTAssertOK(configGetPathResult)
-                
-                
-                
-                let pathValue: String? = String(
-                    data:       path,
-                    encoding:   .utf8
-                )
-                
-                /// The path should be expanded. The exact value depends on
-                /// the environment.
-                XCTAssertNotNil(pathValue)
-                XCTAssertNotEqual(pathValue, pathExpectedValue)
-                XCTAssertTrue(pathValue?.hasSuffix(pathExtension) ?? false)
+                gitConfigEntryFree(entry: cConfigEntry)
             }
+            
+            let cConfigGetEntryResult: Int32 = git_config_get_entry(
+                &cConfigEntry,
+                configPointer,
+                stringName
+            )
+            
+            XCTAssertOK(GitErrorCode(rawValue: cConfigGetEntryResult))
+            XCTAssertNotNil(cConfigEntry)
+            
+            
+            
+            var stringValue = Data()
+            
+            let configGetStringBufResult: GitErrorCode
+                = gitConfigGetStringBuf(
+                    out:    &stringValue,
+                    cfg:    configPointer,
+                    name:   stringName
+                )
+            
+            XCTAssertOK(configGetStringBufResult)
+            XCTAssertEqual(stringValue, stringExpectedValue)
+            
+            
+            
+            let int32ExpectedValue  : Int32     = 123
+            let int32Name           : String    = "test.int32"
+            
+            let configSetInt32Result: GitErrorCode = gitConfigSetInt32(
+                cfg:    configPointer,
+                name:   int32Name,
+                value:  int32ExpectedValue
+            )
+            
+            XCTAssertOK(configSetInt32Result)
+            
+            
+            
+            var int32Value: Int32 = 0
+            
+            let configGetInt32Result: GitErrorCode = gitConfigGetInt32(
+                out:    &int32Value,
+                cfg:    configPointer,
+                name:   int32Name
+            )
+            
+            XCTAssertOK(configGetInt32Result)
+            XCTAssertEqual(int32Value, int32ExpectedValue)
+            
+            
+            
+            let int64ExpectedValue  : Int64     = 1234567891234567890
+            let int64Name           : String    = "test.int64"
+            
+            let configSetInt64Result: GitErrorCode = gitConfigSetInt64(
+                cfg:    configPointer,
+                name:   int64Name,
+                value:  int64ExpectedValue
+            )
+            
+            XCTAssertOK(configSetInt64Result)
+            
+            
+            
+            var int64Value: Int64 = 0
+            
+            let configGetInt64Result: GitErrorCode = gitConfigGetInt64(
+                out:    &int64Value,
+                cfg:    configPointer,
+                name:   int64Name
+            )
+            
+            XCTAssertOK(configGetInt64Result)
+            XCTAssertEqual(int64Value, int64ExpectedValue)
+            
+            
+            
+            let boolExpectedValue   : Bool      = true
+            let boolName            : String    = "test.bool"
+            
+            let configSetBoolResult: GitErrorCode = gitConfigSetBool(
+                cfg:    configPointer,
+                name:   boolName,
+                value:  boolExpectedValue
+            )
+            
+            XCTAssertOK(configSetBoolResult)
+            
+            
+            
+            var boolValue: Bool = false
+            
+            let configGetBoolResult: GitErrorCode = gitConfigGetBool(
+                out:    &boolValue,
+                cfg:    configPointer,
+                name:   boolName
+            )
+            
+            XCTAssertOK(configGetBoolResult)
+            XCTAssertEqual(boolValue, boolExpectedValue)
+            
+            
+            
+            let pathExtension       : String    = "/Documents"
+            let pathExpectedValue   : String    = "~" + pathExtension
+            let pathName            : String    = "test.path"
+            
+            let configSetPathResult: GitErrorCode = gitConfigSetString(
+                cfg:    configPointer,
+                name:   pathName,
+                value:  pathExpectedValue
+            )
+            
+            XCTAssertOK(configSetPathResult)
+            
+            
+            
+            var path = Data()
+            
+            let configGetPathResult: GitErrorCode = gitConfigGetPath(
+                out:    &path,
+                cfg:    configPointer,
+                name:   pathName
+            )
+            
+            XCTAssertOK(configGetPathResult)
+            
+            
+            
+            let pathValue: String? = String(
+                data:       path,
+                encoding:   .utf8
+            )
+            
+            /// The path should be expanded. The exact value depends on
+            /// the environment.
+            XCTAssertNotNil(pathValue)
+            XCTAssertNotEqual(pathValue, pathExpectedValue)
+            XCTAssertTrue(pathValue?.hasSuffix(pathExtension) ?? false)
         }
     }
     
@@ -1375,90 +1345,85 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSnapshotAndWriteOrder() throws
     {
-        try Repository.withRepository
+        try withConfigOnDisk
         {
-            repository in
+            _, configPointer in
             
-            try withConfigOnDisk(in: repository)
+            var snapshotPointer: OpaquePointer? = nil
+            
+            defer
             {
-                configPointer in
-                
-                var snapshotPointer: OpaquePointer? = nil
-                
-                defer
-                {
-                    gitConfigFree(cfg: snapshotPointer)
-                }
-                
-                
-                
-                let stringExpectedValue : String    = "hello world"
-                let stringName          : String    = "test.string"
-                
-                let configSetStringResult: GitErrorCode = gitConfigSetString(
-                    cfg:    configPointer,
-                    name:   stringName,
-                    value:  stringExpectedValue
-                )
-                
-                XCTAssertOK(configSetStringResult)
-                
-                
-                
-                let configSnapshotResult: GitErrorCode = gitConfigSnapshot(
-                    out:        &snapshotPointer,
-                    config:     configPointer
-                )
-                
-                XCTAssertOK(configSnapshotResult)
-                
-                guard let snapshotPointer: OpaquePointer = snapshotPointer
-                else
-                {
-                    XCTFail("The configuration snapshot pointer was nil.")
-                    return
-                }
-                
-                
-                
-                var stringValue: String? = nil
-                
-                let invalidConfigGetStringResult: GitErrorCode
-                    = gitConfigGetString(
-                        out:    &stringValue,
-                        cfg:    configPointer,
-                        name:   stringName
-                    )
-                
-                /// This should fail since it attempts to get the string value
-                /// from a live configuration object.
-                XCTAssertNotOK(invalidConfigGetStringResult)
-                
-                
-                
-                stringValue = nil
-                
-                let configGetStringResult: GitErrorCode = gitConfigGetString(
+                gitConfigFree(cfg: snapshotPointer)
+            }
+            
+            
+            
+            let stringExpectedValue : String    = "hello world"
+            let stringName          : String    = "test.string"
+            
+            let configSetStringResult: GitErrorCode = gitConfigSetString(
+                cfg:    configPointer,
+                name:   stringName,
+                value:  stringExpectedValue
+            )
+            
+            XCTAssertOK(configSetStringResult)
+            
+            
+            
+            let configSnapshotResult: GitErrorCode = gitConfigSnapshot(
+                out:        &snapshotPointer,
+                config:     configPointer
+            )
+            
+            XCTAssertOK(configSnapshotResult)
+            
+            guard let snapshotPointer: OpaquePointer = snapshotPointer
+            else
+            {
+                XCTFail("The configuration snapshot pointer was nil.")
+                return
+            }
+            
+            
+            
+            var stringValue: String? = nil
+            
+            let invalidConfigGetStringResult: GitErrorCode
+                = gitConfigGetString(
                     out:    &stringValue,
-                    cfg:    snapshotPointer,
+                    cfg:    configPointer,
                     name:   stringName
                 )
-                
-                XCTAssertOK(configGetStringResult)
-                XCTAssertNotNil(stringValue)
-                XCTAssertEqual(stringValue, stringExpectedValue)
-                
-                
-                
-                let configSetWriteOrderResult: GitErrorCode
-                    = gitConfigSetWriteOrder(
-                        cfg:        configPointer,
-                        levels:     [.gitConfigLevelLocal, .gitConfigLevelGlobal],
-                        len:        2
-                    )
-                
-                XCTAssertOK(configSetWriteOrderResult)
-            }
+            
+            /// This should fail since it attempts to get the string value
+            /// from a live configuration object.
+            XCTAssertNotOK(invalidConfigGetStringResult)
+            
+            
+            
+            stringValue = nil
+            
+            let configGetStringResult: GitErrorCode = gitConfigGetString(
+                out:    &stringValue,
+                cfg:    snapshotPointer,
+                name:   stringName
+            )
+            
+            XCTAssertOK(configGetStringResult)
+            XCTAssertNotNil(stringValue)
+            XCTAssertEqual(stringValue, stringExpectedValue)
+            
+            
+            
+            let configSetWriteOrderResult: GitErrorCode
+                = gitConfigSetWriteOrder(
+                    cfg:        configPointer,
+                    levels:     [.gitConfigLevelLocal, .gitConfigLevelGlobal],
+                    len:        2
+                )
+            
+            XCTAssertOK(configSetWriteOrderResult)
         }
     }
 }
@@ -1510,40 +1475,44 @@ private extension ConfigTests
     
     
     
-    /// Calls the closure with a pointer to an on-disk configuraiton object.
-    /// - Parameters:
-    ///   - repository: The repository in which to create the configuration
-    ///   object.
-    ///   - body: The closure to call.
-    /// - Returns: The return value of the given closure.
+    /// Calls the closure with a ``Repository`` instance and a pointer to an
+    /// on-disk configuraiton object.
+    /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withConfigOnDisk<T>(
-        in  repository  : Repository,
-        _   body        : (OpaquePointer) -> T
-    ) throws -> T
+    func withConfigOnDisk(
+        _ body: (Repository, OpaquePointer) throws -> Void
+    ) throws
     {
-        var configPointer: OpaquePointer? = nil
-        
-        defer
+        try Repository.withRepository
         {
-            gitConfigFree(cfg: configPointer)
+            repository in
+            
+            var configPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitConfigFree(cfg: configPointer)
+            }
+            
+            
+            
+            let configOpenOnDiskResult: GitErrorCode = gitConfigOpenOnDisk(
+                out:    &configPointer,
+                path:   repository.configPath
+            )
+            
+            XCTAssertOK(configOpenOnDiskResult)
+            
+            guard let configPointer: OpaquePointer = configPointer
+            else
+            {
+                throw NSError.makeError("The configuration pointer was nil.")
+            }
+            
+            try body(
+                repository,
+                configPointer
+            )
         }
-        
-        
-        
-        let configOpenOnDiskResult: GitErrorCode = gitConfigOpenOnDisk(
-            out:    &configPointer,
-            path:   repository.configPath
-        )
-        
-        XCTAssertOK(configOpenOnDiskResult)
-        
-        guard let configPointer: OpaquePointer = configPointer
-        else
-        {
-            throw NSError.makeError("The configuration pointer was nil.")
-        }
-        
-        return body(configPointer)
     }
 }

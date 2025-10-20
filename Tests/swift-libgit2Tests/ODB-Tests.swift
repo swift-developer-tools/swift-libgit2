@@ -1133,11 +1133,10 @@ private extension ODBTests
             guard let odbPointer: OpaquePointer = odbPointer
             else
             {
-                XCTFail("The ODB pointer was nil.")
-                return
+                throw NSError.makeError("The ODB pointer was nil.")
             }
             
-            return try body(
+            try body(
                 repository,
                 odbPointer
             )
