@@ -942,7 +942,7 @@ final class MergeTests: XCTestCaseStopOnFail
         let mergeOptions = GitMergeOptions()
         
         XCTAssertEqual(mergeOptions.version, gitMergeOptionsVersion)
-        XCTAssertEqual(mergeOptions.flags, .gitMergeFindRenames)
+        XCTAssertEqual(mergeOptions.flags, [])
         XCTAssertEqual(mergeOptions.renameThreshold, 50)
         XCTAssertEqual(mergeOptions.targetLimit, 200)
         XCTAssertNil(mergeOptions.metric)
@@ -956,7 +956,7 @@ final class MergeTests: XCTestCaseStopOnFail
             cMergeOptions in
             
             XCTAssertEqual(cMergeOptions.pointee.version, gitMergeOptionsVersion)
-            XCTAssertEqual(GitMergeFlagT(rawValue: cMergeOptions.pointee.flags), .gitMergeFindRenames)
+            XCTAssertEqual(GitMergeFlagT(rawValue: cMergeOptions.pointee.flags), [])
             XCTAssertEqual(cMergeOptions.pointee.rename_threshold, 50)
             XCTAssertEqual(cMergeOptions.pointee.target_limit, 200)
             XCTAssertNil(cMergeOptions.pointee.metric)

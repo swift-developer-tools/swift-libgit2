@@ -30,7 +30,7 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitBlobFilterFlagT/gitBlobFilterCheckForBinary``.
+    /// The default value is an empty option set.
     public var flags        : GitBlobFilterFlagT
     
     /// The commit ID.
@@ -56,7 +56,7 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible, Sendable
     /// values for its properties.
     public init(
         version         : Int32                 = gitBlobFilterOptionsVersion,
-        flags           : GitBlobFilterFlagT    = .gitBlobFilterCheckForBinary,
+        flags           : GitBlobFilterFlagT    = [],
         commitID        : GitOID?               = nil,
         attrCommitID    : GitOID                = GitOID()
     )

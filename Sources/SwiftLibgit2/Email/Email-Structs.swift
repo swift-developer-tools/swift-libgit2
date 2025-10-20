@@ -29,7 +29,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitEmailCreateFlagsT/gitEmailCreateDefault``.
+    /// The default value is an empty option set.
     public var flags            : GitEmailCreateFlagsT
     
     /// The options for the diff operation.
@@ -81,7 +81,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version         : UInt32                = gitEmailCreateOptionsVersion,
-        flags           : GitEmailCreateFlagsT  = .gitEmailCreateDefault,
+        flags           : GitEmailCreateFlagsT  = [],
         diffOpts        : GitDiffOptions        = GitDiffOptions(),
         diffFindOpts    : GitDiffFindOptions    = GitDiffFindOptions(),
         subjectPrefix   : String                = "PATCH",

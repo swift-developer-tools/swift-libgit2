@@ -178,7 +178,7 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitMergeFileFlagT/gitMergeFileDefault``.
+    /// The default value is an option set.
     public var flags            : GitMergeFileFlagT
     
     /// The size of conflict markers.
@@ -198,7 +198,7 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible, Sendable
         ourLabel        : String?               = nil,
         theirLabel      : String?               = nil,
         favor           : GitMergeFileFavorT    = .gitMergeFileFavorNormal,
-        flags           : GitMergeFileFlagT     = .gitMergeFileDefault,
+        flags           : GitMergeFileFlagT     = [],
         markerSize      : UInt16                = gitMergeConflictMarkerSize
     )
     {
@@ -429,7 +429,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitMergeFlagT/gitMergeFindRenames``.
+    /// The default value is an empty option set.
     public var flags            : GitMergeFlagT
     
     /// The similarity percentage beyond which to treat a file as a rename.
@@ -497,7 +497,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitMergeFileFlagT/gitMergeFileDefault``.
+    /// The default value is an empty option set.
     public var fileFlags        : GitMergeFileFlagT
     
     
@@ -506,7 +506,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version         : UInt32                            = gitMergeOptionsVersion,
-        flags           : GitMergeFlagT                     = .gitMergeFindRenames,
+        flags           : GitMergeFlagT                     = [],
         renameThreshold : UInt32                            = 50,
         targetLimit     : UInt32                            = 200,
         metric          : UnsafeMutablePointer<
@@ -514,7 +514,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
         recursionLimit  : UInt32                            = 0,
         defaultDriver   : String?                           = nil,
         fileFavor       : GitMergeFileFavorT                = .gitMergeFileFavorNormal,
-        fileFlags       : GitMergeFileFlagT                 = .gitMergeFileDefault
+        fileFlags       : GitMergeFileFlagT                 = []
     )
     {
         self.version            = version

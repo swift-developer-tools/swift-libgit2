@@ -254,7 +254,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
 
 
 
-/// The options for the fetch operation.
+/// The options for fetch operations.
 ///
 /// ## C Equivalent
 ///
@@ -288,7 +288,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitRemoteUpdateFlags/gitRemoteUpdateFETCHHEAD``.
+    /// The default value is an empty option set.
     public var updateFETCHHEAD  : GitRemoteUpdateFlags
     
     /// The automatic tag-following option used to determine which `--tags`
@@ -337,7 +337,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
         version         : Int32                     = gitFetchOptionsVersion,
         callbacks       : GitRemoteCallbacks        = GitRemoteCallbacks(),
         prune           : GitFetchPruneT            = .gitFetchPruneUnspecified,
-        updateFETCHHEAD : GitRemoteUpdateFlags      = .gitRemoteUpdateFETCHHEAD,
+        updateFETCHHEAD : GitRemoteUpdateFlags      = [],
         downloadTags    : GitRemoteAutoTagOptionT   = .gitRemoteDownloadTagsAuto,
         proxyOpts       : GitProxyOptions           = GitProxyOptions(),
         depth           : GitFetchDepthT            = .gitFetchDepthFull,

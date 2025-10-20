@@ -11,6 +11,31 @@ import CLibgit2
 
 
 
+/// Initializes the given `git_remote_create_options` instance.
+/// - Parameters:
+///   - opts: The `git_remote_create_options` instance to initialize.
+///   - version: The version to use. Pass ``gitRemoteCreateOptionsVersion``.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_remote_create_options_init()`](https://libgit2.org/docs/reference/main/remote/git_remote_create_options_init.html)
+public func gitRemoteCreateOptionsInit(
+    opts    : UnsafeMutablePointer<git_remote_create_options>,
+    version : UInt32
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_remote_create_options_init(
+            opts,
+            version
+        )
+    }
+}
+
+
+
 /// Initializes the given `git_remote_callbacks` instance.
 /// - Parameters:
 ///   - opts: The `git_remote_callbacks` instance to initialize.

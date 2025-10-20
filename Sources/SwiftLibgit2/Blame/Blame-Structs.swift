@@ -30,7 +30,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitBlameFlagT/gitBlameNormal``.
+    /// The default value is an empty option set.
     public var flags                : GitBlameFlagT
     
     /// The lower bound on the number of alphanumeric characters that must be
@@ -86,7 +86,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     /// values for its properties.
     public init(
         version             : UInt32            = gitBlameOptionsVersion,
-        flags               : GitBlameFlagT     = .gitBlameNormal,
+        flags               : GitBlameFlagT     = [],
         minMatchCharacters  : UInt16            = 20,
         newestCommit        : GitOID            = GitOID(),
         oldestCommit        : GitOID            = GitOID(),

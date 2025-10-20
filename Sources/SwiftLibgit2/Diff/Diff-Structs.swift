@@ -247,7 +247,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitDiffOptionT/gitDiffNormal``.
+    /// The default value is an empty option set.
     public var flags            : GitDiffOptionT
     
     /// The submodule ignore options.
@@ -357,7 +357,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version             : UInt32                    = gitDiffOptionsVersion,
-        flags               : GitDiffOptionT            = .gitDiffNormal,
+        flags               : GitDiffOptionT            = [],
         ignoreSubmodules    : GitSubmoduleIgnoreT       = .gitSubmoduleIgnoreUnspecified,
         pathspec            : [String]                  = [],
         notifyCB            : GitDiffNotifyCB?          = nil,
@@ -971,7 +971,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitDiffFindT/gitDiffFindByConfig``.
+    /// The default value is an empty option set.
     public var flags                        : GitDiffFindT
     
     /// The threshold above which similar files will be considered renames.
@@ -1044,7 +1044,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// values for its properties.
     public init(
         version                     : UInt32                            = gitDiffFindOptionsVersion,
-        flags                       : GitDiffFindT                      = .gitDiffFindByConfig,
+        flags                       : GitDiffFindT                      = [],
         renameThreshold             : UInt16                            = 50,
         renameFromRewriteThreshold  : UInt16                            = 50,
         copyThreshold               : UInt16                            = 50,

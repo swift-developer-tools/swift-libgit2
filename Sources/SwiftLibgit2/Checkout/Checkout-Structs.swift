@@ -80,7 +80,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitCheckoutStrategyT/gitCheckoutSafe``.
+    /// The default value is an empty option set.
     public var checkoutStrategy : GitCheckoutStrategyT
     
     /// Whether to disable filters such as CRLF conversion.
@@ -118,7 +118,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitCheckoutNotifyT/gitCheckoutNotifyNone``.
+    /// The default value is an empty option set.
     public var notifyFlags      : GitCheckoutNotifyT
     
     /// The callback invoked for checkout notifications.
@@ -232,12 +232,12 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version             : UInt32                    = gitCheckoutOptionsVersion,
-        checkoutStrategy    : GitCheckoutStrategyT      = .gitCheckoutSafe,
+        checkoutStrategy    : GitCheckoutStrategyT      = [],
         disableFilters      : Bool                      = false,
         dirMode             : UInt32                    = 0,
         fileMode            : UInt32                    = 0,
         fileOpenFlags       : Int32                     = 0,
-        notifyFlags         : GitCheckoutNotifyT        = .gitCheckoutNotifyNone,
+        notifyFlags         : GitCheckoutNotifyT        = [],
         notifyCB            : GitCheckoutNotifyCB?      = nil,
         notifyPayload       : UnsafeMutableRawPointer?  = nil,
         progressCB          : GitCheckoutProgressCB?    = nil,
