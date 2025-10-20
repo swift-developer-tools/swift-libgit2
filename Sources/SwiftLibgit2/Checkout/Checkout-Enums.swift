@@ -25,8 +25,8 @@ import CLibgit2
 /// The caller provides one of two strategies for updating during the checkout
 /// operation:
 ///
-/// - ``gitCheckoutSafe``: This is the default value, similar to Git's default,
-/// which will make modifications that will not lose changes in the working
+/// - ``gitCheckoutSafe``: This is similar to Git's default behavior, which
+/// will make modifications that will not lose changes in the working
 /// directory.
 /// - ``gitCheckoutForce``: This will take any action to make the working
 /// directory match the target, including potentially discarding modified files.
@@ -85,8 +85,6 @@ public struct GitCheckoutStrategyT: COptionSet
     /// Allow safe updates that cannot overwrite uncommitted data.
     ///
     /// ## Discussion
-    ///
-    /// This is the default value.
     ///
     /// If the uncommitted changes do not conflict with the checked out files,
     /// then the checkout will still proceed, leaving the changes intact.

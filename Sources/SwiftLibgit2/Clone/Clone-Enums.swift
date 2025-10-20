@@ -27,10 +27,6 @@ public enum GitCloneLocalT: UInt32, CEnum
 {
     /// Bypass the Git-aware transport for local paths, but use a normal fetch
     /// for `file://` URLs.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     case gitCloneLocalAuto      = 0
     
     /// Bypass the Git-aware transport even for a `file://` URL.

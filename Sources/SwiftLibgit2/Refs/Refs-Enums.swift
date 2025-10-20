@@ -48,10 +48,6 @@ public struct GitReferenceFormatT: COptionSet
     
     
     /// Use no particular normalization.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitReferenceFormatNormal              = GitReferenceFormatT(rawValue: GIT_REFERENCE_FORMAT_NORMAL.rawValue)
     
     /// Control whether one-level reference names are accepted.

@@ -28,10 +28,6 @@ public enum GitRemoteRedirectT: UInt32, CEnum
     case gitRemoteRedirectNone      = 0
     
     /// Allow off-site redirects only upon the initial request.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     case gitRemoteRedirectInitial   = 1
     
     /// Allow redirects at any stage in the fetch or push operation.
@@ -357,10 +353,6 @@ public enum GitRemoteAutoTagOptionT: UInt32, CEnum
 public enum GitFetchDepthT: UInt32, CEnum
 {
     /// Perform a full fetch operation.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     case gitFetchDepthFull          = 0
     
     /// Perform an unshallow fetch operation and fetch missing data.

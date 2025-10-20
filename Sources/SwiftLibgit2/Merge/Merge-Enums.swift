@@ -108,10 +108,6 @@ public enum GitMergeFileFavorT: UInt32, CEnum
     /// When a region of a file is changed in both branches, a conflict will
     /// be recorded in the index so that the checkout operation can produce a
     /// merge file with conflict markers in the working directory.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     case gitMergeFileFavorNormal    = 0
     
     /// When a region of a file is changed in both branches, the file created
