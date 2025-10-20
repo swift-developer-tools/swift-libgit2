@@ -78,7 +78,6 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 
 
 
-// TODO: Replace `git_remote_set_instance_url()` in documentation.
 /// The callback invoked to resolve URLs.
 /// - Parameters:
 ///   - urlResolved: The buffer to which to write the resolved URL.
@@ -90,7 +89,7 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 /// ## Discussion
 ///
 /// - Warning: This is deprecated in libgit2 and will be removed in the next
-/// major release. Use `git_remote_set_instance_url()` instead.
+/// major release. Use ``gitRemoteSetInstanceURL(remote:url:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -105,7 +104,6 @@ public typealias GitURLResolveCB = @convention(c)
 
 
 
-// TODO: Replace `git_remote_set_instance_url()` in documentation.
 /// The callback invoked immediately before attempting a remote connection.
 /// - Parameters:
 ///   - remote: The remote to be connected. The underlying type must be
@@ -117,7 +115,7 @@ public typealias GitURLResolveCB = @convention(c)
 /// ## Discussion
 ///
 /// The URL may be changed before the connection by calling
-/// `git_remote_set_instance_url()`.
+/// ``gitRemoteSetInstanceURL(remote:url:)``.
 ///
 /// ## C Equivalent
 ///
