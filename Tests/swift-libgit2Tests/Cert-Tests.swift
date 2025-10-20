@@ -368,7 +368,7 @@ final class CertTests: XCTestCaseStopOnFail
         
         
         
-        let host: String = "github.com"
+        let host: String = "example.com"
         
         host.withCString
         {
@@ -381,7 +381,7 @@ final class CertTests: XCTestCaseStopOnFail
                 nil
             )
             
-            XCTAssertEqual(acceptCallbackResult, GitErrorCode.gitOK.rawValue)
+            XCTAssertOK(GitErrorCode(rawValue: acceptCallbackResult))
         }
         
         host.withCString
