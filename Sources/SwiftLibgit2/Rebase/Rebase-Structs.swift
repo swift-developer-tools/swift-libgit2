@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options for rebasing.
+/// The options for rebase operations.
 ///
 /// ## C Equivalent
 ///
