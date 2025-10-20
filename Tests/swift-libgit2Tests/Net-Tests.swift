@@ -46,7 +46,7 @@ final class NetTests: XCTestCaseStopOnFail
         XCTAssertZeroOID(remoteHEAD.oid)
         XCTAssertZeroOID(remoteHEAD.loid)
         XCTAssertNil(remoteHEAD.name)
-        XCTAssertNil(remoteHEAD.symrefTarget)
+        XCTAssertNil(remoteHEAD.symRefTarget)
         
         try remoteHEAD.withCValue
         {
