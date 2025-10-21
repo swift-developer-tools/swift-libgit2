@@ -462,8 +462,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`. If this is `nil` at runtime, libgit2
     /// defaults to using the internal metric.
-    public var metric           : UnsafeMutablePointer<
-                                    git_diff_similarity_metric>?
+    public var metric           : GitDiffSimilarityMetric?
     
     /// The maximum number of times to merge common ancestors to build a
     /// virtual merge base when faced with criss-cross merges.
@@ -505,16 +504,15 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// Initializes a ``GitMergeOptions`` instance, optionally specifying
     /// values for its properties.
     public init(
-        version         : UInt32                            = gitMergeOptionsVersion,
-        flags           : GitMergeFlagT                     = [],
-        renameThreshold : UInt32                            = 50,
-        targetLimit     : UInt32                            = 200,
-        metric          : UnsafeMutablePointer<
-                            git_diff_similarity_metric>?    = nil,
-        recursionLimit  : UInt32                            = 0,
-        defaultDriver   : String?                           = nil,
-        fileFavor       : GitMergeFileFavorT                = .gitMergeFileFavorNormal,
-        fileFlags       : GitMergeFileFlagT                 = []
+        version         : UInt32                    = gitMergeOptionsVersion,
+        flags           : GitMergeFlagT             = [],
+        renameThreshold : UInt32                    = 50,
+        targetLimit     : UInt32                    = 200,
+        metric          : GitDiffSimilarityMetric?  = nil,
+        recursionLimit  : UInt32                    = 0,
+        defaultDriver   : String?                   = nil,
+        fileFavor       : GitMergeFileFavorT        = .gitMergeFileFavorNormal,
+        fileFlags       : GitMergeFileFlagT         = []
     )
     {
         self.version            = version
@@ -541,7 +539,7 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
         self.flags              = GitMergeFlagT(rawValue: mergeOptions.flags)
         self.renameThreshold    = mergeOptions.rename_threshold
         self.targetLimit        = mergeOptions.target_limit
-        self.metric             = mergeOptions.metric
+        self.metric             = GitDiffSimilarityMetric(cValue: mergeOptions.metric.pointee)
         self.recursionLimit     = mergeOptions.recursion_limit
         self.defaultDriver      = String(optionalCString: mergeOptions.default_driver)
         self.fileFavor          = GitMergeFileFavorT(cValue: mergeOptions.file_favor) ?? .gitMergeFileFavorNormal
@@ -574,18 +572,27 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
         mergeOptions.flags              = flags.rawValue
         mergeOptions.rename_threshold   = renameThreshold
         mergeOptions.target_limit       = targetLimit
-        mergeOptions.metric             = metric
         mergeOptions.recursion_limit    = recursionLimit
         mergeOptions.file_favor         = fileFavor.cValue()
         mergeOptions.file_flags         = fileFlags.rawValue
         
-        return try defaultDriver.withOptionalCString
+        var cMetric: git_diff_similarity_metric
+            = metric?.cValue() ?? git_diff_similarity_metric()
+        
+        return try withUnsafeMutablePointer(to: &cMetric)
         {
-            cDefaultDriver in
+            cMetricPointer in
             
-            mergeOptions.default_driver = cDefaultDriver
+            mergeOptions.metric = cMetricPointer
             
-            return try body(&mergeOptions)
+            return try defaultDriver.withOptionalCString
+            {
+                cDefaultDriver in
+                
+                mergeOptions.default_driver = cDefaultDriver
+                
+                return try body(&mergeOptions)
+            }
         }
     }
 }

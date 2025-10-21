@@ -883,32 +883,64 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
 
 /// A pluggable similarity metric.
 ///
-/// ## Discussion
-///
-/// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_diff_similarity_metric` is treated as an
-/// opaque struct since its function pointers are allocated and managed by
-/// libgit2, and cannot be meaningfully recreated or translated.
-///
 /// ## C Equivalent
 ///
 /// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
-public struct GitDiffSimilarityMetric: CStruct
+public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
 {
     /// Generates a signature for the given file.
-    public let fileSignature    : FileSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var fileSignature    : FileSignature?            = nil
     
     /// Generates a signature for the given buffer.
-    public let bufferSignature  : BufferSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var bufferSignature  : BufferSignature?          = nil
     
     /// Frees the memory allocated for the given signature.
-    public let freeSignature    : FreeSignature?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var freeSignature    : FreeSignature?            = nil
     
     /// Generates a similarity score.
-    public let similarity       : Similarity?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var similarity       : Similarity?               = nil
     
     /// The payload provided by the caller.
-    public let payload          : UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var payload          : UnsafeMutableRawPointer?  = nil
+    
+    
+    
+    /// Initializes a ``GitDiffSimilarityMetric`` instance, optionally
+    /// specifying values for its properties.
+    public init(
+        fileSignature   : FileSignature?            = nil,
+        bufferSignature : BufferSignature?          = nil,
+        freeSignature   : FreeSignature?            = nil,
+        similarity      : Similarity?               = nil,
+        payload         : UnsafeMutableRawPointer?  = nil
+    )
+    {
+        self.fileSignature      = fileSignature
+        self.bufferSignature    = bufferSignature
+        self.freeSignature      = freeSignature
+        self.similarity         = similarity
+        self.payload            = payload
+    }
     
     
     
@@ -925,6 +957,24 @@ public struct GitDiffSimilarityMetric: CStruct
         self.freeSignature      = diffSimilarityMetric.free_signature
         self.similarity         = diffSimilarityMetric.similarity
         self.payload            = diffSimilarityMetric.payload
+    }
+    
+    
+    
+    /// Converts the ``GitDiffSimilarityMetric`` instance into a
+    /// `git_diff_similarity_metric` instance.
+    /// - Returns: The `git_diff_similarity_metric` instance.
+    internal func cValue() -> git_diff_similarity_metric
+    {
+        var diffSimilarityMetric = git_diff_similarity_metric()
+        
+        diffSimilarityMetric.file_signature     = fileSignature
+        diffSimilarityMetric.buffer_signature   = bufferSignature
+        diffSimilarityMetric.free_signature     = freeSignature
+        diffSimilarityMetric.similarity         = similarity
+        diffSimilarityMetric.payload            = payload
+        
+        return diffSimilarityMetric
     }
     
     
