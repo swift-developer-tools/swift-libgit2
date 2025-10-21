@@ -59,8 +59,8 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         
         
-        var resolvedName    : UnsafePointer<CChar>?     = nil
-        var resolvedEmail   : UnsafePointer<CChar>?     = nil
+        var resolvedName    : String?   = nil
+        var resolvedEmail   : String?   = nil
         
         let mailmapResolveResult: GitErrorCode = gitMailmapResolve(
             realName:   &resolvedName,
@@ -146,8 +146,8 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         
         
-        var resolvedName    : UnsafePointer<CChar>?     = nil
-        var resolvedEmail   : UnsafePointer<CChar>?     = nil
+        var resolvedName    : String?   = nil
+        var resolvedEmail   : String?   = nil
         
         let mailmapResolveResult: GitErrorCode = gitMailmapResolve(
             realName:   &resolvedName,
@@ -232,8 +232,8 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             
             
-            var resolvedName    : UnsafePointer<CChar>?     = nil
-            var resolvedEmail   : UnsafePointer<CChar>?     = nil
+            var resolvedName    : String?   = nil
+            var resolvedEmail   : String?   = nil
             
             let mailmapResolveResult: GitErrorCode = gitMailmapResolve(
                 realName:   &resolvedName,

@@ -295,8 +295,7 @@ public func gitBranchLookup(
 
 /// Gets the branch name from the given reference.
 /// - Parameters:
-///   - out: The abbreviated reference name. This memory is owned by `ref` and
-///   must not be freed by the caller.
+///   - out: The `String` instance in which to store the branch name.
 ///   - ref: A reference object, ideally pointing to a branch. The underlying
 ///   type must be `git_reference`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -313,16 +312,21 @@ public func gitBranchLookup(
 ///
 /// [`git_branch_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_name.html)
 public func gitBranchName(
-    out : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    out : inout String?,
     ref : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return git_branch_name(
-            out,
-            ref
-        )
+        return out.withOptionalMutatingString
+        {
+            cOut in
+            
+            return git_branch_name(
+                cOut,
+                ref
+            )
+        }
     }
 }
 

@@ -236,32 +236,16 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 
                 
-                var branchNamePointer: UnsafePointer<CChar>? = nil
+                var retrievedBranchName: String? = nil
                 
                 let branchNameResult: GitErrorCode = gitBranchName(
-                    out:    &branchNamePointer,
+                    out:    &retrievedBranchName,
                     ref:    branchPointer
                 )
                 
                 XCTAssertOK(branchNameResult)
-                
-                guard let branchNamePointer: UnsafePointer<CChar>
-                        = branchNamePointer
-                else
-                {
-                    XCTFail("The branch name pointer was nil.")
-                    return
-                }
-                
-                guard let branchNameString
-                        = String(optionalCString: branchNamePointer)
-                else
-                {
-                    XCTFail("The branch name string was nil.")
-                    return
-                }
-                
-                XCTAssertEqual(branchNameString, branchName)
+                XCTAssertNotNil(retrievedBranchName)
+                XCTAssertEqual(retrievedBranchName, branchName)
                 
                 
                 

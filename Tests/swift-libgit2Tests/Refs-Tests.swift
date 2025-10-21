@@ -523,8 +523,8 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            var nextRefName : UnsafePointer<CChar>?     = nil
-            var refCount    : Int                       = 0
+            var nextRefName : String?   = nil
+            var refCount    : Int       = 0
             
             while true
             {
