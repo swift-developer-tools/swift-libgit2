@@ -1069,8 +1069,8 @@ public func gitLibgit2OptSetODBLoosePriority(
 
 
 /// Gets the list of supported Git extensions.
-/// - Parameter out: The pointer in which to store the list of supported Git
-/// extensions.
+/// - Parameter out: The array of strings in which to store the list of
+/// supported Git extensions.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -1087,21 +1087,17 @@ public func gitLibgit2OptSetODBLoosePriority(
 ///
 /// [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html)
 public func gitLibgit2OptGetExtensions(
-    out: UnsafeMutablePointer<[String]>
+    out: inout [String]
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var strArray = git_strarray()
-        
-        let getExtensionsResult: Int32
-            = git_libgit2_opt_get_extensions(&strArray)
-        
-        out.pointee = Array(strArray)
-        
-        gitStrArrayDispose(array: &strArray)
-        
-        return getExtensionsResult
+        return try out.withMutatingGitStrArray
+        {
+            cOut in
+            
+            return git_libgit2_opt_get_extensions(cOut)
+        }
     }
 }
 
