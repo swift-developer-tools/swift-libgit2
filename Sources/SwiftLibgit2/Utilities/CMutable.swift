@@ -79,7 +79,7 @@ internal extension CMutable where Self: CConvertible
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `C **`.
-    mutating func withMutatingCValue<T>(
+    mutating func withBorrowingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) rethrows -> T
     {
@@ -188,7 +188,7 @@ internal extension CMutable where Self: ThrowingCConvertible
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `C **`.
-    mutating func withMutatingCValue<T>(
+    mutating func withBorrowingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) throws -> T
     {
@@ -347,6 +347,124 @@ internal extension CMutable where Self: WithCConvertible
         }
         
         return result
+    }
+}
+
+
+
+internal extension CMutable where Self: CConvertible & CFreeable
+{
+    /// Calls the given closure with a mutable pointer to an optional mutable
+    /// pointer to a `C` instance, and updates the receiver with any changes
+    /// made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type
+    /// `C **`.
+    ///
+    /// - Important: If libgit2 allocates new memory, this method will
+    /// automatically free that memory by calling the receiver's
+    /// ``freeCValue(_:)`` method after copying the data.
+    mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
+    ) rethrows -> T where P == UnsafeMutablePointer<C>?
+    {
+        var cValue: C = cValue()
+        
+        return try withUnsafeMutablePointer(to: &cValue)
+        {
+            cValuePointer in
+            
+            var optionalCValuePointer: UnsafeMutablePointer<C>?
+                = cValuePointer
+            
+            let result: T = try body(&optionalCValuePointer)
+            
+            guard let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer
+            else
+            {
+                return result
+            }
+            
+            
+            
+            if
+                isSuccess(result),
+                let mutated = Self.init(cValue: finalCValuePointer.pointee)
+            {
+                self = mutated
+            }
+            
+            if finalCValuePointer != cValuePointer
+            {
+                Self.freeCValue(finalCValuePointer)
+            }
+            
+            return result
+        }
+    }
+}
+
+
+
+internal extension CMutable where Self: ThrowingCConvertible & CFreeable
+{
+    /// Calls the given closure with a mutable pointer to an optional mutable
+    /// pointer to a `C` instance, and updates the receiver with any changes
+    /// made by the closure.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type
+    /// `C **`.
+    ///
+    /// - Important: If libgit2 allocates new memory, this method will
+    /// automatically free that memory by calling the receiver's
+    /// ``freeCValue(_:)`` method after copying the data.
+    mutating func withMutatingCValue<T>(
+        _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
+    ) throws -> T where P == UnsafeMutablePointer<C>?
+    {
+        var cValue: C = try cValue()
+        
+        return try withUnsafeMutablePointer(to: &cValue)
+        {
+            cValuePointer in
+            
+            var optionalCValuePointer: UnsafeMutablePointer<C>? = cValuePointer
+            
+            let result: T = try body(&optionalCValuePointer)
+            
+            guard let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer
+            else
+            {
+                return result
+            }
+            
+            
+            
+            if
+                isSuccess(result),
+                let mutated = Self.init(cValue: finalCValuePointer.pointee)
+            {
+                self = mutated
+            }
+            
+            if finalCValuePointer != cValuePointer
+            {
+                Self.freeCValue(finalCValuePointer)
+            }
+            
+            return result
+        }
     }
 }
 
