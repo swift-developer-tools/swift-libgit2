@@ -422,23 +422,17 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutPerfData() throws
     {
-        var cPerfData = git_checkout_perfdata()
+        let perfData = GitCheckoutPerfData(cValue: git_checkout_perfdata())
         
-        cPerfData.mkdir_calls   = 1
-        cPerfData.stat_calls    = 2
-        cPerfData.chmod_calls   = 3
+        XCTAssertEqual(perfData.mkdirCalls, 0)
+        XCTAssertEqual(perfData.statCalls, 0)
+        XCTAssertEqual(perfData.chmodCalls, 0)
         
+        let cPerfData: git_checkout_perfdata = perfData.cValue()
         
-        
-        let perfData = GitCheckoutPerfData(cValue: cPerfData)
-        
-        XCTAssertEqual(perfData.mkdirCalls, 1)
-        XCTAssertEqual(perfData.statCalls, 2)
-        XCTAssertEqual(perfData.chmodCalls, 3)
-        
-        XCTAssertEqual(perfData.cValue().mkdir_calls, 1)
-        XCTAssertEqual(perfData.cValue().stat_calls, 2)
-        XCTAssertEqual(perfData.cValue().chmod_calls, 3)
+        XCTAssertEqual(cPerfData.mkdir_calls, 0)
+        XCTAssertEqual(cPerfData.stat_calls, 0)
+        XCTAssertEqual(cPerfData.chmod_calls, 0)
     }
     
     

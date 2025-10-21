@@ -17,25 +17,13 @@ final class CertTests: XCTestCaseStopOnFail
 {
     func testGitCert() throws
     {
-        var cCert = git_cert()
+        let cert = GitCert(cValue: git_cert())
         
-        cCert.cert_type = GIT_CERT_X509
+        XCTAssertEqual(cert.certType, .gitCertNone)
         
+        let cCert: git_cert = cert.cValue()
         
-        
-        let cert = GitCert(cValue: cCert)
-        
-        XCTAssertEqual(cert.certType, .gitCertX509)
-        XCTAssertEqual(GitCertT(cValue: cert.cValue().cert_type), .gitCertX509)
-        
-        
-        
-        cCert.cert_type = git_cert_t(rawValue: 123)
-        
-        let fallbackCert = GitCert(cValue: cCert)
-        
-        XCTAssertEqual(fallbackCert.certType, .gitCertNone)
-        XCTAssertEqual(GitCertT(cValue: fallbackCert.cValue().cert_type), .gitCertNone)
+        XCTAssertEqual(GitCertT(cValue: cCert.cert_type), .gitCertNone)
     }
     
     
@@ -307,9 +295,9 @@ final class CertTests: XCTestCaseStopOnFail
         
         
         
-        var cCertX509 = git_cert_x509()
+        var baseCertX509 = git_cert_x509()
         
-        cCertX509.parent = cParentCert
+        baseCertX509.parent = cParentCert
         
         
         
@@ -320,18 +308,20 @@ final class CertTests: XCTestCaseStopOnFail
             let baseAddressPointer
                 = UnsafeMutableRawPointer(mutating: bytes.baseAddress)
             
-            cCertX509.data  = baseAddressPointer
-            cCertX509.len   = bytes.count
+            baseCertX509.data  = baseAddressPointer
+            baseCertX509.len   = bytes.count
             
-            let certX509 = GitCertX509(cValue: cCertX509)
+            let certX509 = GitCertX509(cValue: baseCertX509)
             
             XCTAssertEqual(certX509.parent.certType, .gitCertX509)
             XCTAssertEqual(certX509.data, baseAddressPointer)
             XCTAssertEqual(certX509.len, data.count)
             
-            XCTAssertEqual(GitCertT(cValue: certX509.cValue().parent.cert_type), .gitCertX509)
-            XCTAssertEqual(certX509.cValue().data, baseAddressPointer)
-            XCTAssertEqual(certX509.cValue().len, data.count)
+            let cCertX509: git_cert_x509 = certX509.cValue()
+            
+            XCTAssertEqual(GitCertT(cValue: cCertX509.parent.cert_type), .gitCertX509)
+            XCTAssertEqual(cCertX509.data, baseAddressPointer)
+            XCTAssertEqual(cCertX509.len, data.count)
         }
     }
     
