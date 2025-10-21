@@ -31,9 +31,18 @@ struct Repository
     
     static let commitAuthorName     : String    = "Test User"
     static let commitAuthorEmail    : String    = "test@example.com"
+    
     static let readmeFileName       : String    = "README.md"
     static let readmeFileContent    : String    = "# Hello World!"
     static let blameFileName        : String    = "blame.txt"
+    
+    static let fetchSource          : String    = "refs/heads/*"
+    static let fetchDestination     : String    = "refs/remotes/origin/*"
+    static let fetchRefspec         : String    = "\(fetchSource):\(fetchDestination)"
+    
+    static let pushSource           : String    = "refs/heads/*"
+    static let pushDestination      : String    = "refs/heads/origin/*"
+    static let pushRefspec          : String    = "\(pushSource):\(pushDestination)"
     
     static let gitattributesFiles: [(String, String)] =
     [

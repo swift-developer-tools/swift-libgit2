@@ -1474,6 +1474,28 @@ final class DiffTests: XCTestCaseStopOnFail
     
     
     
+    func testGitDiffSimilarityMetric() throws
+    {
+        let diffSimilarityMetric = GitDiffSimilarityMetric()
+        
+        XCTAssertNil(diffSimilarityMetric.fileSignature)
+        XCTAssertNil(diffSimilarityMetric.bufferSignature)
+        XCTAssertNil(diffSimilarityMetric.freeSignature)
+        XCTAssertNil(diffSimilarityMetric.similarity)
+        XCTAssertNil(diffSimilarityMetric.payload)
+        
+        let cDiffSimilarityMetric: git_diff_similarity_metric
+            = diffSimilarityMetric.cValue()
+        
+        XCTAssertNil(cDiffSimilarityMetric.file_signature)
+        XCTAssertNil(cDiffSimilarityMetric.buffer_signature)
+        XCTAssertNil(cDiffSimilarityMetric.free_signature)
+        XCTAssertNil(cDiffSimilarityMetric.similarity)
+        XCTAssertNil(cDiffSimilarityMetric.payload)
+    }
+    
+    
+    
     func testGitDiffStatsFormatT() throws
     {
         XCTAssertEqual(GitDiffStatsFormatT.gitDiffStatsNone.rawValue, GIT_DIFF_STATS_NONE.rawValue)

@@ -41,7 +41,7 @@ final class RefspecTests: XCTestCaseStopOnFail
                 = gitRefspecDst(refspec: refspecPointer)
             
             XCTAssertNotNil(destinationSpecifier)
-            XCTAssertEqual(destinationSpecifier, Self.fetchDestination)
+            XCTAssertEqual(destinationSpecifier, Repository.fetchDestination)
         }
     }
     
@@ -99,7 +99,7 @@ final class RefspecTests: XCTestCaseStopOnFail
         
         let refspecParseResult: GitErrorCode = gitRefspecParse(
             refspec:    &refspecPointer,
-            input:      "+\(Self.fetchRefspec)",
+            input:      "+\(Repository.fetchRefspec)",
             isFetch:    true
         )
         
@@ -179,7 +179,7 @@ final class RefspecTests: XCTestCaseStopOnFail
                 = gitRefspecSrc(refspec: refspecPointer)
             
             XCTAssertNotNil(sourceSpecifier)
-            XCTAssertEqual(sourceSpecifier, Self.fetchSource)
+            XCTAssertEqual(sourceSpecifier, Repository.fetchSource)
         }
     }
     
@@ -272,7 +272,7 @@ final class RefspecTests: XCTestCaseStopOnFail
                 = gitRefspecString(refspec: refspecPointer)
             
             XCTAssertNotNil(refspecString)
-            XCTAssertEqual(refspecString, Self.fetchRefspec)
+            XCTAssertEqual(refspecString, Repository.fetchRefspec)
         }
     }
     
@@ -313,12 +313,6 @@ final class RefspecTests: XCTestCaseStopOnFail
 
 private extension RefspecTests
 {
-    static let fetchSource      : String    = "refs/heads/*"
-    static let fetchDestination : String    = "refs/remotes/origin/*"
-    static let fetchRefspec     : String    = "\(fetchSource):\(fetchDestination)"
-    
-    
-    
     /// Calls the given closure with a pointer to a fetch refspec.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
@@ -337,7 +331,7 @@ private extension RefspecTests
         
         let refspecParseResult: GitErrorCode = gitRefspecParse(
             refspec:    &refspecPointer,
-            input:      Self.fetchRefspec,
+            input:      Repository.fetchRefspec,
             isFetch:    true
         )
         

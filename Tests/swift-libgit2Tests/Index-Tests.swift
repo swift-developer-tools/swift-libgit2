@@ -1616,7 +1616,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexTime() throws
     {
-        let indexTime = GitIndexTime(cValue: git_index_time())
+        let indexTime = GitIndexTime()
         
         XCTAssertEqual(indexTime.seconds, 0)
         XCTAssertEqual(indexTime.nanoseconds, 0)

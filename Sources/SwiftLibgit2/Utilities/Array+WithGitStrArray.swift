@@ -108,7 +108,10 @@ internal extension Array where Element == String
             
             let result: T = try body(&strArray)
             
-            self = Array(strArray)
+            if isSuccess(result)
+            {
+                self = Array(strArray)
+            }
             
             return result
         }
@@ -124,7 +127,10 @@ internal extension Array where Element == String
             
             let result: T = try body(strArray)
             
-            self = Array(strArray.pointee)
+            if isSuccess(result)
+            {
+                self = Array(strArray.pointee)
+            }
             
             if strArray.pointee.strings != originalPointer
             {

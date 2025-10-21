@@ -50,8 +50,9 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using UTF-8.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using UTF-8.
     public var messageEncoding  : String?
     
     

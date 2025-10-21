@@ -46,11 +46,7 @@ public struct GitBlameFlagT: COptionSet
     
     
     
-    /// Normal blame.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
+    /// Use the default blame behavior.
     public static let gitBlameNormal                        = GitBlameFlagT(rawValue: GIT_BLAME_NORMAL.rawValue)
     
     /// Track lines that have moved within a file.

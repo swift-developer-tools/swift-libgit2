@@ -40,13 +40,13 @@ final class NetTests: XCTestCaseStopOnFail
     
     func testGitRemoteHEAD() throws
     {
-        let remoteHEAD = GitRemoteHEAD(cValue: git_remote_head())
+        let remoteHEAD = GitRemoteHEAD()
         
         XCTAssertFalse(remoteHEAD.local)
         XCTAssertZeroOID(remoteHEAD.oid)
         XCTAssertZeroOID(remoteHEAD.loid)
         XCTAssertNil(remoteHEAD.name)
-        XCTAssertNil(remoteHEAD.symrefTarget)
+        XCTAssertNil(remoteHEAD.symRefTarget)
         
         try remoteHEAD.withCValue
         {

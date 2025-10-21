@@ -842,13 +842,10 @@ final class ODBTests: XCTestCaseStopOnFail
                 oid:    headOID
             )
             
-            /// Most backends do not support streaming reads.
-            if odbOpenRStreamResult == .gitOK
-            {
-                XCTAssertGreaterThan(objectLength, 0)
-                XCTAssertEqual(objectType, .gitObjectCommit)
-                XCTAssertNotNil(streamPointer)
-            }
+            XCTAssertOK(odbOpenRStreamResult)
+            XCTAssertNotNil(streamPointer)
+            XCTAssertGreaterThan(objectLength, 0)
+            XCTAssertEqual(objectType, .gitObjectCommit)
         }
     }
     

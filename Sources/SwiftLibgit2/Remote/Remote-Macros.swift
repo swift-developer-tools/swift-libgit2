@@ -7,8 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// TODO: Replace `git_remote_create_options` in documentation.
-/// The current version for `git_remote_create_options`.
+/// The current version for ``GitRemoteCreateOptions``.
 ///
 /// ## C Equivalent
 ///
@@ -35,8 +34,7 @@ public let gitFetchOptionsVersion: Int32 = 1
 
 
 
-// TODO: Replace `git_push_options` in documentation.
-/// The current version for `git_push_options`.
+/// The current version for ``GitPushOptions``.
 ///
 /// ## C Equivalent
 ///
@@ -45,8 +43,7 @@ public let gitPushOptionsVersion: UInt32 = 1
 
 
 
-// TODO: Replace `git_remote_connect_options` in documentation.
-/// The current version for `git_remote_connect_options`.
+/// The current version for ``GitRemoteConnectOptions``.
 ///
 /// ## C Equivalent
 ///

@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_config_entry`](https://libgit2.org/docs/reference/main/config/git_config_entry.html)
-public struct GitConfigEntry: CFreeable, CStructInternalMutable, WithCConvertible, Sendable
+public struct GitConfigEntry: CStructInternalMutable, WithCConvertible, CFreeable, Sendable
 {
     /// The normalized name of the configuration entry.
     ///

@@ -62,10 +62,8 @@ public struct GitTime: CStructReadable, CConvertible, Sendable
 ///
 /// ## Discussion
 ///
-/// - Note: This struct is provided for documentation purposes, but is not used
-/// by other bindings. `git_writestream` is treated as an opaque struct since
-/// its function pointers are allocated and managed by libgit2, and cannot be
-/// meaningfully recreated or translated.
+/// - Note: This struct is provided for documentation purposes, but is not
+/// used by other bindings. All binding use `git_writestream` instead.
 ///
 /// ## C Equivalent
 ///
@@ -73,24 +71,13 @@ public struct GitTime: CStructReadable, CConvertible, Sendable
 public struct GitWritestream: CStruct
 {
     /// Writes to the stream.
-    public let write: @convention(c)
-    (
-        UnsafeMutablePointer<git_writestream>?,
-        UnsafePointer<CChar>?,
-        Int
-    ) -> Int32
+    public let write    : Write?
     
     /// Closes the stream.
-    public let close: @convention(c)
-    (
-        UnsafeMutablePointer<git_writestream>?
-    ) -> Int32
+    public let close    : Close?
     
     /// Frees the memory allocated for the given `git_writestream` instance.
-    public let free: @convention(c)
-    (
-        UnsafeMutablePointer<git_writestream>?
-    ) -> Void
+    public let free     : Free?
     
     
     
@@ -105,4 +92,39 @@ public struct GitWritestream: CStruct
         self.close  = writeStream.close
         self.free   = writeStream.free
     }
+    
+    
+    
+    /// The callback invoked to write to the given stream.
+    /// - Parameters:
+    ///   - stream: The stream to which to write.
+    ///   - buffer: The buffer to write.
+    ///   - len: The length of `buffer`.
+    /// - Returns: `0` on success, or an error code.
+    public typealias Write = @convention(c)
+    (
+        UnsafeMutablePointer<git_writestream>?,
+        UnsafePointer<CChar>?,
+        Int
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to close the given stream.
+    /// - Parameter stream: The stream to close.
+    /// - Returns: `0` on success, or an error code.
+    public typealias Close = @convention(c)
+    (
+        UnsafeMutablePointer<git_writestream>?
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to free the memory allocated for the given
+    /// `git_writestream` instance.
+    /// - Parameter stream: The stream to free.
+    public typealias Free = @convention(c)
+    (
+        UnsafeMutablePointer<git_writestream>?
+    ) -> Void
 }

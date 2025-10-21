@@ -166,24 +166,19 @@ public func gitMailmapFromRepository(
 
 /// Resolves the given name and email to the given real name and real email.
 /// - Parameters:
-///   - realName: The pointer in which to store the real name.
-///   - realEmail: The pointer in which to store the real email.
+///   - realName: The `String` instance in which to store the real name.
+///   - realEmail: The `String` instance in which to store the real email.
 ///   - mm: The mailmap with which to perform a lookup.
 ///   - name: The name to resolve.
 ///   - email: The email to resolve.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
-/// ## Discussion
-///
-/// - Important: The lifetime of the `realName` and `realEmail` strings are
-/// tied to the `mm`, `name`, and `email` parameters.
-///
 /// ## C Equivalent
 ///
 /// [`git_mailmap_resolve()`](https://libgit2.org/docs/reference/main/mailmap/git_mailmap_resolve.html)
 public func gitMailmapResolve(
-    realName    : UnsafeMutablePointer<UnsafePointer<CChar>?>,
-    realEmail   : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    realName    : inout String?,
+    realEmail   : inout String?,
     mm          : OpaquePointer?,
     name        : String,
     email       : String
@@ -191,13 +186,23 @@ public func gitMailmapResolve(
 {
     return withCConversion
     {
-        return git_mailmap_resolve(
-            realName,
-            realEmail,
-            mm,
-            name,
-            email
-        )
+        return realName.withOptionalMutatingString
+        {
+            cRealName in
+            
+            return realEmail.withOptionalMutatingString
+            {
+                cRealEmail in
+                
+                return git_mailmap_resolve(
+                    cRealName,
+                    cRealEmail,
+                    mm,
+                    name,
+                    email
+                )
+            }
+        }
     }
 }
 

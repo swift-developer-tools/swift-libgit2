@@ -47,10 +47,6 @@ public struct GitPathspecFlagT: COptionSet
     
     
     /// Use the default behavior.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitPathspecDefault        = GitPathspecFlagT(rawValue: GIT_PATHSPEC_DEFAULT.rawValue)
     
     /// Force case-insensitive matching.

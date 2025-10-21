@@ -88,7 +88,7 @@ public struct GitODBExpandID: CStructMutable, CConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized ``GitOID`` instance.
+    /// The default value is a default-initialized ``GitOID`` instance.
     public var id       : GitOID
     
     /// The length of the object ID.

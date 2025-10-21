@@ -295,8 +295,7 @@ public func gitBranchLookup(
 
 /// Gets the branch name from the given reference.
 /// - Parameters:
-///   - out: The abbreviated reference name. This memory is owned by `ref` and
-///   must not be freed by the caller.
+///   - out: The `String` instance in which to store the branch name.
 ///   - ref: A reference object, ideally pointing to a branch. The underlying
 ///   type must be `git_reference`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -313,16 +312,21 @@ public func gitBranchLookup(
 ///
 /// [`git_branch_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_name.html)
 public func gitBranchName(
-    out : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    out : inout String?,
     ref : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return git_branch_name(
-            out,
-            ref
-        )
+        return out.withOptionalMutatingString
+        {
+            cOut in
+            
+            return git_branch_name(
+                cOut,
+                ref
+            )
+        }
     }
 }
 
@@ -617,7 +621,8 @@ public func gitBranchUpstreamMerge(
 
 /// Checks whether the given branch name is valid.
 /// - Parameters:
-///   - valid: The pointer in which to store the resulting boolean.
+///   - valid: The `Bool` instance in which to store whether the given branch
+///   name is valid.
 ///   - name: The branch name to check.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -625,21 +630,20 @@ public func gitBranchUpstreamMerge(
 ///
 /// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
 public func gitBranchNameIsValid(
-    valid   : UnsafeMutablePointer<Bool>,
+    valid   : inout Bool,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intValid: Int32 = 0
-        
-        let branchNameIsValidResult: Int32 = git_branch_name_is_valid(
-            &intValid,
-            name
-        )
-        
-        valid.pointee = Bool(intValid)
-        
-        return branchNameIsValidResult
+        return valid.withMutatingBool
+        {
+            cValid in
+            
+            return git_branch_name_is_valid(
+                cValid,
+                name
+            )
+        }
     }
 }

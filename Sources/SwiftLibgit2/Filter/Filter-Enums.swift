@@ -107,10 +107,6 @@ public struct GitFilterFlagT: COptionSet
     
     
     /// Use the default filtering behavior.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitFilterDefault                  = GitFilterFlagT(rawValue: GIT_FILTER_DEFAULT.rawValue)
     
     /// Allow `safecrlf` violations to continue.

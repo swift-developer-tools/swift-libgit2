@@ -47,10 +47,6 @@ public struct GitDiffOptionT: COptionSet
     
     
     /// Create a normal diff.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitDiffNormal                         = GitDiffOptionT(rawValue: GIT_DIFF_NORMAL.rawValue)
     
     /// Reverses the sides of the diff.
@@ -613,8 +609,7 @@ public struct GitDiffFindT: COptionSet
     ///
     /// ## Discussion
     ///
-    /// This is the default value. This flag will be overridden by any other
-    /// flag.
+    /// This flag will be overridden by any other flag.
     public static let gitDiffFindByConfig                   = GitDiffFindT(rawValue: GIT_DIFF_FIND_BY_CONFIG.rawValue)
     
     /// Look for renames.

@@ -98,7 +98,10 @@ internal extension Array where Element == GitODBExpandID
             )
         }
         
-        self = arrayOfODBExpandIDs.map { GitODBExpandID(cValue: $0 )}
+        if isSuccess(result)
+        {
+            self = arrayOfODBExpandIDs.map { GitODBExpandID(cValue: $0 )}
+        }
         
         return result
     }

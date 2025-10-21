@@ -247,7 +247,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitDiffOptionT/gitDiffNormal``.
+    /// The default value is an empty option set.
     public var flags            : GitDiffOptionT
     
     /// The submodule ignore options.
@@ -322,9 +322,11 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the value of `core.abbrev` from the configuration
-    /// file, or `7` if that value is unset.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using the value of
+    /// `core.abbrev` from the configuration file, or `7` if that value is
+    /// unset.
     public var idAbbrev         : UInt16?
     
     /// The maximum size, in bytes, above which a blob will be automatically
@@ -357,7 +359,7 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version             : UInt32                    = gitDiffOptionsVersion,
-        flags               : GitDiffOptionT            = .gitDiffNormal,
+        flags               : GitDiffOptionT            = [],
         ignoreSubmodules    : GitSubmoduleIgnoreT       = .gitSubmoduleIgnoreUnspecified,
         pathspec            : [String]                  = [],
         notifyCB            : GitDiffNotifyCB?          = nil,
@@ -883,55 +885,64 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
 
 /// A pluggable similarity metric.
 ///
-/// ## Discussion
-///
-/// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_diff_similarity_metric` is treated as an
-/// opaque struct since its function pointers are allocated and managed by
-/// libgit2, and cannot be meaningfully recreated or translated.
-///
 /// ## C Equivalent
 ///
 /// [`git_diff_similarity_metric`](https://libgit2.org/docs/reference/main/diff/git_diff_similarity_metric.html)
-public struct GitDiffSimilarityMetric: CStruct
+public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
 {
     /// Generates a signature for the given file.
-    public let fileSignature: @convention(c)
-    (
-        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
-        UnsafePointer<git_diff_file>?,
-        UnsafePointer<CChar>?,
-        UnsafeMutableRawPointer?
-    ) -> Int32
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var fileSignature    : FileSignature?            = nil
     
     /// Generates a signature for the given buffer.
-    public let bufferSignature: @convention(c)
-    (
-        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
-        UnsafePointer<git_diff_file>?,
-        UnsafePointer<CChar>?,
-        Int,
-        UnsafeMutableRawPointer?
-    ) -> Int32
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var bufferSignature  : BufferSignature?          = nil
     
     /// Frees the memory allocated for the given signature.
-    public let freeSignature: @convention(c)
-    (
-        UnsafeMutableRawPointer?,
-        UnsafeMutableRawPointer?
-    ) -> Void
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var freeSignature    : FreeSignature?            = nil
     
     /// Generates a similarity score.
-    public let similarity: @convention(c)
-    (
-        UnsafeMutablePointer<Int32>?,
-        UnsafeMutableRawPointer?,
-        UnsafeMutableRawPointer?,
-        UnsafeMutableRawPointer?
-    ) -> Int32
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var similarity       : Similarity?               = nil
     
     /// The payload provided by the caller.
-    public let payload: UnsafeMutableRawPointer?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public var payload          : UnsafeMutableRawPointer?  = nil
+    
+    
+    
+    /// Initializes a ``GitDiffSimilarityMetric`` instance, optionally
+    /// specifying values for its properties.
+    public init(
+        fileSignature   : FileSignature?            = nil,
+        bufferSignature : BufferSignature?          = nil,
+        freeSignature   : FreeSignature?            = nil,
+        similarity      : Similarity?               = nil,
+        payload         : UnsafeMutableRawPointer?  = nil
+    )
+    {
+        self.fileSignature      = fileSignature
+        self.bufferSignature    = bufferSignature
+        self.freeSignature      = freeSignature
+        self.similarity         = similarity
+        self.payload            = payload
+    }
     
     
     
@@ -949,6 +960,57 @@ public struct GitDiffSimilarityMetric: CStruct
         self.similarity         = diffSimilarityMetric.similarity
         self.payload            = diffSimilarityMetric.payload
     }
+    
+    
+    
+    /// Converts the ``GitDiffSimilarityMetric`` instance into a
+    /// `git_diff_similarity_metric` instance.
+    /// - Returns: The `git_diff_similarity_metric` instance.
+    internal func cValue() -> git_diff_similarity_metric
+    {
+        var diffSimilarityMetric = git_diff_similarity_metric()
+        
+        diffSimilarityMetric.file_signature     = fileSignature
+        diffSimilarityMetric.buffer_signature   = bufferSignature
+        diffSimilarityMetric.free_signature     = freeSignature
+        diffSimilarityMetric.similarity         = similarity
+        diffSimilarityMetric.payload            = payload
+        
+        return diffSimilarityMetric
+    }
+    
+    
+    
+    public typealias FileSignature = @convention(c)
+    (
+        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
+        UnsafePointer<git_diff_file>?,
+        UnsafePointer<CChar>?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    public typealias BufferSignature = @convention(c)
+    (
+        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
+        UnsafePointer<git_diff_file>?,
+        UnsafePointer<CChar>?,
+        Int,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    public typealias FreeSignature = @convention(c)
+    (
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?
+    ) -> Void
+    
+    public typealias Similarity = @convention(c)
+    (
+        UnsafeMutablePointer<Int32>?,
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
 }
 
 
@@ -971,7 +1033,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitDiffFindT/gitDiffFindByConfig``.
+    /// The default value is an empty option set.
     public var flags                        : GitDiffFindT
     
     /// The threshold above which similar files will be considered renames.
@@ -1027,11 +1089,12 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using a sampling hash of ranges of data in the file.
-    /// This is a reliable similarity approximation that generally works
-    /// well for both text and binary data, while maintaining speed and a
-    /// fixed memory overhead.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using a sampling hash
+    /// of ranges of data in the file. This is a reliable similarity
+    /// approximation that generally works well for both text and binary data,
+    /// while maintaining speed and a fixed memory overhead.
     ///
     /// - Important: If a custom metric is provided, the caller will be
     /// responsible for memory management.
@@ -1044,7 +1107,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// values for its properties.
     public init(
         version                     : UInt32                            = gitDiffFindOptionsVersion,
-        flags                       : GitDiffFindT                      = .gitDiffFindByConfig,
+        flags                       : GitDiffFindT                      = [],
         renameThreshold             : UInt16                            = 50,
         renameFromRewriteThreshold  : UInt16                            = 50,
         copyThreshold               : UInt16                            = 50,

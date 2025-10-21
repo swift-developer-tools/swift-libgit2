@@ -29,7 +29,7 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitFilterFlagT/gitFilterDefault``.
+    /// The default value is an empty option set.
     public var flags        : GitFilterFlagT
     
     /// The commit ID.
@@ -44,7 +44,7 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is a zero-initialized ``GitOID`` instance.
+    /// The default value is a default-initialized ``GitOID`` instance.
     public var attrCommitID : GitOID
     
     
@@ -53,7 +53,7 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
     /// values for its properties.
     public init(
         version         : UInt32            = gitFilterOptionsVersion,
-        flags           : GitFilterFlagT    = .gitFilterDefault,
+        flags           : GitFilterFlagT    = [],
         commitID        : GitOID?           = nil,
         attrCommitID    : GitOID            = GitOID()
     )

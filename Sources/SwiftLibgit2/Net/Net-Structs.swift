@@ -17,23 +17,48 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_remote_head`](https://libgit2.org/docs/reference/main/net/git_remote_head.html)
-public struct GitRemoteHEAD: CStructReadable, WithCConvertible, Sendable
+public struct GitRemoteHEAD: CStructInternalMutable, WithCConvertible, Sendable
 {
     /// Whether the reference exists locally.
-    public let local        : Bool
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `false`.
+    public private(set) var local           : Bool      = false
     
     /// The ID of the reference.
-    public let oid          : GitOID
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is a default-initialized ``GitOID`` instance.
+    public private(set) var oid             : GitOID    = GitOID()
     
     /// The local ID of the reference.
-    public let loid         : GitOID
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is a default-initialized ``GitOID`` instance.
+    public private(set) var loid            : GitOID    = GitOID()
     
     /// The name of the reference.
-    public let name         : String?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public private(set) var name            : String?   = nil
     
     /// The target of the symbolic reference, if the server sent a symref
     /// mapping for the reference.
-    public let symrefTarget : String?
+    ///
+    /// ## Discussion
+    ///
+    /// The default value is `nil`.
+    public private(set) var symRefTarget    : String?   = nil
+    
+    
+    
+    /// Initializes a default ``GitRemoteHEAD`` instance.
+    public init() { }
     
     
     
@@ -48,7 +73,7 @@ public struct GitRemoteHEAD: CStructReadable, WithCConvertible, Sendable
         self.oid            = GitOID(cValue: remoteHEAD.oid)
         self.loid           = GitOID(cValue: remoteHEAD.loid)
         self.name           = String(optionalCString: remoteHEAD.name)
-        self.symrefTarget   = String(optionalCString: remoteHEAD.symref_target)
+        self.symRefTarget   = String(optionalCString: remoteHEAD.symref_target)
     }
     
     
@@ -74,11 +99,11 @@ public struct GitRemoteHEAD: CStructReadable, WithCConvertible, Sendable
             
             remoteHEAD.name = cName
             
-            return try symrefTarget.withOptionalMutableCString
+            return try symRefTarget.withOptionalMutableCString
             {
-                cSymrefTarget in
+                cSymRefTarget in
                 
-                remoteHEAD.symref_target = cSymrefTarget
+                remoteHEAD.symref_target = cSymRefTarget
                 
                 return try body(&remoteHEAD)
             }

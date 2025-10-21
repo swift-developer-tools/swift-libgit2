@@ -148,9 +148,7 @@ public struct GitODBBackendLooseOptions: CStructMutable, CConvertible, Sendable
 /// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_odb_stream` is treated as an opaque struct
-/// since its function pointers are allocated and managed by libgit2, and
-/// cannot be meaningfully recreated or translated.
+/// used by other bindings. All binding use `git_odb_stream` instead.
 ///
 /// ## C Equivalent
 ///
@@ -174,20 +172,10 @@ public struct GitODBStream: CStruct
     
     /// Writes at most the specified number of bytes into the given buffer,
     /// and advances the stream.
-    public let read: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_stream>?,
-        UnsafeMutablePointer<CChar>?,
-        Int
-    ) -> Int32
+    public let read             : Read?
     
     /// Writes the specified number of bytes into the given buffer.
-    public let write: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_stream>?,
-        UnsafePointer<CChar>?,
-        Int
-    ) -> Int32
+    public let write            : Write?
     
     /// Stores the contents of the stream as an object with the given ID.
     ///
@@ -199,11 +187,7 @@ public struct GitODBStream: CStruct
     /// - The object referred to by the given ID already exists in any backend.
     /// - The final number of received bytes is different from the declared
     /// size of the object.
-    public let finalizeWrite: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_stream>?,
-        UnsafePointer<git_oid>?,
-    ) -> Int32
+    public let finalizeWrite    : FinalizeWrite?
     
     /// Frees the memory allocated for the given `git_odb_stream` instance.
     ///
@@ -212,10 +196,7 @@ public struct GitODBStream: CStruct
     /// This method may be called without previously invoking ``finalizeWrite``
     /// if an error occurs, or if the object is alreaedy present in the object
     /// database.
-    public let free: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_stream>?
-    ) -> Void
+    public let free             : Free?
     
     
     
@@ -236,6 +217,60 @@ public struct GitODBStream: CStruct
         self.finalizeWrite  = odbStream.finalize_write
         self.free           = odbStream.free
     }
+    
+    
+    
+    /// The callback invoked to read from the given stream.
+    /// - Parameters:
+    ///   - stream: The stream from which to read.
+    ///   - buffer: The buffer to which to write.
+    ///   - len: The number of bytes to write into `buffer`.
+    /// - Returns: `0` on success, or an error code.
+    public typealias Read = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_stream>?,
+        UnsafeMutablePointer<CChar>?,
+        Int
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to write to the given stream.
+    /// - Parameters:
+    ///   - stream: The stream to which to write.
+    ///   - buffer: The buffer to write.
+    ///   - len: The length of `buffer`.
+    /// - Returns: `0` on success, or an error code.
+    public typealias Write = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_stream>?,
+        UnsafePointer<CChar>?,
+        Int
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to store the contents of the given stream as an
+    /// object with the given ID.
+    /// - Parameters:
+    ///   - stream: The stream containing the contents to store.
+    ///   - oid: The ID with which to store the contents of the given stream.
+    /// - Returns: `0` on success, or an error code.
+    public typealias FinalizeWrite = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_stream>?,
+        UnsafePointer<git_oid>?,
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to free the memory allocated for the given
+    /// `git_odb_stream` instance.
+    /// - Parameter stream: The stream to free.
+    public typealias Free = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_stream>?
+    ) -> Void
 }
 
 
@@ -245,9 +280,7 @@ public struct GitODBStream: CStruct
 /// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_odb_writepack` is treated as an opaque struct
-/// since its function pointers are allocated and managed by libgit2, and
-/// cannot be meaningfully recreated or translated.
+/// used by other bindings. All binding use `git_odb_writepack` instead.
 ///
 /// ## C Equivalent
 ///
@@ -255,29 +288,16 @@ public struct GitODBStream: CStruct
 public struct GitODBWritePack: CStruct
 {
     /// The object database backend.
-    public let backend: UnsafeMutablePointer<git_odb_backend>
+    public let backend  : UnsafeMutablePointer<git_odb_backend>
     
-    /// Appends data to the pack file.
-    public let append: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_writepack>?,
-        UnsafeRawPointer?,
-        Int,
-        UnsafeMutablePointer<git_indexer_progress>?
-    ) -> Int32
+    /// Appends data to the packfile.
+    public let append   : Append?
     
-    /// Commitsi the packfile to the object database.
-    public let commit: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_writepack>?,
-        UnsafeMutablePointer<git_indexer_progress>?,
-    ) -> Int32
+    /// Commits the packfile to the object database.
+    public let commit   : Commit?
     
     /// Frees the memory allocated for the given `git_odb_writepack` instance.
-    public let free: @convention(c)
-    (
-        UnsafeMutablePointer<git_odb_writepack>?
-    ) -> Void
+    public let free     : Free?
     
     
     
@@ -293,4 +313,44 @@ public struct GitODBWritePack: CStruct
         self.commit     = odbWritePack.commit
         self.free       = odbWritePack.free
     }
+    
+    
+    
+    /// The callback invoked to append data to the packfile.
+    /// - Parameters:
+    ///   - writepack: The writepack to use.
+    ///   - data: The data to append.
+    ///   - len: The length of `data`.
+    ///   - stats: The information about the progress of indexing the packfile.
+    /// - Returns: `0` on success, or an error code.
+    public typealias Append = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_writepack>?,
+        UnsafeRawPointer?,
+        Int,
+        UnsafeMutablePointer<git_indexer_progress>?
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to commit the packfile to the object database.
+    /// - Parameters:
+    ///   - writepack: The writepack to use.
+    ///   - stats: The information about the progress of indexing the packfile.
+    /// - Returns: `0` on success, or an error code.
+    public typealias Commit = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_writepack>?,
+        UnsafeMutablePointer<git_indexer_progress>?,
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked to free the memory allocated for the given
+    /// `git_odb_writepack` instance.
+    /// - Parameter writepack: The writepack to free.
+    public typealias Free = @convention(c)
+    (
+        UnsafeMutablePointer<git_odb_writepack>?
+    ) -> Void
 }

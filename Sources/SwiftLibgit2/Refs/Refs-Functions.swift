@@ -920,7 +920,7 @@ public func gitReferenceNext(
 
 /// Gets the next reference name from the given reference iterator.
 /// - Parameters:
-///   - out: The pointer in which to store the next reference name.
+///   - out: The `String` instance in which to store the next reference name.
 ///   - iter: The reference iterator to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -928,16 +928,21 @@ public func gitReferenceNext(
 ///
 /// [`git_reference_next_name()`](https://libgit2.org/docs/reference/main/refs/git_reference_next_name.html)
 public func gitReferenceNextName(
-    out     : UnsafeMutablePointer<UnsafePointer<CChar>?>,
+    out     : inout String?,
     iter    : UnsafeMutablePointer<git_reference_iterator>
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return git_reference_next_name(
-            out,
-            iter
-        )
+        return out.withOptionalMutatingString
+        {
+            cOut in
+            
+            return git_reference_next_name(
+                cOut,
+                iter
+            )
+        }
     }
 }
 
@@ -1208,7 +1213,8 @@ public func gitReferencePeel(
 
 /// Checks whether the given reference name is valid.
 /// - Parameters:
-///   - valid: The pointer in which to store the resulting boolean.
+///   - valid: The `Bool` instance in which to store whether the given
+///   reference name is valid.
 ///   - refName: The reference name to check.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1234,22 +1240,21 @@ public func gitReferencePeel(
 ///
 /// [`git_reference_name_is_valid()`](https://libgit2.org/docs/reference/main/refs/git_reference_name_is_valid.html)
 public func gitReferenceNameIsValid(
-    valid   : UnsafeMutablePointer<Bool>,
+    valid   : inout Bool,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intValid: Int32 = 0
-        
-        let referenceNameIsValidResult: Int32 = git_reference_name_is_valid(
-            &intValid,
-            refName
-        )
-        
-        valid.pointee = Bool(intValid)
-        
-        return referenceNameIsValidResult
+        return valid.withMutatingBool
+        {
+            cValid in
+            
+            return git_reference_name_is_valid(
+                cValid,
+                refName
+            )
+        }
     }
 }
 

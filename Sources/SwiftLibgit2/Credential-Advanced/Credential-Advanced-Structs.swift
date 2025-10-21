@@ -16,9 +16,7 @@ import CLibgit2
 /// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_credential` is treated as an opaque struct
-/// since its function pointer is allocated and managed by libgit2, and cannot
-/// be meaningfully recreated or translated.
+/// used by other bindings. All binding use `git_credential` instead.
 ///
 /// ## C Equivalent
 ///
@@ -26,13 +24,10 @@ import CLibgit2
 public struct GitCredential: CStruct, Sendable
 {
     /// The type of supported credential.
-    public let credType: GitCredentialT
+    public let credType : GitCredentialT
     
     /// Frees the memory allocated for the given `git_credential` instance.
-    public let free: @convention(c)
-    (
-        UnsafeMutablePointer<git_credential>?
-    ) -> Void
+    public let free     : Free?
     
     
     
@@ -46,4 +41,14 @@ public struct GitCredential: CStruct, Sendable
         self.credType   = GitCredentialT(rawValue: credential.credtype.rawValue)
         self.free       = credential.free
     }
+    
+    
+    
+    /// The callback invoked to free the memory allocated for the given
+    /// `git_credential` instance.
+    /// - Parameter cred: The credential to free.
+    public typealias Free = @convention(c)
+    (
+        UnsafeMutablePointer<git_credential>?
+    ) -> Void
 }

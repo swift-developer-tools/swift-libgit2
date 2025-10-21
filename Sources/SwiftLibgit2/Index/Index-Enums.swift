@@ -233,10 +233,6 @@ public struct GitIndexAddOptionT: COptionSet
     
     
     /// Use the default behavior.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitIndexAddDefault                = GitIndexAddOptionT(rawValue: GIT_INDEX_ADD_DEFAULT.rawValue)
     
     /// Force-add the file.

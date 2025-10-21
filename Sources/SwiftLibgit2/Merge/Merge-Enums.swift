@@ -108,10 +108,6 @@ public enum GitMergeFileFavorT: UInt32, CEnum
     /// When a region of a file is changed in both branches, a conflict will
     /// be recorded in the index so that the checkout operation can produce a
     /// merge file with conflict markers in the working directory.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     case gitMergeFileFavorNormal    = 0
     
     /// When a region of a file is changed in both branches, the file created
@@ -291,7 +287,7 @@ public struct GitMergeAnalysisT: COptionSet
     ///
     /// ## Discussion
     ///
-    /// This flag is unused.
+    /// - Note: This flag is unused.
     public static let gitMergeAnalysisNone          = GitMergeAnalysisT(rawValue: GIT_MERGE_ANALYSIS_NONE.rawValue)
     
     /// Both HEAD and the given merge input have diverged from their common

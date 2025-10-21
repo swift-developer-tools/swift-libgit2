@@ -346,9 +346,10 @@ public func gitObjectDup(
 
 
 
-/// Checks if the given raw object content is valid.
+/// Checks whether the given raw object content is valid.
 /// - Parameters:
-///   - valid: The pointer in which to store the resulting boolean.
+///   - valid: The `Bool` instance in which to store whether the given raw
+///   object content is valid.
 ///   - buf: The raw object content to check.
 ///   - len: The length of `buf`.
 ///   - objectType: The type of the object to check.
@@ -362,7 +363,7 @@ public func gitObjectDup(
 ///
 /// [`git_object_rawcontent_is_valid()`](https://libgit2.org/docs/reference/main/object/git_object_rawcontent_is_valid.html)
 public func gitObjectRawContentIsValid(
-    valid       : UnsafeMutablePointer<Bool>,
+    valid       : inout Bool,
     buf         : Data,
     len         : Int,
     objectType  : GitObjectT
@@ -370,23 +371,21 @@ public func gitObjectRawContentIsValid(
 {
     return withCConversion
     {
-        return try buf.withCBuffer
+        return try valid.withMutatingBool
         {
-            cBuf, cBufCount in
+            cValid in
             
-            var intValid: Int32 = 0
-            
-            let objectRawContentIsValidResult: Int32
-                = git_object_rawcontent_is_valid(
-                    &intValid,
+            return try buf.withCBuffer
+            {
+                cBuf, cBufCount in
+                
+                return git_object_rawcontent_is_valid(
+                    cValid,
                     cBuf,
                     cBufCount,
                     objectType.cValue()
                 )
-            
-            valid.pointee = Bool(intValid)
-            
-            return objectRawContentIsValidResult
+            }
         }
     }
 }

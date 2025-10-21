@@ -18,10 +18,6 @@ Manipulate commit history.
 
 - ``GitRebaseOperationT``
 
-### Callbacks
-
-- ``GitRebaseSigningCB``
-
 ### Functions
 
 - ``gitRebaseOptionsInit(opts:version:)``

@@ -75,7 +75,8 @@ public func gitIgnoreClearInternalRules(
 
 /// Checks whether the given path is (or would be) ignored.
 /// - Parameters:
-///   - ignored: The pointer in which to store the resulting boolean.
+///   - ignored: The `Bool` instance in which to store whether the given
+///   path is (or would be) ignored.
 ///   - repo: The repository containing the path. The underlying type must be
 ///   `git_repository`.
 ///   - path: The path to the file to check, relative to the working directory.
@@ -92,23 +93,22 @@ public func gitIgnoreClearInternalRules(
 ///
 /// [`git_ignore_path_is_ignored()`](https://libgit2.org/docs/reference/main/ignore/git_ignore_path_is_ignored.html)
 public func gitIgnorePathIsIgnored(
-    ignored : UnsafeMutablePointer<Bool>,
+    ignored : inout Bool,
     repo    : OpaquePointer,
     path    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        var intIgnored: Int32 = 0
-        
-        let ignorePathIsIgnoredResult: Int32 = git_ignore_path_is_ignored(
-            &intIgnored,
-            repo,
-            path
-        )
-        
-        ignored.pointee = Bool(intIgnored)
-        
-        return ignorePathIsIgnoredResult
+        return ignored.withMutatingBool
+        {
+            cIgnored in
+            
+            return git_ignore_path_is_ignored(
+                cIgnored,
+                repo,
+                path
+            )
+        }
     }
 }

@@ -48,10 +48,6 @@ public struct GitBlobFilterFlagT: COptionSet
     
     
     /// Filters will not be applied to binary files.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitBlobFilterCheckForBinary           = GitBlobFilterFlagT(rawValue: GIT_BLOB_FILTER_CHECK_FOR_BINARY.rawValue)
     
     /// Filters will not load configuration from the system-wide

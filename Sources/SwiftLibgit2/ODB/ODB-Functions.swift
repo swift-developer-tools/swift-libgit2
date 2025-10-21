@@ -651,7 +651,7 @@ public func gitODBStreamFinalizeWrite(
 /// Reads from the given object database stream.
 /// - Parameters:
 ///   - stream: The stream to read.
-///   - buffer: The buffer in which to store the read data.
+///   - buffer: The `Data` instance in which to store the read data.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -664,17 +664,22 @@ public func gitODBStreamFinalizeWrite(
 /// [`git_odb_stream_read()`](https://libgit2.org/docs/reference/main/odb/git_odb_stream_read.html)
 public func gitODBStreamRead(
     stream  : UnsafeMutablePointer<git_odb_stream>,
-    buffer  : UnsafeMutablePointer<CChar>,
+    buffer  : inout Data,
     len     : Int
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return git_odb_stream_read(
-            stream,
-            buffer,
-            len
-        )
+        return try buffer.withMutatingCBuffer
+        {
+            cBuffer, cBufferCount in
+            
+            return git_odb_stream_read(
+                stream,
+                cBuffer,
+                cBufferCount
+            )
+        }
     }
 }
 

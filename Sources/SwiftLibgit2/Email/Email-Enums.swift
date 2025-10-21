@@ -49,10 +49,6 @@ public struct GitEmailCreateFlagsT: COptionSet
     
     
     /// Use the normal patch formatting.
-    ///
-    /// ## Discussion
-    ///
-    /// This is the default value.
     public static let gitEmailCreateDefault         = GitEmailCreateFlagsT(rawValue: GIT_EMAIL_CREATE_DEFAULT.rawValue)
     
     /// Do not include patch numbers in the subject prefix.

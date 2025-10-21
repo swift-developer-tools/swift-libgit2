@@ -80,7 +80,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitCheckoutStrategyT/gitCheckoutSafe``.
+    /// The default value is an empty option set.
     public var checkoutStrategy : GitCheckoutStrategyT
     
     /// Whether to disable filters such as CRLF conversion.
@@ -94,31 +94,36 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
-    /// to using `0o755`.
+    /// The default value is `0`.
+    ///
+    /// If this is `0` at runtime, libgit2 defaults to using `0o755`.
     public var dirMode          : UInt32
     
     /// The permission to use when creating files.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
-    /// to using `0o644` or `0o755`, as dictated by the blob.
+    /// The default value is `0`.
+    ///
+    /// If this is `0` at runtime, libgit2 defaults to using `0o644` or
+    /// `0o755`, as dictated by the blob.
     public var fileMode         : UInt32
     
     /// The flags controlling the file opening process.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. If this is `0` at runtime, libgit2 defaults
-    /// to using `O_CREAT | O_TRUNC | O_WRONLY`.
+    /// The default value is `0`.
+    ///
+    /// If this is `0` at runtime, libgit2 defaults to using
+    /// `O_CREAT | O_TRUNC | O_WRONLY`.
     public var fileOpenFlags    : Int32
     
     /// The flags controlling the behavior of checkout notifications.
     ///
     /// ## Discussion
     ///
-    /// The default value is ``GitCheckoutNotifyT/gitCheckoutNotifyNone``.
+    /// The default value is an empty option set.
     public var notifyFlags      : GitCheckoutNotifyT
     
     /// The callback invoked for checkout notifications.
@@ -153,10 +158,11 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is an empty array. If this is empty at runtime,
-    /// libgit2 defaults to processing all paths. If an array of wildmatch
-    /// patterns is provided, those patterns will be used to determine which
-    /// paths to take into account.
+    /// The default value is an empty array.
+    ///
+    /// If this is empty at runtime, libgit2 defaults to processing all paths.
+    /// If an array of wildmatch patterns is provided, those patterns will be
+    /// used to determine which paths to take into account.
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.
@@ -167,8 +173,9 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using HEAD.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using HEAD.
     ///
     /// A checkout conflict will occur if the working directory does not match
     /// this baseline information.
@@ -232,12 +239,12 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// values for its properties.
     public init(
         version             : UInt32                    = gitCheckoutOptionsVersion,
-        checkoutStrategy    : GitCheckoutStrategyT      = .gitCheckoutSafe,
+        checkoutStrategy    : GitCheckoutStrategyT      = [],
         disableFilters      : Bool                      = false,
         dirMode             : UInt32                    = 0,
         fileMode            : UInt32                    = 0,
         fileOpenFlags       : Int32                     = 0,
-        notifyFlags         : GitCheckoutNotifyT        = .gitCheckoutNotifyNone,
+        notifyFlags         : GitCheckoutNotifyT        = [],
         notifyCB            : GitCheckoutNotifyCB?      = nil,
         notifyPayload       : UnsafeMutableRawPointer?  = nil,
         progressCB          : GitCheckoutProgressCB?    = nil,

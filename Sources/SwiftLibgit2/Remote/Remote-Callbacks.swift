@@ -78,7 +78,6 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 
 
 
-// TODO: Replace `git_remote_set_instance_url()` in documentation.
 /// The callback invoked to resolve URLs.
 /// - Parameters:
 ///   - urlResolved: The buffer to which to write the resolved URL.
@@ -90,7 +89,7 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 /// ## Discussion
 ///
 /// - Warning: This is deprecated in libgit2 and will be removed in the next
-/// major release. Use `git_remote_set_instance_url()` instead.
+/// major release. Use ``gitRemoteSetInstanceURL(remote:url:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -105,7 +104,6 @@ public typealias GitURLResolveCB = @convention(c)
 
 
 
-// TODO: Replace `git_remote_set_instance_url()` in documentation.
 /// The callback invoked immediately before attempting a remote connection.
 /// - Parameters:
 ///   - remote: The remote to be connected. The underlying type must be
@@ -117,7 +115,7 @@ public typealias GitURLResolveCB = @convention(c)
 /// ## Discussion
 ///
 /// The URL may be changed before the connection by calling
-/// `git_remote_set_instance_url()`.
+/// ``gitRemoteSetInstanceURL(remote:url:)``.
 ///
 /// ## C Equivalent
 ///
@@ -126,88 +124,5 @@ public typealias GitRemoteReadyCB = @convention(c)
 (
     OpaquePointer?,
     Int32,
-    UnsafeMutableRawPointer?
-) -> Int32
-
-
-
-/// The callback invoked to report download progress.
-/// - Parameters:
-///   - type: The type of remote operation that was completed.
-///   - payload: The payload provided by the caller.
-/// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// - Note: This callback is currently unused.
-///
-/// ## C Equivalent
-///
-/// This callback does not have a named equivalent in libgit2, but exists as
-/// the ``GitRemoteCallbacks/completion`` property on ``GitRemoteCallbacks``.
-public typealias GitRemoteCompletionCB = @convention(c)
-(
-    git_remote_completion_t,
-    UnsafeMutableRawPointer?
-) -> Int32
-
-
-
-/// The callback invoked for local reference update notifications.
-/// - Parameters:
-///   - refname: The reference name specifying the remote reference that was
-///   updated.
-///   - old_id: The old ID.
-///   - id: The new ID.
-///   - payload: The payload provided by the caller.
-/// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// If this function and ``GitRemoteUpdateRefsCB`` are both provided to
-/// ``GitRemoteCallbacks``, then only ``GitRemoteUpdateRefsCB`` will be invoked.
-///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next
-/// major release. Use ``GitRemoteUpdateRefsCB`` instead.
-///
-/// ## C Equivalent
-///
-/// This callback does not have a named equivalent in libgit2, but exists as
-///  the ``GitRemoteCallbacks/updateTips`` property on ``GitRemoteCallbacks``.
-public typealias GitRemoteUpdateTipsCB = @convention(c)
-(
-    UnsafePointer<CChar>?,
-    UnsafePointer<git_oid>?,
-    UnsafePointer<git_oid>?,
-    UnsafeMutableRawPointer?
-) -> Int32
-
-
-
-/// The callback invoked for local reference update notifications.
-/// - Parameters:
-///   - refname: The reference name specifying the remote reference that was
-///    updated.
-///   - old_id: The old ID.
-///   - id: The new ID.
-///   - refspec: The refspec to use. The underlying type must be `git_refspec`.
-///   - payload: The payload provided by the caller.
-/// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// If this function and ``GitRemoteUpdateTipsCB`` are both provided to
-/// ``GitRemoteCallbacks``, then only this function will be invoked.
-///
-/// ## C Equivalent
-///
-/// This callback does not have a named equivalent in libgit2, but exists as
-/// the ``GitRemoteCallbacks/updateRefs`` property on ``GitRemoteCallbacks``.
-public typealias GitRemoteUpdateRefsCB = @convention(c)
-(
-    UnsafePointer<CChar>?,
-    UnsafePointer<git_oid>?,
-    UnsafePointer<git_oid>?,
-    OpaquePointer?,
     UnsafeMutableRawPointer?
 ) -> Int32

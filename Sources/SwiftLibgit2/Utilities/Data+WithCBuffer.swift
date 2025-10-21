@@ -72,7 +72,9 @@ internal extension Data
         _ body: (UnsafeMutablePointer<CChar>, Int) throws -> T
     ) throws -> T
     {
-        return try self.withUnsafeMutableBytes
+        var data: Data = self
+        
+        let result: T = try data.withUnsafeMutableBytes
         {
             bytes in
             
@@ -87,6 +89,13 @@ internal extension Data
                 bytes.count
             )
         }
+        
+        if isSuccess(result)
+        {
+            self = data
+        }
+        
+        return result
     }
 }
 
