@@ -287,7 +287,7 @@ public struct GitMergeAnalysisT: COptionSet
     ///
     /// ## Discussion
     ///
-    /// This flag is unused.
+    /// - Note: This flag is unused.
     public static let gitMergeAnalysisNone          = GitMergeAnalysisT(rawValue: GIT_MERGE_ANALYSIS_NONE.rawValue)
     
     /// Both HEAD and the given merge input have diverged from their common

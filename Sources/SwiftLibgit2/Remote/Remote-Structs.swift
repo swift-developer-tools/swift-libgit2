@@ -264,7 +264,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// This callback is currently unused.
+    /// - Note: This property is unused.
     public var completion           : CompletionCB?
     
     /// The callback invoked to acquire credentials.
