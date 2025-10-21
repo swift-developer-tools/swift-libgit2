@@ -4,26 +4,7 @@
       "id" : "63F12DEB-4DC1-447C-8642-CB98019778D6",
       "name" : "Test Scheme Action",
       "options" : {
-        "addressSanitizer" : {
-          "detectStackUseAfterReturn" : true,
-          "enabled" : true
-        },
-        "checkedAllocations" : {
-          "enabled" : false,
-          "requiresHardwareAcceleration" : true
-        },
-        "mainThreadCheckerDetectionPolicy" : {
-          "severity" : "failure"
-        },
-        "nsZombieEnabled" : true,
-        "runtimeIssueDetection" : {
-          "severity" : "failure"
-        },
-        "threadPerformanceCheckerRuntimeIssueDetection" : {
-          "severity" : "failure"
-        },
-        "threadSanitizerEnabled" : false,
-        "undefinedBehaviorSanitizerEnabled" : true
+
       }
     }
   ],
@@ -35,6 +16,7 @@
     "mainThreadCheckerDetectionPolicy" : {
       "severity" : "failure"
     },
+    "mallocScribbleEnabled" : true,
     "nsZombieEnabled" : true,
     "performanceAntipatternCheckerEnabled" : true,
     "runtimeIssueDetection" : {
