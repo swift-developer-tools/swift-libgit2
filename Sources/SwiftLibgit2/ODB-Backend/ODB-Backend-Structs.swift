@@ -148,9 +148,7 @@ public struct GitODBBackendLooseOptions: CStructMutable, CConvertible, Sendable
 /// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_odb_stream` is treated as an opaque struct
-/// since its function pointers are allocated and managed by libgit2, and
-/// cannot be meaningfully recreated or translated.
+/// used by other bindings. All binding use `git_odb_stream` instead.
 ///
 /// ## C Equivalent
 ///
@@ -282,9 +280,7 @@ public struct GitODBStream: CStruct
 /// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
-/// used by other bindings. `git_odb_writepack` is treated as an opaque struct
-/// since its function pointers are allocated and managed by libgit2, and
-/// cannot be meaningfully recreated or translated.
+/// used by other bindings. All binding use `git_odb_writepack` instead.
 ///
 /// ## C Equivalent
 ///
