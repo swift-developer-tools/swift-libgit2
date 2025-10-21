@@ -265,7 +265,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     ///
     /// This callback is currently unused.
-    public var completion           : GitRemoteCompletionCB?
+    public var completion           : CompletionCB?
     
     /// The callback invoked to acquire credentials.
     ///
@@ -294,9 +294,12 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
+    /// If this callback and ``updateRefs`` are both provided, then this
+    /// callback will not be invoked.
+    ///
     /// - Warning: This is deprecated in libgit2 and will be removed in the
     /// next major release. Use ``updateRefs`` instead.
-    public var updateTips           : GitRemoteUpdateTipsCB?
+    public var updateTips           : UpdateTipsCB?
     
     /// The callback invoked to report packfile iteration progress.
     ///
@@ -362,7 +365,10 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var updateRefs           : GitRemoteUpdateRefsCB?
+    ///
+    /// If this callback and ``updateTips`` are both provided, then only
+    /// this function will be invoked.
+    public var updateRefs           : UpdateRefsCB?
     
     
     
@@ -371,11 +377,11 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     public init(
         version                 : UInt32                            = gitRemoteCallbacksVersion,
         sidebandProgress        : GitTransportMessageCB?            = nil,
-        completion              : GitRemoteCompletionCB?            = nil,
+        completion              : CompletionCB?                     = nil,
         credentials             : GitCredentialAcquireCB?           = nil,
         certificateCheck        : GitTransportCertificateCheckCB?   = nil,
         transferProgress        : GitIndexerProgressCB?             = nil,
-        updateTips              : GitRemoteUpdateTipsCB?            = nil,
+        updateTips              : UpdateTipsCB?                     = nil,
         packProgress            : GitPackbuilderProgressCB?         = nil,
         pushTransferProgress    : GitPushTransferProgressCB?        = nil,
         pushUpdateReference     : GitPushUpdateReferenceCB?         = nil,
@@ -384,7 +390,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
         remoteReady             : GitRemoteReadyCB?                 = nil,
         payload                 : UnsafeMutableRawPointer?          = nil,
         resolveURL              : GitURLResolveCB?                  = nil,
-        updateRefs              : GitRemoteUpdateRefsCB?            = nil
+        updateRefs              : UpdateRefsCB?                     = nil
     )
     {
         self.version                = version
@@ -471,6 +477,58 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
         
         return remoteCallbacks
     }
+    
+    
+    
+    /// The callback invoked to report download progress.
+    /// - Parameters:
+    ///   - type: The type of remote operation that was completed.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
+    public typealias CompletionCB = @convention(c)
+    (
+        git_remote_completion_t,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked for local reference update notifications.
+    /// - Parameters:
+    ///   - refname: The reference name specifying the remote reference that
+    ///   was updated.
+    ///   - old_id: The old ID.
+    ///   - id: The new ID.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
+    public typealias UpdateTipsCB = @convention(c)
+    (
+        UnsafePointer<CChar>?,
+        UnsafePointer<git_oid>?,
+        UnsafePointer<git_oid>?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    
+    
+    /// The callback invoked for local reference update notifications.
+    /// - Parameters:
+    ///   - refname: The reference name specifying the remote reference that
+    ///    was updated.
+    ///   - old_id: The old ID.
+    ///   - id: The new ID.
+    ///   - refspec: The refspec to use. The underlying type must be
+    ///   `git_refspec`.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
+    public typealias UpdateRefsCB = @convention(c)
+    (
+        UnsafePointer<CChar>?,
+        UnsafePointer<git_oid>?,
+        UnsafePointer<git_oid>?,
+        OpaquePointer?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
 }
 
 

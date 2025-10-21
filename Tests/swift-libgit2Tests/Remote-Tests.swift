@@ -420,7 +420,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         
         
         
-        let remoteCompletionCB: GitRemoteCompletionCB =
+        let remoteCompletionCB: GitRemoteCallbacks.CompletionCB =
         {
             _, _ in
             
@@ -436,7 +436,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         
         
         
-        let remoteUpdateTipsCB: GitRemoteUpdateTipsCB =
+        let remoteUpdateTipsCB: GitRemoteCallbacks.UpdateTipsCB =
         {
             _, _, _, _ in
             
@@ -454,7 +454,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         
         
         
-        let remoteUpdateRefsCB: GitRemoteUpdateRefsCB =
+        let remoteUpdateRefsCB: GitRemoteCallbacks.UpdateRefsCB =
         {
             _, _, _, _, _ in
             

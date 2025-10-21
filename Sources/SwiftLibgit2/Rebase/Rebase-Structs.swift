@@ -93,9 +93,12 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
+    /// If this callback and ``commitCreateCB`` are both provided, then this
+    /// callback will not be invoked.
+    ///
     /// - Warning: This is deprecated in libgit2 and will be removed in the
     /// next major release. Use ``commitCreateCB`` instead.
-    public var signingCB        : GitRebaseSigningCB?
+    public var signingCB        : SigningCB?
     
     /// The payload passed to ``commitCreateCB`` and ``signingCB``.
     ///
@@ -116,7 +119,7 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
         mergeOptions    : GitMergeOptions           = GitMergeOptions(),
         checkoutOptions : GitCheckoutOptions        = GitCheckoutOptions(),
         commitCreateCB  : GitCommitCreateCB?        = nil,
-        signingCB       : GitRebaseSigningCB?       = nil,
+        signingCB       : SigningCB?                = nil,
         payload         : UnsafeMutableRawPointer?  = nil
     )
     {
@@ -203,6 +206,23 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
             }
         }
     }
+    
+    
+    
+    /// The callback invoked to add a signature to the rebase commit.
+    /// - Parameters:
+    ///   - signature: The signature to add to the commit.
+    ///   - signatureField: The header field containing the signature.
+    ///   - commitContent: The content of the unsigned commit to use.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
+    public typealias SigningCB = @convention(c)
+    (
+        UnsafeMutablePointer<git_buf>?,
+        UnsafeMutablePointer<git_buf>?,
+        UnsafePointer<CChar>?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
 }
 
 

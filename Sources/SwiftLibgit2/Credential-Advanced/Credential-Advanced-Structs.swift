@@ -24,13 +24,10 @@ import CLibgit2
 public struct GitCredential: CStruct, Sendable
 {
     /// The type of supported credential.
-    public let credType: GitCredentialT
+    public let credType : GitCredentialT
     
     /// Frees the memory allocated for the given `git_credential` instance.
-    public let free: @convention(c)
-    (
-        UnsafeMutablePointer<git_credential>?
-    ) -> Void
+    public let free     : Free?
     
     
     
@@ -44,4 +41,14 @@ public struct GitCredential: CStruct, Sendable
         self.credType   = GitCredentialT(rawValue: credential.credtype.rawValue)
         self.free       = credential.free
     }
+    
+    
+    
+    /// The callback invoked to free the memory allocated for the given
+    /// `git_credential` instance.
+    /// - Parameter cred: The credential to free.
+    public typealias Free = @convention(c)
+    (
+        UnsafeMutablePointer<git_credential>?
+    ) -> Void
 }

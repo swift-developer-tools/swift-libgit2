@@ -328,7 +328,7 @@ final class RebaseTests: XCTestCaseStopOnFail
     {
         var callbackData = CallbackData()
                     
-        let rebaseSigningCB: GitRebaseSigningCB =
+        let rebaseSigningCB: GitRebaseOptions.SigningCB =
         {
             signature, signatureField, commitContent, payload in
             

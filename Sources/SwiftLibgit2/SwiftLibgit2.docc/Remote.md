@@ -38,9 +38,6 @@ Remote repositories.
 - ``GitPushUpdateReferenceCB``
 - ``GitURLResolveCB``
 - ``GitRemoteReadyCB``
-- ``GitRemoteCompletionCB``
-- ``GitRemoteUpdateTipsCB``
-- ``GitRemoteUpdateRefsCB``
 
 ### Functions
 

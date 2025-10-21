@@ -896,42 +896,19 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
 public struct GitDiffSimilarityMetric: CStruct
 {
     /// Generates a signature for the given file.
-    public let fileSignature: @convention(c)
-    (
-        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
-        UnsafePointer<git_diff_file>?,
-        UnsafePointer<CChar>?,
-        UnsafeMutableRawPointer?
-    ) -> Int32
+    public let fileSignature    : FileSignature?
     
     /// Generates a signature for the given buffer.
-    public let bufferSignature: @convention(c)
-    (
-        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
-        UnsafePointer<git_diff_file>?,
-        UnsafePointer<CChar>?,
-        Int,
-        UnsafeMutableRawPointer?
-    ) -> Int32
+    public let bufferSignature  : BufferSignature?
     
     /// Frees the memory allocated for the given signature.
-    public let freeSignature: @convention(c)
-    (
-        UnsafeMutableRawPointer?,
-        UnsafeMutableRawPointer?
-    ) -> Void
+    public let freeSignature    : FreeSignature?
     
     /// Generates a similarity score.
-    public let similarity: @convention(c)
-    (
-        UnsafeMutablePointer<Int32>?,
-        UnsafeMutableRawPointer?,
-        UnsafeMutableRawPointer?,
-        UnsafeMutableRawPointer?
-    ) -> Int32
+    public let similarity       : Similarity?
     
     /// The payload provided by the caller.
-    public let payload: UnsafeMutableRawPointer?
+    public let payload          : UnsafeMutableRawPointer?
     
     
     
@@ -949,6 +926,39 @@ public struct GitDiffSimilarityMetric: CStruct
         self.similarity         = diffSimilarityMetric.similarity
         self.payload            = diffSimilarityMetric.payload
     }
+    
+    
+    
+    public typealias FileSignature = @convention(c)
+    (
+        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
+        UnsafePointer<git_diff_file>?,
+        UnsafePointer<CChar>?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    public typealias BufferSignature = @convention(c)
+    (
+        UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
+        UnsafePointer<git_diff_file>?,
+        UnsafePointer<CChar>?,
+        Int,
+        UnsafeMutableRawPointer?
+    ) -> Int32
+    
+    public typealias FreeSignature = @convention(c)
+    (
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?
+    ) -> Void
+    
+    public typealias Similarity = @convention(c)
+    (
+        UnsafeMutablePointer<Int32>?,
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?,
+        UnsafeMutableRawPointer?
+    ) -> Int32
 }
 
 
