@@ -669,7 +669,8 @@ public func gitConfigGetPath(
 
 /// Gets the value of the specified string configuration variable.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting string.
+///   - out: The `String` instance in which to store the value of the
+///   specified string configuration variable.
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -688,26 +689,23 @@ public func gitConfigGetPath(
 ///
 /// [`git_config_get_string()`](https://libgit2.org/docs/reference/main/config/git_config_get_string.html)
 public func gitConfigGetString(
-    out     : UnsafeMutablePointer<String?>,
+    out     : inout String?,
     cfg     : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        /// The string is owned by the configuration object and must not be
-        /// freed by the caller.
-        var cOut: UnsafePointer<CChar>? = nil
-        
-        let configGetStringResult: Int32 = git_config_get_string(
-            &cOut,
-            cfg,
-            name
-        )
-        
-        out.pointee = String(optionalCString: cOut)
-        
-        return configGetStringResult
+        return out.withOptionalMutatingString
+        {
+            cOut in
+            
+            return git_config_get_string(
+                cOut,
+                cfg,
+                name
+            )
+        }
     }
 }
 
