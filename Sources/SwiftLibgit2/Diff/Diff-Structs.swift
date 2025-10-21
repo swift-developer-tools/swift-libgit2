@@ -322,9 +322,11 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the value of `core.abbrev` from the configuration
-    /// file, or `7` if that value is unset.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using the value of
+    /// `core.abbrev` from the configuration file, or `7` if that value is
+    /// unset.
     public var idAbbrev         : UInt16?
     
     /// The maximum size, in bytes, above which a blob will be automatically
@@ -1087,11 +1089,12 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using a sampling hash of ranges of data in the file.
-    /// This is a reliable similarity approximation that generally works
-    /// well for both text and binary data, while maintaining speed and a
-    /// fixed memory overhead.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using a sampling hash
+    /// of ranges of data in the file. This is a reliable similarity
+    /// approximation that generally works well for both text and binary data,
+    /// while maintaining speed and a fixed memory overhead.
     ///
     /// - Important: If a custom metric is provided, the caller will be
     /// responsible for memory management.

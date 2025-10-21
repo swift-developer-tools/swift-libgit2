@@ -40,8 +40,7 @@ public struct GitSignature: CStructInternalMutable, WithCConvertible, CFreeable,
     ///
     /// ## Discussion
     ///
-    /// The default value is a ``GitTime`` instance with the default
-    /// configuration.
+    /// The default value is a default-initialized ``GitTime`` instance.
     public private(set) var when    : GitTime = GitTime(cValue: git_time())
     
     

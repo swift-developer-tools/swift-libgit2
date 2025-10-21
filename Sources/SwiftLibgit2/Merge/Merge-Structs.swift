@@ -43,14 +43,18 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. Pass `nil` to not merge the path.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to not merging the path.
     public var path     : String?
     
     /// The file mode of the conflicted file.
     ///
     /// ## Discussion
     ///
-    /// The default value is `0`. Pass `0` to not merge the mode.
+    /// The default value is `0`.
+    ///
+    /// If this is `0` at runtime, libgit2 defaults to not merging the mode.
     public var mode     : UInt32
     
     
@@ -460,8 +464,10 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the internal metric.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using the internal
+    /// metric.
     public var metric           : GitDiffSimilarityMetric?
     
     /// The maximum number of times to merge common ancestors to build a
@@ -480,8 +486,10 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is `nil`. If this is `nil` at runtime, libgit2
-    /// defaults to using the `text` driver.
+    /// The default value is `nil`.
+    ///
+    /// If this is `nil` at runtime, libgit2 defaults to using the `text`
+    /// driver.
     public var defaultDriver    : String?
     
     /// How to handle conflicting file regions during file-level merge

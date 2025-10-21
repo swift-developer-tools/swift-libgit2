@@ -36,8 +36,7 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     ///
     /// ## Discussion
     ///
-    /// The default value is a ``GitDiffOptions`` instance with the default
-    /// configuration.
+    /// The default value is a default-initialized ``GitDiffOptions`` instance.
     public var diffOpts         : GitDiffOptions
     
     /// The options for diff rename and copy detection.
