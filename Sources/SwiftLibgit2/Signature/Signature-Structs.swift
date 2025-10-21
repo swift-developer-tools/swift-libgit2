@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_signature`](https://libgit2.org/docs/reference/main/signature/git_signature.html)
-public struct GitSignature: CFreeable, CStructInternalMutable, WithCConvertible, Sendable
+public struct GitSignature: CStructInternalMutable, WithCConvertible, CFreeable, Sendable
 {
     /// The full name of the actor.
     ///
