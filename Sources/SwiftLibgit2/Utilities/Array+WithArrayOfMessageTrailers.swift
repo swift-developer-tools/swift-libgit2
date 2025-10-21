@@ -183,7 +183,10 @@ internal extension Array where Element == GitMessageTrailer
             
             let result: T = try body(&messageTrailerArray)
             
-            self = Array(messageTrailerArray)
+            if isSuccess(result)
+            {
+                self = Array(messageTrailerArray)
+            }
             
             return result
         }
@@ -206,7 +209,10 @@ internal extension Array where Element == GitMessageTrailer
             
             let result: T = try body(&messageTrailerArray)
             
-            self = Array(messageTrailerArray)
+            if isSuccess(result)
+            {
+                self = Array(messageTrailerArray)
+            }
             
             if messageTrailerArray.trailers != originalPointer
             {

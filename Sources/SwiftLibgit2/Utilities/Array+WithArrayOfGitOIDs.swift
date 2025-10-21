@@ -78,7 +78,10 @@ internal extension Array where Element == GitOID
             
             let result: T = try body(&oidArray)
             
-            self = Array(oidArray)
+            if isSuccess(result)
+            {
+                self = Array(oidArray)
+            }
             
             return result
         }
@@ -101,7 +104,10 @@ internal extension Array where Element == GitOID
             
             let result: T = try body(&oidArray)
             
-            self = Array(oidArray)
+            if isSuccess(result)
+            {
+                self = Array(oidArray)
+            }
             
             if oidArray.ids != originalPointer
             {

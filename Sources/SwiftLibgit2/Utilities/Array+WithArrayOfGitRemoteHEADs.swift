@@ -250,10 +250,13 @@ internal extension Array where Element == GitRemoteHEAD
                 &count
             )
             
-            self = Array(
-                arrayOfRemoteHEADs,
-                count: count
-            )
+            if isSuccess(result)
+            {
+                self = Array(
+                    arrayOfRemoteHEADs,
+                    count: count
+                )
+            }
             
             return result
         }
@@ -274,10 +277,13 @@ internal extension Array where Element == GitRemoteHEAD
                 &count
             )
             
-            self = Array(
-                arrayOfRemoteHEADs,
-                count: count
-            )
+            if isSuccess(result)
+            {
+                self = Array(
+                    arrayOfRemoteHEADs,
+                    count: count
+                )
+            }
             
             return result
         }
