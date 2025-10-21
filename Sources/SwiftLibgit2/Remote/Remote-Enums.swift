@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// Remote redirection settings.
+/// Remote redirection behavior.
 ///
 /// ## Discussion
 ///
