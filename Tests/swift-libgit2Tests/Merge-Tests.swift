@@ -54,10 +54,11 @@ final class MergeTests: XCTestCaseStopOnFail
             
             
             
-            let repositoryStateResult: Int32
-                = git_repository_state(repository.pointer)
+            let repoState: GitRepositoryStateT?
+                = gitRepositoryState(repo: repository.pointer)
             
-            XCTAssertEqual(UInt32(repositoryStateResult), GIT_REPOSITORY_STATE_MERGE.rawValue)
+            XCTAssertNotNil(repoState)
+            XCTAssertEqual(repoState, .gitRepositoryStateMerge)
             
             
             
@@ -67,10 +68,10 @@ final class MergeTests: XCTestCaseStopOnFail
             
             
             
-            let repositoryStateCleanupResult: Int32
-                = git_repository_state_cleanup(repository.pointer)
+            let repoStateCleanupResult: GitErrorCode
+                = gitRepositoryStateCleanup(repo: repository.pointer)
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryStateCleanupResult))
+            XCTAssertOK(repoStateCleanupResult)
         }
     }
     

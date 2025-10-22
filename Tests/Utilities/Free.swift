@@ -33,24 +33,6 @@ enum Free
     
     
     
-    /// Frees the memory allocated for the given `git_repository` instance.
-    /// - Parameter repository: The repository to free. The underlying type
-    /// must be `git_repository`.
-    static func freeRepository(
-        _ repository: OpaquePointer?
-    )
-    {
-        guard let repository: OpaquePointer = repository
-        else
-        {
-            return
-        }
-        
-        git_repository_free(repository)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_transaction` instance.
     /// - Parameter transaction: The transaction to free. The underlying type
     /// must be `git_transaction`.

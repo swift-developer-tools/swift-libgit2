@@ -285,12 +285,12 @@ private extension CherrypickTests
         
         
         
-        let repositorySetHEADFeatureResult: Int32 = git_repository_set_head(
-            repository.pointer,
-            "refs/heads/feature"
+        let repoSetHEADFeatureResult: GitErrorCode = gitRepositorySetHEAD(
+            repo:       repository.pointer,
+            refName:    "refs/heads/feature"
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: repositorySetHEADFeatureResult))
+        XCTAssertOK(repoSetHEADFeatureResult)
         
         
         
@@ -324,12 +324,12 @@ private extension CherrypickTests
         
         
         
-        let repositoryHEADResult: Int32 = git_repository_head(
-            &branchPointer,
-            repository.pointer
+        let repoHEADResult: GitErrorCode = gitRepositoryHEAD(
+            out:    &branchPointer,
+            repo:   repository.pointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
+        XCTAssertOK(repoHEADResult)
         
         guard let branchPointer: OpaquePointer = branchPointer
         else
@@ -345,12 +345,12 @@ private extension CherrypickTests
         
         
         
-        let repositorySetHEADResult: Int32 = git_repository_set_head(
-            repository.pointer,
-            referenceName
+        let repoSetHEADResult: GitErrorCode = gitRepositorySetHEAD(
+            repo:       repository.pointer,
+            refName:    referenceName
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: repositorySetHEADResult))
+        XCTAssertOK(repoSetHEADResult)
         
         
         

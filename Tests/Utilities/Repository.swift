@@ -182,12 +182,12 @@ struct Repository
         
         
         
-        let repositoryIndexResult: Int32 = git_repository_index(
-            &indexPointer,
-            pointer
+        let reposIndexResult: GitErrorCode = gitRepositoryIndex(
+            out:    &indexPointer,
+            repo:   pointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+        XCTAssertOK(reposIndexResult)
         
         guard let indexPointer: OpaquePointer = indexPointer
         else
@@ -623,7 +623,7 @@ internal extension Repository
         
         defer
         {
-            Free.freeRepository(repoPointer)
+            gitRepositoryFree(repo: repoPointer)
             
             try? FileManager.default.removeItem(at: url)
         }
@@ -642,13 +642,13 @@ internal extension Repository
         }
         else
         {
-            let repoInitResult: Int32 = git_repository_init(
-                &repoPointer,
-                url.path(),
-                isBare ? 1 : 0
+            let repoInitResult: GitErrorCode = gitRepositoryInit(
+                out:        &repoPointer,
+                path:       url.path(),
+                isBare:     isBare
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repoInitResult))
+            XCTAssertOK(repoInitResult)
         }
         
         guard let repoPointer: OpaquePointer = repoPointer
@@ -736,12 +736,12 @@ internal extension Repository
             
             
             
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
+            let repoIndexResult: GitErrorCode = gitRepositoryIndex(
+                out:    &indexPointer,
+                repo:   repository.pointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+            XCTAssertOK(repoIndexResult)
             
             guard let indexPointer: OpaquePointer = indexPointer
             else

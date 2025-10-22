@@ -288,12 +288,12 @@ private extension IndexerTests
         
         if indexerOptions?.verify == true
         {
-            let repositoryODBResult: Int32 = git_repository_odb(
-                &odbPointer,
-                repository.pointer
+            let repoODBResult: GitErrorCode = gitRepositoryODB(
+                out:    &odbPointer,
+                repo:   repository.pointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryODBResult))
+            XCTAssertOK(repoODBResult)
         }
         
         

@@ -963,12 +963,12 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let newRepositoryIndexResult: Int32 = git_repository_index(
-                &newIndexPointer,
-                repository.pointer
+            let newRepoIndexResult: GitErrorCode = gitRepositoryIndex(
+                out:    &newIndexPointer,
+                repo:   repository.pointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: newRepositoryIndexResult))
+            XCTAssertOK(newRepoIndexResult)
             
             guard let newIndexPointer: OpaquePointer = newIndexPointer
             else
