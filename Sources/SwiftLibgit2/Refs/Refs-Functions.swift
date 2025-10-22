@@ -1015,7 +1015,8 @@ public func gitReferenceForEachGlob(
 ///   - repo: The repository containing the reference. The underlying type
 ///   must be `git_repository`.
 ///   - refName: The name of the reference to check.
-/// - Returns: Whether the given reference has a reflog.
+/// - Returns: Whether the given reference has a reflog, or `nil` if there
+/// was an error.
 ///
 /// ## C Equivalent
 ///
@@ -1023,12 +1024,19 @@ public func gitReferenceForEachGlob(
 public func gitReferenceHasLog(
     repo    : OpaquePointer,
     refName : String
-) -> Bool
+) -> Bool?
 {
     let referenceHasReflog: Int32 = git_reference_has_log(
         repo,
         refName
     )
+    
+    if
+        referenceHasReflog != 0,
+        referenceHasReflog != 1
+    {
+        return nil
+    }
     
     return Bool(referenceHasReflog)
 }
