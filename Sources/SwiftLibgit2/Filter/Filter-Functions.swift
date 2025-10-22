@@ -126,12 +126,12 @@ public func gitFilterListContains(
     name    : String
 ) -> Bool
 {
-    let filterListContainsName: Int32 = git_filter_list_contains(
+    let containsName: Int32 = git_filter_list_contains(
         filters,
         name
     )
     
-    return Bool(filterListContainsName)
+    return Bool(containsName)
 }
 
 

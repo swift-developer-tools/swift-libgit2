@@ -824,7 +824,7 @@ public func gitReferenceCmp(
     ref2    : OpaquePointer
 ) -> Bool
 {
-    let referencesAreEqual: Int32 = git_reference_cmp(
+    let equal: Int32 = git_reference_cmp(
         ref1,
         ref2
     )
@@ -832,7 +832,7 @@ public func gitReferenceCmp(
     /// The `Bool` initializer follows the C convention that `0` is `false`,
     /// which is applicable throughout most of libgit2. This function returns
     /// `0` if the IDs match, since it uses `memcmp()` in its implementation.
-    return !Bool(referencesAreEqual)
+    return !Bool(equal)
 }
 
 
@@ -1026,19 +1026,19 @@ public func gitReferenceHasLog(
     refName : String
 ) -> Bool?
 {
-    let referenceHasReflog: Int32 = git_reference_has_log(
+    let hasReflog: Int32 = git_reference_has_log(
         repo,
         refName
     )
     
     if
-        referenceHasReflog != 0,
-        referenceHasReflog != 1
+        hasReflog != 0,
+        hasReflog != 1
     {
         return nil
     }
     
-    return Bool(referenceHasReflog)
+    return Bool(hasReflog)
 }
 
 
@@ -1081,9 +1081,9 @@ public func gitReferenceIsBranch(
     ref: OpaquePointer
 ) -> Bool
 {
-    let referenceIsBranch: Int32 = git_reference_is_branch(ref)
+    let isBranch: Int32 = git_reference_is_branch(ref)
     
-    return Bool(referenceIsBranch)
+    return Bool(isBranch)
 }
 
 
@@ -1100,9 +1100,9 @@ public func gitReferenceIsRemote(
     ref: OpaquePointer
 ) -> Bool
 {
-    let referenceIsRemote: Int32 = git_reference_is_remote(ref)
+    let isRemote: Int32 = git_reference_is_remote(ref)
     
-    return Bool(referenceIsRemote)
+    return Bool(isRemote)
 }
 
 
@@ -1119,9 +1119,9 @@ public func gitReferenceIsTag(
     ref: OpaquePointer
 ) -> Bool
 {
-    let referenceIsTag: Int32 = git_reference_is_tag(ref)
+    let isTag: Int32 = git_reference_is_tag(ref)
     
-    return Bool(referenceIsTag)
+    return Bool(isTag)
 }
 
 
@@ -1138,9 +1138,9 @@ public func gitReferenceIsNote(
     ref: OpaquePointer
 ) -> Bool
 {
-    let referenceIsNote: Int32 = git_reference_is_note(ref)
+    let isNote: Int32 = git_reference_is_note(ref)
     
-    return Bool(referenceIsNote)
+    return Bool(isNote)
 }
 
 

@@ -699,9 +699,9 @@ public func gitRemoteConnected(
     remote: OpaquePointer
 ) -> Bool
 {
-    let remoteIsConnected: Int32 = git_remote_connected(remote)
+    let isConnected: Int32 = git_remote_connected(remote)
     
-    return Bool(remoteIsConnected)
+    return Bool(isConnected)
 }
 
 

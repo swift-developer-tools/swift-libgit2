@@ -683,9 +683,9 @@ public func gitIndexEntryIsConflict(
     {
         cEntry in
         
-        let indexEntryIsConflict: Int32 = git_index_entry_is_conflict(cEntry)
+        let isConflict: Int32 = git_index_entry_is_conflict(cEntry)
         
-        return Bool(indexEntryIsConflict)
+        return Bool(isConflict)
     }
 }
 
@@ -1277,9 +1277,9 @@ public func gitIndexHasConflicts(
     index: OpaquePointer
 ) -> Bool
 {
-    let indexHasConflicts: Int32 = git_index_has_conflicts(index)
+    let hasConflicts: Int32 = git_index_has_conflicts(index)
     
-    return Bool(indexHasConflicts)
+    return Bool(hasConflicts)
 }
 
 

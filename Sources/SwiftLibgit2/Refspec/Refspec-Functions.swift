@@ -133,9 +133,9 @@ public func gitRefspecForce(
     refspec: OpaquePointer
 ) -> Bool
 {
-    let forceUpdateIsSet: Int32 = git_refspec_force(refspec)
+    let isForceUpdateSet: Int32 = git_refspec_force(refspec)
     
-    return Bool(forceUpdateIsSet)
+    return Bool(isForceUpdateSet)
 }
 
 

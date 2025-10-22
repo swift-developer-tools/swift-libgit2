@@ -86,13 +86,13 @@ public func gitPathspecMatchesPath(
     path    : String
 ) -> Bool
 {
-    let pathspecMatchesPath: Int32 = git_pathspec_matches_path(
+    let matchesPath: Int32 = git_pathspec_matches_path(
         ps,
         flags.rawValue,
         path
     )
     
-    return Bool(pathspecMatchesPath)
+    return Bool(matchesPath)
 }
 
 

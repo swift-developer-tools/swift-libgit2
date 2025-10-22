@@ -275,12 +275,12 @@ public func gitODBExists(
 {
     var cID: git_oid = id.cValue()
     
-    let odbExists: Int32 = git_odb_exists(
+    let exists: Int32 = git_odb_exists(
         db,
         &cID
     )
     
-    return Bool(odbExists)
+    return Bool(exists)
 }
 
 
@@ -304,13 +304,13 @@ public func gitODBExistsExt(
 {
     var cID: git_oid = id.cValue()
     
-    let odbExists: Int32 = git_odb_exists_ext(
+    let exists: Int32 = git_odb_exists_ext(
         db,
         &cID,
         flags.rawValue
     )
     
-    return Bool(odbExists)
+    return Bool(exists)
 }
 
 
