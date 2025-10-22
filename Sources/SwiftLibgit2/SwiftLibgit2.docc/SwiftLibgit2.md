@@ -16,7 +16,7 @@ libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 Swift bindings are provided for almost every API available in libgit2. Direct 
 access to the libgit2 C library is also provided by the package. There are no 
 bindings for opaque structs, initialization macros, and some variadic functions, 
-but these may be accessed by importing the C library. See the Usage section for 
+but these may be accessed by importing the C library. See [Usage](#Usage) for 
 an example of how to import and use either library.
 
 The bindings use the same signatures and names as their C equivalents, but are 
@@ -32,9 +32,9 @@ libgit2's behavior and semantics. For example, some bindings use Swift types
 like `String` instead of `UnsafePointer<CChar>`.
 
 Some bindings must use C types to maintain compatibility with libgit2's 
-memory management and calling conventions. This includes callbacks invoked by 
-libgit2 internally, output parameters where libgit2 owns the returned memory, 
-and other cases where C types cannot be accurately represented in Swift.
+memory management and calling conventions. This includes callbacks invoked 
+internally by libgit2, output parameters where libgit2 owns the returned memory, 
+and other cases where C types cannot be represented in Swift.
 
 The bindings for bitset C enums are represented as structs, but remain in their 
 respective "Enums" documentation section to match libgit2's API organization. 
@@ -55,8 +55,8 @@ See the Xcode documentation for step-by-step instructions on how to
 
 All necessary dependencies are handled by the package, which includes compiled 
 builds of libgit2, [libssh2](https://libssh2.org), and 
-[OpenSSL](https://www.openssl.org). See the Bundled Dependencies section below 
-for more information.
+[OpenSSL](https://www.openssl.org). See 
+[Bundled Dependencies](#Bundled-Dependencies) for more information.
 
 swift-libgit2 has been built to run on the following iOS and macOS platforms, 
 on both devices and simulators:
@@ -155,10 +155,18 @@ end-to-end encryption.
 
 
 
+## License
+
+swift-libgit2 is licensed under the Apache License, Version 2.0. See the 
+[LICENSE](https://github.com/swift-developer-tools/swift-libgit2/blob/main/LICENSE.txt) 
+file for complete license information.
+
+
+
 ## Attribution
 
 See the [`Licenses`](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Licenses) 
-folder for the complete license texts.
+folder for complete license information.
 
 ### Documentation
 
