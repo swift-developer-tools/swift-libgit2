@@ -225,12 +225,13 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            let refHasLogBeforeEnsure: Bool = gitReferenceHasLog(
+            let refHasLogBeforeEnsure: Bool? = gitReferenceHasLog(
                 repo:       repository.pointer,
                 refName:    customRefName
             )
             
-            XCTAssertFalse(refHasLogBeforeEnsure)
+            XCTAssertNotNil(refHasLogBeforeEnsure)
+            XCTAssertFalse(refHasLogBeforeEnsure ?? true)
             
             
             
@@ -243,12 +244,13 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            let refHasLogAfterEnsure: Bool = gitReferenceHasLog(
+            let refHasLogAfterEnsure: Bool? = gitReferenceHasLog(
                 repo:       repository.pointer,
                 refName:    customRefName
             )
             
-            XCTAssertTrue(refHasLogAfterEnsure)
+            XCTAssertNotNil(refHasLogAfterEnsure)
+            XCTAssertTrue(refHasLogAfterEnsure ?? false)
         }
     }
     
@@ -415,12 +417,13 @@ final class RefsTests: XCTestCaseStopOnFail
         {
             repository, _ in
             
-            let refHasLog: Bool = gitReferenceHasLog(
+            let refHasLog: Bool? = gitReferenceHasLog(
                 repo:       repository.pointer,
                 refName:    Self.directRefFullName
             )
             
-            XCTAssertTrue(refHasLog)
+            XCTAssertNotNil(refHasLog)
+            XCTAssertTrue(refHasLog ?? false)
         }
     }
     
