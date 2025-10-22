@@ -11,7 +11,6 @@ import CLibgit2
 
 
 
-// TODO: Replace `git_repository_config()` in documentation.
 /// The priority level of a configuration file.
 ///
 /// ## Discussion
@@ -28,8 +27,8 @@ import CLibgit2
 /// writable. This ordering can be overridden with
 /// ``gitConfigSetWriteOrder(cfg:levels:len:)``.
 ///
-/// ``gitConfigOpenDefault(out:)`` and `git_repository_config()` honor those
-/// priority levels as well.
+/// ``gitConfigOpenDefault(out:)`` and ``gitRepositoryConfig(out:repo:)`` honor
+/// those priority levels as well.
 ///
 /// ## C Equivalent
 ///

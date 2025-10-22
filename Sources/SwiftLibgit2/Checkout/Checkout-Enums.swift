@@ -11,7 +11,6 @@ import CLibgit2
 
 
 
-// TODO: Replace `git_repository_set_head()` in documentation.
 /// The flags controlling the behavior of the checkout operation.
 ///
 /// ## Discussion
@@ -44,8 +43,8 @@ import CLibgit2
 ///
 /// - Note: In libgit2, checkout is used to update the working directory and
 /// index to match a target tree. Unlike `git checkout`, it does not move the
-/// HEAD commit. Use `git_repository_set_head()` or a similar function for that
-/// purpose.
+/// HEAD commit. Use ``gitRepositorySetHEAD(repo:refName:)`` or a similar
+/// function for that purpose.
 ///
 /// ## C Equivalent
 ///

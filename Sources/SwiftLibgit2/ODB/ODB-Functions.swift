@@ -874,7 +874,6 @@ public func gitODBHash(
 
 
 
-// TODO: Replace `git_repository_hashfile()` in documentation.
 /// Reads the specified file from the disk and gets the ID that the file would
 /// have, if it were written to the object database as an object of the given
 /// type, without applying filters.
@@ -888,7 +887,8 @@ public func gitODBHash(
 ///
 /// This is similar to `git hash-object --no-filters`.
 ///
-/// - Note: To apply filters, use `git_repository_hashfile()` instead.
+/// - Note: To apply filters, use
+/// ``gitRepositoryHashFile(out:repo:path:type:asPath:)`` instead.
 ///
 /// ## C Equivalent
 ///

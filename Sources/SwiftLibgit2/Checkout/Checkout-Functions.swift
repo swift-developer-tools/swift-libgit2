@@ -36,7 +36,6 @@ public func gitCheckoutOptionsInit(
 
 
 
-// TODO: Replace `git_repository_set_head()` in documentation.
 /// Updates files in the index and in the working tree to match the conent of
 /// the commit pointed at by HEAD.
 /// - Parameters:
@@ -52,7 +51,7 @@ public func gitCheckoutOptionsInit(
 /// conflicts since the working directory would then appear to be dirty.
 ///
 /// Instead, checkout the target of the branch and then update HEAD using
-/// `git_repository_set_head()` to point to the checked-out branch.
+/// ``gitRepositorySetHEAD(repo:refName:)`` to point to the checked-out branch.
 ///
 /// ## C Equivalent
 ///
