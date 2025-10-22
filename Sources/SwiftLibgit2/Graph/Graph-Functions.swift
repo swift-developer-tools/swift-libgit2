@@ -91,7 +91,9 @@ public func gitGraphDescendantOf(
         &cAncestor
     )
     
-    if isDescendant < 0
+    if
+        isDescendant != 0,
+        isDescendant != 1
     {
         return nil
     }
@@ -132,7 +134,9 @@ public func gitGraphReachableFromAny(
         cDescendantArray.count
     )
     
-    if isReachableFromAny < 0
+    if
+        isReachableFromAny != 0,
+        isReachableFromAny != 1
     {
         return nil
     }

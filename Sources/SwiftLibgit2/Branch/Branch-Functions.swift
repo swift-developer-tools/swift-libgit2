@@ -454,7 +454,9 @@ public func gitBranchIsHEAD(
 {
     let branchIsHEAD: Int32 = git_branch_is_head(branch)
     
-    if branchIsHEAD < 0
+    if
+        branchIsHEAD != 0,
+        branchIsHEAD != 1
     {
         return nil
     }
@@ -484,7 +486,9 @@ public func gitBranchIsCheckedOut(
 {
     let branchIsCheckedOut: Int32 = git_branch_is_checked_out(branch)
     
-    if branchIsCheckedOut < 0
+    if
+        branchIsCheckedOut != 0,
+        branchIsCheckedOut != 1
     {
         return nil
     }
