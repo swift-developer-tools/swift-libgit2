@@ -54,8 +54,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     ///
-    /// If this is default-initialized at runtime, libgit2 defaults to using
-    /// HEAD.
+    /// Pass a default-initialized instance to use HEAD.
     public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
@@ -64,8 +63,8 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     ///
-    /// If this is default-initialized at runtime, libgit2 defaults to using
-    /// the first commit encountered with a `nil` parent.
+    /// Pass a default-initialized instance to use the first commit
+    /// encountered with a `nil` parent.
     public var oldestCommit         : GitOID
     
     /// The first line in the file to blame.
@@ -81,8 +80,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// The default value is `nil`.
     ///
-    /// If this is `nil` at runtime, libgit2 defaults to using last line of
-    /// the file.
+    /// Pass `nil` to use the last line of the file.
     public var maxLine              : Int?
     
     

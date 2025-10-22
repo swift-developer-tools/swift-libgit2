@@ -53,7 +53,7 @@ public struct GitPathspecFlagT: COptionSet
     ///
     /// ## Discussion
     ///
-    /// If this flag is not enabled, the native filesystem case match
+    /// If this flag is not enabled, the native file system case match
     /// sensitivity will be used.
     public static let gitPathspecIgnoreCase     = GitPathspecFlagT(rawValue: GIT_PATHSPEC_IGNORE_CASE.rawValue)
     
@@ -61,7 +61,7 @@ public struct GitPathspecFlagT: COptionSet
     ///
     /// ## Discussion
     ///
-    /// If this flag is not enabled, the native filesystem case match
+    /// If this flag is not enabled, the native file system case match
     /// sensitivity will be used.
     public static let gitPathspecUseCase        = GitPathspecFlagT(rawValue: GIT_PATHSPEC_USE_CASE.rawValue)
     

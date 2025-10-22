@@ -182,12 +182,12 @@ struct Repository
         
         
         
-        let repositoryIndexResult: Int32 = git_repository_index(
-            &indexPointer,
-            pointer
+        let reposIndexResult: GitErrorCode = gitRepositoryIndex(
+            out:    &indexPointer,
+            repo:   pointer
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+        XCTAssertOK(reposIndexResult)
         
         guard let indexPointer: OpaquePointer = indexPointer
         else
@@ -606,43 +606,68 @@ internal extension Repository
     
     
     /// Calls the given closure with a ``Repository`` instance.
-    /// - Parameter body: The closure to call.
+    /// - Parameters:
+    ///   - options: The repository initialization options to use.
+    ///   - isBare: Whether to initialize a bare repository.
+    ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
     static func withRepository<T>(
-        _ body: (Repository) throws -> T
+        options : GitRepositoryInitOptions?     = nil,
+        isBare  : Bool                          = false,
+        _ body  : (Repository) throws -> T
     ) throws -> T
     {
-        var repositoryPointer   : OpaquePointer?    = nil
-        let url                 : URL               = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
+        var repoPointer : OpaquePointer?    = nil
+        let url         : URL               = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
         
         defer
         {
-            Free.freeRepository(repositoryPointer)
+            gitRepositoryFree(repo: repoPointer)
             
             try? FileManager.default.removeItem(at: url)
         }
         
         
         
-        let repositoryInitResult: Int32 = git_repository_init(
-            &repositoryPointer,
-            url.path,
-            0
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: repositoryInitResult))
-        
-        guard let repositoryPointer: OpaquePointer = repositoryPointer
+        if let options: GitRepositoryInitOptions = options
+        {
+            let repoInitExtResult: GitErrorCode = gitRepositoryInitExt(
+                out:        &repoPointer,
+                repoPath:   url.path(),
+                opts:       options
+            )
+            
+            XCTAssertOK(repoInitExtResult)
+        }
         else
         {
-            throw NSError.makeError("Failed to initialize repository.")
+            let repoInitResult: GitErrorCode = gitRepositoryInit(
+                out:        &repoPointer,
+                path:       url.path(),
+                isBare:     isBare
+            )
+            
+            XCTAssertOK(repoInitResult)
+        }
+        
+        guard let repoPointer: OpaquePointer = repoPointer
+        else
+        {
+            throw NSError.makeError("The repository pointer was nil.")
         }
         
         let repository = Repository(
             url:        url,
-            pointer:    repositoryPointer
+            pointer:    repoPointer
         )
+        
+        
+        
+        if isBare
+        {
+            return try body(repository)
+        }
         
         
         
@@ -652,6 +677,7 @@ internal extension Repository
             message:    "Initial commit"
         )
         
+        try createBlameData(in: repository)
         
         
         
@@ -683,8 +709,6 @@ internal extension Repository
         
         
         
-        try createBlameData(in: repository)
-        
         return try body(repository)
     }
     
@@ -712,12 +736,12 @@ internal extension Repository
             
             
             
-            let repositoryIndexResult: Int32 = git_repository_index(
-                &indexPointer,
-                repository.pointer
+            let repoIndexResult: GitErrorCode = gitRepositoryIndex(
+                out:    &indexPointer,
+                repo:   repository.pointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryIndexResult))
+            XCTAssertOK(repoIndexResult)
             
             guard let indexPointer: OpaquePointer = indexPointer
             else

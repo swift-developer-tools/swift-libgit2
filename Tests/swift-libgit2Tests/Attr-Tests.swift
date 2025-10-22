@@ -435,7 +435,7 @@ final class AttrTests: XCTestCaseStopOnFail
                 cAttrOptions in
                 
                 XCTAssertEqual(cAttrOptions.pointee.version, gitAttrOptionsVersion)
-                XCTAssertEqual(cAttrOptions.pointee.flags, 0)
+                XCTAssertEqual(GitAttrCheckFlagsT(rawValue: cAttrOptions.pointee.flags), [])
                 XCTAssertNil(cAttrOptions.pointee.commit_id)
                 XCTAssertZeroOID(GitOID(cValue: cAttrOptions.pointee.attr_commit_id))
             }

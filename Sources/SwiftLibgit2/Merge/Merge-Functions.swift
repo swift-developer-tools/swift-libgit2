@@ -678,7 +678,6 @@ public func gitMergeCommits(
 
 
 
-// TODO: Replace `git_repository_state_cleanup()` in documentation.
 /// Merges the given commits into HEAD, and writes the results into the
 /// working directory.
 /// - Parameters:
@@ -699,7 +698,7 @@ public func gitMergeCommits(
 ///
 /// - Note: To maintain compatability with Git, the repository is put into
 /// a merging state. Once the commit is done, or the process is aborted, use
-/// `git_repository_state_cleanup()` to clear the merging state.
+/// ``gitRepositoryStateCleanup(repo:)`` to clear the merging state.
 ///
 /// ## C Equivalent
 ///

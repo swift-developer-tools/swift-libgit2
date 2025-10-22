@@ -12,7 +12,6 @@ import Foundation
 
 
 
-// TODO: Replace `git_repository_index()` in documentation.
 /// Creates a new bare index as an in-memory representation of the index at
 /// the given path.
 /// - Parameters:
@@ -27,8 +26,8 @@ import Foundation
 /// resulting index, any index APIs which rely on these will fail with
 /// the ``GitErrorCode/gitError`` result code.
 ///
-/// To access the index of an actual repository, use `git_repository_index()`
-/// instead.
+/// - Note: To access the index of an actual repository, use
+/// ``gitRepositoryIndex(out:repo:)`` instead.
 ///
 /// - Note: This function supports only SHA-1 indices.
 ///
@@ -684,9 +683,9 @@ public func gitIndexEntryIsConflict(
     {
         cEntry in
         
-        let indexEntryIsConflict: Int32 = git_index_entry_is_conflict(cEntry)
+        let isConflict: Int32 = git_index_entry_is_conflict(cEntry)
         
-        return Bool(indexEntryIsConflict)
+        return Bool(isConflict)
     }
 }
 
@@ -1278,9 +1277,9 @@ public func gitIndexHasConflicts(
     index: OpaquePointer
 ) -> Bool
 {
-    let indexHasConflicts: Int32 = git_index_has_conflicts(index)
+    let hasConflicts: Int32 = git_index_has_conflicts(index)
     
-    return Bool(indexHasConflicts)
+    return Bool(hasConflicts)
 }
 
 

@@ -65,8 +65,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If this is `nil` at runtime, libgit2 defaults to using the remote's
-    /// default branch.
+    /// Pass `nil` to use the remote's default branch.
     public var checkoutBranch       : String?
     
     /// The callback invoked to create a new repository.
@@ -75,8 +74,8 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If this is `nil` at runtime, libgit2 defaults to using ``bare``
-    /// property to determine whether to create a bare repository.
+    /// Pass `nil` to use the ``bare`` property to determine whether to
+    /// create a bare repository.
     public var repositoryCB         : GitRepositoryCreateCB?
     
     /// The payload passed to ``repositoryCB``.

@@ -74,7 +74,7 @@ public func gitPathspecFree(
 /// ## Discussion
 ///
 /// Unlike most other pathspec-matching functions, this function will not fall
-/// back on the native filesystem case sensitivity. If no flags are provided,
+/// back on the native file system case sensitivity. If no flags are provided,
 /// this function will perform a case-sensitive match.
 ///
 /// ## C Equivalent
@@ -86,13 +86,13 @@ public func gitPathspecMatchesPath(
     path    : String
 ) -> Bool
 {
-    let pathspecMatchesPath: Int32 = git_pathspec_matches_path(
+    let matchesPath: Int32 = git_pathspec_matches_path(
         ps,
         flags.rawValue,
         path
     )
     
-    return Bool(pathspecMatchesPath)
+    return Bool(matchesPath)
 }
 
 

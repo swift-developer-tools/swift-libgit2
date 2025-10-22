@@ -89,7 +89,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             XCTAssertNil(cApplyOptions.pointee.delta_cb)
             XCTAssertNil(cApplyOptions.pointee.hunk_cb)
             XCTAssertNil(cApplyOptions.pointee.payload)
-            XCTAssertEqual(cApplyOptions.pointee.flags, 0)
+            XCTAssertEqual(GitApplyFlagsT(rawValue: cApplyOptions.pointee.flags), [])
         }
     }
     

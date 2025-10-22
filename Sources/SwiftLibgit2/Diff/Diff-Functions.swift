@@ -527,9 +527,9 @@ public func gitDiffIsSortedICase(
     diff: OpaquePointer
 ) -> Bool
 {
-    let diffIsSortedICase: Int32 = git_diff_is_sorted_icase(diff)
+    let isSortedICase: Int32 = git_diff_is_sorted_icase(diff)
     
-    return Bool(diffIsSortedICase)
+    return Bool(isSortedICase)
 }
 
 

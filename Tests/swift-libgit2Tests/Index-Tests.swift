@@ -768,8 +768,8 @@ final class IndexTests: XCTestCaseStopOnFail
             XCTAssertEqual(cIndexEntry.pointee.gid, 0)
             XCTAssertEqual(cIndexEntry.pointee.file_size, 0)
             XCTAssertZeroOID(GitOID(cValue: cIndexEntry.pointee.id))
-            XCTAssertEqual(cIndexEntry.pointee.flags, 0)
-            XCTAssertEqual(cIndexEntry.pointee.flags_extended, 0)
+            XCTAssertEqual(GitIndexEntryFlagT(rawValue: UInt32(cIndexEntry.pointee.flags)), [])
+            XCTAssertEqual(GitIndexEntryExtendedFlagT(rawValue: UInt32(cIndexEntry.pointee.flags_extended)), [])
             XCTAssertEqual(String(optionalCString: cIndexEntry.pointee.path), "")
         }
     }

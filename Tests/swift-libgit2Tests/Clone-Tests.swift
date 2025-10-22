@@ -21,31 +21,31 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepositoryPointer : OpaquePointer?    = nil
-            let clonedRepositoryURL     : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            var clonedRepoPointer   : OpaquePointer?    = nil
+            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
             
             defer
             {
-                Free.freeRepository(clonedRepositoryPointer)
+                gitRepositoryFree(repo: clonedRepoPointer)
                 
-                try? FileManager.default.removeItem(at: clonedRepositoryURL)
+                try? FileManager.default.removeItem(at: clonedRepoURL)
             }
             
             
             
             let cloneResult: GitErrorCode = gitClone(
-                out:        &clonedRepositoryPointer,
+                out:        &clonedRepoPointer,
                 url:        repository.url.path,
-                localPath:  clonedRepositoryURL.path,
+                localPath:  clonedRepoURL.path,
                 options:    nil
             )
             
             XCTAssertOK(cloneResult)
-            XCTAssertNotNil(clonedRepositoryPointer)
+            XCTAssertNotNil(clonedRepoPointer)
             
             
             
-            let readmeFileURL: URL = clonedRepositoryURL.appending(
+            let readmeFileURL: URL = clonedRepoURL.appending(
                 path:           Repository.readmeFileName,
                 directoryHint:  .notDirectory
             )
@@ -148,14 +148,14 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepositoryPointer : OpaquePointer?    = nil
-            let clonedRepositoryURL     : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            var clonedRepoPointer   : OpaquePointer?    = nil
+            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
             
             defer
             {
-                Free.freeRepository(clonedRepositoryPointer)
+                gitRepositoryFree(repo: clonedRepoPointer)
                 
-                try? FileManager.default.removeItem(at: clonedRepositoryURL)
+                try? FileManager.default.removeItem(at: clonedRepoURL)
             }
             
             
@@ -227,14 +227,14 @@ final class CloneTests: XCTestCaseStopOnFail
                 
                 
                 let cloneResult: GitErrorCode = gitClone(
-                    out:        &clonedRepositoryPointer,
+                    out:        &clonedRepoPointer,
                     url:        repository.url.path,
-                    localPath:  clonedRepositoryURL.path,
+                    localPath:  clonedRepoURL.path,
                     options:    cloneOptions
                 )
                 
                 XCTAssertOK(cloneResult)
-                XCTAssertNotNil(clonedRepositoryPointer)
+                XCTAssertNotNil(clonedRepoPointer)
             }
             
             XCTAssertTrue(callbackData.isRepositoryCreated)
@@ -262,14 +262,14 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            var clonedRepositoryPointer : OpaquePointer?    = nil
-            let clonedRepositoryURL     : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            var clonedRepoPointer   : OpaquePointer?    = nil
+            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
             
             defer
             {
-                Free.freeRepository(clonedRepositoryPointer)
+                gitRepositoryFree(repo: clonedRepoPointer)
                 
-                try? FileManager.default.removeItem(at: clonedRepositoryURL)
+                try? FileManager.default.removeItem(at: clonedRepoURL)
             }
             
             
@@ -281,14 +281,20 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             let cloneResult: GitErrorCode = gitClone(
-                out:        &clonedRepositoryPointer,
+                out:        &clonedRepoPointer,
                 url:        repository.url.path,
-                localPath:  clonedRepositoryURL.path,
+                localPath:  clonedRepoURL.path,
                 options:    cloneOptions
             )
             
             XCTAssertOK(cloneResult)
-            XCTAssertNotNil(clonedRepositoryPointer)
+            
+            guard let clonedRepoPointer: OpaquePointer = clonedRepoPointer
+            else
+            {
+                XCTFail("The repository pointer was nil.")
+                return
+            }
             
             
             
@@ -301,12 +307,12 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            let repositoryHEADResult: Int32 = git_repository_head(
-                &headReferencePointer,
-                clonedRepositoryPointer
+            let repositoryHEADResult: GitErrorCode = gitRepositoryHEAD(
+                out:    &headReferencePointer,
+                repo:   clonedRepoPointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: repositoryHEADResult))
+            XCTAssertOK(repositoryHEADResult)
             
             guard let headReferencePointer: OpaquePointer
                     = headReferencePointer
@@ -338,14 +344,14 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepositoryPointer : OpaquePointer?    = nil
-            let clonedRepositoryURL     : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            var clonedRepoPointer   : OpaquePointer?    = nil
+            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
             
             defer
             {
-                Free.freeRepository(clonedRepositoryPointer)
+                gitRepositoryFree(repo: clonedRepoPointer)
                 
-                try? FileManager.default.removeItem(at: clonedRepositoryURL)
+                try? FileManager.default.removeItem(at: clonedRepoURL)
             }
             
             
@@ -357,14 +363,14 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             let cloneResult: GitErrorCode = gitClone(
-                out:        &clonedRepositoryPointer,
+                out:        &clonedRepoPointer,
                 url:        repository.url.path,
-                localPath:  clonedRepositoryURL.path,
+                localPath:  clonedRepoURL.path,
                 options:    cloneOptions
             )
             
             XCTAssertEqual(cloneResult, .gitEUser)
-            XCTAssertNil(clonedRepositoryPointer)
+            XCTAssertNil(clonedRepoPointer)
         }
     }
     
@@ -376,14 +382,14 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepositoryPointer : OpaquePointer?    = nil
-            let clonedRepositoryURL     : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            var clonedRepoPointer   : OpaquePointer?    = nil
+            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
             
             defer
             {
-                Free.freeRepository(clonedRepositoryPointer)
+                gitRepositoryFree(repo: clonedRepoPointer)
                 
-                try? FileManager.default.removeItem(at: clonedRepositoryURL)
+                try? FileManager.default.removeItem(at: clonedRepoURL)
             }
             
             
@@ -396,18 +402,18 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             let cloneResult: GitErrorCode = gitClone(
-                out:        &clonedRepositoryPointer,
+                out:        &clonedRepoPointer,
                 url:        repository.url.path,
-                localPath:  clonedRepositoryURL.path,
+                localPath:  clonedRepoURL.path,
                 options:    cloneOptions
             )
             
             XCTAssertOK(cloneResult)
-            XCTAssertNotNil(clonedRepositoryPointer)
+            XCTAssertNotNil(clonedRepoPointer)
             
             
             
-            let readmeFileURL: URL = clonedRepositoryURL.appending(
+            let readmeFileURL: URL = clonedRepoURL.appending(
                 path:           Repository.readmeFileName,
                 directoryHint:  .notDirectory
             )
@@ -420,7 +426,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            let objectsDirectoryURL: URL = clonedRepositoryURL.appending(
+            let objectsDirectoryURL: URL = clonedRepoURL.appending(
                 path:           "objects",
                 directoryHint:  .isDirectory
             )

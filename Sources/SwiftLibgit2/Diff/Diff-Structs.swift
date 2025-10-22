@@ -311,8 +311,8 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// This is used by functions that operate without a repository. If a
     /// repository is available, the ID format of the repository will be used.
-    /// Otherwise, if there is no repository available and this is `nil` at
-    /// runtime, libgit2 defaults to using ``GitOIDT/gitOIDSHA1``.
+    /// Otherwise, if there is no repository available and this is `nil`,
+    /// ``GitOIDT/gitOIDSHA1`` will be used.
     ///
     /// If this is specified and a repository is available, the specified type
     /// must match the repository's ID format.
@@ -324,9 +324,8 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If this is `nil` at runtime, libgit2 defaults to using the value of
-    /// `core.abbrev` from the configuration file, or `7` if that value is
-    /// unset.
+    /// Pass `nil` to use the value of `core.abbrev` from the configuration
+    /// file, or `7` if that value is unset.
     public var idAbbrev         : UInt16?
     
     /// The maximum size, in bytes, above which a blob will be automatically
@@ -1091,10 +1090,10 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If this is `nil` at runtime, libgit2 defaults to using a sampling hash
-    /// of ranges of data in the file. This is a reliable similarity
-    /// approximation that generally works well for both text and binary data,
-    /// while maintaining speed and a fixed memory overhead.
+    /// Pass `nil` to use a sampling hash of ranges of data in the file. This
+    /// is a reliable similarity approximation that generally works well for
+    /// both text and binary data, while maintaining speed and a fixed memory
+    /// overhead.
     ///
     /// - Important: If a custom metric is provided, the caller will be
     /// responsible for memory management.

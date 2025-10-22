@@ -388,7 +388,7 @@ final class DiffTests: XCTestCaseStopOnFail
             cDiffDelta in
             
             XCTAssertEqual(GitDeltaT(cValue: cDiffDelta.pointee.status), .gitDeltaUnmodified)
-            XCTAssertEqual(cDiffDelta.pointee.flags, 0)
+            XCTAssertEqual(GitDiffFlagT(rawValue: cDiffDelta.pointee.flags), [])
             XCTAssertEqual(cDiffDelta.pointee.similarity, 0)
             XCTAssertEqual(cDiffDelta.pointee.nfiles, 0)
             XCTAssertNotNil(cDiffDelta.pointee.old_file)
@@ -416,7 +416,7 @@ final class DiffTests: XCTestCaseStopOnFail
             XCTAssertZeroOID(GitOID(cValue: cDiffFile.pointee.id))
             XCTAssertNil(cDiffFile.pointee.path)
             XCTAssertEqual(cDiffFile.pointee.size, 0)
-            XCTAssertEqual(cDiffFile.pointee.flags, 0)
+            XCTAssertEqual(GitDiffFlagT(rawValue: cDiffFile.pointee.flags), [])
             XCTAssertEqual(GitFileModeT(rawValue: cDiffFile.pointee.mode), .gitFileModeUnreadable)
             XCTAssertEqual(cDiffFile.pointee.id_abbrev, 0)
         }
@@ -963,12 +963,12 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            let newRepositoryIndexResult: Int32 = git_repository_index(
-                &newIndexPointer,
-                repository.pointer
+            let newRepoIndexResult: GitErrorCode = gitRepositoryIndex(
+                out:    &newIndexPointer,
+                repo:   repository.pointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: newRepositoryIndexResult))
+            XCTAssertOK(newRepoIndexResult)
             
             guard let newIndexPointer: OpaquePointer = newIndexPointer
             else
