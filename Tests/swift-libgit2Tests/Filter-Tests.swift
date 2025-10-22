@@ -221,7 +221,7 @@ final class FilterTests: XCTestCaseStopOnFail
             cFilterOptions in
             
             XCTAssertEqual(cFilterOptions.pointee.version, gitAttrOptionsVersion)
-            XCTAssertEqual(cFilterOptions.pointee.flags, 0)
+            XCTAssertEqual(GitFilterFlagT(rawValue: cFilterOptions.pointee.flags), [])
             XCTAssertNil(cFilterOptions.pointee.commit_id)
             XCTAssertZeroOID(GitOID(cValue: cFilterOptions.pointee.attr_commit_id))
         }
