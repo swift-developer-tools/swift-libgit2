@@ -96,7 +96,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `0`.
     ///
-    /// If this is `0` at runtime, libgit2 defaults to using `0o755`.
+    /// Pass `0` to use `0o755`.
     public var dirMode          : UInt32
     
     /// The permission to use when creating files.
@@ -105,8 +105,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `0`.
     ///
-    /// If this is `0` at runtime, libgit2 defaults to using `0o644` or
-    /// `0o755`, as dictated by the blob.
+    /// Pass `0` to use `0o644` or `0o755`, as dictated by the blob.
     public var fileMode         : UInt32
     
     /// The flags controlling the file opening process.
@@ -115,8 +114,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `0`.
     ///
-    /// If this is `0` at runtime, libgit2 defaults to using
-    /// `O_CREAT | O_TRUNC | O_WRONLY`.
+    /// Pass `0` to use `O_CREAT | O_TRUNC | O_WRONLY`.
     public var fileOpenFlags    : Int32
     
     /// The flags controlling the behavior of checkout notifications.
@@ -160,9 +158,9 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is an empty array.
     ///
-    /// If this is empty at runtime, libgit2 defaults to processing all paths.
-    /// If an array of wildmatch patterns is provided, those patterns will be
-    /// used to determine which paths to take into account.
+    /// Pass an empty array to process all paths. If an array of wildmatch
+    /// patterns is provided, those patterns will be used to determine which
+    /// paths to take into account.
     ///
     /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
     /// this as a simple list.
@@ -175,7 +173,7 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     ///
     /// The default value is `nil`.
     ///
-    /// If this is `nil` at runtime, libgit2 defaults to using HEAD.
+    /// Pass `nil` to use HEAD.
     ///
     /// A checkout conflict will occur if the working directory does not match
     /// this baseline information.
