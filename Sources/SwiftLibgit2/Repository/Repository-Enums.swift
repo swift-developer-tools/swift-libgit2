@@ -191,7 +191,7 @@ public struct GitRepositoryInitFlagT: COptionSet
 
 
 
-/// Repository initialization modes.
+/// The repository initialization mode.
 ///
 /// ## C Equivalent
 ///

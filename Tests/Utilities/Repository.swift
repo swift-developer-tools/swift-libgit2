@@ -391,14 +391,13 @@ struct Repository
     
     
     
-    /// Resets to the given commit.
+    /// Resets the repository to the specified commit.
     /// - Parameters:
-    ///   - commitOID: The ID of the commit.
-    ///   - resetType: The type of reset to perform. The default value is
-    ///   `GIT_RESET_HARD`.
+    ///   - commitOID: The ID of the commit to use.
+    ///   - resetType: The type of reset to perform.
     func reset(
         to      commitOID   : GitOID,
-        type    resetType   : git_reset_t   = GIT_RESET_HARD
+        type    resetType   : GitResetT     = .gitResetHard
     )
     {
         var commitPointer: OpaquePointer? = nil
@@ -418,16 +417,23 @@ struct Repository
         
         XCTAssertOK(commitLookupResult)
         
+        guard let commitPointer: OpaquePointer = commitPointer
+        else
+        {
+            XCTFail("The commit pointer was nil.")
+            return
+        }
         
         
-        let resetResult: Int32 = git_reset(
-            pointer,
-            commitPointer,
-            resetType,
-            nil
+        
+        let resetResult: GitErrorCode = gitReset(
+            repo:           pointer,
+            target:         commitPointer,
+            resetType:      resetType,
+            checkoutOpts:   nil
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: resetResult))
+        XCTAssertOK(resetResult)
     }
     
     

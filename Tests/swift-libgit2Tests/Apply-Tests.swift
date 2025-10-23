@@ -382,19 +382,9 @@ private extension ApplyTests
             
             
             
-            try Commit.withHEADCommit(in: repository)
-            {
-                commitPointer in
-                
-                let resetResult: Int32 =  git_reset(
-                    repository.pointer,
-                    commitPointer,
-                    GIT_RESET_HARD,
-                    nil
-                )
-                
-                XCTAssertOK(GitErrorCode(rawValue: resetResult))
-            }
+            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            
+            repository.reset(to: headOID)
             
             
             
