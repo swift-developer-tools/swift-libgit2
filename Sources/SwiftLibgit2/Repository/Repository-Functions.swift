@@ -314,12 +314,12 @@ public func gitRepositoryInitOptionsInit(
 public func gitRepositoryInitExt(
     out         : UnsafeMutablePointer<OpaquePointer?>,
     repoPath    : String,
-    opts        : GitRepositoryInitOptions?
+    opts        : GitRepositoryInitOptions
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try opts.withOptionalCValue
+        return try opts.withCValue
         {
             cOpts in
             
