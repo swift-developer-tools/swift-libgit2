@@ -33,6 +33,8 @@ final class ResetTests: XCTestCaseStopOnFail
                 message:    "Second commit"
             )
             
+            
+            
             let headOIDBeforeReset: GitOID
                 = OID.getHEADCommitOID(in: repository)
             
@@ -40,42 +42,7 @@ final class ResetTests: XCTestCaseStopOnFail
             
             
             
-            
-            
-            var commitPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitCommitFree(commit: commitPointer)
-            }
-            
-            
-            
-            let commitLookupResult: GitErrorCode = gitCommitLookup(
-                commit:     &commitPointer,
-                repo:       repository.pointer,
-                id:         firstCommitOID
-            )
-            
-            XCTAssertOK(commitLookupResult)
-            
-            guard let commitPointer: OpaquePointer = commitPointer
-            else
-            {
-                XCTFail("The commit pointer was nil.")
-                return
-            }
-            
-            
-            
-            let resetResult: GitErrorCode = gitReset(
-                repo:           repository.pointer,
-                target:         commitPointer,
-                resetType:      .gitResetHard,
-                checkoutOpts:   nil
-            )
-            
-            XCTAssertOK(resetResult)
+            repository.reset(to: firstCommitOID)
             
             
             
