@@ -133,14 +133,60 @@ final class AttrTests: XCTestCaseStopOnFail
     
     func testGitAttrForEach() throws
     {
-        try testGitAttrForEachFlow(options: nil)
+        try Repository.withRepository
+        {
+            repository in
+            
+            var attributes: [String : String] = [:]
+            
+            withUnsafeMutablePointer(to: &attributes)
+            {
+                attributesPointer in
+                
+                let attrForEachResult: GitErrorCode = gitAttrForEach(
+                    repo:       repository.pointer,
+                    flags:      .gitAttrCheckFileThenIndex,
+                    path:       "test.txt",
+                    callback:   Self.attrForEachCB,
+                    payload:    UnsafeMutableRawPointer(attributesPointer)
+                )
+                
+                XCTAssertOK(attrForEachResult)
+            }
+            
+            XCTAssertGreaterThan(attributes.keys.count, 0)
+            XCTAssertTrue(attributes.keys.contains("text"))
+        }
     }
     
     
     
     func testGitAttrForEachExt() throws
     {
-        try testGitAttrForEachFlow(options: GitAttrOptions())
+        try Repository.withRepository
+        {
+            repository in
+            
+            var attributes: [String : String] = [:]
+            
+            withUnsafeMutablePointer(to: &attributes)
+            {
+                attributesPointer in
+                
+                let attrForEachExtResult: GitErrorCode = gitAttrForEachExt(
+                    repo:       repository.pointer,
+                    opts:       nil,
+                    path:       "test.txt",
+                    callback:   Self.attrForEachCB,
+                    payload:    UnsafeMutableRawPointer(attributesPointer)
+                )
+                
+                XCTAssertOK(attrForEachExtResult)
+            }
+            
+            XCTAssertGreaterThan(attributes.keys.count, 0)
+            XCTAssertTrue(attributes.keys.contains("text"))
+        }
     }
     
     
@@ -156,7 +202,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attrGetExtResult: GitErrorCode = gitAttrGetExt(
                 valueOut:   &valueOut,
                 repo:       repository.pointer,
-                opts:       GitAttrOptions(),
+                opts:       nil,
                 path:       "data.bin",
                 name:       "binary"
             )
@@ -258,7 +304,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attrGetManyExtResult: GitErrorCode = gitAttrGetManyExt(
                 valueOut:   valueOut,
                 repo:       repository.pointer,
-                opts:       GitAttrOptions(),
+                opts:       nil,
                 path:       "file.special",
                 numAttr:    attributeCount,
                 names:      attributeNames
@@ -490,76 +536,25 @@ final class AttrTests: XCTestCaseStopOnFail
 
 private extension AttrTests
 {
-    /// Tests looping over all the attributes in the given path, with or
-    /// without extended options.
-    /// - Parameter options: The options to use when querying the attributes.
-    /// - Throws: An error if an operation fails.
-    func testGitAttrForEachFlow(
-        options: GitAttrOptions?
-    ) throws
+    static let attrForEachCB: GitAttrForEachCB =
     {
-        try Repository.withRepository
+        cName, cValue, cPayload in
+        
+        guard
+            let name        : String                    = String(optionalCString: cName),
+            let value       : String                    = String(optionalCString: cValue),
+            let cPayload    : UnsafeMutableRawPointer   = cPayload
+        else
         {
-            repository in
-            
-            var attributes: [String : String] = [:]
-            
-            let callback: GitAttrForEachCB =
-            {
-                cName, cValue, cPayload in
-                
-                guard
-                    let name        : String                    = String(optionalCString: cName),
-                    let value       : String                    = String(optionalCString: cValue),
-                    let cPayload    : UnsafeMutableRawPointer   = cPayload
-                else
-                {
-                    XCTFail("The payload was nil.")
-                    return GitErrorCode.gitUnknown(-123).rawValue
-                }
-                
-                let payloadPointer: UnsafeMutablePointer<[String : String]>
-                    = cPayload.assumingMemoryBound(to: [String : String].self)
-                
-                payloadPointer.pointee[name] = value
-                
-                return GitErrorCode.gitOK.rawValue
-            }
-            
-            
-            
-            withUnsafeMutablePointer(to: &attributes)
-            {
-                attributesPointer in
-                
-                if let options: GitAttrOptions = options
-                {
-                    let attrForEachExtResult: GitErrorCode = gitAttrForEachExt(
-                        repo:       repository.pointer,
-                        opts:       options,
-                        path:       "test.txt",
-                        callback:   callback,
-                        payload:    UnsafeMutableRawPointer(attributesPointer)
-                    )
-                    
-                    XCTAssertOK(attrForEachExtResult)
-                }
-                else
-                {
-                    let attrForEachResult: GitErrorCode = gitAttrForEach(
-                        repo:       repository.pointer,
-                        flags:      .gitAttrCheckFileThenIndex,
-                        path:       "test.txt",
-                        callback:   callback,
-                        payload:    UnsafeMutableRawPointer(attributesPointer)
-                    )
-                    
-                    XCTAssertOK(attrForEachResult)
-                }
-            }
-            
-            XCTAssertGreaterThan(attributes.keys.count, 0)
-            XCTAssertTrue(attributes.keys.contains("text"))
+            XCTFail("The payload was nil.")
+            return GitErrorCode.gitUnknown(-123).rawValue
         }
+        
+        let payloadPointer: UnsafeMutablePointer<[String : String]>
+            = cPayload.assumingMemoryBound(to: [String : String].self)
+        
+        payloadPointer.pointee[name] = value
+        
+        return GitErrorCode.gitOK.rawValue
     }
 }
