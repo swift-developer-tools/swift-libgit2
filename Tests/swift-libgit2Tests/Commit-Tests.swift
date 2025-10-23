@@ -15,10 +15,9 @@ import XCTest
 
 final class CommitTests: XCTestCaseStopOnFail
 {
-    func testGitCommitAmendAndDup() throws
+    func testGitCommitAmend() throws
     {
-        try amendOrDuplicateCommit(type: .amend)
-        try amendOrDuplicateCommit(type: .duplicate)
+        try amendOrDuplicateCommit(.amend)
     }
     
     
@@ -385,6 +384,13 @@ final class CommitTests: XCTestCaseStopOnFail
     func testGitCommitCreateOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitCommitCreateOptionsVersion), GIT_COMMIT_CREATE_OPTIONS_VERSION)
+    }
+    
+    
+    
+    func testGitCommitDup() throws
+    {
+        try amendOrDuplicateCommit(.duplicate)
     }
     
     
@@ -797,7 +803,7 @@ private extension CommitTests
     /// - Parameter type: Whether to amend or duplicate a commit.
     /// - Throws: An error if an operation fails.
     func amendOrDuplicateCommit(
-        type: AmendOrDuplicate
+        _ type: AmendOrDuplicate
     ) throws
     {
         try Repository.withRepository

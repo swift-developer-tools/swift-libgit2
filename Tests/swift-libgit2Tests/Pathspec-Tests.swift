@@ -500,6 +500,8 @@ final class PathspecTests: XCTestCaseStopOnFail
 
 
 
+// MARK: - Extensions
+
 private extension PathspecTests
 {
     /// Calls the given closure with a pointer to a pathspec.

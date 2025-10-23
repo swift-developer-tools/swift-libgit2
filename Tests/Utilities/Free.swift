@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_revwalk` instance.
-    /// - Parameter revwalk: The revwalk to free. The underlying type must
-    /// be `git_revwalk`.
-    static func freeRevwalk(
-        _ revwalk: OpaquePointer?
-    )
-    {
-        guard let revwalk: OpaquePointer = revwalk
-        else
-        {
-            return
-        }
-        
-        git_revwalk_free(revwalk)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_transaction` instance.
     /// - Parameter transaction: The transaction to free. The underlying type
     /// must be `git_transaction`.
