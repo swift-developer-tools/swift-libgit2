@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options for the clone operation.
+/// The options for clone operations.
 ///
 /// ## C Equivalent
 ///
@@ -26,7 +26,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// The default value is ``gitCloneOptionsVersion``.
     public var version              : UInt32
     
-    /// The options for the checkout operation.
+    /// The checkout options.
     ///
     /// ## Discussion
     ///
@@ -34,7 +34,7 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// instance.
     public var checkoutOpts         : GitCheckoutOptions
     
-    /// The options for the fetch operation, including callbacks.
+    /// The fetch options.
     ///
     /// ## Discussion
     ///

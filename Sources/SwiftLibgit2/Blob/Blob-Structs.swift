@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options for the blob filtering operation.
+/// The options for blob filtering.
 ///
 /// ## C Equivalent
 ///

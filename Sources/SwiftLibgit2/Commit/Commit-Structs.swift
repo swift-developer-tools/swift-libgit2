@@ -12,7 +12,7 @@ import CLibgit2
 
 
 /// The options for commit creation.
-/// 
+///
 /// ## C Equivalent
 /// 
 /// [`git_commit_create_options`](https://libgit2.org/docs/reference/main/commit/git_commit_create_options.html)

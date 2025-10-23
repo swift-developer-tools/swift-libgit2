@@ -61,7 +61,7 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     /// no notes will be rewritten.
     public var rewriteNotesRef  : String?
     
-    /// The options for the merge operation.
+    /// The merge options.
     ///
     /// ## Discussion
     ///
@@ -69,7 +69,7 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     /// instance.
     public var mergeOptions     : GitMergeOptions
     
-    /// The options for the checkout operation.
+    /// The checkout options.
     ///
     /// ## Discussion
     ///

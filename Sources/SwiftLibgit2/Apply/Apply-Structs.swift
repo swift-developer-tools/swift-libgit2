@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options for the apply operation.
+/// The options for apply operations.
 ///
 /// ## C Equivalent
 ///
