@@ -205,17 +205,17 @@ final class PackTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeRevwalk(revwalkPointer)
+                gitRevwalkFree(walk: revwalkPointer)
             }
             
             
             
-            let revwalkNewResult: Int32 = git_revwalk_new(
-                &revwalkPointer,
-                repository.pointer
+            let revwalkNewResult: GitErrorCode = gitRevwalkNew(
+                out:    &revwalkPointer,
+                repo:   repository.pointer
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: revwalkNewResult))
+            XCTAssertOK(revwalkNewResult)
             
             guard let revwalkPointer: OpaquePointer = revwalkPointer
             else
@@ -226,10 +226,10 @@ final class PackTests: XCTestCaseStopOnFail
             
             
             
-            let revwalkPushHEADResult: Int32
-                = git_revwalk_push_head(revwalkPointer)
+            let revwalkPushHEADResult: GitErrorCode
+                = gitRevwalkPushHEAD(walk: revwalkPointer)
             
-            XCTAssertOK(GitErrorCode(rawValue: revwalkPushHEADResult))
+            XCTAssertOK(revwalkPushHEADResult)
             
             
             
