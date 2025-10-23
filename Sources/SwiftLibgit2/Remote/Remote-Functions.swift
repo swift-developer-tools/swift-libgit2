@@ -75,7 +75,7 @@ public func gitRemoteCreateOptionsInit(
 ///   - out: The pointer in which to store the remote. The underlying type
 ///   must be `git_remote`.
 ///   - url: The remote URL to use.
-///   - opts: The options for remote creation. Pass `nil` to create a detached
+///   - opts: The remote creation options. Pass `nil` to create a detached
 ///   remote.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

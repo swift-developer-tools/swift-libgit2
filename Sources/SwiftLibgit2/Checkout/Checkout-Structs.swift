@@ -62,7 +62,7 @@ public struct GitCheckoutPerfData: CStructReadable, CConvertible, Sendable
 
 
 
-/// The options for the checkout operation.
+/// The options for checkout operations.
 ///
 /// ## C Equivalent
 ///

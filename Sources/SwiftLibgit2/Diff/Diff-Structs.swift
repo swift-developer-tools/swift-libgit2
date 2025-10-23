@@ -229,7 +229,7 @@ public struct GitDiffDelta: CStructReadable, WithCConvertible, Sendable
 
 
 
-/// The options for the diff operation.
+/// The options for diff operations.
 ///
 /// ## C Equivalent
 ///

@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options for the blame operation.
+/// The options for blame operations.
 ///
 /// ## C Equivalent
 ///

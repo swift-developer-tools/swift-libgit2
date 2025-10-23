@@ -135,7 +135,7 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
 
 
 
-/// The options for the merge operation.
+/// The options for file merge operations.
 ///
 /// ## C Equivalent
 ///
@@ -415,7 +415,7 @@ public struct GitMergeFileResult: CStructInternalMutable, WithCConvertible, CFre
 
 
 
-/// The options for the merge operation.
+/// The options for merge operations.
 ///
 /// ## C Equivalent
 ///

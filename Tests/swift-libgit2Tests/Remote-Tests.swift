@@ -874,12 +874,13 @@ final class RemoteTests: XCTestCaseStopOnFail
             remoteCreateOptions.fetchspec   = Repository.fetchRefspec
             
             
+            
             let remoteCreateWithOptsResult: GitErrorCode
-            = gitRemoteCreateWithOpts(
-                out:    &remotePointer,
-                url:    Self.remoteURL,
-                opts:   remoteCreateOptions
-            )
+                = gitRemoteCreateWithOpts(
+                    out:    &remotePointer,
+                    url:    Self.remoteURL,
+                    opts:   remoteCreateOptions
+                )
             
             XCTAssertOK(remoteCreateWithOptsResult)
             

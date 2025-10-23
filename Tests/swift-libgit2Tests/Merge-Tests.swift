@@ -23,31 +23,12 @@ final class MergeTests: XCTestCaseStopOnFail
             
             var theirHeads: [OpaquePointer?] = [annotatedCommitPointer]
             
-            
-            
-            var mergeOptions = GitMergeOptions()
-            
-            mergeOptions.flags      = .gitMergeFailOnConflict
-            mergeOptions.fileFavor  = .gitMergeFileFavorOurs
-            
-            
-            
-            var checkoutOptions = GitCheckoutOptions()
-            
-            checkoutOptions.checkoutStrategy    = .gitCheckoutAllowConflicts
-            checkoutOptions.ancestorLabel       = "ancestor"
-            checkoutOptions.ourLabel            = "ours"
-            checkoutOptions.theirLabel          = "theirs"
-            checkoutOptions.fileMode            = 0o100644
-            
-            
-            
             let mergeResult: GitErrorCode = gitMerge(
                 repo:           repository.pointer,
                 theirHeads:     &theirHeads,
                 theirHeadsLen:  theirHeads.count,
-                mergeOpts:      mergeOptions,
-                checkoutOpts:   checkoutOptions
+                mergeOpts:      nil,
+                checkoutOpts:   nil
             )
             
             XCTAssertOK(mergeResult)

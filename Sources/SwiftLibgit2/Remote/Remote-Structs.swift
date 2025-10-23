@@ -579,7 +579,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     /// ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsAuto``.
     public var downloadTags     : GitRemoteAutoTagOptionT
     
-    /// The options for connecting through a proxy.
+    /// The proxy options.
     ///
     /// ## Discussion
     ///
@@ -754,7 +754,7 @@ public struct GitPushOptions: CStructMutable, WithCConvertible
     /// instance.
     public var callbacks            : GitRemoteCallbacks
     
-    /// The options for connecting through a proxy.
+    /// The proxy options.
     ///
     /// ## Discussion
     ///
@@ -902,7 +902,7 @@ public struct GitRemoteConnectOptions: CStructMutable, WithCConvertible
     /// instance.
     public var callbacks            : GitRemoteCallbacks
     
-    /// The options for connecting through a proxy.
+    /// The proxy options.
     ///
     /// ## Discussion
     ///

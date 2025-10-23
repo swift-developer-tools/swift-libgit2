@@ -12,7 +12,7 @@ import Foundation
 
 
 
-/// The options for the revert operation.
+/// The options for revert operations.
 ///
 /// ## C Equivalent
 ///
@@ -33,7 +33,7 @@ public struct GitRevertOptions: CStructMutable, WithCConvertible
     /// The default value is `0`.
     public var mainline     : UInt32
     
-    /// The options for the merge operation.
+    /// The merge options.
     ///
     /// ## Discussion
     ///
@@ -41,7 +41,7 @@ public struct GitRevertOptions: CStructMutable, WithCConvertible
     /// instance.
     public var mergeOpts    : GitMergeOptions
     
-    /// The options for the checkout operation.
+    /// The checkout options.
     ///
     /// ## Discussion
     ///

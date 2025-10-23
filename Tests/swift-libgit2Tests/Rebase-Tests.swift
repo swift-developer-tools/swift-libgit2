@@ -251,6 +251,34 @@ final class RebaseTests: XCTestCaseStopOnFail
     
     
     
+    func testGitRebaseOpen() throws
+    {
+        try withPreparedRebase
+        {
+            repository, _ in
+            
+            var rebasePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitRebaseFree(rebase: rebasePointer)
+            }
+            
+            
+            
+            let rebaseOpenResult: GitErrorCode = gitRebaseOpen(
+                out:    &rebasePointer,
+                repo:   repository.pointer,
+                opts:   nil
+            )
+            
+            XCTAssertOK(rebaseOpenResult)
+            XCTAssertNotNil(rebasePointer)
+        }
+    }
+    
+    
+    
     func testGitRebaseOperation() throws
     {
         let rebaseOperation = GitRebaseOperation()
