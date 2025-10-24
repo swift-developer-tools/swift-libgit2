@@ -829,9 +829,8 @@ public func gitReferenceCmp(
         ref2
     )
     
-    /// The `Bool` initializer follows the C convention that `0` is `false`,
-    /// which is applicable throughout most of libgit2. This function returns
-    /// `0` if the IDs match, since it uses `memcmp()` in its implementation.
+    /// The `Bool` initializer treats `0` as `false`. This function
+    /// uses `memcmp()`, which returns `0` when memory blocks match.
     return !Bool(equal)
 }
 
