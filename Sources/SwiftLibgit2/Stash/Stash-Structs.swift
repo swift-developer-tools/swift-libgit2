@@ -79,14 +79,6 @@ public struct GitStashSaveOptions: CStructMutable, WithCConvertible, Sendable
     /// `git_stash_save_options` instance.
     /// - Parameter stashSaveOptions: The `git_stash_save_options` instance
     /// to use.
-    ///
-    /// ## Discussion
-    ///
-    /// - Warning: This initializer must not be called with a
-    /// `git_stash_save_options` instance that was not created by libgit2,
-    /// unless the signature fields have been set to non-`nil` values. Doing
-    /// so will cause a crash when ``GitSignature.init(cValue:)`` tries to
-    /// unwrap the `nil` signature fields.
     internal init(
         cValue stashSaveOptions: git_stash_save_options
     )

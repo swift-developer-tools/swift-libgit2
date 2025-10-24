@@ -7,9 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// A sendable type that can be converted to and from an associated fixed-size
-/// integer raw value.
-internal protocol CEnum: CConvertible, CMutable, RawRepresentable, Sendable
+/// A type that can be converted to and from a fixed-size integer raw value.
+internal protocol CEnum: CConvertible, CMutable, RawValueMutable
     where RawValue: FixedWidthInteger
 {
     /// Creates an instance from the equivalent C value.

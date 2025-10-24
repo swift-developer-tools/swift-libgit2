@@ -22,6 +22,10 @@ internal func isSuccess<T>(
     {
         return errorCode == .gitOK
     }
+    else if let errorCode = result as? Int32
+    {
+        return GitErrorCode(rawValue: errorCode) == .gitOK
+    }
     
     return defaultSuccess
 }

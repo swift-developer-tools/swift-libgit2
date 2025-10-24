@@ -177,22 +177,16 @@ public func gitBranchNext(
 {
     return withCConversion
     {
-        var cOutType: git_branch_t = outType.cValue()
-        
-        let branchNextResult: Int32 = git_branch_next(
-            out,
-            &cOutType,
-            iter
-        )
-        
-        if
-            branchNextResult == GitErrorCode.gitOK.rawValue,
-            let swiftOutType = GitBranchT(cValue: cOutType)
+        return outType.withMutatingCValue
         {
-            outType = swiftOutType
+            cOutType in
+            
+            return git_branch_next(
+                out,
+                cOutType,
+                iter
+            )
         }
-        
-        return branchNextResult
     }
 }
 

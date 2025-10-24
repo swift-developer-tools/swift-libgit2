@@ -471,18 +471,16 @@ private extension ApplyTests
             
             if checkIndex
             {
-                var statusFlags: UInt32 = 0
+                var status = GitStatusT()
                 
-                let statusFileResult: Int32 = git_status_file(
-                    &statusFlags,
-                    repository.pointer,
-                    Repository.readmeFileName
+                let statusFileResult: GitErrorCode = gitStatusFile(
+                    statusFlags:    &status,
+                    repo:           repository.pointer,
+                    path:           Repository.readmeFileName
                 )
                 
-                XCTAssertOK(GitErrorCode(rawValue: statusFileResult))
-                
-                /// The file should have staged changes in the index.
-                XCTAssertTrue((statusFlags & GIT_STATUS_INDEX_MODIFIED.rawValue) != 0)
+                XCTAssertOK(statusFileResult)
+                XCTAssertTrue(status.contains(.gitStatusIndexModified))
             }
         }
     }

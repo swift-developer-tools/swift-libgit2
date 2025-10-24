@@ -96,7 +96,8 @@ internal extension CMutable where Self: CConvertible
             
             if
                 isSuccess(result),
-                let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer,
+                let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer,
                 let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
                 self = mutated
@@ -204,7 +205,8 @@ internal extension CMutable where Self: ThrowingCConvertible
             
             if
                 isSuccess(result),
-                let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer,
+                let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer,
                 let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
                 self = mutated
@@ -308,7 +310,8 @@ internal extension CMutable where Self: WithCConvertible
             
             if
                 isSuccess(result),
-                let finalCValuePointer: UnsafeMutablePointer<C> = optionalCValuePointer,
+                let finalCValuePointer: UnsafeMutablePointer<C>
+                    = optionalCValuePointer,
                 let mutated = Self.init(cValue: finalCValuePointer.pointee)
             {
                 self = mutated
