@@ -7,8 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-/// A sendable type that presents a mathematical set interface to a bitset.
-internal protocol COptionSet: CConvertible, CStruct, OptionSet, Sendable
+/// A type that presents a mathematical set interface to a bitset.
+internal protocol COptionSet: CConvertible, CStruct, RawValueMutable, OptionSet
     where RawValue == UInt32
 {
     /// Creates an instance from a raw value.
