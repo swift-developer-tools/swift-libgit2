@@ -175,25 +175,13 @@ public struct GitStatusEntry: CStructReadable, WithCConvertible, Sendable
     {
         self.status = GitStatusT(cValue: statusEntry.status)
         
-        if statusEntry.head_to_index != nil
-        {
-            self.headToIndex
-                = GitDiffDelta(cValue: statusEntry.head_to_index.pointee)
-        }
-        else
-        {
-            self.headToIndex = nil
-        }
+        self.headToIndex = statusEntry.head_to_index != nil
+            ? GitDiffDelta(cValue: statusEntry.head_to_index.pointee)
+            : nil
         
-        if statusEntry.index_to_workdir != nil
-        {
-            self.indexToWorkdir
-                = GitDiffDelta(cValue: statusEntry.index_to_workdir.pointee)
-        }
-        else
-        {
-            self.indexToWorkdir = nil
-        }
+        self.indexToWorkdir = statusEntry.index_to_workdir != nil
+            ? GitDiffDelta(cValue: statusEntry.index_to_workdir.pointee)
+            : nil
     }
     
     
