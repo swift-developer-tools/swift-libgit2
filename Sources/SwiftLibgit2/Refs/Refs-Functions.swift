@@ -824,14 +824,14 @@ public func gitReferenceCmp(
     ref2    : OpaquePointer
 ) -> Bool
 {
-    let equal: Int32 = git_reference_cmp(
+    let isEqual: Int32 = git_reference_cmp(
         ref1,
         ref2
     )
     
     /// The `Bool` initializer treats `0` as `false`. This function
     /// uses `memcmp()`, which returns `0` when memory blocks match.
-    return !Bool(equal)
+    return !Bool(isEqual)
 }
 
 
