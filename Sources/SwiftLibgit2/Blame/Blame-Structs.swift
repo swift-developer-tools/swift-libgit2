@@ -248,14 +248,6 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible, Sendable
     /// Initializes a ``GitBlameHunk`` instance from the given `git_blame_hunk`
     /// instance.
     /// - Parameter blameHunk: The `git_blame_hunk` instance to use.
-    ///
-    /// ## Discussion
-    ///
-    /// - Warning: This initializer must not be called with a `git_blame_hunk`
-    /// instance that was not created by libgit2, unless the signature fields
-    /// have been set to non-`nil` values. Doing so will cause a crash when
-    /// ``GitSignature.init(cValue:)`` tries to unwrap the `nil` signature
-    /// fields.
     internal init(
         cValue blameHunk: git_blame_hunk
     )
@@ -263,15 +255,27 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible, Sendable
         self.linesInHunk            = blameHunk.lines_in_hunk
         self.finalCommitID          = GitOID(cValue: blameHunk.final_commit_id)
         self.finalStartLineNumber   = blameHunk.final_start_line_number
-        self.finalSignature         = GitSignature(cValue: blameHunk.final_signature.pointee)
-        self.finalCommitter         = GitSignature(cValue: blameHunk.final_committer.pointee)
         self.origCommitID           = GitOID(cValue: blameHunk.orig_commit_id)
         self.origPath               = String(optionalCString: blameHunk.orig_path)
         self.origStartLineNumber    = blameHunk.orig_start_line_number
-        self.origSignature          = GitSignature(cValue: blameHunk.orig_signature.pointee)
-        self.origCommitter          = GitSignature(cValue: blameHunk.orig_committer.pointee)
         self.summary                = String(optionalCString: blameHunk.summary)
         self.boundary               = Bool(blameHunk.boundary)
+        
+        self.finalSignature = blameHunk.final_signature != nil
+            ? GitSignature(cValue: blameHunk.final_signature.pointee)
+            : nil
+        
+        self.finalCommitter = blameHunk.final_committer != nil
+            ? GitSignature(cValue: blameHunk.final_committer.pointee)
+            : nil
+        
+        self.origSignature = blameHunk.orig_signature != nil
+            ? GitSignature(cValue: blameHunk.orig_signature.pointee)
+            : nil
+        
+        self.origCommitter = blameHunk.orig_committer != nil
+            ? GitSignature(cValue: blameHunk.orig_committer.pointee)
+            : nil
     }
     
     

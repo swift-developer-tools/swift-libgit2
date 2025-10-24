@@ -302,54 +302,37 @@ final class BlameTests: XCTestCaseStopOnFail
     
     func testGitBlameHunk() throws
     {
-        try Repository.withRepository
+        let blameHunk = GitBlameHunk(cValue: git_blame_hunk())
+        
+        XCTAssertEqual(blameHunk.linesInHunk, 0)
+        XCTAssertZeroOID(blameHunk.finalCommitID)
+        XCTAssertEqual(blameHunk.finalStartLineNumber, 0)
+        XCTAssertNil(blameHunk.finalSignature)
+        XCTAssertNil(blameHunk.finalCommitter)
+        XCTAssertZeroOID(blameHunk.origCommitID)
+        XCTAssertNil(blameHunk.origPath)
+        XCTAssertEqual(blameHunk.origStartLineNumber, 0)
+        XCTAssertNil(blameHunk.origSignature)
+        XCTAssertNil(blameHunk.origCommitter)
+        XCTAssertNil(blameHunk.summary)
+        XCTAssertFalse(blameHunk.boundary)
+        
+        try blameHunk.withCValue
         {
-            repository in
+            cBlameHunk in
             
-            try repository.signature.withCValue
-            {
-                cSignature in
-                
-                var baseBlameHunk = git_blame_hunk()
-                
-                baseBlameHunk.final_signature   = cSignature
-                baseBlameHunk.final_committer   = cSignature
-                baseBlameHunk.orig_signature    = cSignature
-                baseBlameHunk.orig_committer    = cSignature
-                
-                let blameHunk = GitBlameHunk(cValue: baseBlameHunk)
-                
-                XCTAssertEqual(blameHunk.linesInHunk, 0)
-                XCTAssertZeroOID(blameHunk.finalCommitID)
-                XCTAssertEqual(blameHunk.finalStartLineNumber, 0)
-                XCTAssertNotNil(blameHunk.finalSignature)
-                XCTAssertNotNil(blameHunk.finalCommitter)
-                XCTAssertZeroOID(blameHunk.origCommitID)
-                XCTAssertNil(blameHunk.origPath)
-                XCTAssertEqual(blameHunk.origStartLineNumber, 0)
-                XCTAssertNotNil(blameHunk.origSignature)
-                XCTAssertNotNil(blameHunk.origCommitter)
-                XCTAssertNil(blameHunk.summary)
-                XCTAssertFalse(blameHunk.boundary)
-                
-                try blameHunk.withCValue
-                {
-                    cBlameHunk in
-                    
-                    XCTAssertEqual(cBlameHunk.pointee.lines_in_hunk, 0)
-                    XCTAssertZeroOID(GitOID(cValue: cBlameHunk.pointee.final_commit_id))
-                    XCTAssertEqual(cBlameHunk.pointee.final_start_line_number, 0)
-                    XCTAssertNotNil(cBlameHunk.pointee.final_signature)
-                    XCTAssertNotNil(cBlameHunk.pointee.final_committer)
-                    XCTAssertZeroOID(GitOID(cValue: cBlameHunk.pointee.orig_commit_id))
-                    XCTAssertNil(cBlameHunk.pointee.orig_path)
-                    XCTAssertEqual(cBlameHunk.pointee.orig_start_line_number, 0)
-                    XCTAssertNotNil(cBlameHunk.pointee.orig_signature)
-                    XCTAssertNotNil(cBlameHunk.pointee.orig_committer)
-                    XCTAssertNil(cBlameHunk.pointee.summary)
-                    XCTAssertFalse(Bool(cBlameHunk.pointee.boundary))
-                }
-            }
+            XCTAssertEqual(cBlameHunk.pointee.lines_in_hunk, 0)
+            XCTAssertZeroOID(GitOID(cValue: cBlameHunk.pointee.final_commit_id))
+            XCTAssertEqual(cBlameHunk.pointee.final_start_line_number, 0)
+            XCTAssertNil(cBlameHunk.pointee.final_signature)
+            XCTAssertNil(cBlameHunk.pointee.final_committer)
+            XCTAssertZeroOID(GitOID(cValue: cBlameHunk.pointee.orig_commit_id))
+            XCTAssertNil(cBlameHunk.pointee.orig_path)
+            XCTAssertEqual(cBlameHunk.pointee.orig_start_line_number, 0)
+            XCTAssertNil(cBlameHunk.pointee.orig_signature)
+            XCTAssertNil(cBlameHunk.pointee.orig_committer)
+            XCTAssertNil(cBlameHunk.pointee.summary)
+            XCTAssertFalse(Bool(cBlameHunk.pointee.boundary))
         }
     }
     
