@@ -37,7 +37,7 @@ final class TagTests: XCTestCaseStopOnFail
     
     func testGitTagCreateFromBuffer() throws
     {
-        try Repository.withRepository
+        let tagContent: String = try Repository.withRepository
         {
             repository in
             
@@ -46,14 +46,12 @@ final class TagTests: XCTestCaseStopOnFail
             guard let headOIDString: String = gitOIDToStrS(oid: headOID)
             else
             {
-                XCTFail("The HEAD OID string was nil.")
-                return
+                throw NSError.makeError("The HEAD OID string was nil.")
             }
             
             
             
-            let tagData: String =
-            """
+            return """
             object \(headOIDString)
             type commit
             tag \(Self.tagName)
@@ -61,24 +59,11 @@ final class TagTests: XCTestCaseStopOnFail
             
             \(Self.tagMessage)
             """
-            
-            try Commit.withHEADCommit(in: repository)
-            {
-                commitPointer in
-                
-                var tagOID = GitOID()
-                
-                let tagCreateFromBufferResult: GitErrorCode
-                = gitTagCreateFromBuffer(
-                    oid:        &tagOID,
-                    repo:       repository.pointer,
-                    buffer:     tagData,
-                    force:      true
-                )
-                
-                XCTAssertOK(tagCreateFromBufferResult)
-                XCTAssertNotZeroOID(tagOID)
-            }
+        }
+        
+        try withTag(type: .buffer(content: tagContent))
+        {
+            _, _ in
         }
     }
     
@@ -90,24 +75,13 @@ final class TagTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Commit.withHEADCommit(in: repository)
-            {
-                commitPointer in
-                
-                var tagOID = GitOID()
-                
-                let tagCreateLightweightResult: GitErrorCode
-                    = gitTagCreateLightweight(
-                        oid:        &tagOID,
-                        repo:       repository.pointer,
-                        tagName:    Self.tagName,
-                        target:     commitPointer,
-                        force:      true
-                    )
-                
-                XCTAssertOK(tagCreateLightweightResult)
-                XCTAssertNotZeroOID(tagOID)
-            }
+            try Tag.createTag(
+                type:       .lightweight,
+                named:      Self.tagName,
+                in:         repository,
+                message:    Self.tagMessage,
+                force:      true
+            )
         }
     }
     
@@ -521,14 +495,6 @@ private extension TagTests
     
     
     
-    enum TagCreationType
-    {
-        case standard
-        case annotated
-    }
-    
-    
-    
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a tag that points to HEAD.
     /// - Parameters:
@@ -536,7 +502,7 @@ private extension TagTests
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
     func withTag(
-        type    : TagCreationType = .standard,
+        type    : Tag.TagCreationType = .standard,
         _ body  : (Repository, OpaquePointer) throws -> Void
     ) throws
     {
@@ -544,43 +510,13 @@ private extension TagTests
         {
             repository in
             
-            var tagOID = GitOID()
-            
-            try Commit.withHEADCommit(in: repository)
-            {
-                commitPointer in
-                
-                let tagCreateResult: GitErrorCode
-                
-                switch type
-                {
-                    case .standard:
-                        
-                        tagCreateResult = gitTagCreate(
-                            oid:        &tagOID,
-                            repo:       repository.pointer,
-                            tagName:    Self.tagName,
-                            target:     commitPointer,
-                            tagger:     repository.signature,
-                            message:    Self.tagMessage,
-                            force:      true
-                        )
-                        
-                    case .annotated:
-                        
-                        tagCreateResult = gitTagAnnotationCreate(
-                            oid:        &tagOID,
-                            repo:       repository.pointer,
-                            tagName:    Self.tagName,
-                            target:     commitPointer,
-                            tagger:     repository.signature,
-                            message:    Self.tagMessage
-                        )
-                }
-                
-                XCTAssertOK(tagCreateResult)
-                XCTAssertNotZeroOID(tagOID)
-            }
+            let tagOID = try Tag.createTag(
+                type:       type,
+                named:      Self.tagName,
+                in:         repository,
+                message:    Self.tagMessage,
+                force:      true
+            )
             
             
             
