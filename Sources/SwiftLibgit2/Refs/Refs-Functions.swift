@@ -18,7 +18,8 @@ import Foundation
 ///   must be `git_reference`.
 ///   - repo: The repository containing the reference. The underlying type must
 ///   be `git_repository`.
-///   - name: The full reference name to use. This will be checked for validity.
+///   - name: The full name of the reference to look up. This will be checked
+///   for validity.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
