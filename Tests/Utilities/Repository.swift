@@ -532,12 +532,10 @@ struct Repository
 
 internal extension Repository
 {
-    /// Creates blame data in the given repository.
+    /// Creates attribute and blame data in the repository.
     /// - Parameter repository: The repository.
     /// - Throws: An error if an operation fails.
-    static func createBlameData(
-        in repository: Repository
-    ) throws
+    private func createMiscellaneousData() throws
     {
         let initialContent: String =
         """
@@ -546,9 +544,9 @@ internal extension Repository
         3: Even more content
         """
         
-        try repository.commit(
+        try commit(
             initialContent,
-            toFile:     blameFileName,
+            toFile:     Self.blameFileName,
             message:    "Add blame file"
         )
         
@@ -562,9 +560,9 @@ internal extension Repository
         4: Added in second commit
         """
         
-        try repository.commit(
+        try commit(
             modifiedContent,
-            toFile:     blameFileName,
+            toFile:     Self.blameFileName,
             message:    "Modify blame file"
         )
         
@@ -579,11 +577,39 @@ internal extension Repository
         5: Added in third commit
         """
         
-        try repository.commit(
+        try commit(
             finalContent,
-            toFile:     blameFileName,
+            toFile:     Self.blameFileName,
             message:    "Final blame file update"
         )
+        
+        
+        
+        let gitattributesContent: String =
+        """
+        *.txt text eol=lf
+        *.bin binary
+        *.special custom=customvalue
+        *.false -text
+        *.macro attr1 attr2=value
+        """
+        
+        let gitattributesURL: URL = url.appending(
+            path:           ".gitattributes",
+            directoryHint:  .notDirectory
+        )
+        
+        try gitattributesContent.atomicWrite(to: gitattributesURL)
+        
+        for (filename, content) in Self.gitattributesFiles
+        {
+            let fileURL: URL = url.appending(
+                path:           filename,
+                directoryHint:  .notDirectory
+            )
+            
+            try content.atomicWrite(to: fileURL)
+        }
     }
     
     
@@ -684,35 +710,7 @@ internal extension Repository
             message:    "Initial commit"
         )
         
-        try createBlameData(in: repository)
-        
-        
-        
-        let gitattributesContent: String =
-        """
-        *.txt text eol=lf
-        *.bin binary
-        *.special custom=customvalue
-        *.false -text
-        *.macro attr1 attr2=value
-        """
-        
-        let gitattributesURL: URL = repository.url.appending(
-            path:           ".gitattributes",
-            directoryHint:  .notDirectory
-        )
-        
-        try gitattributesContent.atomicWrite(to: gitattributesURL)
-        
-        for (filename, content) in gitattributesFiles
-        {
-            let fileURL: URL = repository.url.appending(
-                path:           filename,
-                directoryHint:  .notDirectory
-            )
-            
-            try content.atomicWrite(to: fileURL)
-        }
+        try repository.createMiscellaneousData()
         
         
         
