@@ -904,17 +904,12 @@ final class RepositoryTests: XCTestCaseStopOnFail
             {
                 oid, payload in
                 
-                guard let oid: UnsafePointer<git_oid> = oid
+                guard
+                    let oid     : UnsafePointer<git_oid>    = oid,
+                    let payload : UnsafeMutableRawPointer   = payload
                 else
                 {
-                    XCTFail("The OID was nil.")
-                    return GitErrorCode.gitUnknown(-123).rawValue
-                }
-                
-                guard let payload: UnsafeMutableRawPointer = payload
-                else
-                {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 

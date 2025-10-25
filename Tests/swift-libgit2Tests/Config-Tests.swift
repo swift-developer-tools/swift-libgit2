@@ -1455,10 +1455,13 @@ private extension ConfigTests
             return 1
         }
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard
+            let payload: UnsafeMutableRawPointer = payload,
+            let name    = String(optionalCString: entry?.pointee.name),
+            let value   = String(optionalCString: entry?.pointee.value)
         else
         {
-            XCTFail("The payload was nil.")
+            XCTFail("All or some callback parameters were nil.")
             return GitErrorCode.gitUnknown(-123).rawValue
         }
         
@@ -1466,13 +1469,7 @@ private extension ConfigTests
             = payload.assumingMemoryBound(to: CallbackData.self)
         
         payloadPointer.pointee.count += 1
-        
-        if
-            let name    = String(optionalCString: entry?.pointee.name),
-            let value   = String(optionalCString: entry?.pointee.value)
-        {
-            payloadPointer.pointee.values.append("\(name)=\(value)")
-        }
+        payloadPointer.pointee.values.append("\(name)=\(value)")
         
         return GitErrorCode.gitOK.rawValue
     }

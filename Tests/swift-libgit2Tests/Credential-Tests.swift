@@ -31,11 +31,14 @@ final class CredentialTests: XCTestCaseStopOnFail
             out, url, usernameFromURL, allowedTypes, payload in
             
             guard
-                let out     : UnsafeMutablePointer<UnsafeMutablePointer<git_credential>?>   = out,
-                let payload : UnsafeMutableRawPointer                                       = payload
+                let out     : UnsafeMutablePointer<
+                                UnsafeMutablePointer<git_credential>?>  = out,
+                let payload : UnsafeMutableRawPointer                   = payload,
+                let url                 = String(optionalCString: url),
+                let usernameFromURL     = String(optionalCString: usernameFromURL)
             else
             {
-                XCTFail("The payload was nil.")
+                XCTFail("All or some callback parameters were nil.")
                 return GitErrorCode.gitUnknown(-123).rawValue
             }
             
@@ -44,16 +47,9 @@ final class CredentialTests: XCTestCaseStopOnFail
             
             payloadPointer.pointee.count            += 1
             payloadPointer.pointee.allowedTypes     = allowedTypes
-            
-            if let url = String(optionalCString: url)
-            {
-                payloadPointer.pointee.url = url
-            }
-            
-            if let usernameFromURL = String(optionalCString: usernameFromURL)
-            {
-                payloadPointer.pointee.usernameFromURL = usernameFromURL
-            }
+            payloadPointer.pointee.url              = url
+            payloadPointer.pointee.usernameFromURL  = usernameFromURL
+  
             
             return gitCredentialUsernameNew(
                 out:        out,

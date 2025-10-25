@@ -599,10 +599,13 @@ private extension StashTests
         {
             index, message, stashOID, payload in
             
-            guard let payload: UnsafeMutableRawPointer = payload
+            guard
+                let payload     : UnsafeMutableRawPointer   = payload,
+                let stashOID    : UnsafePointer<git_oid>    = stashOID,
+                let message = String(optionalCString: message)
             else
             {
-                XCTFail("The payload was nil.")
+                XCTFail("All or some callback parameters were nil.")
                 return GitErrorCode.gitUnknown(-123).rawValue
             }
             
@@ -610,18 +613,11 @@ private extension StashTests
                 = payload.assumingMemoryBound(to: CallbackData.self)
             
             payloadPointer.pointee.callCount += 1
+            payloadPointer.pointee.stashMessages.append(message)
             
-            if let message = String(optionalCString: message)
-            {
-                payloadPointer.pointee.stashMessages.append(message)
-            }
-            
-            if let stashOID: git_oid = stashOID?.pointee
-            {
-                payloadPointer.pointee.stashOIDs.append(
-                    GitOID(cValue: stashOID)
-                )
-            }
+            payloadPointer.pointee.stashOIDs.append(
+                GitOID(cValue: stashOID.pointee)
+            )
             
             return GitErrorCode.gitOK.rawValue
         }

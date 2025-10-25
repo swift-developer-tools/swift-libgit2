@@ -538,20 +538,20 @@ private extension AttrTests
 {
     static let attrForEachCB: GitAttrForEachCB =
     {
-        cName, cValue, cPayload in
+        name, value, payload in
         
         guard
-            let name        : String                    = String(optionalCString: cName),
-            let value       : String                    = String(optionalCString: cValue),
-            let cPayload    : UnsafeMutableRawPointer   = cPayload
+            let payload: UnsafeMutableRawPointer = payload,
+            let name    = String(optionalCString: name),
+            let value   = String(optionalCString: value)
         else
         {
-            XCTFail("The payload was nil.")
+            XCTFail("All or some callback parameters were nil.")
             return GitErrorCode.gitUnknown(-123).rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<[String : String]>
-            = cPayload.assumingMemoryBound(to: [String : String].self)
+            = payload.assumingMemoryBound(to: [String : String].self)
         
         payloadPointer.pointee[name] = value
         

@@ -392,12 +392,12 @@ public func gitOIDEqual(
     var cA  : git_oid   = a.cValue()
     var cB  : git_oid   = b.cValue()
     
-    let equal: Int32 = git_oid_equal(
+    let isEqual: Int32 = git_oid_equal(
         &cA,
         &cB
     )
     
-    return Bool(equal)
+    return Bool(isEqual)
 }
 
 
@@ -423,16 +423,15 @@ public func gitOIDNCmp(
     var cA  : git_oid   = a.cValue()
     var cB  : git_oid   = b.cValue()
     
-    let equal: Int32 = git_oid_ncmp(
+    let isEqual: Int32 = git_oid_ncmp(
         &cA,
         &cB,
         len
     )
     
-    /// The `Bool` initializer follows the C convention that `0` is `false`,
-    /// which is applicable throughout most of libgit2. This function returns
-    /// `0` if the IDs match, since it uses `memcmp()` in its implementation.
-    return !Bool(equal)
+    /// The `Bool` initializer treats `0` as `false`. This function
+    /// uses `memcmp()`, which returns `0` when memory blocks match.
+    return !Bool(isEqual)
 }
 
 
@@ -453,15 +452,14 @@ public func gitOIDStrEq(
 {
     var cID: git_oid = id.cValue()
     
-    let equal: Int32 = git_oid_streq(
+    let isEqual: Int32 = git_oid_streq(
         &cID,
         str
     )
     
-    /// The `Bool` initializer follows the C convention that `0` is `false`,
-    /// which is applicable throughout most of libgit2. This function returns
-    /// `0` if the IDs match, since it uses `memcmp()` in its implementation.
-    return !Bool(equal)
+    /// The `Bool` initializer treats `0` as `false`. This function
+    /// uses `memcmp()`, which returns `0` when memory blocks match.
+    return !Bool(isEqual)
 }
 
 

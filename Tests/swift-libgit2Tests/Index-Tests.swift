@@ -248,10 +248,12 @@ final class IndexTests: XCTestCaseStopOnFail
             {
                 path, matchedPathspec, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard
+                    let payload: UnsafeMutableRawPointer = payload,
+                    let path = String(optionalCString: path)
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
@@ -260,9 +262,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 
                 payloadPointer.pointee.callCount += 1
                 
-                if
-                    let pathString = String(optionalCString: path),
-                    pathString.contains("skipped")
+                if path.contains("skipped")
                 {
                     return 1
                 }

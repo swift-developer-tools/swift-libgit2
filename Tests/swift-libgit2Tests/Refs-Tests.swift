@@ -327,22 +327,20 @@ final class RefsTests: XCTestCaseStopOnFail
             {
                 name, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard
+                    let payload: UnsafeMutableRawPointer = payload,
+                    let refName = String(optionalCString: name)
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
                     = payload.assumingMemoryBound(to: CallbackData.self)
                 
-                payloadPointer.pointee.refCount += 1
-                
-                if let refName = String(optionalCString: name)
-                {
-                    payloadPointer.pointee.lastRefName = refName
-                }
+                payloadPointer.pointee.refCount     += 1
+                payloadPointer.pointee.lastRefName  = refName
                 
                 return GitErrorCode.gitOK.rawValue
             }
@@ -1333,23 +1331,20 @@ private extension RefsTests
         }
         
         guard
+            let payload     : UnsafeMutableRawPointer   = payload,
             let reference   : OpaquePointer             = reference,
-            let payload     : UnsafeMutableRawPointer   = payload
+            let refName     : String                    = gitReferenceName(ref: reference)
         else
         {
-            XCTFail("The reference or payload were nil.")
+            XCTFail("All or some callback parameters were nil.")
             return GitErrorCode.gitUnknown(-123).rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
             = payload.assumingMemoryBound(to: CallbackData.self)
         
-        payloadPointer.pointee.refCount += 1
-        
-        if let refName: String = gitReferenceName(ref: reference)
-        {
-            payloadPointer.pointee.lastRefName = refName
-        }
+        payloadPointer.pointee.refCount     += 1
+        payloadPointer.pointee.lastRefName  = refName
         
         return GitErrorCode.gitOK.rawValue
     }
@@ -1360,22 +1355,20 @@ private extension RefsTests
     {
         name, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard
+            let payload: UnsafeMutableRawPointer = payload,
+            let refName = String(optionalCString: name)
         else
         {
-            XCTFail("The payload was nil.")
+            XCTFail("All or some callback parameters were nil.")
             return GitErrorCode.gitUnknown(-123).rawValue
         }
         
         let payloadPointer: UnsafeMutablePointer<CallbackData>
             = payload.assumingMemoryBound(to: CallbackData.self)
         
-        payloadPointer.pointee.refCount += 1
-        
-        if let refName = String(optionalCString: name)
-        {
-            payloadPointer.pointee.lastRefName = refName
-        }
+        payloadPointer.pointee.refCount     += 1
+        payloadPointer.pointee.lastRefName  = refName
         
         return GitErrorCode.gitOK.rawValue
     }

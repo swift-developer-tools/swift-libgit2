@@ -519,12 +519,15 @@ final class NotesTests: XCTestCaseStopOnFail
             
             let noteForEachCB: GitNoteForEachCB =
             {
-                blobID, annotatedObjectID, payload in
+                blobOID, annotatedObjectOID, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard
+                    let payload     : UnsafeMutableRawPointer   = payload,
+                    let blobOID     : UnsafePointer<git_oid>    = blobOID,
+                    let objectOID   : UnsafePointer<git_oid>    = annotatedObjectOID
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
@@ -533,19 +536,13 @@ final class NotesTests: XCTestCaseStopOnFail
                 
                 payloadPointer.pointee.callCount += 1
                 
-                if let blobOID: git_oid = blobID?.pointee
-                {
-                    payloadPointer.pointee.noteOIDs.append(
-                        GitOID(cValue: blobOID)
-                    )
-                }
+                payloadPointer.pointee.noteOIDs.append(
+                    GitOID(cValue: blobOID.pointee)
+                )
                 
-                if let annotatedObjectOID: git_oid = annotatedObjectID?.pointee
-                {
-                    payloadPointer.pointee.annotatedOIDs.append(
-                        GitOID(cValue: annotatedObjectOID)
-                    )
-                }
+                payloadPointer.pointee.annotatedOIDs.append(
+                    GitOID(cValue: objectOID.pointee)
+                )
                 
                 return GitErrorCode.gitOK.rawValue
             }
