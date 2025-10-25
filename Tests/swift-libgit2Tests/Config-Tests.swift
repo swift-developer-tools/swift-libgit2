@@ -377,7 +377,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 = gitConfigOpenDefault(out: &parentConfigPointer)
             
             guard
-                configOpenDefaultResult == .gitOK,
+                isOK(configOpenDefaultResult),
                 let parentConfigPointer: OpaquePointer = parentConfigPointer
             else
             {
@@ -395,7 +395,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 level:      .gitConfigLevelGlobal
             )
             
-            if configOpenLevelResult == .gitOK
+            if isOK(configOpenLevelResult)
             {
                 XCTAssertNotNil(levelConfigPointer)
             }
@@ -407,7 +407,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 config:     parentConfigPointer
             )
             
-            if configOpenGlobalResult == .gitOK
+            if isOK(configOpenGlobalResult)
             {
                 XCTAssertNotNil(globalConfigPointer)
             }
@@ -460,7 +460,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTransaction(transactionPointer)
+                gitTransactionFree(tx: transactionPointer)
             }
             
             
@@ -979,7 +979,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         let configOpenDefaultResult: GitErrorCode
             = gitConfigOpenDefault(out: &configPointer)
         
-        if configOpenDefaultResult == .gitOK
+        if isOK(configOpenDefaultResult)
         {
             XCTAssertNotNil(configPointer)
         }

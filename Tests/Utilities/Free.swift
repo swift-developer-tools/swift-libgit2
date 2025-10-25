@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_transaction` instance.
-    /// - Parameter transaction: The transaction to free. The underlying type
-    /// must be `git_transaction`.
-    static func freeTransaction(
-        _ transaction: OpaquePointer?
-    )
-    {
-        guard let transaction: OpaquePointer = transaction
-        else
-        {
-            return
-        }
-        
-        git_transaction_free(transaction)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_tree` instance.
     /// - Parameter tree: The tree to free. The underlying type must be
     /// `git_tree`.

@@ -75,7 +75,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let commitOID: GitOID = try repository.commit(
                 "New matching content",
@@ -198,8 +198,6 @@ final class RefsTests: XCTestCaseStopOnFail
         {
             repository, _ in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             var customRefPointer: OpaquePointer? = nil
             
             defer
@@ -215,7 +213,7 @@ final class RefsTests: XCTestCaseStopOnFail
                 out:            &customRefPointer,
                 repo:           repository.pointer,
                 name:           customRefName,
-                id:             headOID,
+                id:             repository.headOID,
                 force:          false,
                 logMessage:     "Create custom reference"
             )
@@ -638,14 +636,13 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            let headOID     : GitOID    = OID.getHEADCommitOID(in: repository)
-            let refFullName : String    = "refs/heads/another-ref"
+            let refFullName: String = "refs/heads/another-ref"
             
             let refCreateResult: GitErrorCode = gitReferenceCreate(
                 out:            &otherDirectRefPointer,
                 repo:           repository.pointer,
                 name:           refFullName,
-                id:             headOID,
+                id:             repository.headOID,
                 force:          false,
                 logMessage:     "Create another direct reference"
             )
@@ -957,13 +954,11 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let resolvedRefTargetOID: GitOID?
                 = gitReferenceTarget(ref: resolvedRefPointer)
             
             XCTAssertNotNil(resolvedRefTargetOID)
-            XCTAssertEqual(resolvedRefTargetOID, headOID)
+            XCTAssertEqual(resolvedRefTargetOID, repository.headOID)
             
             
             
@@ -1219,13 +1214,11 @@ final class RefsTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let refCreateResult: GitErrorCode = gitReferenceCreate(
                 out:            &tagRefPointer,
                 repo:           repository.pointer,
                 name:           "refs/tags/some-tag",
-                id:             headOID,
+                id:             repository.headOID,
                 force:          false,
                 logMessage:     "Create tag reference"
             )
@@ -1395,8 +1388,6 @@ private extension RefsTests
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             var directRefPointer: OpaquePointer? = nil
             
             defer
@@ -1405,6 +1396,8 @@ private extension RefsTests
             }
             
             
+            
+            let headOID: GitOID = repository.headOID
             
             let refCreateResult: GitErrorCode = gitReferenceCreate(
                 out:            &directRefPointer,

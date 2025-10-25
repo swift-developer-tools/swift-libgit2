@@ -271,8 +271,6 @@ final class ODBTests: XCTestCaseStopOnFail
         {
             repository, odbPointer in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             var sourceObjectPointer     : OpaquePointer?    = nil
             var duplicatedObjectPointer : OpaquePointer?    = nil
             
@@ -283,6 +281,9 @@ final class ODBTests: XCTestCaseStopOnFail
             }
             
             
+            
+            
+            let headOID: GitOID = repository.headOID
             
             let odbReadResult: GitErrorCode = gitODBRead(
                 obj:    &sourceObjectPointer,
@@ -368,7 +369,7 @@ final class ODBTests: XCTestCaseStopOnFail
         {
             repository, odbPointer in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let odbExists: Bool = gitODBExists(
                 db:     odbPointer,
@@ -418,7 +419,7 @@ final class ODBTests: XCTestCaseStopOnFail
         {
             repository, odbPointer in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             var fullOID = GitOID()
             
@@ -694,7 +695,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let odbReadResult: GitErrorCode = gitODBRead(
                 obj:    &objectPointer,
@@ -759,7 +760,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let odbReadPrefixResult: GitErrorCode = gitODBReadPrefix(
                 obj:        &objectPointer,
@@ -821,14 +822,13 @@ final class ODBTests: XCTestCaseStopOnFail
         {
             repository, odbPointer in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             var streamPointer: UnsafeMutablePointer<git_odb_stream>? = nil
             
             defer
             {
                 gitODBStreamFree(stream: streamPointer)
             }
+            
             
             
             var objectLength    : Int           = 0
@@ -839,7 +839,7 @@ final class ODBTests: XCTestCaseStopOnFail
                 len:    &objectLength,
                 type:   &objectType,
                 db:     odbPointer,
-                oid:    headOID
+                oid:    repository.headOID
             )
             
             XCTAssertOK(odbOpenRStreamResult)

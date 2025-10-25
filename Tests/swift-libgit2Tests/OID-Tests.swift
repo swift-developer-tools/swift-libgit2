@@ -833,7 +833,7 @@ private extension OIDTests
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             guard let headOIDString: String = gitOIDToStrS(oid: headOID)
             else

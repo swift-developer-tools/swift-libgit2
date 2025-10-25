@@ -32,12 +32,10 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let objectLookupResult: GitErrorCode = gitObjectLookup(
                 object:     &sourceObjectPointer,
                 repo:       repository.pointer,
-                id:         headOID,
+                id:         repository.headOID,
                 type:       .gitObjectCommit
             )
             
@@ -150,12 +148,10 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let objectLookupResult: GitErrorCode = gitObjectLookup(
                 object:     &treeishPointer,
                 repo:       repository.pointer,
-                id:         headOID,
+                id:         repository.headOID,
                 type:       .gitObjectCommit
             )
             
@@ -212,12 +208,10 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let objectLookupResult: GitErrorCode = gitObjectLookup(
                 object:     &objectPointer,
                 repo:       repository.pointer,
-                id:         headOID,
+                id:         repository.headOID,
                 type:       .gitObjectCommit
             )
             
@@ -420,7 +414,7 @@ private extension ObjectTests
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let objectLookupResult: GitErrorCode = gitObjectLookup(
                 object:     &objectPointer,
@@ -500,9 +494,8 @@ private extension ObjectTests
             
             
             
-            let prefixLength: Int = 7
-            
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let prefixLength    : Int       = 7
+            let headOID         : GitOID    = repository.headOID
             
             guard let headOIDString: String = gitOIDToStrS(oid: headOID)
             else

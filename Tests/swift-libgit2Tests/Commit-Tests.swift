@@ -525,10 +525,6 @@ final class CommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
             var commitPointer: OpaquePointer? = nil
             
             defer
@@ -541,7 +537,7 @@ final class CommitTests: XCTestCaseStopOnFail
             let commitLookupPrefixResult: GitErrorCode = gitCommitLookupPrefix(
                 commit:     &commitPointer,
                 repo:       repository.pointer,
-                id:         headOID,
+                id:         repository.headOID,
                 len:        7
             )
             
@@ -808,10 +804,6 @@ private extension CommitTests
         {
             repository in
             
-            let originalCommitOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
             var newCommitPointer        : OpaquePointer?    = nil
             var originalCommitPointer   : OpaquePointer?    = nil
 
@@ -822,6 +814,8 @@ private extension CommitTests
             }
             
             
+            
+            let originalCommitOID: GitOID = repository.headOID
             
             let commitLookupResult: GitErrorCode = gitCommitLookup(
                 commit:     &originalCommitPointer,

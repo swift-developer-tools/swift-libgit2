@@ -382,9 +382,7 @@ private extension ApplyTests
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            repository.reset(to: headOID)
+            repository.reset(to: repository.headOID)
             
             
             

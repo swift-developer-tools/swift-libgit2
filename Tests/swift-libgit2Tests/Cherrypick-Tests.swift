@@ -69,9 +69,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            repository.reset(to: headOID)
+            repository.reset(to: repository.headOID)
             
             
             
@@ -302,7 +300,6 @@ private extension CherrypickTests
         
         
         
-        let headOID             : GitOID            = OID.getHEADCommitOID(in: repository)
         var headCommitPointer   : OpaquePointer?    = nil
         var branchPointer       : OpaquePointer?    = nil
         
@@ -317,7 +314,7 @@ private extension CherrypickTests
         let commitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &headCommitPointer,
             repo:       repository.pointer,
-            id:         headOID
+            id:         repository.headOID
         )
         
         XCTAssertOK(commitLookupResult)

@@ -154,7 +154,7 @@ final class MergeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let firstCommitOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let firstCommitOID: GitOID = repository.headOID
             
             let secondCommitOID: GitOID = try repository.commit(
                 "Second commit",
@@ -221,7 +221,7 @@ final class MergeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let firstCommitOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let firstCommitOID: GitOID = repository.headOID
             
             let secondCommitOID: GitOID = try repository.commit(
                 "Second commit",
@@ -308,7 +308,7 @@ final class MergeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let firstCommitOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let firstCommitOID: GitOID = repository.headOID
             
             let secondCommitOID: GitOID = try repository.commit(
                 "Second commit",
@@ -394,19 +394,13 @@ final class MergeTests: XCTestCaseStopOnFail
             
             
             
-            let baseOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let baseOID: GitOID = repository.headOID
             
-            
-            
-            try repository.commit(
+            let ourOID: GitOID = try repository.commit(
                 "Our content\n",
                 toFile:     "ours.txt",
                 message:    "Our commit"
             )
-            
-            let ourOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
             
             repository.reset(to: baseOID)
             
@@ -580,31 +574,21 @@ final class MergeTests: XCTestCaseStopOnFail
                 message:    "Initial commit"
             )
             
-            let baseOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let baseOID: GitOID = repository.headOID
             
-            
-            
-            try repository.commit(
+            let ourOID: GitOID = try repository.commit(
                 "\(fileContent)Our changes\n",
                 toFile:     fileName,
                 message:    "Our commit"
             )
             
-            let ourOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
             repository.reset(to: baseOID)
             
-            
-            
-            try repository.commit(
+            let theirOID: GitOID =  try repository.commit(
                 "\(fileContent)Their changes\n",
                 toFile:     fileName,
                 message:    "Their commit"
             )
-            
-            let theirOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             
             
@@ -1064,13 +1048,11 @@ final class MergeTests: XCTestCaseStopOnFail
                 return
             }
             
-            let ourOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             
+            let ourOID: GitOID = repository.headOID
             
-            repository.reset(to: OID.getHEADCommitOID(in: repository))
-            
-            
+            repository.reset(to: ourOID)
             
             try repository.commit(
                 "Their content\n",
@@ -1161,7 +1143,7 @@ private extension MergeTests
             
             let branchName: String = "feature/test"
             
-            let initialHeadOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let initialHeadOID: GitOID = repository.headOID
             
             try Branch.createLocalBranch(
                 named:      branchName,
@@ -1190,13 +1172,13 @@ private extension MergeTests
             
             
             
-            let branchHeadOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let branchHEADOID: GitOID = repository.headOID
             
             let annotatedCommitLookupResult: GitErrorCode
                 = gitAnnotatedCommitLookup(
                     out:    &annotatedCommitPointer,
                     repo:   repository.pointer,
-                    id:     branchHeadOID
+                    id:     branchHEADOID
                 )
             
             XCTAssertOK(annotatedCommitLookupResult)

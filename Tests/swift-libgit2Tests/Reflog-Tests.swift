@@ -35,7 +35,7 @@ final class ReflogTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let reflogAppendResult: GitErrorCode = gitReflogAppend(
                 reflog:     reflogPointer,
@@ -160,7 +160,7 @@ final class ReflogTests: XCTestCaseStopOnFail
         {
             repository, reflogPointer in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             for index in 1...3
             {

@@ -77,7 +77,7 @@ final class RebaseTests: XCTestCaseStopOnFail
                 message:    "Branch commit"
             )
             
-            let branchCommitOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let branchCommitOID: GitOID = repository.headOID
             
             repository.reset(to: baseCommitOID)
             
