@@ -33,7 +33,7 @@ public enum GitResetT: UInt32, CEnum
     
     /// Initializes a ``GitResetT`` instance from the given `git_reset_t`
     /// instance.
-    /// - Parameter repositoryInitMode: The `git_reset_t` instance to use.
+    /// - Parameter reset: The `git_reset_t` instance to use.
     internal init?(
         cValue reset: git_reset_t
     )
