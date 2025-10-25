@@ -618,6 +618,7 @@ internal extension Repository
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
+    @discardableResult
     static func withRepository<T>(
         options : GitRepositoryInitOptions?     = nil,
         isBare  : Bool                          = false,
