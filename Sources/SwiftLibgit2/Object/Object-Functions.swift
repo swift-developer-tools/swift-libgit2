@@ -48,26 +48,20 @@ public func gitObjectLookup(
 
 
 
-/// Looks up a reference to the specified object in the given repository,
-/// using a prefix of the object's ID.
+/// Looks up the specified object in the given repository, using a prefix of
+/// the object's ID.
 /// - Parameters:
 ///   - objectOut: The pointer in which to store the object. The underlying
 ///   type must be `git_object`.
 ///   - repo: The repository containing the object. The underlying type must
 ///   be `git_repository`.
 ///   - id: The prefix of the ID of the object to lookup.
-///   - len: The length of the object's ID prefix.
+///   - len: The length of the object's ID prefix. This must be greater than or
+///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
+///   object matching the prefix.
 ///   - type: The type of the object to look up. Pass
 ///   ``GitObjectT/gitObjectAny`` to guess the type of the object.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will try to match the first `len` hexadecimal characters of
-/// the given ID. The remaining characters must be zeros.
-///
-/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
-/// enough to identify a unique object matching the prefix.
 ///
 /// ## C Equivalent
 ///

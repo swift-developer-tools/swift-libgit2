@@ -45,8 +45,8 @@ public func gitCommitLookup(
 
 
 
-/// Looks up a commit in the given repository, using a prefix of the commit's
-/// ID.
+/// Looks up the specified commit in the given repository, using a prefix of
+/// the commit's ID.
 /// - Parameters:
 ///   - commit: The pointer in which to store the commit. The underlying type
 ///   must be `git_commit`.
@@ -54,16 +54,10 @@ public func gitCommitLookup(
 ///   type must be `git_repository`.
 ///   - id: The prefix of the ID of the commit to lookup. If the object is
 ///   an annotated tag, it will be peeled back to the commit.
-///   - len: The length of the commit's ID prefix.
+///   - len: The length of the commit's ID prefix. This must be greater than or
+///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
+///   commit matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will try to match the first `len` hexadecimal characters of
-/// the given ID. The remaining characters must be zeros.
-///
-/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
-/// enough to identify a unique commit matching the prefix.
 ///
 /// ## C Equivalent
 ///
