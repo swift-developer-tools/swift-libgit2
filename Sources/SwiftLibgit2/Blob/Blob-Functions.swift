@@ -44,23 +44,18 @@ public func gitBlobLookup(
 
 
 
-/// Looks up a blob in the given repository, using a prefix of the blob's ID.
+/// Looks up the specified blob in the given repository, using a prefix of the
+/// blob's ID.
 /// - Parameters:
 ///   - blob: The pointer in which to store the blob. The underlying type must
 ///   be `git_blob`.
 ///   - repo: The repository to use when locating the blob. The underlying type
 ///   must be `git_repository`.
 ///   - id: The prefix of the ID of the blob to look up.
-///   - len: The length of the blob's ID prefix.
+///   - len: The length of the blob's ID prefix. This must be greater than or
+///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
+///   blob matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will try to match the first `len` hexadecimal characters of
-/// the given ID. The remaining characters must be zeros.
-///
-/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
-/// enough to identify a unique blob matching the prefix.
 ///
 /// ## C Equivalent
 ///

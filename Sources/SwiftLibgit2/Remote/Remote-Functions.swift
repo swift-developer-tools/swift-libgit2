@@ -1365,8 +1365,8 @@ public func gitRemotePruneRefs(
 
 /// Renames the specified remote.
 /// - Parameters:
-///   - problems: The array of strings in which to store non-default refspecs
-///   that cannot be renamed.
+///   - problems: The array of strings in which to store the non-default
+///   refspecs that cannot be renamed.
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - name: The name of the remote to rename. This will be checked for

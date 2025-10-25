@@ -175,18 +175,14 @@ public func gitODBRead(
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - shortID: The prefix of the ID of the object to look up.
-///   - len: The length of the object's ID prefix.
+///   - len: The length of the object's ID prefix. This must be greater than or
+///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
+///   object matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This function will try to match the first `len` hexadecimal characters of
-/// the given ID. The remaining characters must be zeros.
-///
-/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
-/// enough to identify a unique object matching the prefix.
-///
-/// - Note: This function will query all available object database backends.
+/// This function will query all available object database backends.
 ///
 /// ## C Equivalent
 ///
@@ -323,18 +319,14 @@ public func gitODBExistsExt(
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - shortID: The prefix of the ID of the object to look up.
-///   - len: The length of the object's ID prefix.
+///   - len: The length of the object's ID prefix. This must be greater than or
+///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
+///   object matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
 ///
-/// This function will try to match the first `len` hexadecimal characters of
-/// the given ID. The remaining characters must be zeros.
-///
-/// `len` must be greater than or equal to ``gitOIDMinPrefixLen``, and long
-/// enough to identify a unique object matching the prefix.
-///
-/// - Note: This function will query all available object database backends.
+/// This function will query all available object database backends.
 ///
 /// ## C Equivalent
 ///

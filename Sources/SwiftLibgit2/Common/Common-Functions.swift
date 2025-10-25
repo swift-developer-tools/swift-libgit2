@@ -1068,9 +1068,9 @@ public func gitLibgit2OptSetODBLoosePriority(
 
 
 
-/// Gets the list of supported Git extensions.
-/// - Parameter out: The array of strings in which to store the list of
-/// supported Git extensions.
+/// Gets the supported Git extensions.
+/// - Parameter out: The array of strings in which to store the supported Git
+/// extensions.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

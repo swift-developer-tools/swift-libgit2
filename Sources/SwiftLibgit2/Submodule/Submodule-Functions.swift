@@ -85,8 +85,8 @@ public func gitSubmoduleUpdate(
 ///   must be `git_submodule`.
 ///   - repo: The repository containing the submodule. The underlying type must
 ///   be `git_repository`.
-///   - name: The name of the submodule, or the path to the submodule. This
-///   may include a trailing slash (`/`).
+///   - name: The name or path of the submodule to lookup. This may include a
+///   trailing slash (`/`).
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

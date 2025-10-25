@@ -21,7 +21,7 @@ final class DescribeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Tag.createAnnotatedTag(
+            try Tag.createTag(
                 named:      "v1.0.0",
                 in:         repository,
                 message:    "Hello World!"
@@ -88,7 +88,7 @@ final class DescribeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Tag.createAnnotatedTag(
+            try Tag.createTag(
                 named:      "v1.0.0",
                 in:         repository,
                 message:    "Hello World!"
@@ -301,7 +301,7 @@ final class DescribeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Tag.createAnnotatedTag(
+            try Tag.createTag(
                 named:      "v1.0.0",
                 in:         repository,
                 message:    "Hello World!"
@@ -342,7 +342,7 @@ final class DescribeTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Tag.createAnnotatedTag(
+            try Tag.createTag(
                 named:      "v1.0.0",
                 in:         repository,
                 message:    "Hello World!"
