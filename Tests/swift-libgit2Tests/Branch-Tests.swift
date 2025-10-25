@@ -17,43 +17,34 @@ final class BranchTests: XCTestCaseStopOnFail
 {
     func testGitBranchNameIsValid() throws
     {
-        var isValid: Bool = false
-        
-        var branchNameIsValidResult: GitErrorCode = gitBranchNameIsValid(
-            valid:  &isValid,
-            name:   "feature/hello-world"
-        )
-        
-        XCTAssertOK(branchNameIsValidResult)
-        XCTAssertTrue(isValid)
-        
-        
-        
-        let invalidBranchNames: [String] =
+        let branchNamesAndResults: [String : Bool] =
         [
-            "-feature/hello-world",
-            "feature/hello~world",
-            "feature/hello^world",
-            "feature:hello-world",
-            "feature/hello-world?",
-            "[feature]-hello-world",
-            "feature*hello-world",
-            "feature..hello-world",
-            "feature...hello-world",
-            "feature@{hello-world"
+            "feature/hello-world"   : true,
+            "-feature/hello-world"  : false,
+            "feature/hello~world"   : false,
+            "feature/hello^world"   : false,
+            "feature:hello-world"   : false,
+            "feature/main"          : true,
+            "feature/hello-world?"  : false,
+            "[feature]-hello-world" : false,
+            "feature*hello-world"   : false,
+            "feature..hello-world"  : false,
+            "develop/feature/main"  : true,
+            "feature...hello-world" : false,
+            "feature@{hello-world"  : false
         ]
         
-        for invalidBranchName in invalidBranchNames
+        for (branchName, validityResult) in branchNamesAndResults
         {
-            isValid = false
+            var isValid: Bool = !validityResult
             
-            branchNameIsValidResult = gitBranchNameIsValid(
+            let branchNameIsValidResult: GitErrorCode = gitBranchNameIsValid(
                 valid:  &isValid,
-                name:   invalidBranchName
+                name:   branchName
             )
             
             XCTAssertOK(branchNameIsValidResult)
-            XCTAssertFalse(isValid)
+            XCTAssertEqual(isValid, validityResult)
         }
     }
     
