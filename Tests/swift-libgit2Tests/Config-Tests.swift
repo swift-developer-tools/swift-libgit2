@@ -460,7 +460,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTransaction(transactionPointer)
+                gitTransactionFree(tx: transactionPointer)
             }
             
             
