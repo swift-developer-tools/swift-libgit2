@@ -1569,7 +1569,6 @@ public func gitConfigBackendForEachMatch(
 
 
 
-// TODO: Replace `git_transaction_commit()` in documentation.
 /// Locks the configuration backend with the highest priority.
 /// - Parameters:
 ///   - tx: The pointer in which to store the transaction. The underlying
@@ -1585,7 +1584,7 @@ public func gitConfigBackendForEachMatch(
 /// unlocked.
 ///
 /// The resulting transaction may be used to commit or undo changes. Changes
-/// may be applied by calling `git_transaction_commit()` before freeing the
+/// may be applied by calling ``gitTransactionCommit(tx:)`` before freeing the
 /// transaction. Either of these actions will unlock the configuration backend.
 ///
 /// ## C Equivalent
