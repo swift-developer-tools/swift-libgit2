@@ -32,12 +32,10 @@ final class OIDArrayTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let swiftArrayOfOIDs: [GitOID] =
             [
                 GitOID(),
-                headOID,
+                repository.headOID,
                 GitOID()
             ]
             
@@ -87,12 +85,10 @@ final class OIDArrayTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let arrayOfOIDs: [GitOID] =
             [
                 GitOID(),
-                headOID,
+                repository.headOID,
                 GitOID()
             ]
             
@@ -141,7 +137,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let outerArrayOfOIDs: [GitOID] =
             [
@@ -226,7 +222,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             var arrayOfOIDs: [GitOID] =
             [

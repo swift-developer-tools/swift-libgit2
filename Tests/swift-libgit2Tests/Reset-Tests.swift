@@ -33,23 +33,11 @@ final class ResetTests: XCTestCaseStopOnFail
                 message:    "Second commit"
             )
             
-            
-            
-            let headOIDBeforeReset: GitOID
-                = OID.getHEADCommitOID(in: repository)
-            
-            XCTAssertEqual(headOIDBeforeReset, secondCommitOID)
-            
-            
+            XCTAssertEqual(repository.headOID, secondCommitOID)
             
             repository.reset(to: firstCommitOID)
             
-            
-            
-            let headOIDAfterReset: GitOID
-                = OID.getHEADCommitOID(in: repository)
-            
-            XCTAssertEqual(headOIDAfterReset, firstCommitOID)
+            XCTAssertEqual(repository.headOID, firstCommitOID)
         }
     }
     
@@ -247,10 +235,7 @@ final class ResetTests: XCTestCaseStopOnFail
                 message:    "Second commit"
             )
             
-            let headOIDBeforeReset: GitOID
-                = OID.getHEADCommitOID(in: repository)
-            
-            XCTAssertEqual(headOIDBeforeReset, secondCommitOID)
+            XCTAssertEqual(repository.headOID, secondCommitOID)
             
             
             
@@ -291,13 +276,7 @@ final class ResetTests: XCTestCaseStopOnFail
                 )
             
             XCTAssertOK(resetFromAnnotatedResult)
-            
-            
-            
-            let headOIDAfterReset: GitOID
-                = OID.getHEADCommitOID(in: repository)
-            
-            XCTAssertEqual(headOIDAfterReset, firstCommitOID)
+            XCTAssertEqual(repository.headOID, firstCommitOID)
         }
     }
     

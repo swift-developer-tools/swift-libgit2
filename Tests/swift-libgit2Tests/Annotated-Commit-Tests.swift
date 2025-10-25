@@ -28,10 +28,6 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
             var annotatedCommitPointer: OpaquePointer? = nil
             
             defer
@@ -40,6 +36,8 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             }
             
             
+            
+            let headOID: GitOID = repository.headOID
             
             let annotatedCommitFromFetchheadResult: GitErrorCode
                 = gitAnnotatedCommitFromFetchhead(
@@ -201,10 +199,6 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
             var annotatedCommitPointer: OpaquePointer? = nil
             
             defer
@@ -213,6 +207,8 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             }
             
             
+            
+            let headOID: GitOID = repository.headOID
             
             let annotatedCommitLookupResult: GitErrorCode
                 = gitAnnotatedCommitLookup(

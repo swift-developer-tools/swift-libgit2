@@ -202,9 +202,8 @@ final class RepositoryTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            guard let headOIDString: String = gitOIDToStrS(oid: headOID)
+            guard let headOIDString: String
+                    = gitOIDToStrS(oid: repository.headOID)
             else
             {
                 XCTFail("The HEAD OID string was nil.")
@@ -876,7 +875,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             guard let headOIDString: String = gitOIDToStrS(oid: headOID)
             else
@@ -1401,12 +1400,10 @@ final class RepositoryTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let repoSetHEADDetachedResult: GitErrorCode
                 = gitRepositorySetHEADDetached(
                     repo:           repository.pointer,
-                    committish:     headOID
+                    committish:     repository.headOID
                 )
             
             XCTAssertOK(repoSetHEADDetachedResult)
@@ -1438,13 +1435,11 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let annotatedCommitLookupResult: GitErrorCode
                 = gitAnnotatedCommitLookup(
                     out:    &annotatedCommitPointer,
                     repo:   repository.pointer,
-                    id:     headOID
+                    id:     repository.headOID
                 )
             
             XCTAssertOK(annotatedCommitLookupResult)

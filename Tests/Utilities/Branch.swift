@@ -57,13 +57,11 @@ enum Branch
         
         if annotated
         {
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             let annotatedCommitLookup: GitErrorCode
                 = gitAnnotatedCommitLookup(
                     out:    &annotatedCommitPointer,
                     repo:   repository.pointer,
-                    id:     headOID
+                    id:     repository.headOID
                 )
             
             XCTAssertOK(annotatedCommitLookup)

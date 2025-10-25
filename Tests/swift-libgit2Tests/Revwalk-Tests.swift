@@ -215,7 +215,7 @@ final class RevwalkTests: XCTestCaseStopOnFail
         {
             repository, revwalkPointer in
             
-            let headOID : GitOID    = OID.getHEADCommitOID(in: repository)
+            let headOID : GitOID    = repository.headOID
             var nextOID : GitOID    = GitOID()
             
             let revwalkNextResult: GitErrorCode = gitRevwalkNext(
@@ -787,11 +787,9 @@ private extension RevwalkTests
             
             if push
             {
-                let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-                
                 let revwalkPushResult: GitErrorCode = gitRevwalkPush(
                     walk:   revwalkPointer,
-                    id:     headOID
+                    id:     repository.headOID
                 )
                 
                 XCTAssertOK(revwalkPushResult)

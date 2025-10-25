@@ -335,12 +335,7 @@ final class TransactionTests: XCTestCaseStopOnFail
                 = gitTransactionCommit(tx: transactionPointer)
             
             XCTAssertOK(commitResult)
-            
-            
-            
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            XCTAssertEqual(commitOID, headOID)
+            XCTAssertEqual(commitOID, repository.headOID)
         }
     }
 }

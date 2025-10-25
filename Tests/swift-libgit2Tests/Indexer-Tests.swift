@@ -195,12 +195,10 @@ private extension IndexerTests
         
         
         
-        let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-        
         let packbuilderInsertCommitResult: GitErrorCode
             = gitPackbuilderInsertCommit(
                 pb: packbuilderPointer,
-                id: headOID
+                id: repository.headOID
             )
         
         XCTAssertOK(packbuilderInsertCommitResult)

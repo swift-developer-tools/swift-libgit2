@@ -27,10 +27,6 @@ enum Commit
         _   body        : (OpaquePointer) throws -> T
     ) throws -> T
     {
-        let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-        
-        
-        
         var commitPointer: OpaquePointer? = nil
         
         defer
@@ -43,7 +39,7 @@ enum Commit
         let commitLookupResult: GitErrorCode = gitCommitLookup(
             commit:     &commitPointer,
             repo:       repository.pointer,
-            id:         headOID
+            id:         repository.headOID
         )
         
         XCTAssertOK(commitLookupResult)

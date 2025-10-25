@@ -39,7 +39,7 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID         : GitOID    = OID.getHEADCommitOID(in: repository)
+            let headOID         : GitOID    = repository.headOID
             var notesCommitOID  : GitOID    = GitOID()
             var notesBlobOID    : GitOID    = GitOID()
             
@@ -130,7 +130,7 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let secondCommitOID: GitOID = try repository.commit(
                 "Second commit content",
@@ -286,10 +286,9 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            var notesCommitOID  = GitOID()
-            var notesBlobOID    = GitOID()
+            let headOID         : GitOID    = repository.headOID
+            var notesCommitOID  : GitOID    = GitOID()
+            var notesBlobOID    : GitOID    = GitOID()
             
             let noteCommitCreateResult: GitErrorCode = gitNoteCommitCreate(
                 notesCommitOut:         &notesCommitOID,
@@ -471,8 +470,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             var firstNoteOID = GitOID()
             
             let firstNoteCreateResult: GitErrorCode = gitNoteCreate(
@@ -481,7 +478,7 @@ final class NotesTests: XCTestCaseStopOnFail
                 notesRef    : nil,
                 author      : repository.signature,
                 committer   : repository.signature,
-                oid         : headOID,
+                oid         : repository.headOID,
                 note        : "First note",
                 force       : false
             )
@@ -602,8 +599,6 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
             var firstNoteOID = GitOID()
             
             let firstNoteCreateResult: GitErrorCode = gitNoteCreate(
@@ -612,7 +607,7 @@ final class NotesTests: XCTestCaseStopOnFail
                 notesRef    : nil,
                 author      : repository.signature,
                 committer   : repository.signature,
-                oid         : headOID,
+                oid         : repository.headOID,
                 note        : "First note",
                 force       : false
             )
@@ -709,7 +704,7 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository, _, _ in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
+            let headOID: GitOID = repository.headOID
             
             let noteRemoveResult: GitErrorCode = gitNoteRemove(
                 repo:       repository.pointer,
@@ -776,9 +771,8 @@ private extension NotesTests
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            var noteOID = GitOID()
+            let headOID : GitOID    = repository.headOID
+            var noteOID : GitOID    = GitOID()
             
             let noteCreateResult: GitErrorCode = gitNoteCreate(
                 out         : &noteOID,

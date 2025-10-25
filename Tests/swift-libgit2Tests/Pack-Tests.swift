@@ -77,14 +77,10 @@ final class PackTests: XCTestCaseStopOnFail
         {
             repository, packbuilderPointer in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            
-            
             let packbuilderInsertCommitResult: GitErrorCode
                 = gitPackbuilderInsertCommit(
                     pb:     packbuilderPointer,
-                    id:     headOID
+                    id:     repository.headOID
                 )
             
             XCTAssertOK(packbuilderInsertCommitResult)

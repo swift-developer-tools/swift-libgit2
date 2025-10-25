@@ -41,9 +41,8 @@ final class TagTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
-            
-            guard let headOIDString: String = gitOIDToStrS(oid: headOID)
+            guard let headOIDString: String
+                    = gitOIDToStrS(oid: repository.headOID)
             else
             {
                 throw NSError.makeError("The HEAD OID string was nil.")
@@ -450,13 +449,11 @@ final class TagTests: XCTestCaseStopOnFail
         try withTag
         {
             repository, tagPointer in
-        
-            let headOID: GitOID = OID.getHEADCommitOID(in: repository)
             
             let tagTargetOID: GitOID? = gitTagTargetID(tag: tagPointer)
             
             XCTAssertNotNil(tagTargetOID)
-            XCTAssertEqual(tagTargetOID, headOID)
+            XCTAssertEqual(tagTargetOID, repository.headOID)
         }
     }
     

@@ -100,6 +100,25 @@ struct Repository
     
     
     
+    /// The HEAD reference ID.
+    var headOID: GitOID
+    {
+        var headOID = GitOID()
+        
+        let referenceNameToIDResult: GitErrorCode = gitReferenceNameToID(
+            out:    &headOID,
+            repo:   pointer,
+            name:   "HEAD"
+        )
+        
+        XCTAssertOK(referenceNameToIDResult)
+        XCTAssertNotZeroOID(headOID)
+        
+        return headOID
+    }
+    
+    
+    
     /// Commits changes to the specified file with the given content and
     /// message.
     /// - Parameters:
