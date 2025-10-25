@@ -191,22 +191,20 @@ final class CommitTests: XCTestCaseStopOnFail
                 out, author, committer, messageEncoding, message,
                 tree, parentCount, parents, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard
+                    let payload: UnsafeMutableRawPointer = payload,
+                    let message = String(optionalCString: message)
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
                 let payloadPointer: UnsafeMutablePointer<CallbackData>
                     = payload.assumingMemoryBound(to: CallbackData.self)
                 
-                payloadPointer.pointee.callCount += 1
-                
-                if let lastMessage = String(optionalCString: message)
-                {
-                    payloadPointer.pointee.lastMessage = lastMessage
-                }
+                payloadPointer.pointee.callCount    += 1
+                payloadPointer.pointee.lastMessage  = message
                 
                 /// Let the rebase create the commit normally.
                 return GitErrorCode.gitPassthrough.rawValue

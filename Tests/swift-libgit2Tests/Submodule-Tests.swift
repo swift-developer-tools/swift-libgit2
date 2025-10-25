@@ -302,10 +302,12 @@ final class SubmoduleTests: XCTestCaseStopOnFail
             {
                 sm, name, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard
+                    let payload: UnsafeMutableRawPointer = payload,
+                    let name = String(optionalCString: name)
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
@@ -313,14 +315,6 @@ final class SubmoduleTests: XCTestCaseStopOnFail
                     = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.callCount += 1
-                
-                guard let name = String(optionalCString: name)
-                else
-                {
-                    XCTFail("The name was nil.")
-                    return GitErrorCode.gitUnknown(-123).rawValue
-                }
-                
                 payloadPointer.pointee.names.append(name)
                 
                 return GitErrorCode.gitOK.rawValue

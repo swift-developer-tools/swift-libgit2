@@ -492,7 +492,7 @@ final class ODBTests: XCTestCaseStopOnFail
                     let oidPointer  : UnsafePointer<git_oid>    = oidPointer
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 

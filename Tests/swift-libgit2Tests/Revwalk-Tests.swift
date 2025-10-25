@@ -622,17 +622,12 @@ private extension RevwalkTests
             {
                 commitOID, payload in
                 
-                guard let commitOID: git_oid = commitOID?.pointee
+                guard
+                    let commitOID   : UnsafePointer<git_oid>    = commitOID,
+                    let payload     : UnsafeMutableRawPointer   = payload
                 else
                 {
-                    XCTFail("The commit OID was nil.")
-                    return GitErrorCode.gitUnknown(-123).rawValue
-                }
-                
-                guard let payload: UnsafeMutableRawPointer = payload
-                else
-                {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
@@ -642,7 +637,7 @@ private extension RevwalkTests
                 payloadPointer.pointee.callCount += 1
                 
                 if gitOIDEqual(
-                    a:  GitOID(cValue: commitOID),
+                    a:  GitOID(cValue: commitOID.pointee),
                     b:  payloadPointer.pointee.hideCommitOID
                 )
                 {

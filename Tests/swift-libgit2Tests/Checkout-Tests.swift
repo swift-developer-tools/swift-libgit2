@@ -44,10 +44,12 @@ final class CheckoutTests: XCTestCaseStopOnFail
             {
                 why, path, baseline, target, workdir, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard
+                    let payload: UnsafeMutableRawPointer = payload,
+                    let path = String(optionalCString: path)
                 else
                 {
-                    XCTFail("The payload was nil.")
+                    XCTFail("All or some callback parameters were nil.")
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
@@ -56,11 +58,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 
                 payloadPointer.pointee.notifyCallCount      += 1
                 payloadPointer.pointee.lastNotifyReason     = GitCheckoutNotifyT(rawValue: why.rawValue)
-                
-                if let path = String(optionalCString: path)
-                {
-                    payloadPointer.pointee.lastNotifyPath = path
-                }
+                payloadPointer.pointee.lastNotifyPath       = path
                 
                 return GitErrorCode.gitOK.rawValue
             }
@@ -74,6 +72,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
                 {
+                    XCTFail("The payload pointer was nil.")
                     return
                 }
                 
@@ -83,11 +82,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 payloadPointer.pointee.progressCallCount    += 1
                 payloadPointer.pointee.lastCompletedSteps   = completedSteps
                 payloadPointer.pointee.lastTotalSteps       = totalSteps
-                
-                if let path = String(optionalCString: path)
-                {
-                    payloadPointer.pointee.lastPath = path
-                }
+                payloadPointer.pointee.lastPath             = String(optionalCString: path)
             }
             
             
@@ -101,6 +96,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                     let payload     : UnsafeMutableRawPointer               = payload
                 else
                 {
+                    XCTFail("All or some callback parameters were nil.")
                     return
                 }
                 

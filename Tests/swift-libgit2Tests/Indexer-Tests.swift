@@ -213,17 +213,12 @@ private extension IndexerTests
         {
             data, size, payload in
             
-            guard let data: UnsafeMutableRawPointer = data
+            guard
+                let data    : UnsafeMutableRawPointer   = data,
+                let payload : UnsafeMutableRawPointer   = payload
             else
             {
-                XCTFail("The data was nil.")
-                return GitErrorCode.gitUnknown(-123).rawValue
-            }
-            
-            guard let payload: UnsafeMutableRawPointer = payload
-            else
-            {
-                XCTFail("The payload was nil.")
+                XCTFail("All or some callback parameters were nil.")
                 return GitErrorCode.gitUnknown(-123).rawValue
             }
             
