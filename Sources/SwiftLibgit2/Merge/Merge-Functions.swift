@@ -290,11 +290,11 @@ public func gitMergeBaseMany(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return out.withMutatingCValue
         {
             cOut in
             
-            return try inputArray.withArrayOfGitOIDs
+            return inputArray.withArrayOfGitOIDs
             {
                 cInputArray, cInputArrayCount in
                 
@@ -371,7 +371,7 @@ public func gitMergeBasesMany(
         {
             cOut in
             
-            return try inputArray.withArrayOfGitOIDs
+            return inputArray.withArrayOfGitOIDs
             {
                 cInputArray, cInputArrayCount in
                 
@@ -409,11 +409,11 @@ public func gitMergeBaseOctopus(
 {
     return withCConversion
     {
-        return try out.withMutatingCValue
+        return out.withMutatingCValue
         {
             cOut in
             
-            return try inputArray.withArrayOfGitOIDs
+            return inputArray.withArrayOfGitOIDs
             {
                 cInputArray, cInputArrayCount in
                 

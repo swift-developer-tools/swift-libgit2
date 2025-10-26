@@ -18,10 +18,9 @@ internal extension Array where Element == GitOID
     /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
     func withArrayOfGitOIDs<T>(
         _ body: (UnsafePointer<git_oid>?, Int) throws -> T
-    ) throws -> T
+    ) rethrows -> T
     {
         guard !self.isEmpty
         else
@@ -31,24 +30,12 @@ internal extension Array where Element == GitOID
         
         
         
-        let arrayOfOIDs: [git_oid] = self.map { $0.cValue() }
+        var arrayOfOIDs: [git_oid] = self.map { $0.cValue() }
         
-        return try arrayOfOIDs.withUnsafeBufferPointer
-        {
-            arrayOfOIDsBufferPointer in
-            
-            guard let baseAddress: UnsafePointer<git_oid>
-                    = arrayOfOIDsBufferPointer.baseAddress
-            else
-            {
-                throw NSError.makeCConversionError()
-            }
-            
-            return try body(
-                baseAddress,
-                arrayOfOIDs.count
-            )
-        }
+        return try body(
+            &arrayOfOIDs,
+            arrayOfOIDs.count
+        )
     }
     
     

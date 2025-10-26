@@ -94,7 +94,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             
-            try arrayOfOIDs.withArrayOfGitOIDs
+            arrayOfOIDs.withArrayOfGitOIDs
             {
                 cArrayOfOIDs, cArrayOfOIDsCount in
                 
@@ -119,7 +119,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             
-            try [].withArrayOfGitOIDs
+            [].withArrayOfGitOIDs
             {
                 cOIDs, cOIDsCount in
                 
@@ -153,7 +153,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             
-            try outerArrayOfOIDs.withArrayOfGitOIDs
+            outerArrayOfOIDs.withArrayOfGitOIDs
             {
                 cOuterArrayOfOIDs, cOuterArrayOfOIDsCount in
                 
@@ -176,7 +176,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 
                 
                 
-                try innerArrayOfOIDs.withArrayOfGitOIDs
+                innerArrayOfOIDs.withArrayOfGitOIDs
                 {
                     cInnerArrayOfOIDs, cInnerArrayOfOIdsCount in
                     
