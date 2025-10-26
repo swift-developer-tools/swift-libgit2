@@ -709,7 +709,7 @@ public func gitCommitExtractSignature(
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
 ///   array of `git_commit` instances, of length `parentCount`. All the given
-///   commits must be owned by `repo`.
+///   commits must belong to the given repository.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -921,7 +921,7 @@ public func gitCommitAmend(
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
 ///   array of `git_commit` instances, of length `parentCount`. All the given
-///   commits must be owned by `repo`.
+///   commits must belong to the given repository.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
