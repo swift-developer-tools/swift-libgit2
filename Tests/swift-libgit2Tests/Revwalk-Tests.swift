@@ -797,7 +797,7 @@ private extension RevwalkTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 revwalkPointer
             )

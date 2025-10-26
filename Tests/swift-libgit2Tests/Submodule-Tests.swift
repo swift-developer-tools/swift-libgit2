@@ -1275,7 +1275,7 @@ private extension SubmoduleTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 submodulePointer
             )
