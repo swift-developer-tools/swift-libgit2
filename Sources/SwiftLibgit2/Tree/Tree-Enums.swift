@@ -11,7 +11,101 @@ import CLibgit2
 
 
 
-/// The valid modes for index and tree entries.
+/// Tree traversal modes.
+///
+/// ## C Equivalent
+///
+/// [`git_treewalk_mode`](https://libgit2.org/docs/reference/main/tree/git_treewalk_mode.html)
+public enum GitTreewalkMode: UInt32, CEnum
+{
+    /// Pre-order.
+    case gitTreewalkPre     = 0
+    
+    /// Post-order.
+    case gitTreewalkPost    = 1
+
+    
+    
+    /// Initializes a ``GitTreewalkMode`` instance from the given
+    /// `git_treewalk_mode` instance.
+    /// - Parameter treewalkMode: The `git_treewalk_mode` instance to use.
+    internal init?(
+        cValue treewalkMode: git_treewalk_mode
+    )
+    {
+        switch treewalkMode
+        {
+            case GIT_TREEWALK_PRE   : self = .gitTreewalkPre
+            case GIT_TREEWALK_POST  : self = .gitTreewalkPost
+            default                 : return nil
+        }
+    }
+    
+    
+    
+    /// Converts the ``GitTreewalkMode`` instance into a `git_treewalk_mode`
+    /// instance.
+    /// - Returns: The `git_treewalk_mode` instance.
+    internal func cValue() -> git_treewalk_mode
+    {
+        switch self
+        {
+            case .gitTreewalkPre    : return GIT_TREEWALK_PRE
+            case .gitTreewalkPost   : return GIT_TREEWALK_POST
+        }
+    }
+}
+
+
+
+/// Tree update types.
+///
+/// ## C Equivalent
+///
+/// [`git_tree_update_t`](https://libgit2.org/docs/reference/main/tree/git_tree_update_t.html)
+public enum GitTreeUpdateT: UInt32, CEnum
+{
+    /// Update or insert an entry.
+    case gitTreeUpdateUpsert    = 0
+    
+    /// Remove an entry.
+    case gitTreeUpdateRemove    = 1
+
+    
+    
+    /// Initializes a ``GitTreeUpdateT`` instance from the given
+    /// `git_tree_update_t` instance.
+    /// - Parameter treeUpdate: The `git_tree_update_t` instance to use.
+    internal init?(
+        cValue treeUpdate: git_tree_update_t
+    )
+    {
+        switch treeUpdate
+        {
+            case GIT_TREE_UPDATE_UPSERT : self = .gitTreeUpdateUpsert
+            case GIT_TREE_UPDATE_REMOVE : self = .gitTreeUpdateRemove
+            default                     : return nil
+        }
+    }
+    
+    
+    
+    /// Converts the ``GitTreeUpdateT`` instance into a `git_tree_update_t`
+    /// instance.
+    /// - Returns: The `git_tree_update_t` instance.
+    internal func cValue() -> git_tree_update_t
+    {
+        switch self
+        {
+            case .gitTreeUpdateUpsert   : return GIT_TREE_UPDATE_UPSERT
+            case .gitTreeUpdateRemove   : return GIT_TREE_UPDATE_REMOVE
+        }
+    }
+}
+
+
+
+/// The valid UNIX file attributes for index and tree entries.
 ///
 /// ## C Equivalent
 ///
