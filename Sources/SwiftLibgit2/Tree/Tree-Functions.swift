@@ -31,13 +31,16 @@ public func gitTreeLookup(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_tree_lookup(
-            out,
-            repo,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_tree_lookup(
+                out,
+                repo,
+                cID
+            )
+        }
     }
 }
 
@@ -68,14 +71,17 @@ public func gitTreeLookupPrefix(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_tree_lookup_prefix(
-            out,
-            repo,
-            &cID,
-            len
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_tree_lookup_prefix(
+                out,
+                repo,
+                cID,
+                len
+            )
+        }
     }
 }
 
@@ -243,12 +249,15 @@ public func gitTreeEntryByID(
     id      : GitOID
 ) -> OpaquePointer?
 {
-    var cID: git_oid = id.cValue()
-    
-    return git_tree_entry_byid(
-        tree,
-        &cID
-    )
+    return id.withCValue
+    {
+        cID in
+        
+        return git_tree_entry_byid(
+            tree,
+            cID
+        )
+    }
 }
 
 
@@ -646,15 +655,18 @@ public func gitTreebuilderInsert(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_treebuilder_insert(
-            out,
-            bld,
-            fileName,
-            &cID,
-            fileMode.cValue()
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_treebuilder_insert(
+                out,
+                bld,
+                fileName,
+                cID,
+                fileMode.cValue()
+            )
+        }
     }
 }
 

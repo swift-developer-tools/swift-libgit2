@@ -32,13 +32,16 @@ public func gitBlobLookup(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_blob_lookup(
-            blob,
-            repo,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_blob_lookup(
+                blob,
+                repo,
+                cID
+            )
+        }
     }
 }
 
@@ -69,14 +72,17 @@ public func gitBlobLookupPrefix(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_blob_lookup_prefix(
-            blob,
-            repo,
-            &cID,
-            len
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_blob_lookup_prefix(
+                blob,
+                repo,
+                cID,
+                len
+            )
+        }
     }
 }
 

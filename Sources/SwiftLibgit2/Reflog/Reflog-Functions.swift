@@ -82,18 +82,21 @@ public func gitReflogAppend(
 {
     return withCConversion
     {
-        return try committer.withCValue
+        return try id.withCValue
         {
-            cCommitter in
+            cID in
             
-            var cID: git_oid = id.cValue()
-            
-            return git_reflog_append(
-                reflog,
-                &cID,
-                cCommitter,
-                msg
-            )
+            return try committer.withCValue
+            {
+                cCommitter in
+                
+                return git_reflog_append(
+                    reflog,
+                    cID,
+                    cCommitter,
+                    msg
+                )
+            }
         }
     }
 }

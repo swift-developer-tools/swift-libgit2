@@ -476,7 +476,7 @@ final class AttrTests: XCTestCaseStopOnFail
             XCTAssertNil(attrOptions.commitID)
             XCTAssertZeroOID(attrOptions.attrCommitID)
             
-            attrOptions.withCValue
+            try attrOptions.withCValue
             {
                 cAttrOptions in
                 

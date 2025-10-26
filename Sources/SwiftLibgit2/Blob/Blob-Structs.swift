@@ -116,22 +116,11 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible, Sendable
         blobFilterOptions.flags             = flags.rawValue
         blobFilterOptions.attr_commit_id    = attrCommitID.cValue()
         
-        if let commitID: GitOID = commitID
+        return try commitID.withOptionalCValue
         {
-            var cCommitID: git_oid = commitID.cValue()
+            cCommitID in
             
-            return try withUnsafeMutablePointer(to: &cCommitID)
-            {
-                commitIDPointer in
-                
-                blobFilterOptions.commit_id = commitIDPointer
-                
-                return try body(&blobFilterOptions)
-            }
-        }
-        else
-        {
-            blobFilterOptions.commit_id = nil
+            blobFilterOptions.commit_id = cCommitID
             
             return try body(&blobFilterOptions)
         }

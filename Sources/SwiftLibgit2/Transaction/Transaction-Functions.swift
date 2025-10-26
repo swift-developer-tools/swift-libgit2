@@ -93,19 +93,22 @@ public func gitTransactionSetTarget(
 {
     return withCConversion
     {
-        return try sig.withOptionalCValue
+        return try target.withCValue
         {
-            cSig in
+            cTarget in
             
-            var cTarget: git_oid = target.cValue()
-            
-            return git_transaction_set_target(
-                tx,
-                refName,
-                &cTarget,
-                cSig,
-                msg
-            )
+            return try sig.withOptionalCValue
+            {
+                cSig in
+                
+                return git_transaction_set_target(
+                    tx,
+                    refName,
+                    cTarget,
+                    cSig,
+                    msg
+                )
+            }
         }
     }
 }

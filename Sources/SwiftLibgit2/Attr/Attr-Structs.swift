@@ -85,9 +85,10 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible, Sendable
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_attr_options>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var attrOptions = git_attr_options()
         
@@ -95,22 +96,11 @@ public struct GitAttrOptions: CStructMutable, WithCConvertible, Sendable
         attrOptions.flags           = flags.rawValue
         attrOptions.attr_commit_id  = attrCommitID.cValue()
         
-        if let commitID: GitOID = commitID
+        return try commitID.withOptionalCValue
         {
-            var cCommitID: git_oid = commitID.cValue()
+            cCommitID in
             
-            return try withUnsafeMutablePointer(to: &cCommitID)
-            {
-                commitIDPointer in
-                
-                attrOptions.commit_id = commitIDPointer
-                
-                return try body(&attrOptions)
-            }
-        }
-        else
-        {
-            attrOptions.commit_id = nil
+            attrOptions.commit_id = cCommitID
             
             return try body(&attrOptions)
         }

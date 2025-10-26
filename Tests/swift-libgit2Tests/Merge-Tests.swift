@@ -925,7 +925,7 @@ final class MergeTests: XCTestCaseStopOnFail
             XCTAssertEqual(GitMergeFlagT(rawValue: cMergeOptions.pointee.flags), [])
             XCTAssertEqual(cMergeOptions.pointee.rename_threshold, 50)
             XCTAssertEqual(cMergeOptions.pointee.target_limit, 200)
-            XCTAssertNotNil(cMergeOptions.pointee.metric)
+            XCTAssertNil(cMergeOptions.pointee.metric)
             XCTAssertEqual(cMergeOptions.pointee.recursion_limit, 0)
             XCTAssertNil(cMergeOptions.pointee.default_driver)
             XCTAssertEqual(GitMergeFileFavorT(cValue: cMergeOptions.pointee.file_favor), .gitMergeFileFavorNormal)

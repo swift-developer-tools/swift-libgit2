@@ -11,19 +11,19 @@
 ///
 /// ## Discussion
 ///
-/// These protocols standardize the implementation of Swift binding structs
+/// These protocols standardize the implementation of Swift binding types
 /// that can be converted to their C equivalents using an instance method.
 ///
-/// ### Conforming Structs
+/// ### Conforming Types
 ///
-/// All Swift binding structs that indirectly conform to ``CStruct`` must
+/// All Swift binding types that indirectly conform to ``CStruct`` must
 /// also conform to one of the following protocols:
 ///
 /// - ``CConvertible`` (non-throwing, without memory management)
 /// - ``ThrowingCConvertible`` (throwing, without memory management)
 /// - ``WithCConvertible`` (throwing, with memory management)
 ///
-/// Structs that directly conform to ``CStruct`` (and are unused by other
+/// Types that directly conform to ``CStruct`` (and are unused by other
 /// bindings) must not conform to any of these protocols. See the ``CStruct``
 /// documentation for more information.
 ///
@@ -34,46 +34,47 @@
 ///
 /// ### Protocol Choice
 ///
-/// The protocol used by a struct depends on the conversion process and whether
+/// The protocol used by a type depends on the conversion process and whether
 /// the conversion can fail.
 ///
-/// Structs that can be converted using only simple field assignment (creating
-/// a C struct and directly returning it) must conform to ``CConvertible`` or
-/// ``ThrowingCConvertible``. Any structs with an initialization method involve
-/// the possibility of failure during conversion, so these structs must conform
+/// Types that can be converted using only simple field assignment (creating
+/// a C type and directly returning it) must conform to ``CConvertible`` or
+/// ``ThrowingCConvertible``. Any types with an initialization method involve
+/// the possibility of failure during conversion, so these types must conform
 /// to ``ThrowingCConvertible``.
 ///
-/// Structs that must be converted with memory management (using closures to
+/// Types that must be converted with memory management (using closures to
 /// ensure proper lifetime of C values and other nested conversions) must
 /// conform to ``WithCConvertible``.
 ///
-/// Structs must use ``NSError/makeCConversionError()`` to create conversion
+/// Types must use ``NSError/makeCConversionError()`` to create conversion
 /// errors.
 ///
 /// ## Methods vs Properties
 ///
-/// Structs that can be converted using only simple field assignment without
+/// Types that can be converted using only simple field assignment without
 /// memory management would theoretically be able to use a computed property
 /// instead of an instance method.
 ///
-/// However, computed properties are not used for C conversion, since they
+/// However, computed properties are not used for C conversion since they
 /// cannot throw an error. The only recourse for conversion failure in a
-/// computed property is to return an optional value.
+/// computed property is to return an optional value, which could lead to
+/// silent failures. ``CConvertible`` does not throw an error but still uses
+/// a method for consistency with the other protocols.
 ///
 /// ### Optional Receivers
 ///
 /// ``WithCConvertible`` includes default implementations of
 /// ``withOptionalCValue(_:)``, which can be used to reduce overhead at call
-/// sites by eliminating the need to guard against optional structs when
+/// sites by eliminating the need to guard against optional types when
 /// converting them to their C equivalents.
 ///
-/// ``CConvertible`` and ``ThrowingCConvertible`` do not provide equivalent
-/// optional handling extensions. These protocols are generally used by structs
-/// that pass the equivalent C value directly to C functions (not as pointers),
-/// so the standard optional chaining syntax `object?.cValue()` is more
-/// appropriate. For cases where a pointer is needed, a simple `guard` statement
-/// provides clear control flow without adding protocol complexity for an
-/// uncommon use case.
+/// ``CConvertible`` and ``ThrowingCConvertible`` both conform to
+/// ``WithCConvertible`` and provide default implementations of
+/// ``withCValue(_:)``. Conforming types must not override this method.
+/// This allows all convertible types to use ``withCValue(_:)`` and
+/// ``withOptionalCValue(_:)`` to reduce overhead at call sites, especially
+/// for optional values that otherwise would require `guard` statements.
 ///
 /// ### Preventing Silent Failure
 ///
@@ -106,7 +107,7 @@
 
 /// A type that can be converted to the equivalent C value, without memory
 /// management and without the possibility of failure.
-internal protocol CConvertible
+internal protocol CConvertible: WithCConvertible
 {
     /// The type of the equivalent C value.
     associatedtype C
@@ -126,7 +127,7 @@ internal protocol CConvertible
 
 /// A type that can be converted to the equivalent C value, without
 /// memory management and with the possibility of failure.
-internal protocol ThrowingCConvertible
+internal protocol ThrowingCConvertible: WithCConvertible
 {
     /// The type of the equivalent C value.
     associatedtype C
@@ -186,6 +187,43 @@ internal protocol WithCConvertible
 
 
 // MARK: - Extensions
+
+internal extension CConvertible
+{
+    /// Calls the given closure with a mutable pointer to the equivalent C
+    /// value.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    func withCValue<T>(
+        _ body: (UnsafeMutablePointer<C>) throws -> T
+    ) rethrows -> T
+    {
+        var cValue: C = cValue()
+        
+        return try body(&cValue)
+    }
+}
+
+
+
+internal extension ThrowingCConvertible
+{
+    /// Calls the given closure with a mutable pointer to the equivalent C
+    /// value.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    func withCValue<T>(
+        _ body: (UnsafeMutablePointer<C>) throws -> T
+    ) throws -> T
+    {
+        var cValue: C = try cValue()
+        
+        return try body(&cValue)
+    }
+}
+
+
 
 internal extension WithCConvertible
 {

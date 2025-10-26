@@ -216,7 +216,7 @@ final class FilterTests: XCTestCaseStopOnFail
         XCTAssertNil(filterOptions.commitID)
         XCTAssertZeroOID(filterOptions.attrCommitID)
         
-        filterOptions.withCValue
+        try filterOptions.withCValue
         {
             cFilterOptions in
             

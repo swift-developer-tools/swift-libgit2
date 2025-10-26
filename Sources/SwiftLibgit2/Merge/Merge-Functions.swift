@@ -213,15 +213,22 @@ public func gitMergeBase(
         {
             cOut in
             
-            var cOne    : git_oid   = one.cValue()
-            var cTwo    : git_oid   = two.cValue()
-            
-            return git_merge_base(
-                cOut,
-                repo,
-                &cOne,
-                &cTwo
-            )
+            return one.withCValue
+            {
+                cOne in
+                
+                return two.withCValue
+                {
+                    cTwo in
+                    
+                    return git_merge_base(
+                        cOut,
+                        repo,
+                        cOne,
+                        cTwo
+                    )
+                }
+            }
         }
     }
 }
@@ -254,15 +261,22 @@ public func gitMergeBases(
         {
             cOut in
             
-            var cOne    : git_oid   = one.cValue()
-            var cTwo    : git_oid   = two.cValue()
-            
-            return git_merge_bases(
-                cOut,
-                repo,
-                &cOne,
-                &cTwo
-            )
+            return one.withCValue
+            {
+                cOne in
+                
+                return two.withCValue
+                {
+                    cTwo in
+                    
+                    return git_merge_bases(
+                        cOut,
+                        repo,
+                        cOne,
+                        cTwo
+                    )
+                }
+            }
         }
     }
 }

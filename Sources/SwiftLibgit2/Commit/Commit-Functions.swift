@@ -33,13 +33,16 @@ public func gitCommitLookup(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_commit_lookup(
-            commit,
-            repo,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_commit_lookup(
+                commit,
+                repo,
+                cID
+            )
+        }
     }
 }
 
@@ -71,14 +74,17 @@ public func gitCommitLookupPrefix(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_commit_lookup_prefix(
-            commit,
-            repo,
-            &cID,
-            len
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_commit_lookup_prefix(
+                commit,
+                repo,
+                cID,
+                len
+            )
+        }
     }
 }
 
@@ -671,8 +677,6 @@ public func gitCommitExtractSignature(
 {
     return withCConversion
     {
-        var cCommitID: git_oid = commitID.cValue()
-        
         return try signature.withMutatingGitBuf
         {
             cSignature in
@@ -681,13 +685,18 @@ public func gitCommitExtractSignature(
             {
                 cSignedData in
                 
-                return git_commit_extract_signature(
-                    cSignature,
-                    cSignedData,
-                    repo,
-                    &cCommitID,
-                    field
-                )
+                return commitID.withCValue
+                {
+                    cCommitID in
+                    
+                    return git_commit_extract_signature(
+                        cSignature,
+                        cSignedData,
+                        repo,
+                        cCommitID,
+                        field
+                    )
+                }
             }
         }
     }

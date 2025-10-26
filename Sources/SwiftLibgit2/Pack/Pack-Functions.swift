@@ -86,13 +86,16 @@ public func gitPackbuilderInsert(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_packbuilder_insert(
-            pb,
-            &cID,
-            name
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_packbuilder_insert(
+                pb,
+                cID,
+                name
+            )
+        }
     }
 }
 
@@ -120,12 +123,15 @@ public func gitPackbuilderInsertTree(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_packbuilder_insert_tree(
-            pb,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_packbuilder_insert_tree(
+                pb,
+                cID
+            )
+        }
     }
 }
 
@@ -153,12 +159,15 @@ public func gitPackbuilderInsertCommit(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_packbuilder_insert_commit(
-            pb,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_packbuilder_insert_commit(
+                pb,
+                cID
+            )
+        }
     }
 }
 
@@ -216,13 +225,16 @@ public func gitPackbuilderInsertRecur(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_packbuilder_insert_recur(
-            pb,
-            &cID,
-            name
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_packbuilder_insert_recur(
+                pb,
+                cID,
+                name
+            )
+        }
     }
 }
 

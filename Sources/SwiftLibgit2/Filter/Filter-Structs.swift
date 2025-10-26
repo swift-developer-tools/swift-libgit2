@@ -86,9 +86,10 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_filter_options>) throws -> T
-    ) rethrows -> T
+    ) throws -> T
     {
         var filterOptions = git_filter_options()
         
@@ -96,22 +97,11 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
         filterOptions.flags             = flags.rawValue
         filterOptions.attr_commit_id    = attrCommitID.cValue()
         
-        if let commitID: GitOID = commitID
+        return try commitID.withOptionalCValue
         {
-            var cCommitID: git_oid = commitID.cValue()
+            cCommitID in
             
-            return try withUnsafeMutablePointer(to: &cCommitID)
-            {
-                commitIDPointer in
-                
-                filterOptions.commit_id = commitIDPointer
-                
-                return try body(&filterOptions)
-            }
-        }
-        else
-        {
-            filterOptions.commit_id = nil
+            filterOptions.commit_id = cCommitID
             
             return try body(&filterOptions)
         }

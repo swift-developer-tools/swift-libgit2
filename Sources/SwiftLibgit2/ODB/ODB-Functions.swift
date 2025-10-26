@@ -155,13 +155,16 @@ public func gitODBRead(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_odb_read(
-            obj,
-            db,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_odb_read(
+                obj,
+                db,
+                cID
+            )
+        }
     }
 }
 
@@ -196,14 +199,17 @@ public func gitODBReadPrefix(
 {
     return withCConversion
     {
-        var cShortID: git_oid = shortID.cValue()
-        
-        return git_odb_read_prefix(
-            obj,
-            db,
-            &cShortID,
-            len
-        )
+        return shortID.withCValue
+        {
+            cShortID in
+            
+            return git_odb_read_prefix(
+                obj,
+                db,
+                cShortID,
+                len
+            )
+        }
     }
 }
 
@@ -240,14 +246,17 @@ public func gitODBReadHeader(
         {
             cTypeOut in
             
-            var cID: git_oid = id.cValue()
-            
-            return git_odb_read_header(
-                lenOut,
-                cTypeOut,
-                db,
-                &cID
-            )
+            return id.withCValue
+            {
+                cID in
+                
+                return git_odb_read_header(
+                    lenOut,
+                    cTypeOut,
+                    db,
+                    cID
+                )
+            }
         }
     }
 }
@@ -269,12 +278,15 @@ public func gitODBExists(
     id  : GitOID
 ) -> Bool
 {
-    var cID: git_oid = id.cValue()
-    
-    let exists: Int32 = git_odb_exists(
-        db,
-        &cID
-    )
+    let exists: Int32 = id.withCValue
+    {
+        cID in
+        
+        return git_odb_exists(
+            db,
+            cID
+        )
+    }
     
     return Bool(exists)
 }
@@ -298,13 +310,16 @@ public func gitODBExistsExt(
     flags   : GitODBLookupFlagsT
 ) -> Bool
 {
-    var cID: git_oid = id.cValue()
-    
-    let exists: Int32 = git_odb_exists_ext(
-        db,
-        &cID,
-        flags.rawValue
-    )
+    let exists: Int32 = id.withCValue
+    {
+        cID in
+        
+        return git_odb_exists_ext(
+            db,
+            cID,
+            flags.rawValue
+        )
+    }
     
     return Bool(exists)
 }
@@ -344,14 +359,17 @@ public func gitODBExistsPrefix(
         {
             cOut in
             
-            var cShortID: git_oid = shortID.cValue()
-            
-            return git_odb_exists_prefix(
-                cOut,
-                db,
-                &cShortID,
-                len
-            )
+            return shortID.withCValue
+            {
+                cShortID in
+                
+                return git_odb_exists_prefix(
+                    cOut,
+                    db,
+                    cShortID,
+                    len
+                )
+            }
         }
     }
 }
@@ -734,15 +752,18 @@ public func gitODBOpenRStream(
         {
             cType in
             
-            var cOID: git_oid = oid.cValue()
-            
-            return git_odb_open_rstream(
-                out,
-                len,
-                cType,
-                db,
-                &cOID
-            )
+            return oid.withCValue
+            {
+                cOID in
+                
+                return git_odb_open_rstream(
+                    out,
+                    len,
+                    cType,
+                    db,
+                    cOID
+                )
+            }
         }
     }
 }

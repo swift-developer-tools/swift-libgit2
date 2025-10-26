@@ -68,27 +68,18 @@ public func gitIndexerNew(
 {
     return withCConversion
     {
-        guard let opts: GitIndexerOptions = opts
-        else
+        return try opts.withOptionalCValue
         {
+            cOpts in
+            
             return git_indexer_new(
                 out,
                 path,
                 mode,
                 odb,
-                nil
+                cOpts
             )
         }
-        
-        var cOpts: git_indexer_options = try opts.cValue()
-        
-        return git_indexer_new(
-            out,
-            path,
-            mode,
-            odb,
-            &cOpts
-        )
     }
 }
 
