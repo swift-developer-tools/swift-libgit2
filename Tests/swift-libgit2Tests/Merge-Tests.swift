@@ -483,7 +483,7 @@ final class MergeTests: XCTestCaseStopOnFail
     
     func testGitMergeFile() throws
     {
-        let fileMode        : UInt32    = 0o100644
+        let fileMode        : UInt32    = UInt32(GitFileModeT.gitFileModeBlob.rawValue)
         let fileName        : String    = "test.txt"
         let ancestorContent : String    = "Line 1\nLine 2\nLine 3\n"
         let ourContent      : String    = "Line 1\nLine 2\nLine 3\n"
@@ -562,7 +562,7 @@ final class MergeTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let fileMode    : UInt32    = 0o100644
+            let fileMode    : UInt32    = UInt32(GitFileModeT.gitFileModeBlob.rawValue)
             let fileName    : String    = "merge.txt"
             let fileContent : String    = "Initial content\n"
             

@@ -36,10 +36,12 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
+            let fileMode = UInt32(GitFileModeT.gitFileModeBlob.rawValue)
+            
             var indexEntry = GitIndexEntry()
             
             indexEntry.path     = "custom-entry.txt"
-            indexEntry.mode     = 0o100644
+            indexEntry.mode     = fileMode
             indexEntry.id       = blobOID
             
             
@@ -61,7 +63,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertNotNil(retrievedIndexEntry)
             XCTAssertEqual(retrievedIndexEntry?.path, indexEntry.path)
-            XCTAssertEqual(retrievedIndexEntry?.mode, 0o100644)
+            XCTAssertEqual(retrievedIndexEntry?.mode, fileMode)
             XCTAssertEqual(retrievedIndexEntry?.id, blobOID)
         }
     }
@@ -176,10 +178,12 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
+            let fileMode = UInt32(GitFileModeT.gitFileModeBlob.rawValue)
+            
             var indexEntry = GitIndexEntry()
             
             indexEntry.path     = "buffer-file.txt"
-            indexEntry.mode     = 0o100644
+            indexEntry.mode     = fileMode
             
             
             
@@ -211,7 +215,7 @@ final class IndexTests: XCTestCaseStopOnFail
             }
             
             XCTAssertEqual(retrievedIndexEntry.path, indexEntry.path)
-            XCTAssertEqual(retrievedIndexEntry.mode, 0o100644)
+            XCTAssertEqual(retrievedIndexEntry.mode, fileMode)
             XCTAssertNotZeroOID(retrievedIndexEntry.id)
             
             Blob.validateBlobContent(

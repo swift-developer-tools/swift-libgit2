@@ -72,8 +72,8 @@ final class ODBBackendTests: XCTestCaseStopOnFail
                 objectsDir:         objectsDirectoryURL.path(),
                 compressionLevel:   9,
                 doFSync:            true,
-                dirMode:            0o755,
-                fileMode:           0o644
+                dirMode:            UInt32(GitFileModeT.gitFileModeBlobExecutable.rawValue),
+                fileMode:           UInt32(GitFileModeT.gitFileModeBlob.rawValue)
             )
             
             XCTAssertOK(odbBackendLooseResult)
