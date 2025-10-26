@@ -545,9 +545,9 @@ private extension PathspecTests
     /// - Parameters:
     ///   - matchListPointer: The pathspec match list to validate. The
     ///   underlying type must be `git_pathspec_match_list`.
-    ///   - expectedMatches: The expcted matching filenames.
+    ///   - expectedMatches: The expcted matching file names.
     ///   - expectDiffEntries: Whether to expect diff entries instead of
-    ///   filenames.
+    ///   file names.
     /// - Throws: An error if an operation fails.
     func validateMatchList(
         _ matchListPointer  : OpaquePointer?,
@@ -594,7 +594,7 @@ private extension PathspecTests
             )
             else
             {
-                XCTFail("The filename was nil.")
+                XCTFail("The file name was nil.")
                 return
             }
             

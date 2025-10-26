@@ -73,7 +73,7 @@ public struct GitFeatureT: COptionSet
     /// This feature is always available.
     public static let gitFeatureRegex           = GitFeatureT(rawValue: GIT_FEATURE_REGEX.rawValue)
     
-    /// Internationalization support for filename translation.
+    /// Internationalization support for file name translation.
     public static let gitFeatureI18N            = GitFeatureT(rawValue: GIT_FEATURE_I18N.rawValue)
     
     /// NTLM support over HTTPS.

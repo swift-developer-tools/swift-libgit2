@@ -272,12 +272,12 @@ public func gitPathspecMatchListEntryCount(
 
 
 
-/// Gets the filename of the specified entry in the given pathspec match list.
+/// Gets the file name of the specified entry in the given pathspec match list.
 /// - Parameters:
 ///   - m: The pathspec match list to use. The underlying type must be
 ///   `git_pathspec_match_list`.
 ///   - pos: The index of the entry to retrieve.
-/// - Returns: The filename of the specified entry in the given pathspec match
+/// - Returns: The file name of the specified entry in the given pathspec match
 /// list.
 ///
 /// ## Discussion
@@ -356,13 +356,13 @@ public func gitPathspecMatchListFailedEntryCount(
 
 
 
-/// Gets the filename of the specified unmatched entry in the given pathspec
+/// Gets the file name of the specified unmatched entry in the given pathspec
 /// match list.
 /// - Parameters:
 ///   - m: The pathspec match list to use. The underlying type must be
 ///   `git_pathspec_match_list`.
 ///   - pos: The index of the entry to retrieve.
-/// - Returns: The filename of the specified unmatched entry in the given
+/// - Returns: The file name of the specified unmatched entry in the given
 /// pathspec match list.
 ///
 /// ## C Equivalent

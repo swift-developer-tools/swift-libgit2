@@ -77,10 +77,10 @@ public func gitPatchFromDiff(
 ///   be `git_patch`.
 ///   - oldBlob: The blob for the old side of the diff. The underlying type
 ///   must be `git_blob`.
-///   - oldAsPath: The filename to use for `oldBlob`.
+///   - oldAsPath: The file name to use for `oldBlob`.
 ///   - newBlob: The blob for the new side of the diff. The underlying type
 ///   must be `git_blob`.
-///   - newAsPath: The filename to use for `newBlob`.
+///   - newAsPath: The file name to use for `newBlob`.
 ///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -129,10 +129,10 @@ public func gitPatchFromBlobs(
 ///   be `git_patch`.
 ///   - oldBlob: The blob for the old side of the diff. The underlying type
 ///   must be `git_blob`.
-///   - oldAsPath: The filename to use for `oldBlob`.
+///   - oldAsPath: The file name to use for `oldBlob`.
 ///   - buffer: The raw data for the new side of the diff.
 ///   - bufferLen: The length of `buffer`.
-///   - bufferAsPath: The filename to use for `buffer`.
+///   - bufferAsPath: The file name to use for `buffer`.
 ///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -188,10 +188,10 @@ public func gitPatchFromBlobAndBuffer(
 ///   be `git_patch`.
 ///   - oldBuffer: The raw data for the old side of the diff.
 ///   - oldBufferLen: The length of `oldBuffer`.
-///   - oldAsPath: The filename to use for `oldBuffer`.
+///   - oldAsPath: The file name to use for `oldBuffer`.
 ///   - newBuffer: The raw data for the new side of the diff.
 ///   - newBufferLen: The length of `newBuffer`.
-///   - newAsPath: The filename to use for `newBuffer`.
+///   - newAsPath: The file name to use for `newBuffer`.
 ///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

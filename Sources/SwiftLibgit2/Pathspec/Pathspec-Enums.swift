@@ -75,7 +75,7 @@ public struct GitPathspecFlagT: COptionSet
     /// did not match any files.
     public static let gitPathspecFindFailures   = GitPathspecFlagT(rawValue: GIT_PATHSPEC_FIND_FAILURES.rawValue)
     
-    /// Do not keep the matching filenames.
+    /// Do not keep the matching file names.
     ///
     /// ## Discussion
     ///

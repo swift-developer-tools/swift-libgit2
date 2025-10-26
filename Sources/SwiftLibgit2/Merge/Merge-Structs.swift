@@ -39,7 +39,7 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
         return ptr?.count ?? 0
     }
     
-    /// The filename of the conflicted file.
+    /// The file name of the conflicted file.
     ///
     /// ## Discussion
     ///
@@ -304,7 +304,7 @@ public struct GitMergeFileResult: CStructInternalMutable, WithCConvertible, CFre
     /// If the output contains conflict markers, it cannot be auto-merged.
     public private(set) var automergeable   : Bool      = false
     
-    /// The path of resulting file, or `nil` if a filename conflict would
+    /// The path of resulting file, or `nil` if a file name conflict would
     /// have otherwise occurred.
     ///
     /// ## Discussion

@@ -672,10 +672,10 @@ public func gitDiffToBuf(
 /// - Parameters:
 ///   - oldBlob: The old blob to use in the diff operation. The underlying type
 ///   must be `git_blob`.
-///   - oldAsPath: The filename to use for `oldBlob`.
+///   - oldAsPath: The file name to use for `oldBlob`.
 ///   - newBlob: The new blob to use in the diff operation. The underlying type
 ///   must be `git_blob`.
-///   - newAsPath: The filename to use for `newBlob`.
+///   - newAsPath: The file name to use for `newBlob`.
 ///   - options: The diff options to use.
 ///   - fileCB: The callback to invoke for each file in a diff.
 ///   - binaryCB: The callback to invoke for binary content in a diff.
@@ -744,10 +744,10 @@ public func gitDiffBlobs(
 /// - Parameters:
 ///   - oldBlob: The old blob to use in the diff operation. The underlying type
 ///   must be `git_blob`.
-///   - oldAsPath: The filename to use for `oldBlob`.
+///   - oldAsPath: The file name to use for `oldBlob`.
 ///   - buffer: The raw data for the new side of the diff.
 ///   - bufferLen: The length of `buffer`.
-///   - bufferAsPath: The filename to use for `buffer`.
+///   - bufferAsPath: The file name to use for `buffer`.
 ///   - options: The diff options to use.
 ///   - fileCB: The callback to invoke for each file in a diff.
 ///   - binaryCB: The callback to invoke for binary content in a diff.
@@ -814,10 +814,10 @@ public func gitDiffBlobToBuffer(
 /// - Parameters:
 ///   - oldBuffer: The raw data for the old side of the diff.
 ///   - oldBufferLen: The length of `oldBuffer`.
-///   - oldBufferAsPath: The filename to use for `oldBuffer`.
+///   - oldBufferAsPath: The file name to use for `oldBuffer`.
 ///   - newBuffer: The raw data for the new side of the diff.
 ///   - newBufferLen: The length of `newBuffer`.
-///   - newBufferAsPath: The filename to use for `newBuffer`.
+///   - newBufferAsPath: The file name to use for `newBuffer`.
 ///   - options: The diff options to use.
 ///   - fileCB: The callback to invoke for each file in a diff.
 ///   - binaryCB: The callback to invoke for binary content in a diff.

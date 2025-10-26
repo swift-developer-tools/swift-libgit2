@@ -925,7 +925,7 @@ public func gitIndexRemoveByPath(
 /// To emulate `git add -A` and generate an error if the pathspec contains the
 /// exact path of an ignored file (when not force-adding), use the
 /// ``GitIndexAddOptionT/gitIndexAddCheckPathspec`` flag to check that each
-/// entry in the pathspec that is an exact match to a filename on the disk is
+/// entry in the pathspec that is an exact match to a file name on the disk is
 /// either not ignored or is already in the index. If the check fails, this
 /// function will return ``GitErrorCode/gitEInvalidSpec``.
 ///
