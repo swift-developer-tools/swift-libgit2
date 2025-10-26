@@ -620,10 +620,10 @@ internal extension Repository
         
         try gitattributesContent.atomicWrite(to: gitattributesURL)
         
-        for (filename, content) in Self.gitattributesFiles
+        for (fileName, content) in Self.gitattributesFiles
         {
             let fileURL: URL = url.appending(
-                path:           filename,
+                path:           fileName,
                 directoryHint:  .notDirectory
             )
             

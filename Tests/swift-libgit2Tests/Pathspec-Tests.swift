@@ -210,16 +210,16 @@ final class PathspecTests: XCTestCaseStopOnFail
                 "file3.swift"   : "Content 3"
             ]
             
-            for (filename, content) in files
+            for (fileName, content) in files
             {
                 try repository.modifyFile(
-                    at:     filename,
+                    at:     fileName,
                     with:   content
                 )
                 
                 let addByPathResult: GitErrorCode = gitIndexAddByPath(
                     index:  indexPointer,
-                    path:   filename
+                    path:   fileName
                 )
                 
                 XCTAssertOK(addByPathResult)
@@ -443,10 +443,10 @@ final class PathspecTests: XCTestCaseStopOnFail
                 "file3.swift"   : "Content 3"
             ]
             
-            for (filename, content) in files
+            for (fileName, content) in files
             {
                 try repository.modifyFile(
-                    at:     filename,
+                    at:     fileName,
                     with:   content
                 )
             }
@@ -571,7 +571,7 @@ private extension PathspecTests
         
         
         
-        var filenames: [String] = []
+        var fileNames: [String] = []
         
         for index in 0..<entryCount
         {
@@ -588,7 +588,7 @@ private extension PathspecTests
             
             
             
-            guard let filename: String = gitPathspecMatchListEntry(
+            guard let fileName: String = gitPathspecMatchListEntry(
                 m:      matchListPointer,
                 pos:    index
             )
@@ -598,18 +598,18 @@ private extension PathspecTests
                 return
             }
             
-            filenames.append(filename)
+            fileNames.append(fileName)
         }
         
         
         
         if !expectDiffEntries
         {
-            XCTAssertGreaterThanOrEqual(filenames.count, expectedMatches.count)
+            XCTAssertGreaterThanOrEqual(fileNames.count, expectedMatches.count)
             
             for expectedMatch in expectedMatches
             {
-                XCTAssertTrue(filenames.contains(expectedMatch))
+                XCTAssertTrue(fileNames.contains(expectedMatch))
             }
         }
     }

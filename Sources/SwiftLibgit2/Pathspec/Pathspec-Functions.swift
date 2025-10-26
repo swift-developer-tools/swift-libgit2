@@ -293,12 +293,12 @@ public func gitPathspecMatchListEntry(
     pos : Int
 ) -> String?
 {
-    let filename: UnsafePointer<CChar>? = git_pathspec_match_list_entry(
+    let fileName: UnsafePointer<CChar>? = git_pathspec_match_list_entry(
         m,
         pos
     )
     
-    return String(optionalCString: filename)
+    return String(optionalCString: fileName)
 }
 
 
@@ -373,10 +373,10 @@ public func gitPathspecMatchListFailedEntry(
     pos : Int
 ) -> String?
 {
-    let filename: UnsafePointer<CChar>? = git_pathspec_match_list_failed_entry(
+    let fileName: UnsafePointer<CChar>? = git_pathspec_match_list_failed_entry(
         m,
         pos
     )
     
-    return String(optionalCString: filename)
+    return String(optionalCString: fileName)
 }

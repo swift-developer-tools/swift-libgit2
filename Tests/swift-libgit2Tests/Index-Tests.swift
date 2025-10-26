@@ -74,16 +74,16 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let filename1   : String    = "test1.txt"
-            let filename2   : String    = "test2.txt"
+            let fileName1   : String    = "test1.txt"
+            let fileName2   : String    = "test2.txt"
             
             try repository.modifyFile(
-                at:     filename1,
+                at:     fileName1,
                 with:   "Test 1"
             )
             
             try repository.modifyFile(
-                at:     filename2,
+                at:     fileName2,
                 with:   "Test 2"
             )
             
@@ -113,7 +113,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry1AfterAdd: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename1,
+                path:   fileName1,
                 stage:  .gitIndexStageNormal
             )
             
@@ -123,7 +123,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry2AfterAdd: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename2,
+                path:   fileName2,
                 stage:  .gitIndexStageNormal
             )
             
@@ -150,7 +150,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry1AfterRemove: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename1,
+                path:   fileName1,
                 stage:  .gitIndexStageNormal
             )
             
@@ -160,7 +160,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry2AfterRemove: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename2,
+                path:   fileName2,
                 stage:  .gitIndexStageNormal
             )
             
@@ -1010,16 +1010,16 @@ final class IndexTests: XCTestCaseStopOnFail
             repository, indexPointer in
             
             let prefix      : String    = "prefix-"
-            let filename1   : String    = "\(prefix)file1.txt"
-            let filename2   : String    = "\(prefix)file2.txt"
+            let fileName1   : String    = "\(prefix)file1.txt"
+            let fileName2   : String    = "\(prefix)file2.txt"
             
             try repository.modifyFile(
-                at:     filename1,
+                at:     fileName1,
                 with:   "File 1"
             )
             
             try repository.modifyFile(
-                at:     filename2,
+                at:     fileName2,
                 with:   "File 2"
             )
             
@@ -1027,7 +1027,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let addFile1Result: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
-                path:   filename1
+                path:   fileName1
             )
             
             XCTAssertOK(addFile1Result)
@@ -1036,7 +1036,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let addFile2Result: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
-                path:   filename2
+                path:   fileName2
             )
             
             XCTAssertOK(addFile2Result)
@@ -1635,10 +1635,10 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let filename: String = "update.txt"
+            let fileName: String = "update.txt"
             
             try repository.modifyFile(
-                at:     filename,
+                at:     fileName,
                 with:   "Original content"
             )
             
@@ -1646,7 +1646,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexAddByPathResult: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
-                path:   filename
+                path:   fileName
             )
             
             XCTAssertOK(indexAddByPathResult)
@@ -1662,7 +1662,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let originalIndexEntry: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename,
+                path:   fileName,
                 stage:  .gitIndexStageNormal
             )
             
@@ -1676,7 +1676,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                at:     filename,
+                at:     fileName,
                 with:   "Updated content"
             )
             
@@ -1695,7 +1695,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let updatedIndexEntry: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename,
+                path:   fileName,
                 stage:  .gitIndexStageNormal
             )
             
