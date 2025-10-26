@@ -322,21 +322,18 @@ struct Repository
         
         defer
         {
-            Free.freeTree(treePointer)
+            gitTreeFree(tree: treePointer)
         }
         
         
         
-        // TODO: Remove once `git_tree_lookup()` has a binding.
-        var cTreeOID: git_oid = treeOID.cValue()
-        
-        let treeLookupResult: Int32 = git_tree_lookup(
-            &treePointer,
-            pointer,
-            &cTreeOID
+        let treeLookupResult: GitErrorCode = gitTreeLookup(
+            out:    &treePointer,
+            repo:   pointer,
+            id:     treeOID
         )
         
-        XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
+        XCTAssertOK(treeLookupResult)
         
         guard let treePointer: OpaquePointer = treePointer
         else

@@ -114,8 +114,8 @@ enum Diff
         {
             gitCommitFree(commit: oldCommitPointer)
             gitCommitFree(commit: newCommitPointer)
-            Free.freeTree(oldTreePointer)
-            Free.freeTree(newTreePointer)
+            gitTreeFree(tree: oldTreePointer)
+            gitTreeFree(tree: newTreePointer)
             gitDiffFree(diff: diffPointer)
         }
         
@@ -221,7 +221,7 @@ enum Diff
         
         defer
         {
-            Free.freeTree(treePointer)
+            gitTreeFree(tree: treePointer)
         }
         
         

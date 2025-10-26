@@ -376,7 +376,7 @@ final class PathspecTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
                 gitPathspecMatchListFree(m: matchListPointer)
             }
             

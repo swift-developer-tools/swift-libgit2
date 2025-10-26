@@ -998,9 +998,9 @@ final class MergeTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(ancestorTreePointer)
-                Free.freeTree(ourTreePointer)
-                Free.freeTree(theirTreePointer)
+                gitTreeFree(tree: ancestorTreePointer)
+                gitTreeFree(tree: ourTreePointer)
+                gitTreeFree(tree: theirTreePointer)
                 gitIndexFree(index: indexPointer)
             }
             
