@@ -29,8 +29,8 @@ like `String` instead of `UnsafePointer<CChar>`.
 
 Some bindings must use C types to maintain compatibility with libgit2's 
 memory management and calling conventions. This includes callbacks invoked 
-internally by libgit2, output parameters where libgit2 owns the returned memory, 
-and other cases where C types cannot be represented in Swift.
+internally by libgit2, some output parameters, and other cases where C types 
+cannot be represented in Swift.
 
 The bindings for bitset C enums are represented as structs, but remain in their 
 respective "Enums" documentation section to match libgit2's API organization. 
