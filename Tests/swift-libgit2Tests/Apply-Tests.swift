@@ -126,7 +126,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
             }
             
             
@@ -283,7 +283,7 @@ private extension ApplyTests
             
             defer
             {
-                Free.freeTree(oldTreePointer)
+                gitTreeFree(tree: oldTreePointer)
             }
             
             
@@ -336,21 +336,18 @@ private extension ApplyTests
             
             defer
             {
-                Free.freeTree(newTreePointer)
+                gitTreeFree(tree: newTreePointer)
             }
             
             
             
-            // TODO: Replace once `git_tree_lookup()` has a binding.
-            var cNewTreeOID: git_oid = newTreeOID.cValue()
-            
-            let treeLookupResult: Int32 = git_tree_lookup(
-                &newTreePointer,
-                repository.pointer,
-                &cNewTreeOID
+            let treeLookupResult: GitErrorCode = gitTreeLookup(
+                out:    &newTreePointer,
+                repo:   repository.pointer,
+                id:     newTreeOID
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
+            XCTAssertOK(treeLookupResult)
             
             
             

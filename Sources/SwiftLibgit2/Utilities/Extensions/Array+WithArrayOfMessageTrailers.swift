@@ -74,14 +74,6 @@ internal extension Array where Element == GitMessageTrailer
         
         /// Create an array of mutable C string pointers.
         ///
-        /// Use `Swift.Array` instead of the unqualified `Array` because within
-        /// the`extension Array where Element == GitMessageTrailer` context,
-        /// the compiler resolves unqualified `Array(_:)` calls to
-        /// `Array<GitMessageTrailer>.init(_:)` rather than the generic
-        /// `Array<T>.init(_:)` initializer. This causes a type mismatch since
-        /// the assigned type is `[Int]`, but the compiler expects
-        /// `[GitMessageTrailer]`.
-        ///
         /// All keys and values are collected in a single flattened array
         /// (`[key0, value0, key1, value1, ... keyN, valueN]`).
         let strings         : [String]  = validMessageTrailers.flatMap { [$0.key!, $0.value!] }

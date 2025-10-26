@@ -537,7 +537,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
             }
             
             

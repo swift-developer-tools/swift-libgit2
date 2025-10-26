@@ -268,6 +268,11 @@ public func gitRemoteDup(
 /// - Returns: The repository containing the given remote. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given remote and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_remote_owner()`](https://libgit2.org/docs/reference/main/remote/git_remote_owner.html)
@@ -628,6 +633,11 @@ public func gitRemoteRefspecCount(
 ///   - n: The index of the refspec to retrieve.
 /// - Returns: The refspec at the specified index in the given remote. The
 /// underlying type will be `git_refspec`.
+///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given remote and must
+/// not be freed.
 ///
 /// ## C Equivalent
 ///

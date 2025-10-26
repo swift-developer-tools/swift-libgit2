@@ -36,10 +36,12 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
+            let fileMode = UInt32(GitFileModeT.gitFileModeBlob.rawValue)
+            
             var indexEntry = GitIndexEntry()
             
             indexEntry.path     = "custom-entry.txt"
-            indexEntry.mode     = 0o100644
+            indexEntry.mode     = fileMode
             indexEntry.id       = blobOID
             
             
@@ -61,7 +63,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertNotNil(retrievedIndexEntry)
             XCTAssertEqual(retrievedIndexEntry?.path, indexEntry.path)
-            XCTAssertEqual(retrievedIndexEntry?.mode, 0o100644)
+            XCTAssertEqual(retrievedIndexEntry?.mode, fileMode)
             XCTAssertEqual(retrievedIndexEntry?.id, blobOID)
         }
     }
@@ -74,16 +76,16 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let filename1   : String    = "test1.txt"
-            let filename2   : String    = "test2.txt"
+            let fileName1   : String    = "test1.txt"
+            let fileName2   : String    = "test2.txt"
             
             try repository.modifyFile(
-                at:     filename1,
+                at:     fileName1,
                 with:   "Test 1"
             )
             
             try repository.modifyFile(
-                at:     filename2,
+                at:     fileName2,
                 with:   "Test 2"
             )
             
@@ -113,7 +115,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry1AfterAdd: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename1,
+                path:   fileName1,
                 stage:  .gitIndexStageNormal
             )
             
@@ -123,7 +125,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry2AfterAdd: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename2,
+                path:   fileName2,
                 stage:  .gitIndexStageNormal
             )
             
@@ -150,7 +152,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry1AfterRemove: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename1,
+                path:   fileName1,
                 stage:  .gitIndexStageNormal
             )
             
@@ -160,7 +162,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexEntry2AfterRemove: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename2,
+                path:   fileName2,
                 stage:  .gitIndexStageNormal
             )
             
@@ -176,10 +178,12 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
+            let fileMode = UInt32(GitFileModeT.gitFileModeBlob.rawValue)
+            
             var indexEntry = GitIndexEntry()
             
             indexEntry.path     = "buffer-file.txt"
-            indexEntry.mode     = 0o100644
+            indexEntry.mode     = fileMode
             
             
             
@@ -211,7 +215,7 @@ final class IndexTests: XCTestCaseStopOnFail
             }
             
             XCTAssertEqual(retrievedIndexEntry.path, indexEntry.path)
-            XCTAssertEqual(retrievedIndexEntry.mode, 0o100644)
+            XCTAssertEqual(retrievedIndexEntry.mode, fileMode)
             XCTAssertNotZeroOID(retrievedIndexEntry.id)
             
             Blob.validateBlobContent(
@@ -1010,16 +1014,16 @@ final class IndexTests: XCTestCaseStopOnFail
             repository, indexPointer in
             
             let prefix      : String    = "prefix-"
-            let filename1   : String    = "\(prefix)file1.txt"
-            let filename2   : String    = "\(prefix)file2.txt"
+            let fileName1   : String    = "\(prefix)file1.txt"
+            let fileName2   : String    = "\(prefix)file2.txt"
             
             try repository.modifyFile(
-                at:     filename1,
+                at:     fileName1,
                 with:   "File 1"
             )
             
             try repository.modifyFile(
-                at:     filename2,
+                at:     fileName2,
                 with:   "File 2"
             )
             
@@ -1027,7 +1031,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let addFile1Result: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
-                path:   filename1
+                path:   fileName1
             )
             
             XCTAssertOK(addFile1Result)
@@ -1036,7 +1040,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let addFile2Result: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
-                path:   filename2
+                path:   fileName2
             )
             
             XCTAssertOK(addFile2Result)
@@ -1424,7 +1428,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
             }
             
             
@@ -1440,16 +1444,13 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             
-            // TODO: Remove once `git_tree_lookup()` has a binding.
-            var cTreeOID: git_oid = treeOID.cValue()
-            
-            let treeLookupResult: Int32 = git_tree_lookup(
-                &treePointer,
-                repository.pointer,
-                &cTreeOID
+            let treeLookupResult: GitErrorCode = gitTreeLookup(
+                out:    &treePointer,
+                repo:   repository.pointer,
+                id:     treeOID
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: treeLookupResult))
+            XCTAssertOK(treeLookupResult)
             
             guard let treePointer: OpaquePointer = treePointer
             else
@@ -1498,7 +1499,7 @@ final class IndexTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(secondIndexWriteTreeResult)
-            XCTAssertEqual(newTreeOID, GitOID(cValue: cTreeOID))
+            XCTAssertEqual(newTreeOID, treeOID)
         }
     }
     
@@ -1635,10 +1636,10 @@ final class IndexTests: XCTestCaseStopOnFail
         {
             repository, indexPointer in
             
-            let filename: String = "update.txt"
+            let fileName: String = "update.txt"
             
             try repository.modifyFile(
-                at:     filename,
+                at:     fileName,
                 with:   "Original content"
             )
             
@@ -1646,7 +1647,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexAddByPathResult: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
-                path:   filename
+                path:   fileName
             )
             
             XCTAssertOK(indexAddByPathResult)
@@ -1662,7 +1663,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let originalIndexEntry: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename,
+                path:   fileName,
                 stage:  .gitIndexStageNormal
             )
             
@@ -1676,7 +1677,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             
             try repository.modifyFile(
-                at:     filename,
+                at:     fileName,
                 with:   "Updated content"
             )
             
@@ -1695,7 +1696,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let updatedIndexEntry: GitIndexEntry? = gitIndexGetByPath(
                 index:  indexPointer,
-                path:   filename,
+                path:   fileName,
                 stage:  .gitIndexStageNormal
             )
             

@@ -15,24 +15,6 @@ import CLibgit2
 /// Functions to free memory.
 enum Free
 {
-    /// Frees the memory allocated for the given `git_tree` instance.
-    /// - Parameter tree: The tree to free. The underlying type must be
-    /// `git_tree`.
-    static func freeTree(
-        _ tree: OpaquePointer?
-    )
-    {
-        guard let tree: OpaquePointer = tree
-        else
-        {
-            return
-        }
-        
-        git_tree_free(tree)
-    }
-    
-    
-    
     /// Frees the memory allocated for the given `git_worktree` instance.
     /// - Parameter worktree: The worktree to free. The underlying type must
     /// be `git_worktree`.

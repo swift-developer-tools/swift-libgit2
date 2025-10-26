@@ -120,7 +120,7 @@ public struct GitDiffOptionT: COptionSet
     /// Treat all submodules as unmodified.
     public static let gitDiffIgnoreSubmodules               = GitDiffOptionT(rawValue: GIT_DIFF_IGNORE_SUBMODULES.rawValue)
     
-    /// Use case-insensitive filename comparisons.
+    /// Use case-insensitive file name comparisons.
     public static let gitDiffIgnoreCase                     = GitDiffOptionT(rawValue: GIT_DIFF_IGNORE_CASE.rawValue)
     
     /// Represent case changes as an add/delete pair.

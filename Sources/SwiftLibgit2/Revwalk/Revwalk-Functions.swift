@@ -455,6 +455,11 @@ public func gitRevwalkFree(
 /// `git_revwalk`.
 /// - Returns: The repository being walked by the given revision walker.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given revision walker
+/// and must not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_revwalk_repository()`](https://libgit2.org/docs/reference/main/revwalk/git_revwalk_repository.html)

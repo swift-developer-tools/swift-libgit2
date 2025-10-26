@@ -508,7 +508,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
                 gitDiffFree(diff: diffPointer)
             }
             
@@ -1585,7 +1585,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
                 gitDiffFree(diff: diffPointer)
             }
             
@@ -1688,7 +1688,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             defer
             {
-                Free.freeTree(treePointer)
+                gitTreeFree(tree: treePointer)
                 gitDiffFree(diff: diffPointer)
             }
             

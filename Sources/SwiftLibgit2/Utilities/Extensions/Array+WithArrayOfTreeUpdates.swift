@@ -25,15 +25,15 @@ import Foundation
 
 
 
-internal extension Array where Element == GitConfigMap
+internal extension Array where Element == GitTreeUpdate
 {
-    /// Calls the given closure with a pointer to an array of `git_configmap`
+    /// Calls the given closure with a pointer to an array of `git_tree_update`
     /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
-    func withArrayOfGitConfigMaps<T>(
-        _ body: (UnsafePointer<git_configmap>?, Int) throws -> T
+    func withArrayOfGitTreeUpdates<T>(
+        _ body: (UnsafePointer<git_tree_update>?, Int) throws -> T
     ) throws -> T
     {
         guard !self.isEmpty
@@ -44,64 +44,33 @@ internal extension Array where Element == GitConfigMap
         
         
         
-        /// Collect the non-`nil` `strMatch` properties with their original
-        /// indices.
-        let stringEntries: [(index: Int, string: String)]
-            = self.enumerated().compactMap
+        /// Collect the instances with non-`nil` `path` properties.
+        /// Valid tree updates do not have `nil` `path` properties.
+        /// The optional typing of this property in ``GitTreeUpdate`` is
+        /// used to to safeguard against force-unwrapping `nil` C strings.
+        let validTreeUpdates: [GitTreeUpdate] = self.compactMap
         {
-            index, configMap in
+            treeUpdate in
             
-            guard let strMatch: String = configMap.strMatch
+            guard treeUpdate.path != nil
             else
             {
                 return nil
             }
             
-            return (index, strMatch)
+            return treeUpdate
         }
         
-        
-        
-        /// If there were no non-`nil` `strMatch` properties, perform
-        /// direct conversion.
-        guard !stringEntries.isEmpty
+        guard !validTreeUpdates.isEmpty
         else
         {
-            let arrayOfConfigMaps: [git_configmap] = self.map
-            {
-                configMap in
-                
-                var cConfigMap = git_configmap()
-                
-                cConfigMap.type         = configMap.type.cValue()
-                cConfigMap.str_match    = nil
-                cConfigMap.map_value    = configMap.mapValue
-                
-                return cConfigMap
-            }
-            
-            return try arrayOfConfigMaps.withUnsafeBufferPointer
-            {
-                arrayOfConfigMapsBufferPointer in
-                
-                guard let baseAddress: UnsafePointer<git_configmap>
-                        = arrayOfConfigMapsBufferPointer.baseAddress
-                else
-                {
-                    throw NSError.makeCConversionError()
-                }
-                
-                return try body(
-                    baseAddress,
-                    arrayOfConfigMaps.count
-                )
-            }
+            return try body(nil, 0)
         }
         
         
         
         /// Create an array of mutable C string pointers.
-        let strings         : [String]  = stringEntries.map { $0.string }
+        let strings         : [String]  = validTreeUpdates.map { $0.path! }
         let argsCounts      : [Int]     = Swift.Array(strings.map { $0.utf8.count + 1 })
         let argsOffsets     : [Int]     = [0] + scan(argsCounts, 0, +)
         let argsBufferSize  : Int       = argsOffsets.last ?? 0
@@ -146,34 +115,27 @@ internal extension Array where Element == GitConfigMap
             
             
             
-            var cStringsByIndex: [Int : UnsafeMutablePointer<CChar>] = [:]
-            
-            for (stringIndex, entry) in stringEntries.enumerated()
+            let arrayOfTreeUpdates: [git_tree_update]
+                = validTreeUpdates.enumerated().map
             {
-                cStringsByIndex[entry.index] = cStrings[stringIndex]
+                index, treeUpdate in
+                
+                var cTreeUpdate = git_tree_update()
+                
+                cTreeUpdate.action      = treeUpdate.action.cValue()
+                cTreeUpdate.id          = treeUpdate.id.cValue()
+                cTreeUpdate.filemode    = treeUpdate.fileMode.cValue()
+                cTreeUpdate.path        = cStrings[index].map { UnsafePointer($0) }
+                
+                return cTreeUpdate
             }
             
-            
-            
-            let arrayOfConfigMaps: [git_configmap] = self.enumerated().map
+            return try arrayOfTreeUpdates.withUnsafeBufferPointer
             {
-                index, configMap in
+                arrayOfTreeUpdatesBufferPointer in
                 
-                var cConfigMap = git_configmap()
-                
-                cConfigMap.type         = configMap.type.cValue()
-                cConfigMap.str_match    = cStringsByIndex[index].map { UnsafePointer($0) }
-                cConfigMap.map_value    = configMap.mapValue
-                
-                return cConfigMap
-            }
-            
-            return try arrayOfConfigMaps.withUnsafeBufferPointer
-            {
-                arrayOfConfigMapsBufferPointer in
-                
-                guard let baseAddress: UnsafePointer<git_configmap>
-                        = arrayOfConfigMapsBufferPointer.baseAddress
+                guard let baseAddress: UnsafePointer<git_tree_update>
+                        = arrayOfTreeUpdatesBufferPointer.baseAddress
                 else
                 {
                     throw NSError.makeCConversionError()
@@ -181,7 +143,7 @@ internal extension Array where Element == GitConfigMap
                 
                 return try body(
                     baseAddress,
-                    arrayOfConfigMaps.count
+                    arrayOfTreeUpdates.count
                 )
             }
         }

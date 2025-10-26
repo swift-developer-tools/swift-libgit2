@@ -1575,7 +1575,7 @@ private extension RemoteTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 remotePointer
             )

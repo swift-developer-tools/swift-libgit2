@@ -18,7 +18,8 @@ import Foundation
 ///   must be `git_reference`.
 ///   - repo: The repository containing the reference. The underlying type must
 ///   be `git_repository`.
-///   - name: The full reference name to use. This will be checked for validity.
+///   - name: The full name of the reference to look up. This will be checked
+///   for validity.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -479,6 +480,11 @@ public func gitReferenceResolve(
 /// underlying type must be `git_reference`.
 /// - Returns: The repository containing the given reference. The underlying
 /// type will be `git_repository`.
+///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given reference and must
+/// not be freed.
 ///
 /// ## C Equivalent
 ///

@@ -109,14 +109,6 @@ internal extension Array where Element == GitRemoteHEAD
         
         
         /// Create an array of mutable C string pointers.
-        ///
-        /// Use `Swift.Array` instead of the unqualified `Array` because within
-        /// the`extension Array where Element == GitRemoteHEAD` context, the
-        /// compiler resolves unqualified `Array(_:)` calls to
-        /// `Array<GitRemoteHEAD>.init(_:)` rather than the generic
-        /// `Array<T>.init(_:)` initializer. This causes a type mismatch since
-        /// the assigned type is `[Int]`, but the compiler expects
-        /// `[GitRemoteHEAD]`.
         let argsCounts      : [Int]     = Swift.Array(strings.map { $0.utf8.count + 1 })
         let argsOffsets     : [Int]     = [0] + scan(argsCounts, 0, +)
         let argsBufferSize  : Int       = argsOffsets.last ?? 0

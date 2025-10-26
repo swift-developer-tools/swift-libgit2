@@ -29,8 +29,8 @@ like `String` instead of `UnsafePointer<CChar>`.
 
 Some bindings must use C types to maintain compatibility with libgit2's 
 memory management and calling conventions. This includes callbacks invoked 
-internally by libgit2, output parameters where libgit2 owns the returned memory, 
-and other cases where C types cannot be represented in Swift.
+internally by libgit2, some output parameters, and other cases where C types 
+cannot be represented in Swift.
 
 The bindings for bitset C enums are represented as structs, but remain in their 
 respective "Enums" documentation section to match libgit2's API organization. 
@@ -109,8 +109,8 @@ converted from Swift to C, or in other cases specific to individual functions.
 
 ### Memory Management
 
-swift-libgit2 directly invokes libgit2 C code. The caller is generally 
-responsible for freeing memory allocated by libgit2, unless otherwise specified.
+swift-libgit2 directly invokes libgit2 C code. The caller is responsible for 
+freeing memory allocated by libgit2, unless otherwise specified.
 
 Consider using 
 [`defer`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/statements/#Defer-Statement)
@@ -120,7 +120,7 @@ free memory.
 ### Thread Safety
 
 libgit2 objects cannot be safely accessed by multiple threads simultaneously. 
-Doing so may result in data loss or other undefined behavior.
+Doing so may result in data loss or undefined behavior.
 
 Consider using threading APIs such as 
 [`DispatchQueue`](https://developer.apple.com/documentation/dispatch/dispatchqueue) 

@@ -135,6 +135,11 @@ public func gitCommitID(
 /// - Returns: The repository containing the given commit. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given commit and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_commit_owner()`](https://libgit2.org/docs/reference/main/commit/git_commit_owner.html)
@@ -709,7 +714,7 @@ public func gitCommitExtractSignature(
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
 ///   array of `git_commit` instances, of length `parentCount`. All the given
-///   commits must be owned by `repo`.
+///   commits must belong to the given repository.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -921,7 +926,7 @@ public func gitCommitAmend(
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
 ///   array of `git_commit` instances, of length `parentCount`. All the given
-///   commits must be owned by `repo`.
+///   commits must belong to the given repository.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion

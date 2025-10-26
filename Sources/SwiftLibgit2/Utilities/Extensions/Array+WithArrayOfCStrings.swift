@@ -83,12 +83,6 @@ internal extension Array where Element == String
         
         
         
-        /// Use `Swift.Array` instead of the unqualified `Array` because within
-        /// the `extension Array where Element == String` context, the compiler
-        /// resolves unqualified `Array(_:)` calls to `Array<String>.init(_:)`
-        /// rather than the generic `Array<T>.init(_:)` initializer.
-        /// This causes a type mismatch since the assigned type is `[Int]`,
-        /// but the compiler expects `[String]`.
         let argsCounts      : [Int]     = Swift.Array(self.map { $0.utf8.count + 1 })
         let argsOffsets     : [Int]     = [0] + scan(argsCounts, 0, +)
         let argsBufferSize  : Int       = argsOffsets.last ?? 0
