@@ -135,6 +135,11 @@ public func gitCommitID(
 /// - Returns: The repository containing the given commit. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given commit and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_commit_owner()`](https://libgit2.org/docs/reference/main/commit/git_commit_owner.html)

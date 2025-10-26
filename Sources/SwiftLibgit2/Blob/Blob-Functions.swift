@@ -132,6 +132,11 @@ public func gitBlobID(
 /// - Returns: The repository containing the given blob. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given blob and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_blob_owner()`](https://libgit2.org/docs/reference/main/blob/git_blob_owner.html)

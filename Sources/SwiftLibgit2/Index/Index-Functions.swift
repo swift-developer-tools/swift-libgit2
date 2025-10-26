@@ -104,6 +104,11 @@ public func gitIndexFree(
 /// - Returns: The repository containing the given index. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given index and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_index_owner()`](https://libgit2.org/docs/reference/main/index/git_index_owner.html)

@@ -131,6 +131,11 @@ public func gitTagID(
 /// - Returns: The repository containing the given tag. The underlying type
 /// will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given tag and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_tag_owner()`](https://libgit2.org/docs/reference/main/tag/git_tag_owner.html)

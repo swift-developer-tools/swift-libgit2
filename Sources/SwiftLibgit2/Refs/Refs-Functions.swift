@@ -481,6 +481,11 @@ public func gitReferenceResolve(
 /// - Returns: The repository containing the given reference. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given reference and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_reference_owner()`](https://libgit2.org/docs/reference/main/refs/git_reference_owner.html)

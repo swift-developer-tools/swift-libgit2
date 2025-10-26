@@ -339,10 +339,10 @@ public func gitSubmoduleAddToIndex(
 ///
 /// ## Discussion
 ///
-/// - Important: The returned pointer will be a reference to the repository
-/// that was passed to ``gitSubmoduleLookup(out:repo:name:)``. If that
-/// repository has been freed, the returned pointer will be a dangling
-/// reference.
+/// - Important: The returned pointer is owned by the given submodule and
+/// must not be freed. It will be a reference to the repository that was
+/// passed to ``gitSubmoduleLookup(out:repo:name:)``. If that repository has
+/// been freed, the returned pointer will be a dangling reference.
 ///
 /// ## C Equivalent
 ///

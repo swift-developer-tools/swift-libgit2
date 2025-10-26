@@ -18,6 +18,11 @@ import Foundation
 /// - Returns: The repository containing the given patch. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given patch and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_patch_owner()`](https://libgit2.org/docs/reference/main/patch/git_patch_owner.html)

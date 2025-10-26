@@ -210,6 +210,11 @@ public func gitObjectType(
 /// - Returns: The repository containing the given object. The underlying
 /// type will be `git_repository`.
 ///
+/// ## Discussion
+///
+/// - Important: The returned pointer is owned by the given object and must
+/// not be freed.
+///
 /// ## C Equivalent
 ///
 /// [`git_object_owner()`](https://libgit2.org/docs/reference/main/object/git_object_owner.html)
