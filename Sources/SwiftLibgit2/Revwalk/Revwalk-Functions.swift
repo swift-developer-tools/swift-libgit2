@@ -100,12 +100,15 @@ public func gitRevwalkPush(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_revwalk_push(
-            walk,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_revwalk_push(
+                walk,
+                cID
+            )
+        }
     }
 }
 
@@ -186,12 +189,15 @@ public func gitRevwalkHide(
 {
     return withCConversion
     {
-        var cCommitID: git_oid = commitID.cValue()
-        
-        return git_revwalk_hide(
-            walk,
-            &cCommitID
-        )
+        return commitID.withCValue
+        {
+            cCommitID in
+            
+            return git_revwalk_hide(
+                walk,
+                cCommitID
+            )
+        }
     }
 }
 
@@ -334,7 +340,7 @@ public func gitRevwalkNext(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             

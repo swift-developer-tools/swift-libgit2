@@ -421,21 +421,15 @@ public func gitDiffFindSimilar(
 {
     return withCConversion
     {
-        guard let options: GitDiffFindOptions = options
-        else
+        return try options.withOptionalCValue
         {
+            cOptions in
+            
             return git_diff_find_similar(
                 diff,
-                nil
+                cOptions
             )
         }
-        
-        var cOptions: git_diff_find_options = try options.cValue()
-        
-        return git_diff_find_similar(
-            diff,
-            &cOptions
-        )
     }
 }
 
@@ -1126,32 +1120,20 @@ public func gitDiffPatchID(
 {
     return withCConversion
     {
-        guard let opts: GitDiffPatchIDOptions = opts
-        else
+        return try opts.withOptionalCValue
         {
-            return out.withMutatingCValue
+            cOpts in
+            
+            return try out.withMutatingCValue
             {
                 cOut in
                 
                 return git_diff_patchid(
                     cOut,
                     diff,
-                    nil
+                    cOpts
                 )
             }
-        }
-        
-        var cOpts: git_diff_patchid_options = try opts.cValue()
-        
-        return out.withMutatingCValue
-        {
-            cOut in
-            
-            return git_diff_patchid(
-                cOut,
-                diff,
-                &cOpts
-            )
         }
     }
 }

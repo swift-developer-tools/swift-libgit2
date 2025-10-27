@@ -35,14 +35,17 @@ public func gitObjectLookup(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_object_lookup(
-            object,
-            repo,
-            &cID,
-            type.cValue()
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_object_lookup(
+                object,
+                repo,
+                cID,
+                type.cValue()
+            )
+        }
     }
 }
 
@@ -76,15 +79,18 @@ public func gitObjectLookupPrefix(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_object_lookup_prefix(
-            objectOut,
-            repo,
-            &cID,
-            len,
-            type.cValue()
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_object_lookup_prefix(
+                objectOut,
+                repo,
+                cID,
+                len,
+                type.cValue()
+            )
+        }
     }
 }
 

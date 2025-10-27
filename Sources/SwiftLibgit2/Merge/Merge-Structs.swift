@@ -582,14 +582,11 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
         mergeOptions.file_favor         = fileFavor.cValue()
         mergeOptions.file_flags         = fileFlags.rawValue
         
-        var cMetric: git_diff_similarity_metric
-            = metric?.cValue() ?? git_diff_similarity_metric()
-        
-        return try withUnsafeMutablePointer(to: &cMetric)
+        return try metric.withOptionalCValue
         {
-            cMetricPointer in
+            cMetric in
             
-            mergeOptions.metric = cMetricPointer
+            mergeOptions.metric = cMetric
             
             return try defaultDriver.withOptionalCString
             {

@@ -113,11 +113,11 @@ public func gitMergeAnalysis(
 {
     return withCConversion
     {
-        return analysisOut.withMutatingCValue
+        return try analysisOut.withMutatingCValue
         {
             cAnalysisOut in
             
-            return preferenceOut.withMutatingCValue
+            return try preferenceOut.withMutatingCValue
             {
                 cPreferenceOut in
                 
@@ -165,11 +165,11 @@ public func gitMergeAnalysisForRef(
 {
     return withCConversion
     {
-        return analysisOut.withMutatingCValue
+        return try analysisOut.withMutatingCValue
         {
             cAnalysisOut in
             
-            return preferenceOut.withMutatingCValue
+            return try preferenceOut.withMutatingCValue
             {
                 cPreferenceOut in
                 
@@ -209,19 +209,26 @@ public func gitMergeBase(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
-            var cOne    : git_oid   = one.cValue()
-            var cTwo    : git_oid   = two.cValue()
-            
-            return git_merge_base(
-                cOut,
-                repo,
-                &cOne,
-                &cTwo
-            )
+            return one.withCValue
+            {
+                cOne in
+                
+                return two.withCValue
+                {
+                    cTwo in
+                    
+                    return git_merge_base(
+                        cOut,
+                        repo,
+                        cOne,
+                        cTwo
+                    )
+                }
+            }
         }
     }
 }
@@ -254,15 +261,22 @@ public func gitMergeBases(
         {
             cOut in
             
-            var cOne    : git_oid   = one.cValue()
-            var cTwo    : git_oid   = two.cValue()
-            
-            return git_merge_bases(
-                cOut,
-                repo,
-                &cOne,
-                &cTwo
-            )
+            return one.withCValue
+            {
+                cOne in
+                
+                return two.withCValue
+                {
+                    cTwo in
+                    
+                    return git_merge_bases(
+                        cOut,
+                        repo,
+                        cOne,
+                        cTwo
+                    )
+                }
+            }
         }
     }
 }
@@ -294,7 +308,7 @@ public func gitMergeBaseMany(
         {
             cOut in
             
-            return try inputArray.withArrayOfGitOIDs
+            return inputArray.withArrayOfGitOIDs
             {
                 cInputArray, cInputArrayCount in
                 
@@ -371,7 +385,7 @@ public func gitMergeBasesMany(
         {
             cOut in
             
-            return try inputArray.withArrayOfGitOIDs
+            return inputArray.withArrayOfGitOIDs
             {
                 cInputArray, cInputArrayCount in
                 
@@ -413,7 +427,7 @@ public func gitMergeBaseOctopus(
         {
             cOut in
             
-            return try inputArray.withArrayOfGitOIDs
+            return inputArray.withArrayOfGitOIDs
             {
                 cInputArray, cInputArrayCount in
                 

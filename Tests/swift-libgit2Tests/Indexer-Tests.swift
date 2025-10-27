@@ -34,15 +34,18 @@ final class IndexerTests: XCTestCaseStopOnFail
         XCTAssertEqual(indexerProgress.indexedDeltas, 0)
         XCTAssertEqual(indexerProgress.receivedBytes, 0)
         
-        let cIndexerProgress: git_indexer_progress = indexerProgress.cValue()
-        
-        XCTAssertEqual(cIndexerProgress.total_objects, 0)
-        XCTAssertEqual(cIndexerProgress.indexed_objects, 0)
-        XCTAssertEqual(cIndexerProgress.received_objects, 0)
-        XCTAssertEqual(cIndexerProgress.local_objects, 0)
-        XCTAssertEqual(cIndexerProgress.total_deltas, 0)
-        XCTAssertEqual(cIndexerProgress.indexed_deltas, 0)
-        XCTAssertEqual(cIndexerProgress.received_bytes, 0)
+        indexerProgress.withCValue
+        {
+            cIndexerProgress in
+            
+            XCTAssertEqual(cIndexerProgress.pointee.total_objects, 0)
+            XCTAssertEqual(cIndexerProgress.pointee.indexed_objects, 0)
+            XCTAssertEqual(cIndexerProgress.pointee.received_objects, 0)
+            XCTAssertEqual(cIndexerProgress.pointee.local_objects, 0)
+            XCTAssertEqual(cIndexerProgress.pointee.total_deltas, 0)
+            XCTAssertEqual(cIndexerProgress.pointee.indexed_deltas, 0)
+            XCTAssertEqual(cIndexerProgress.pointee.received_bytes, 0)
+        }
     }
     
     
@@ -120,12 +123,15 @@ final class IndexerTests: XCTestCaseStopOnFail
         XCTAssertNil(indexerOptions.progressCBPayload)
         XCTAssertFalse(indexerOptions.verify)
         
-        let cIndexerOptions: git_indexer_options = try indexerOptions.cValue()
-        
-        XCTAssertEqual(cIndexerOptions.version, gitIndexerOptionsVersion)
-        XCTAssertNil(cIndexerOptions.progress_cb)
-        XCTAssertNil(cIndexerOptions.progress_cb_payload)
-        XCTAssertFalse(Bool(cIndexerOptions.verify))
+        try indexerOptions.withCValue
+        {
+            cIndexerOptions in
+            
+            XCTAssertEqual(cIndexerOptions.pointee.version, gitIndexerOptionsVersion)
+            XCTAssertNil(cIndexerOptions.pointee.progress_cb)
+            XCTAssertNil(cIndexerOptions.pointee.progress_cb_payload)
+            XCTAssertFalse(Bool(cIndexerOptions.pointee.verify))
+        }
     }
     
     

@@ -467,11 +467,14 @@ final class ODBTests: XCTestCaseStopOnFail
         XCTAssertEqual(odbExpandID.length, 0)
         XCTAssertEqual(odbExpandID.type, .gitObjectAny)
         
-        let cODBExpandID: git_odb_expand_id = odbExpandID.cValue()
-        
-        XCTAssertZeroOID(GitOID(cValue: cODBExpandID.id))
-        XCTAssertEqual(cODBExpandID.length, 0)
-        XCTAssertEqual(GitObjectT(cValue: cODBExpandID.type), .gitObjectAny)
+        odbExpandID.withCValue
+        {
+            cODBExpandID in
+            
+            XCTAssertZeroOID(GitOID(cValue: cODBExpandID.pointee.id))
+            XCTAssertEqual(cODBExpandID.pointee.length, 0)
+            XCTAssertEqual(GitObjectT(cValue: cODBExpandID.pointee.type), .gitObjectAny)
+        }
     }
     
     
@@ -665,10 +668,13 @@ final class ODBTests: XCTestCaseStopOnFail
         XCTAssertEqual(odbOptions.version, gitODBOptionsVersion)
         XCTAssertEqual(odbOptions.oidType, .gitOIDSHA1)
         
-        let cODBOptions: git_odb_options = odbOptions.cValue()
-        
-        XCTAssertEqual(cODBOptions.version, gitODBOptionsVersion)
-        XCTAssertEqual(GitOIDT(cValue: cODBOptions.oid_type), .gitOIDSHA1)
+        odbOptions.withCValue
+        {
+            cODBOptions in
+            
+            XCTAssertEqual(cODBOptions.pointee.version, gitODBOptionsVersion)
+            XCTAssertEqual(GitOIDT(cValue: cODBOptions.pointee.oid_type), .gitOIDSHA1)
+        }
     }
     
     

@@ -43,16 +43,23 @@ public func gitGraphAheadBehind(
 {
     return withCConversion
     {
-        var cLocal      : git_oid   = local.cValue()
-        var cUpstream   : git_oid   = upstream.cValue()
-        
-        return git_graph_ahead_behind(
-            ahead,
-            behind,
-            repo,
-            &cLocal,
-            &cUpstream
-        )
+        return local.withCValue
+        {
+            cLocal in
+            
+            return upstream.withCValue
+            {
+                cUpstream in
+                
+                return git_graph_ahead_behind(
+                    ahead,
+                    behind,
+                    repo,
+                    cLocal,
+                    cUpstream
+                )
+            }
+        }
     }
 }
 
@@ -82,14 +89,21 @@ public func gitGraphDescendantOf(
     ancestor    : GitOID
 ) -> Bool?
 {
-    var cCommit     : git_oid   = commit.cValue()
-    var cAncestor   : git_oid   = ancestor.cValue()
-    
-    let isDescendant: Int32 = git_graph_descendant_of(
-        repo,
-        &cCommit,
-        &cAncestor
-    )
+    let isDescendant: Int32 = commit.withCValue
+    {
+        cCommit in
+        
+        return ancestor.withCValue
+        {
+            cAncestor in
+            
+            return git_graph_descendant_of(
+                repo,
+                cCommit,
+                cAncestor
+            )
+        }
+    }
     
     if
         isDescendant != 0,
@@ -124,15 +138,22 @@ public func gitGraphReachableFromAny(
     length          : Int
 ) -> Bool?
 {
-    var cCommit             : git_oid       = commit.cValue()
-    var cDescendantArray    : [git_oid]     = descendantArray.map { $0.cValue() }
-    
-    let isReachableFromAny: Int32 = git_graph_reachable_from_any(
-        repo,
-        &cCommit,
-        &cDescendantArray,
-        cDescendantArray.count
-    )
+    let isReachableFromAny: Int32 = commit.withCValue
+    {
+        cCommit in
+        
+        return descendantArray.withArrayOfGitOIDs
+        {
+            cDescendantArray, cDescendantArrayCount in
+            
+            return git_graph_reachable_from_any(
+                repo,
+                cCommit,
+                cDescendantArray,
+                cDescendantArrayCount
+            )
+        }
+    }
     
     if
         isReachableFromAny != 0,

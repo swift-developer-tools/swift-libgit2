@@ -177,7 +177,7 @@ public func gitBranchNext(
 {
     return withCConversion
     {
-        return outType.withMutatingCValue
+        return try outType.withMutatingCValue
         {
             cOutType in
             

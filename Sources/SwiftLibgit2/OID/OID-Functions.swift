@@ -29,7 +29,7 @@ public func gitOIDFromStr(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -59,7 +59,7 @@ public func gitOIDFromStrP(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -99,7 +99,7 @@ public func gitOIDFromStrN(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -172,12 +172,15 @@ public func gitOIDFmt(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_oid_fmt(
-            out,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_oid_fmt(
+                out,
+                cID
+            )
+        }
     }
 }
 
@@ -206,13 +209,16 @@ public func gitOIDNFmt(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_oid_nfmt(
-            out,
-            n,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_oid_nfmt(
+                out,
+                n,
+                cID
+            )
+        }
     }
 }
 
@@ -245,12 +251,15 @@ public func gitOIDPathFmt(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_oid_pathfmt(
-            out,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_oid_pathfmt(
+                out,
+                cID
+            )
+        }
     }
 }
 
@@ -267,9 +276,12 @@ public func gitOIDToStrS(
     oid: GitOID
 ) -> String?
 {
-    var cOID: git_oid = oid.cValue()
-    
-    let oidString: UnsafeMutablePointer<CChar>? = git_oid_tostr_s(&cOID)
+    let oidString: UnsafeMutablePointer<CChar>? = oid.withCValue
+    {
+        cOID in
+        
+        return git_oid_tostr_s(cOID)
+    }
     
     return String(optionalCString: oidString)
 }
@@ -298,14 +310,16 @@ public func gitOIDToStr(
     id  : GitOID
 ) -> String?
 {
-    var cID: git_oid = id.cValue()
-    
-    /// The memory is owned by the caller.
-    let oidString: UnsafeMutablePointer<CChar>? = git_oid_tostr(
-        out,
-        n,
-        &cID
-    )
+    let oidString: UnsafeMutablePointer<CChar>? = id.withCValue
+    {
+        cID in
+        
+        return git_oid_tostr(
+            out,
+            n,
+            cID
+        )
+    }
     
     return String(optionalCString: oidString)
 }
@@ -328,16 +342,19 @@ public func gitOIDCpy(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
-            var cSrc: git_oid = src.cValue()
-            
-            return git_oid_cpy(
-                cOut,
-                &cSrc
-            )
+            return src.withCValue
+            {
+                cSrc in
+                
+                return git_oid_cpy(
+                    cOut,
+                    cSrc
+                )
+            }
         }
     }
 }
@@ -359,13 +376,20 @@ public func gitOIDCmp(
     b   : GitOID
 ) -> Int
 {
-    var cA  : git_oid   = a.cValue()
-    var cB  : git_oid   = b.cValue()
-    
-    let oidCmpResult: Int32 = git_oid_cmp(
-        &cA,
-        &cB
-    )
+    let oidCmpResult: Int32 = a.withCValue
+    {
+        cA in
+        
+        return b.withCValue
+        {
+            cB in
+            
+            return git_oid_cmp(
+                cA,
+                cB
+            )
+        }
+    }
     
     let sign: Int32 = oidCmpResult.signum()
     
@@ -389,13 +413,20 @@ public func gitOIDEqual(
     b   : GitOID
 ) -> Bool
 {
-    var cA  : git_oid   = a.cValue()
-    var cB  : git_oid   = b.cValue()
-    
-    let isEqual: Int32 = git_oid_equal(
-        &cA,
-        &cB
-    )
+    let isEqual: Int32 = a.withCValue
+    {
+        cA in
+        
+        return b.withCValue
+        {
+            cB in
+            
+            return git_oid_equal(
+                cA,
+                cB
+            )
+        }
+    }
     
     return Bool(isEqual)
 }
@@ -420,14 +451,21 @@ public func gitOIDNCmp(
     len : Int
 ) -> Bool
 {
-    var cA  : git_oid   = a.cValue()
-    var cB  : git_oid   = b.cValue()
-    
-    let isEqual: Int32 = git_oid_ncmp(
-        &cA,
-        &cB,
-        len
-    )
+    let isEqual: Int32 = a.withCValue
+    {
+        cA in
+        
+        return b.withCValue
+        {
+            cB in
+            
+            return git_oid_ncmp(
+                cA,
+                cB,
+                len
+            )
+        }
+    }
     
     /// The `Bool` initializer treats `0` as `false`. This function
     /// uses `memcmp()`, which returns `0` when memory blocks match.
@@ -450,12 +488,15 @@ public func gitOIDStrEq(
     str : String
 ) -> Bool
 {
-    var cID: git_oid = id.cValue()
-    
-    let isEqual: Int32 = git_oid_streq(
-        &cID,
-        str
-    )
+    let isEqual: Int32 = id.withCValue
+    {
+        cID in
+        
+        return git_oid_streq(
+            cID,
+            str
+        )
+    }
     
     /// The `Bool` initializer treats `0` as `false`. This function
     /// uses `memcmp()`, which returns `0` when memory blocks match.
@@ -479,12 +520,15 @@ public func gitOIDStrCmp(
     str : String
 ) -> Int
 {
-    var cID: git_oid = id.cValue()
-    
-    let oidStrCmpResult: Int32 = git_oid_strcmp(
-        &cID,
-        str
-    )
+    let oidStrCmpResult: Int32 = id.withCValue
+    {
+        cID in
+        
+        return git_oid_strcmp(
+            cID,
+            str
+        )
+    }
     
     let sign: Int32 = oidStrCmpResult.signum()
     
@@ -504,9 +548,12 @@ public func gitOIDIsZero(
     id: GitOID
 ) -> Bool
 {
-    var cID: git_oid = id.cValue()
-    
-    let isZero: Int32 = git_oid_is_zero(&cID)
+    let isZero: Int32 = id.withCValue
+    {
+        cID in
+        
+        return git_oid_is_zero(cID)
+    }
     
     return Bool(isZero)
 }

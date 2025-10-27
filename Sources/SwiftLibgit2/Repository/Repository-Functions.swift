@@ -1046,7 +1046,7 @@ public func gitRepositoryHashFile(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -1126,12 +1126,15 @@ public func gitRepositorySetHEADDetached(
 {
     return withCConversion
     {
-        var cCommittish: git_oid = committish.cValue()
-        
-        return git_repository_set_head_detached(
-            repo,
-            &cCommittish
-        )
+        return committish.withCValue
+        {
+            cCommittish in
+            
+            return git_repository_set_head_detached(
+                repo,
+                cCommittish
+            )
+        }
     }
 }
 

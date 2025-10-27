@@ -62,7 +62,7 @@ public func gitReferenceNameToID(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -258,16 +258,19 @@ public func gitReferenceCreate(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_reference_create(
-            out,
-            repo,
-            name,
-            &cID,
-            force.int32Value,
-            logMessage
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_reference_create(
+                out,
+                repo,
+                name,
+                cID,
+                force.int32Value,
+                logMessage
+            )
+        }
     }
 }
 
@@ -314,18 +317,25 @@ public func gitReferenceCreateMatching(
 {
     return withCConversion
     {
-        var cID         : git_oid   = id.cValue()
-        var cCurrentID  : git_oid   = currentID.cValue()
-        
-        return git_reference_create_matching(
-            out,
-            repo,
-            name,
-            &cID,
-            force.int32Value,
-            &cCurrentID,
-            logMessage
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return currentID.withCValue
+            {
+                cCurrentID in
+                
+                return git_reference_create_matching(
+                    out,
+                    repo,
+                    name,
+                    cID,
+                    force.int32Value,
+                    cCurrentID,
+                    logMessage
+                )
+            }
+        }
     }
 }
 
@@ -570,14 +580,17 @@ public func gitReferenceSetTarget(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_reference_set_target(
-            out,
-            ref,
-            &cID,
-            logMessage
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_reference_set_target(
+                out,
+                ref,
+                cID,
+                logMessage
+            )
+        }
     }
 }
 

@@ -410,11 +410,14 @@ final class RevparseTests: XCTestCaseStopOnFail
         XCTAssertNil(revspec.to)
         XCTAssertEqual(revspec.flags, [])
         
-        let cRevspec: git_revspec = revspec.cValue()
-        
-        XCTAssertNil(cRevspec.from)
-        XCTAssertNil(cRevspec.to)
-        XCTAssertEqual(GitRevspecT(rawValue: cRevspec.flags), [])
+        revspec.withCValue
+        {
+            cRevspec in
+            
+            XCTAssertNil(cRevspec.pointee.from)
+            XCTAssertNil(cRevspec.pointee.to)
+            XCTAssertEqual(GitRevspecT(rawValue: cRevspec.pointee.flags), [])
+        }
     }
     
     

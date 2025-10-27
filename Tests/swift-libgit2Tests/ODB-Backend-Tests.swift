@@ -112,11 +112,13 @@ final class ODBBackendTests: XCTestCaseStopOnFail
         XCTAssertEqual(backendLooseOptions.version, gitODBOptionsVersion)
         XCTAssertEqual(backendLooseOptions.oidType, .gitOIDSHA1)
         
-        let cBackendLooseOptions: git_odb_backend_loose_options
-            = backendLooseOptions.cValue()
-        
-        XCTAssertEqual(cBackendLooseOptions.version, gitODBOptionsVersion)
-        XCTAssertEqual(GitOIDT(cValue: cBackendLooseOptions.oid_type), .gitOIDSHA1)
+        backendLooseOptions.withCValue
+        {
+            cBackendLooseOptions in
+            
+            XCTAssertEqual(cBackendLooseOptions.pointee.version, gitODBOptionsVersion)
+            XCTAssertEqual(GitOIDT(cValue: cBackendLooseOptions.pointee.oid_type), .gitOIDSHA1)
+        }
     }
     
     
@@ -234,11 +236,13 @@ final class ODBBackendTests: XCTestCaseStopOnFail
         XCTAssertEqual(backendPackOptions.version, gitODBOptionsVersion)
         XCTAssertEqual(backendPackOptions.oidType, .gitOIDSHA1)
         
-        let cBackendPackOptions: git_odb_backend_pack_options
-            = backendPackOptions.cValue()
-        
-        XCTAssertEqual(cBackendPackOptions.version, gitODBOptionsVersion)
-        XCTAssertEqual(GitOIDT(cValue: cBackendPackOptions.oid_type), .gitOIDSHA1)
+        backendPackOptions.withCValue
+        {
+            cBackendPackOptions in
+            
+            XCTAssertEqual(cBackendPackOptions.pointee.version, gitODBOptionsVersion)
+            XCTAssertEqual(GitOIDT(cValue: cBackendPackOptions.pointee.oid_type), .gitOIDSHA1)
+        }
     }
     
     

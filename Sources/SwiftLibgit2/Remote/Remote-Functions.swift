@@ -947,23 +947,26 @@ public func gitRemoteConnect(
 {
     return withCConversion
     {
-        return try proxyOpts.withOptionalCValue
+        return try callbacks.withCValue
         {
-            cProxyOpts in
+            cCallbacks in
             
-            return try customHeaders.withGitStrArray
+            return try proxyOpts.withOptionalCValue
             {
-                cCustomHeaders in
+                cProxyOpts in
                 
-                var cCallbacks: git_remote_callbacks = try callbacks.cValue()
-                
-                return git_remote_connect(
-                    remote,
-                    direction.cValue(),
-                    &cCallbacks,
-                    cProxyOpts,
-                    cCustomHeaders
-                )
+                return try customHeaders.withGitStrArray
+                {
+                    cCustomHeaders in
+                    
+                    return git_remote_connect(
+                        remote,
+                        direction.cValue(),
+                        cCallbacks,
+                        cProxyOpts,
+                        cCustomHeaders
+                    )
+                }
             }
         }
     }
@@ -1139,15 +1142,18 @@ public func gitRemoteUpdateTips(
 {
     return withCConversion
     {
-        var cCallbacks: git_remote_callbacks = try callbacks.cValue()
-        
-        return git_remote_update_tips(
-            remote,
-            &cCallbacks,
-            updateFlags.rawValue,
-            downloadTags.cValue(),
-            reflogMessage
-        )
+        return try callbacks.withCValue
+        {
+            cCallbacks in
+            
+            return git_remote_update_tips(
+                remote,
+                cCallbacks,
+                updateFlags.rawValue,
+                downloadTags.cValue(),
+                reflogMessage
+            )
+        }
     }
 }
 
@@ -1219,12 +1225,15 @@ public func gitRemotePrune(
 {
     return withCConversion
     {
-        var cCallbacks: git_remote_callbacks = try callbacks.cValue()
-        
-        return git_remote_prune(
-            remote,
-            &cCallbacks
-        )
+        return try callbacks.withCValue
+        {
+            cCallbacks in
+            
+            return git_remote_prune(
+                remote,
+                cCallbacks
+            )
+        }
     }
 }
 

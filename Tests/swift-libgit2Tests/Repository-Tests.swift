@@ -357,21 +357,24 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             defer
             {
+                gitWorktreeFree(wt: worktreePointer)
+                
                 try? FileManager.default.removeItem(at: worktreeURL)
-                Free.freeWorktree(worktreePointer)
             }
             
             
             
-            let worktreeAddResult: Int32 = git_worktree_add(
-                &worktreePointer,
-                repository.pointer,
-                worktreeName,
-                worktreeURL.path(),
-                nil
+            try? FileManager.default.removeItem(at: worktreeURL)
+            
+            let worktreeAddResult: GitErrorCode = gitWorktreeAdd(
+                out:    &worktreePointer,
+                repo:   repository.pointer,
+                name:   worktreeName,
+                path:   worktreeURL.path(),
+                opts:   nil
             )
             
-            XCTAssertOK(GitErrorCode(rawValue: worktreeAddResult))
+            XCTAssertOK(worktreeAddResult)
             XCTAssertNotNil(worktreePointer)
             
             
@@ -390,41 +393,16 @@ final class RepositoryTests: XCTestCaseStopOnFail
     
     func testGitRepositoryHEADForWorktree() throws
     {
-        try Repository.withRepository
+        try Repository.withWorktree
         {
-            repository in
+            repository, _ in
             
-            let worktreeName: String = "test-worktree"
-            
-            let worktreeURL: URL
-                = FileManager.default.temporaryDirectory
-                    .appending(path: "worktree", directoryHint: .isDirectory)
-                    .appendingPathExtension(UUID().uuidString)
-            
-            
-            
-            var worktreePointer : OpaquePointer?    = nil
-            var headPointer     : OpaquePointer?    = nil
+            var headPointer: OpaquePointer? = nil
             
             defer
             {
-                try? FileManager.default.removeItem(at: worktreeURL)
-                Free.freeWorktree(worktreePointer)
                 gitReferenceFree(ref: headPointer)
             }
-            
-            
-            
-            let worktreeAddResult: Int32 = git_worktree_add(
-                &worktreePointer,
-                repository.pointer,
-                worktreeName,
-                worktreeURL.path(),
-                nil
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: worktreeAddResult))
-            XCTAssertNotNil(worktreePointer)
             
             
             
@@ -432,7 +410,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
                 = gitRepositoryHEADForWorktree(
                     out:    &headPointer,
                     repo:   repository.pointer,
-                    name:   worktreeName
+                    name:   Repository.worktreeName
                 )
             
             XCTAssertOK(headForWorktreeResult)
@@ -1185,46 +1163,15 @@ final class RepositoryTests: XCTestCaseStopOnFail
     
     func testGitRepositoryOpenFromWorktree() throws
     {
-        try Repository.withRepository
+        try Repository.withWorktree
         {
-            repository in
+            _, worktreePointer in
             
-            let worktreeName: String = "test-worktree"
-            
-            let worktreeURL: URL
-                = FileManager.default.temporaryDirectory
-                    .appending(path: "worktree", directoryHint: .isDirectory)
-                    .appendingPathExtension(UUID().uuidString)
-            
-            
-            
-            var worktreePointer : OpaquePointer?    = nil
-            var repoPointer     : OpaquePointer?    = nil
+            var repoPointer: OpaquePointer? = nil
             
             defer
             {
-                try? FileManager.default.removeItem(at: worktreeURL)
-                Free.freeWorktree(worktreePointer)
                 gitRepositoryFree(repo: repoPointer)
-            }
-            
-            
-            
-            let worktreeAddResult: Int32 = git_worktree_add(
-                &worktreePointer,
-                repository.pointer,
-                worktreeName,
-                worktreeURL.path(),
-                nil
-            )
-            
-            XCTAssertOK(GitErrorCode(rawValue: worktreeAddResult))
-            
-            guard let worktreePointer: OpaquePointer = worktreePointer
-            else
-            {
-                XCTFail("The worktree pointer was nil.")
-                return
             }
             
             

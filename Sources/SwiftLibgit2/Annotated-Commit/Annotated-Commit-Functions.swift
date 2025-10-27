@@ -66,15 +66,18 @@ public func gitAnnotatedCommitFromFetchhead(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_annotated_commit_from_fetchhead(
-            out,
-            repo,
-            branchName,
-            remoteURL,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_annotated_commit_from_fetchhead(
+                out,
+                repo,
+                branchName,
+                remoteURL,
+                cID
+            )
+        }
     }
 }
 
@@ -108,13 +111,16 @@ public func gitAnnotatedCommitLookup(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_annotated_commit_lookup(
-            out,
-            repo,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_annotated_commit_lookup(
+                out,
+                repo,
+                cID
+            )
+        }
     }
 }
 

@@ -31,13 +31,16 @@ public func gitTagLookup(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_tag_lookup(
-            out,
-            repo,
-            &cID
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_tag_lookup(
+                out,
+                repo,
+                cID
+            )
+        }
     }
 }
 
@@ -68,14 +71,17 @@ public func gitTagLookupPrefix(
 {
     return withCConversion
     {
-        var cID: git_oid = id.cValue()
-        
-        return git_tag_lookup_prefix(
-            out,
-            repo,
-            &cID,
-            len
-        )
+        return id.withCValue
+        {
+            cID in
+            
+            return git_tag_lookup_prefix(
+                out,
+                repo,
+                cID,
+                len
+            )
+        }
     }
 }
 
@@ -413,7 +419,7 @@ public func gitTagCreateFromBuffer(
 {
     return withCConversion
     {
-        return oid.withMutatingCValue
+        return try oid.withMutatingCValue
         {
             cOID in
             
@@ -462,7 +468,7 @@ public func gitTagCreateLightweight(
 {
     return withCConversion
     {
-        return oid.withMutatingCValue
+        return try oid.withMutatingCValue
         {
             cOID in
             

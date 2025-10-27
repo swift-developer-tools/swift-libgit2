@@ -113,11 +113,11 @@ public func gitNoteNext(
 {
     return withCConversion
     {
-        return noteID.withMutatingCValue
+        return try noteID.withMutatingCValue
         {
             cNoteID in
             
-            return annotatedID.withMutatingCValue
+            return try annotatedID.withMutatingCValue
             {
                 cAnnotatedID in
                 
@@ -156,14 +156,17 @@ public func gitNoteRead(
 {
     return withCConversion
     {
-        var cOID: git_oid = oid.cValue()
-        
-        return git_note_read(
-            out,
-            repo,
-            notesRef,
-            &cOID
-        )
+        return oid.withCValue
+        {
+            cOID in
+            
+            return git_note_read(
+                out,
+                repo,
+                notesRef,
+                cOID
+            )
+        }
     }
 }
 
@@ -192,14 +195,17 @@ public func gitNoteCommitRead(
 {
     return withCConversion
     {
-        var cOID: git_oid = oid.cValue()
-        
-        return git_note_commit_read(
-            out,
-            repo,
-            notesCommit,
-            &cOID
-        )
+        return oid.withCValue
+        {
+            cOID in
+            
+            return git_note_commit_read(
+                out,
+                repo,
+                notesCommit,
+                cOID
+            )
+        }
     }
 }
 
@@ -336,18 +342,21 @@ public func gitNoteCreate(
                 {
                     cCommitter in
                     
-                    var cOID: git_oid = oid.cValue()
-                    
-                    return git_note_create(
-                        cOut,
-                        repo,
-                        notesRef,
-                        cAuthor,
-                        cCommitter,
-                        &cOID,
-                        note,
-                        force.int32Value
-                    )
+                    return oid.withCValue
+                    {
+                        cOID in
+                        
+                        return git_note_create(
+                            cOut,
+                            repo,
+                            notesRef,
+                            cAuthor,
+                            cCommitter,
+                            cOID,
+                            note,
+                            force.int32Value
+                        )
+                    }
                 }
             }
         }
@@ -410,19 +419,22 @@ public func gitNoteCommitCreate(
                     {
                         cCommitter in
                         
-                        var cOID: git_oid = oid.cValue()
-                        
-                        return git_note_commit_create(
-                            cNotesCommitOut,
-                            cNotesBlobOut,
-                            repo,
-                            parent,
-                            cAuthor,
-                            cCommitter,
-                            &cOID,
-                            note,
-                            allowNoteOverwrite.int32Value
-                        )
+                        return oid.withCValue
+                        {
+                            cOID in
+                            
+                            return git_note_commit_create(
+                                cNotesCommitOut,
+                                cNotesBlobOut,
+                                repo,
+                                parent,
+                                cAuthor,
+                                cCommitter,
+                                cOID,
+                                note,
+                                allowNoteOverwrite.int32Value
+                            )
+                        }
                     }
                 }
             }
@@ -464,15 +476,18 @@ public func gitNoteRemove(
             {
                 cCommitter in
                 
-                var cOID: git_oid = oid.cValue()
-                
-                return git_note_remove(
-                    repo,
-                    notesRef,
-                    cAuthor,
-                    cCommitter,
-                    &cOID
-                )
+                return oid.withCValue
+                {
+                    cOID in
+                    
+                    return git_note_remove(
+                        repo,
+                        notesRef,
+                        cAuthor,
+                        cCommitter,
+                        cOID
+                    )
+                }
             }
         }
     }
@@ -525,16 +540,19 @@ public func gitNoteCommitRemove(
                 {
                     cCommitter in
                     
-                    var cOID: git_oid = oid.cValue()
-                    
-                    return git_note_commit_remove(
-                        cNotesCommitOut,
-                        repo,
-                        notesCommit,
-                        cAuthor,
-                        cCommitter,
-                        &cOID
-                    )
+                    return oid.withCValue
+                    {
+                        cOID in
+                        
+                        return git_note_commit_remove(
+                            cNotesCommitOut,
+                            repo,
+                            notesCommit,
+                            cAuthor,
+                            cCommitter,
+                            cOID
+                        )
+                    }
                 }
             }
         }

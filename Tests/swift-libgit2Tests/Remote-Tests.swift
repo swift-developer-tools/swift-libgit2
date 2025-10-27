@@ -495,24 +495,27 @@ final class RemoteTests: XCTestCaseStopOnFail
         XCTAssertNil(remoteCallbacks.resolveURL)
         XCTAssertNil(remoteCallbacks.updateRefs)
         
-        let cRemoteCallbacks: git_remote_callbacks = try remoteCallbacks.cValue()
-        
-        XCTAssertEqual(cRemoteCallbacks.version, gitRemoteCallbacksVersion)
-        XCTAssertNil(cRemoteCallbacks.sideband_progress)
-        XCTAssertNil(cRemoteCallbacks.completion)
-        XCTAssertNil(cRemoteCallbacks.credentials)
-        XCTAssertNil(cRemoteCallbacks.certificate_check)
-        XCTAssertNil(cRemoteCallbacks.transfer_progress)
-        XCTAssertNil(cRemoteCallbacks.update_tips)
-        XCTAssertNil(cRemoteCallbacks.pack_progress)
-        XCTAssertNil(cRemoteCallbacks.push_transfer_progress)
-        XCTAssertNil(cRemoteCallbacks.push_update_reference)
-        XCTAssertNil(cRemoteCallbacks.push_negotiation)
-        XCTAssertNil(cRemoteCallbacks.transport)
-        XCTAssertNil(cRemoteCallbacks.remote_ready)
-        XCTAssertNil(cRemoteCallbacks.payload)
-        XCTAssertNil(cRemoteCallbacks.resolve_url)
-        XCTAssertNil(cRemoteCallbacks.update_refs)
+        try remoteCallbacks.withCValue
+        {
+            cRemoteCallbacks in
+            
+            XCTAssertEqual(cRemoteCallbacks.pointee.version, gitRemoteCallbacksVersion)
+            XCTAssertNil(cRemoteCallbacks.pointee.sideband_progress)
+            XCTAssertNil(cRemoteCallbacks.pointee.completion)
+            XCTAssertNil(cRemoteCallbacks.pointee.credentials)
+            XCTAssertNil(cRemoteCallbacks.pointee.certificate_check)
+            XCTAssertNil(cRemoteCallbacks.pointee.transfer_progress)
+            XCTAssertNil(cRemoteCallbacks.pointee.update_tips)
+            XCTAssertNil(cRemoteCallbacks.pointee.pack_progress)
+            XCTAssertNil(cRemoteCallbacks.pointee.push_transfer_progress)
+            XCTAssertNil(cRemoteCallbacks.pointee.push_update_reference)
+            XCTAssertNil(cRemoteCallbacks.pointee.push_negotiation)
+            XCTAssertNil(cRemoteCallbacks.pointee.transport)
+            XCTAssertNil(cRemoteCallbacks.pointee.remote_ready)
+            XCTAssertNil(cRemoteCallbacks.pointee.payload)
+            XCTAssertNil(cRemoteCallbacks.pointee.resolve_url)
+            XCTAssertNil(cRemoteCallbacks.pointee.update_refs)
+        }
     }
     
     

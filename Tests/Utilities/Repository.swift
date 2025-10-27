@@ -29,31 +29,6 @@ struct Repository
     
     
     
-    static let commitAuthorName     : String    = "Test User"
-    static let commitAuthorEmail    : String    = "test@example.com"
-    
-    static let readmeFileName       : String    = "README.md"
-    static let readmeFileContent    : String    = "# Hello World!"
-    static let blameFileName        : String    = "blame.txt"
-    
-    static let fetchSource          : String    = "refs/heads/*"
-    static let fetchDestination     : String    = "refs/remotes/origin/*"
-    static let fetchRefspec         : String    = "\(fetchSource):\(fetchDestination)"
-    
-    static let pushSource           : String    = "refs/heads/*"
-    static let pushDestination      : String    = "refs/heads/origin/*"
-    static let pushRefspec          : String    = "\(pushSource):\(pushDestination)"
-    
-    static let gitattributesFiles: [(String, String)] =
-    [
-        ("test.txt",        "This is a text file\n"),
-        ("data.bin",        "Binary data"),
-        ("file.special",    "Special file"),
-        ("negative.false",  "File with false attribute")
-    ]
-    
-    
-    
     /// Creates a new ``Repository`` instance from the given URL and pointer.
     /// - Parameters:
     ///   - url: The URL of the repository.
@@ -548,6 +523,39 @@ struct Repository
 
 internal extension Repository
 {
+    static let commitAuthorName     : String    = "Test User"
+    static let commitAuthorEmail    : String    = "test@example.com"
+    
+    static let readmeFileName       : String    = "README.md"
+    static let readmeFileContent    : String    = "# Hello World!"
+    static let blameFileName        : String    = "blame.txt"
+    
+    static let fetchSource          : String    = "refs/heads/*"
+    static let fetchDestination     : String    = "refs/remotes/origin/*"
+    static let fetchRefspec         : String    = "\(fetchSource):\(fetchDestination)"
+    
+    static let pushSource           : String    = "refs/heads/*"
+    static let pushDestination      : String    = "refs/heads/origin/*"
+    static let pushRefspec          : String    = "\(pushSource):\(pushDestination)"
+    
+    static let worktreeName         : String    = "worktree"
+    static let worktreePath         : String    = worktreeURL.path()
+    
+    static let worktreeURL: URL
+        = FileManager.default.temporaryDirectory
+            .appending(path: worktreeName, directoryHint: .isDirectory)
+            .appendingPathExtension(UUID().uuidString)
+    
+    static let gitattributesFiles: [(String, String)] =
+    [
+        ("test.txt",        "This is a text file\n"),
+        ("data.bin",        "Binary data"),
+        ("file.special",    "Special file"),
+        ("negative.false",  "File with false attribute")
+    ]
+    
+    
+    
     /// Creates attribute and blame data in the repository.
     /// - Parameter repository: The repository.
     /// - Throws: An error if an operation fails.
@@ -735,12 +743,12 @@ internal extension Repository
     
     
     
-    /// Calls the given closure with a ``Repository`` instance and a pointer to
-    /// the repository's index.
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to the repository's index.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withIndexPointer<T>(
+    static func withIndex<T>(
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
@@ -773,6 +781,62 @@ internal extension Repository
             return try body(
                 repository,
                 indexPointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to a worktree.
+    /// - Parameters:
+    ///   - options: The worktree adding options to use.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withWorktree<T>(
+        options : GitWorktreeAddOptions? = nil,
+        _ body  : (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var worktreePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitWorktreeFree(wt: worktreePointer)
+                
+                try? FileManager.default.removeItem(at: Self.worktreeURL)
+            }
+            
+            
+            
+            try? FileManager.default.removeItem(at: Self.worktreeURL)
+            
+            let worktreeAddResult: GitErrorCode = gitWorktreeAdd(
+                out:    &worktreePointer,
+                repo:   repository.pointer,
+                name:   Self.worktreeName,
+                path:   Self.worktreePath,
+                opts:   options
+            )
+            
+            XCTAssertOK(worktreeAddResult)
+            
+            guard let worktreePointer: OpaquePointer = worktreePointer
+            else
+            {
+                throw NSError.makeError("The worktree pointer was nil.")
+            }
+            
+            
+            
+            return try body(
+                repository,
+                worktreePointer
             )
         }
     }
