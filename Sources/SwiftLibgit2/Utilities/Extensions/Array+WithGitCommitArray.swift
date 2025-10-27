@@ -17,6 +17,10 @@ internal extension Array where Element == OpaquePointer
     /// instance.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// - Important: The commits are owned by the caller and must not be freed.
     func withGitCommitArray<T>(
         _ body: (UnsafeMutablePointer<git_commitarray>) throws -> T
     ) rethrows -> T
@@ -26,15 +30,6 @@ internal extension Array where Element == OpaquePointer
         guard !self.isEmpty
         else
         {
-            defer
-            {
-                if commitArray.count > 0
-                {
-                    /// libgit2 allocated new memory that must be freed.
-                    gitCommitArrayDispose(array: &commitArray)
-                }
-            }
-            
             return try body(&commitArray)
         }
         
@@ -60,15 +55,7 @@ internal extension Array where Element == OpaquePointer
         
         
         
-        let result: T = try body(&commitArray)
-        
-        if commitArray.commits != originalPointers
-        {
-            /// libgit2 allocated new memory that must be freed.
-            gitCommitArrayDispose(array: &commitArray)
-        }
-        
-        return result
+        return try body(&commitArray)
     }
     
     
@@ -77,54 +64,23 @@ internal extension Array where Element == OpaquePointer
     /// instance, and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// - Important: The commits are owned by the caller and must not be freed.
     mutating func withMutatingGitCommitArray<T>(
         _ body: (UnsafeMutablePointer<git_commitarray>) throws -> T
     ) rethrows -> T
     {
-        guard !self.isEmpty
-        else
-        {
-            var commitArray = git_commitarray()
-            
-            defer
-            {
-                if commitArray.count > 0
-                {
-                    /// libgit2 allocated new memory that must be freed.
-                    gitCommitArrayDispose(array: &commitArray)
-                }
-            }
-            
-            let result: T = try body(&commitArray)
-            
-            if isSuccess(result)
-            {
-                self = Array(commitArray)
-            }
-            
-            return result
-        }
-        
-        
-        
         return try self.withGitCommitArray
         {
             commitArray in
-            
-            let originalPointer: UnsafePointer<OpaquePointer?>
-                = commitArray.pointee.commits
             
             let result: T = try body(commitArray)
             
             if isSuccess(result)
             {
                 self = Array(commitArray.pointee)
-            }
-            
-            if commitArray.pointee.commits != originalPointer
-            {
-                /// libgit2 allocated new memory that must be freed.
-                gitCommitArrayDispose(array: commitArray)
             }
             
             return result
