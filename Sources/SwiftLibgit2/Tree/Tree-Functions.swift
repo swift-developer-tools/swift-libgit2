@@ -727,7 +727,7 @@ public func gitTreebuilderFilter(
 
 
 
-/// Writes the contents of the given treebuilder as a tree object.
+/// Writes the contents of the given treebuilder as a tree.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-written tree.
