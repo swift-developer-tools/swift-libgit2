@@ -361,7 +361,7 @@ final class TagTests: XCTestCaseStopOnFail
     
     
     
-    func testGitTaghNameIsValid() throws
+    func testGitTagNameIsValid() throws
     {
         let tagNamesAndResults: [String : Bool] =
         [
