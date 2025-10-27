@@ -1057,7 +1057,7 @@ final class RefsTests: XCTestCaseStopOnFail
     
     func testGitReferenceSymbolicCreateMatching() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, _ in
             

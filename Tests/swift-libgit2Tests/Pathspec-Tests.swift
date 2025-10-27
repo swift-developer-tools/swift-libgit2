@@ -199,7 +199,7 @@ final class PathspecTests: XCTestCaseStopOnFail
     
     func testGitPathspecMatchIndex() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             

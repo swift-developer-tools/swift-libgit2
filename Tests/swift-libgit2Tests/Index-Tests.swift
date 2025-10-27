@@ -17,7 +17,7 @@ final class IndexTests: XCTestCaseStopOnFail
 {
     func testGitIndexAdd() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -72,7 +72,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexAddAllAndRemoveAll() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -174,7 +174,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexAddFromBuffer() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -230,7 +230,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexAddAllWithCallback() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -319,7 +319,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexAddByPathAndRemoveByPath() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -450,7 +450,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexCapsAndSetCaps() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -481,7 +481,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexChecksum() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -496,7 +496,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexConflictAddGetAndRemove() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -582,7 +582,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexConflictIterator() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -717,7 +717,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexCountAndClear() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -849,7 +849,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexEntryStageAndIsConflict() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -965,7 +965,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexFind() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1009,7 +1009,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexFindPrefix() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1081,7 +1081,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexGetByIndex() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1115,7 +1115,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexGetByPath() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1145,7 +1145,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexHasConflictsAndCleanup() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1210,7 +1210,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexIterator() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1335,7 +1335,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexOwner() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1350,7 +1350,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexPath() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1396,7 +1396,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexReadAndWrite() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1420,7 +1420,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexReadTreeAndWriteTree() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1507,7 +1507,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexRemoveDirectory() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1635,7 +1635,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexUpdateAll() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1718,7 +1718,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexWriteTreeTo() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
@@ -1739,7 +1739,7 @@ final class IndexTests: XCTestCaseStopOnFail
     
     func testGitIndexVersionAndSetVersion() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             

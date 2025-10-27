@@ -743,12 +743,12 @@ internal extension Repository
     
     
     
-    /// Calls the given closure with a ``Repository`` instance and a pointer to
-    /// the repository's index.
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to the repository's index.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withIndexPointer<T>(
+    static func withIndex<T>(
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {

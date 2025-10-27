@@ -226,7 +226,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
     
     func testGitCheckoutIndex() throws
     {
-        try Repository.withIndexPointer
+        try Repository.withIndex
         {
             repository, indexPointer in
             
