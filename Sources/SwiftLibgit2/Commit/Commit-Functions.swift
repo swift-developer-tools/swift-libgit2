@@ -718,8 +718,7 @@ public func gitCommitExtractSignature(
 ///   - messageEncoding: The commit message encoding to use. Pass `nil` to
 ///   use the original message encoding.
 ///   - message: The commit message to use.
-///   - tree: The tree object to use as the tree for the commit. The underlying
-///   type must be `git_tree`.
+///   - tree: The commit tree to use. The underlying type must be `git_tree`.
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
 ///   array of `git_commit` instances, of length `parentCount`. All the given
@@ -854,8 +853,7 @@ public func gitCommitCreateFromStage(
 ///   - messageEncoding: The commit message encoding to use. Pass `nil` to
 ///   use the original message encoding.
 ///   - message: The commit message to use.
-///   - tree: The tree object to use as the tree for the commit. The underlying
-///   type must be `git_tree`.
+///   - tree: The commit tree to use. The underlying type must be `git_tree`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -930,8 +928,7 @@ public func gitCommitAmend(
 ///   - messageEncoding: The commit message encoding to use. Pass `nil` to
 ///   use the original message encoding.
 ///   - message: The commit message to use.
-///   - tree: The tree object to use as the tree for the commit. The underlying
-///   type must be `git_tree`.
+///   - tree: The commit tree to use. The underlying type must be `git_tree`.
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
 ///   array of `git_commit` instances, of length `parentCount`. All the given
