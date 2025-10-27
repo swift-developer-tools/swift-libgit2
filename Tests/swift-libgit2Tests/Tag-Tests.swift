@@ -37,7 +37,7 @@ final class TagTests: XCTestCaseStopOnFail
     
     func testGitTagCreateFromBuffer() throws
     {
-        let tagContent: String = try Repository.withRepository
+        try Repository.withRepository
         {
             repository in
             
@@ -50,7 +50,8 @@ final class TagTests: XCTestCaseStopOnFail
             
             
             
-            return """
+            let tagContent: String =
+            """
             object \(headOIDString)
             type commit
             tag \(Self.tagName)
@@ -58,11 +59,34 @@ final class TagTests: XCTestCaseStopOnFail
             
             \(Self.tagMessage)
             """
-        }
-        
-        try withTag(type: .buffer(content: tagContent))
-        {
-            _, _ in
+            
+            let tagOID = try Tag.createTag(
+                type:       .buffer(content: tagContent),
+                named:      Self.tagName,
+                in:         repository,
+                message:    Self.tagMessage,
+                force:      true
+            )
+            
+            
+            
+            var tagPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitTagFree(tag: tagPointer)
+            }
+            
+            
+            
+            let tagLookupResult: GitErrorCode = gitTagLookup(
+                out:    &tagPointer,
+                repo:   repository.pointer,
+                id:     tagOID
+            )
+            
+            XCTAssertOK(tagLookupResult)
+            XCTAssertNotNil(tagPointer)
         }
     }
     
