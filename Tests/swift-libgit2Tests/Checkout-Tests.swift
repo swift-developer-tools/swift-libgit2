@@ -424,11 +424,14 @@ final class CheckoutTests: XCTestCaseStopOnFail
         XCTAssertEqual(perfData.statCalls, 0)
         XCTAssertEqual(perfData.chmodCalls, 0)
         
-        let cPerfData: git_checkout_perfdata = perfData.cValue()
-        
-        XCTAssertEqual(cPerfData.mkdir_calls, 0)
-        XCTAssertEqual(cPerfData.stat_calls, 0)
-        XCTAssertEqual(cPerfData.chmod_calls, 0)
+        perfData.withCValue
+        {
+            cPerfData in
+            
+            XCTAssertEqual(cPerfData.pointee.mkdir_calls, 0)
+            XCTAssertEqual(cPerfData.pointee.stat_calls, 0)
+            XCTAssertEqual(cPerfData.pointee.chmod_calls, 0)
+        }
     }
     
     

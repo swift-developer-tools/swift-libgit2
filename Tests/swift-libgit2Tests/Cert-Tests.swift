@@ -21,9 +21,12 @@ final class CertTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(cert.certType, .gitCertNone)
         
-        let cCert: git_cert = cert.cValue()
-        
-        XCTAssertEqual(GitCertT(cValue: cCert.cert_type), .gitCertNone)
+        cert.withCValue
+        {
+            cCert in
+            
+            XCTAssertEqual(GitCertT(cValue: cCert.pointee.cert_type), .gitCertNone)
+        }
     }
     
     
@@ -317,11 +320,14 @@ final class CertTests: XCTestCaseStopOnFail
             XCTAssertEqual(certX509.data, baseAddressPointer)
             XCTAssertEqual(certX509.len, data.count)
             
-            let cCertX509: git_cert_x509 = certX509.cValue()
-            
-            XCTAssertEqual(GitCertT(cValue: cCertX509.parent.cert_type), .gitCertX509)
-            XCTAssertEqual(cCertX509.data, baseAddressPointer)
-            XCTAssertEqual(cCertX509.len, data.count)
+            certX509.withCValue
+            {
+                cCertX509 in
+                
+                XCTAssertEqual(GitCertT(cValue: cCertX509.pointee.parent.cert_type), .gitCertX509)
+                XCTAssertEqual(cCertX509.pointee.data, baseAddressPointer)
+                XCTAssertEqual(cCertX509.pointee.len, data.count)
+            }
         }
     }
     

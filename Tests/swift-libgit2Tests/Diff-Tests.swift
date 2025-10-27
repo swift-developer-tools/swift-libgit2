@@ -437,16 +437,19 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffFindOptions.renameLimit, 1000)
         XCTAssertNil(diffFindOptions.metric)
         
-        let cDiffFindOptions: git_diff_find_options = try diffFindOptions.cValue()
-        
-        XCTAssertEqual(cDiffFindOptions.version, gitDiffOptionsVersion)
-        XCTAssertEqual(GitDiffFindT(rawValue: cDiffFindOptions.flags), .gitDiffFindByConfig)
-        XCTAssertEqual(cDiffFindOptions.rename_threshold, 50)
-        XCTAssertEqual(cDiffFindOptions.rename_from_rewrite_threshold, 50)
-        XCTAssertEqual(cDiffFindOptions.copy_threshold, 50)
-        XCTAssertEqual(cDiffFindOptions.break_rewrite_threshold, 50)
-        XCTAssertEqual(cDiffFindOptions.rename_limit, 1000)
-        XCTAssertNil(cDiffFindOptions.metric)
+        try diffFindOptions.withCValue
+        {
+            cDiffFindOptions in
+            
+            XCTAssertEqual(cDiffFindOptions.pointee.version, gitDiffOptionsVersion)
+            XCTAssertEqual(GitDiffFindT(rawValue: cDiffFindOptions.pointee.flags), .gitDiffFindByConfig)
+            XCTAssertEqual(cDiffFindOptions.pointee.rename_threshold, 50)
+            XCTAssertEqual(cDiffFindOptions.pointee.rename_from_rewrite_threshold, 50)
+            XCTAssertEqual(cDiffFindOptions.pointee.copy_threshold, 50)
+            XCTAssertEqual(cDiffFindOptions.pointee.break_rewrite_threshold, 50)
+            XCTAssertEqual(cDiffFindOptions.pointee.rename_limit, 1000)
+            XCTAssertNil(cDiffFindOptions.pointee.metric)
+        }
     }
     
     
@@ -902,16 +905,17 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffHunk.headerLen, 0)
         XCTAssertNil(diffHunk.header)
         
-        
-        
-        let cDiffHunk: git_diff_hunk = diffHunk.cValue()
-        
-        XCTAssertEqual(cDiffHunk.old_start, 0)
-        XCTAssertEqual(cDiffHunk.old_lines, 0)
-        XCTAssertEqual(cDiffHunk.new_start, 0)
-        XCTAssertEqual(cDiffHunk.new_lines, 0)
-        XCTAssertEqual(cDiffHunk.header_len, 0)
-        XCTAssertEqual(String(cArray: cDiffHunk.header, count: 0), "")
+        diffHunk.withCValue
+        {
+            cDiffHunk in
+            
+            XCTAssertEqual(cDiffHunk.pointee.old_start, 0)
+            XCTAssertEqual(cDiffHunk.pointee.old_lines, 0)
+            XCTAssertEqual(cDiffHunk.pointee.new_start, 0)
+            XCTAssertEqual(cDiffHunk.pointee.new_lines, 0)
+            XCTAssertEqual(cDiffHunk.pointee.header_len, 0)
+            XCTAssertEqual(String(cArray: cDiffHunk.pointee.header, count: 0), "")
+        }
     }
     
     
@@ -1352,10 +1356,13 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertEqual(diffParseOptions.version, gitDiffParseOptionsVersion)
         XCTAssertEqual(diffParseOptions.oidType, .gitOIDSHA1)
         
-        let cDiffParseOptions: git_diff_parse_options = diffParseOptions.cValue()
-        
-        XCTAssertEqual(cDiffParseOptions.version, gitDiffParseOptionsVersion)
-        XCTAssertEqual(GitOIDT(cValue: cDiffParseOptions.oid_type), .gitOIDSHA1)
+        diffParseOptions.withCValue
+        {
+            cDiffParseOptions in
+            
+            XCTAssertEqual(cDiffParseOptions.pointee.version, gitDiffParseOptionsVersion)
+            XCTAssertEqual(GitOIDT(cValue: cDiffParseOptions.pointee.oid_type), .gitOIDSHA1)
+        }
     }
     
     
@@ -1399,9 +1406,12 @@ final class DiffTests: XCTestCaseStopOnFail
         
         XCTAssertEqual(diffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
         
-        let cDiffPatchIDOptions: git_diff_patchid_options = try diffPatchIDOptions.cValue()
-        
-        XCTAssertEqual(cDiffPatchIDOptions.version, gitDiffPatchIDOptionsVersion)
+        try diffPatchIDOptions.withCValue
+        {
+            cDiffPatchIDOptions in
+            
+            XCTAssertEqual(cDiffPatchIDOptions.pointee.version, gitDiffPatchIDOptionsVersion)
+        }
     }
     
     
@@ -1484,14 +1494,16 @@ final class DiffTests: XCTestCaseStopOnFail
         XCTAssertNil(diffSimilarityMetric.similarity)
         XCTAssertNil(diffSimilarityMetric.payload)
         
-        let cDiffSimilarityMetric: git_diff_similarity_metric
-            = diffSimilarityMetric.cValue()
-        
-        XCTAssertNil(cDiffSimilarityMetric.file_signature)
-        XCTAssertNil(cDiffSimilarityMetric.buffer_signature)
-        XCTAssertNil(cDiffSimilarityMetric.free_signature)
-        XCTAssertNil(cDiffSimilarityMetric.similarity)
-        XCTAssertNil(cDiffSimilarityMetric.payload)
+        diffSimilarityMetric.withCValue
+        {
+            cDiffSimilarityMetric in
+            
+            XCTAssertNil(cDiffSimilarityMetric.pointee.file_signature)
+            XCTAssertNil(cDiffSimilarityMetric.pointee.buffer_signature)
+            XCTAssertNil(cDiffSimilarityMetric.pointee.free_signature)
+            XCTAssertNil(cDiffSimilarityMetric.pointee.similarity)
+            XCTAssertNil(cDiffSimilarityMetric.pointee.payload)
+        }
     }
     
     

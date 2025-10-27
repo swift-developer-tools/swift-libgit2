@@ -22,9 +22,12 @@ final class OIDTests: XCTestCaseStopOnFail
         XCTAssertZeroOID(oid)
         XCTAssertEqual(oid.id.count, GitOID.size)
         
-        let cOID: git_oid = oid.cValue()
-        
-        XCTAssertZeroOID(GitOID(cValue: cOID))
+        oid.withCValue
+        {
+            cOID in
+            
+            XCTAssertZeroOID(GitOID(cValue: cOID.pointee))
+        }
     }
     
     

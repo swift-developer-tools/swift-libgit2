@@ -1622,10 +1622,13 @@ final class IndexTests: XCTestCaseStopOnFail
         XCTAssertEqual(indexTime.seconds, 0)
         XCTAssertEqual(indexTime.nanoseconds, 0)
         
-        let cIndexTime: git_index_time = indexTime.cValue()
-        
-        XCTAssertEqual(cIndexTime.seconds, 0)
-        XCTAssertEqual(cIndexTime.nanoseconds, 0)
+        indexTime.withCValue
+        {
+            cIndexTime in
+            
+            XCTAssertEqual(cIndexTime.pointee.seconds, 0)
+            XCTAssertEqual(cIndexTime.pointee.nanoseconds, 0)
+        }
     }
     
     
