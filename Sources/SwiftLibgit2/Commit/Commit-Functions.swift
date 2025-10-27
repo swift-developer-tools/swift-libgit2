@@ -709,7 +709,7 @@ public func gitCommitExtractSignature(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
-///   - repo: The repository in which to store the commit. The underlying type
+///   - repo: The repository in which to create the commit. The underlying type
 ///   must be `git_repository`.
 ///   - updateRef: The name of the reference that will be updated to point to
 ///   the commit.
@@ -798,7 +798,7 @@ public func gitCommitCreate(
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
-///   - repo: The repository in which to store the commit. The underlying type
+///   - repo: The repository in which to create the commit. The underlying type
 ///   must be `git_repository`.
 ///   - message: The commit message to use.
 ///   - opts: The commit creation options to use.
@@ -921,7 +921,7 @@ public func gitCommitAmend(
 /// instance with the commit content.
 /// - Parameters:
 ///   - out: The `Data` instance in which to store the commit content.
-///   - repo: The repository in which to store the commit. The underlying type
+///   - repo: The repository in which to create the commit. The underlying type
 ///   must be `git_repository`.
 ///   - author: The author signature to use.
 ///   - committer: The committer signature to use.
@@ -996,7 +996,7 @@ public func gitCommitCreateBuffer(
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit
-///   - repo: The repository in which to store the commit. The underlying type
+///   - repo: The repository in which to create the commit. The underlying type
 ///   must be `git_repository`.
 ///   - commitContent: The content of the unsigned commit to use.
 ///   - signature: The signature to add to the commit.
