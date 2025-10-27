@@ -1591,8 +1591,7 @@ private extension RemoteTests
     /// - Parameters:
     ///   - remotePointer: The remote to validate. The underlying type must be
     ///   `git_remote`.
-    ///   - repository: The repository containing the given remote. The
-    ///   underlying type must be `git_repository`.
+    ///   - repository: The repository containing the given remote.
     /// - Throws: An error if an operation fails.
     func validateRemote(
         _   remotePointer   : OpaquePointer?,
