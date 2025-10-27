@@ -392,26 +392,14 @@ public func gitConfigSetWriteOrder(
 {
     return withCConversion
     {
-        let cLevels: [git_config_level_t] = levels.map { $0.cValue() }
-        
-        return cLevels.withUnsafeBufferPointer
+        return try levels.withArrayOfGitConfigLevels
         {
-            levelsBufferPointer in
-            
-            guard let baseAddress: UnsafePointer<git_config_level_t>
-                    = levelsBufferPointer.baseAddress
-            else
-            {
-                return GitErrorCode.gitEUser.rawValue
-            }
-            
-            let mutableBaseAddress: UnsafeMutablePointer<git_config_level_t>
-                = UnsafeMutablePointer(mutating: baseAddress)
+            cLevels, cLevelsCount in
             
             return git_config_set_writeorder(
                 cfg,
-                mutableBaseAddress,
-                cLevels.count
+                cLevels,
+                cLevelsCount
             )
         }
     }
