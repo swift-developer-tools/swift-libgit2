@@ -711,8 +711,7 @@ public func gitCommitExtractSignature(
 ///   newly-created commit.
 ///   - repo: The repository in which to create the commit. The underlying type
 ///   must be `git_repository`.
-///   - updateRef: The name of the reference that will be updated to point to
-///   the commit.
+///   - updateRef: The name of the reference to update to point to the commit.
 ///   - author: The author signature to use.
 ///   - committer: The committer signature to use.
 ///   - messageEncoding: The commit message encoding to use. Pass `nil` to
