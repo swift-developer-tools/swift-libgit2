@@ -910,7 +910,7 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
     /// The default value is `nil`.
     public var freeSignature    : FreeSignature?            = nil
     
-    /// Generates a similarity score.
+    /// Calculates the similarity of the given signatures.
     ///
     /// ## Discussion
     ///
@@ -980,6 +980,14 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
     
     
     
+    /// The callback invoked to generate a signature for the given file.
+    /// - Parameters:
+    ///   - out: The pointer in which to store the signature.
+    ///   - file: The file for which to generate a signature.
+    ///   - fullPath: The full path to the file for which to generate a
+    ///   signature.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
     public typealias FileSignature = @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
@@ -988,6 +996,17 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
         UnsafeMutableRawPointer?
     ) -> Int32
     
+    
+    
+    /// The callback invoked to generate a signature for the given file,
+    /// using the given buffer containing the contents of the file.
+    /// - Parameters:
+    ///   - out: The pointer in which to store the signature.
+    ///   - file: The file for which to generate a signature.
+    ///   - buf: The buffer containing the contents of the file.
+    ///   - bufLen: The length of `buf`.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
     public typealias BufferSignature = @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutableRawPointer?>?,
@@ -997,12 +1016,29 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
         UnsafeMutableRawPointer?
     ) -> Int32
     
+    
+    
+    /// The callback invoked to free the memory allocated for the given
+    /// signature.
+    /// - Parameters:
+    ///   - sig: The signature to free.
+    ///   - payload: The payload provided by the caller.
     public typealias FreeSignature = @convention(c)
     (
         UnsafeMutableRawPointer?,
         UnsafeMutableRawPointer?
     ) -> Void
     
+    
+    
+    /// The callback invoked to calculate the similarity of the given
+    /// signatures.
+    /// - Parameters:
+    ///   - score: The pointer in which to store the similarity score.
+    ///   - sigA: The first signature to compare.
+    ///   - sigB: The second signature to compare.
+    ///   - payload: The payload provided by the caller.
+    /// - Returns: `0` on success, or an error code.
     public typealias Similarity = @convention(c)
     (
         UnsafeMutablePointer<Int32>?,
