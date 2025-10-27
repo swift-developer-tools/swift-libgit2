@@ -17,7 +17,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
 {
     func testGitWorktreeAdd() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, _ in
         }
@@ -33,7 +33,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
         
         
         
-        try withWorktree(options: worktreeAddOptions)
+        try Repository.withWorktree(options: worktreeAddOptions)
         {
             _, worktreePointer in
             
@@ -107,7 +107,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeIsPrunable() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, worktreePointer in
             
@@ -144,7 +144,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeList() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             repository, _ in
             
@@ -157,7 +157,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(worktreeListResult)
             XCTAssertEqual(worktreeNames.count, 1)
-            XCTAssertTrue(worktreeNames.contains(Self.worktreeName))
+            XCTAssertTrue(worktreeNames.contains(Repository.worktreeName))
         }
     }
     
@@ -165,7 +165,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeLockAndUnlock() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, worktreePointer in
             
@@ -219,7 +219,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeLockWithoutReason() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, worktreePointer in
             
@@ -250,7 +250,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeLookup() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             repository, _ in
             
@@ -266,7 +266,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             let worktreeLookupResult: GitErrorCode = gitWorktreeLookup(
                 out:    &worktreePointer,
                 repo:   repository.pointer,
-                name:   Self.worktreeName
+                name:   Repository.worktreeName
             )
             
             XCTAssertOK(worktreeLookupResult)
@@ -283,7 +283,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             let worktreeName: String? = gitWorktreeName(wt: worktreePointer)
             
             XCTAssertNotNil(worktreeName)
-            XCTAssertEqual(worktreeName, Self.worktreeName)
+            XCTAssertEqual(worktreeName, Repository.worktreeName)
         }
     }
     
@@ -291,14 +291,14 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeName() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, worktreePointer in
             
             let worktreeName: String? = gitWorktreeName(wt: worktreePointer)
             
             XCTAssertNotNil(worktreeName)
-            XCTAssertEqual(worktreeName, Self.worktreeName)
+            XCTAssertEqual(worktreeName, Repository.worktreeName)
         }
     }
     
@@ -306,7 +306,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeOpenFromRepository() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             repository, _ in
             
@@ -323,7 +323,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             
             let repoOpenResult: GitErrorCode = gitRepositoryOpen(
                 out:    &repoPointer,
-                path:   Self.worktreePath
+                path:   Repository.worktreePath
             )
             
             XCTAssertOK(repoOpenResult)
@@ -357,7 +357,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             let worktreeName: String? = gitWorktreeName(wt: worktreePointer)
             
             XCTAssertNotNil(worktreeName)
-            XCTAssertEqual(worktreeName, Self.worktreeName)
+            XCTAssertEqual(worktreeName, Repository.worktreeName)
         }
     }
     
@@ -365,14 +365,14 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreePath() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, worktreePointer in
             
             let worktreePath: String? = gitWorktreePath(wt: worktreePointer)
             
             XCTAssertNotNil(worktreePath)
-            XCTAssertTrue(worktreePath?.contains(Self.worktreeName) ?? false)
+            XCTAssertTrue(worktreePath?.contains(Repository.worktreeName) ?? false)
         }
     }
     
@@ -380,7 +380,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreePrune() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             repository, worktreePointer in
             
@@ -402,8 +402,9 @@ final class WorktreeTests: XCTestCaseStopOnFail
             
             
             
-            let worktreeExists: Bool
-                = FileManager.default.fileExists(atPath: Self.worktreePath)
+            let worktreeExists: Bool = FileManager.default.fileExists(
+                atPath: Repository.worktreePath
+            )
             
             XCTAssertFalse(worktreeExists)
         }
@@ -484,7 +485,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
     
     func testGitWorktreeValidate() throws
     {
-        try withWorktree
+        try Repository.withWorktree
         {
             _, worktreePointer in
             
@@ -492,80 +493,6 @@ final class WorktreeTests: XCTestCaseStopOnFail
                 = gitWorktreeValidate(wt: worktreePointer)
             
             XCTAssertOK(worktreeValidateResult)
-        }
-    }
-}
-
-
-
-// MARK: - Extensions
-
-private extension WorktreeTests
-{
-    static let worktreeName: String    = "worktree"
-    static let worktreePath: String    = worktreeURL.path()
-    
-    static let worktreeURL: URL
-        = FileManager.default.temporaryDirectory
-            .appending(
-                path:           worktreeName,
-                directoryHint:  .isDirectory
-            )
-            .appendingPathExtension(UUID().uuidString)
-    
-    
-    
-    /// Calls the given closure with a ``Repository`` instance and a pointer
-    /// to a worktree.
-    /// - Parameters:
-    ///   - options: The worktree adding options to use.
-    ///   - body: The closure to call.
-    /// - Throws: An error if an operation fails.
-    func withWorktree(
-        options : GitWorktreeAddOptions? = nil,
-        _ body  : (Repository, OpaquePointer) throws -> Void
-    ) throws
-    {
-        try Repository.withRepository
-        {
-            repository in
-            
-            var worktreePointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitWorktreeFree(wt: worktreePointer)
-                
-                try? FileManager.default.removeItem(at: Self.worktreeURL)
-            }
-            
-            
-            
-            try? FileManager.default.removeItem(at: Self.worktreeURL)
-            
-            let worktreeAddResult: GitErrorCode = gitWorktreeAdd(
-                out:    &worktreePointer,
-                repo:   repository.pointer,
-                name:   Self.worktreeName,
-                path:   Self.worktreePath,
-                opts:   options
-            )
-            
-            XCTAssertOK(worktreeAddResult)
-            
-            guard let worktreePointer: OpaquePointer = worktreePointer
-            else
-            {
-                XCTFail("The worktree pointer was nil.")
-                return
-            }
-            
-            
-            
-            try body(
-                repository,
-                worktreePointer
-            )
         }
     }
 }
