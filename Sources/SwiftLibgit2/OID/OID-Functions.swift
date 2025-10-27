@@ -29,7 +29,7 @@ public func gitOIDFromStr(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -59,7 +59,7 @@ public func gitOIDFromStrP(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -99,7 +99,7 @@ public func gitOIDFromStrN(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -342,7 +342,7 @@ public func gitOIDCpy(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             

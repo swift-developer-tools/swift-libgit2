@@ -394,7 +394,7 @@ public func gitIndexWriteTree(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -436,7 +436,7 @@ public func gitIndexWriteTreeTo(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             

@@ -1046,7 +1046,7 @@ public func gitRepositoryHashFile(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             

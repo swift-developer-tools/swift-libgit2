@@ -305,7 +305,7 @@ public func gitBlobCreateFromWorkdir(
 {
     return withCConversion
     {
-        return id.withMutatingCValue
+        return try id.withMutatingCValue
         {
             cID in
             
@@ -341,7 +341,7 @@ public func gitBlobCreateFromDisk(
 {
     return withCConversion
     {
-        return id.withMutatingCValue
+        return try id.withMutatingCValue
         {
             cID in
             
@@ -418,7 +418,7 @@ public func gitBlobCreateFromStreamCommit(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             

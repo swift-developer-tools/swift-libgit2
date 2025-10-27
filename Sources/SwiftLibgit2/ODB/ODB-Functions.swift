@@ -242,7 +242,7 @@ public func gitODBReadHeader(
 {
     return withCConversion
     {
-        return typeOut.withMutatingCValue
+        return try typeOut.withMutatingCValue
         {
             cTypeOut in
             
@@ -355,7 +355,7 @@ public func gitODBExistsPrefix(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -644,7 +644,7 @@ public func gitODBStreamFinalizeWrite(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -748,7 +748,7 @@ public func gitODBOpenRStream(
 {
     return withCConversion
     {
-        return type.withMutatingCValue
+        return try type.withMutatingCValue
         {
             cType in
             
@@ -914,7 +914,7 @@ public func gitODBHashFile(
 {
     return withCConversion
     {
-        return oid.withMutatingCValue
+        return try oid.withMutatingCValue
         {
             cOID in
             

@@ -419,7 +419,7 @@ public func gitTagCreateFromBuffer(
 {
     return withCConversion
     {
-        return oid.withMutatingCValue
+        return try oid.withMutatingCValue
         {
             cOID in
             
@@ -468,7 +468,7 @@ public func gitTagCreateLightweight(
 {
     return withCConversion
     {
-        return oid.withMutatingCValue
+        return try oid.withMutatingCValue
         {
             cOID in
             

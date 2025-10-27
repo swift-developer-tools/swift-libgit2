@@ -1124,7 +1124,7 @@ public func gitDiffPatchID(
         {
             cOpts in
             
-            return out.withMutatingCValue
+            return try out.withMutatingCValue
             {
                 cOut in
                 

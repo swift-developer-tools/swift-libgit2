@@ -109,7 +109,7 @@ public func gitIndexerAppend(
         {
             cData, cDataCount in
             
-            return stats.withMutatingCValue
+            return try stats.withMutatingCValue
             {
                 cStats in
                 
@@ -142,7 +142,7 @@ public func gitIndexerCommit(
 {
     return withCConversion
     {
-        return stats.withMutatingCValue
+        return try stats.withMutatingCValue
         {
             cStats in
             

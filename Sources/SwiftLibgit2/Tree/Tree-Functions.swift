@@ -745,7 +745,7 @@ public func gitTreebuilderWrite(
 {
     return withCConversion
     {
-        return id.withMutatingCValue
+        return try id.withMutatingCValue
         {
             cID in
             

@@ -96,7 +96,7 @@ public func gitRevparse(
 {
     return withCConversion
     {
-        return revspec.withMutatingCValue
+        return try revspec.withMutatingCValue
         {
             cRevspec in
             

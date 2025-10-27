@@ -113,11 +113,11 @@ public func gitNoteNext(
 {
     return withCConversion
     {
-        return noteID.withMutatingCValue
+        return try noteID.withMutatingCValue
         {
             cNoteID in
             
-            return annotatedID.withMutatingCValue
+            return try annotatedID.withMutatingCValue
             {
                 cAnnotatedID in
                 

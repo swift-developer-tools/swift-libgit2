@@ -113,11 +113,11 @@ public func gitMergeAnalysis(
 {
     return withCConversion
     {
-        return analysisOut.withMutatingCValue
+        return try analysisOut.withMutatingCValue
         {
             cAnalysisOut in
             
-            return preferenceOut.withMutatingCValue
+            return try preferenceOut.withMutatingCValue
             {
                 cPreferenceOut in
                 
@@ -165,11 +165,11 @@ public func gitMergeAnalysisForRef(
 {
     return withCConversion
     {
-        return analysisOut.withMutatingCValue
+        return try analysisOut.withMutatingCValue
         {
             cAnalysisOut in
             
-            return preferenceOut.withMutatingCValue
+            return try preferenceOut.withMutatingCValue
             {
                 cPreferenceOut in
                 
@@ -209,7 +209,7 @@ public func gitMergeBase(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -304,7 +304,7 @@ public func gitMergeBaseMany(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
@@ -423,7 +423,7 @@ public func gitMergeBaseOctopus(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             

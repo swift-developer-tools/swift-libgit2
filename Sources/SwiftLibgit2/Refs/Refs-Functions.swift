@@ -62,7 +62,7 @@ public func gitReferenceNameToID(
 {
     return withCConversion
     {
-        return out.withMutatingCValue
+        return try out.withMutatingCValue
         {
             cOut in
             
