@@ -145,7 +145,7 @@ internal extension Array where Element == GitMessageTrailer
                 
                 return try body(
                     baseAddress,
-                    arrayOfMessageTrailers.count
+                    arrayOfMessageTrailersBufferPointer.count
                 )
             }
         }

@@ -46,7 +46,7 @@ internal extension Array where Element == GitODBExpandID
             
             return try body(
                 baseAddress,
-                arrayOfODBExpandIDs.count
+                arrayOfODBExpandIDsBufferPointer.count
             )
         }
     }
@@ -78,8 +78,7 @@ internal extension Array where Element == GitODBExpandID
         
         
         
-        var arrayOfODBExpandIDs : [git_odb_expand_id]   = self.map { $0.cValue() }
-        let count               : Int                   = arrayOfODBExpandIDs.count
+        var arrayOfODBExpandIDs: [git_odb_expand_id] = self.map { $0.cValue() }
         
         let result: T = try arrayOfODBExpandIDs.withUnsafeMutableBufferPointer
         {
@@ -94,7 +93,7 @@ internal extension Array where Element == GitODBExpandID
             
             return try body(
                 baseAddress,
-                count
+                arrayOfODBExpandIDsBufferPointer.count
             )
         }
         

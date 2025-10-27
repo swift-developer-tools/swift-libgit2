@@ -93,7 +93,7 @@ internal extension Array where Element == GitConfigMap
                 
                 return try body(
                     baseAddress,
-                    arrayOfConfigMaps.count
+                    arrayOfConfigMapsBufferPointer.count
                 )
             }
         }
@@ -181,7 +181,7 @@ internal extension Array where Element == GitConfigMap
                 
                 return try body(
                     baseAddress,
-                    arrayOfConfigMaps.count
+                    arrayOfConfigMapsBufferPointer.count
                 )
             }
         }
