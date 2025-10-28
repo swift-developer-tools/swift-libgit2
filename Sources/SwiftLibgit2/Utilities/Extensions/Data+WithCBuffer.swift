@@ -21,6 +21,9 @@ internal extension Data
     ///
     /// ## Discussion
     ///
+    /// Use this method with C functions that expect a parameter of the type
+    /// `const char *`.
+    ///
     /// Callers must ensure that the receiver is not empty before calling
     /// this method when:
     ///
@@ -58,6 +61,50 @@ internal extension Data
                 baseAddress.assumingMemoryBound(to: CChar.self),
                 bytes.count
             )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with mutable pointer to a pointer to a buffer,
+    /// and the length of that buffer.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type
+    /// `const char **`.
+    ///
+    /// - Important: See ``withCBuffer(_:)`` for more information on when
+    /// to check for empty data before calling this method.
+    func withMutableCBuffer<T>(
+        _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>, Int) throws -> T
+    ) throws -> T
+    {
+        return try self.withUnsafeBytes
+        {
+            bytes in
+            
+            guard let baseAddress: UnsafeRawPointer = bytes.baseAddress
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            var cCharPointer: UnsafePointer<CChar>?
+                = baseAddress.assumingMemoryBound(to: CChar.self)
+            
+            return try withUnsafeMutablePointer(to: &cCharPointer)
+            {
+                mutableCCharPointer in
+                
+                return try body(
+                    mutableCCharPointer,
+                    bytes.count
+                )
+            }
         }
     }
     
