@@ -47,8 +47,7 @@
 /// ensure proper lifetime of C values and other nested conversions) must
 /// conform to ``WithCConvertible``.
 ///
-/// Types must use ``NSError/makeCConversionError()`` to create conversion
-/// errors.
+/// Types must use ``makeCConversionError()`` to create conversion errors.
 ///
 /// ## Methods vs Properties
 ///

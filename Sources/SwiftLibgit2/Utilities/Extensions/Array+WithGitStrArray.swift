@@ -55,10 +55,10 @@ internal extension Array where Element == String
             
             
             
-            /// ``Array<String>/withArrayOfCStrings(_:)`` appends a null
-            /// terminator as the last element of the array, but `git_strarray`
-            /// must not include this terminator, otherwise it will cause a
-            /// runtime crash when libgit2 tries to read invalid memory.
+            /// ``withArrayOfCStrings(_:)`` appends a null terminator as the
+            /// last element of the array, but `git_strarray` must not include
+            /// this terminator, otherwise it will cause a runtime crash when
+            /// libgit2 tries to read invalid memory.
             for (index, cString) in cStrings.dropLast().enumerated()
             {
                 originalPointers[index] = cString

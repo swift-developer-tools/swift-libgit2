@@ -115,9 +115,9 @@ internal extension Optional where Wrapped == Data
     /// closure.
     ///
     /// When the receiver contains data, this method will call the
-    /// ``Data/withCBuffer(_:)`` method of the wrapped value.
+    /// ``withCBuffer(_:)`` method of the wrapped value.
     ///
-    /// - Note: See ``Data/withCBuffer(_:)`` for more information on when
+    /// - Important: See ``withCBuffer(_:)`` for more information on when
     /// to check for empty data before calling this method.
     func withOptionalCBuffer<T>(
         _ body: (UnsafePointer<CChar>?, Int) throws -> T
