@@ -305,11 +305,12 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             
             
-            let configIteratorGlobNewResult: GitErrorCode = gitConfigIteratorGlobNew(
-                out:        &configGlobIterator,
-                cfg:        configPointer,
-                regExp:     "test.*"
-            )
+            let configIteratorGlobNewResult: GitErrorCode
+                = gitConfigIteratorGlobNew(
+                    out:        &configGlobIterator,
+                    cfg:        configPointer,
+                    regExp:     "test.*"
+                )
             
             XCTAssertOK(configIteratorGlobNewResult)
             
