@@ -27,7 +27,7 @@ public struct GitCredential: CStruct, Sendable
     public let credType : GitCredentialT
     
     /// Frees the memory allocated for the given `git_credential` instance.
-    public let free     : Free?
+    public let free     : GitCredential.Free?
     
     
     

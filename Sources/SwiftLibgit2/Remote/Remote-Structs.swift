@@ -265,7 +265,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     /// The default value is `nil`.
     ///
     /// - Note: This property is unused.
-    public var completion           : CompletionCB?
+    public var completion           : GitRemoteCallbacks.CompletionCB?
     
     /// The callback invoked to acquire credentials.
     ///
@@ -299,7 +299,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     ///
     /// - Warning: This is deprecated in libgit2 and will be removed in the
     /// next major release. Use ``updateRefs`` instead.
-    public var updateTips           : UpdateTipsCB?
+    public var updateTips           : GitRemoteCallbacks.UpdateTipsCB?
     
     /// The callback invoked to report packfile iteration progress.
     ///
@@ -368,7 +368,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     ///
     /// If this callback and ``updateTips`` are both provided, then only
     /// this function will be invoked.
-    public var updateRefs           : UpdateRefsCB?
+    public var updateRefs           : GitRemoteCallbacks.UpdateRefsCB?
     
     
     
