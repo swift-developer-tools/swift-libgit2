@@ -79,7 +79,7 @@ final class IndexerTests: XCTestCaseStopOnFail
             
             
             
-            let packfileData: Data = try createPackfileData(from: repository)
+            let packfileData: Data = try repository.createPackfileData()
             
             try withUnsafeMutablePointer(to: &callbackData)
             {
@@ -91,20 +91,21 @@ final class IndexerTests: XCTestCaseStopOnFail
                 indexerOptions.progressCBPayload    = UnsafeMutableRawPointer(callbackDataPointer)
                 indexerOptions.verify               = false
                 
-                try testIndexerWithPackfile(
-                    in:         repository,
-                    data:       packfileData,
-                    options:    indexerOptions
+                try repository.validatePackfileData(
+                    packfileData,
+                    options: nil
                 )
                 
-                
+                try repository.validatePackfileData(
+                    packfileData,
+                    options: indexerOptions
+                )
                 
                 indexerOptions.verify = true
                 
-                try testIndexerWithPackfile(
-                    in:         repository,
-                    data:       packfileData,
-                    options:    indexerOptions
+                try repository.validatePackfileData(
+                    packfileData,
+                    options: indexerOptions
                 )
             }
             
@@ -165,190 +166,5 @@ private extension IndexerTests
     struct CallbackData
     {
         var callCount: Int = 0
-    }
-    
-    
-    
-    /// Creates packfile data from the given repository.
-    /// - Parameter repository: The repository to use.
-    /// - Returns: The packfile data.
-    /// - Throws: An error if an operation fails.
-    func createPackfileData(
-        from repository: Repository
-    ) throws -> Data
-    {
-        var packbuilderPointer: OpaquePointer? = nil
-        
-        defer
-        {
-            gitPackbuilderFree(pb: packbuilderPointer)
-        }
-        
-        
-        
-        let packbuilderNewResult: GitErrorCode = gitPackbuilderNew(
-            out:    &packbuilderPointer,
-            repo:   repository.pointer
-        )
-        
-        XCTAssertOK(packbuilderNewResult)
-        
-        guard let packbuilderPointer: OpaquePointer = packbuilderPointer
-        else
-        {
-            throw NSError.makeError("The packbuilder pointer was nil.")
-        }
-        
-        
-        
-        let packbuilderInsertCommitResult: GitErrorCode
-            = gitPackbuilderInsertCommit(
-                pb: packbuilderPointer,
-                id: repository.headOID
-            )
-        
-        XCTAssertOK(packbuilderInsertCommitResult)
-        
-        
-        
-        var packData = Data()
-        
-        let packbuilderForEachCB: GitPackbuilderForEachCB =
-        {
-            data, size, payload in
-            
-            guard
-                let data    : UnsafeMutableRawPointer   = data,
-                let payload : UnsafeMutableRawPointer   = payload
-            else
-            {
-                XCTFail("All or some callback parameters were nil.")
-                return GitErrorCode.gitUnknown(-123).rawValue
-            }
-            
-            let payloadPointer: UnsafeMutablePointer<Data>
-                = payload.assumingMemoryBound(to: Data.self)
-            
-            let bytes = Data(
-                bytes:  data,
-                count:  size
-            )
-            
-            payloadPointer.pointee.append(bytes)
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        
-        
-        withUnsafeMutablePointer(to: &packData)
-        {
-            packDataPointer in
-            
-            let packbuilderForEachResult: GitErrorCode = gitPackbuilderForEach(
-                pb:         packbuilderPointer,
-                cb:         packbuilderForEachCB,
-                payload:    packDataPointer
-            )
-            
-            XCTAssertOK(packbuilderForEachResult)
-        }
-        
-        return packData
-    }
-    
-    
-    
-    /// Tests the indexer workflow with the given packfile data.
-    /// - Parameters:
-    ///   - repository: The repository from which the packfile data was created.
-    ///   - packfileData: The packfile data to index.
-    ///   - indexerOptions: The indexer options.
-    /// - Throws: An error if an operation fails.
-    func testIndexerWithPackfile(
-        in          repository      : Repository,
-        data        packfileData    : Data,
-        options     indexerOptions  : GitIndexerOptions?
-    ) throws
-    {
-        var indexerPointer  : OpaquePointer?    = nil
-        var odbPointer      : OpaquePointer?    = nil
-        let indexerURL      : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2IndexerTests")
-        
-        defer
-        {
-            gitIndexerFree(idx: indexerPointer)
-            gitODBFree(db: odbPointer)
-            
-            try? FileManager.default.removeItem(at: indexerURL)
-        }
-        
-        
-        
-        if indexerOptions?.verify == true
-        {
-            let repoODBResult: GitErrorCode = gitRepositoryODB(
-                out:    &odbPointer,
-                repo:   repository.pointer
-            )
-            
-            XCTAssertOK(repoODBResult)
-        }
-        
-        
-        
-        let indexerNewResult: GitErrorCode = gitIndexerNew(
-            out:    &indexerPointer,
-            path:   indexerURL.path(),
-            mode:   0,
-            odb:    odbPointer,
-            opts:   indexerOptions
-        )
-        
-        XCTAssertOK(indexerNewResult)
-        
-        guard let indexerPointer: OpaquePointer = indexerPointer
-        else
-        {
-            XCTFail("The indexer pointer was nil.")
-            return
-        }
-        
-        
-        
-        var indexerProgress = GitIndexerProgress()
-        
-        let indexerAppendResult: GitErrorCode = gitIndexerAppend(
-            idx:    indexerPointer,
-            data:   packfileData,
-            size:   packfileData.count,
-            stats:  &indexerProgress
-        )
-        
-        XCTAssertOK(indexerAppendResult)
-        
-        
-        
-        let indexerCommitResult: GitErrorCode = gitIndexerCommit(
-            idx:    indexerPointer,
-            stats:  &indexerProgress
-        )
-        
-        XCTAssertOK(indexerCommitResult)
-        XCTAssertGreaterThan(indexerProgress.indexedObjects, 0)
-        
-        
-        
-        let packfileName: String? = gitIndexerName(idx: indexerPointer)
-        
-        XCTAssertNotNil(packfileName)
-        XCTAssertFalse(packfileName?.isEmpty ?? true)
-        
-        
-        
-        let packfileOID: GitOID? = gitIndexerHash(idx: indexerPointer)
-        
-        XCTAssertNotNil(packfileOID)
-        XCTAssertNotZeroOID(packfileOID)
     }
 }
