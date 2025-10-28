@@ -382,6 +382,49 @@ struct Repository
     
     
     
+    /// Inserts the given blob data into the given treebuilder.
+    /// - Parameters:
+    ///   - blobData: The blob data to insert.
+    ///   - fileName: The file name to use.
+    ///   - treebuilderPointer: The treebuilder to update. The underlying
+    ///   type must be `git_treebuilder`.
+    func insertBlob(
+        _       blobData            : Data,
+        named   fileName            : String,
+        into    treebuilderPointer  : OpaquePointer
+    )
+    {
+        var blobOID = GitOID()
+        
+        let blobCreateFromBufferResult: GitErrorCode
+            = gitBlobCreateFromBuffer(
+                id:         &blobOID,
+                repo:       pointer,
+                buffer:     blobData,
+                len:        blobData.count
+            )
+        
+        XCTAssertOK(blobCreateFromBufferResult)
+        XCTAssertNotZeroOID(blobOID)
+        
+        
+        
+        var treeEntryPointer: OpaquePointer? = nil
+        
+        let treebuilderInsertResult: GitErrorCode = gitTreebuilderInsert(
+            out:        &treeEntryPointer,
+            bld:        treebuilderPointer,
+            fileName:   fileName,
+            id:         blobOID,
+            fileMode:   .gitFileModeBlob
+        )
+        
+        XCTAssertOK(treebuilderInsertResult)
+        XCTAssertNotNil(treeEntryPointer)
+    }
+    
+    
+    
     /// Resets the repository to the specified commit.
     /// - Parameters:
     ///   - commitOID: The ID of the commit to use.
@@ -537,6 +580,8 @@ internal extension Repository
     static let pushSource           : String    = "refs/heads/*"
     static let pushDestination      : String    = "refs/heads/origin/*"
     static let pushRefspec          : String    = "\(pushSource):\(pushDestination)"
+    
+    static let treebuilderFileName  : String    = "treebuilder-test.txt"
     
     static let worktreeName         : String    = "worktree"
     static let worktreePath         : String    = worktreeURL.path()
@@ -781,6 +826,120 @@ internal extension Repository
             return try body(
                 repository,
                 indexPointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to a tree.
+    /// - Parameter body: The closure to call.
+    /// - Throws: An error if an operation fails.
+    static func withTree(
+        _ body: (Repository, OpaquePointer) throws -> Void
+    ) throws
+    {
+        try withTreebuilder
+        {
+            repository, treebuilderPointer in
+            
+            var treeOID = GitOID()
+            
+            let treebuilderWriteResult: GitErrorCode = gitTreebuilderWrite(
+                id:     &treeOID,
+                bld:    treebuilderPointer
+            )
+            
+            XCTAssertOK(treebuilderWriteResult)
+            XCTAssertNotZeroOID(treeOID)
+            
+            
+            
+            var treePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitTreeFree(tree: treePointer)
+            }
+            
+            
+            
+            let treeLookupResult: GitErrorCode = gitTreeLookup(
+                out:    &treePointer,
+                repo:   repository.pointer,
+                id:     treeOID
+            )
+            
+            XCTAssertOK(treeLookupResult)
+            
+            guard let treePointer: OpaquePointer = treePointer
+            else
+            {
+                XCTFail("The tree pointer was nil.")
+                return
+            }
+            
+            
+            
+            try body(
+                repository,
+                treePointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to a treebuilder.
+    /// - Parameter body: The closure to call.
+    /// - Throws: An error if an operation fails.
+    static func withTreebuilder(
+        _ body: (Repository, OpaquePointer) throws -> Void
+    ) throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var treebuilderPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitTreebuilderFree(bld: treebuilderPointer)
+            }
+            
+            
+            
+            let treebuilderNewResult: GitErrorCode = gitTreebuilderNew(
+                out:        &treebuilderPointer,
+                repo:       repository.pointer,
+                source:     nil
+            )
+            
+            XCTAssertOK(treebuilderNewResult)
+            
+            guard let treebuilderPointer: OpaquePointer = treebuilderPointer
+            else
+            {
+                XCTFail("The treebuilder pointer was nil.")
+                return
+            }
+            
+            
+            
+            repository.insertBlob(
+                Data("Treebuilder content".utf8),
+                named:  Self.treebuilderFileName,
+                into:   treebuilderPointer
+            )
+            
+            
+            
+            try body(
+                repository,
+                treebuilderPointer
             )
         }
     }
