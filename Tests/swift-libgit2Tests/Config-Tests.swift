@@ -1477,7 +1477,7 @@ private extension ConfigTests
     
     
     /// Calls the closure with a ``Repository`` instance and a pointer to an
-    /// on-disk configuraiton object.
+    /// on-disk configuration object.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
     func withConfigOnDisk(
