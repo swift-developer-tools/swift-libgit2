@@ -303,7 +303,7 @@ public func gitNoteID(
 /// Adds a note for the given object.
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID.
-///   - repo: The repository in which to store the note. The underlying type
+///   - repo: The repository in which to create the note. The underlying type
 ///   must be `git_repository`.
 ///   - notesRef: The canonical name of the reference to use. Pass `nil` to
 ///   use `refs/notes/commits`.
@@ -371,7 +371,7 @@ public func gitNoteCreate(
 ///   commit ID.
 ///   - notesBlobOut: The ``GitOID`` instance in which to store the note
 ///   blob ID.
-///   - repo: The repository in which to store the note. The underlying type
+///   - repo: The repository in which to create the note. The underlying type
 ///   must be `git_repository`.
 ///   - parent: The parent note. Pass `nil` to start a new notes tree.
 ///   - author: The signature of the notes commit author.
@@ -619,7 +619,7 @@ public func gitNoteDefaultRef(
 ///   `git_repository`.
 ///   - notesRef: The canonical name of the reference to use. Pass `nil` to
 ///   use `refs/notes/commits`.
-///   - noteCB: The callback to invoke for each note.
+///   - noteCB: The ``GitNoteForEachCB`` callback to invoke for each note.
 ///   - payload: The payload to pass to `noteCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

@@ -250,7 +250,8 @@ public func gitAttrGetManyExt(
 ///   must be `git_repository`.
 ///   - flags: The flags to use when querying the attributes.
 ///   - path: The path within the repository to check for attributes.
-///   - callback: The callback to invoke for each attribute name and value.
+///   - callback: The ``GitAttrForEachCB`` callback to invoke for each
+///   attribute name and value.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -291,7 +292,8 @@ public func gitAttrForEach(
 ///   must be `git_repository`.
 ///   - opts: The attribute options to use.
 ///   - path: The path within the repository to check for attributes.
-///   - callback: The callback to invoke for each attribute name and value.
+///   - callback: The ``GitAttrForEachCB`` callback to invoke for each
+///   attribute name and value.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

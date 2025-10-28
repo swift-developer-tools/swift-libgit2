@@ -702,7 +702,8 @@ public func gitTreebuilderRemove(
 /// - Parameters:
 ///   - bld: The treebuilder to update. The underlying type must be
 ///   `git_treebuilder`.
-///   - filter: The callback to invoke for each tree entry.
+///   - filter: The ``GitTreebuilderFilterCB`` callback to invoke for each
+///   tree entry.
 ///   - payload: The payload to pass to `filter`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -727,7 +728,7 @@ public func gitTreebuilderFilter(
 
 
 
-/// Writes the contents of the given treebuilder as a tree object.
+/// Writes the contents of the given treebuilder as a tree.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-written tree.
@@ -763,7 +764,7 @@ public func gitTreebuilderWrite(
 /// - Parameters:
 ///   - tree: The tree to traverse. The underlying type must be `git_tree`.
 ///   - mode: The traversal mode to use.
-///   - callback: The callback to invoke for each tree entry.
+///   - callback: The ``GitTreewalkCB`` callback to invoke for each tree entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

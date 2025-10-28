@@ -456,7 +456,7 @@ public func gitODBRefresh(
 /// - Parameters:
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
-///   - cb: The callback to invoke for each object.
+///   - cb: The ``GitODBForEachCB`` callback to invoke for each object.
 ///   - payload: The payload to pass to `cb`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -775,7 +775,8 @@ public func gitODBOpenRStream(
 /// - Parameters:
 ///   - out: The writepack functions.
 ///   - db: The object database to read. The underlying type must be `git_odb`.
-///   - progressCB: The callback to invoke to report indexing progress.
+///   - progressCB: The ``GitIndexerProgressCB`` callback to invoke to report
+///   indexing progress.
 ///   - progressPayload: The payload to pass to `progressCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

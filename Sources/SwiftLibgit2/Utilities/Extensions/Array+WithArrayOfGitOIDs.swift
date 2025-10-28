@@ -18,6 +18,11 @@ internal extension Array where Element == GitOID
     /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type
+    /// `const git_oid *`.
     func withArrayOfGitOIDs<T>(
         _ body: (UnsafePointer<git_oid>?, Int) throws -> T
     ) rethrows -> T
@@ -36,6 +41,51 @@ internal extension Array where Element == GitOID
             &arrayOfOIDs,
             arrayOfOIDs.count
         )
+    }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to a pointer to an
+    /// array of `git_oid` instances, and the length of that array.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    ///
+    /// ## Discussion
+    ///
+    /// Use this method with C functions that expect a parameter of the type
+    /// `const git_oid **`.
+    func withArrayOfGitOIDs<T>(
+        _ body: (UnsafeMutablePointer<UnsafePointer<git_oid>?>?, Int) throws -> T
+    ) rethrows -> T
+    {
+        guard !self.isEmpty
+        else
+        {
+            return try body(nil, 0)
+        }
+        
+        
+        
+        let arrayOfOIDs: [git_oid] = self.map { $0.cValue() }
+        
+        return try arrayOfOIDs.withUnsafeBufferPointer
+        {
+            arrayOfOIDsBufferPointer in
+            
+            var baseAddress: UnsafePointer<git_oid>?
+                = arrayOfOIDsBufferPointer.baseAddress
+            
+            guard baseAddress != nil
+            else
+            {
+                throw NSError.makeCConversionError()
+            }
+            
+            return try body(
+                &baseAddress,
+                arrayOfOIDsBufferPointer.count
+            )
+        }
     }
     
     

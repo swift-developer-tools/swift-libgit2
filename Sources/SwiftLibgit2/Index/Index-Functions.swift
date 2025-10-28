@@ -376,10 +376,9 @@ public func gitIndexReadTree(
 /// ## Discussion
 ///
 /// This function will scan the given index and write a representation of its
-/// current state back to the disk. It recursively creates tree objects for
-/// each of the subtrees stored in the index, but only returns the ID of the
-/// root tree. The resulting ID can be used for operations such as creating
-/// a commit.
+/// current state back to the disk. It recursively creates trees for each of
+/// the subtrees stored in the index, but only returns the ID of the root tree.
+/// The resulting ID can be used for operations such as creating a commit.
 ///
 /// The given index must not be bare, must be associated with an existing
 /// repository, and must not contain any conflicted files.
@@ -910,7 +909,8 @@ public func gitIndexRemoveByPath(
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - pathspec: The path patterns to use.
 ///   - flags: The flags for adding files that match a pathspec.
-///   - callback: The callback invoked to add, remove, or update files.
+///   - callback: The ``GitIndexMatchedPathCB`` callback to invoke to add,
+///   remove, or update files.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -978,7 +978,8 @@ public func gitIndexAddAll(
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - pathspec: The path patterns to use.
-///   - callback: The callback invoked to add, remove, or update files.
+///   - callback: The ``GitIndexMatchedPathCB`` callback to invoke to add,
+///   remove, or update files.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1015,7 +1016,8 @@ public func gitIndexRemoveAll(
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   - pathspec: The path patterns to use.
-///   - callback: The callback invoked to add, remove, or update files.
+///   - callback: The ``GitIndexMatchedPathCB`` callback to invoke to add,
+///   remove, or update files.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

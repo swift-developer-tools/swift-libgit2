@@ -962,7 +962,8 @@ public func gitRepositoryStateCleanup(
 /// - Parameters:
 ///   - repo: The repository to use. The underlying type must be
 ///   `git_repository`.
-///   - callback: The callback to invoke for each `FETCH_HEAD` entry.
+///   - callback: The ``GitRepositoryFETCHHEADForEachCB`` callback to invoke
+///   for each `FETCH_HEAD` entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -991,7 +992,8 @@ public func gitRepositoryFETCHHEADForEach(
 /// - Parameters:
 ///   - repo: The repository to use. The underlying type must be
 ///   `git_repository`.
-///   - callback: The callback to invoke for each `MERGE_HEAD` entry.
+///   - callback: The ``GitRepositoryMERGEHEADForEachCB`` callback to invoke
+///   for each `MERGE_HEAD` entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

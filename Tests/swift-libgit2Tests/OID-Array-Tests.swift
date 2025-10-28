@@ -119,9 +119,27 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             
             
             
+            /// Use explicit type annotations for the closure parameters
+            /// so the compiler knows which overloaded method to use.
             [].withArrayOfGitOIDs
             {
-                cOIDs, cOIDsCount in
+                (
+                    cOIDs       : UnsafePointer<git_oid>?,
+                    cOIDsCount  : Int
+                ) in
+                
+                XCTAssertNil(cOIDs)
+                XCTAssertEqual(cOIDsCount, 0)
+            }
+            
+            
+            
+            [].withArrayOfGitOIDs
+            {
+                (
+                    cOIDs       : UnsafeMutablePointer<UnsafePointer<git_oid>?>?,
+                    cOIDsCount  : Int
+                ) in
                 
                 XCTAssertNil(cOIDs)
                 XCTAssertEqual(cOIDsCount, 0)

@@ -90,18 +90,15 @@ internal extension Array where Element == GitRemoteHEAD
                 var baseAddress: UnsafePointer<git_remote_head>?
                     = arrayOfRemoteHEADsBufferPointer.baseAddress
                 
-                let count: Int = arrayOfRemoteHEADs.count
-                
-                if
-                    count > 0,
-                    baseAddress == nil
+                guard baseAddress != nil
+                else
                 {
                     throw NSError.makeCConversionError()
                 }
                 
                 return try body(
                     &baseAddress,
-                    count
+                    arrayOfRemoteHEADsBufferPointer.count
                 )
             }
         }
@@ -190,18 +187,15 @@ internal extension Array where Element == GitRemoteHEAD
                 var baseAddress: UnsafePointer<git_remote_head>?
                     = arrayOfRemoteHEADsBufferPointer.baseAddress
                 
-                let count: Int = arrayOfRemoteHEADs.count
-                
-                if
-                    count > 0,
-                    baseAddress == nil
+                guard baseAddress != nil
+                else
                 {
                     throw NSError.makeCConversionError()
                 }
                 
                 return try body(
                     &baseAddress,
-                    count
+                    arrayOfRemoteHEADsBufferPointer.count
                 )
             }
         }

@@ -745,7 +745,8 @@ public func gitConfigGetStringBuf(
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
 ///   - regExp: The regular expression used to filter values.
-///   - callback: The callback to invoke for each configuration entry.
+///   - callback: The ``GitConfigForEachCB`` callback to invoke for each
+///   configuration entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1118,7 +1119,8 @@ public func gitConfigDeleteMultivar(
 /// - Parameters:
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
-///   - callback: The callback to invoke for each configuration entry.
+///   - callback: The ``GitConfigForEachCB`` callback to invoke for each
+///   configuration entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1228,7 +1230,8 @@ public func gitConfigIteratorGlobNew(
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - regExp: The regular expression used to match the configuration names.
-///   - callback: The callback to invoke for each configuration entry.
+///   - callback: The ``GitConfigForEachCB`` callback to invoke for each
+///   configuration entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1520,7 +1523,8 @@ public func gitConfigParsePath(
 /// - Parameters:
 ///   - backend: The configuration backend to search.
 ///   - regExp: The regular expression used to match the configuration names.
-///   - callback: The callback to invoke for each configuration entry.
+///   - callback: The ``GitConfigForEachCB`` callback to invoke for each
+///   configuration entry.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

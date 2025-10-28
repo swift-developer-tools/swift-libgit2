@@ -45,7 +45,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderClear() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             _, treebuilderPointer in
             
@@ -74,7 +74,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderEntryCount() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             _, treebuilderPointer in
             
@@ -89,17 +89,16 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderFilter() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             repository, treebuilderPointer in
             
             let keptFileName: String = "keep-this-file.txt"
             
-            insertBlob(
+            repository.insertBlob(
                 Data("More treebuilder content".utf8),
                 named:  keptFileName,
-                into:   treebuilderPointer,
-                in:     repository
+                into:   treebuilderPointer
             )
             
             
@@ -163,7 +162,7 @@ final class TreeTests: XCTestCaseStopOnFail
             
             var treeEntryPointer: OpaquePointer? = gitTreebuilderGet(
                 bld:        treebuilderPointer,
-                fileName:   Self.treebuilderFileName
+                fileName:   Repository.treebuilderFileName
             )
             
             XCTAssertNil(treeEntryPointer)
@@ -190,13 +189,13 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderGet() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             _, treebuilderPointer in
             
             let treeEntryPointer: OpaquePointer? = gitTreebuilderGet(
                 bld:        treebuilderPointer,
-                fileName:   Self.treebuilderFileName
+                fileName:   Repository.treebuilderFileName
             )
             
             XCTAssertNotNil(treeEntryPointer)
@@ -207,7 +206,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderNewAndInsert() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             _, _ in
         }
@@ -217,13 +216,13 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderRemove() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             _, treebuilderPointer in
             
             let treebuilderRemoveResult: GitErrorCode = gitTreebuilderRemove(
                 bld:        treebuilderPointer,
-                fileName:   Self.treebuilderFileName
+                fileName:   Repository.treebuilderFileName
             )
             
             XCTAssertOK(treebuilderRemoveResult)
@@ -234,7 +233,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreebuilderWrite() throws
     {
-        try withTreebuilder
+        try Repository.withTreebuilder
         {
             _, treebuilderPointer in
             
@@ -254,7 +253,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeCreatedUpdated() throws
     {
-        try withTree
+        try Repository.withTree
         {
             repository, treePointer in
             
@@ -329,7 +328,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeDup() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -357,7 +356,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryByIndex() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -374,13 +373,13 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryByName() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
             let treeEntryPointer: OpaquePointer? = gitTreeEntryByName(
                 tree:       treePointer,
-                fileName:   Self.treebuilderFileName
+                fileName:   Repository.treebuilderFileName
             )
             
             XCTAssertNotNil(treeEntryPointer)
@@ -391,7 +390,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryByPath() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -407,7 +406,7 @@ final class TreeTests: XCTestCaseStopOnFail
             let treeEntryByPathResult: GitErrorCode = gitTreeEntryByPath(
                 out:    &treeEntryPointer,
                 root:   treePointer,
-                path:   Self.treebuilderFileName
+                path:   Repository.treebuilderFileName
             )
             
             XCTAssertOK(treeEntryByPathResult)
@@ -419,7 +418,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryCmp() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -437,7 +436,7 @@ final class TreeTests: XCTestCaseStopOnFail
             guard let secondTreeEntryPointer: OpaquePointer
                     = gitTreeEntryByName(
                         tree:       treePointer,
-                        fileName:   Self.treebuilderFileName
+                        fileName:   Repository.treebuilderFileName
                     )
             else
             {
@@ -460,7 +459,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryCount() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -474,7 +473,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryDup() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -514,7 +513,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryFileMode() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -542,7 +541,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryFileModeRaw() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -577,7 +576,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryID() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -604,7 +603,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryName() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -624,7 +623,7 @@ final class TreeTests: XCTestCaseStopOnFail
                 = gitTreeEntryName(entry: treeEntryPointer)
             
             XCTAssertNotNil(treeEntryName)
-            XCTAssertEqual(treeEntryName, Self.treebuilderFileName)
+            XCTAssertEqual(treeEntryName, Repository.treebuilderFileName)
         }
     }
     
@@ -632,7 +631,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryToObject() throws
     {
-        try withTree
+        try Repository.withTree
         {
             repository, treePointer in
             
@@ -672,7 +671,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeEntryType() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -707,7 +706,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeID() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -722,7 +721,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeLookup() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, _ in
         }
@@ -732,7 +731,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeLookupPrefix() throws
     {
-        try withTree
+        try Repository.withTree
         {
             repository, treePointer in
             
@@ -770,7 +769,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeOwner() throws
     {
-        try withTree
+        try Repository.withTree
         {
             repository, treePointer in
             
@@ -822,7 +821,7 @@ final class TreeTests: XCTestCaseStopOnFail
     
     func testGitTreeWalk() throws
     {
-        try withTree
+        try Repository.withTree
         {
             _, treePointer in
             
@@ -890,172 +889,8 @@ final class TreeTests: XCTestCaseStopOnFail
 
 private extension TreeTests
 {
-    static let treebuilderFileName: String = "treebuilder-test.txt"
-    
-    
-    
     struct CallbackData
     {
         var callCount: Int = 0
-    }
-    
-    
-    
-    /// Inserts the given blob data into the given treebuilder.
-    /// - Parameters:
-    ///   - blobData: The blob data to insert.
-    ///   - fileName: The file name to use.
-    ///   - treebuilderPointer: The treebuilder to update. The underlying
-    ///   type must be `git_treebuilder`.
-    ///   - repository: The repository to update.
-    func insertBlob(
-        _       blobData            : Data,
-        named   fileName            : String,
-        into    treebuilderPointer  : OpaquePointer,
-        in      repository          : Repository
-    )
-    {
-        var blobOID = GitOID()
-        
-        let blobCreateFromBufferResult: GitErrorCode
-            = gitBlobCreateFromBuffer(
-                id:         &blobOID,
-                repo:       repository.pointer,
-                buffer:     blobData,
-                len:        blobData.count
-            )
-        
-        XCTAssertOK(blobCreateFromBufferResult)
-        XCTAssertNotZeroOID(blobOID)
-        
-        
-        
-        var treeEntryPointer: OpaquePointer? = nil
-        
-        let treebuilderInsertResult: GitErrorCode = gitTreebuilderInsert(
-            out:        &treeEntryPointer,
-            bld:        treebuilderPointer,
-            fileName:   fileName,
-            id:         blobOID,
-            fileMode:   .gitFileModeBlob
-        )
-        
-        XCTAssertOK(treebuilderInsertResult)
-        XCTAssertNotNil(treeEntryPointer)
-    }
-    
-    
-    
-    /// Calls the given closure with a ``Repository`` instance and a pointer
-    /// to a treebuilder.
-    /// - Parameter body: The closure to call.
-    /// - Throws: An error if an operation fails.
-    func withTreebuilder(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
-    {
-        try Repository.withRepository
-        {
-            repository in
-            
-            var treebuilderPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitTreebuilderFree(bld: treebuilderPointer)
-            }
-            
-            
-            
-            let treebuilderNewResult: GitErrorCode = gitTreebuilderNew(
-                out:        &treebuilderPointer,
-                repo:       repository.pointer,
-                source:     nil
-            )
-            
-            XCTAssertOK(treebuilderNewResult)
-            
-            guard let treebuilderPointer: OpaquePointer = treebuilderPointer
-            else
-            {
-                XCTFail("The treebuilder pointer was nil.")
-                return
-            }
-            
-            
-            
-            insertBlob(
-                Data("Treebuilder content".utf8),
-                named:  Self.treebuilderFileName,
-                into:   treebuilderPointer,
-                in:     repository
-            )
-            
-            
-            
-            try body(
-                repository,
-                treebuilderPointer
-            )
-        }
-    }
-    
-    
-    
-    /// Calls the given closure with a ``Repository`` instance and a pointer
-    /// to a tree.
-    /// - Parameter body: The closure to call.
-    /// - Throws: An error if an operation fails.
-    func withTree(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
-    {
-        try withTreebuilder
-        {
-            repository, treebuilderPointer in
-            
-            var treeOID = GitOID()
-            
-            let treebuilderWriteResult: GitErrorCode = gitTreebuilderWrite(
-                id:     &treeOID,
-                bld:    treebuilderPointer
-            )
-            
-            XCTAssertOK(treebuilderWriteResult)
-            XCTAssertNotZeroOID(treeOID)
-            
-            
-            
-            var treePointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitTreeFree(tree: treePointer)
-            }
-            
-            
-            
-            let treeLookupResult: GitErrorCode = gitTreeLookup(
-                out:    &treePointer,
-                repo:   repository.pointer,
-                id:     treeOID
-            )
-            
-            XCTAssertOK(treeLookupResult)
-            
-            guard let treePointer: OpaquePointer = treePointer
-            else
-            {
-                XCTFail("The tree pointer was nil.")
-                return
-            }
-            
-            
-            
-            try body(
-                repository,
-                treePointer
-            )
-        }
     }
 }

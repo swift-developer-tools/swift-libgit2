@@ -143,7 +143,7 @@ internal extension Array where Element == GitTreeUpdate
                 
                 return try body(
                     baseAddress,
-                    arrayOfTreeUpdates.count
+                    arrayOfTreeUpdatesBufferPointer.count
                 )
             }
         }

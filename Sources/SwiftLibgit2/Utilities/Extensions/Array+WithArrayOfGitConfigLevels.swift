@@ -50,7 +50,7 @@ internal extension Array where Element == GitConfigLevelT
             
             return try body(
                 mutableBaseAddress,
-                arrayOfConfigLevels.count
+                arrayOfConfigLevelsBufferPointer.count
             )
         }
     }
