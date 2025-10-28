@@ -787,12 +787,10 @@ private extension RevwalkTests
             
             if push
             {
-                let revwalkPushResult: GitErrorCode = gitRevwalkPush(
-                    walk:   revwalkPointer,
-                    id:     repository.headOID
-                )
+                let revwalkPushHEADResult: GitErrorCode
+                    = gitRevwalkPushHEAD(walk: revwalkPointer)
                 
-                XCTAssertOK(revwalkPushResult)
+                XCTAssertOK(revwalkPushHEADResult)
             }
             
             

@@ -169,7 +169,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 with:   content
             )
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     content
             )
@@ -191,7 +191,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     Repository.readmeFileContent
             )
@@ -215,7 +215,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     content
             )
@@ -238,7 +238,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 with:   content
             )
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     content
             )
@@ -261,7 +261,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     Repository.readmeFileContent
             )
@@ -286,7 +286,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     content
             )
@@ -566,7 +566,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 with:   content
             )
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     content
             )
@@ -589,7 +589,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     Repository.readmeFileContent
             )
@@ -614,7 +614,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             
             /// The safe checkout will not overwrite uncommitted changes.
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     content
             )

@@ -457,7 +457,7 @@ private extension ApplyTests
             
             
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         Repository.readmeFileName,
                 equals:     endContent
             )
