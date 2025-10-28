@@ -21,8 +21,11 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepoPointer   : OpaquePointer?    = nil
-            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            let clonedRepoURL: URL = try Repository.createTemporaryDirectory(
+                named: "SwiftLibgit2CloneTests"
+            )
+            
+            var clonedRepoPointer: OpaquePointer? = nil
             
             defer
             {
@@ -148,8 +151,11 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepoPointer   : OpaquePointer?    = nil
-            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            let clonedRepoURL: URL = try Repository.createTemporaryDirectory(
+                named: "SwiftLibgit2CloneTests"
+            )
+            
+            var clonedRepoPointer: OpaquePointer? = nil
             
             defer
             {
@@ -262,8 +268,11 @@ final class CloneTests: XCTestCaseStopOnFail
             
             
             
-            var clonedRepoPointer   : OpaquePointer?    = nil
-            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            let clonedRepoURL: URL = try Repository.createTemporaryDirectory(
+                named: "SwiftLibgit2CloneTests"
+            )
+            
+            var clonedRepoPointer: OpaquePointer? = nil
             
             defer
             {
@@ -344,8 +353,11 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepoPointer   : OpaquePointer?    = nil
-            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            let clonedRepoURL: URL = try Repository.createTemporaryDirectory(
+                named: "SwiftLibgit2CloneTests"
+            )
+            
+            var clonedRepoPointer: OpaquePointer? = nil
             
             defer
             {
@@ -382,8 +394,11 @@ final class CloneTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var clonedRepoPointer   : OpaquePointer?    = nil
-            let clonedRepoURL       : URL               = try Repository.createTemporaryDirectory(named: "SwiftLibgit2CloneTests")
+            let clonedRepoURL: URL = try Repository.createTemporaryDirectory(
+                named: "SwiftLibgit2CloneTests"
+            )
+            
+            var clonedRepoPointer: OpaquePointer? = nil
             
             defer
             {
