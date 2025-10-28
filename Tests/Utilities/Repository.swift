@@ -56,7 +56,7 @@ struct Repository
     
     
     
-    /// The URL to the configuration file.
+    /// The URL of the configuration file.
     var configURL: URL
     {
         return url.appending(
@@ -67,7 +67,7 @@ struct Repository
     
     
     
-    /// The absolute path to the configuration file.
+    /// The absolute path of the configuration file.
     var configPath: String
     {
         return configURL.path(percentEncoded: false)
@@ -90,6 +90,28 @@ struct Repository
         XCTAssertNotZeroOID(headOID)
         
         return headOID
+    }
+    
+    
+    
+    /// The URL of the objects directory.
+    var objectsURL: URL
+    {
+        return url.appending(
+            path:           ".git/objects",
+            directoryHint:  .isDirectory
+        )
+    }
+    
+    
+    
+    /// The URL of the objects information directory.
+    var objectsInfoURL: URL
+    {
+        return objectsURL.appending(
+            path:           "info",
+            directoryHint:  .isDirectory
+        )
     }
     
     
@@ -588,11 +610,16 @@ struct Repository
     /// - Parameters:
     ///   - packfileData: The packfile data to index and validate.
     ///   - indexerOptions: The indexer options.
+    ///   - deleteIndexer: Whether to delete the indexer directory before
+    ///   returning. If this is `false`, the caller must delete the directory.
+    /// - Returns: The URL of the index file.
     /// - Throws: An error if an operation fails.
+    @discardableResult
     func validatePackfileData(
-        _           packfileData    : Data,
-        options     indexerOptions  : GitIndexerOptions?    = nil
-    ) throws
+        _               packfileData    : Data,
+        options         indexerOptions  : GitIndexerOptions?    = nil,
+        deleteIndexer                   : Bool                  = false
+    ) throws -> URL
     {
         let indexerURL: URL = try Repository.createTemporaryDirectory(
             named: "SwiftLibgit2IndexerTests"
@@ -606,7 +633,10 @@ struct Repository
             gitIndexerFree(idx: indexerPointer)
             gitODBFree(db: odbPointer)
             
-            try? FileManager.default.removeItem(at: indexerURL)
+            if deleteIndexer
+            {
+                try? FileManager.default.removeItem(at: indexerURL)
+            }
         }
         
         
@@ -664,17 +694,31 @@ struct Repository
         
         
         
-        let packfileName: String? = gitIndexerName(idx: indexerPointer)
-        
-        XCTAssertNotNil(packfileName)
-        XCTAssertFalse(packfileName?.isEmpty ?? true)
-        
-        
-        
         let packfileOID: GitOID? = gitIndexerHash(idx: indexerPointer)
         
         XCTAssertNotNil(packfileOID)
         XCTAssertNotZeroOID(packfileOID)
+        
+        
+        
+        let packfileName: String? = gitIndexerName(idx: indexerPointer)
+        
+        guard let packfileName: String = packfileName
+        else
+        {
+            throw NSError.makeError("The packfile name was nil.")
+        }
+        
+        XCTAssertFalse(packfileName.isEmpty)
+        
+        
+        
+        let indexURL: URL = indexerURL.appending(
+            path:           "pack-\(packfileName).idx",
+            directoryHint:  .notDirectory
+        )
+        
+        return indexURL
     }
     
     
@@ -861,6 +905,10 @@ internal extension Repository
             
             try content.atomicWrite(to: fileURL)
         }
+        
+        
+        
+        try createDirectory(at: objectsInfoURL.path())
     }
     
     
@@ -902,8 +950,9 @@ internal extension Repository
         _ body  : (Repository) throws -> T
     ) throws -> T
     {
-        var repoPointer : OpaquePointer?    = nil
-        let url         : URL               = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
+        let url: URL = try createTemporaryDirectory(named: "SwiftLibgit2Tests")
+        
+        var repoPointer: OpaquePointer? = nil
         
         defer
         {
