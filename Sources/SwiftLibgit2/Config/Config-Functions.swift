@@ -471,7 +471,7 @@ public func gitConfigFree(
 ///   - cfg: The configuration object to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the
-///   configuraiton entry.
+///   configuration entry.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
