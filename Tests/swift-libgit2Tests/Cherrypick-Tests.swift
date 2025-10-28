@@ -62,7 +62,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         "feature.txt",
                 equals:     CherrypickTests.featureBranchContent
             )
@@ -96,7 +96,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             
             
-            try repository.assertFileContent(
+            try repository.validateFileContent(
                 at:         "feature.txt",
                 equals:     CherrypickTests.featureBranchContent
             )

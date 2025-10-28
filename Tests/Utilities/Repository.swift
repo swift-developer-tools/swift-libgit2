@@ -716,8 +716,8 @@ struct Repository
     
     
     
-    /// Asserts that the contents of the specified file are equal to the given
-    /// value.
+    /// Validates that the contents of the specified file are equal to the
+    /// given value.
     /// - Parameters:
     ///   - path: The path to the file content to verify. This will be appended
     ///   to the repository's URL.
@@ -725,7 +725,7 @@ struct Repository
     ///   - directoryHint: A hint to URL file APIs for handling paths that may
     ///   reference directories.
     /// - Throws: An error if an operation fails.
-    func assertFileContent(
+    func validateFileContent(
         at              path    : String,
         equals          content : String,
         directoryHint           : URL.DirectoryHint     = .notDirectory
