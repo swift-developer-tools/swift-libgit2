@@ -197,7 +197,7 @@ public func gitStashApply(
 /// - Parameters:
 ///   - repo: The repository containing the stash. The underlying type must
 ///   be `git_repository`.
-///   - callback: The callback to invoke for each stashed state.
+///   - callback: The ``GitStashCB`` callback to invoke for each stashed state.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

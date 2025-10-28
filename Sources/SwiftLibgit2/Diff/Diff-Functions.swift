@@ -531,10 +531,14 @@ public func gitDiffIsSortedICase(
 /// Loops over all deltas in the given diff.
 /// - Parameters:
 ///   - diff: The diff to iterate. The underlying type must be `git_diff`.
-///   - fileCB: The callback to invoke for each file in a diff.
-///   - binaryCB: The callback to invoke for binary content in a diff.
-///   - hunkCB: The callback to invoke for each hunk in a diff.
-///   - lineCB: The callback to invoke for each line in a diff.
+///   - fileCB: The ``GitDiffFileCB`` callback to invoke for each file in
+///   the diff.
+///   - binaryCB: The ``GitDiffBinaryCB`` callback to invoke for binary
+///   content in the diff.
+///   - hunkCB: The ``GitDiffHunkCB`` callback to invoke for each hunk in
+///   the diff.
+///   - lineCB: The ``GitDiffLineCB`` callback to invoke for each line in
+///   the diff.
 ///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
 ///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -602,7 +606,8 @@ public func gitDiffStatusChar(
 /// - Parameters:
 ///   - diff: The diff to iterate. The underlying type must be `git_diff`.
 ///   - format: The diff data output format to use.
-///   - printCB: The callback to invoke for each line in a diff.
+///   - printCB: The ``GitDiffLineCB`` callback to invoke for each line in
+///   the diff.
 ///   - payload: The payload to pass to `printCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -671,10 +676,14 @@ public func gitDiffToBuf(
 ///   must be `git_blob`.
 ///   - newAsPath: The file name to use for `newBlob`.
 ///   - options: The diff options to use.
-///   - fileCB: The callback to invoke for each file in a diff.
-///   - binaryCB: The callback to invoke for binary content in a diff.
-///   - hunkCB: The callback to invoke for each hunk in a diff.
-///   - lineCB: The callback to invoke for each line in a diff.
+///   - fileCB: The ``GitDiffFileCB`` callback to invoke for each file in
+///   the diff.
+///   - binaryCB: The ``GitDiffBinaryCB`` callback to invoke for binary
+///   content in the diff.
+///   - hunkCB: The ``GitDiffHunkCB`` callback to invoke for each hunk in
+///   the diff.
+///   - lineCB: The ``GitDiffLineCB`` callback to invoke for each line in
+///   the diff.
 ///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
 ///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -743,10 +752,14 @@ public func gitDiffBlobs(
 ///   - bufferLen: The length of `buffer`.
 ///   - bufferAsPath: The file name to use for `buffer`.
 ///   - options: The diff options to use.
-///   - fileCB: The callback to invoke for each file in a diff.
-///   - binaryCB: The callback to invoke for binary content in a diff.
-///   - hunkCB: The callback to invoke for each hunk in a diff.
-///   - lineCB: The callback to invoke for each line in a diff.
+///   - fileCB: The ``GitDiffFileCB`` callback to invoke for each file in
+///   the diff.
+///   - binaryCB: The ``GitDiffBinaryCB`` callback to invoke for binary
+///   content in the diff.
+///   - hunkCB: The ``GitDiffHunkCB`` callback to invoke for each hunk in
+///   the diff.
+///   - lineCB: The ``GitDiffLineCB`` callback to invoke for each line in
+///   the diff.
 ///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
 ///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -813,10 +826,14 @@ public func gitDiffBlobToBuffer(
 ///   - newBufferLen: The length of `newBuffer`.
 ///   - newBufferAsPath: The file name to use for `newBuffer`.
 ///   - options: The diff options to use.
-///   - fileCB: The callback to invoke for each file in a diff.
-///   - binaryCB: The callback to invoke for binary content in a diff.
-///   - hunkCB: The callback to invoke for each hunk in a diff.
-///   - lineCB: The callback to invoke for each line in a diff.
+///   - fileCB: The ``GitDiffFileCB`` callback to invoke for each file in
+///   the diff.
+///   - binaryCB: The ``GitDiffBinaryCB`` callback to invoke for binary
+///   content in the diff.
+///   - hunkCB: The ``GitDiffHunkCB`` callback to invoke for each hunk in
+///   the diff.
+///   - lineCB: The ``GitDiffLineCB`` callback to invoke for each line in
+///   the diff.
 ///   - payload: The payload to pass to the `fileCB`, `binaryCB`, `hunkCB`,
 ///   and `lineCB`.
 /// - Returns: A ``GitErrorCode`` instance.

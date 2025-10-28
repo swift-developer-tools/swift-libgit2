@@ -286,7 +286,8 @@ public func gitPackbuilderWriteBuf(
 ///   corresponding index file. Pass `nil` to use the default location.
 ///   - mode: The permissions to use when writing. Pass `0` for the default
 ///   permissions.
-///   - progressCB: The callback to invoke to report indexing progress.
+///   - progressCB: The ``GitIndexerProgressCB`` callback to invoke to report
+///   indexing progress.
 ///   - progressCBPayload: The payload to pass to `progressCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -367,7 +368,8 @@ public func gitPackbuilderName(
 /// - Parameters:
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
-///   - cb: The callback to invoke for each packed object.
+///   - cb: The ``GitPackbuilderForEachCB`` callback to invoke for each
+///   packed object.
 ///   - payload: The payload to pass to `cb`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -433,8 +435,8 @@ public func gitPackbuilderWritten(
 /// - Parameters:
 ///   - pb: The packbuilder to update. The underlying type must be
 ///   `git_packbuilder`.
-///   - progressCB: The callback to invoke to report packfile iteration
-///   progress.
+///   - progressCB: The ``GitPackbuilderProgressCB`` callback to invoke to
+///   report packfile iteration progress.
 ///   - progressCBPayload: The payload to pass to `progressCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

@@ -40,7 +40,7 @@ public func gitStatusOptionsInit(
 /// - Parameters:
 ///   - repo: The repository containing the files. The underlying type must
 ///   be `git_repository`.
-///   - callback: The callback to invoke for each status.
+///   - callback: The ``GitStatusCB`` callback to invoke for each status.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -70,7 +70,7 @@ public func gitStatusForEach(
 ///   - repo: The repository containing the files. The underlying type must
 ///   be `git_repository`.
 ///   - opts: The status options to use.
-///   - callback: The callback to invoke for each status.
+///   - callback: The ``GitStatusCB`` callback to invoke for each status.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

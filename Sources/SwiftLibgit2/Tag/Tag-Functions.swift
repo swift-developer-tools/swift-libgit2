@@ -582,7 +582,7 @@ public func gitTagListMatch(
 /// - Parameters:
 ///   - repo: The repository containing the tags. The underlying type must be
 ///   `git_repository`.
-///   - callback: The callback to invoke for each tag.
+///   - callback: The ``GitTagForEachCB`` callback to invoke for each tag.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

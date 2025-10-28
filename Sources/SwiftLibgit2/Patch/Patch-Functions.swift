@@ -479,7 +479,8 @@ public func gitPatchSize(
 /// Serializes the given patch to text.
 /// - Parameters:
 ///   - patch: The patch to serialize. The underlying type must be `git_patch`.
-///   - printCB: The callback invoked for each line in the diff.
+///   - printCB: The ``GitDiffLineCB`` callback to invoke for each line in
+///   the diff.
 ///   - payload: The payload to pass to `printCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

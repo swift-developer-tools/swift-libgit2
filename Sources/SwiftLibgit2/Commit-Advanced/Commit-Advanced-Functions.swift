@@ -116,8 +116,8 @@ public func gitCommitCreateFromIDs(
 ///   use the original message encoding.
 ///   - message: The commit message to use.
 ///   - tree: The ID of the commit tree to use.
-///   - parentCB: The callback to invoke to get the parents of the commit.
-///   See ``GitCommitParentCB``.
+///   - parentCB: The ``GitCommitParentCB`` callback to invoke to get the
+///   parents of the commit.
 ///   - parentPayload: The payload to pass to `parentCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

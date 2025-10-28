@@ -163,7 +163,7 @@ public func gitSubmoduleFree(
 /// - Parameters:
 ///   - repo: The repository containing the submodules. The underlying type
 ///   must be `git_repository`.
-///   - callback: The callback to invoke for each submodule.
+///   - callback: The ``GitSubmoduleCB`` callback to invoke for each submodule.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

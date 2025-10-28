@@ -482,8 +482,8 @@ public func gitRevwalkRepository(
 /// - Parameters:
 ///   - walk: The revision walker to update. The underlying type must be
 ///   `git_revwalk`.
-///   - hideCB: The callback to invoke to hide the specified commit and its
-///   parents. Pass `nil` to unset the callback.
+///   - hideCB: The ``GitRevwalkHideCB`` callback to invoke to hide the
+///   specified commit and its parents. Pass `nil` to unset the callback.
 ///   - payload: The payload to pass to `hideCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

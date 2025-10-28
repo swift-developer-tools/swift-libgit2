@@ -619,7 +619,7 @@ public func gitNoteDefaultRef(
 ///   `git_repository`.
 ///   - notesRef: The canonical name of the reference to use. Pass `nil` to
 ///   use `refs/notes/commits`.
-///   - noteCB: The callback to invoke for each note.
+///   - noteCB: The ``GitNoteForEachCB`` callback to invoke for each note.
 ///   - payload: The payload to pass to `noteCB`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

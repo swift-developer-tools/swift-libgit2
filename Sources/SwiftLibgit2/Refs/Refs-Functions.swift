@@ -723,7 +723,8 @@ public func gitReferenceList(
 /// - Parameters:
 ///   - repo: The repository containing the references. The underlying type
 ///   must be `git_repository`.
-///   - callback: The callback to invoke for each reference.
+///   - callback: The ``GitReferenceForEachCB`` callback to invoke for each
+///   reference.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -753,7 +754,8 @@ public func gitReferenceForEach(
 /// - Parameters:
 ///   - repo: The repository containing the references. The underlying type
 ///   must be `git_repository`.
-///   - callback: The callback to invoke for each reference name.
+///   - callback: The ``GitReferenceForEachNameCB`` callback to invoke for
+///   each reference name.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -993,7 +995,8 @@ public func gitReferenceIteratorFree(
 ///   - repo: The repository containing the references. The underlying type
 ///   must be `git_repository`.
 ///   - glob: The pattern to match.
-///   - callback: The callback to invoke for each reference name.
+///   - callback: The ``GitReferenceForEachNameCB`` callback to invoke for
+///   each reference name.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

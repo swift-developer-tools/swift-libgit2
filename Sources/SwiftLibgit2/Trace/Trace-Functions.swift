@@ -15,7 +15,7 @@ import CLibgit2
 /// callback.
 /// - Parameters:
 ///   - level: The trace level to set.
-///   - cb: The callback to invoke with trace data.
+///   - cb: The ``GitTraceCB`` callback to invoke with trace data.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
