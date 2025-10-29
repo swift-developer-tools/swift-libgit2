@@ -158,12 +158,12 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigFindPaths() throws
     {
-        var data = Data()
+        var path: String? = nil
         
-        _ = gitConfigFindGlobal(out: &data)
-        _ = gitConfigFindXDG(out: &data)
-        _ = gitConfigFindSystem(out: &data)
-        _ = gitConfigFindProgramData(out: &data)
+        _ = gitConfigFindGlobal(out: &path)
+        _ = gitConfigFindXDG(out: &path)
+        _ = gitConfigFindSystem(out: &path)
+        _ = gitConfigFindProgramData(out: &path)
     }
     
     
@@ -1100,7 +1100,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        var path                : Data      = Data()
+        var path                : String?   = nil
         let pathExtension       : String    = "/test"
         let pathExpectedValue   : String    = "~" + pathExtension
         
@@ -1111,18 +1111,11 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         XCTAssertOK(configParsePathResult)
         
-        
-        
-        let pathValue: String? = String(
-            data:       path,
-            encoding:   .utf8
-        )
-        
         /// The path should be expanded. The exact value depends on the
         /// environment.
-        XCTAssertNotNil(pathValue)
-        XCTAssertNotEqual(pathValue, pathExpectedValue)
-        XCTAssertTrue(pathValue?.hasSuffix(pathExtension) ?? false)
+        XCTAssertNotNil(path)
+        XCTAssertNotEqual(path, pathExpectedValue)
+        XCTAssertTrue(path?.hasSuffix(pathExtension) ?? false)
     }
     
     
@@ -1215,7 +1208,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             
             
-            var stringValue = Data()
+            var stringValue: String? = nil
             
             let configGetStringBufResult: GitErrorCode
                 = gitConfigGetStringBuf(
@@ -1225,6 +1218,7 @@ final class ConfigTests: XCTestCaseStopOnFail
                 )
             
             XCTAssertOK(configGetStringBufResult)
+            XCTAssertNotNil(stringValue)
             XCTAssertEqual(stringValue, stringExpectedValue)
             
             
@@ -1321,7 +1315,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             
             
-            var path = Data()
+            var path: String? = nil
             
             let configGetPathResult: GitErrorCode = gitConfigGetPath(
                 out:    &path,
@@ -1331,18 +1325,11 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configGetPathResult)
             
-            
-            
-            let pathValue: String? = String(
-                data:       path,
-                encoding:   .utf8
-            )
-            
             /// The path should be expanded. The exact value depends on
             /// the environment.
-            XCTAssertNotNil(pathValue)
-            XCTAssertNotEqual(pathValue, pathExpectedValue)
-            XCTAssertTrue(pathValue?.hasSuffix(pathExtension) ?? false)
+            XCTAssertNotNil(path)
+            XCTAssertNotEqual(path, pathExpectedValue)
+            XCTAssertTrue(path?.hasSuffix(pathExtension) ?? false)
         }
     }
     
