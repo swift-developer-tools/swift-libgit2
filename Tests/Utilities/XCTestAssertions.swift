@@ -7,7 +7,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
 
@@ -15,8 +14,7 @@ import XCTest
 
 // MARK: - Utilities
 
-/// Checks whether the given libgit2 operation result is ``GitErrorCode/gitOK``,
-/// and clears the last libgit2 error otherwise.
+/// Checks whether the given libgit2 operation result is ``GitErrorCode/gitOK``.
 /// - Parameter errorCode: The libgit2 operation result to check.
 /// - Returns: Whether the given libgit2 operation result is
 /// ``GitErrorCode/gitOK``.
@@ -28,8 +26,7 @@ func isOK(
     
     if !isOK
     {
-        // TODO: Replace when `git_error_clear()` has a binding, and remove CLibgit2 import.
-        git_error_clear()
+        gitErrorClear()
     }
     
     return isOK
@@ -41,7 +38,7 @@ func isOK(
 
 /// Asserts that the given libgit2 operation result code is
 /// ``GitErrorCode/gitOK``.
-/// - Parameter result: The libgit2 operation result code to use.
+/// - Parameter result: The libgit2 operation result code to check.
 func XCTAssertOK(
     _ result: GitErrorCode
 )
@@ -62,6 +59,8 @@ func XCTAssertOK(
         {
             message += " \(errorMessage)"
         }
+        
+        gitErrorClear()
     }
     
     XCTAssertEqual(result, GitErrorCode.gitOK, message)
@@ -71,7 +70,7 @@ func XCTAssertOK(
 
 /// Asserts that the given libgit2 operation result code is not
 /// ``GitErrorCode/gitOK``.
-/// - Parameter result: The libgit2 operation result code to use.
+/// - Parameter result: The libgit2 operation result code to check.
 func XCTAssertNotOK(
     _ result: GitErrorCode
 )
@@ -83,7 +82,7 @@ func XCTAssertNotOK(
         return
     }
     
-    git_error_last()
+    gitErrorClear()
 }
 
 
