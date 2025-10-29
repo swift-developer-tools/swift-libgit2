@@ -124,7 +124,7 @@ enum Branch
     ///   - repository: The repository containing the branch.
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
-    static func withExistingLocalBranchPointer<T>(
+    static func withExistingLocalBranch<T>(
         named   branchName  : String,
         in      repository  : Repository,
         _       body        : (inout OpaquePointer?) throws -> T
@@ -165,7 +165,7 @@ enum Branch
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withNewLocalBranchPointer<T>(
+    static func withNewLocalBranch<T>(
         named       branchName  : String,
         in          repository  : Repository,
         force                   : Bool,

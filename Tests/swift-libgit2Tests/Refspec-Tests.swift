@@ -17,7 +17,7 @@ final class RefspecTests: XCTestCaseStopOnFail
 {
     func testGitRefspecDirection() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -33,7 +33,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecDst() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -49,7 +49,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecDstMatches() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -76,7 +76,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecForce() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -130,7 +130,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecParse() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             _ in
         }
@@ -140,7 +140,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecRTransform() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -152,17 +152,18 @@ final class RefspecTests: XCTestCaseStopOnFail
             
             for (refName, transformedName) in refNamesAndTransformedNames
             {
-                var transformedData = Data()
+                var retrievedName: String? = nil
                 
                 let refspecRTransformResult: GitErrorCode
                     = gitRefspecRTransform(
-                        out:    &transformedData,
+                        out:    &retrievedName,
                         spec:   refspecPointer,
                         name:   refName
                     )
                 
                 XCTAssertOK(refspecRTransformResult)
-                XCTAssertEqual(transformedData, transformedName)
+                XCTAssertNotNil(retrievedName)
+                XCTAssertEqual(retrievedName, transformedName)
             }
         }
     }
@@ -171,7 +172,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecSrc() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -187,7 +188,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecSrcMatches() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -264,7 +265,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecString() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -280,7 +281,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecTransform() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -292,16 +293,17 @@ final class RefspecTests: XCTestCaseStopOnFail
             
             for (refName, transformedName) in refNamesAndTransformedNames
             {
-                var transformedData = Data()
+                var retrievedName: String? = nil
                 
                 let refspecTransformResult: GitErrorCode = gitRefspecTransform(
-                    out:    &transformedData,
+                    out:    &retrievedName,
                     spec:   refspecPointer,
                     name:   refName
                 )
                 
                 XCTAssertOK(refspecTransformResult)
-                XCTAssertEqual(transformedData, transformedName)
+                XCTAssertNotNil(retrievedName)
+                XCTAssertEqual(retrievedName, transformedName)
             }
         }
     }
@@ -316,7 +318,7 @@ private extension RefspecTests
     /// Calls the given closure with a pointer to a fetch refspec.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withRefspecPointer(
+    func withRefspec(
         _ body: (OpaquePointer) throws -> Void
     ) throws
     {
@@ -340,7 +342,8 @@ private extension RefspecTests
         guard let refspecPointer: OpaquePointer = refspecPointer
         else
         {
-            throw NSError.makeError("The refspec pointer was nil.")
+            XCTFail("The refspec pointer was nil.")
+            return
         }
         
         try body(refspecPointer)

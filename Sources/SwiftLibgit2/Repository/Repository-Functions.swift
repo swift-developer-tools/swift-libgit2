@@ -8,11 +8,10 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
-/// Opens the repository at the specified location.
+/// Opens the specified repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
@@ -101,9 +100,9 @@ public func gitRepositoryWrapODB(
 
 
 
-/// Searches for a repository at the specified location, and copies its path.
+/// Gets the path of the specified repository.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the found path.
+///   - out: The `String` instance in which to store the found path.
 ///   - startPath: The base path at which to begin searching.
 ///   - acrossFS: Whether to search across file system boundaries.
 ///   - ceilingDirs: A list of absolute symbolic link free paths, separated
@@ -119,7 +118,7 @@ public func gitRepositoryWrapODB(
 ///
 /// [`git_repository_discover()`](https://libgit2.org/docs/reference/main/repository/git_repository_discover.html)
 public func gitRepositoryDiscover(
-    out         : inout Data,
+    out         : inout String?,
     startPath   : String,
     acrossFS    : Bool,
     ceilingDirs : String?
@@ -127,7 +126,7 @@ public func gitRepositoryDiscover(
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -143,7 +142,7 @@ public func gitRepositoryDiscover(
 
 
 
-/// Opens the repository at the specified location.
+/// Opens the specified repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
@@ -182,7 +181,7 @@ public func gitRepositoryOpenExt(
 
 
 
-/// Opens a bare repository at the specified location.
+/// Opens the specified bare repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
@@ -529,7 +528,7 @@ public func gitRepositoryIsEmpty(
 
 /// Gets the path of the specified file or directory in the given repository.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the path.
+///   - out: The `String` instance in which to store the path.
 ///   - repo: The repository to search. The underlying type must be
 ///   `git_repository`.
 ///   - item: The type of item for which to retrieve the path.
@@ -539,14 +538,14 @@ public func gitRepositoryIsEmpty(
 ///
 /// [`git_repository_item_path()`](https://libgit2.org/docs/reference/main/repository/git_repository_item_path.html)
 public func gitRepositoryItemPath(
-    out     : inout Data,
+    out     : inout String?,
     repo    : OpaquePointer,
     item    : GitRepositoryItemT
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -873,7 +872,7 @@ public func gitRepositoryIndex(
 
 /// Gets the prepared message of the given repository.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the prepared message.
+///   - out: The `String` instance in which to store the prepared message.
 ///   - repo: The repository for which to get the prepared message. The
 ///   underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -892,13 +891,13 @@ public func gitRepositoryIndex(
 ///
 /// [`git_repository_message()`](https://libgit2.org/docs/reference/main/repository/git_repository_message.html)
 public func gitRepositoryMessage(
-    out     : inout Data,
+    out     : inout String?,
     repo    : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -1327,11 +1326,11 @@ public func gitRepositoryIdent(
 {
     return withCConversion
     {
-        return name.withOptionalMutatingString
+        return name.withOptionalMutatingCString
         {
             cName in
             
-            return email.withOptionalMutatingString
+            return email.withOptionalMutatingCString
             {
                 cEmail in
                 

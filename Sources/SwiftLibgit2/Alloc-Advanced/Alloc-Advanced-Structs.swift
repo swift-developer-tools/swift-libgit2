@@ -30,14 +30,14 @@ import CLibgit2
 public struct GitAllocator: CStruct, Sendable
 {
     /// Allocates memory for the given number of bytes.
-    public let gMalloc  : GMalloc?
+    public let gMalloc  : GitAllocator.GMalloc?
     
     /// Deallocates the given object and reallocates memory for the given
     /// number of bytes.
-    public let gRealloc : GRealloc?
+    public let gRealloc : GitAllocator.GRealloc?
     
     /// Frees the memory allocated for the given object.
-    public let gFree    : GFree?
+    public let gFree    : GitAllocator.GFree?
     
     
     

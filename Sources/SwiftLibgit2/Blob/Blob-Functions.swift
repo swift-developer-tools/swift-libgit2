@@ -458,7 +458,7 @@ public func gitBlobCreateFromBuffer(
         {
             cID in
             
-            return try buffer.withCBuffer
+            return try buffer.withCString
             {
                 cBuffer, cBufferCount in
                 
@@ -527,7 +527,7 @@ public func gitBlobDataIsBinary(
         return false
     }
     
-    return try? data.withCBuffer
+    return try? data.withCString
     {
         cData, cDataCount in
         

@@ -841,7 +841,8 @@ private extension OIDTests
             guard let headOIDString: String = gitOIDToStrS(oid: headOID)
             else
             {
-                throw NSError.makeError("The HEAD OID string was nil.")
+                XCTFail("The HEAD OID string was nil.")
+                return
             }
             
             XCTAssertEqual(headOIDString.count, gitOIDSHA1HexSize)

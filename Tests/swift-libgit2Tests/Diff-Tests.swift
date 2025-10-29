@@ -704,7 +704,7 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiff(in: repository)
             {
                 diffPointer in
                 
@@ -827,7 +827,7 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiff(in: repository)
             {
                 diffPointer in
                 
@@ -877,17 +877,18 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                var diffStatistics = Data()
+                var diffStats: String? = nil
                 
                 let diffStatsToBufResult: GitErrorCode = gitDiffStatsToBuf(
-                    out:        &diffStatistics,
+                    out:        &diffStats,
                     stats:      diffStatsPointer,
                     format:     .gitDiffStatsFull,
                     width:      80
                 )
                 
                 XCTAssertOK(diffStatsToBufResult)
-                XCTAssertGreaterThan(diffStatistics.count, 0)
+                XCTAssertNotNil(diffStats)
+                XCTAssertGreaterThan(diffStats?.count ?? 0, 0)
             }
         }
     }
@@ -1143,7 +1144,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             
             
-            try Diff.withTreeToTreeDiffPointer(
+            try Diff.withTreeToTreeDiff(
                 in:             repository,
                 oldCommitOID:   firstCommitOID,
                 newCommitOID:   secondCommitOID
@@ -1151,7 +1152,7 @@ final class DiffTests: XCTestCaseStopOnFail
             {
                 firstToSecondDiffPointer in
                 
-                try Diff.withTreeToTreeDiffPointer(
+                try Diff.withTreeToTreeDiff(
                     in:             repository,
                     oldCommitOID:   secondCommitOID,
                     newCommitOID:   thirdCommitOID
@@ -1380,7 +1381,7 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiff(in: repository)
             {
                 diffPointer in
                 
@@ -1444,7 +1445,7 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiff(in: repository)
             {
                 diffPointer in
                 
@@ -1660,7 +1661,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 message:    "New commit"
             )
             
-            try Diff.withTreeToTreeDiffPointer(
+            try Diff.withTreeToTreeDiff(
                 in:             repository,
                 oldCommitOID:   oldCommitOID,
                 newCommitOID:   newCommitOID
@@ -1676,7 +1677,7 @@ final class DiffTests: XCTestCaseStopOnFail
         {
             repository in
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository) { _ in }
+            try Diff.withTreeToWorkdirDiff(in: repository) { _ in }
         }
     }
     

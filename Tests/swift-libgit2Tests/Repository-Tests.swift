@@ -169,28 +169,18 @@ final class RepositoryTests: XCTestCaseStopOnFail
             repository in
             
             let repositoryPath  : String    = repository.url.path()
-            var discoveredData  : Data      = Data()
+            var retrievedPath   : String?   = nil
             
             let repoDiscoverResult: GitErrorCode = gitRepositoryDiscover(
-                out:            &discoveredData,
+                out:            &retrievedPath,
                 startPath:      repositoryPath,
                 acrossFS:       false,
                 ceilingDirs:    nil
             )
             
             XCTAssertOK(repoDiscoverResult)
-            
-            guard let discoveredPath = String(
-                data:       discoveredData,
-                encoding:   .utf8
-            )
-            else
-            {
-                XCTFail("The discovered path was nil.")
-                return
-            }
-            
-            XCTAssertTrue(discoveredPath.contains(repositoryPath))
+            XCTAssertNotNil(retrievedPath)
+            XCTAssertTrue(retrievedPath?.contains(repositoryPath) ?? false)
         }
     }
     
@@ -739,51 +729,31 @@ final class RepositoryTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var itemPathData = Data()
+            var retrievedPath: String? = nil
             
             var repoItemPathResult: GitErrorCode = gitRepositoryItemPath(
-                out:    &itemPathData,
+                out:    &retrievedPath,
                 repo:   repository.pointer,
                 item:   .gitRepositoryItemIndex
             )
             
             XCTAssertOK(repoItemPathResult)
-            
-            guard let indexPathString = String(
-                bytes:      itemPathData,
-                encoding:   .utf8
-            )
-            else
-            {
-                XCTFail("The index path string was nil.")
-                return
-            }
-            
-            XCTAssertTrue(indexPathString.contains("index"))
+            XCTAssertNotNil(retrievedPath)
+            XCTAssertTrue(retrievedPath?.contains("index") ?? false)
             
             
             
-            itemPathData = Data()
+            retrievedPath = nil
             
             repoItemPathResult = gitRepositoryItemPath(
-                out:    &itemPathData,
+                out:    &retrievedPath,
                 repo:   repository.pointer,
                 item:   .gitRepositoryItemGitDir
             )
             
             XCTAssertOK(repoItemPathResult)
-            
-            guard let gitDirPathString = String(
-                bytes:      itemPathData,
-                encoding:   .utf8
-            )
-            else
-            {
-                XCTFail("The Git directory path string was nil.")
-                return
-            }
-            
-            XCTAssertTrue(gitDirPathString.contains(".git"))
+            XCTAssertNotNil(retrievedPath)
+            XCTAssertTrue(retrievedPath?.contains(".git") ?? false)
         }
     }
     
@@ -939,15 +909,16 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             
             
-            var messageData = Data()
+            var retrievedMessage: String? = nil
             
             let repoMessageResult: GitErrorCode = gitRepositoryMessage(
-                out:    &messageData,
+                out:    &retrievedMessage,
                 repo:   repository.pointer
             )
             
             XCTAssertOK(repoMessageResult)
-            XCTAssertEqual(messageData, mergeMessage)
+            XCTAssertNotNil(retrievedMessage)
+            XCTAssertEqual(retrievedMessage, mergeMessage)
             
             
             

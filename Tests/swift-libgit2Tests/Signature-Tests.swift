@@ -135,89 +135,77 @@ final class SignatureTests: XCTestCaseStopOnFail
         {
             repository in
             
-            do
-            {
-                var authorSignature     : GitSignature?     = GitSignature()
-                var committerSignature  : GitSignature?     = GitSignature()
-                
-                let bothResult: GitErrorCode = gitSignatureDefaultFromEnv(
+            var authorSignature     : GitSignature?     = GitSignature()
+            var committerSignature  : GitSignature?     = GitSignature()
+            
+            let bothResult: GitErrorCode = gitSignatureDefaultFromEnv(
+                authorOut:      &authorSignature,
+                committerOut:   &committerSignature,
+                repo:           repository.pointer
+            )
+            
+            XCTAssertOK(bothResult)
+            XCTAssertNotNil(authorSignature)
+            XCTAssertFalse(authorSignature!.name.isEmpty)
+            XCTAssertFalse(authorSignature!.email.isEmpty)
+            XCTAssertNotNil(authorSignature!.when)
+            XCTAssertNotNil(committerSignature)
+            XCTAssertFalse(committerSignature!.name.isEmpty)
+            XCTAssertFalse(committerSignature!.email.isEmpty)
+            XCTAssertNotNil(committerSignature!.when)
+            
+            
+            
+            authorSignature     = GitSignature()
+            committerSignature  = nil
+            
+            let authorOnlyResult: GitErrorCode
+                = gitSignatureDefaultFromEnv(
                     authorOut:      &authorSignature,
                     committerOut:   &committerSignature,
                     repo:           repository.pointer
                 )
-                
-                XCTAssertOK(bothResult)
-                XCTAssertNotNil(authorSignature)
-                XCTAssertFalse(authorSignature!.name.isEmpty)
-                XCTAssertFalse(authorSignature!.email.isEmpty)
-                XCTAssertNotNil(authorSignature!.when)
-                XCTAssertNotNil(committerSignature)
-                XCTAssertFalse(committerSignature!.name.isEmpty)
-                XCTAssertFalse(committerSignature!.email.isEmpty)
-                XCTAssertNotNil(committerSignature!.when)
-            }
+            
+            XCTAssertOK(authorOnlyResult)
+            XCTAssertNotNil(authorSignature)
+            XCTAssertFalse(authorSignature!.name.isEmpty)
+            XCTAssertFalse(authorSignature!.email.isEmpty)
+            XCTAssertNotNil(authorSignature!.when)
+            XCTAssertNil(committerSignature)
             
             
             
-            do
-            {
-                var authorSignature     : GitSignature?     = GitSignature()
-                var committerSignature  : GitSignature?     = nil
-                
-                let authorOnlyResult: GitErrorCode
-                    = gitSignatureDefaultFromEnv(
-                        authorOut:      &authorSignature,
-                        committerOut:   &committerSignature,
-                        repo:           repository.pointer
-                    )
-                
-                XCTAssertOK(authorOnlyResult)
-                XCTAssertNotNil(authorSignature)
-                XCTAssertFalse(authorSignature!.name.isEmpty)
-                XCTAssertFalse(authorSignature!.email.isEmpty)
-                XCTAssertNotNil(authorSignature!.when)
-                XCTAssertNil(committerSignature)
-            }
+            authorSignature     = nil
+            committerSignature  = GitSignature()
             
-            
-            
-            do
-            {
-                var authorSignature     : GitSignature?     = nil
-                var committerSignature  : GitSignature?     = GitSignature()
-                
-                let committerOnlyResult: GitErrorCode
-                    = gitSignatureDefaultFromEnv(
-                        authorOut:      &authorSignature,
-                        committerOut:   &committerSignature,
-                        repo:           repository.pointer
-                    )
-                
-                XCTAssertOK(committerOnlyResult)
-                XCTAssertNil(authorSignature)
-                XCTAssertNotNil(committerSignature)
-                XCTAssertFalse(committerSignature!.name.isEmpty)
-                XCTAssertFalse(committerSignature!.email.isEmpty)
-                XCTAssertNotNil(committerSignature!.when)
-            }
-            
-            
-            
-            do
-            {
-                var authorSignature     : GitSignature?     = nil
-                var committerSignature  : GitSignature?     = nil
-                
-                let neitherResult: GitErrorCode = gitSignatureDefaultFromEnv(
+            let committerOnlyResult: GitErrorCode
+                = gitSignatureDefaultFromEnv(
                     authorOut:      &authorSignature,
                     committerOut:   &committerSignature,
                     repo:           repository.pointer
                 )
-                
-                XCTAssertEqual(neitherResult, .gitEUser)
-                XCTAssertNil(authorSignature)
-                XCTAssertNil(committerSignature)
-            }
+            
+            XCTAssertOK(committerOnlyResult)
+            XCTAssertNil(authorSignature)
+            XCTAssertNotNil(committerSignature)
+            XCTAssertFalse(committerSignature!.name.isEmpty)
+            XCTAssertFalse(committerSignature!.email.isEmpty)
+            XCTAssertNotNil(committerSignature!.when)
+            
+            
+            
+            authorSignature     = nil
+            committerSignature  = nil
+            
+            let neitherResult: GitErrorCode = gitSignatureDefaultFromEnv(
+                authorOut:      &authorSignature,
+                committerOut:   &committerSignature,
+                repo:           repository.pointer
+            )
+            
+            XCTAssertEqual(neitherResult, .gitEUser)
+            XCTAssertNil(authorSignature)
+            XCTAssertNil(committerSignature)
         }
     }
     

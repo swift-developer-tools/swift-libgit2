@@ -67,7 +67,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            var description = Data()
+            var description: String? = nil
             
             let describeFormatResult: GitErrorCode = gitDescribeFormat(
                 out:        &description,
@@ -76,7 +76,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(describeFormatResult)
-            XCTAssertGreaterThan(description.count, 0)
+            XCTAssertNotNil(description)
+            XCTAssertGreaterThan(description?.count ?? 0, 0)
         }
     }
     
@@ -149,7 +150,7 @@ final class DescribeTests: XCTestCaseStopOnFail
             
             
             
-            var description = Data()
+            var description: String? = nil
             
             let describeFormatResult: GitErrorCode = gitDescribeFormat(
                 out:        &description,
@@ -158,7 +159,8 @@ final class DescribeTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(describeFormatResult)
-            XCTAssertGreaterThan(description.count, 0)
+            XCTAssertNotNil(description)
+            XCTAssertGreaterThan(description?.count ?? 0, 0)
         }
     }
     

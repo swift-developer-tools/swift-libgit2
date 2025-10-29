@@ -98,7 +98,7 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     ///
     /// - Warning: This is deprecated in libgit2 and will be removed in the
     /// next major release. Use ``commitCreateCB`` instead.
-    public var signingCB        : SigningCB?
+    public var signingCB        : GitRebaseOptions.SigningCB?
     
     /// The payload passed to ``commitCreateCB`` and ``signingCB``.
     ///

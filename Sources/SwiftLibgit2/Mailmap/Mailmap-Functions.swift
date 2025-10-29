@@ -112,7 +112,7 @@ public func gitMailmapFromBuffer(
 {
     return withCConversion
     {
-        return try buf.withCBuffer
+        return try buf.withCString
         {
             cBuf, cBufCount in
             
@@ -186,11 +186,11 @@ public func gitMailmapResolve(
 {
     return withCConversion
     {
-        return realName.withOptionalMutatingString
+        return realName.withOptionalMutatingCString
         {
             cRealName in
             
-            return realEmail.withOptionalMutatingString
+            return realEmail.withOptionalMutatingCString
             {
                 cRealEmail in
                 

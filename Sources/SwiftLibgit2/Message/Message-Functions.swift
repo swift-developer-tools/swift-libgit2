@@ -8,14 +8,13 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
 /// Cleans up excess whitespace in the given message, and adds a trailing
 /// newline if necessary.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the prettified message.
+///   - out: The `String` instance in which to store the prettified message.
 ///   - message: The message to prettify.
 ///   - stripComments: Whether to remove comment lines.
 ///   - commentChar: The comment character at the start of lines to remove,
@@ -31,7 +30,7 @@ import Foundation
 ///
 /// [`git_message_prettify()`](https://libgit2.org/docs/reference/main/message/git_message_prettify.html)
 public func gitMessagePrettify(
-    out             : inout Data,
+    out             : inout String?,
     message         : String,
     stripComments   : Bool,
     commentChar     : CChar?
@@ -39,7 +38,7 @@ public func gitMessagePrettify(
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

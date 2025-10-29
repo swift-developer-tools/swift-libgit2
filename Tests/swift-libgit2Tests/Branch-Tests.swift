@@ -67,7 +67,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            try Branch.withNewLocalBranchPointer(
+            try Branch.withNewLocalBranch(
                 named:      branchName,
                 in:         repository,
                 force:      false,
@@ -132,7 +132,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            Branch.withExistingLocalBranchPointer(
+            Branch.withExistingLocalBranch(
                 named:  branchName,
                 in:     repository
             )
@@ -209,7 +209,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            try Branch.withNewLocalBranchPointer(
+            try Branch.withNewLocalBranch(
                 named:      branchName,
                 in:         repository,
                 force:      false,
@@ -299,62 +299,23 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
-    func testGitBranchRemoteOperations() throws
+    func testGitBranchRemoteName() throws
     {
         try Repository.withRepository
         {
             repository in
             
-            let referenceName: String = "refs/heads/main"
-            
-            
-            
-            var data = Data()
+            var retrievedName: String? = nil
             
             let branchRemoteNameResult: GitErrorCode = gitBranchRemoteName(
-                out:        &data,
+                out:        &retrievedName,
                 repo:       repository.pointer,
-                refName:    referenceName
+                refName:    "HEAD"
             )
             
-            /// The operation should fail since there the reference is a
-            /// local branch.
+            /// The reference is a local branch.
             XCTAssertNotOK(branchRemoteNameResult)
-            
-            
-            
-            let branchUpstreamRemoteResult: GitErrorCode
-                = gitBranchUpstreamRemote(
-                    buf:        &data,
-                    repo:       repository.pointer,
-                    refName:    referenceName
-                )
-            
-            /// The operation should fail since there is no configured upstream.
-            XCTAssertNotOK(branchUpstreamRemoteResult)
-            
-            
-            
-            let branchUpstreamMergeResult: GitErrorCode
-                = gitBranchUpstreamMerge(
-                    buf:        &data,
-                    repo:       repository.pointer,
-                    refName:    referenceName
-                )
-            
-            /// The operation should fail since there is no configured upstream.
-            XCTAssertNotOK(branchUpstreamMergeResult)
-            
-            
-            
-            let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
-                out:        &data,
-                repo:       repository.pointer,
-                refName:    referenceName
-            )
-            
-            /// The operation should fail since there is no configured upstream.
-            XCTAssertNotOK(branchUpstreamNameResult)
+            XCTAssertNil(retrievedName)
         }
     }
     
@@ -383,5 +344,73 @@ final class BranchTests: XCTestCaseStopOnFail
         
         XCTAssertNotNil(allBranches)
         XCTAssertEqual(allBranches?.rawValue, GIT_BRANCH_ALL.rawValue)
+    }
+    
+    
+    
+    func testGitBranchUpstreamMerge() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var retrievedName: String? = nil
+            
+            let branchUpstreamMergeResult: GitErrorCode
+                = gitBranchUpstreamMerge(
+                    buf:        &retrievedName,
+                    repo:       repository.pointer,
+                    refName:    "HEAD"
+                )
+            
+            /// There is no configured upstream.
+            XCTAssertNotOK(branchUpstreamMergeResult)
+            XCTAssertNil(retrievedName)
+        }
+    }
+    
+    
+    
+    func testGitBranchUpstreamName() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var retrievedName: String? = nil
+            
+            let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
+                out:        &retrievedName,
+                repo:       repository.pointer,
+                refName:    "HEAD"
+            )
+            
+            /// There is no configured upstream.
+            XCTAssertNotOK(branchUpstreamNameResult)
+            XCTAssertNil(retrievedName)
+        }
+    }
+    
+    
+    
+    func testGitBranchUpstreamRemote() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var retrievedName: String? = nil
+            
+            let branchUpstreamRemoteResult: GitErrorCode
+                = gitBranchUpstreamRemote(
+                    buf:        &retrievedName,
+                    repo:       repository.pointer,
+                    refName:    "HEAD"
+                )
+            
+            /// There is no configured upstream.
+            XCTAssertNotOK(branchUpstreamRemoteResult)
+            XCTAssertNil(retrievedName)
+        }
     }
 }

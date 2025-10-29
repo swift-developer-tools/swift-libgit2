@@ -954,7 +954,7 @@ public func gitReferenceNextName(
 {
     return withCConversion
     {
-        return out.withOptionalMutatingString
+        return out.withOptionalMutatingCString
         {
             cOut in
             
@@ -1193,7 +1193,7 @@ public func gitReferenceNormalizeName(
 {
     return withCConversion
     {
-        return try bufferOut.withMutatingCBuffer
+        return try bufferOut.withMutatingCString
         {
             cBufferOut, cBufferOutCount in
             

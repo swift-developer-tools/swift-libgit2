@@ -17,7 +17,7 @@ final class NotesTests: XCTestCaseStopOnFail
 {
     func testGitNoteAuthor() throws
     {
-        try withNotePointer
+        try withNote
         {
             _, notePointer, _ in
             
@@ -396,7 +396,7 @@ final class NotesTests: XCTestCaseStopOnFail
     
     func testGitNoteCommitter() throws
     {
-        try withNotePointer
+        try withNote
         {
             _, notePointer, _ in
             
@@ -414,7 +414,7 @@ final class NotesTests: XCTestCaseStopOnFail
     
     func testGitNoteCreateAndRead() throws
     {
-        try withNotePointer
+        try withNote
         {
             _, notePointer, noteOID in
             
@@ -441,7 +441,7 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var notesReference = Data()
+            var notesReference: String? = nil
             
             let noteDefaultResult: GitErrorCode = gitNoteDefaultRef(
                 out:    &notesReference,
@@ -449,16 +449,8 @@ final class NotesTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(noteDefaultResult)
-            
-            
-            
-            let notesReferenceValue: String? = String(
-                data:       notesReference,
-                encoding:   .utf8
-            )
-            
-            XCTAssertNotNil(notesReferenceValue)
-            XCTAssertTrue(notesReferenceValue?.hasPrefix("refs/notes") ?? false)
+            XCTAssertNotNil(notesReference)
+            XCTAssertTrue(notesReference?.hasPrefix("refs/notes") ?? false)
         }
     }
     
@@ -473,14 +465,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var firstNoteOID = GitOID()
             
             let firstNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &firstNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : repository.headOID,
-                note        : "First note",
-                force       : false
+                out:        &firstNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        repository.headOID,
+                note:       "First note",
+                force:      false
             )
             
             XCTAssertOK(firstNoteCreateResult)
@@ -497,14 +489,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var secondNoteOID = GitOID()
             
             let secondNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &secondNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : secondCommitOID,
-                note        : "Second note",
-                force       : false
+                out:        &secondNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        secondCommitOID,
+                note:       "Second note",
+                force:      false
             )
             
             XCTAssertOK(secondNoteCreateResult)
@@ -602,14 +594,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var firstNoteOID = GitOID()
             
             let firstNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &firstNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : repository.headOID,
-                note        : "First note",
-                force       : false
+                out:        &firstNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        repository.headOID,
+                note:       "First note",
+                force:      false
             )
             
             XCTAssertOK(firstNoteCreateResult)
@@ -626,14 +618,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var secondNoteOID = GitOID()
             
             let secondNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &secondNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : secondCommitOID,
-                note        : "Second note",
-                force       : false
+                out:        &secondNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        secondCommitOID,
+                note:       "Second note",
+                force:      false
             )
             
             XCTAssertOK(secondNoteCreateResult)
@@ -700,7 +692,7 @@ final class NotesTests: XCTestCaseStopOnFail
     
     func testGitNoteRemove() throws
     {
-        try withNotePointer
+        try withNote
         {
             repository, _, _ in
             
@@ -763,7 +755,7 @@ private extension NotesTests
     /// a created note, and the ID of that note.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withNotePointer(
+    func withNote(
         _ body: (Repository, OpaquePointer, GitOID) throws -> Void
     ) throws
     {
@@ -775,14 +767,14 @@ private extension NotesTests
             var noteOID : GitOID    = GitOID()
             
             let noteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &noteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : headOID,
-                note        : Self.defaultNoteMessage,
-                force       : false
+                out:        &noteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        headOID,
+                note:       Self.defaultNoteMessage,
+                force:      false
             )
             
             XCTAssertOK(noteCreateResult)
@@ -811,7 +803,8 @@ private extension NotesTests
             guard let notePointer: OpaquePointer = notePointer
             else
             {
-                throw NSError.makeError("The note pointer was nil.")
+                XCTFail("The note pointer was nil.")
+                return
             }
             
             

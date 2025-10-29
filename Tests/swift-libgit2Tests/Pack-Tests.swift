@@ -17,7 +17,7 @@ final class PackTests: XCTestCaseStopOnFail
 {
     func testGitPackbuilderForEach() throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -73,7 +73,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertCommitAndTree() throws
     {
-        try withPackbuilderPointer
+        try withPackbuilder
         {
             repository, packbuilderPointer in
             
@@ -157,7 +157,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertAndObjectCount() throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, _ in
             
@@ -168,7 +168,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertRecur() throws
     {
-        try withPackbuilderPointer(insertCommit: .recursive)
+        try withPackbuilder(insertCommit: .recursive)
         {
             _, _ in
             
@@ -179,7 +179,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderInsertWalk() throws
     {
-        try withPackbuilderPointer
+        try withPackbuilder
         {
             repository, packbuilderPointer in
             
@@ -250,7 +250,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderHashAndName() throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -286,7 +286,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderNew() throws
     {
-        try withPackbuilderPointer
+        try withPackbuilder
         {
             _, _ in
         }
@@ -296,7 +296,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderSetCallbacks() throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -358,7 +358,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderSetThreads() throws
     {
-        try withPackbuilderPointer
+        try withPackbuilder
         {
             _, packbuilderPointer in
             
@@ -399,7 +399,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderWriteBuf() throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -420,7 +420,7 @@ final class PackTests: XCTestCaseStopOnFail
     
     func testGitPackbuilderWritten() throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -485,7 +485,7 @@ private extension PackTests
         withCallback: Bool
     ) throws
     {
-        try withPackbuilderPointer(insertCommit: .standard)
+        try withPackbuilder(insertCommit: .standard)
         {
             _, packbuilderPointer in
             
@@ -558,7 +558,7 @@ private extension PackTests
     ///   insert that commit.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withPackbuilderPointer(
+    func withPackbuilder(
         insertCommit    : CommitInsertType? = nil,
         _ body          : (Repository, OpaquePointer) throws -> Void
     ) throws
@@ -586,7 +586,8 @@ private extension PackTests
             guard let packbuilderPointer: OpaquePointer = packbuilderPointer
             else
             {
-                throw NSError.makeError("The packbuilder pointer was nil.")
+                XCTFail("The packbuilder pointer was nil.")
+                return
             }
             
             

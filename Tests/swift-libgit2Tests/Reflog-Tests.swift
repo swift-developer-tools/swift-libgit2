@@ -24,7 +24,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogAppendAndEntryCount() throws
     {
-        try withReflogPointer
+        try withReflog
         {
             repository, reflogPointer in
             
@@ -156,7 +156,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogDrop() throws
     {
-        try withReflogPointer
+        try withReflog
         {
             repository, reflogPointer in
             
@@ -221,7 +221,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogEntryByIndexAndGetters() throws
     {
-        try withReflogPointer
+        try withReflog
         {
             _, reflogPointer in
             
@@ -266,7 +266,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogReadAndWrite() throws
     {
-        try withReflogPointer
+        try withReflog
         {
             _, reflogPointer in
             
@@ -281,7 +281,7 @@ final class ReflogTests: XCTestCaseStopOnFail
     
     func testGitReflogRename() throws
     {
-        try withReflogPointer
+        try withReflog
         {
             repository, reflogPointer in
             
@@ -341,7 +341,7 @@ private extension ReflogTests
     /// to a reflog.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withReflogPointer(
+    func withReflog(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {
@@ -369,7 +369,8 @@ private extension ReflogTests
             guard let reflogPointer: OpaquePointer = reflogPointer
             else
             {
-                throw NSError.makeError("The reflog pointer was nil.")
+                XCTFail("The reflog pointer was nil.")
+                return
             }
             
             

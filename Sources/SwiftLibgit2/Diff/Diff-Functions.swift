@@ -793,7 +793,7 @@ public func gitDiffBlobToBuffer(
         {
             cOptions in
             
-            return try buffer.withOptionalCBuffer
+            return try buffer.withOptionalCString
             {
                 cBuffer, cBufferLength in
                 
@@ -864,11 +864,11 @@ public func gitDiffBuffers(
 {
     return withCConversion
     {
-        return try oldBuffer.withOptionalCBuffer
+        return try oldBuffer.withOptionalCString
         {
             cOldBuffer, cOldBufferCount in
             
-            return try newBuffer.withOptionalCBuffer
+            return try newBuffer.withOptionalCString
             {
                 cNewBuffer, cNewBufferCount in
                 
@@ -928,7 +928,7 @@ public func gitDiffFromBuffer(
 {
     return withCConversion
     {
-        return try content.withCBuffer
+        return try content.withCString
         {
             cContent, cContentCount in
             
@@ -1020,9 +1020,9 @@ public func gitDiffStatsDeletions(
 
 
 
-/// Stores the given diff statistics in the given `Data` instance.
+/// Gets the string representation of the given diff statistics.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the given diff statistics.
+///   - out: The `String` instance in which to store the given diff statistics.
 ///   - stats: The diff statistics to write. The underlying type must be
 ///   `git_diff_stats`.
 ///   - format: The diff stats format to use.
@@ -1038,7 +1038,7 @@ public func gitDiffStatsDeletions(
 ///
 /// [`git_diff_stats_to_buf()`](https://libgit2.org/docs/reference/main/diff/git_diff_stats_to_buf.html)
 public func gitDiffStatsToBuf(
-    out     : inout Data,
+    out     : inout String?,
     stats   : OpaquePointer,
     format  : GitDiffStatsFormatT,
     width   : Int
@@ -1046,7 +1046,7 @@ public func gitDiffStatsToBuf(
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

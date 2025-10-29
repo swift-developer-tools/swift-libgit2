@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
@@ -420,7 +419,7 @@ public func gitSubmoduleURL(
 
 /// Resolves the URL of the given submodule, relative to the given repository.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the resolved URL.
+///   - out: The `String` instance in which to store the resolved URL.
 ///   - repo: The repository against which to resolve the relative URL. The
 ///   underlying type must be `git_repository`.
 ///   - url: The relative URL to resolve.
@@ -430,14 +429,14 @@ public func gitSubmoduleURL(
 ///
 /// [`git_submodule_resolve_url()`](https://libgit2.org/docs/reference/main/submodule/git_submodule_resolve_url.html)
 public func gitSubmoduleResolveURL(
-    out     : inout Data,
+    out     : inout String?,
     repo    : OpaquePointer,
     url     : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

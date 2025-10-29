@@ -71,13 +71,13 @@ public struct GitTime: CStructReadable, CConvertible, Sendable
 public struct GitWritestream: CStruct
 {
     /// Writes to the stream.
-    public let write    : Write?
+    public let write    : GitWritestream.Write?
     
     /// Closes the stream.
-    public let close    : Close?
+    public let close    : GitWritestream.Close?
     
     /// Frees the memory allocated for the given `git_writestream` instance.
-    public let free     : Free?
+    public let free     : GitWritestream.Free?
     
     
     

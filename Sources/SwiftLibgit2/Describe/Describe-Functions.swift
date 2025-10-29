@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
@@ -137,9 +136,9 @@ public func gitDescribeWorkdir(
 
 
 
-/// Updates the given `Data` instance with the given description.
+/// Gets the string representation of the given description.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the description.
+///   - out: The `String` instance in which to store the description.
 ///   - result: The description to use. The underlying type must be
 ///   `git_describe_result`.
 ///   - opts: The describe format options to use.
@@ -149,14 +148,14 @@ public func gitDescribeWorkdir(
 ///
 /// [`git_describe_format()`](https://libgit2.org/docs/reference/main/describe/git_describe_format.html)
 public func gitDescribeFormat(
-    out     : inout Data,
+    out     : inout String?,
     result  : OpaquePointer,
     opts    : GitDescribeFormatOptions?
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

@@ -320,7 +320,7 @@ public func gitBlameBuffer(
 {
     return withCConversion
     {
-        return try buffer.withCBuffer
+        return try buffer.withCString
         {
             cBuffer, cBufferCount in
             

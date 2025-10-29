@@ -155,7 +155,7 @@ public func gitObjectID(
 
 /// Gets the abbreviated ID for the given object.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the abbreviated ID.
+///   - out: The `String` instance in which to store the abbreviated ID.
 ///   - obj: The object for which to get the abbreviated ID. The underlying
 ///   type must be `git_object`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -171,13 +171,13 @@ public func gitObjectID(
 ///
 /// [`git_object_short_id()`](https://libgit2.org/docs/reference/main/object/git_object_short_id.html)
 public func gitObjectShortID(
-    out : inout Data,
+    out : inout String?,
     obj : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -380,7 +380,7 @@ public func gitObjectRawContentIsValid(
         {
             cValid in
             
-            return try buf.withCBuffer
+            return try buf.withCString
             {
                 cBuf, cBufCount in
                 

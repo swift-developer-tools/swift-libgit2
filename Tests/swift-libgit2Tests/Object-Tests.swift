@@ -538,15 +538,16 @@ private extension ObjectTests
             
             
             
-            var shortOID = Data()
+            var shortOIDString: String? = nil
             
             let objectShortIDResult: GitErrorCode = gitObjectShortID(
-                out:    &shortOID,
+                out:    &shortOIDString,
                 obj:    objectPointer
             )
             
             XCTAssertOK(objectShortIDResult)
-            XCTAssertEqual(shortOID, headOIDStringPrefix)
+            XCTAssertNotNil(shortOIDString)
+            XCTAssertEqual(shortOIDString, headOIDStringPrefix)
         }
     }
 }

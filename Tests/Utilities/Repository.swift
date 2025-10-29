@@ -1054,6 +1054,8 @@ internal extension Repository
                 throw NSError.makeError("The index pointer was nil.")
             }
             
+            
+            
             return try body(
                 repository,
                 indexPointer

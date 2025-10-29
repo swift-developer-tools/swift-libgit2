@@ -263,7 +263,7 @@ private extension CherrypickTests
         
         
         
-        try Branch.withNewLocalBranchPointer(
+        try Branch.withNewLocalBranch(
             named:      "feature",
             in:         repository,
             force:      false,

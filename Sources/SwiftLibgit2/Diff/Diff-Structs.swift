@@ -538,7 +538,7 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
             return try body(&diffBinaryFile)
         }
         
-        return try data.withCBuffer
+        return try data.withCString
         {
             cData, cDataCount in
             
@@ -868,7 +868,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
             return try body(&diffLine)
         }
         
-        return try content.withCBuffer
+        return try content.withCString
         {
             cContent, cContentCount in
             
@@ -894,35 +894,35 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var fileSignature    : FileSignature?            = nil
+    public var fileSignature    : GitDiffSimilarityMetric.FileSignature?    = nil
     
     /// Generates a signature for the given buffer.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var bufferSignature  : BufferSignature?          = nil
+    public var bufferSignature  : GitDiffSimilarityMetric.BufferSignature?  = nil
     
     /// Frees the memory allocated for the given signature.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var freeSignature    : FreeSignature?            = nil
+    public var freeSignature    : GitDiffSimilarityMetric.FreeSignature?    = nil
     
     /// Calculates the similarity of the given signatures.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var similarity       : Similarity?               = nil
+    public var similarity       : GitDiffSimilarityMetric.Similarity?       = nil
     
     /// The payload provided by the caller.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
-    public var payload          : UnsafeMutableRawPointer?  = nil
+    public var payload          : UnsafeMutableRawPointer?                  = nil
     
     
     

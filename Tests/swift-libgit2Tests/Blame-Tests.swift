@@ -17,35 +17,15 @@ final class BlameTests: XCTestCaseStopOnFail
 {
     func testGitBlameBuffer() throws
     {
-        try Repository.withRepository
+        try withBlame
         {
-            repository in
+            blamePointer in
             
-            var baseBlamePointer    : OpaquePointer?    = nil
-            var bufferBlamePointer  : OpaquePointer?    = nil
+            var bufferBlamePointer: OpaquePointer? = nil
             
             defer
             {
-                gitBlameFree(blame: baseBlamePointer)
                 gitBlameFree(blame: bufferBlamePointer)
-            }
-            
-            
-            
-            let blameFileResult: GitErrorCode = gitBlameFile(
-                out:        &baseBlamePointer,
-                repo:       repository.pointer,
-                path:       Repository.blameFileName,
-                options:    nil
-            )
-            
-            XCTAssertOK(blameFileResult)
-            
-            guard let baseBlamePointer: OpaquePointer = baseBlamePointer
-            else
-            {
-                XCTFail("The base blame pointer was nil.")
-                return
             }
             
             
@@ -54,7 +34,7 @@ final class BlameTests: XCTestCaseStopOnFail
             
             let blameBufferResult: GitErrorCode = gitBlameBuffer(
                 out:        &bufferBlamePointer,
-                base:       baseBlamePointer,
+                base:       blamePointer,
                 buffer:     bufferContent,
                 bufferLen:  bufferContent.count
             )
@@ -68,180 +48,257 @@ final class BlameTests: XCTestCaseStopOnFail
     
     func testGitBlameFile() throws
     {
-        try Repository.withRepository
+        try withBlame
         {
-            repository in
+            _ in
+        }
+    }
+    
+    
+    
+    func testGitBlameGetHunkByIndex() throws
+    {
+        try withBlame
+        {
+            blamePointer in
             
-            var blamePointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitBlameFree(blame: blamePointer)
-            }
-            
-            
-            
-            let blameOptions = GitBlameOptions()
-            
-            var blameFileResult: GitErrorCode = gitBlameFile(
-                out:        &blamePointer,
-                repo:       repository.pointer,
-                path:       Repository.blameFileName,
-                options:    blameOptions
-            )
-            
-            XCTAssertOK(blameFileResult)
-            
-            
-            
-            blameFileResult = gitBlameFile(
-                out:        &blamePointer,
-                repo:       repository.pointer,
-                path:       Repository.blameFileName,
-                options:    nil
-            )
-            
-            XCTAssertOK(blameFileResult)
-            
-            guard let blamePointer: OpaquePointer = blamePointer
-            else
-            {
-                XCTFail("The blame pointer was nil.")
-                return
-            }
-            
-            
-            
-            let lineCount   : Int   = gitBlameLineCount(blame: blamePointer)
-            let hunkCount   : Int   = gitBlameHunkCount(blame: blamePointer)
-            
-            XCTAssertGreaterThan(lineCount, 0)
-            XCTAssertGreaterThan(hunkCount, 0)
-            
-            
-            
-            let firstHunk: GitBlameHunk? = gitBlameHunkByIndex(
+            let blameHunk: GitBlameHunk? = gitBlameGetHunkByIndex(
                 blame:  blamePointer,
                 index:  0
             )
             
-            guard let firstHunk: GitBlameHunk = firstHunk
+            guard let blameHunk: GitBlameHunk = blameHunk
             else
             {
-                XCTFail("The first hunk was nil.")
+                XCTFail("The blame hunk was nil.")
                 return
             }
             
-            XCTAssertGreaterThan(firstHunk.linesInHunk, 0)
-            XCTAssertNotZeroOID(firstHunk.finalCommitID)
-            XCTAssertGreaterThan(firstHunk.finalStartLineNumber, 0)
-            XCTAssertNotNil(firstHunk.finalSignature)
-            XCTAssertNotNil(firstHunk.finalCommitter)
-            XCTAssertNotZeroOID(firstHunk.origCommitID)
-            XCTAssertNotNil(firstHunk.origPath)
-            XCTAssertGreaterThan(firstHunk.origStartLineNumber, 0)
-            XCTAssertNotNil(firstHunk.origSignature)
-            XCTAssertNotNil(firstHunk.origCommitter)
-            XCTAssertNotNil(firstHunk.summary)
-            XCTAssertFalse(firstHunk.boundary)
+            XCTAssertGreaterThan(blameHunk.linesInHunk, 0)
+            XCTAssertNotZeroOID(blameHunk.finalCommitID)
+            XCTAssertGreaterThan(blameHunk.finalStartLineNumber, 0)
+            XCTAssertNotNil(blameHunk.finalSignature)
+            XCTAssertNotNil(blameHunk.finalCommitter)
+            XCTAssertNotZeroOID(blameHunk.origCommitID)
+            XCTAssertNotNil(blameHunk.origPath)
+            XCTAssertGreaterThan(blameHunk.origStartLineNumber, 0)
+            XCTAssertNotNil(blameHunk.origSignature)
+            XCTAssertNotNil(blameHunk.origCommitter)
+            XCTAssertNotNil(blameHunk.summary)
+            XCTAssertFalse(blameHunk.boundary)
             
             
             
-            let hunkForFirstLine: GitBlameHunk? = gitBlameHunkByLine(
+            let hunkCount: Int = gitBlameHunkCount(blame: blamePointer)
+            
+            XCTAssertGreaterThan(hunkCount, 0)
+            
+            
+            
+            let invalidHunkIndex: Int = hunkCount + 1
+            
+            guard
+                invalidHunkIndex >= UInt32.min,
+                invalidHunkIndex <= UInt32.max
+            else
+            {
+                XCTFail("The invalid hunk index was out of UInt32 range.")
+                return
+            }
+            
+            
+            
+            let invalidBlameHunk: GitBlameHunk? = gitBlameGetHunkByIndex(
+                blame:  blamePointer,
+                index:  UInt32(invalidHunkIndex)
+            )
+            
+            XCTAssertNil(invalidBlameHunk)
+        }
+    }
+    
+    
+    
+    func testGitBlameGetHunkByLine() throws
+    {
+        try withBlame
+        {
+            blamePointer in
+            
+            let blameHunk: GitBlameHunk? = gitBlameGetHunkByLine(
                 blame:      blamePointer,
                 lineNo:     1
             )
             
-            XCTAssertNotNil(hunkForFirstLine)
+            XCTAssertNotNil(blameHunk)
+        }
+    }
+    
+    
+    
+    func testGitBlameGetHunkCount() throws
+    {
+        try withBlame
+        {
+            blamePointer in
+            
+            let hunkCount: Int = gitBlameHunkCount(blame: blamePointer)
+            
+            XCTAssertGreaterThan(hunkCount, 0)
             
             
-            
-            let firstLine: GitBlameLine? = gitBlameLineByIndex(
-                blame:  blamePointer,
-                idx:    1
-            )
-            
-            guard let firstLine: GitBlameLine = firstLine
-            else
-            {
-                XCTFail("The first line was nil.")
-                return
-            }
-            
-            XCTAssertGreaterThan(firstLine.len, 0)
-            
-            
-            
-            let invalidHunk: GitBlameHunk? = gitBlameHunkByIndex(
-                blame:  blamePointer,
-                index:  hunkCount + 10
-            )
-            
-            XCTAssertNil(invalidHunk)
-            
-            
-            
-            let invalidLine: GitBlameLine? = gitBlameLineByIndex(
-                blame:  blamePointer,
-                idx:    hunkCount + 10
-            )
-            
-            XCTAssertNil(invalidLine)
-            
-            
-            
-            /// Test the deprecated functions.
             
             let hunkCountDeprecated: UInt32
                 = gitBlameGetHunkCount(blame: blamePointer)
             
             XCTAssertEqual(hunkCountDeprecated, UInt32(hunkCount))
+        }
+    }
+    
+    
+    
+    func testGitBlameHunkByIndex() throws
+    {
+        try withBlame
+        {
+            blamePointer in
             
-            
-            
-            let firstHunkDeprecated: GitBlameHunk? = gitBlameGetHunkByIndex(
+            let blameHunk: GitBlameHunk? = gitBlameHunkByIndex(
                 blame:  blamePointer,
                 index:  0
             )
             
-            guard let firstHunkDeprecated: GitBlameHunk = firstHunkDeprecated
+            guard let blameHunk: GitBlameHunk = blameHunk
             else
             {
-                XCTFail("The deprecated first hunk was nil.")
+                XCTFail("The blame hunk was nil.")
                 return
             }
             
-            XCTAssertGreaterThan(firstHunkDeprecated.linesInHunk, 0)
-            XCTAssertNotZeroOID(firstHunkDeprecated.finalCommitID)
-            XCTAssertGreaterThan(firstHunkDeprecated.finalStartLineNumber, 0)
-            XCTAssertNotNil(firstHunkDeprecated.finalSignature)
-            XCTAssertNotNil(firstHunkDeprecated.finalCommitter)
-            XCTAssertNotZeroOID(firstHunkDeprecated.origCommitID)
-            XCTAssertNotNil(firstHunkDeprecated.origPath)
-            XCTAssertGreaterThan(firstHunkDeprecated.origStartLineNumber, 0)
-            XCTAssertNotNil(firstHunkDeprecated.origSignature)
-            XCTAssertNotNil(firstHunkDeprecated.origCommitter)
-            XCTAssertNotNil(firstHunkDeprecated.summary)
-            XCTAssertFalse(firstHunkDeprecated.boundary)
+            XCTAssertGreaterThan(blameHunk.linesInHunk, 0)
+            XCTAssertNotZeroOID(blameHunk.finalCommitID)
+            XCTAssertGreaterThan(blameHunk.finalStartLineNumber, 0)
+            XCTAssertNotNil(blameHunk.finalSignature)
+            XCTAssertNotNil(blameHunk.finalCommitter)
+            XCTAssertNotZeroOID(blameHunk.origCommitID)
+            XCTAssertNotNil(blameHunk.origPath)
+            XCTAssertGreaterThan(blameHunk.origStartLineNumber, 0)
+            XCTAssertNotNil(blameHunk.origSignature)
+            XCTAssertNotNil(blameHunk.origCommitter)
+            XCTAssertNotNil(blameHunk.summary)
+            XCTAssertFalse(blameHunk.boundary)
             
             
             
-            let hunkForFirstLineDeprecated: GitBlameHunk?
-                = gitBlameGetHunkByLine(
-                    blame:      blamePointer,
-                    lineNo:     1
-                )
+            let hunkCount: Int = gitBlameHunkCount(blame: blamePointer)
             
-            XCTAssertNotNil(hunkForFirstLineDeprecated)
+            XCTAssertGreaterThan(hunkCount, 0)
             
             
             
-            let invalidHunkDeprecated: GitBlameHunk? = gitBlameGetHunkByIndex(
+            let invalidBlameHunk: GitBlameHunk? = gitBlameHunkByIndex(
                 blame:  blamePointer,
-                index:  hunkCountDeprecated + 10
+                index:  hunkCount + 10
             )
             
-            XCTAssertNil(invalidHunkDeprecated)
+            XCTAssertNil(invalidBlameHunk)
+        }
+    }
+    
+    
+    
+    func testGitBlameHunkByLine() throws
+    {
+        try withBlame
+        {
+            blamePointer in
+            
+            let blameHunk: GitBlameHunk? = gitBlameHunkByLine(
+                blame:      blamePointer,
+                lineNo:     1
+            )
+            
+            guard let blameHunk: GitBlameHunk = blameHunk
+            else
+            {
+                XCTFail("The blame hunk was nil.")
+                return
+            }
+            
+            XCTAssertGreaterThan(blameHunk.linesInHunk, 0)
+            XCTAssertNotZeroOID(blameHunk.finalCommitID)
+            XCTAssertGreaterThan(blameHunk.finalStartLineNumber, 0)
+            XCTAssertNotNil(blameHunk.finalSignature)
+            XCTAssertNotNil(blameHunk.finalCommitter)
+            XCTAssertNotZeroOID(blameHunk.origCommitID)
+            XCTAssertNotNil(blameHunk.origPath)
+            XCTAssertGreaterThan(blameHunk.origStartLineNumber, 0)
+            XCTAssertNotNil(blameHunk.origSignature)
+            XCTAssertNotNil(blameHunk.origCommitter)
+            XCTAssertNotNil(blameHunk.summary)
+            XCTAssertFalse(blameHunk.boundary)
+        }
+    }
+    
+    
+    
+    func testGitBlameHunkCount() throws
+    {
+        try withBlame
+        {
+            blamePointer in
+            
+            let hunkCount: Int = gitBlameHunkCount(blame: blamePointer)
+            
+            XCTAssertGreaterThan(hunkCount, 0)
+        }
+    }
+    
+    
+    
+    func testGitBlameLineByIndex() throws
+    {
+        try withBlame
+        {
+            blamePointer in
+            
+            let blameLine: GitBlameLine? = gitBlameLineByIndex(
+                blame:  blamePointer,
+                idx:    1
+            )
+            
+            XCTAssertNotNil(blameLine)
+            XCTAssertNotNil(blameLine?.ptr)
+            XCTAssertGreaterThan(blameLine?.len ?? 0, 0)
+            
+            
+            
+            let hunkCount: Int = gitBlameHunkCount(blame: blamePointer)
+            
+            XCTAssertGreaterThan(hunkCount, 0)
+            
+            
+            
+            let invalidBlameLine: GitBlameLine? = gitBlameLineByIndex(
+                blame:  blamePointer,
+                idx:    hunkCount + 10
+            )
+            
+            XCTAssertNil(invalidBlameLine)
+        }
+    }
+    
+    
+    
+    func testGitBlameLineCount() throws
+    {
+        try withBlame
+        {
+            blamePointer in
+            
+            let lineCount: Int = gitBlameLineCount(blame: blamePointer)
+            
+            XCTAssertGreaterThan(lineCount, 0)
         }
     }
     
@@ -401,5 +458,54 @@ final class BlameTests: XCTestCaseStopOnFail
     func testGitBlameOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitBlameOptionsVersion), GIT_BLAME_OPTIONS_VERSION)
+    }
+}
+
+
+
+// MARK: - Extensions
+
+private extension BlameTests
+{
+    /// Calls the given closure with a pointer to a blame.
+    /// - Parameter body: The closure to call.
+    /// - Throws: An error if an operation fails.
+    func withBlame(
+        _ body: (OpaquePointer) throws -> Void
+    ) throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var blamePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitBlameFree(blame: blamePointer)
+            }
+            
+            
+            
+            let blameFileResult: GitErrorCode = gitBlameFile(
+                out:        &blamePointer,
+                repo:       repository.pointer,
+                path:       Repository.blameFileName,
+                options:    nil
+            )
+            
+            XCTAssertOK(blameFileResult)
+            
+            guard let blamePointer: OpaquePointer = blamePointer
+            else
+            {
+                XCTFail("The blame pointer was nil.")
+                return
+            }
+            
+            
+            
+            return try body(blamePointer)
+        }
     }
 }

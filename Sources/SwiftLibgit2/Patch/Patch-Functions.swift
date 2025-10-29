@@ -163,7 +163,7 @@ public func gitPatchFromBlobAndBuffer(
 {
     return withCConversion
     {
-        return try buffer.withOptionalCBuffer
+        return try buffer.withOptionalCString
         {
             cBuffer, cBufferCount in
             
@@ -223,11 +223,11 @@ public func gitPatchFromBuffers(
 {
     return withCConversion
     {
-        return try oldBuffer.withOptionalCBuffer
+        return try oldBuffer.withOptionalCString
         {
             cOldBuffer, cOldBufferCount in
             
-            return try newBuffer.withOptionalCBuffer
+            return try newBuffer.withOptionalCString
             {
                 cNewBuffer, cNewBufferCount in
                 

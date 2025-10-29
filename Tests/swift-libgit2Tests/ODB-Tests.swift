@@ -212,7 +212,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBAddDiskAlternate() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             _, odbPointer in
             
@@ -240,9 +240,9 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBBackend() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let backendCount: Int = gitODBNumBackends(odb: odbPointer)
             
@@ -267,7 +267,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBObjectDup() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -365,7 +365,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBExists() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -415,7 +415,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBExistsPrefixAndExpandIDs() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -481,9 +481,9 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBForEach() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             var callbackData = CallbackData()
             
@@ -555,7 +555,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBHashAndHashFile() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -649,7 +649,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBOpenAndRefresh() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             _, odbPointer in
             
@@ -688,7 +688,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBReadAndObjectGetters() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -753,7 +753,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBReadPrefixAndHeader() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -800,9 +800,9 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBSetCommitGraph() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let odbSetCommitGraphResult: GitErrorCode = gitODBSetCommitGraph(
                 odb:        odbPointer,
@@ -824,7 +824,7 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBStreamRead() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
             repository, odbPointer in
             
@@ -859,9 +859,9 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBStreamWrite() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let blobData = Data("Blob content".utf8)
             
@@ -929,9 +929,9 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitODBWrite() throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let blobData = Data("Blob content".utf8)
             
@@ -1022,9 +1022,9 @@ private extension ODBTests
         withCallback: Bool
     ) throws
     {
-        try withOpenedODBPointer
+        try withOpenedODB
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             var callbackData = CallbackData()
             
@@ -1104,7 +1104,7 @@ private extension ODBTests
     /// to an opened object database.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withOpenedODBPointer(
+    func withOpenedODB(
         _ body: (Repository, OpaquePointer) throws -> Void
     ) throws
     {
@@ -1136,7 +1136,8 @@ private extension ODBTests
             guard let odbPointer: OpaquePointer = odbPointer
             else
             {
-                throw NSError.makeError("The ODB pointer was nil.")
+                XCTFail("The ODB pointer was nil.")
+                return
             }
             
             try body(

@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
@@ -584,7 +583,8 @@ public func gitNoteFree(
 
 /// Gets the default notes reference for the given repository.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the default notes reference.
+///   - out: The `String` instance in which to store the default notes
+///   reference.
 ///   - repo: The repository to check. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -593,13 +593,13 @@ public func gitNoteFree(
 ///
 /// [`git_note_default_ref()`](https://libgit2.org/docs/reference/main/notes/git_note_default_ref.html)
 public func gitNoteDefaultRef(
-    out     : inout Data,
+    out     : inout String?,
     repo    : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

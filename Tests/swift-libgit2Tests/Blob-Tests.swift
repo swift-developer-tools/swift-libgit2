@@ -115,7 +115,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let writeResult: Int32 = try data.withCBuffer
+            let writeResult: Int32 = try data.withCString
             {
                 cData, cDataCount in
                 

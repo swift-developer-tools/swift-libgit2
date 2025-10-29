@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
@@ -243,7 +242,7 @@ public func gitRefspecDstMatches(
 /// Transforms the specified reference to its target, following the rules of
 /// the given refspec.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the target name.
+///   - out: The `String` instance in which to store the target name.
 ///   - spec: The refspec to use. The underlying type must be `git_refspec`.
 ///   - name: The name of the reference to transform.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -252,14 +251,14 @@ public func gitRefspecDstMatches(
 ///
 /// [`git_refspec_transform()`](https://libgit2.org/docs/reference/main/refspec/git_refspec_transform.html)
 public func gitRefspecTransform(
-    out     : inout Data,
+    out     : inout String?,
     spec    : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -277,7 +276,7 @@ public func gitRefspecTransform(
 /// Transforms the specified reference to its source reference, following the
 /// rules of the given refspec.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the target name.
+///   - out: The `String` instance in which to store the target name.
 ///   - spec: The refspec to transform. The underlying type must be
 ///   `git_refspec`.
 ///   - name: The name of the reference to transform.
@@ -287,14 +286,14 @@ public func gitRefspecTransform(
 ///
 /// [`git_refspec_rtransform()`](https://libgit2.org/docs/reference/main/refspec/git_refspec_rtransform.html)
 public func gitRefspecRTransform(
-    out     : inout Data,
+    out     : inout String?,
     spec    : OpaquePointer,
     name    : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

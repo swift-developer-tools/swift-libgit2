@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
@@ -1490,7 +1489,7 @@ public func gitRemoteDelete(
 
 /// Gets the default branch name of the given remote.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the default branch name.
+///   - out: The `String` instance in which to store the default branch name.
 ///   - remote: The remote to check. The underlying type must be `git_remote`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1508,13 +1507,13 @@ public func gitRemoteDelete(
 ///
 /// [`git_remote_default_branch()`](https://libgit2.org/docs/reference/main/remote/git_remote_default_branch.html)
 public func gitRemoteDefaultBranch(
-    out     : inout Data,
+    out     : inout String?,
     remote  : OpaquePointer
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             

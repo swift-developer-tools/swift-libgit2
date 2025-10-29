@@ -163,7 +163,7 @@ final class ApplyTests: XCTestCaseStopOnFail
             
             let applyOptions = GitApplyOptions()
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiff(in: repository)
             {
                 diffPointer in
                 

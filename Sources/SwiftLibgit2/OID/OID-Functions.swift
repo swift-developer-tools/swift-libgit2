@@ -134,7 +134,7 @@ public func gitOIDFromRaw(
         {
             cOut in
             
-            return try raw.withCBuffer
+            return try raw.withCString
             {
                 cRaw, _ in
                 

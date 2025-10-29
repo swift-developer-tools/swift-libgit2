@@ -308,7 +308,7 @@ final class TreeTests: XCTestCaseStopOnFail
             
             
             /// Empty paths are invalid. `nil` paths are ignored by
-            /// ``Array<GitTreeUpdate>/withArrayOfGitTreeUpdates(_:)``.
+            /// ``withArrayOfGitTreeUpdates(_:)``.
             treeUpdates.removeFirst()
             
             treeCreateUpdatedResult = gitTreeCreateUpdated(

@@ -105,7 +105,7 @@ public func gitIndexerAppend(
 {
     return withCConversion
     {
-        return try data.withCBuffer
+        return try data.withCString
         {
             cData, cDataCount in
             
