@@ -571,15 +571,16 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             
             
-            var defaultBranchData = Data()
+            var defaultBranchName: String? = nil
             
             let remoteDefaultBranchResult: GitErrorCode
                 = gitRemoteDefaultBranch(
-                    out:        &defaultBranchData,
+                    out:        &defaultBranchName,
                     remote:     remotePointer
                 )
             
             XCTAssertNeverConnected(remoteDefaultBranchResult)
+            XCTAssertNil(defaultBranchName)
         }
     }
     
