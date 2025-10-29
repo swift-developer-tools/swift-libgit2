@@ -240,7 +240,7 @@ public func gitPackbuilderInsertRecur(
 
 
 
-/// Writes the contents of the specified packfile to the given `Data` instance.
+/// Gets the contents of the specified packfile.
 /// - Parameters:
 ///   - buf: The `Data` instance in which to store the contents of the
 ///   specified packfile.
@@ -250,7 +250,7 @@ public func gitPackbuilderInsertRecur(
 ///
 /// ## Discussion
 ///
-/// The contents of `buf` will become a valid packfile,even though there will
+/// The contents of `buf` will become a valid packfile, even though there will
 /// be no attached index.
 ///
 /// ## C Equivalent
