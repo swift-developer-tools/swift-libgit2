@@ -299,64 +299,22 @@ final class BranchTests: XCTestCaseStopOnFail
     
     
     
-    func testGitBranchRemoteOperations() throws
+    func testGitBranchRemoteName() throws
     {
         try Repository.withRepository
         {
             repository in
-            
-            let referenceName: String = "refs/heads/main"
-            
-            
             
             var retrievedName: String? = nil
             
             let branchRemoteNameResult: GitErrorCode = gitBranchRemoteName(
                 out:        &retrievedName,
                 repo:       repository.pointer,
-                refName:    referenceName
+                refName:    "HEAD"
             )
             
             /// The reference is a local branch.
             XCTAssertNotOK(branchRemoteNameResult)
-            XCTAssertNil(retrievedName)
-            
-            
-            
-            let branchUpstreamRemoteResult: GitErrorCode
-                = gitBranchUpstreamRemote(
-                    buf:        &retrievedName,
-                    repo:       repository.pointer,
-                    refName:    referenceName
-                )
-            
-            /// There is no configured upstream.
-            XCTAssertNotOK(branchUpstreamRemoteResult)
-            XCTAssertNil(retrievedName)
-            
-            
-            
-            let branchUpstreamMergeResult: GitErrorCode
-                = gitBranchUpstreamMerge(
-                    buf:        &retrievedName,
-                    repo:       repository.pointer,
-                    refName:    referenceName
-                )
-            
-            /// There is no configured upstream.
-            XCTAssertNotOK(branchUpstreamMergeResult)
-            XCTAssertNil(retrievedName)
-            
-            
-            
-            let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
-                out:        &retrievedName,
-                repo:       repository.pointer,
-                refName:    referenceName
-            )
-            
-            /// There is no configured upstream.
-            XCTAssertNotOK(branchUpstreamNameResult)
             XCTAssertNil(retrievedName)
         }
     }
@@ -386,5 +344,73 @@ final class BranchTests: XCTestCaseStopOnFail
         
         XCTAssertNotNil(allBranches)
         XCTAssertEqual(allBranches?.rawValue, GIT_BRANCH_ALL.rawValue)
+    }
+    
+    
+    
+    func testGitBranchUpstreamMerge() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var retrievedName: String? = nil
+            
+            let branchUpstreamMergeResult: GitErrorCode
+                = gitBranchUpstreamMerge(
+                    buf:        &retrievedName,
+                    repo:       repository.pointer,
+                    refName:    "HEAD"
+                )
+            
+            /// There is no configured upstream.
+            XCTAssertNotOK(branchUpstreamMergeResult)
+            XCTAssertNil(retrievedName)
+        }
+    }
+    
+    
+    
+    func testGitBranchUpstreamName() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var retrievedName: String? = nil
+            
+            let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
+                out:        &retrievedName,
+                repo:       repository.pointer,
+                refName:    "HEAD"
+            )
+            
+            /// There is no configured upstream.
+            XCTAssertNotOK(branchUpstreamNameResult)
+            XCTAssertNil(retrievedName)
+        }
+    }
+    
+    
+    
+    func testGitBranchUpstreamRemote() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var retrievedName: String? = nil
+            
+            let branchUpstreamRemoteResult: GitErrorCode
+                = gitBranchUpstreamRemote(
+                    buf:        &retrievedName,
+                    repo:       repository.pointer,
+                    refName:    "HEAD"
+                )
+            
+            /// There is no configured upstream.
+            XCTAssertNotOK(branchUpstreamRemoteResult)
+            XCTAssertNil(retrievedName)
+        }
     }
 }
