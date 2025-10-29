@@ -441,7 +441,7 @@ final class NotesTests: XCTestCaseStopOnFail
         {
             repository in
             
-            var notesReference = Data()
+            var notesReference: String? = nil
             
             let noteDefaultResult: GitErrorCode = gitNoteDefaultRef(
                 out:    &notesReference,
@@ -449,16 +449,8 @@ final class NotesTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(noteDefaultResult)
-            
-            
-            
-            let notesReferenceValue: String? = String(
-                data:       notesReference,
-                encoding:   .utf8
-            )
-            
-            XCTAssertNotNil(notesReferenceValue)
-            XCTAssertTrue(notesReferenceValue?.hasPrefix("refs/notes") ?? false)
+            XCTAssertNotNil(notesReference)
+            XCTAssertTrue(notesReference?.hasPrefix("refs/notes") ?? false)
         }
     }
     
@@ -473,14 +465,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var firstNoteOID = GitOID()
             
             let firstNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &firstNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : repository.headOID,
-                note        : "First note",
-                force       : false
+                out:        &firstNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        repository.headOID,
+                note:       "First note",
+                force:      false
             )
             
             XCTAssertOK(firstNoteCreateResult)
@@ -497,14 +489,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var secondNoteOID = GitOID()
             
             let secondNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &secondNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : secondCommitOID,
-                note        : "Second note",
-                force       : false
+                out:        &secondNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        secondCommitOID,
+                note:       "Second note",
+                force:      false
             )
             
             XCTAssertOK(secondNoteCreateResult)
@@ -602,14 +594,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var firstNoteOID = GitOID()
             
             let firstNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &firstNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : repository.headOID,
-                note        : "First note",
-                force       : false
+                out:        &firstNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        repository.headOID,
+                note:       "First note",
+                force:      false
             )
             
             XCTAssertOK(firstNoteCreateResult)
@@ -626,14 +618,14 @@ final class NotesTests: XCTestCaseStopOnFail
             var secondNoteOID = GitOID()
             
             let secondNoteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &secondNoteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : secondCommitOID,
-                note        : "Second note",
-                force       : false
+                out:        &secondNoteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        secondCommitOID,
+                note:       "Second note",
+                force:      false
             )
             
             XCTAssertOK(secondNoteCreateResult)
@@ -775,14 +767,14 @@ private extension NotesTests
             var noteOID : GitOID    = GitOID()
             
             let noteCreateResult: GitErrorCode = gitNoteCreate(
-                out         : &noteOID,
-                repo        : repository.pointer,
-                notesRef    : nil,
-                author      : repository.signature,
-                committer   : repository.signature,
-                oid         : headOID,
-                note        : Self.defaultNoteMessage,
-                force       : false
+                out:        &noteOID,
+                repo:       repository.pointer,
+                notesRef:   nil,
+                author:     repository.signature,
+                committer:  repository.signature,
+                oid:        headOID,
+                note:       Self.defaultNoteMessage,
+                force:      false
             )
             
             XCTAssertOK(noteCreateResult)
