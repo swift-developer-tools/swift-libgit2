@@ -156,14 +156,38 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     
     
-    func testGitConfigFindPaths() throws
+    func testGitConfigFindGlobal() throws
     {
         var path: String? = nil
         
         _ = gitConfigFindGlobal(out: &path)
-        _ = gitConfigFindXDG(out: &path)
-        _ = gitConfigFindSystem(out: &path)
+    }
+    
+    
+    
+    func testGitConfigFindProgramData() throws
+    {
+        var path: String? = nil
+        
         _ = gitConfigFindProgramData(out: &path)
+    }
+    
+    
+    
+    func testGitConfigFindSystem() throws
+    {
+        var path: String? = nil
+        
+        _ = gitConfigFindSystem(out: &path)
+    }
+    
+    
+    
+    func testGitConfigFindXDG() throws
+    {
+        var path: String? = nil
+        
+        _ = gitConfigFindXDG(out: &path)
     }
     
     
@@ -1032,7 +1056,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     
     
-    func testGitConfigParsingOperations() throws
+    func testGitConfigParseBool() throws
     {
         var boolResult: Bool = false
         
@@ -1053,9 +1077,12 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         XCTAssertOK(configParseFalseResult)
         XCTAssertFalse(boolResult)
-        
-        
-        
+    }
+    
+    
+    
+    func testGitConfigParseInt32() throws
+    {
         var int32Result: Int32 = 0
         
         let configParseInt32Result: GitErrorCode = gitConfigParseInt32(
@@ -1075,9 +1102,12 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         XCTAssertOK(configParseInt32SuffixResult)
         XCTAssertEqual(int32Result, 1024)
-        
-        
-        
+    }
+    
+    
+    
+    func testGitConfigParseInt64() throws
+    {
         var int64Result: Int64 = 0
         
         let configParseInt64Result: GitErrorCode = gitConfigParseInt64(
@@ -1097,9 +1127,12 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         XCTAssertOK(configParseInt64SuffixResult)
         XCTAssertEqual(int64Result, 1024)
-        
-        
-        
+    }
+    
+    
+    
+    func testGitConfigParsePath() throws
+    {
         var path                : String?   = nil
         let pathExtension       : String    = "/test"
         let pathExpectedValue   : String    = "~" + pathExtension
@@ -1120,30 +1153,171 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     
     
-    func testGitConfigSetAndGetOperations() throws
+    func testGitConfigSetAndGetBool() throws
     {
         try withConfigOnDisk
         {
             _, configPointer in
             
-            let stringExpectedValue : String    = "hello world"
-            let stringName          : String    = "test.string"
+            let name    : String    = "test.bool"
+            let value   : Bool      = true
+            
+            let configSetBoolResult: GitErrorCode = gitConfigSetBool(
+                cfg:    configPointer,
+                name:   name,
+                value:  value
+            )
+            
+            XCTAssertOK(configSetBoolResult)
+            
+            
+            
+            var retrievedValue: Bool = false
+            
+            let configGetBoolResult: GitErrorCode = gitConfigGetBool(
+                out:    &retrievedValue,
+                cfg:    configPointer,
+                name:   name
+            )
+            
+            XCTAssertOK(configGetBoolResult)
+            XCTAssertEqual(retrievedValue, value)
+        }
+    }
+    
+    
+    
+    func testGitConfigSetAndGetInt32() throws
+    {
+        try withConfigOnDisk
+        {
+            _, configPointer in
+            
+            let name    : String    = "test.int32"
+            let value   : Int32     = 123
+
+            let configSetInt32Result: GitErrorCode = gitConfigSetInt32(
+                cfg:    configPointer,
+                name:   name,
+                value:  value
+            )
+            
+            XCTAssertOK(configSetInt32Result)
+            
+            
+            
+            var retrievedValue: Int32 = 0
+            
+            let configGetInt32Result: GitErrorCode = gitConfigGetInt32(
+                out:    &retrievedValue,
+                cfg:    configPointer,
+                name:   name
+            )
+            
+            XCTAssertOK(configGetInt32Result)
+            XCTAssertEqual(retrievedValue, value)
+        }
+    }
+    
+    
+    
+    func testGitConfigSetAndGetInt64() throws
+    {
+        try withConfigOnDisk
+        {
+            _, configPointer in
+            
+            let name    : String    = "test.int64"
+            let value   : Int64     = 1234567891234567890
+            
+            let configSetInt64Result: GitErrorCode = gitConfigSetInt64(
+                cfg:    configPointer,
+                name:   name,
+                value:  value
+            )
+            
+            XCTAssertOK(configSetInt64Result)
+            
+            
+            
+            var retirevedValue: Int64 = 0
+            
+            let configGetInt64Result: GitErrorCode = gitConfigGetInt64(
+                out:    &retirevedValue,
+                cfg:    configPointer,
+                name:   name
+            )
+            
+            XCTAssertOK(configGetInt64Result)
+            XCTAssertEqual(retirevedValue, value)
+        }
+    }
+    
+    
+    
+    func testGitConfigSetAndGetPath() throws
+    {
+        try withConfigOnDisk
+        {
+            _, configPointer in
+            
+            let pathExtension   : String    = "/Documents"
+            let name            : String    = "test.path"
+            let value           : String    = "~" + pathExtension
+            
+            let configSetPathResult: GitErrorCode = gitConfigSetString(
+                cfg:    configPointer,
+                name:   name,
+                value:  value
+            )
+            
+            XCTAssertOK(configSetPathResult)
+            
+            
+            
+            var retrievedValue: String? = nil
+            
+            let configGetPathResult: GitErrorCode = gitConfigGetPath(
+                out:    &retrievedValue,
+                cfg:    configPointer,
+                name:   name
+            )
+            
+            XCTAssertOK(configGetPathResult)
+            
+            /// The path should be expanded. The exact value depends on
+            /// the environment.
+            XCTAssertNotNil(retrievedValue)
+            XCTAssertNotEqual(retrievedValue, value)
+            XCTAssertTrue(retrievedValue?.hasSuffix(pathExtension) ?? false)
+        }
+    }
+    
+    
+    
+    func testGitConfigSetAndGetString() throws
+    {
+        try withConfigOnDisk
+        {
+            _, configPointer in
+            
+            let name    : String    = "test.string"
+            let value   : String    = "hello world"
             
             var configSetStringResult: GitErrorCode = gitConfigSetString(
                 cfg:    configPointer,
-                name:   stringName,
-                value:  stringExpectedValue
+                name:   name,
+                value:  value
             )
             
             XCTAssertOK(configSetStringResult)
             
             
             
-            let configDeleteEntryResult: GitErrorCode
-                = gitConfigDeleteEntry(
-                    cfg:    configPointer,
-                    name:   stringName
-                )
+            let configDeleteEntryResult: GitErrorCode = gitConfigDeleteEntry(
+                cfg:    configPointer,
+                name:   name
+            )
             
             XCTAssertOK(configDeleteEntryResult)
             
@@ -1154,7 +1328,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             var configGetEntryResult: GitErrorCode = gitConfigGetEntry(
                 out:    &configEntry,
                 cfg:    configPointer,
-                name:   stringName
+                name:   name
             )
             
             /// The entry was deleted.
@@ -1164,8 +1338,8 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             configSetStringResult = gitConfigSetString(
                 cfg:    configPointer,
-                name:   stringName,
-                value:  stringExpectedValue
+                name:   name,
+                value:  value
             )
             
             XCTAssertOK(configSetStringResult)
@@ -1175,7 +1349,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             configGetEntryResult = gitConfigGetEntry(
                 out:    &configEntry,
                 cfg:    configPointer,
-                name:   stringName
+                name:   name
             )
             
             XCTAssertOK(configGetEntryResult)
@@ -1183,153 +1357,23 @@ final class ConfigTests: XCTestCaseStopOnFail
             XCTAssertNotNil(configEntry.value)
             XCTAssertNotNil(configEntry.backendType)
             XCTAssertNotNil(configEntry.originPath)
-            XCTAssertEqual(configEntry.name, stringName)
-            XCTAssertEqual(configEntry.value, stringExpectedValue)
+            XCTAssertEqual(configEntry.name, name)
+            XCTAssertEqual(configEntry.value, value)
             XCTAssertEqual(configEntry.level, .gitConfigLevelLocal)
             
             
             
-            /// Test freeing a `git_config_entry`.
-            var cConfigEntry: UnsafeMutablePointer<git_config_entry>? = nil
+            var retrievedValue: String? = nil
             
-            defer
-            {
-                gitConfigEntryFree(entry: cConfigEntry)
-            }
-            
-            let cConfigGetEntryResult: Int32 = git_config_get_entry(
-                &cConfigEntry,
-                configPointer,
-                stringName
+            let configGetStringBufResult: GitErrorCode = gitConfigGetStringBuf(
+                out:    &retrievedValue,
+                cfg:    configPointer,
+                name:   name
             )
-            
-            XCTAssertOK(GitErrorCode(rawValue: cConfigGetEntryResult))
-            XCTAssertNotNil(cConfigEntry)
-            
-            
-            
-            var stringValue: String? = nil
-            
-            let configGetStringBufResult: GitErrorCode
-                = gitConfigGetStringBuf(
-                    out:    &stringValue,
-                    cfg:    configPointer,
-                    name:   stringName
-                )
             
             XCTAssertOK(configGetStringBufResult)
-            XCTAssertNotNil(stringValue)
-            XCTAssertEqual(stringValue, stringExpectedValue)
-            
-            
-            
-            let int32ExpectedValue  : Int32     = 123
-            let int32Name           : String    = "test.int32"
-            
-            let configSetInt32Result: GitErrorCode = gitConfigSetInt32(
-                cfg:    configPointer,
-                name:   int32Name,
-                value:  int32ExpectedValue
-            )
-            
-            XCTAssertOK(configSetInt32Result)
-            
-            
-            
-            var int32Value: Int32 = 0
-            
-            let configGetInt32Result: GitErrorCode = gitConfigGetInt32(
-                out:    &int32Value,
-                cfg:    configPointer,
-                name:   int32Name
-            )
-            
-            XCTAssertOK(configGetInt32Result)
-            XCTAssertEqual(int32Value, int32ExpectedValue)
-            
-            
-            
-            let int64ExpectedValue  : Int64     = 1234567891234567890
-            let int64Name           : String    = "test.int64"
-            
-            let configSetInt64Result: GitErrorCode = gitConfigSetInt64(
-                cfg:    configPointer,
-                name:   int64Name,
-                value:  int64ExpectedValue
-            )
-            
-            XCTAssertOK(configSetInt64Result)
-            
-            
-            
-            var int64Value: Int64 = 0
-            
-            let configGetInt64Result: GitErrorCode = gitConfigGetInt64(
-                out:    &int64Value,
-                cfg:    configPointer,
-                name:   int64Name
-            )
-            
-            XCTAssertOK(configGetInt64Result)
-            XCTAssertEqual(int64Value, int64ExpectedValue)
-            
-            
-            
-            let boolExpectedValue   : Bool      = true
-            let boolName            : String    = "test.bool"
-            
-            let configSetBoolResult: GitErrorCode = gitConfigSetBool(
-                cfg:    configPointer,
-                name:   boolName,
-                value:  boolExpectedValue
-            )
-            
-            XCTAssertOK(configSetBoolResult)
-            
-            
-            
-            var boolValue: Bool = false
-            
-            let configGetBoolResult: GitErrorCode = gitConfigGetBool(
-                out:    &boolValue,
-                cfg:    configPointer,
-                name:   boolName
-            )
-            
-            XCTAssertOK(configGetBoolResult)
-            XCTAssertEqual(boolValue, boolExpectedValue)
-            
-            
-            
-            let pathExtension       : String    = "/Documents"
-            let pathExpectedValue   : String    = "~" + pathExtension
-            let pathName            : String    = "test.path"
-            
-            let configSetPathResult: GitErrorCode = gitConfigSetString(
-                cfg:    configPointer,
-                name:   pathName,
-                value:  pathExpectedValue
-            )
-            
-            XCTAssertOK(configSetPathResult)
-            
-            
-            
-            var path: String? = nil
-            
-            let configGetPathResult: GitErrorCode = gitConfigGetPath(
-                out:    &path,
-                cfg:    configPointer,
-                name:   pathName
-            )
-            
-            XCTAssertOK(configGetPathResult)
-            
-            /// The path should be expanded. The exact value depends on
-            /// the environment.
-            XCTAssertNotNil(path)
-            XCTAssertNotEqual(path, pathExpectedValue)
-            XCTAssertTrue(path?.hasSuffix(pathExtension) ?? false)
+            XCTAssertNotNil(retrievedValue)
+            XCTAssertEqual(retrievedValue, value)
         }
     }
     
