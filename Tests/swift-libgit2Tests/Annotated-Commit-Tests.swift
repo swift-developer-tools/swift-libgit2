@@ -93,7 +93,8 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(referenceLookupResult)
             
-            guard let headReferencePointer: OpaquePointer = headReferencePointer
+            guard let headReferencePointer: OpaquePointer
+                    = headReferencePointer
             else
             {
                 XCTFail("The HEAD reference pointer was nil.")
