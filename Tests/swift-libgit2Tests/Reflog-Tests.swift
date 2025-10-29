@@ -369,7 +369,8 @@ private extension ReflogTests
             guard let reflogPointer: OpaquePointer = reflogPointer
             else
             {
-                throw NSError.makeError("The reflog pointer was nil.")
+                XCTFail("The reflog pointer was nil.")
+                return
             }
             
             

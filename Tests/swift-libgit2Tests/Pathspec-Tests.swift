@@ -533,7 +533,8 @@ private extension PathspecTests
         guard let pathspecPointer: OpaquePointer = pathspecPointer
         else
         {
-            throw NSError.makeError("The pathspec pointer was nil.")
+            XCTFail("The pathspec pointer was nil.")
+            return
         }
         
         try body(pathspecPointer)

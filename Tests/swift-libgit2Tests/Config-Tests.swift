@@ -1539,7 +1539,8 @@ private extension ConfigTests
             guard let configPointer: OpaquePointer = configPointer
             else
             {
-                throw NSError.makeError("The configuration pointer was nil.")
+                XCTFail("The configuration pointer was nil.")
+                return
             }
             
             try body(

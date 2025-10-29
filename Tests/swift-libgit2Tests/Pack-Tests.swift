@@ -586,7 +586,8 @@ private extension PackTests
             guard let packbuilderPointer: OpaquePointer = packbuilderPointer
             else
             {
-                throw NSError.makeError("The packbuilder pointer was nil.")
+                XCTFail("The packbuilder pointer was nil.")
+                return
             }
             
             

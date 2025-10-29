@@ -424,7 +424,8 @@ private extension PatchTests
                 guard let patchPointer: OpaquePointer = patchPointer
                 else
                 {
-                    throw NSError.makeError("The patch pointer was nil.")
+                    XCTFail("The patch pointer was nil.")
+                    return
                 }
                 
                 

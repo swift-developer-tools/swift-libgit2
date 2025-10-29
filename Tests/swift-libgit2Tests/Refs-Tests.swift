@@ -1413,9 +1413,8 @@ private extension RefsTests
             guard let directRefPointer: OpaquePointer = directRefPointer
             else
             {
-                throw NSError.makeError(
-                    "The direct reference pointer was nil."
-                )
+                XCTFail("The direct reference pointer was nil.")
+                return
             }
             
             

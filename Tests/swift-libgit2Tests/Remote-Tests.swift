@@ -1588,7 +1588,8 @@ private extension RemoteTests
             guard let remotePointer: OpaquePointer = remotePointer
             else
             {
-                throw NSError.makeError("The remote pointer was nil.")
+                XCTFail("The remote pointer was nil.")
+                return
             }
             
             
@@ -1597,8 +1598,6 @@ private extension RemoteTests
                 remotePointer,
                 in: repository
             )
-            
-            
             
             try body(
                 repository,
@@ -1623,7 +1622,8 @@ private extension RemoteTests
         guard remotePointer != nil
         else
         {
-            throw NSError.makeError("The remote pointer was nil.")
+            XCTFail("The remote pointer was nil.")
+            return
         }
         
         
@@ -1649,9 +1649,8 @@ private extension RemoteTests
                 = lookedUpRemotePointer
         else
         {
-            throw NSError.makeError(
-                "The looked-up remote pointer was nil."
-            )
+            XCTFail( "The looked-up remote pointer was nil.")
+            return
         }
         
         

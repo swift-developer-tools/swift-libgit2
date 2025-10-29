@@ -483,7 +483,8 @@ private extension RebaseTests
             guard let rebasePointer: OpaquePointer = rebasePointer
             else
             {
-                throw NSError.makeError("The rebase pointer was nil.")
+                XCTFail("The rebase pointer was nil.")
+                return
             }
             
             

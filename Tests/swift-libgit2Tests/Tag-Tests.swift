@@ -45,7 +45,8 @@ final class TagTests: XCTestCaseStopOnFail
                     = gitOIDToStrS(oid: repository.headOID)
             else
             {
-                throw NSError.makeError("The HEAD OID string was nil.")
+                XCTFail("The HEAD OID string was nil.")
+                return
             }
             
             

@@ -342,7 +342,8 @@ private extension RefspecTests
         guard let refspecPointer: OpaquePointer = refspecPointer
         else
         {
-            throw NSError.makeError("The refspec pointer was nil.")
+            XCTFail("The refspec pointer was nil.")
+            return
         }
         
         try body(refspecPointer)
