@@ -242,7 +242,7 @@ final class ODBTests: XCTestCaseStopOnFail
     {
         try withOpenedODBPointer
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let backendCount: Int = gitODBNumBackends(odb: odbPointer)
             
@@ -483,7 +483,7 @@ final class ODBTests: XCTestCaseStopOnFail
     {
         try withOpenedODBPointer
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             var callbackData = CallbackData()
             
@@ -802,7 +802,7 @@ final class ODBTests: XCTestCaseStopOnFail
     {
         try withOpenedODBPointer
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let odbSetCommitGraphResult: GitErrorCode = gitODBSetCommitGraph(
                 odb:        odbPointer,
@@ -861,7 +861,7 @@ final class ODBTests: XCTestCaseStopOnFail
     {
         try withOpenedODBPointer
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let blobData = Data("Blob content".utf8)
             
@@ -931,7 +931,7 @@ final class ODBTests: XCTestCaseStopOnFail
     {
         try withOpenedODBPointer
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             let blobData = Data("Blob content".utf8)
             
@@ -1024,7 +1024,7 @@ private extension ODBTests
     {
         try withOpenedODBPointer
         {
-            repository, odbPointer in
+            _, odbPointer in
             
             var callbackData = CallbackData()
             
