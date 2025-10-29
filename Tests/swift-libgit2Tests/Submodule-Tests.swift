@@ -662,17 +662,18 @@ final class SubmoduleTests: XCTestCaseStopOnFail
         {
             repository, _ in
             
-            var urlData = Data()
+            var resolvedURL: String? = nil
             
             let submoduleResolveURLResult: GitErrorCode
                 = gitSubmoduleResolveURL(
-                    out:    &urlData,
+                    out:    &resolvedURL,
                     repo:   repository.pointer,
                     url:    Self.submoduleURL
                 )
             
             XCTAssertOK(submoduleResolveURLResult)
-            XCTAssertEqual(urlData, Self.submoduleURL)
+            XCTAssertNotNil(resolvedURL)
+            XCTAssertEqual(resolvedURL, Self.submoduleURL)
         }
     }
     
