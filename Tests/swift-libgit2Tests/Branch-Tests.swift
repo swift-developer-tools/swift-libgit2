@@ -309,52 +309,55 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            var data = Data()
+            var retrievedName: String? = nil
             
             let branchRemoteNameResult: GitErrorCode = gitBranchRemoteName(
-                out:        &data,
+                out:        &retrievedName,
                 repo:       repository.pointer,
                 refName:    referenceName
             )
             
-            /// The operation should fail since there the reference is a
-            /// local branch.
+            /// The reference is a local branch.
             XCTAssertNotOK(branchRemoteNameResult)
+            XCTAssertNil(retrievedName)
             
             
             
             let branchUpstreamRemoteResult: GitErrorCode
                 = gitBranchUpstreamRemote(
-                    buf:        &data,
+                    buf:        &retrievedName,
                     repo:       repository.pointer,
                     refName:    referenceName
                 )
             
-            /// The operation should fail since there is no configured upstream.
+            /// There is no configured upstream.
             XCTAssertNotOK(branchUpstreamRemoteResult)
+            XCTAssertNil(retrievedName)
             
             
             
             let branchUpstreamMergeResult: GitErrorCode
                 = gitBranchUpstreamMerge(
-                    buf:        &data,
+                    buf:        &retrievedName,
                     repo:       repository.pointer,
                     refName:    referenceName
                 )
             
-            /// The operation should fail since there is no configured upstream.
+            /// There is no configured upstream.
             XCTAssertNotOK(branchUpstreamMergeResult)
+            XCTAssertNil(retrievedName)
             
             
             
             let branchUpstreamNameResult: GitErrorCode = gitBranchUpstreamName(
-                out:        &data,
+                out:        &retrievedName,
                 repo:       repository.pointer,
                 refName:    referenceName
             )
             
-            /// The operation should fail since there is no configured upstream.
+            /// There is no configured upstream.
             XCTAssertNotOK(branchUpstreamNameResult)
+            XCTAssertNil(retrievedName)
         }
     }
     

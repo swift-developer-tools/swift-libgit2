@@ -8,7 +8,6 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import Foundation
 
 
 
@@ -392,7 +391,7 @@ public func gitBranchSetUpstream(
 
 /// Gets the upstream name of the given local branch.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the upstream name.
+///   - out: The `String` instance in which to store the upstream name.
 ///   - repo: The repository containing the branches. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The name of the local branch for which to get the upstream
@@ -411,14 +410,14 @@ public func gitBranchSetUpstream(
 ///
 /// [`git_branch_upstream_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_name.html)
 public func gitBranchUpstreamName(
-    out     : inout Data,
+    out     : inout String?,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -494,7 +493,7 @@ public func gitBranchIsCheckedOut(
 
 /// Gets the remote name of the given remote-tracking branch.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the remote name.
+///   - out: The `String` instance in which to store the remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -515,14 +514,14 @@ public func gitBranchIsCheckedOut(
 ///
 /// [`git_branch_remote_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_remote_name.html)
 public func gitBranchRemoteName(
-    out     : inout Data,
+    out     : inout String?,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
@@ -539,7 +538,7 @@ public func gitBranchRemoteName(
 
 /// Gets the upstream remote name of the given local branch.
 /// - Parameters:
-///   - buf: The `Data` instance in which to store the upstream remote name.
+///   - buf: The `String` instance in which to store the upstream remote name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -555,14 +554,14 @@ public func gitBranchRemoteName(
 ///
 /// [`git_branch_upstream_remote()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_remote.html)
 public func gitBranchUpstreamRemote(
-    buf     : inout Data,
+    buf     : inout String?,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try buf.withMutatingGitBuf
+        return try buf.withOptionalMutatingGitBuf
         {
             cBuf in
             
@@ -579,7 +578,7 @@ public func gitBranchUpstreamRemote(
 
 /// Gets the upstream merge name of the given local branch.
 /// - Parameters:
-///   - buf: The `Data` instance in which to store the upstream merge name.
+///   - buf: The `String` instance in which to store the upstream merge name.
 ///   - repo: The repository containing the branch. The underlying type must
 ///   be `git_repository`.
 ///   - refName: The full reference name of the branch for which to get the
@@ -595,14 +594,14 @@ public func gitBranchUpstreamRemote(
 ///
 /// [`git_branch_upstream_merge()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_merge.html)
 public func gitBranchUpstreamMerge(
-    buf     : inout Data,
+    buf     : inout String?,
     repo    : OpaquePointer,
     refName : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try buf.withMutatingGitBuf
+        return try buf.withOptionalMutatingGitBuf
         {
             cBuf in
             
