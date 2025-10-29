@@ -407,7 +407,7 @@ final class CommitTests: XCTestCaseStopOnFail
             {
                 commitPointer in
                 
-                var commitHeaderField = Data()
+                var commitHeaderField: String? = nil
                 
                 let commitHeaderFieldResult: GitErrorCode
                     = gitCommitHeaderField(
@@ -417,7 +417,8 @@ final class CommitTests: XCTestCaseStopOnFail
                     )
                 
                 XCTAssertOK(commitHeaderFieldResult)
-                XCTAssertGreaterThan(commitHeaderField.count, 0)
+                XCTAssertNotNil(commitHeaderField)
+                XCTAssertGreaterThan(commitHeaderField?.count ?? 0, 0)
             }
         }
     }

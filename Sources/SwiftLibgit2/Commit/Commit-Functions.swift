@@ -612,7 +612,7 @@ public func gitCommitNthGenAncestor(
 
 /// Gets the specified header field from the given commit.
 /// - Parameters:
-///   - out: The `Data` instance in which to store the header field.
+///   - out: The `String` instance in which to store the header field.
 ///   - commit: The commit for which to get the specified header field. The
 ///   underlying type must be `git_commit`.
 ///   - field: The header field to return.
@@ -622,14 +622,14 @@ public func gitCommitNthGenAncestor(
 ///
 /// [`git_commit_header_field()`](https://libgit2.org/docs/reference/main/commit/git_commit_header_field.html)
 public func gitCommitHeaderField(
-    out     : inout Data,
+    out     : inout String?,
     commit  : OpaquePointer,
     field   : String
 ) -> GitErrorCode
 {
     return withCConversion
     {
-        return try out.withMutatingGitBuf
+        return try out.withOptionalMutatingGitBuf
         {
             cOut in
             
