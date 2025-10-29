@@ -110,6 +110,26 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     
     
+    func testGitPushNegotiationCB() throws
+    {
+        let pushNegotiationCB: GitPushNegotiationCB =
+        {
+            _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let pushNegotiationCBResult: Int32 = pushNegotiationCB(
+            nil,
+            0,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: pushNegotiationCBResult))
+    }
+    
+    
+    
     func testGitPushOptions() throws
     {
         let pushOptions = GitPushOptions()
@@ -159,6 +179,27 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     
     
+    func testGitPushTransferProgressCB() throws
+    {
+        let pushTransferProgressCB: GitPushTransferProgressCB =
+        {
+            _, _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let pushTransferCBResult: Int32 = pushTransferProgressCB(
+            0,
+            0,
+            0,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: pushTransferCBResult))
+    }
+    
+    
+    
     func testGitPushUpdate() throws
     {
         let pushUpdate = GitPushUpdate()
@@ -177,6 +218,26 @@ final class RemoteTests: XCTestCaseStopOnFail
             XCTAssertZeroOID(GitOID(cValue: cPushUpdate.pointee.src))
             XCTAssertZeroOID(GitOID(cValue: cPushUpdate.pointee.dst))
         }
+    }
+    
+    
+    
+    func testGitPushUpdateReferenceCB() throws
+    {
+        let pushUpdateReferenceCB: GitPushUpdateReferenceCB =
+        {
+            _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let pushUpdateReferenceCBResult: Int32 = pushUpdateReferenceCB(
+            nil,
+            nil,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: pushUpdateReferenceCBResult))
     }
     
     
@@ -331,149 +392,6 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     
     
-    func testGitRemoteCallbackInvocations() throws
-    {
-        let pushTransferProgressCB: GitPushTransferProgressCB =
-        {
-            _, _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let pushTransferCBResult: Int32 = pushTransferProgressCB(
-            0,
-            0,
-            0,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: pushTransferCBResult))
-        
-        
-        
-        let pushNegotiationCB: GitPushNegotiationCB =
-        {
-            _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let pushNegotiationCBResult: Int32 = pushNegotiationCB(
-            nil,
-            0,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: pushNegotiationCBResult))
-        
-        
-        
-        let pushUpdateReferenceCB: GitPushUpdateReferenceCB =
-        {
-            _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let pushUpdateReferenceCBResult: Int32 = pushUpdateReferenceCB(
-            nil,
-            nil,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: pushUpdateReferenceCBResult))
-        
-        
-        
-        let urlResolveCB: GitURLResolveCB =
-        {
-            _, _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let urlResolveCBResult: Int32 = urlResolveCB(
-            nil,
-            nil,
-            0,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: urlResolveCBResult))
-        
-        
-        
-        let remoteReadyCB: GitRemoteReadyCB =
-        {
-            _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let remoteReadyCBResult: Int32 = remoteReadyCB(
-            nil,
-            0,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: remoteReadyCBResult))
-        
-        
-        
-        let remoteCompletionCB: GitRemoteCallbacks.CompletionCB =
-        {
-            _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let remoteCompletionCBResult: Int32 = remoteCompletionCB(
-            GIT_REMOTE_COMPLETION_DOWNLOAD,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: remoteCompletionCBResult))
-        
-        
-        
-        let remoteUpdateTipsCB: GitRemoteCallbacks.UpdateTipsCB =
-        {
-            _, _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let remoteUpdateTipsCBResult: Int32 = remoteUpdateTipsCB(
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: remoteUpdateTipsCBResult))
-        
-        
-        
-        let remoteUpdateRefsCB: GitRemoteCallbacks.UpdateRefsCB =
-        {
-            _, _, _, _, _ in
-            
-            return GitErrorCode.gitOK.rawValue
-        }
-        
-        let remoteUpdateRefsCBResult: Int32 = remoteUpdateRefsCB(
-            nil,
-            nil,
-            nil,
-            nil,
-            nil
-        )
-        
-        XCTAssertOK(GitErrorCode(rawValue: remoteUpdateRefsCBResult))
-    }
-    
-    
-    
     func testGitRemoteCallbacks() throws
     {
         let remoteCallbacks = GitRemoteCallbacks()
@@ -516,6 +434,68 @@ final class RemoteTests: XCTestCaseStopOnFail
             XCTAssertNil(cRemoteCallbacks.pointee.resolve_url)
             XCTAssertNil(cRemoteCallbacks.pointee.update_refs)
         }
+    }
+    
+    
+    
+    func testGitRemoteCallbacksCompletionCB() throws
+    {
+        let remoteCompletionCB: GitRemoteCallbacks.CompletionCB =
+        {
+            _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let remoteCompletionCBResult: Int32 = remoteCompletionCB(
+            GIT_REMOTE_COMPLETION_DOWNLOAD,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: remoteCompletionCBResult))
+    }
+    
+    
+    
+    func testGitRemoteCallbacksUpdateTipsCB() throws
+    {
+        let remoteUpdateTipsCB: GitRemoteCallbacks.UpdateTipsCB =
+        {
+            _, _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let remoteUpdateTipsCBResult: Int32 = remoteUpdateTipsCB(
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: remoteUpdateTipsCBResult))
+    }
+    
+    
+    
+    func testGitRemoteCallbacksUpdateRefsCB() throws
+    {
+        let remoteUpdateRefsCB: GitRemoteCallbacks.UpdateRefsCB =
+        {
+            _, _, _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let remoteUpdateRefsCBResult: Int32 = remoteUpdateRefsCB(
+            nil,
+            nil,
+            nil,
+            nil,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: remoteUpdateRefsCBResult))
     }
     
     
@@ -1184,6 +1164,26 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     
     
+    func testGitRemoteReadyCB() throws
+    {
+        let remoteReadyCB: GitRemoteReadyCB =
+        {
+            _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let remoteReadyCBResult: Int32 = remoteReadyCB(
+            nil,
+            0,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: remoteReadyCBResult))
+    }
+    
+    
+    
     func testGitRemoteRedirectT() throws
     {
         XCTAssertEqual(GitRemoteRedirectT.gitRemoteRedirectNone.rawValue, GIT_REMOTE_REDIRECT_NONE.rawValue)
@@ -1463,6 +1463,27 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             XCTAssertEqual(remoteUploadResult, .gitECertificate)
         }
+    }
+    
+    
+    
+    func testGitURLResolveCB() throws
+    {
+        let urlResolveCB: GitURLResolveCB =
+        {
+            _, _, _, _ in
+            
+            return GitErrorCode.gitOK.rawValue
+        }
+        
+        let urlResolveCBResult: Int32 = urlResolveCB(
+            nil,
+            nil,
+            0,
+            nil
+        )
+        
+        XCTAssertOK(GitErrorCode(rawValue: urlResolveCBResult))
     }
 }
 
