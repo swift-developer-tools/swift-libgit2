@@ -52,12 +52,16 @@ func XCTAssertOK(
         return
     }
     
-    let error   : GitError  = gitErrorLast()
-    var message : String    = "Code: \(result). Class: \(error.klass)."
+    var message: String = "Unknown error."
     
-    if let errorMessage: String = error.message
+    if let error: GitError = gitErrorLast()
     {
-        message += " \(errorMessage)"
+        message = "Code: \(result). Class: \(error.klass)."
+        
+        if let errorMessage: String = error.message
+        {
+            message += " \(errorMessage)"
+        }
     }
     
     XCTAssertEqual(result, GitErrorCode.gitOK, message)
