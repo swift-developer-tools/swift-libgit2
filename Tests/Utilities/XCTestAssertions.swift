@@ -52,10 +52,10 @@ func XCTAssertOK(
         return
     }
     
-    let error   : UnsafePointer<git_error>?     = git_error_last()
-    var message : String                        = "Code: \(result)."
+    let error   : GitError  = gitErrorLast()
+    var message : String    = "Code: \(result). Class: \(error.klass)."
     
-    if let errorMessage = String(optionalCString: error?.pointee.message)
+    if let errorMessage: String = error.message
     {
         message += " \(errorMessage)"
     }
