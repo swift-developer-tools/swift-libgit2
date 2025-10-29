@@ -17,19 +17,20 @@ final class MessageTests: XCTestCaseStopOnFail
 {
     func testGitMessagePrettify() throws
     {
-        var data            : Data      = Data()
+        var message         : String?   = nil
         let whitespace      : String    = "   "
         let shortMessage    : String    = "Hello World!"
         
         let shortMessagePrettifyResult: GitErrorCode = gitMessagePrettify(
-            out:            &data,
+            out:            &message,
             message:        whitespace + shortMessage + whitespace,
             stripComments:  false,
             commentChar:    nil
         )
         
         XCTAssertOK(shortMessagePrettifyResult)
-        XCTAssertEqual(data, whitespace + shortMessage + "\n")
+        XCTAssertNotNil(message)
+        XCTAssertEqual(message, whitespace + shortMessage + "\n")
         
         
         
@@ -42,40 +43,47 @@ final class MessageTests: XCTestCaseStopOnFail
         """
         
         var longMessagePrettifyResult: GitErrorCode = gitMessagePrettify(
-            out:            &data,
+            out:            &message,
             message:        longMessage,
             stripComments:  true,
             commentChar:    commentCharacter
         )
         
         XCTAssertOK(longMessagePrettifyResult)
-        XCTAssertEqual(data, shortMessage + "\n")
+        XCTAssertNotNil(message)
+        XCTAssertEqual(message, shortMessage + "\n")
         
         
         
         longMessage += "\n"
         
         longMessagePrettifyResult = gitMessagePrettify(
-            out:            &data,
+            out:            &message,
             message:        longMessage,
             stripComments:  false,
             commentChar:    commentCharacter
         )
         
         XCTAssertOK(longMessagePrettifyResult)
-        XCTAssertEqual(data, longMessage)
+        XCTAssertNotNil(message)
+        XCTAssertEqual(message, longMessage)
         
         
         
         /// If `stripComments` is `true`, `commentChar` must not be `nil`.
         let invalidMessagePrettifyResult: GitErrorCode = gitMessagePrettify(
-            out:            &data,
+            out:            &message,
             message:        shortMessage,
             stripComments:  true,
             commentChar:    nil
         )
         
         XCTAssertEqual(invalidMessagePrettifyResult, .gitEUser)
+        
+        /// The string will not be mutated since the operation failed.
+        XCTAssertNotNil(message)
+        XCTAssertEqual(message, longMessage)
+
     }
     
     
