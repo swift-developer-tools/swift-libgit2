@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// Opens the repository at the specified location.
+/// Opens the specified repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
@@ -100,7 +100,7 @@ public func gitRepositoryWrapODB(
 
 
 
-/// Searches for a repository at the specified location, and copies its path.
+/// Gets the path of the specified repository.
 /// - Parameters:
 ///   - out: The `String` instance in which to store the found path.
 ///   - startPath: The base path at which to begin searching.
@@ -142,7 +142,7 @@ public func gitRepositoryDiscover(
 
 
 
-/// Opens the repository at the specified location.
+/// Opens the specified repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
@@ -181,7 +181,7 @@ public func gitRepositoryOpenExt(
 
 
 
-/// Opens a bare repository at the specified location.
+/// Opens the specified bare repository.
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
