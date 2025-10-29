@@ -126,24 +126,24 @@ final class CommonTests: XCTestCaseStopOnFail
         var int32   : Int32     = 0
         var uint    : UInt      = 0
         var bool    : Bool      = false
-        var data    : Data      = Data()
+        var string  : String?   = nil
         var strings : [String]  = []
         
         XCTAssertOK(gitLibgit2OptGetMWindowSize(size: &int1))
         XCTAssertOK(gitLibgit2OptGetMWindowMappedLimit(limit: &int1))
-        XCTAssertOK(gitLibgit2OptGetSearchPath(level: .gitConfigLevelSystem, buf: &data))
+        XCTAssertOK(gitLibgit2OptGetSearchPath(level: .gitConfigLevelSystem, buf: &string))
         XCTAssertOK(gitLibgit2OptGetCachedMemory(current: &int1, allowed: &int2))
-        XCTAssertOK(gitLibgit2OptGetTemplatePath(out: &data))
-        XCTAssertOK(gitLibgit2OptGetUserAgent(out: &data))
+        XCTAssertOK(gitLibgit2OptGetTemplatePath(out: &string))
+        XCTAssertOK(gitLibgit2OptGetUserAgent(out: &string))
         XCTAssertOK(gitLibgit2OptGetWindowsShareMode(value: &uint))
         XCTAssertOK(gitLibgit2OptGetPackMaxObjects(out: &int1))
         XCTAssertOK(gitLibgit2OptGetMWindowFileLimit(limit: &int1))
         XCTAssertOK(gitLibgit2OptGetExtensions(out: &strings))
         XCTAssertOK(gitLibgit2OptGetOwnerValidation(enabled: &bool))
-        XCTAssertOK(gitLibgit2OptGetHomeDir(out: &data))
+        XCTAssertOK(gitLibgit2OptGetHomeDir(out: &string))
         XCTAssertOK(gitLibgit2OptGetServerConnectTimeout(timeout: &int32))
         XCTAssertOK(gitLibgit2OptGetServerTimeout(timeout: &int32))
-        XCTAssertOK(gitLibgit2OptGetUserAgentProduct(out: &data))
+        XCTAssertOK(gitLibgit2OptGetUserAgentProduct(out: &string))
     }
     
     
