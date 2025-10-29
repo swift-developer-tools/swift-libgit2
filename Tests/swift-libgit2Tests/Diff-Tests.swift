@@ -877,17 +877,18 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 
                 
-                var diffStatistics = Data()
+                var diffStats: String? = nil
                 
                 let diffStatsToBufResult: GitErrorCode = gitDiffStatsToBuf(
-                    out:        &diffStatistics,
+                    out:        &diffStats,
                     stats:      diffStatsPointer,
                     format:     .gitDiffStatsFull,
                     width:      80
                 )
                 
                 XCTAssertOK(diffStatsToBufResult)
-                XCTAssertGreaterThan(diffStatistics.count, 0)
+                XCTAssertNotNil(diffStats)
+                XCTAssertGreaterThan(diffStats?.count ?? 0, 0)
             }
         }
     }
