@@ -67,7 +67,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            try Branch.withNewLocalBranchPointer(
+            try Branch.withNewLocalBranch(
                 named:      branchName,
                 in:         repository,
                 force:      false,
@@ -132,7 +132,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            Branch.withExistingLocalBranchPointer(
+            Branch.withExistingLocalBranch(
                 named:  branchName,
                 in:     repository
             )
@@ -209,7 +209,7 @@ final class BranchTests: XCTestCaseStopOnFail
             
             
             
-            try Branch.withNewLocalBranchPointer(
+            try Branch.withNewLocalBranch(
                 named:      branchName,
                 in:         repository,
                 force:      false,

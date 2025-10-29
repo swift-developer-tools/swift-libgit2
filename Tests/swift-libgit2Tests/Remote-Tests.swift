@@ -244,7 +244,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteAddFetch() throws
     {
-        try withRemotePointer(type: .fetchspec)
+        try withRemote(type: .fetchspec)
         {
             repository, _ in
             
@@ -262,7 +262,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteAddPushAndGetPushRefspecs() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             repository, _ in
             
@@ -320,7 +320,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteAutoTag() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             repository, _ in
             
@@ -528,7 +528,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteConnectAndDefaultBranch() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -568,7 +568,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteConnectExt() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -639,7 +639,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteCreateAndLookup() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, _ in
             
@@ -816,7 +816,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteCreateWithFetchspec() throws
     {
-        try withRemotePointer(type: .fetchspec)
+        try withRemote(type: .fetchspec)
         {
             _, remotePointer in
             
@@ -881,7 +881,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDelete() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             repository, _ in
             
@@ -918,7 +918,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDisconnect() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -940,7 +940,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDownload() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -958,7 +958,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDup() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -985,7 +985,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteFetch() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1011,7 +1011,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteGetRefspec() throws
     {
-        try withRemotePointer(type: .fetchspec)
+        try withRemote(type: .fetchspec)
         {
             _, remotePointer in
             
@@ -1047,7 +1047,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteList() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             repository, _ in
             
@@ -1068,7 +1068,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteLS() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1119,7 +1119,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemotePrune() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1136,7 +1136,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemotePruneRefs() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1148,7 +1148,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemotePush() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1205,7 +1205,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteRefspecCount() throws
     {
-        try withRemotePointer(type: .fetchspec)
+        try withRemote(type: .fetchspec)
         {
             _, remotePointer in
             
@@ -1220,7 +1220,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteRename() throws
     {
-        try withRemotePointer(type: .fetchspec)
+        try withRemote(type: .fetchspec)
         {
             repository, _ in
             
@@ -1286,7 +1286,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetInstancePushURL() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1312,7 +1312,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetInstanceURL() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1339,7 +1339,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetPushURL() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             repository, _ in
             
@@ -1357,7 +1357,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetURL() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             repository, _ in
             
@@ -1375,7 +1375,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteStats() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1390,7 +1390,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteStop() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1431,7 +1431,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteUpdateTips() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1451,7 +1451,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteUpload() throws
     {
-        try withRemotePointer
+        try withRemote
         {
             _, remotePointer in
             
@@ -1541,7 +1541,7 @@ private extension RemoteTests
     ///   - type: How to create the remote.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withRemotePointer(
+    func withRemote(
         type    : RemoteCreationType = .standard,
         _ body  : (Repository, OpaquePointer) throws -> Void
     ) throws

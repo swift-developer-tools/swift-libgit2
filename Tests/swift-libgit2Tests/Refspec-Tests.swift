@@ -17,7 +17,7 @@ final class RefspecTests: XCTestCaseStopOnFail
 {
     func testGitRefspecDirection() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -33,7 +33,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecDst() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -49,7 +49,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecDstMatches() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -76,7 +76,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecForce() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -130,7 +130,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecParse() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             _ in
         }
@@ -140,7 +140,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecRTransform() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -172,7 +172,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecSrc() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -188,7 +188,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecSrcMatches() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -265,7 +265,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecString() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -281,7 +281,7 @@ final class RefspecTests: XCTestCaseStopOnFail
     
     func testGitRefspecTransform() throws
     {
-        try withRefspecPointer
+        try withRefspec
         {
             refspecPointer in
             
@@ -318,7 +318,7 @@ private extension RefspecTests
     /// Calls the given closure with a pointer to a fetch refspec.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withRefspecPointer(
+    func withRefspec(
         _ body: (OpaquePointer) throws -> Void
     ) throws
     {

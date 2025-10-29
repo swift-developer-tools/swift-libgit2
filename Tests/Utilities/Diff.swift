@@ -97,7 +97,7 @@ enum Diff
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTreeToTreeDiffPointer<T>(
+    static func withTreeToTreeDiff<T>(
         in repository   : Repository,
         oldCommitOID    : GitOID,
         newCommitOID    : GitOID,
@@ -205,7 +205,7 @@ enum Diff
     ///   - body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTreeToWorkdirDiffPointer<T>(
+    static func withTreeToWorkdirDiff<T>(
         in  repository  : Repository,
         _   body        : (OpaquePointer) throws -> T
     ) throws -> T

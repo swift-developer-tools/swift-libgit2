@@ -100,7 +100,7 @@ final class PathspecTests: XCTestCaseStopOnFail
             
             
             
-            try Diff.withTreeToTreeDiffPointer(
+            try Diff.withTreeToTreeDiff(
                 in:             repository,
                 oldCommitOID:   oldCommitOID,
                 newCommitOID:   newCommitOID
@@ -108,7 +108,7 @@ final class PathspecTests: XCTestCaseStopOnFail
             {
                 diffPointer in
                 
-                try withPathspecPointer
+                try withPathspec
                 {
                     pathspecPointer in
                     
@@ -141,7 +141,7 @@ final class PathspecTests: XCTestCaseStopOnFail
     
     func testGitPathspecMatchesPath() throws
     {
-        try withPathspecPointer(pathspec: ["*.txt", "docs/*.md"])
+        try withPathspec(pathspec: ["*.txt", "docs/*.md"])
         {
             pathspecPointer in
             
@@ -236,7 +236,7 @@ final class PathspecTests: XCTestCaseStopOnFail
             
             
             
-            try withPathspecPointer
+            try withPathspec
             {
                 pathspecPointer in
                 
@@ -292,7 +292,7 @@ final class PathspecTests: XCTestCaseStopOnFail
                 "missing.md"
             ]
             
-            try withPathspecPointer(pathspec: pathspec)
+            try withPathspec(pathspec: pathspec)
             {
                 pathspecPointer in
                 
@@ -403,7 +403,7 @@ final class PathspecTests: XCTestCaseStopOnFail
             
             
             
-            try withPathspecPointer
+            try withPathspec
             {
                 pathspecPointer in
                 
@@ -462,7 +462,7 @@ final class PathspecTests: XCTestCaseStopOnFail
             
             
             
-            try withPathspecPointer
+            try withPathspec
             {
                 pathspecPointer in
                 
@@ -491,7 +491,7 @@ final class PathspecTests: XCTestCaseStopOnFail
     
     func testGitPathspecNew() throws
     {
-        try withPathspecPointer
+        try withPathspec
         {
             _ in
         }
@@ -509,7 +509,7 @@ private extension PathspecTests
     ///   - pathspec: The pathspecs to use.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withPathspecPointer(
+    func withPathspec(
         pathspec    : [String] = ["*.txt", "*.md"],
         _ body      : (OpaquePointer) throws -> Void
     ) throws

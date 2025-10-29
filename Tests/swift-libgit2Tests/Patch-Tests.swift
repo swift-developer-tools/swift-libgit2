@@ -189,7 +189,7 @@ final class PatchTests: XCTestCaseStopOnFail
     
     func testGitPatchFromDiff() throws
     {
-        try withPatchPointer
+        try withPatch
         {
             _ in
         }
@@ -199,7 +199,7 @@ final class PatchTests: XCTestCaseStopOnFail
     
     func testGitPatchGetHunkAndLineInHunk() throws
     {
-        try withPatchPointer
+        try withPatch
         {
             patchPointer in
             
@@ -245,7 +245,7 @@ final class PatchTests: XCTestCaseStopOnFail
     
     func testGitPatchLineStats() throws
     {
-        try withPatchPointer
+        try withPatch
         {
             patchPointer in
             
@@ -271,7 +271,7 @@ final class PatchTests: XCTestCaseStopOnFail
     
     func testGitPatchPrint() throws
     {
-        try withPatchPointer
+        try withPatch
         {
             patchPointer in
             
@@ -319,7 +319,7 @@ final class PatchTests: XCTestCaseStopOnFail
     
     func testGitPatchSize() throws
     {
-        try withPatchPointer
+        try withPatch
         {
             patchPointer in
             
@@ -350,7 +350,7 @@ final class PatchTests: XCTestCaseStopOnFail
     
     func testGitPatchToBuf() throws
     {
-        try withPatchPointer
+        try withPatch
         {
             patchPointer in
             
@@ -392,7 +392,7 @@ private extension PatchTests
     /// Calls the given closure with a pointer to a patch.
     /// - Parameter body: The closure to call.
     /// - Throws: An error if an operation fails.
-    func withPatchPointer(
+    func withPatch(
         _ body: (OpaquePointer) throws -> Void
     ) throws
     {
@@ -400,7 +400,7 @@ private extension PatchTests
         {
             repository in
             
-            try Diff.withTreeToWorkdirDiffPointer(in: repository)
+            try Diff.withTreeToWorkdirDiff(in: repository)
             {
                 diffPointer in
                 
