@@ -12,17 +12,13 @@ import Foundation
 
 
 
-/// Creates a diff from the given commit in `mbox` format to send via email.
+/// Creates a diff for the given commit in `mbox` format to send via email.
 /// - Parameters:
 ///   - out: The `Data` instance in which to store the email patch.
 ///   - commit: The commit for which to create a patch. The underlying type
-///   must be `git_commit`.
+///   must be `git_commit`. This must not be a merge commit.
 ///   - opts: The email creation options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: The given commit must not be a merge commit.
 ///
 /// ## C Equivalent
 ///
