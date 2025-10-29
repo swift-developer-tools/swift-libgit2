@@ -954,7 +954,7 @@ public func gitReferenceNextName(
 {
     return withCConversion
     {
-        return out.withOptionalMutatingString
+        return out.withOptionalMutatingCString
         {
             cOut in
             

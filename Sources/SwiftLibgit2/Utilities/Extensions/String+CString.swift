@@ -178,7 +178,7 @@ internal extension Optional where Wrapped == String
     /// with libgit2 functions that return pointers to memory owned by other
     /// objects. Do not use this method with libgit2 functions that allocate
     /// memory that must be freed by the caller.
-    mutating func withOptionalMutatingString<T>(
+    mutating func withOptionalMutatingCString<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>) throws -> T
     ) rethrows -> T
     {

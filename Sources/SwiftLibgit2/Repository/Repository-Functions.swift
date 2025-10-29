@@ -1327,11 +1327,11 @@ public func gitRepositoryIdent(
 {
     return withCConversion
     {
-        return name.withOptionalMutatingString
+        return name.withOptionalMutatingCString
         {
             cName in
             
-            return email.withOptionalMutatingString
+            return email.withOptionalMutatingCString
             {
                 cEmail in
                 

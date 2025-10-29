@@ -186,11 +186,11 @@ public func gitMailmapResolve(
 {
     return withCConversion
     {
-        return realName.withOptionalMutatingString
+        return realName.withOptionalMutatingCString
         {
             cRealName in
             
-            return realEmail.withOptionalMutatingString
+            return realEmail.withOptionalMutatingCString
             {
                 cRealEmail in
                 

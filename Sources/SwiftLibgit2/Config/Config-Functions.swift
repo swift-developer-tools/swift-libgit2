@@ -683,7 +683,7 @@ public func gitConfigGetString(
 {
     return withCConversion
     {
-        return out.withOptionalMutatingString
+        return out.withOptionalMutatingCString
         {
             cOut in
             
