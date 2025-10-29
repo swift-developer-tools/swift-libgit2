@@ -152,17 +152,18 @@ final class RefspecTests: XCTestCaseStopOnFail
             
             for (refName, transformedName) in refNamesAndTransformedNames
             {
-                var transformedData = Data()
+                var retrievedName: String? = nil
                 
                 let refspecRTransformResult: GitErrorCode
                     = gitRefspecRTransform(
-                        out:    &transformedData,
+                        out:    &retrievedName,
                         spec:   refspecPointer,
                         name:   refName
                     )
                 
                 XCTAssertOK(refspecRTransformResult)
-                XCTAssertEqual(transformedData, transformedName)
+                XCTAssertNotNil(retrievedName)
+                XCTAssertEqual(retrievedName, transformedName)
             }
         }
     }
@@ -292,16 +293,17 @@ final class RefspecTests: XCTestCaseStopOnFail
             
             for (refName, transformedName) in refNamesAndTransformedNames
             {
-                var transformedData = Data()
+                var retrievedName: String? = nil
                 
                 let refspecTransformResult: GitErrorCode = gitRefspecTransform(
-                    out:    &transformedData,
+                    out:    &retrievedName,
                     spec:   refspecPointer,
                     name:   refName
                 )
                 
                 XCTAssertOK(refspecTransformResult)
-                XCTAssertEqual(transformedData, transformedName)
+                XCTAssertNotNil(retrievedName)
+                XCTAssertEqual(retrievedName, transformedName)
             }
         }
     }
