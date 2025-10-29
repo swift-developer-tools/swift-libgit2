@@ -26,7 +26,7 @@ import Foundation
 
 internal extension String
 {
-    /// Calls the given closure with a mutable C string pointer.
+    /// Calls the given closure with a mutable C string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the closure.
     /// - Throws: An error if the conversion fails.
@@ -73,7 +73,8 @@ internal extension String
     
     
     /// Initializes a new string from the given optional C string pointer.
-    /// - Parameter cString: The optional C string pointer.
+    /// - Parameter cString: The optional C string pointer from which to
+    /// initialize a new string.
     ///
     /// ## Discussion
     ///
@@ -112,8 +113,7 @@ internal extension String
 
 internal extension Optional where Wrapped == String
 {
-    /// Calls the given closure with an optional pointer to the contents of
-    /// the receiver.
+    /// Calls the given closure with an optional C string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     func withOptionalCString<T>(
@@ -139,8 +139,7 @@ internal extension Optional where Wrapped == String
     
     
     
-    /// Calls the given closure with an optional mutable pointer to the
-    /// contents of the receiver.
+    /// Calls the given closure with an an optional mutable C string.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
@@ -167,8 +166,8 @@ internal extension Optional where Wrapped == String
     
     
     
-    /// Calls the given closure with a mutable pointer to the contents of the
-    /// receiver, and updates the receiver with any changes made by the closure.
+    /// Calls the given closure with a mutable pointer to an optional C string,
+    /// and updates the receiver with any changes made by the closure.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     ///
