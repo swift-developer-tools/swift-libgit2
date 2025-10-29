@@ -7,3 +7,8 @@ Low-level credential implementations.
 ### Structs
 
 - ``GitCredential``
+- ``GitCredentialUserPassPlaintext``
+- ``GitCredentialUsername``
+- ``GitCredentialSSHKey``
+- ``GitCredentialSSHInteractive``
+- ``GitCredentialSSHCustom``
