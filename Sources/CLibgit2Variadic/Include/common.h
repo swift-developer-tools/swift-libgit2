@@ -7,8 +7,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef libgit2_opt_h
-#define libgit2_opt_h
+#ifndef common_h
+#define common_h
 
 #include <git2.h>
 
@@ -78,4 +78,4 @@ int git_libgit2_opt_set_server_timeout(int timeout);
 
 
 
-#endif // !libgit2_opt_h
+#endif // !common_h
