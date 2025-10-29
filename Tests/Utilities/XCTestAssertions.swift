@@ -41,7 +41,7 @@ func isOK(
 
 /// Asserts that the given libgit2 operation result code is
 /// ``GitErrorCode/gitOK``.
-/// - Parameter result: The libgit2 operation result code.
+/// - Parameter result: The libgit2 operation result code to use.
 func XCTAssertOK(
     _ result: GitErrorCode
 )
@@ -67,7 +67,7 @@ func XCTAssertOK(
 
 /// Asserts that the given libgit2 operation result code is not
 /// ``GitErrorCode/gitOK``.
-/// - Parameter result: The libgit2 operation result code.
+/// - Parameter result: The libgit2 operation result code to use.
 func XCTAssertNotOK(
     _ result: GitErrorCode
 )
@@ -140,8 +140,8 @@ func XCTAssertNotEqual(
 
 /// Asserts that the given OIDs are equal.
 /// - Parameters:
-///   - oid1: The first OID.
-///   - oid2: The second OID.
+///   - oid1: The first OID to compare.
+///   - oid2: The second OID to compare.
 func XCTAssertEqual(
     _ oid1  : GitOID?,
     _ oid2  : GitOID?
@@ -173,8 +173,8 @@ func XCTAssertEqual(
 
 /// Asserts that the given OIDs are not equal.
 /// - Parameters:
-///   - oid1: The first OID.
-///   - oid2: The second OID.
+///   - oid1: The first OID to compare.
+///   - oid2: The second OID to compare.
 func XCTAssertNotEqual(
     _ oid1  : GitOID?,
     _ oid2  : GitOID?
@@ -205,7 +205,7 @@ func XCTAssertNotEqual(
 
 
 /// Asserts that the given OID is not `nil` and all zeros.
-/// - Parameter oid: The OID.
+/// - Parameter oid: The OID to evaluate.
 func XCTAssertZeroOID(
     _ oid : GitOID?
 )
@@ -225,7 +225,7 @@ func XCTAssertZeroOID(
 
 
 /// Asserts that the given OID is not `nil` and is not all zeros.
-/// - Parameter oid: The OID.
+/// - Parameter oid: The OID to evaluate.
 func XCTAssertNotZeroOID(
     _ oid : GitOID?
 )
