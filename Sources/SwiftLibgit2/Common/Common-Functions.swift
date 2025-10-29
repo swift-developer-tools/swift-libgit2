@@ -8,7 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
-import CLibgit2Opts
+import CLibgit2Variadic
 
 
 
