@@ -161,7 +161,7 @@ public func gitFilterListApplyToBuffer(
         {
             cOut in
             
-            return try input.withCBuffer
+            return try input.withCString
             {
                 cInput, cInputCount in
                 
@@ -276,7 +276,7 @@ public func gitFilterListStreamBuffer(
 {
     return withCConversion
     {
-        return try buffer.withCBuffer
+        return try buffer.withCString
         {
             cBuffer, cBufferCount in
             

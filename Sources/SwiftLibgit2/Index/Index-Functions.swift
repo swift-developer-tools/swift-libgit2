@@ -855,7 +855,7 @@ public func gitIndexAddFromBuffer(
         {
             cEntry in
             
-            return try buffer.withCBuffer
+            return try buffer.withCString
             {
                 cBuffer, cBufferCount in
                 

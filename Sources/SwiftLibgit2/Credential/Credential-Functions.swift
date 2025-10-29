@@ -369,7 +369,7 @@ public func gitCredentialSSHCustomNew(
             nullTerminatedPublicKey.append(0)
         }
         
-        return try nullTerminatedPublicKey.withCBuffer
+        return try nullTerminatedPublicKey.withCString
         {
             cPublicKey, cPublicKeyCount in
             

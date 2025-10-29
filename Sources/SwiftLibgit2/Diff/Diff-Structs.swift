@@ -538,7 +538,7 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
             return try body(&diffBinaryFile)
         }
         
-        return try data.withCBuffer
+        return try data.withCString
         {
             cData, cDataCount in
             
@@ -868,7 +868,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
             return try body(&diffLine)
         }
         
-        return try content.withCBuffer
+        return try content.withCString
         {
             cContent, cContentCount in
             

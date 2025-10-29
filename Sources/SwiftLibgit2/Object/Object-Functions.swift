@@ -380,7 +380,7 @@ public func gitObjectRawContentIsValid(
         {
             cValid in
             
-            return try buf.withCBuffer
+            return try buf.withCString
             {
                 cBuf, cBufCount in
                 

@@ -114,7 +114,7 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
         
         mergeFileInput.mode = mode
         
-        return try ptr.withOptionalCBuffer
+        return try ptr.withOptionalCString
         {
             cPtr, cPtrCount in
             
@@ -400,7 +400,7 @@ public struct GitMergeFileResult: CStructInternalMutable, WithCConvertible, CFre
                 return try body(&mergeFileResult)
             }
             
-            return try ptr.withCBuffer
+            return try ptr.withCString
             {
                 cPtr, cPtrCount in
                 

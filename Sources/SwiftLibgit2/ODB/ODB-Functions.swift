@@ -523,7 +523,7 @@ public func gitODBWrite(
         {
             cOut in
             
-            return try data.withCBuffer
+            return try data.withCString
             {
                 cData, cDataCount in
                 
@@ -603,7 +603,7 @@ public func gitODBStreamWrite(
 {
     return withCConversion
     {
-        return try buffer.withCBuffer
+        return try buffer.withCString
         {
             cBuffer, cBufferCount in
             
@@ -680,7 +680,7 @@ public func gitODBStreamRead(
 {
     return withCConversion
     {
-        return try buffer.withMutatingCBuffer
+        return try buffer.withMutatingCString
         {
             cBuffer, cBufferCount in
             
@@ -871,7 +871,7 @@ public func gitODBHash(
         {
             cOID in
             
-            return try data.withCBuffer
+            return try data.withCString
             {
                 cData, cDataCount in
                 

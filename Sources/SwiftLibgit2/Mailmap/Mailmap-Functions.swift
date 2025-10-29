@@ -112,7 +112,7 @@ public func gitMailmapFromBuffer(
 {
     return withCConversion
     {
-        return try buf.withCBuffer
+        return try buf.withCString
         {
             cBuf, cBufCount in
             

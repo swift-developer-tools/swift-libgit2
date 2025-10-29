@@ -793,7 +793,7 @@ public func gitDiffBlobToBuffer(
         {
             cOptions in
             
-            return try buffer.withOptionalCBuffer
+            return try buffer.withOptionalCString
             {
                 cBuffer, cBufferLength in
                 
@@ -864,11 +864,11 @@ public func gitDiffBuffers(
 {
     return withCConversion
     {
-        return try oldBuffer.withOptionalCBuffer
+        return try oldBuffer.withOptionalCString
         {
             cOldBuffer, cOldBufferCount in
             
-            return try newBuffer.withOptionalCBuffer
+            return try newBuffer.withOptionalCString
             {
                 cNewBuffer, cNewBufferCount in
                 
@@ -928,7 +928,7 @@ public func gitDiffFromBuffer(
 {
     return withCConversion
     {
-        return try content.withCBuffer
+        return try content.withCString
         {
             cContent, cContentCount in
             

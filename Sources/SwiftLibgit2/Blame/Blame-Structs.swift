@@ -398,7 +398,7 @@ public struct GitBlameLine: CStructReadable, WithCConvertible, Sendable
             return try body(&blameLine)
         }
         
-        return try ptr.withCBuffer
+        return try ptr.withCString
         {
             cPtr, cPtrCount in
             
