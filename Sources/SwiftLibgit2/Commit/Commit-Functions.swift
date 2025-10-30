@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 import CLibgit2
+import CLibgit2Variadic
 import Foundation
 
 
@@ -777,6 +778,90 @@ public func gitCommitCreate(
                         parentCount,
                         parents
                     )
+                }
+            }
+        }
+    }
+}
+
+
+
+/// Creates a new commit in the given repository.
+/// - Parameters:
+///   - id: The ``GitOID`` instance in which to store the ID of the
+///   newly-created commit.
+///   - repo: The repository in which to create the commit. The underlying type
+///   must be `git_repository`.
+///   - updateRef: The name of the reference to update to point to the commit.
+///   - author: The author signature to use.
+///   - committer: The committer signature to use.
+///   - messageEncoding: The commit message encoding to use. Pass `nil` to
+///   use the original message encoding.
+///   - message: The commit message to use.
+///   - tree: The commit tree to use. The underlying type must be `git_tree`.
+///   - parentCount: The length of `parents`.
+///   - parents: The parents of the commit. The underlying types must be
+///   `git_commit`. All the commits must belong to the given repository.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## Discussion
+///
+/// The commit message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the commit message.
+///
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
+///
+/// ## C Equivalent
+///
+/// [`git_commit_create_v()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_v.html)
+public func gitCommitCreateV(
+    id              : inout GitOID,
+    repo            : OpaquePointer,
+    updateRef       : String?,
+    author          : GitSignature,
+    committer       : GitSignature,
+    messageEncoding : String?,
+    message         : String,
+    tree            : OpaquePointer,
+    parentCount     : Int,
+    parents         : [CVarArg]
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try id.withMutatingCValue
+        {
+            cID in
+            
+            return try author.withCValue
+            {
+                cAuthor in
+                
+                return try committer.withCValue
+                {
+                    cCommitter in
+                    
+                    return withVaList(parents)
+                    {
+                        cParents in
+                        
+                        return _git_commit_create_v(
+                            cID,
+                            repo,
+                            updateRef,
+                            cAuthor,
+                            cCommitter,
+                            messageEncoding,
+                            message,
+                            tree,
+                            parents.count,
+                            cParents
+                        )
+                    }
                 }
             }
         }
