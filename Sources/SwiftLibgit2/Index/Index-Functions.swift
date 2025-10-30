@@ -793,7 +793,7 @@ public func gitIndexIteratorFree(
 /// This function forces the file to be added to the given index, regardless
 /// of ignore rules. If the file is the result of a merge conflict, it will
 /// no longer be marked as conflicting. The data about the conflict will be
-/// moved to the "resolve undo" (`REUC`) section.
+/// moved to the resolve-undo (REUC) section.
 ///
 /// - Note: This function does not support bare repositories.
 ///
@@ -837,7 +837,7 @@ public func gitIndexAddByPath(
 /// This function forces the file to be added to the given index, regardless
 /// of ignore rules. If the file is the result of a merge conflict, it will
 /// no longer be marked as conflicting. The data about the conflict will be
-/// moved to the "resolve undo" (`REUC`) section.
+/// moved to the resolve-undo (REUC) section.
 ///
 /// ## C Equivalent
 ///
@@ -882,7 +882,7 @@ public func gitIndexAddFromBuffer(
 ///
 /// If the specified file is the result of a merge conflict, it will no longer
 /// be marked as conflicting. The data about the conflict will be moved to the
-/// "resolve undo" (`REUC`) section.
+/// resolve-undo (REUC) section.
 ///
 /// ## C Equivalent
 ///
@@ -939,7 +939,7 @@ public func gitIndexRemoveByPath(
 ///
 /// If any of the specified files are the result of a merge conflict, they will
 /// no longer be marked as conflicting. The data about the conflicts will be
-/// moved to the "resolve undo" (`REUC`) section.
+/// moved to the resolve-undo (REUC) section.
 ///
 /// - Note: This function does not support bare repositories.
 ///
