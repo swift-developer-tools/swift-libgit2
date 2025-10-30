@@ -116,7 +116,8 @@ public func gitFilterListLoadExt(
 ///
 /// ## Discussion
 ///
-/// The built-in filters `crlf` and `indent` can be queried.
+/// The built-in filters ``gitFilterCRLF`` and ``gitFilterIdent`` can be
+/// queried.
 ///
 /// ## C Equivalent
 ///
