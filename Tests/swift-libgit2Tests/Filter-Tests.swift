@@ -244,7 +244,7 @@ private extension FilterTests
     
     
     
-    enum FilerListType
+    enum FilterListType
     {
         case blob
         case buffer
@@ -300,7 +300,7 @@ private extension FilterTests
     /// - Parameter type: The type of filter list application to test.
     /// - Throws: An error if an operation fails.
     func testGitFilterListApplyFlow(
-        type: FilerListType
+        type: FilterListType
     ) throws
     {
         try Repository.withRepository
@@ -391,7 +391,7 @@ private extension FilterTests
     /// - Parameter type: The type of filter list streaming to test.
     /// - Throws: An error if an operation fails.
     func testGitFilterListStreamFlow(
-        type: FilerListType
+        type: FilterListType
     ) throws
     {
         try Repository.withRepository
