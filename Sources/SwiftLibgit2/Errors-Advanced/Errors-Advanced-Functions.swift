@@ -58,12 +58,12 @@ public func gitErrorSet(
     {
         return withVaList(args)
         {
-            vaList in
+            cArgs in
             
             return _git_error_set(
                 errorClass.rawValue,
                 fmt,
-                vaList
+                cArgs
             )
         }
     }
