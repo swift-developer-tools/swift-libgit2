@@ -342,7 +342,7 @@ public func gitSignatureDup(
 ///
 /// ## Discussion
 ///
-/// Since `git_signature` is not an opaque struct, it is legal to free it
+/// Since `git_signature` is not an opaque object, it is legal to free it
 /// manually, but be sure to free the `name` and `email` strings in addition
 /// to the `git_signature` struct itself.
 ///
