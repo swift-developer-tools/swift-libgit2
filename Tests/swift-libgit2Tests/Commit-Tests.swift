@@ -33,6 +33,22 @@ final class CommitTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCommitCreate() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            try repository.commit(
+                "File content",
+                toFile:     "file.txt",
+                message:    "Add file"
+            )
+        }
+    }
+    
+    
+    
     func testGitCommitCreateBufferWithSignatureAndExtract() throws
     {
         try Repository.withIndex
