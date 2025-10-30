@@ -506,7 +506,7 @@ public func gitIndexGetByIndex(
     n       : Int
 ) -> GitIndexEntry?
 {
-    guard let indexEntryPointer: UnsafePointer<git_index_entry>
+    guard let indexEntry: UnsafePointer<git_index_entry>
             = git_index_get_byindex(
                 index,
                 n
@@ -516,7 +516,7 @@ public func gitIndexGetByIndex(
         return nil
     }
     
-    return GitIndexEntry(cValue: indexEntryPointer.pointee)
+    return GitIndexEntry(cValue: indexEntry.pointee)
 }
 
 
@@ -537,7 +537,7 @@ public func gitIndexGetByPath(
     stage   : GitIndexStageT
 ) -> GitIndexEntry?
 {
-    guard let indexEntryPointer: UnsafePointer<git_index_entry>
+    guard let indexEntry: UnsafePointer<git_index_entry>
             = git_index_get_bypath(
                 index,
                 path,
@@ -548,7 +548,7 @@ public func gitIndexGetByPath(
         return nil
     }
     
-    return GitIndexEntry(cValue: indexEntryPointer.pointee)
+    return GitIndexEntry(cValue: indexEntry.pointee)
 }
 
 
