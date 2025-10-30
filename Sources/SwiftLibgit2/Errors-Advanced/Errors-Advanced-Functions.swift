@@ -29,7 +29,7 @@ public func gitErrorClear()
 /// - Parameters:
 ///   - errorClass: The error category to set.
 ///   - fmt: The `printf`-style format string to set.
-///   - args: The arguments for `fmt`. The arguments must be C types.
+///   - args: The arguments for `fmt`. The underlying types must be C types.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -39,11 +39,11 @@ public func gitErrorClear()
 /// set by directly calling this function will be overwritten by internal
 /// libgit2 APIs.
 ///
-/// - Important: The variadic arguments must be C types. For example, a Swift
-/// string must be converted to a C string that is valid for the duration of
-/// the function call. Passing Swift types will result in data loss or
-/// undefined behavior. Use ``gitErrorSetStr(errorClass:string:)`` to pass a
-/// static Swift string instead.
+/// - Important: The underlying types of the variadic arguments must be C types.
+/// For example, a Swift string must be converted to a C string that is valid
+/// for the duration of the function call. Passing Swift types will result in
+/// data loss or undefined behavior. Use ``gitErrorSetStr(errorClass:string:)``
+/// to pass a static Swift string instead.
 ///
 /// ## C Equivalent
 ///
