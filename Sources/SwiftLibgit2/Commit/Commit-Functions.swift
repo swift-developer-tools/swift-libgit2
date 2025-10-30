@@ -704,8 +704,7 @@ public func gitCommitExtractSignature(
 
 
 
-/// Creates a new commit in the given repository from a list of `git_object`
-/// pointers.
+/// Creates a new commit in the given repository.
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
@@ -720,8 +719,9 @@ public func gitCommitExtractSignature(
 ///   - tree: The commit tree to use. The underlying type must be `git_tree`.
 ///   - parentCount: The length of `parents`.
 ///   - parents: The parents of the commit. The underlying type must be an
-///   array of `git_commit` instances, of length `parentCount`. All the given
-///   commits must belong to the given repository.
+///   array of `git_commit` instances, of length `parentCount`. All the commits
+///   must belong to the given repository. This may be `nil` if `parentCount`
+///   is `0`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -734,14 +734,6 @@ public func gitCommitExtractSignature(
 /// Pass `HEAD` to update the HEAD of the current branch and make it point to
 /// this commit. If the reference does not exist yet, it will be created.
 /// If it does exist, the first parent must be the tip of this branch.
-///
-/// `parents` may be `nil` if `parentCount` is `0`.
-///
-/// - Note: libgit2 provides a similar variadic function called
-/// [`git_commit_create_v()`](https://libgit2.org/docs/reference/main/commit/git_commit_create_v.html).
-/// There is no binding for `git_commit_create_v()`, since it uses C-style
-/// variadic arguments (`...`), and Swift can only import C variadic functions
-/// that use `va_list` for their arguments.
 ///
 /// ## C Equivalent
 ///
