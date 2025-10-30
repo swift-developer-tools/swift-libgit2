@@ -618,8 +618,7 @@ public func gitIndexRemoveDirectory(
 /// ## Discussion
 ///
 /// If a previous index entry exists that has the same path and stage as the
-/// given index entry, it will be replaced. Otherwise, the index entry will
-/// be added.
+/// given index entry, it will be replaced.
 ///
 /// A full copy of the index entry (including the path) will be inserted on
 /// the index.
