@@ -144,21 +144,19 @@ final class FilterTests: XCTestCaseStopOnFail
             
             let filterListContainsCRLF: Bool = gitFilterListContains(
                 filters:    filterListPointer,
-                name:       "crlf"
+                name:       gitFilterCRLF
             )
             
-            /// The `crlf` filter should be present for text files.
             XCTAssertTrue(filterListContainsCRLF)
             
             
             
-            let filterListContainsIndent: Bool = gitFilterListContains(
+            let filterListContainsIdent: Bool = gitFilterListContains(
                 filters:    filterListPointer,
-                name:       "indent"
+                name:       gitFilterIdent
             )
             
-            /// The `indent` filter is generally not configured.
-            XCTAssertFalse(filterListContainsIndent)
+            XCTAssertFalse(filterListContainsIdent)
         }
     }
     
