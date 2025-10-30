@@ -42,7 +42,7 @@ let package = Package(
     targets:
     [
         .target(
-            name: "CLibgit2Opts",
+            name: "CLibgit2Variadic",
             dependencies:
             [
                 .product(
@@ -56,7 +56,7 @@ let package = Package(
             name: "SwiftLibgit2",
             dependencies:
             [
-                "CLibgit2Opts",
+                "CLibgit2Variadic",
                 .product(
                     name:       "CLibgit2",
                     package:    "swift-libgit2-base"

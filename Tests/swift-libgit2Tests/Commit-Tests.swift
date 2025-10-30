@@ -33,6 +33,22 @@ final class CommitTests: XCTestCaseStopOnFail
     
     
     
+    func testGitCommitCreate() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            try repository.commit(
+                "File content",
+                toFile:     "file.txt",
+                message:    "Add file"
+            )
+        }
+    }
+    
+    
+    
     func testGitCommitCreateBufferWithSignatureAndExtract() throws
     {
         try Repository.withIndex
@@ -379,6 +395,100 @@ final class CommitTests: XCTestCaseStopOnFail
     func testGitCommitCreateOptionsVersion() throws
     {
         XCTAssertEqual(Int32(gitCommitCreateOptionsVersion), GIT_COMMIT_CREATE_OPTIONS_VERSION)
+    }
+    
+    
+    
+    func testGitCommitCreateV() throws
+    {
+        try Repository.withIndex
+        {
+            repository, indexPointer in
+            
+            let path: String = "file.txt"
+            
+            try repository.modifyFile(
+                at:     path,
+                with:   "File content"
+            )
+            
+            let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
+                index:  indexPointer,
+                path:   path
+            )
+            
+            XCTAssertOK(indexAddBypathResult)
+            
+            
+            
+            let indexWriteResult: GitErrorCode
+                = gitIndexWrite(index: indexPointer)
+            
+            XCTAssertOK(indexWriteResult)
+            
+            
+            
+            var treeOID = GitOID()
+            
+            let indexWriteTreeResult: GitErrorCode = gitIndexWriteTree(
+                out:    &treeOID,
+                index:  indexPointer
+            )
+            
+            XCTAssertOK(indexWriteTreeResult)
+            
+            
+            
+            var treePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitTreeFree(tree: treePointer)
+            }
+            
+            
+            
+            let treeLookupResult: GitErrorCode = gitTreeLookup(
+                out:    &treePointer,
+                repo:   repository.pointer,
+                id:     treeOID
+            )
+            
+            XCTAssertOK(treeLookupResult)
+            
+            guard let treePointer: OpaquePointer = treePointer
+            else
+            {
+                XCTFail("The tree pointer was nil.")
+                return
+            }
+            
+            
+            
+            try Commit.withHEADCommit(in: repository)
+            {
+                commitPointer in
+                
+                var commitOID   : GitOID        = GitOID()
+                let parents     : [CVarArg]     = [commitPointer]
+                
+                let commitCreateResult: GitErrorCode = gitCommitCreateV(
+                    id:                 &commitOID,
+                    repo:               repository.pointer,
+                    updateRef:          "HEAD",
+                    author:             repository.signature,
+                    committer:          repository.signature,
+                    messageEncoding:    nil,
+                    message:            "Add file",
+                    tree:               treePointer,
+                    parentCount:        parents.count,
+                    parents:            parents
+                )
+                
+                XCTAssertOK(commitCreateResult)
+                XCTAssertNotZeroOID(commitOID)
+            }
+        }
     }
     
     

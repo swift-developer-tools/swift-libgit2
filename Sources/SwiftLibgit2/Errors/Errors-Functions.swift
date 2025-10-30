@@ -25,9 +25,13 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_error_last()`](https://libgit2.org/docs/reference/main/errors/git_error_last.html)
-public func gitErrorLast() -> GitError
+public func gitErrorLast() -> GitError?
 {
-    let error: UnsafePointer<git_error> = git_error_last()
+    guard let error: UnsafePointer<git_error> = git_error_last()
+    else
+    {
+        return nil
+    }
     
     return GitError(cValue: error.pointee)
 }

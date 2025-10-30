@@ -198,12 +198,12 @@ struct Repository
         
         
         
-        let reposIndexResult: GitErrorCode = gitRepositoryIndex(
+        let repoIndexResult: GitErrorCode = gitRepositoryIndex(
             out:    &indexPointer,
             repo:   pointer
         )
         
-        XCTAssertOK(reposIndexResult)
+        XCTAssertOK(repoIndexResult)
         
         guard let indexPointer: OpaquePointer = indexPointer
         else

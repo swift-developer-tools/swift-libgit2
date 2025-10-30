@@ -156,10 +156,11 @@ final class ErrorsTests: XCTestCaseStopOnFail
         {
             _ in
             
-            let error: GitError = gitErrorLast()
+            let error: GitError? = gitErrorLast()
             
-            XCTAssertEqual(error.message, "no error")
-            XCTAssertEqual(error.klass, .gitErrorNone)
+            XCTAssertNotNil(error)
+            XCTAssertEqual(error?.message, "no error")
+            XCTAssertEqual(error?.klass, .gitErrorNone)
         }
     }
     

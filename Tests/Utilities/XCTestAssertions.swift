@@ -7,9 +7,30 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CLibgit2
 import XCTest
 @testable import SwiftLibgit2
+
+
+
+// MARK: - Utilities
+
+/// Checks whether the given libgit2 operation result is ``GitErrorCode/gitOK``.
+/// - Parameter errorCode: The libgit2 operation result to check.
+/// - Returns: Whether the given libgit2 operation result is
+/// ``GitErrorCode/gitOK``.
+func isOK(
+    _ errorCode: GitErrorCode
+) -> Bool
+{
+    let isOK: Bool = errorCode == .gitOK
+    
+    if !isOK
+    {
+        gitErrorClear()
+    }
+    
+    return isOK
+}
 
 
 
@@ -17,7 +38,7 @@ import XCTest
 
 /// Asserts that the given libgit2 operation result code is
 /// ``GitErrorCode/gitOK``.
-/// - Parameter result: The libgit2 operation result code.
+/// - Parameter result: The libgit2 operation result code to check.
 func XCTAssertOK(
     _ result: GitErrorCode
 )
@@ -28,12 +49,18 @@ func XCTAssertOK(
         return
     }
     
-    let error   : UnsafePointer<git_error>?     = git_error_last()
-    var message : String                        = "Code: \(result)."
+    var message: String = "Unknown error."
     
-    if let errorMessage = String(optionalCString: error?.pointee.message)
+    if let error: GitError = gitErrorLast()
     {
-        message += " \(errorMessage)"
+        message = "Code: \(result). Class: \(error.klass)."
+        
+        if let errorMessage: String = error.message
+        {
+            message += " \(errorMessage)"
+        }
+        
+        gitErrorClear()
     }
     
     XCTAssertEqual(result, GitErrorCode.gitOK, message)
@@ -43,7 +70,7 @@ func XCTAssertOK(
 
 /// Asserts that the given libgit2 operation result code is not
 /// ``GitErrorCode/gitOK``.
-/// - Parameter result: The libgit2 operation result code.
+/// - Parameter result: The libgit2 operation result code to check.
 func XCTAssertNotOK(
     _ result: GitErrorCode
 )
@@ -55,7 +82,7 @@ func XCTAssertNotOK(
         return
     }
     
-    git_error_last()
+    gitErrorClear()
 }
 
 
@@ -116,8 +143,8 @@ func XCTAssertNotEqual(
 
 /// Asserts that the given OIDs are equal.
 /// - Parameters:
-///   - oid1: The first OID.
-///   - oid2: The second OID.
+///   - oid1: The first OID to compare.
+///   - oid2: The second OID to compare.
 func XCTAssertEqual(
     _ oid1  : GitOID?,
     _ oid2  : GitOID?
@@ -149,8 +176,8 @@ func XCTAssertEqual(
 
 /// Asserts that the given OIDs are not equal.
 /// - Parameters:
-///   - oid1: The first OID.
-///   - oid2: The second OID.
+///   - oid1: The first OID to compare.
+///   - oid2: The second OID to compare.
 func XCTAssertNotEqual(
     _ oid1  : GitOID?,
     _ oid2  : GitOID?
@@ -181,7 +208,7 @@ func XCTAssertNotEqual(
 
 
 /// Asserts that the given OID is not `nil` and all zeros.
-/// - Parameter oid: The OID.
+/// - Parameter oid: The OID to evaluate.
 func XCTAssertZeroOID(
     _ oid : GitOID?
 )
@@ -201,7 +228,7 @@ func XCTAssertZeroOID(
 
 
 /// Asserts that the given OID is not `nil` and is not all zeros.
-/// - Parameter oid: The OID.
+/// - Parameter oid: The OID to evaluate.
 func XCTAssertNotZeroOID(
     _ oid : GitOID?
 )

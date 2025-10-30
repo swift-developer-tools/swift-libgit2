@@ -1510,7 +1510,7 @@ private extension RemoteTests
     /// Asserts that the given libgit2 operation result code is
     /// ``GitErrorCode/gitError``, and that the error is because the remote
     /// has never connected.
-    /// - Parameter result: The libgit2 operation result code.
+    /// - Parameter result: The libgit2 operation result code to check.
     func XCTAssertNeverConnected(
         _ result: GitErrorCode
     )
@@ -1522,15 +1522,13 @@ private extension RemoteTests
             return
         }
         
-        let error   : UnsafePointer<git_error>?     = git_error_last()
-        var message : String                        = "Unknown error."
+        let error: GitError? = gitErrorLast()
         
-        if let errorMessage = String(optionalCString: error?.pointee.message)
-        {
-            message = errorMessage
-        }
+        gitErrorClear()
         
-        XCTAssertEqual(message, "this remote has never connected")
+        XCTAssertNotNil(error)
+        XCTAssertEqual(error?.message, "this remote has never connected")
+        XCTAssertEqual(error?.klass, .gitErrorNet)
     }
     
     
