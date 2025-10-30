@@ -144,21 +144,19 @@ final class FilterTests: XCTestCaseStopOnFail
             
             let filterListContainsCRLF: Bool = gitFilterListContains(
                 filters:    filterListPointer,
-                name:       "crlf"
+                name:       gitFilterCRLF
             )
             
-            /// The `crlf` filter should be present for text files.
             XCTAssertTrue(filterListContainsCRLF)
             
             
             
-            let filterListContainsIndent: Bool = gitFilterListContains(
+            let filterListContainsIdent: Bool = gitFilterListContains(
                 filters:    filterListPointer,
-                name:       "indent"
+                name:       gitFilterIdent
             )
             
-            /// The `indent` filter is generally not configured.
-            XCTAssertFalse(filterListContainsIndent)
+            XCTAssertFalse(filterListContainsIdent)
         }
     }
     
@@ -246,7 +244,7 @@ private extension FilterTests
     
     
     
-    enum FilerListType
+    enum FilterListType
     {
         case blob
         case buffer
@@ -302,7 +300,7 @@ private extension FilterTests
     /// - Parameter type: The type of filter list application to test.
     /// - Throws: An error if an operation fails.
     func testGitFilterListApplyFlow(
-        type: FilerListType
+        type: FilterListType
     ) throws
     {
         try Repository.withRepository
@@ -393,7 +391,7 @@ private extension FilterTests
     /// - Parameter type: The type of filter list streaming to test.
     /// - Throws: An error if an operation fails.
     func testGitFilterListStreamFlow(
-        type: FilerListType
+        type: FilterListType
     ) throws
     {
         try Repository.withRepository

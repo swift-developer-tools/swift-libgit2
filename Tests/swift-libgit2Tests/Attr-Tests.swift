@@ -24,7 +24,7 @@ final class AttrTests: XCTestCaseStopOnFail
             let attrAddMacroResult: GitErrorCode = gitAttrAddMacro(
                 repo:       repository.pointer,
                 name:       "testmacro",
-                values:     "text eol=crlf"
+                values:     "text eol=\(gitFilterCRLF)"
             )
             
             XCTAssertOK(attrAddMacroResult)

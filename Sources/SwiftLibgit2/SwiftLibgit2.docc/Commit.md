@@ -45,6 +45,7 @@ A representation of a set of changes in the repository.
 - ``gitCommitHeaderField(out:commit:field:)``
 - ``gitCommitExtractSignature(signature:signedData:repo:commitID:field:)``
 - ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``
+- ``gitCommitCreateV(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``
 - ``gitCommitCreateFromStage(id:repo:message:opts:)``
 - ``gitCommitAmend(id:commitToAmend:updateRef:author:committer:messageEncoding:message:tree:)``
 - ``gitCommitCreateBuffer(out:repo:author:committer:messageEncoding:message:tree:parentCount:parents:)``

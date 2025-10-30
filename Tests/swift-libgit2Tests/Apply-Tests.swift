@@ -236,7 +236,7 @@ final class ApplyTests: XCTestCaseStopOnFail
 
 private extension ApplyTests
 {
-    struct CallbackCounts
+    struct CallbackData
     {
         var deltaCount  : Int   = 0
         var hunkCount   : Int   = 0
@@ -383,7 +383,7 @@ private extension ApplyTests
             
             
             
-            var callbackCounts = CallbackCounts()
+            var callbackData = CallbackData()
             
             let deltaCB: GitApplyDeltaCB =
             {
@@ -396,8 +396,8 @@ private extension ApplyTests
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CallbackCounts>
-                    = payload.assumingMemoryBound(to: CallbackCounts.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.deltaCount += 1
                 
@@ -417,8 +417,8 @@ private extension ApplyTests
                     return GitErrorCode.gitUnknown(-123).rawValue
                 }
                 
-                let payloadPointer: UnsafeMutablePointer<CallbackCounts>
-                    = payload.assumingMemoryBound(to: CallbackCounts.self)
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
                 
                 payloadPointer.pointee.hunkCount += 1
                 
@@ -427,15 +427,15 @@ private extension ApplyTests
             
             
             
-            withUnsafeMutablePointer(to: &callbackCounts)
+            withUnsafeMutablePointer(to: &callbackData)
             {
-                callbackCountsPointer in
+                callbackDataPointer in
                 
                 var applyOptions = GitApplyOptions()
                 
                 applyOptions.deltaCB    = deltaCB
                 applyOptions.hunkCB     = hunkCB
-                applyOptions.payload    = UnsafeMutableRawPointer(callbackCountsPointer)
+                applyOptions.payload    = UnsafeMutableRawPointer(callbackDataPointer)
                 
                 if let flags: GitApplyFlagsT = flags
                 {
@@ -452,8 +452,8 @@ private extension ApplyTests
                 XCTAssertOK(applyResult)
             }
             
-            XCTAssertGreaterThan(callbackCounts.deltaCount, 0)
-            XCTAssertGreaterThan(callbackCounts.hunkCount, 0)
+            XCTAssertGreaterThan(callbackData.deltaCount, 0)
+            XCTAssertGreaterThan(callbackData.hunkCount, 0)
             
             
             
