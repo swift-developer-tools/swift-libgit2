@@ -1068,12 +1068,13 @@ internal extension Repository
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a tree.
     /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTree(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
+    static func withTree<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
     {
-        try withTreebuilder
+        return try withTreebuilder
         {
             repository, treebuilderPointer in
             
@@ -1109,13 +1110,12 @@ internal extension Repository
             guard let treePointer: OpaquePointer = treePointer
             else
             {
-                XCTFail("The tree pointer was nil.")
-                return
+                throw NSError.makeError("The tree pointer was nil.")
             }
             
             
             
-            try body(
+            return try body(
                 repository,
                 treePointer
             )
