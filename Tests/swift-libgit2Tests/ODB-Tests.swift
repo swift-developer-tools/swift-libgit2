@@ -633,9 +633,109 @@ final class ODBTests: XCTestCaseStopOnFail
     
     
     
+    func testGitODBObjectData() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectData: Data? = gitODBObjectData(object: objectPointer)
+                
+                XCTAssertNotNil(objectData)
+                XCTAssertGreaterThan(objectData?.count ?? 0, 0)
+            }
+        }
+    }
+    
+    
+    
     func testGitODBObjectFree() throws
     {
         gitODBObjectFree(object: nil)
+    }
+    
+    
+    
+    func testGitODBObjectID() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectOID: GitOID? = gitODBObjectID(object: objectPointer)
+                
+                XCTAssertNotNil(objectOID)
+                XCTAssertEqual(objectOID, repository.headOID)
+            }
+        }
+    }
+    
+    
+    
+    func testGitODBObjectSize() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectData: Data? = gitODBObjectData(object: objectPointer)
+                
+                XCTAssertNotNil(objectData)
+                XCTAssertGreaterThan(objectData?.count ?? 0, 0)
+                
+                
+                
+                let objectSize: Int = gitODBObjectSize(object: objectPointer)
+                
+                XCTAssertGreaterThan(objectSize, 0)
+                XCTAssertEqual(objectSize, objectData?.count ?? 0)
+            }
+        }
+    }
+    
+    
+    
+    func testGitODBObjectType() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectType: GitObjectT?
+                    = gitODBObjectType(object: objectPointer)
+                
+                XCTAssertNotNil(objectType)
+                XCTAssertEqual(objectType, .gitObjectCommit)
+            }
+        }
     }
     
     
@@ -679,66 +779,19 @@ final class ODBTests: XCTestCaseStopOnFail
     
     
     
-    func testGitODBReadAndObjectGetters() throws
+    func testGitODBRead() throws
     {
         try withOpenedODB
         {
             repository, odbPointer in
             
-            var objectPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitODBObjectFree(object: objectPointer)
-            }
-            
-            
-            
-            let headOID: GitOID = repository.headOID
-            
-            let odbReadResult: GitErrorCode = gitODBRead(
-                obj:    &objectPointer,
-                db:     odbPointer,
-                id:     headOID
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
             )
-            
-            XCTAssertOK(odbReadResult)
-            
-            guard let objectPointer: OpaquePointer = objectPointer
-            else
             {
-                XCTFail("The ODB object pointer was nil.")
-                return
+                _ in
             }
-            
-            
-            
-            let objectOID: GitOID? = gitODBObjectID(object: objectPointer)
-            
-            XCTAssertNotNil(objectOID)
-            XCTAssertEqual(objectOID, headOID)
-            
-            
-            
-            let objectData: Data? = gitODBObjectData(object: objectPointer)
-            
-            XCTAssertNotNil(objectData)
-            XCTAssertGreaterThan(objectData?.count ?? 0, 0)
-            
-            
-            
-            let objectSize: Int = gitODBObjectSize(object: objectPointer)
-            
-            XCTAssertGreaterThan(objectSize, 0)
-            XCTAssertEqual(objectSize, objectData?.count ?? 0)
-            
-            
-            
-            let objectType: GitObjectT?
-                = gitODBObjectType(object: objectPointer)
-            
-            XCTAssertNotNil(objectType)
-            XCTAssertEqual(objectType, .gitObjectCommit)
         }
     }
     
@@ -926,9 +979,8 @@ final class ODBTests: XCTestCaseStopOnFail
         {
             _, odbPointer in
             
-            let blobData = Data("Blob content".utf8)
-            
-            var blobOID = GitOID()
+            let blobData    = Data("Blob content".utf8)
+            var blobOID     = GitOID()
             
             let odbWriteResult: GitErrorCode = gitODBWrite(
                 out:    &blobOID,
@@ -1133,5 +1185,52 @@ private extension ODBTests
                 odbPointer
             )
         }
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to an object read from the given
+    /// object database in the given repository.
+    /// - Parameters:
+    ///   - odbPointer: The object database from which to read. The underlying
+    ///   type must be `git_odb`.
+    ///   - repository: The repository containing the object database.
+    ///   - body: The closure to call.
+    /// - Throws: An error if an operation fails.
+    func withReadObject(
+        from    odbPointer  : OpaquePointer,
+        in      repository  : Repository,
+        _ body: (OpaquePointer) throws -> Void
+    ) throws
+    {
+        var objectPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            gitODBObjectFree(object: objectPointer)
+        }
+        
+        
+        
+        let headOID: GitOID = repository.headOID
+        
+        let odbReadResult: GitErrorCode = gitODBRead(
+            obj:    &objectPointer,
+            db:     odbPointer,
+            id:     headOID
+        )
+        
+        XCTAssertOK(odbReadResult)
+        
+        guard let objectPointer: OpaquePointer = objectPointer
+        else
+        {
+            XCTFail("The ODB object pointer was nil.")
+            return
+        }
+        
+        
+        
+        return try body(objectPointer)
     }
 }
