@@ -75,6 +75,17 @@ struct Repository
     
     
     
+    /// The URL of the attributes file.
+    var gitAttributesURL: URL
+    {
+        return url.appending(
+            path:           ".gitattributes",
+            directoryHint:  .notDirectory
+        )
+    }
+    
+    
+    
     /// The HEAD reference ID.
     var headOID: GitOID
     {
@@ -817,7 +828,16 @@ internal extension Repository
             .appending(path: worktreeName, directoryHint: .isDirectory)
             .appendingPathExtension(UUID().uuidString)
     
-    static let gitattributesFiles: [(String, String)] =
+    static let gitAttributesContent: String =
+    """
+    *.txt text eol=lf
+    *.bin binary
+    *.special custom=customvalue
+    *.false -text
+    *.macro attr1 attr2=value
+    """
+    
+    static let gitAttributesFiles: [(String, String)] =
     [
         ("test.txt",        "This is a text file\n"),
         ("data.bin",        "Binary data"),
@@ -880,23 +900,9 @@ internal extension Repository
         
         
         
-        let gitattributesContent: String =
-        """
-        *.txt text eol=lf
-        *.bin binary
-        *.special custom=customvalue
-        *.false -text
-        *.macro attr1 attr2=value
-        """
+        try Self.gitAttributesContent.atomicWrite(to: gitAttributesURL)
         
-        let gitattributesURL: URL = url.appending(
-            path:           ".gitattributes",
-            directoryHint:  .notDirectory
-        )
-        
-        try gitattributesContent.atomicWrite(to: gitattributesURL)
-        
-        for (fileName, content) in Self.gitattributesFiles
+        for (fileName, content) in Self.gitAttributesFiles
         {
             let fileURL: URL = url.appending(
                 path:           fileName,
@@ -1028,7 +1034,7 @@ internal extension Repository
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        try withRepository
+        return try withRepository
         {
             repository in
             
@@ -1068,12 +1074,13 @@ internal extension Repository
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a tree.
     /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTree(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
+    static func withTree<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
     {
-        try withTreebuilder
+        return try withTreebuilder
         {
             repository, treebuilderPointer in
             
@@ -1109,13 +1116,12 @@ internal extension Repository
             guard let treePointer: OpaquePointer = treePointer
             else
             {
-                XCTFail("The tree pointer was nil.")
-                return
+                throw NSError.makeError("The tree pointer was nil.")
             }
             
             
             
-            try body(
+            return try body(
                 repository,
                 treePointer
             )
@@ -1127,12 +1133,13 @@ internal extension Repository
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a treebuilder.
     /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     /// - Throws: An error if an operation fails.
-    static func withTreebuilder(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
+    static func withTreebuilder<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
     {
-        try Repository.withRepository
+        return try Repository.withRepository
         {
             repository in
             
@@ -1156,8 +1163,7 @@ internal extension Repository
             guard let treebuilderPointer: OpaquePointer = treebuilderPointer
             else
             {
-                XCTFail("The treebuilder pointer was nil.")
-                return
+                throw NSError.makeError("The treebuilder pointer was nil.")
             }
             
             
@@ -1170,7 +1176,7 @@ internal extension Repository
             
             
             
-            try body(
+            return try body(
                 repository,
                 treebuilderPointer
             )
@@ -1191,7 +1197,7 @@ internal extension Repository
         _ body  : (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        try Repository.withRepository
+        return try Repository.withRepository
         {
             repository in
             

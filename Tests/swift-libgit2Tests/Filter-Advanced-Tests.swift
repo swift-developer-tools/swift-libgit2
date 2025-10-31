@@ -266,6 +266,43 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
     
     
     
+    func testGitFilterRegister() throws
+    {
+        let filterName: String = "test-filter"
+        
+        let filterPointer = UnsafeMutablePointer<git_filter>
+            .allocate(capacity: 1)
+        
+        defer
+        {
+            let filterUnregisterResult: GitErrorCode
+                = gitFilterUnregister(name: filterName)
+            
+            filterPointer.deallocate()
+            
+            XCTAssertOK(filterUnregisterResult)
+        }
+        
+        
+        
+        "*".withCString
+        {
+            cAttributes in
+            
+            filterPointer.pointee.attributes = cAttributes
+            
+            let filterRegisterResult: GitErrorCode = gitFilterRegister(
+                name:       filterName,
+                filter:     filterPointer,
+                priority:   gitFilterDriverPriority + 100
+            )
+            
+            XCTAssertOK(filterRegisterResult)
+        }
+    }
+    
+    
+    
     func testGitFilterSourceOperations() throws
     {
         try Repository.withRepository
@@ -329,6 +366,7 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(filterInitResult)
+            XCTAssertNotNil(filterPointer)
             
             
             
@@ -408,6 +446,13 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
             
             
             
+            let retrievedFilter: UnsafeMutablePointer<git_filter>?
+                = gitFilterLookup(name: filterName)
+            
+            XCTAssertNotNil(retrievedFilter)
+            
+            
+            
             let filterListLoadResult: GitErrorCode = gitFilterListLoad(
                 filters:    &filterListPointer,
                 repo:       repository.pointer,
@@ -442,6 +487,26 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
         )
         
         XCTAssertOK(GitErrorCode(rawValue: filterStreamFNResult))
+    }
+    
+    
+    
+    func testGitFilterUnregister() throws
+    {
+        let filterNames: [String] =
+        [
+            gitFilterCRLF,
+            gitFilterIdent,
+            "non-existent"
+        ]
+        
+        for filterName in filterNames
+        {
+            let filterUnregisterResult: GitErrorCode
+                = gitFilterUnregister(name: filterName)
+            
+            XCTAssertNotOK(filterUnregisterResult)
+        }
     }
     
     

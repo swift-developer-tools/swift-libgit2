@@ -582,9 +582,9 @@ final class DiffTests: XCTestCaseStopOnFail
             
             XCTAssertOK(diffFindSimilarResult)
             
-            Diff.assertDiffChanges(
-                diffPointer:    diffPointer,
-                type:           .gitDeltaRenamed
+            Diff.validateDiff(
+                diffPointer,
+                type:   .gitDeltaRenamed
             )
         }
     }
@@ -816,7 +816,7 @@ final class DiffTests: XCTestCaseStopOnFail
         )
         
         XCTAssertOK(diffFromBufferResult)
-        Diff.assertDiffChanges(diffPointer: diffPointer)
+        Diff.validateDiff(diffPointer)
     }
     
     
@@ -1045,7 +1045,7 @@ final class DiffTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(diffIndexToWorkdirResult)
-            Diff.assertDiffChanges(diffPointer: diffPointer)
+            Diff.validateDiff(diffPointer)
         }
     }
     
@@ -1637,7 +1637,7 @@ final class DiffTests: XCTestCaseStopOnFail
             )
             
             XCTAssertOK(diffTreeToIndexResult)
-            Diff.assertDiffChanges(diffPointer: diffPointer)
+            Diff.validateDiff(diffPointer)
         }
     }
     
@@ -1731,7 +1731,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 )
             
             XCTAssertOK(diffTreeToWorkdirWithIndexResult)
-            Diff.assertDiffChanges(diffPointer: diffPointer)
+            Diff.validateDiff(diffPointer)
         }
     }
 }

@@ -87,7 +87,7 @@ public typealias GitFilterCheckFN = @convention(c)
 ///   the heap.
 ///   - to: The input buffer to use.
 ///   - from: The output buffer to use.
-///   - src: The filter source to check. The underlying type must be
+///   - src: The filter source to use. The underlying type must be
 ///   `git_filter_source`.
 /// - Returns: `0` on success, or an error code.
 ///
@@ -119,7 +119,7 @@ public typealias GitFilterApplyFN = @convention(c)
 ///   - self: The filter to check.
 ///   - payload: The payload provided by the caller. This must be allocated on
 ///   the heap.
-///   - src: The filter source to check. The underlying type must be
+///   - src: The filter source to use. The underlying type must be
 ///   `git_filter_source`.
 ///   - next: The stream in which to write the filtered data.
 /// - Returns: `0` on success, or an error code.
