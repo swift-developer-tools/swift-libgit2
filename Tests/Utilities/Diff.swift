@@ -17,22 +17,13 @@ import XCTest
 /// Diff-related test utilities.
 enum Diff
 {
-    /// Asserts that the given diff meets certain expectations.
+    /// Validates the properties of the given diff.
     /// - Parameters:
-    ///   - diffPointer: The diff to evaluate.
-    ///   - type: The type to evaluate.
-    ///
-    /// ## Discussion
-    ///
-    /// The following conditions are checked:
-    ///
-    /// - The diff is not `nil`.
-    /// - The diff has a non-zero number of deltas.
-    /// - The diff has a non-zero number of deltas of the given type, if a
-    /// type was specified.
-    static func assertDiffChanges(
-        diffPointer : OpaquePointer?,
-        type        : GitDeltaT?        = nil
+    ///   - diffPointer: The diff to validate.
+    ///   - type: The type of delta to use.
+    static func validateDiff(
+        _ diffPointer   : OpaquePointer?,
+        type            : GitDeltaT?        = nil
     )
     {
         guard let diffPointer: OpaquePointer = diffPointer
@@ -191,7 +182,7 @@ enum Diff
         
         
         
-        assertDiffChanges(diffPointer: diffPointer)
+        validateDiff(diffPointer)
         
         return try body(diffPointer)
     }
@@ -265,7 +256,7 @@ enum Diff
             throw NSError.makeError("The diff pointer was nil.")
         }
         
-        assertDiffChanges(diffPointer: diffPointer)
+        validateDiff(diffPointer)
         
         
         
