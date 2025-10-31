@@ -141,41 +141,18 @@ final class ODBBackendTests: XCTestCaseStopOnFail
             
             
             
-            let packDirectoryURL: URL = repository.url.appending(
-                path:           "pack",
-                directoryHint:  .isDirectory
+            let packfileData: Data = try repository.createPackfileData()
+            
+            let indexURL: URL = try repository.validatePackfileData(
+                packfileData,
+                options: nil
             )
-            
-            let packfileURLs: [URL]?
-                = try? FileManager.default.contentsOfDirectory(
-                    at:                             packDirectoryURL,
-                    includingPropertiesForKeys:     nil
-                )
-            
-            guard let packfileURLs: [URL] = packfileURLs
-            else
-            {
-                /// Packfiles may not exist in the repository.
-                return
-            }
-            
-            
-            
-            let indexFileURL: URL?
-                = packfileURLs.first(where: { $0.pathExtension == ".idx" })
-            
-            guard let indexFileURL: URL = indexFileURL
-            else
-            {
-                /// Packfiles may not exist in the repository.
-                return
-            }
             
             
             
             let odbBackendOnePackResult: GitErrorCode = gitODBBackendOnePack(
                 out:        &backendPointer,
-                indexFile:  indexFileURL.path()
+                indexFile:  indexURL.path()
             )
             
             XCTAssertOK(odbBackendOnePackResult)

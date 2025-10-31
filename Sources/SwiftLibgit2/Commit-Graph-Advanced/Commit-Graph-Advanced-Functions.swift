@@ -227,11 +227,12 @@ public func gitCommitGraphWriterCommit(
 
 
 
-/// Writes the contents of the given commit graph writer to the given buffer.
+/// Gets the contents of the given commit graph writer.
 /// - Parameters:
 ///   - buffer: The `Data` instance in which to store the contents of the
 ///   given commit graph writer.
-///   - w: The commit graph writer to write.
+///   - w: The commit graph writer to write. The underlying type must be
+///   `git_commit_graph_writer`.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent

@@ -50,4 +50,3 @@ public struct GitMergeDriver: CStruct, Sendable
         self.apply          = mergeDriver.apply
     }
 }
-

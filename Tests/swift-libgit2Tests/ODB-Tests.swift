@@ -1128,7 +1128,7 @@ private extension ODBTests
             
             
             
-            return try body(odbPointer)
+            try body(odbPointer)
         }
     }
     
@@ -1228,6 +1228,6 @@ private extension ODBTests
         
         
         
-        return try body(objectPointer)
+        try body(objectPointer)
     }
 }
