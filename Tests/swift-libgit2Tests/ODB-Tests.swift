@@ -17,98 +17,9 @@ final class ODBTests: XCTestCaseStopOnFail
 {
     func testGitAddAlternate() throws
     {
-        try Repository.withRepository
+        try withAddedBackend(alternate: true)
         {
-            repository in
-            
-            var odbPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitODBFree(db: odbPointer)
-            }
-            
-            
-            
-            let odbNewResult: GitErrorCode = gitODBNew(odb: &odbPointer)
-            
-            XCTAssertOK(odbNewResult)
-            
-            guard let odbPointer: OpaquePointer = odbPointer
-            else
-            {
-                XCTFail("The ODB pointer was nil.")
-                return
-            }
-            
-            
-            
-            let alternateDirectoryURL: URL
-                = try Repository.createTemporaryDirectory(named: "alternates")
-            
-            defer
-            {
-                try? FileManager.default.removeItem(at: alternateDirectoryURL)
-            }
-            
-            
-            
-            var backendOwnershipTransferred : Bool = false
-            
-            var looseBackendPointer: UnsafeMutablePointer<git_odb_backend>?
-                = nil
-            
-            defer
-            {
-                if
-                    !backendOwnershipTransferred,
-                    looseBackendPointer != nil
-                {
-                    /// Ownership of the memory transfers to libgit2 after
-                    /// adding the backend. Free the memory manually if the
-                    /// memory was allocated, but the add operation failed.
-                    looseBackendPointer?.pointee.free(looseBackendPointer)
-                }
-            }
-            
-            
-            
-            let looseBackendResult: GitErrorCode = gitODBBackendLoose(
-                out:                &looseBackendPointer,
-                objectsDir:         alternateDirectoryURL.path(),
-                compressionLevel:   -1,
-                doFSync:            false,
-                dirMode:            0,
-                fileMode:           0
-            )
-            
-            XCTAssertOK(looseBackendResult)
-            
-            guard let looseBackendPointer: UnsafeMutablePointer<git_odb_backend>
-                    = looseBackendPointer
-            else
-            {
-                XCTFail("The loose ODB backend pointer was nil.")
-                return
-            }
-            
-            
-            
-            let odbAddAlternateResult: GitErrorCode = gitODBAddAlternate(
-                odb:        odbPointer,
-                backend:    looseBackendPointer,
-                priority:   5
-            )
-            
-            XCTAssertOK(odbAddAlternateResult)
-            
-            backendOwnershipTransferred = true
-            
-            
-            
-            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
-            
-            XCTAssertGreaterThan(backendCount, 0)
+            _ in
         }
     }
     
@@ -116,95 +27,9 @@ final class ODBTests: XCTestCaseStopOnFail
     
     func testGitAddBackend() throws
     {
-        try Repository.withRepository
+        try withAddedBackend(alternate: false)
         {
-            repository in
-            
-            var odbPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitODBFree(db: odbPointer)
-            }
-            
-            
-            
-            let odbNewResult: GitErrorCode = gitODBNew(odb: &odbPointer)
-            
-            XCTAssertOK(odbNewResult)
-            
-            guard let odbPointer: OpaquePointer = odbPointer
-            else
-            {
-                XCTFail("The ODB pointer was nil.")
-                return
-            }
-            
-            
-            
-            let objectsDirectoryURL: URL = repository.url.appending(
-                path:           ".git/objects",
-                directoryHint:  .isDirectory
-            )
-            
-            
-            
-            var backendOwnershipTransferred : Bool = false
-            
-            var looseBackendPointer: UnsafeMutablePointer<git_odb_backend>?
-                = nil
-            
-            defer
-            {
-                if
-                    !backendOwnershipTransferred,
-                    looseBackendPointer != nil
-                {
-                    /// Ownership of the memory transfers to libgit2 after
-                    /// adding the backend. Free the memory manually if the
-                    /// memory was allocated, but the add operation failed.
-                    looseBackendPointer?.pointee.free(looseBackendPointer)
-                }
-            }
-            
-            
-            
-            let looseBackendResult: GitErrorCode = gitODBBackendLoose(
-                out:                &looseBackendPointer,
-                objectsDir:         objectsDirectoryURL.path(),
-                compressionLevel:   -1,
-                doFSync:            false,
-                dirMode:            0,
-                fileMode:           0
-            )
-            
-            XCTAssertOK(looseBackendResult)
-            
-            guard let looseBackendPointer: UnsafeMutablePointer<git_odb_backend>
-                    = looseBackendPointer
-            else
-            {
-                XCTFail("The loose ODB backend pointer was nil.")
-                return
-            }
-            
-            
-            
-            let odbAddBackendResult: GitErrorCode = gitODBAddBackend(
-                odb:        odbPointer,
-                backend:    looseBackendPointer,
-                priority:   1
-            )
-            
-            XCTAssertOK(odbAddBackendResult)
-            
-            backendOwnershipTransferred = true
-            
-            
-            
-            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
-            
-            XCTAssertGreaterThan(backendCount, 0)
+            _ in
         }
     }
     
@@ -242,13 +67,217 @@ final class ODBTests: XCTestCaseStopOnFail
     {
         try withOpenedODB
         {
+            _, _ in
+        }
+    }
+    
+    
+    
+    func testGitODBExists() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            let headOID: GitOID = repository.headOID
+            
+            let odbExists: Bool = gitODBExists(
+                db:     odbPointer,
+                id:     headOID
+            )
+            
+            XCTAssertTrue(odbExists)
+            
+            
+            
+            var odbExistsExt: Bool = gitODBExistsExt(
+                db:         odbPointer,
+                id:         headOID,
+                flags:      .gitODBLookupNoRefresh
+            )
+            
+            XCTAssertTrue(odbExistsExt)
+            
+            
+            
+            odbExistsExt = false
+            
+            odbExistsExt = gitODBExistsExt(
+                db:         odbPointer,
+                id:         headOID,
+                flags:      []
+            )
+            
+            XCTAssertTrue(odbExistsExt)
+            
+            
+            
+            let zeroOIDExists: Bool = gitODBExists(
+                db:     odbPointer,
+                id:     GitOID()
+            )
+            
+            XCTAssertFalse(zeroOIDExists)
+        }
+    }
+    
+    
+    
+    func testGitODBExistsPrefix() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            let headOID: GitOID = repository.headOID
+            
+            var fullOID = GitOID()
+            
+            let odbExistsPrefixResult: GitErrorCode = gitODBExistsPrefix(
+                out:        &fullOID,
+                db:         odbPointer,
+                shortID:    headOID,
+                len:        7
+            )
+            
+            XCTAssertOK(odbExistsPrefixResult)
+            XCTAssertEqual(fullOID, headOID)
+        }
+    }
+    
+    
+    
+    func testGitODBExpandID() throws
+    {
+        let odbExpandID = GitODBExpandID()
+        
+        XCTAssertZeroOID(odbExpandID.id)
+        XCTAssertEqual(odbExpandID.length, 0)
+        XCTAssertEqual(odbExpandID.type, .gitObjectAny)
+        
+        odbExpandID.withCValue
+        {
+            cODBExpandID in
+            
+            XCTAssertZeroOID(GitOID(cValue: cODBExpandID.pointee.id))
+            XCTAssertEqual(cODBExpandID.pointee.length, 0)
+            XCTAssertEqual(GitObjectT(cValue: cODBExpandID.pointee.type), .gitObjectAny)
+        }
+    }
+    
+    
+    
+    func testGitODBExpandIDs() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            let headOID: GitOID = repository.headOID
+            
+            var expandID = GitODBExpandID()
+            
+            expandID.id         = headOID
+            expandID.length     = 7
+            expandID.type       = .gitObjectCommit
+            
+            var expandIDs: [GitODBExpandID] = [expandID]
+            
+            
+            
+            let odbExpandIDsResult: GitErrorCode = gitODBExpandIDs(
+                db:     odbPointer,
+                ids:    &expandIDs,
+                count:  expandIDs.count
+            )
+            
+            XCTAssertOK(odbExpandIDsResult)
+            XCTAssertEqual(expandIDs[0].id, headOID)
+            XCTAssertEqual(expandIDs[0].type, .gitObjectCommit)
+        }
+    }
+    
+    
+    
+    func testGitODBForEach() throws
+    {
+        try withOpenedODB
+        {
             _, odbPointer in
             
-            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
+            var callbackData = CallbackData()
             
-            XCTAssertGreaterThan(backendCount, 0)
+            let odbForEachCB: GitODBForEachCB =
+            {
+                oidPointer, payload in
+                
+                guard
+                    let payload     : UnsafeMutableRawPointer   = payload,
+                    let oidPointer  : UnsafePointer<git_oid>    = oidPointer
+                else
+                {
+                    XCTFail("All or some callback parameters were nil.")
+                    return GitErrorCode.gitUnknown(-123).rawValue
+                }
+                
+                let payloadPointer: UnsafeMutablePointer<CallbackData>
+                    = payload.assumingMemoryBound(to: CallbackData.self)
+                
+                payloadPointer.pointee.callCount += 1
+                
+                payloadPointer.pointee.oids.append(
+                    GitOID(cValue: oidPointer.pointee)
+                )
+                
+                return GitErrorCode.gitOK.rawValue
+            }
             
             
+            
+            withUnsafeMutablePointer(to: &callbackData)
+            {
+                callbackDataPointer in
+                
+                let odbForEachResult: GitErrorCode = gitODBForEach(
+                    db:         odbPointer,
+                    cb:         odbForEachCB,
+                    payload:    UnsafeMutableRawPointer(callbackDataPointer)
+                )
+                
+                XCTAssertOK(odbForEachResult)
+            }
+            
+            XCTAssertGreaterThan(callbackData.callCount, 0)
+            XCTAssertGreaterThan(callbackData.oids.count, 0)
+            
+            
+            
+            for oid in callbackData.oids
+            {
+                let oidExists: Bool = gitODBExists(
+                    db:     odbPointer,
+                    id:     oid
+                )
+                
+                XCTAssertTrue(oidExists)
+            }
+        }
+    }
+    
+    
+    
+    func testGitODBFree() throws
+    {
+        gitODBFree(db: nil)
+    }
+    
+    
+    
+    func testGitODBGetBackend() throws
+    {
+        try withOpenedODB
+        {
+            _, odbPointer in
             
             var backendPointer: UnsafeMutablePointer<git_odb_backend>? = nil
             
@@ -260,6 +289,130 @@ final class ODBTests: XCTestCaseStopOnFail
             
             XCTAssertOK(odbGetBackendResult)
             XCTAssertNotNil(backendPointer)
+        }
+    }
+    
+    
+    
+    func testGitODBHashAndHashFile() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            let blobContent : String    = "Blob content"
+            let blobData    : Data      = Data(blobContent.utf8)
+            
+            var hashOID = GitOID()
+            
+            let odbHashResult: GitErrorCode = gitODBHash(
+                oid:            &hashOID,
+                data:           blobData,
+                len:            blobData.count,
+                objectType:     .gitObjectBlob
+            )
+            
+            XCTAssertOK(odbHashResult)
+            XCTAssertNotZeroOID(hashOID)
+            
+            
+            
+            let testURL: URL = try repository.modifyFile(
+                at:     "hash.txt",
+                with:   blobContent
+            )
+            
+            
+            
+            var fileHashOID = GitOID()
+            
+            let odbHashFileResult: GitErrorCode = gitODBHashFile(
+                oid:            &fileHashOID,
+                path:           testURL.path(),
+                objectType:     .gitObjectBlob
+            )
+            
+            XCTAssertOK(odbHashFileResult)
+            XCTAssertNotZeroOID(fileHashOID)
+            XCTAssertEqual(fileHashOID, hashOID)
+        }
+    }
+    
+    
+    
+    func testGitODBLookupFlagsT() throws
+    {
+        XCTAssertEqual(GitODBLookupFlagsT.gitODBLookupNoRefresh.rawValue, GIT_ODB_LOOKUP_NO_REFRESH.rawValue)
+        
+        XCTAssertEqual(GitODBLookupFlagsT(rawValue: 123).cValue().rawValue, 123)
+        
+        XCTAssertEqual(GitODBLookupFlagsT.gitODBLookupNoRefresh.cValue(), GIT_ODB_LOOKUP_NO_REFRESH)
+        
+        XCTAssertEqual(GitODBLookupFlagsT(cValue: GIT_ODB_LOOKUP_NO_REFRESH), .gitODBLookupNoRefresh)
+        
+        
+        
+        let flags: GitODBLookupFlagsT =
+        [
+            .gitODBLookupNoRefresh
+        ]
+        
+        XCTAssertTrue(flags.contains(.gitODBLookupNoRefresh))
+    }
+    
+    
+    
+    func testGitODBNew() throws
+    {
+        var odbPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            gitODBFree(db: odbPointer)
+        }
+        
+        
+        
+        let odbNewResult: GitErrorCode = gitODBNew(odb: &odbPointer)
+        
+        XCTAssertOK(odbNewResult)
+        XCTAssertNotNil(odbPointer)
+    }
+    
+    
+    
+    func testGitODBNumBackends() throws
+    {
+        try withOpenedODB
+        {
+            _, odbPointer in
+            
+            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
+            
+            XCTAssertGreaterThan(backendCount, 0)
+        }
+    }
+    
+    
+    
+    func testGitODBObjectData() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectData: Data? = gitODBObjectData(object: objectPointer)
+                
+                XCTAssertNotNil(objectData)
+                XCTAssertGreaterThan(objectData?.count ?? 0, 0)
+            }
         }
     }
     
@@ -363,286 +516,86 @@ final class ODBTests: XCTestCaseStopOnFail
     
     
     
-    func testGitODBExists() throws
-    {
-        try withOpenedODB
-        {
-            repository, odbPointer in
-            
-            let headOID: GitOID = repository.headOID
-            
-            let odbExists: Bool = gitODBExists(
-                db:     odbPointer,
-                id:     headOID
-            )
-            
-            XCTAssertTrue(odbExists)
-            
-            
-            
-            var odbExistsExt: Bool = gitODBExistsExt(
-                db:         odbPointer,
-                id:         headOID,
-                flags:      .gitODBLookupNoRefresh
-            )
-            
-            XCTAssertTrue(odbExistsExt)
-            
-            
-            
-            odbExistsExt = false
-            
-            odbExistsExt = gitODBExistsExt(
-                db:         odbPointer,
-                id:         headOID,
-                flags:      []
-            )
-            
-            XCTAssertTrue(odbExistsExt)
-            
-            
-            
-            let zeroOIDExists: Bool = gitODBExists(
-                db:     odbPointer,
-                id:     GitOID()
-            )
-            
-            XCTAssertFalse(zeroOIDExists)
-        }
-    }
-    
-    
-    
-    func testGitODBExistsPrefixAndExpandIDs() throws
-    {
-        try withOpenedODB
-        {
-            repository, odbPointer in
-            
-            let headOID: GitOID = repository.headOID
-            
-            var fullOID = GitOID()
-            
-            let odbExistsPrefixResult: GitErrorCode = gitODBExistsPrefix(
-                out:        &fullOID,
-                db:         odbPointer,
-                shortID:    headOID,
-                len:        7
-            )
-            
-            XCTAssertOK(odbExistsPrefixResult)
-            XCTAssertEqual(fullOID, headOID)
-            
-            
-            
-            var expandID = GitODBExpandID()
-            
-            expandID.id         = headOID
-            expandID.length     = 7
-            expandID.type       = .gitObjectCommit
-            
-            var expandIDs: [GitODBExpandID] = [expandID]
-            
-            
-            
-            let odbExpandIDsResult: GitErrorCode = gitODBExpandIDs(
-                db:     odbPointer,
-                ids:    &expandIDs,
-                count:  expandIDs.count
-            )
-            
-            XCTAssertOK(odbExpandIDsResult)
-            XCTAssertEqual(expandIDs[0].id, headOID)
-            XCTAssertEqual(expandIDs[0].type, .gitObjectCommit)
-        }
-    }
-    
-    
-    
-    func testGitODBExpandID() throws
-    {
-        let odbExpandID = GitODBExpandID()
-        
-        XCTAssertZeroOID(odbExpandID.id)
-        XCTAssertEqual(odbExpandID.length, 0)
-        XCTAssertEqual(odbExpandID.type, .gitObjectAny)
-        
-        odbExpandID.withCValue
-        {
-            cODBExpandID in
-            
-            XCTAssertZeroOID(GitOID(cValue: cODBExpandID.pointee.id))
-            XCTAssertEqual(cODBExpandID.pointee.length, 0)
-            XCTAssertEqual(GitObjectT(cValue: cODBExpandID.pointee.type), .gitObjectAny)
-        }
-    }
-    
-    
-    
-    func testGitODBForEach() throws
-    {
-        try withOpenedODB
-        {
-            _, odbPointer in
-            
-            var callbackData = CallbackData()
-            
-            let odbForEachCB: GitODBForEachCB =
-            {
-                oidPointer, payload in
-                
-                guard
-                    let payload     : UnsafeMutableRawPointer   = payload,
-                    let oidPointer  : UnsafePointer<git_oid>    = oidPointer
-                else
-                {
-                    XCTFail("All or some callback parameters were nil.")
-                    return GitErrorCode.gitUnknown(-123).rawValue
-                }
-                
-                let payloadPointer: UnsafeMutablePointer<CallbackData>
-                    = payload.assumingMemoryBound(to: CallbackData.self)
-                
-                payloadPointer.pointee.callCount += 1
-                
-                payloadPointer.pointee.oids.append(
-                    GitOID(cValue: oidPointer.pointee)
-                )
-                
-                return GitErrorCode.gitOK.rawValue
-            }
-            
-            
-            
-            withUnsafeMutablePointer(to: &callbackData)
-            {
-                callbackDataPointer in
-                
-                let odbForEachResult: GitErrorCode = gitODBForEach(
-                    db:         odbPointer,
-                    cb:         odbForEachCB,
-                    payload:    UnsafeMutableRawPointer(callbackDataPointer)
-                )
-                
-                XCTAssertOK(odbForEachResult)
-            }
-            
-            XCTAssertGreaterThan(callbackData.callCount, 0)
-            XCTAssertGreaterThan(callbackData.oids.count, 0)
-            
-            
-            
-            for oid in callbackData.oids
-            {
-                let oidExists: Bool = gitODBExists(
-                    db:     odbPointer,
-                    id:     oid
-                )
-                
-                XCTAssertTrue(oidExists)
-            }
-        }
-    }
-    
-    
-    
-    func testGitODBFree() throws
-    {
-        gitODBFree(db: nil)
-    }
-    
-    
-    
-    func testGitODBHashAndHashFile() throws
-    {
-        try withOpenedODB
-        {
-            repository, odbPointer in
-            
-            let blobContent : String    = "Blob content"
-            let blobData    : Data      = Data(blobContent.utf8)
-            
-            var hashOID = GitOID()
-            
-            let odbHashResult: GitErrorCode = gitODBHash(
-                oid:            &hashOID,
-                data:           blobData,
-                len:            blobData.count,
-                objectType:     .gitObjectBlob
-            )
-            
-            XCTAssertOK(odbHashResult)
-            XCTAssertNotZeroOID(hashOID)
-            
-            
-            
-            let testURL: URL = try repository.modifyFile(
-                at:     "hash.txt",
-                with:   blobContent
-            )
-            
-            
-            
-            var fileHashOID = GitOID()
-            
-            let odbHashFileResult: GitErrorCode = gitODBHashFile(
-                oid:            &fileHashOID,
-                path:           testURL.path(),
-                objectType:     .gitObjectBlob
-            )
-            
-            XCTAssertOK(odbHashFileResult)
-            XCTAssertNotZeroOID(fileHashOID)
-            XCTAssertEqual(fileHashOID, hashOID)
-        }
-    }
-    
-    
-    
-    func testGitODBLookupFlagsT() throws
-    {
-        XCTAssertEqual(GitODBLookupFlagsT.gitODBLookupNoRefresh.rawValue, GIT_ODB_LOOKUP_NO_REFRESH.rawValue)
-        
-        XCTAssertEqual(GitODBLookupFlagsT(rawValue: 123).cValue().rawValue, 123)
-        
-        XCTAssertEqual(GitODBLookupFlagsT.gitODBLookupNoRefresh.cValue(), GIT_ODB_LOOKUP_NO_REFRESH)
-        
-        XCTAssertEqual(GitODBLookupFlagsT(cValue: GIT_ODB_LOOKUP_NO_REFRESH), .gitODBLookupNoRefresh)
-        
-        
-        
-        let flags: GitODBLookupFlagsT =
-        [
-            .gitODBLookupNoRefresh
-        ]
-        
-        XCTAssertTrue(flags.contains(.gitODBLookupNoRefresh))
-    }
-    
-    
-    
-    func testGitODBNew() throws
-    {
-        var odbPointer: OpaquePointer? = nil
-        
-        defer
-        {
-            gitODBFree(db: odbPointer)
-        }
-        
-        
-        
-        let odbNewResult: GitErrorCode = gitODBNew(odb: &odbPointer)
-        
-        XCTAssertOK(odbNewResult)
-        XCTAssertNotNil(odbPointer)
-    }
-    
-    
-    
     func testGitODBObjectFree() throws
     {
         gitODBObjectFree(object: nil)
+    }
+    
+    
+    
+    func testGitODBObjectID() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectOID: GitOID? = gitODBObjectID(object: objectPointer)
+                
+                XCTAssertNotNil(objectOID)
+                XCTAssertEqual(objectOID, repository.headOID)
+            }
+        }
+    }
+    
+    
+    
+    func testGitODBObjectSize() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectData: Data? = gitODBObjectData(object: objectPointer)
+                
+                XCTAssertNotNil(objectData)
+                XCTAssertGreaterThan(objectData?.count ?? 0, 0)
+                
+                
+                
+                let objectSize: Int = gitODBObjectSize(object: objectPointer)
+                
+                XCTAssertGreaterThan(objectSize, 0)
+                XCTAssertEqual(objectSize, objectData?.count ?? 0)
+            }
+        }
+    }
+    
+    
+    
+    func testGitODBObjectType() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
+            )
+            {
+                objectPointer in
+                
+                let objectType: GitObjectT?
+                    = gitODBObjectType(object: objectPointer)
+                
+                XCTAssertNotNil(objectType)
+                XCTAssertEqual(objectType, .gitObjectCommit)
+            }
+        }
     }
     
     
@@ -686,99 +639,29 @@ final class ODBTests: XCTestCaseStopOnFail
     
     
     
-    func testGitODBReadAndObjectGetters() throws
+    func testGitODBRead() throws
     {
         try withOpenedODB
         {
             repository, odbPointer in
             
-            var objectPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitODBObjectFree(object: objectPointer)
-            }
-            
-            
-            
-            let headOID: GitOID = repository.headOID
-            
-            let odbReadResult: GitErrorCode = gitODBRead(
-                obj:    &objectPointer,
-                db:     odbPointer,
-                id:     headOID
+            try withReadObject(
+                from:   odbPointer,
+                in:     repository
             )
-            
-            XCTAssertOK(odbReadResult)
-            
-            guard let objectPointer: OpaquePointer = objectPointer
-            else
             {
-                XCTFail("The ODB object pointer was nil.")
-                return
+                _ in
             }
-            
-            
-            
-            let objectOID: GitOID? = gitODBObjectID(object: objectPointer)
-            
-            XCTAssertNotNil(objectOID)
-            XCTAssertEqual(objectOID, headOID)
-            
-            
-            
-            let objectData: Data? = gitODBObjectData(object: objectPointer)
-            
-            XCTAssertNotNil(objectData)
-            XCTAssertGreaterThan(objectData?.count ?? 0, 0)
-            
-            
-            
-            let objectSize: Int = gitODBObjectSize(object: objectPointer)
-            
-            XCTAssertGreaterThan(objectSize, 0)
-            XCTAssertEqual(objectSize, objectData?.count ?? 0)
-            
-            
-            
-            let objectType: GitObjectT?
-                = gitODBObjectType(object: objectPointer)
-            
-            XCTAssertNotNil(objectType)
-            XCTAssertEqual(objectType, .gitObjectCommit)
         }
     }
     
     
     
-    func testGitODBReadPrefixAndHeader() throws
+    func testGitODBReadHeader() throws
     {
         try withOpenedODB
         {
             repository, odbPointer in
-            
-            var objectPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitODBObjectFree(object: objectPointer)
-            }
-            
-            
-            
-            let headOID: GitOID = repository.headOID
-            
-            let odbReadPrefixResult: GitErrorCode = gitODBReadPrefix(
-                obj:        &objectPointer,
-                db:         odbPointer,
-                shortID:    headOID,
-                len:        7
-            )
-            
-            XCTAssertOK(odbReadPrefixResult)
-            XCTAssertNotNil(objectPointer)
-            
-            
             
             var headerLength    : Int           = 0
             var headerType      : GitObjectT    = .gitObjectAny
@@ -787,12 +670,41 @@ final class ODBTests: XCTestCaseStopOnFail
                 lenOut:     &headerLength,
                 typeOut:    &headerType,
                 db:         odbPointer,
-                id:         headOID
+                id:         repository.headOID
             )
             
             XCTAssertOK(odbReadHeaderResult)
             XCTAssertGreaterThan(headerLength, 0)
             XCTAssertEqual(headerType, .gitObjectCommit)
+        }
+    }
+    
+    
+    
+    func testGitODBReadPrefix() throws
+    {
+        try withOpenedODB
+        {
+            repository, odbPointer in
+            
+            var objectPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitODBObjectFree(object: objectPointer)
+            }
+            
+            
+            
+            let odbReadPrefixResult: GitErrorCode = gitODBReadPrefix(
+                obj:        &objectPointer,
+                db:         odbPointer,
+                shortID:    repository.headOID,
+                len:        7
+            )
+            
+            XCTAssertOK(odbReadPrefixResult)
+            XCTAssertNotNil(objectPointer)
         }
     }
     
@@ -933,9 +845,8 @@ final class ODBTests: XCTestCaseStopOnFail
         {
             _, odbPointer in
             
-            let blobData = Data("Blob content".utf8)
-            
-            var blobOID = GitOID()
+            let blobData    = Data("Blob content".utf8)
+            var blobOID     = GitOID()
             
             let odbWriteResult: GitErrorCode = gitODBWrite(
                 out:    &blobOID,
@@ -1100,6 +1011,129 @@ private extension ODBTests
     
     
     
+    /// Calls the given closure with a pointer to an object database, after
+    /// adding a backend to it.
+    /// - Parameters:
+    ///   - alternate: Whether to add the backend as an alternate backend.
+    ///   - body: The closure to call.
+    /// - Throws: An error if an operation fails.
+    func withAddedBackend(
+        alternate   : Bool,
+        _ body      : (OpaquePointer) throws -> Void
+    ) throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            var odbPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitODBFree(db: odbPointer)
+            }
+            
+            
+            
+            let odbNewResult: GitErrorCode = gitODBNew(odb: &odbPointer)
+            
+            XCTAssertOK(odbNewResult)
+            
+            guard let odbPointer: OpaquePointer = odbPointer
+            else
+            {
+                XCTFail("The ODB pointer was nil.")
+                return
+            }
+            
+            
+            
+            let objectsURL: URL = alternate
+                ? try Repository.createTemporaryDirectory(named: "alternates")
+                : repository.objectsURL
+            
+            var backendOwnershipTransferred: Bool = false
+            
+            var backendPointer: UnsafeMutablePointer<git_odb_backend>? = nil
+            
+            defer
+            {
+                if alternate
+                {
+                    try? FileManager.default.removeItem(at: objectsURL)
+                }
+                
+                if
+                    !backendOwnershipTransferred,
+                    backendPointer != nil
+                {
+                    /// Ownership of the memory transfers to libgit2 after
+                    /// adding the backend. Free the memory manually if the
+                    /// memory was allocated, but the add operation failed.
+                    backendPointer?.pointee.free(backendPointer)
+                }
+            }
+            
+            
+            
+            let looseBackendResult: GitErrorCode = gitODBBackendLoose(
+                out:                &backendPointer,
+                objectsDir:         objectsURL.path(),
+                compressionLevel:   -1,
+                doFSync:            false,
+                dirMode:            0,
+                fileMode:           0
+            )
+            
+            XCTAssertOK(looseBackendResult)
+            
+            guard let backendPointer: UnsafeMutablePointer<git_odb_backend>
+                    = backendPointer
+            else
+            {
+                XCTFail("The ODB backend pointer was nil.")
+                return
+            }
+            
+            
+            
+            if alternate
+            {
+                let odbAddAlternateResult: GitErrorCode = gitODBAddAlternate(
+                    odb:        odbPointer,
+                    backend:    backendPointer,
+                    priority:   5
+                )
+                
+                XCTAssertOK(odbAddAlternateResult)
+            }
+            else
+            {
+                let odbAddBackendResult: GitErrorCode = gitODBAddBackend(
+                    odb:        odbPointer,
+                    backend:    backendPointer,
+                    priority:   1
+                )
+                
+                XCTAssertOK(odbAddBackendResult)
+            }
+            
+            backendOwnershipTransferred = true
+            
+            
+            
+            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
+            
+            XCTAssertGreaterThan(backendCount, 0)
+            
+            
+            
+            return try body(odbPointer)
+        }
+    }
+    
+    
+    
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to an opened object database.
     /// - Parameter body: The closure to call.
@@ -1121,14 +1155,9 @@ private extension ODBTests
             
             
             
-            let objectsDirectoryURL: URL = repository.url.appending(
-                path:           ".git/objects",
-                directoryHint:  .isDirectory
-            )
-            
             let odbOpenResult: GitErrorCode = gitODBOpen(
                 odbOut:         &odbPointer,
-                objectsDir:     objectsDirectoryURL.path()
+                objectsDir:     repository.objectsURL.path()
             )
             
             XCTAssertOK(odbOpenResult)
@@ -1140,10 +1169,65 @@ private extension ODBTests
                 return
             }
             
+            
+            
+            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
+            
+            XCTAssertGreaterThan(backendCount, 0)
+            
+            
+            
             try body(
                 repository,
                 odbPointer
             )
         }
+    }
+    
+    
+    
+    /// Calls the given closure with a pointer to an object read from the given
+    /// object database in the given repository.
+    /// - Parameters:
+    ///   - odbPointer: The object database from which to read. The underlying
+    ///   type must be `git_odb`.
+    ///   - repository: The repository containing the object database.
+    ///   - body: The closure to call.
+    /// - Throws: An error if an operation fails.
+    func withReadObject(
+        from    odbPointer  : OpaquePointer,
+        in      repository  : Repository,
+        _ body: (OpaquePointer) throws -> Void
+    ) throws
+    {
+        var objectPointer: OpaquePointer? = nil
+        
+        defer
+        {
+            gitODBObjectFree(object: objectPointer)
+        }
+        
+        
+        
+        let headOID: GitOID = repository.headOID
+        
+        let odbReadResult: GitErrorCode = gitODBRead(
+            obj:    &objectPointer,
+            db:     odbPointer,
+            id:     headOID
+        )
+        
+        XCTAssertOK(odbReadResult)
+        
+        guard let objectPointer: OpaquePointer = objectPointer
+        else
+        {
+            XCTFail("The ODB object pointer was nil.")
+            return
+        }
+        
+        
+        
+        return try body(objectPointer)
     }
 }

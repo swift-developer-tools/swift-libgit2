@@ -30,7 +30,7 @@ public typealias GitPackbuilderForEachCB = @convention(c)
 /// - Parameters:
 ///   - stage: The stage of the packbuilder.
 ///   - current: The current object.
-///   - total: The total number of objects.
+///   - total: The number of objects.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
 ///

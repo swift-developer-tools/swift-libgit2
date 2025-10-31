@@ -33,16 +33,9 @@ final class ODBBackendTests: XCTestCaseStopOnFail
             
             
             
-            let objectsDirectoryURL: URL = repository.url.appending(
-                path:           ".git/objects",
-                directoryHint:  .isDirectory
-            )
-            
-            
-            
             var odbBackendLooseResult: GitErrorCode = gitODBBackendLoose(
                 out:                &backendPointer,
-                objectsDir:         objectsDirectoryURL.path(),
+                objectsDir:         repository.objectsURL.path(),
                 compressionLevel:   -1,
                 doFSync:            false,
                 dirMode:            0,
@@ -69,7 +62,7 @@ final class ODBBackendTests: XCTestCaseStopOnFail
             
             odbBackendLooseResult = gitODBBackendLoose(
                 out:                &backendFsyncPointer,
-                objectsDir:         objectsDirectoryURL.path(),
+                objectsDir:         repository.objectsURL.path(),
                 compressionLevel:   9,
                 doFSync:            true,
                 dirMode:            UInt32(GitFileModeT.gitFileModeBlobExecutable.rawValue),
@@ -210,16 +203,9 @@ final class ODBBackendTests: XCTestCaseStopOnFail
             
             
             
-            let objectsDirectoryURL: URL = repository.url.appending(
-                path:           ".git/objects",
-                directoryHint:  .isDirectory
-            )
-            
-            
-            
             let odbBackendPackResult: GitErrorCode = gitODBBackendPack(
                 out:            &backendPointer,
-                objectsDir:     objectsDirectoryURL.path()
+                objectsDir:     repository.objectsURL.path()
             )
             
             XCTAssertOK(odbBackendPackResult)

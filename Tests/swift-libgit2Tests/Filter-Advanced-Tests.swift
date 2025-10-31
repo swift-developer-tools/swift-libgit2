@@ -164,8 +164,6 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
     
     func testGitFilterListPush() throws
     {
-        /// If the push operation succeeds, libgit2 takes ownership of the
-        /// filter list and it must not be freed.
         try withFilterList(free: false)
         {
             filterListPointer in
@@ -214,6 +212,9 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
             
             if !isOK(filterListPushResult)
             {
+                /// Ownership of the memory transfers to libgit2 after
+                /// registering the filter. Free the memory manually if the
+                /// memory was allocated, but the push operation failed.
                 gitFilterListFree(filters: filterListPointer)
             }
             

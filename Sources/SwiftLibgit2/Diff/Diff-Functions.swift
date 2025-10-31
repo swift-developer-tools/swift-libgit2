@@ -969,10 +969,10 @@ public func gitDiffGetStats(
 
 
 
-/// Gets the total number of files changed in a diff.
-/// - Parameter stats: The diff statistics from which to get the total number
-/// of changed files. The underlying type must be `git_diff_stats`.
-/// - Returns: The total number of files changed in a diff.
+/// Gets the number of files changed in a diff.
+/// - Parameter stats: The diff statistics from which to get the number of
+/// changed files. The underlying type must be `git_diff_stats`.
+/// - Returns: The number of files changed in a diff.
 ///
 /// ## C Equivalent
 ///
@@ -986,10 +986,10 @@ public func gitDiffStatsFilesChanged(
 
 
 
-/// Gets the total number of insertions in a diff.
-/// - Parameter stats: The diff statistics from which to get the total number
-/// of insertions. The underlying type must be `git_diff_stats`.
-/// - Returns: The total number of insertions in a diff.
+/// Gets the number of insertions in a diff.
+/// - Parameter stats: The diff statistics from which to get the number of
+/// insertions. The underlying type must be `git_diff_stats`.
+/// - Returns: The number of insertions in a diff.
 ///
 /// ## C Equivalent
 ///
@@ -1003,10 +1003,10 @@ public func gitDiffStatsInsertions(
 
 
 
-/// Gets the total number of deletions in a diff.
-/// - Parameter stats: The diff statistics from which to get the total number
-/// of deletions. The underlying type must be `git_diff_stats`.
-/// - Returns: The total number of deletions in a diff.
+/// Gets the number of deletions in a diff.
+/// - Parameter stats: The diff statistics from which to get the number of
+/// deletions. The underlying type must be `git_diff_stats`.
+/// - Returns: The number of deletions in a diff.
 ///
 /// ## C Equivalent
 ///
