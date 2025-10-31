@@ -269,7 +269,7 @@ public func gitFilterInit(
 
 
 
-/// Register the given filter with the given name and priority.
+/// Registers the given filter with the given name and priority.
 /// - Parameters:
 ///   - name: The filter name to use.
 ///   - filter: The filter to register.
@@ -279,8 +279,8 @@ public func gitFilterInit(
 /// ## Discussion
 ///
 /// - Important: The `filter` pointer will be stored by libgit2 and must remain
-/// valid until the filter is unregistered or until libgit2 is shut down. The
-/// pointer must be a durable allocation, meaning it must be statically
+/// valid until the filter is unregistered or until libgit2 is shut down.
+/// The pointer must be a durable allocation, meaning it must be statically
 /// allocated or heap-allocated. Passing a stack-allocated pointer will result
 /// in data loss or undefined behavior.
 ///
@@ -295,7 +295,7 @@ public func gitFilterRegister(
 {
     return withCConversion
     {
-        git_filter_register(
+        return git_filter_register(
             name,
             filter,
             priority
