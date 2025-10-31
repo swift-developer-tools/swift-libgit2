@@ -142,13 +142,6 @@ final class ODBTests: XCTestCaseStopOnFail
             
             
             
-            let objectsDirectoryURL: URL = repository.url.appending(
-                path:           ".git/objects",
-                directoryHint:  .isDirectory
-            )
-            
-            
-            
             var backendOwnershipTransferred : Bool = false
             
             var looseBackendPointer: UnsafeMutablePointer<git_odb_backend>?
@@ -171,7 +164,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             let looseBackendResult: GitErrorCode = gitODBBackendLoose(
                 out:                &looseBackendPointer,
-                objectsDir:         objectsDirectoryURL.path(),
+                objectsDir:         repository.objectsURL.path(),
                 compressionLevel:   -1,
                 doFSync:            false,
                 dirMode:            0,
@@ -1121,14 +1114,9 @@ private extension ODBTests
             
             
             
-            let objectsDirectoryURL: URL = repository.url.appending(
-                path:           ".git/objects",
-                directoryHint:  .isDirectory
-            )
-            
             let odbOpenResult: GitErrorCode = gitODBOpen(
                 odbOut:         &odbPointer,
-                objectsDir:     objectsDirectoryURL.path()
+                objectsDir:     repository.objectsURL.path()
             )
             
             XCTAssertOK(odbOpenResult)
