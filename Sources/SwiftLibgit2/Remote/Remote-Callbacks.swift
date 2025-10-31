@@ -14,7 +14,7 @@ import CLibgit2
 /// The callback invoked to report push network progress.
 /// - Parameters:
 ///   - current: The number of objects pushed so far.
-///   - total: The total number of objects to push.
+///   - total: The number of objects to push.
 ///   - bytes: The number of bytes pushed.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.

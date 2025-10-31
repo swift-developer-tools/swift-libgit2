@@ -589,7 +589,7 @@ public func gitODBOpenWStream(
 ///
 /// ## Discussion
 ///
-/// - Note: The write operation will fail if if total number of received bytes
+/// - Note: The write operation will fail if if number of received bytes
 /// exceeds the size declared with ``gitODBOpenWStream(out:db:size:type:)``.
 ///
 /// ## C Equivalent
@@ -630,9 +630,8 @@ public func gitODBStreamWrite(
 /// After the finalization operation successfully completes, the object will
 /// take its final name and will be available to the object database.
 ///
-/// - Note: The finalization operation will fail if if total number of received
-/// bytes exceeds the size declared with
-/// ``gitODBOpenWStream(out:db:size:type:)``.
+/// - Note: The finalization operation will fail if if number of received bytes
+/// exceeds the size declared with ``gitODBOpenWStream(out:db:size:type:)``.
 ///
 /// ## C Equivalent
 ///

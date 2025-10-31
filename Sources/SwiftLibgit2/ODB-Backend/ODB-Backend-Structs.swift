@@ -167,7 +167,7 @@ public struct GitODBStream: CStruct
     /// The declared object size.
     public let declaredSize     : GitObjectSizeT
     
-    /// The total number of received bytes.
+    /// The number of received bytes.
     public let receivedBytes    : GitObjectSizeT
     
     /// Writes at most the specified number of bytes into the given buffer,
