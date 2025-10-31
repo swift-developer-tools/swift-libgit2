@@ -505,7 +505,7 @@ private extension BlameTests
             
             
             
-            return try body(blamePointer)
+            try body(blamePointer)
         }
     }
 }

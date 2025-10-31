@@ -203,7 +203,7 @@ private extension CommitGraphAdvancedTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 commitGraphPointer
             )
@@ -306,7 +306,7 @@ private extension CommitGraphAdvancedTests
             
             
             
-            return try body(
+            try body(
                 repository,
                 writerPointer
             )
