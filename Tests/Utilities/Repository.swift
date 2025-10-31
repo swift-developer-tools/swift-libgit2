@@ -75,6 +75,17 @@ struct Repository
     
     
     
+    /// The URL of the attributes file.
+    var gitAttributesURL: URL
+    {
+        return url.appending(
+            path:           ".gitattributes",
+            directoryHint:  .notDirectory
+        )
+    }
+    
+    
+    
     /// The HEAD reference ID.
     var headOID: GitOID
     {
@@ -817,7 +828,16 @@ internal extension Repository
             .appending(path: worktreeName, directoryHint: .isDirectory)
             .appendingPathExtension(UUID().uuidString)
     
-    static let gitattributesFiles: [(String, String)] =
+    static let gitAttributesContent: String =
+    """
+    *.txt text eol=lf
+    *.bin binary
+    *.special custom=customvalue
+    *.false -text
+    *.macro attr1 attr2=value
+    """
+    
+    static let gitAttributesFiles: [(String, String)] =
     [
         ("test.txt",        "This is a text file\n"),
         ("data.bin",        "Binary data"),
@@ -880,23 +900,9 @@ internal extension Repository
         
         
         
-        let gitattributesContent: String =
-        """
-        *.txt text eol=lf
-        *.bin binary
-        *.special custom=customvalue
-        *.false -text
-        *.macro attr1 attr2=value
-        """
+        try Self.gitAttributesContent.atomicWrite(to: gitAttributesURL)
         
-        let gitattributesURL: URL = url.appending(
-            path:           ".gitattributes",
-            directoryHint:  .notDirectory
-        )
-        
-        try gitattributesContent.atomicWrite(to: gitattributesURL)
-        
-        for (fileName, content) in Self.gitattributesFiles
+        for (fileName, content) in Self.gitAttributesFiles
         {
             let fileURL: URL = url.appending(
                 path:           fileName,
