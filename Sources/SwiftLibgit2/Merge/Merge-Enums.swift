@@ -64,7 +64,7 @@ public struct GitMergeFlagT: COptionSet
     /// and no index will be returned.
     public static let gitMergeFailOnConflict    = GitMergeFlagT(rawValue: GIT_MERGE_FAIL_ON_CONFLICT.rawValue)
     
-    /// Do not write the `REUC` extension on the generated index.
+    /// Do not write the resolve-undo (REUC) extension on the generated index.
     public static let gitMergeSkipREUC          = GitMergeFlagT(rawValue: GIT_MERGE_SKIP_REUC.rawValue)
     
     /// If the commits being merged have multiple merge bases, do not build a

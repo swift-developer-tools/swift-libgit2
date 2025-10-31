@@ -432,10 +432,10 @@ private extension CredentialTests
     
     
     
-    /// Checks the the username of the given credential pointer equals the
+    /// Checks whether the username of the given credential pointer equals the
     /// given username.
     /// - Parameters:
-    ///   - credentialPointer: A mutable pointer to the credential to check.
+    ///   - credentialPointer: The credential to check.
     ///   - expectedUsername: The expected username.
     func validateUsername(
         of      credentialPointer   : UnsafeMutablePointer<git_credential>?,

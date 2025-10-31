@@ -492,7 +492,7 @@ public func gitIndexClear(
 
 
 
-/// Gets the index entry at the given position.
+/// Gets the index entry at the given position within the given index.
 /// - Parameters:
 ///   - index: The index to search. The underlying type must be `git_index`.
 ///   - n: The position of the entry within the given index.
@@ -506,7 +506,7 @@ public func gitIndexGetByIndex(
     n       : Int
 ) -> GitIndexEntry?
 {
-    guard let indexEntryPointer: UnsafePointer<git_index_entry>
+    guard let indexEntry: UnsafePointer<git_index_entry>
             = git_index_get_byindex(
                 index,
                 n
@@ -516,7 +516,7 @@ public func gitIndexGetByIndex(
         return nil
     }
     
-    return GitIndexEntry(cValue: indexEntryPointer.pointee)
+    return GitIndexEntry(cValue: indexEntry.pointee)
 }
 
 
@@ -537,7 +537,7 @@ public func gitIndexGetByPath(
     stage   : GitIndexStageT
 ) -> GitIndexEntry?
 {
-    guard let indexEntryPointer: UnsafePointer<git_index_entry>
+    guard let indexEntry: UnsafePointer<git_index_entry>
             = git_index_get_bypath(
                 index,
                 path,
@@ -548,7 +548,7 @@ public func gitIndexGetByPath(
         return nil
     }
     
-    return GitIndexEntry(cValue: indexEntryPointer.pointee)
+    return GitIndexEntry(cValue: indexEntry.pointee)
 }
 
 
@@ -618,8 +618,7 @@ public func gitIndexRemoveDirectory(
 /// ## Discussion
 ///
 /// If a previous index entry exists that has the same path and stage as the
-/// given index entry, it will be replaced. Otherwise, the index entry will
-/// be added.
+/// given index entry, it will be replaced.
 ///
 /// A full copy of the index entry (including the path) will be inserted on
 /// the index.
@@ -793,7 +792,7 @@ public func gitIndexIteratorFree(
 /// This function forces the file to be added to the given index, regardless
 /// of ignore rules. If the file is the result of a merge conflict, it will
 /// no longer be marked as conflicting. The data about the conflict will be
-/// moved to the "resolve undo" (`REUC`) section.
+/// moved to the resolve-undo (REUC) section.
 ///
 /// - Note: This function does not support bare repositories.
 ///
@@ -837,7 +836,7 @@ public func gitIndexAddByPath(
 /// This function forces the file to be added to the given index, regardless
 /// of ignore rules. If the file is the result of a merge conflict, it will
 /// no longer be marked as conflicting. The data about the conflict will be
-/// moved to the "resolve undo" (`REUC`) section.
+/// moved to the resolve-undo (REUC) section.
 ///
 /// ## C Equivalent
 ///
@@ -882,7 +881,7 @@ public func gitIndexAddFromBuffer(
 ///
 /// If the specified file is the result of a merge conflict, it will no longer
 /// be marked as conflicting. The data about the conflict will be moved to the
-/// "resolve undo" (`REUC`) section.
+/// resolve-undo (REUC) section.
 ///
 /// ## C Equivalent
 ///
@@ -939,7 +938,7 @@ public func gitIndexRemoveByPath(
 ///
 /// If any of the specified files are the result of a merge conflict, they will
 /// no longer be marked as conflicting. The data about the conflicts will be
-/// moved to the "resolve undo" (`REUC`) section.
+/// moved to the resolve-undo (REUC) section.
 ///
 /// - Note: This function does not support bare repositories.
 ///
