@@ -1028,7 +1028,7 @@ internal extension Repository
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        try withRepository
+        return try withRepository
         {
             repository in
             
@@ -1191,7 +1191,7 @@ internal extension Repository
         _ body  : (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        try Repository.withRepository
+        return try Repository.withRepository
         {
             repository in
             
