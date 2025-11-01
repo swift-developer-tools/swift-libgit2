@@ -26,7 +26,7 @@ public struct GitODBBackend: CStruct
     /// The struct version.
     public let version      : UInt32
     
-    /// The object database.
+    /// The object database. The underlying type must be `git_odb`.
     public let odb          : OpaquePointer?
     
     /// Reads the specified object from the given object database backend.
@@ -81,7 +81,7 @@ public struct GitODBBackend: CStruct
     
     
     
-    /// Initializes a ``GitAllocator`` instance from the given `git_odb_backend`
+    /// Initializes a ``GitODBBackend`` instance from the given `git_odb_backend`
     /// instance.
     /// - Parameter backend: The `git_odb_backend` instance to use.
     internal init(
@@ -238,7 +238,7 @@ public struct GitODBBackend: CStruct
     ///   - backend: The object database backend to search.
     ///   - id: The ID of the object for which to search.
     /// - Returns: Whether the specified object can be found in the given
-    /// object database backend.
+    /// object database backend, or an error code.
     public typealias Exists = @convention(c)
     (
         UnsafeMutablePointer<git_odb_backend>?,
@@ -258,7 +258,7 @@ public struct GitODBBackend: CStruct
     ///   than or equal to ``gitOIDMinPrefixLen``, and long enough to identify
     ///   a unique object matching the prefix.
     /// - Returns: Whether the specified object can be found in the given
-    /// object database backend.
+    /// object database backend, or an error code.
     public typealias ExistsPrefix = @convention(c)
     (
         UnsafeMutablePointer<git_oid>?,

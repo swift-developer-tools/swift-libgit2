@@ -18,14 +18,16 @@ import CLibgit2
 /// [`git_revspec`](https://libgit2.org/docs/reference/main/revparse/git_revspec.html)
 public struct GitRevspec: CStructMutable, CConvertible
 {
-    /// The left element of the revspec.
+    /// The left element of the revspec. The underlying type must be
+    /// `git_object`.
     ///
     /// ## Discussion
     ///
     /// The default value is `nil`.
     public var from     : OpaquePointer?
     
-    /// The right element of the revspec.
+    /// The right element of the revspec. The underlying type must be
+    /// `git_object`.
     ///
     /// ## Discussion
     ///

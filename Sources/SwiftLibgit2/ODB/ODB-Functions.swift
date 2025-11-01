@@ -1195,7 +1195,7 @@ public func gitODBGetBackend(
 /// ## Discussion
 ///
 /// - Important: If the operation succeeds, ownership of the given commit graph
-/// will be transferred to libgit2. The caller must not free it.
+/// will be transferred to libgit2. The caller must not free the commit graph.
 ///
 /// ## C Equivalent
 ///

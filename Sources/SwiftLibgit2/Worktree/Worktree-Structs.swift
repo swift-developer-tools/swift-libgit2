@@ -41,7 +41,8 @@ public struct GitWorktreeAddOptions: CStructMutable, WithCConvertible
     /// The default value is `false`.
     public var checkoutExisting : Bool
     
-    /// The reference to use for the worktree HEAD.
+    /// The reference to use for the worktree HEAD. The underlying type must
+    /// be `git_reference`.
     ///
     /// ## Discussion
     ///
