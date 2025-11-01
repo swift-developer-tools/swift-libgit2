@@ -238,7 +238,7 @@ public struct GitODBBackend: CStruct
     ///   - backend: The object database backend to search.
     ///   - id: The ID of the object for which to search.
     /// - Returns: Whether the specified object can be found in the given
-    /// object database backend.
+    /// object database backend, or an error code.
     public typealias Exists = @convention(c)
     (
         UnsafeMutablePointer<git_odb_backend>?,
@@ -258,7 +258,7 @@ public struct GitODBBackend: CStruct
     ///   than or equal to ``gitOIDMinPrefixLen``, and long enough to identify
     ///   a unique object matching the prefix.
     /// - Returns: Whether the specified object can be found in the given
-    /// object database backend.
+    /// object database backend, or an error code.
     public typealias ExistsPrefix = @convention(c)
     (
         UnsafeMutablePointer<git_oid>?,
