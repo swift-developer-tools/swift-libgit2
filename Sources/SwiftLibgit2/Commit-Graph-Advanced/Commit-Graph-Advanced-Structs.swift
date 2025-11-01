@@ -19,7 +19,7 @@ import Foundation
 /// [`git_commit_graph_writer_options`](https://libgit2.org/docs/reference/main/sys/commit_graph/git_commit_graph_writer_options.html)
 public struct GitCommitGraphWriterOptions: CStructMutable, ThrowingCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

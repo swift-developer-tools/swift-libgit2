@@ -19,7 +19,7 @@ import Foundation
 /// [`git_remote_create_options`](https://libgit2.org/docs/reference/main/remote/git_remote_create_options.html)
 public struct GitRemoteCreateOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -241,7 +241,7 @@ public struct GitPushUpdate: CStructInternalMutable, WithCConvertible, Sendable
 /// [`git_remote_callbacks`](https://libgit2.org/docs/reference/main/remote/git_remote_callbacks.html)
 public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -540,7 +540,7 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
 /// [`git_fetch_options`](https://libgit2.org/docs/reference/main/remote/git_fetch_options.html)
 public struct GitFetchOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -730,7 +730,7 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
 /// [`git_push_options`](https://libgit2.org/docs/reference/main/remote/git_push_options.html)
 public struct GitPushOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -886,7 +886,7 @@ public struct GitPushOptions: CStructMutable, WithCConvertible
 /// [`git_remote_connect_options`](https://libgit2.org/docs/reference/main/remote/git_remote_connect_options.html)
 public struct GitRemoteConnectOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

@@ -135,7 +135,7 @@ public struct GitConfigIterator: CStruct
 /// [`git_config_backend`](https://libgit2.org/docs/reference/main/sys/config/git_config_backend.html)
 public struct GitConfigBackend: CStruct
 {
-    /// The version to use.
+    /// The struct version.
     public let version      : UInt32
     
     /// Whether the backend is for a snapshot.
@@ -368,7 +368,7 @@ public struct GitConfigBackend: CStruct
 /// [`git_config_backend_memory_options`](https://libgit2.org/docs/reference/main/sys/config/git_config_backend_memory_options.html)
 public struct GitConfigBackendMemoryOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

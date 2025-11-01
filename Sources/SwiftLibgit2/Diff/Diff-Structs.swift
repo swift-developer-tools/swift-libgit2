@@ -236,7 +236,7 @@ public struct GitDiffDelta: CStructReadable, WithCConvertible, Sendable
 /// [`git_diff_options`](https://libgit2.org/docs/reference/main/diff/git_diff_options.html)
 public struct GitDiffOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -1057,7 +1057,7 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
 /// [`git_diff_find_options`](https://libgit2.org/docs/reference/main/diff/git_diff_find_options.html)
 public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -1223,7 +1223,7 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
 /// [`git_diff_parse_options`](https://libgit2.org/docs/reference/main/diff/git_diff_parse_options.html)
 public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -1293,7 +1293,7 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 /// [`git_diff_patchid_options`](https://libgit2.org/docs/reference/main/diff/git_diff_patchid_options.html)
 public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

@@ -18,7 +18,7 @@ import CLibgit2
 /// [`git_diff_perfdata`](https://libgit2.org/docs/reference/main/sys/diff/git_diff_perfdata.html)
 public struct GitDiffPerfData: CStructInternalMutable, CConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

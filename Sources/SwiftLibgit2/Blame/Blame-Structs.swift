@@ -19,7 +19,7 @@ import Foundation
 /// [`git_blame_options`](https://libgit2.org/docs/reference/main/blame/git_blame_options.html)
 public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

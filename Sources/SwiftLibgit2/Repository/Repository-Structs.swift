@@ -19,7 +19,7 @@ import Foundation
 /// [`git_repository_init_options`](https://libgit2.org/docs/reference/main/repository/git_repository_init_options.html)
 public struct GitRepositoryInitOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

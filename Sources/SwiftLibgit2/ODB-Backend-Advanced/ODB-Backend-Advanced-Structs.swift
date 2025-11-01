@@ -23,7 +23,7 @@ import CLibgit2
 /// [`git_odb_backend`](https://libgit2.org/docs/reference/main/sys/odb_backend/git_odb_backend.html)
 public struct GitODBBackend: CStruct
 {
-    /// The version to use.
+    /// The struct version.
     public let version      : UInt32
     
     /// The object database.

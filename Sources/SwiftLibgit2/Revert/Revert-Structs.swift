@@ -19,7 +19,7 @@ import Foundation
 /// [`git_revert_options`](https://libgit2.org/docs/reference/main/revert/git_revert_options.html)
 public struct GitRevertOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
