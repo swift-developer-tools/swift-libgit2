@@ -19,7 +19,7 @@ import Foundation
 /// [`git_proxy_options`](https://libgit2.org/docs/reference/main/proxy/git_proxy_options.html)
 public struct GitProxyOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

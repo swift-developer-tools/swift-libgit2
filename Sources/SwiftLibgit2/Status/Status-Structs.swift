@@ -19,7 +19,7 @@ import Foundation
 /// [`git_status_options`](https://libgit2.org/docs/reference/main/status/git_status_options.html)
 public struct GitStatusOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

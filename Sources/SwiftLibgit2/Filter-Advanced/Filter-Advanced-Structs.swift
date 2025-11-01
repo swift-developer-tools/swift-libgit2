@@ -23,7 +23,7 @@ import CLibgit2
 /// [`git_filter`](https://libgit2.org/docs/reference/main/sys/filter/git_filter.html)
 public struct GitFilter: CStruct, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     public let version      : UInt32
     
     /// The whitespace-separated list of attribute names to check.

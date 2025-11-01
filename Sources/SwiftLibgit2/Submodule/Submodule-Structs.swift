@@ -19,7 +19,7 @@ import Foundation
 /// [`git_submodule_update_options`](https://libgit2.org/docs/reference/main/submodule/git_submodule_update_options.html)
 public struct GitSubmoduleUpdateOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

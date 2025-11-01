@@ -18,7 +18,7 @@ import CLibgit2
 /// [`git_email_create_options`](https://libgit2.org/docs/reference/main/email/git_email_create_options.html)
 public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

@@ -122,7 +122,7 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible, Sendable
 /// [`git_indexer_options`](https://libgit2.org/docs/reference/main/indexer/git_indexer_options.html)
 public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

@@ -69,7 +69,7 @@ public struct GitCheckoutPerfData: CStructReadable, CConvertible, Sendable
 /// [`git_checkout_options`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options.html)
 public struct GitCheckoutOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

@@ -19,7 +19,7 @@ import Foundation
 /// [`git_worktree_add_options`](https://libgit2.org/docs/reference/main/worktree/git_worktree_add_options.html)
 public struct GitWorktreeAddOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -140,7 +140,7 @@ public struct GitWorktreeAddOptions: CStructMutable, WithCConvertible
 /// [`git_worktree_prune_options`](https://libgit2.org/docs/reference/main/worktree/git_worktree_prune_options.html)
 public struct GitWorktreePruneOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

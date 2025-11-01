@@ -18,7 +18,7 @@ import CLibgit2
 /// [`git_odb_options`](https://libgit2.org/docs/reference/main/odb/git_odb_options.html)
 public struct GitODBOptions: CStructMutable, CConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

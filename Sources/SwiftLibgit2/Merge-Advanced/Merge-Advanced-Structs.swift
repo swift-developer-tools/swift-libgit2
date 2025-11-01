@@ -23,7 +23,7 @@ import CLibgit2
 /// [`git_merge_driver`](https://libgit2.org/docs/reference/main/sys/merge/git_merge_driver.html)
 public struct GitMergeDriver: CStruct, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     public let version      : UInt32
     
     /// The callback invoked to initialize the merge driver.

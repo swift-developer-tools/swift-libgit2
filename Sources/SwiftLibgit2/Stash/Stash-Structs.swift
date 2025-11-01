@@ -19,7 +19,7 @@ import Foundation
 /// [`git_stash_save_options`](https://libgit2.org/docs/reference/main/stash/git_stash_save_options.html)
 public struct GitStashSaveOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -150,7 +150,7 @@ public struct GitStashSaveOptions: CStructMutable, WithCConvertible, Sendable
 /// [`git_stash_apply_options`](https://libgit2.org/docs/reference/main/stash/git_stash_apply_options.html)
 public struct GitStashApplyOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

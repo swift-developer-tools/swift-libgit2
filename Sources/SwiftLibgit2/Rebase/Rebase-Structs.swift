@@ -19,7 +19,7 @@ import Foundation
 /// [`git_rebase_options`](https://libgit2.org/docs/reference/main/rebase/git_rebase_options.html)
 public struct GitRebaseOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

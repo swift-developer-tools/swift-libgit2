@@ -19,7 +19,7 @@ import Foundation
 /// [`git_apply_options`](https://libgit2.org/docs/reference/main/apply/git_apply_options.html)
 public struct GitApplyOptions: CStructMutable, WithCConvertible
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///

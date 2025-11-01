@@ -19,7 +19,7 @@ import Foundation
 /// [`git_describe_options`](https://libgit2.org/docs/reference/main/describe/git_describe_options.html)
 public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
@@ -152,7 +152,7 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
 /// [`git_describe_format_options`](https://libgit2.org/docs/reference/main/describe/git_describe_format_options.html)
 public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible, Sendable
 {
-    /// The version to use.
+    /// The struct version.
     ///
     /// ## Discussion
     ///
