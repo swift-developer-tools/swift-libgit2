@@ -81,7 +81,7 @@ public struct GitODBBackend: CStruct
     
     
     
-    /// Initializes a ``GitAllocator`` instance from the given `git_odb_backend`
+    /// Initializes a ``GitODBBackend`` instance from the given `git_odb_backend`
     /// instance.
     /// - Parameter backend: The `git_odb_backend` instance to use.
     internal init(
