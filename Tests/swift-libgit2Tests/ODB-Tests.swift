@@ -1076,7 +1076,7 @@ private extension ODBTests
             
             
             
-            let looseBackendResult: GitErrorCode = gitODBBackendLoose(
+            let odbBackendLooseResult: GitErrorCode = gitODBBackendLoose(
                 out:                &backendPointer,
                 objectsDir:         objectsURL.path(),
                 compressionLevel:   -1,
@@ -1085,7 +1085,7 @@ private extension ODBTests
                 fileMode:           0
             )
             
-            XCTAssertOK(looseBackendResult)
+            XCTAssertOK(odbBackendLooseResult)
             
             guard let backendPointer: UnsafeMutablePointer<git_odb_backend>
                     = backendPointer
