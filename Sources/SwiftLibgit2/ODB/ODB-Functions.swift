@@ -133,8 +133,8 @@ public func gitODBFree(
 
 /// Reads the specified object from the given object database.
 /// - Parameters:
-///   - obj: The pointer in which to store the read object. The underlying
-///   type must be `git_odb_object`.
+///   - obj: The pointer in which to store the object. The underlying type
+///   must be `git_odb_object`.
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - id: The ID of the object to read.
@@ -173,8 +173,8 @@ public func gitODBRead(
 /// Reads the specified object from the given object database, using a prefix
 /// of the object's ID.
 /// - Parameters:
-///   - obj: The pointer in which to store the read object. The underlying
-///   type must be `git_odb_object`.
+///   - obj: The pointer in which to store the object. The underlying type must
+///   be `git_odb_object`.
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - shortID: The prefix of the ID of the object to look up.
@@ -218,8 +218,8 @@ public func gitODBReadPrefix(
 /// Reads the header of the specified object from the given object database,
 /// without reading its full contents.
 /// - Parameters:
-///   - lenOut: The pointer in which to store the header length.
-///   - typeOut: The ``GitObjectT`` instance in which to store the header type.
+///   - lenOut: The pointer in which to store the object size.
+///   - typeOut: The ``GitObjectT`` instance in which to store the object type.
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - id: The ID of the object to read.
@@ -263,12 +263,14 @@ public func gitODBReadHeader(
 
 
 
-/// Checks whether the specified object can be found in the object database.
+/// Checks whether the specified object can be found in the given object
+/// database.
 /// - Parameters:
-///   - db: The object for which to search. The underlying type must be
+///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - id: The ID of the object for which to search.
-/// - Returns: Whether the given object can be found in the object database.
+/// - Returns: Whether the given object can be found in the given object
+/// database.
 ///
 /// ## C Equivalent
 ///
@@ -293,13 +295,15 @@ public func gitODBExists(
 
 
 
-/// Checks whether the specified object can be found in the object database.
+/// Checks whether the specified object can be found in the given object
+/// database.
 /// - Parameters:
-///   - db: The object for which to search. The underlying type must be
+///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - id: The ID of the object for which to search.
 ///   - flags: The flags controlling the behavior of the object database lookup.
-/// - Returns: Whether the given object can be found in the object database.
+/// - Returns: Whether the given object can be found in the given object
+/// database.
 ///
 /// ## C Equivalent
 ///
@@ -492,9 +496,9 @@ public func gitODBForEach(
 ///   operation.
 ///   - odb: The object database to update. The underlying type must be
 ///   `git_odb`.
-///   - data: The object data to store.
+///   - data: The object data to write.
 ///   - len: The length of `data`.
-///   - type: The type of object to store.
+///   - type: The type of object to write.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## Discussion
@@ -547,7 +551,7 @@ public func gitODBWrite(
 ///   - out: The pointer in which to store the stream.
 ///   - db: The object database to update. The underlying type must be
 ///   `git_odb`.
-///   - size: The final size of the object to write.
+///   - size: The size of the object to write.
 ///   - type: The type of the object to write.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -719,7 +723,7 @@ public func gitODBStreamFree(
 /// Opens a stream to read the specified object from the given object database.
 /// - Parameters:
 ///   - out: The pointer in which to store the stream.
-///   - len: The pointer in which to store the length of the object.
+///   - len: The pointer in which to store the size of the object.
 ///   - type: The ``GitObjectT`` instance in which to store the object type.
 ///   - db: The object database to read. The underlying type must be
 ///   `git_odb`.
@@ -769,11 +773,11 @@ public func gitODBOpenRStream(
 
 
 
-/// Opens a stream for writing the given packfile to the given object
-/// database.
+/// Opens a stream for writing a packfile to the given object database.
 /// - Parameters:
-///   - out: The writepack functions.
-///   - db: The object database to read. The underlying type must be `git_odb`.
+///   - out: The pointer in which to store the writepack functions.
+///   - db: The object database from which to read. The underlying type must
+///   be `git_odb`.
 ///   - progressCB: The ``GitIndexerProgressCB`` callback to invoke to report
 ///   indexing progress.
 ///   - progressPayload: The payload to pass to `progressCB`.
