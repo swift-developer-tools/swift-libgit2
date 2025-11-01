@@ -26,7 +26,8 @@ public struct GitRemoteCreateOptions: CStructMutable, WithCConvertible
     /// The default value is ``gitRemoteCreateOptionsVersion``.
     public var version      : UInt32
     
-    /// The repository that should own the remote.
+    /// The repository that should own the remote. The underlying type must
+    /// be `git_repository`.
     ///
     /// ## Discussion
     ///

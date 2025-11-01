@@ -26,7 +26,7 @@ public struct GitODBBackend: CStruct
     /// The struct version.
     public let version      : UInt32
     
-    /// The object database.
+    /// The object database. The underlying type must be `git_odb`.
     public let odb          : OpaquePointer?
     
     /// Reads the specified object from the given object database backend.
