@@ -13,7 +13,7 @@ import XCTest
 
 
 
-final class RefTests: XCTestCaseStopOnFail
+final class RefDBTests: XCTestCaseStopOnFail
 {
     func testGitRefDBFree() throws
     {
