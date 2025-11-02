@@ -1067,9 +1067,6 @@ private extension ODBTests
                     !backendOwnershipTransferred,
                     backendPointer != nil
                 {
-                    /// Ownership of the memory transfers to libgit2 after
-                    /// adding the backend. Free the memory manually if the
-                    /// memory was allocated, but the add operation failed.
                     backendPointer?.pointee.free(backendPointer)
                 }
             }
