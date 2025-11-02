@@ -23,7 +23,6 @@ import CLibgit2
 /// [`git_reference_iterator`](https://libgit2.org/docs/reference/main/sys/refdb_backend/git_reference_iterator.html)
 public struct GitReferenceIterator: CStruct
 {
-
     /// The reference database. The underlying type must be `git_refdb`.
     public let db       : OpaquePointer?
     
@@ -106,7 +105,7 @@ public struct GitReferenceIterator: CStruct
 /// ## C Equivalent
 ///
 /// [`git_refdb_backend`](https://libgit2.org/docs/reference/main/sys/refdb_backend/git_refdb_backend.html)
-public struct GitRefDBBackend: CStruct
+public struct GitRefDBBackend: CStruct, Sendable
 {
 
     /// The struct version.
