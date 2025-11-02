@@ -26,7 +26,7 @@ public enum GitStreamT: UInt32, CEnum
     
     
     
-    /// Initializes a ``GitStreamT`` instance from the given  `git_stream_t`
+    /// Initializes a ``GitStreamT`` instance from the given `git_stream_t`
     /// instance.
     /// - Parameter stream: The `git_stream_t` instance to use.
     internal init?(
