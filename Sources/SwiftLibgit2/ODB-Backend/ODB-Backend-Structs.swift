@@ -171,13 +171,13 @@ public struct GitODBStream: CStruct
     public let receivedBytes    : GitObjectSizeT
     
     /// Writes at most the specified number of bytes into the given buffer,
-    /// and advances the stream.
+    /// and advances the given stream.
     public let read             : GitODBStream.Read?
     
     /// Writes the specified number of bytes into the given buffer.
     public let write            : GitODBStream.Write?
     
-    /// Stores the contents of the stream as an object with the given ID.
+    /// Stores the contents of the given stream as an object with the given ID.
     ///
     /// ## Discussion
     ///
