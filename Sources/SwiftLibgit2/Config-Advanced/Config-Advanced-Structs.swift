@@ -78,7 +78,7 @@ public struct GitConfigIterator: CStruct
     /// Gets the next backend entry.
     public let next     : GitConfigIterator.Next?
     
-    /// Frees the memory allocated for the iterator.
+    /// Frees the memory allocated for the given `git_config_iterator` instance.
     public let free     : GitConfigIterator.Free?
     
     
