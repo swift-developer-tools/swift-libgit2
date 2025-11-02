@@ -1025,6 +1025,50 @@ internal extension Repository
     
     
     
+    /// Calls the closure with a ``Repository`` instance and a pointer to an
+    /// on-disk configuration object.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withConfig<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var configPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitConfigFree(cfg: configPointer)
+            }
+            
+            
+            
+            let configOpenOnDiskResult: GitErrorCode = gitConfigOpenOnDisk(
+                out:    &configPointer,
+                path:   repository.configPath
+            )
+            
+            XCTAssertOK(configOpenOnDiskResult)
+            
+            guard let configPointer: OpaquePointer = configPointer
+            else
+            {
+                throw NSError.makeError("The configuration pointer was nil.")
+            }
+            
+            return try body(
+                repository,
+                configPointer
+            )
+        }
+    }
+    
+    
+    
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to the repository's index.
     /// - Parameter body: The closure to call.
@@ -1065,6 +1109,106 @@ internal extension Repository
             return try body(
                 repository,
                 indexPointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to an opened object database.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withODB<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var odbPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitODBFree(db: odbPointer)
+            }
+            
+            
+            
+            let odbOpenResult: GitErrorCode = gitODBOpen(
+                odbOut:         &odbPointer,
+                objectsDir:     repository.objectsURL.path()
+            )
+            
+            XCTAssertOK(odbOpenResult)
+            
+            guard let odbPointer: OpaquePointer = odbPointer
+            else
+            {
+                throw NSError.makeError("The ODB pointer was nil.")
+            }
+            
+            
+            
+            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
+            
+            XCTAssertGreaterThan(backendCount, 0)
+            
+            
+            
+            return try body(
+                repository,
+                odbPointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to an opened reference database.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withRefDB<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var refDBPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitRefDBFree(refDB: refDBPointer)
+            }
+            
+            
+            
+            let refDBOpenResult: GitErrorCode = gitRefDBOpen(
+                out:    &refDBPointer,
+                repo:   repository.pointer
+            )
+            
+            XCTAssertOK(refDBOpenResult)
+            
+            guard let refDBPointer: OpaquePointer = refDBPointer
+            else
+            {
+                throw NSError.makeError(
+                    "The reference database pointer was nil."
+                )
+            }
+            
+            
+            
+            return try body(
+                repository,
+                refDBPointer
             )
         }
     }
