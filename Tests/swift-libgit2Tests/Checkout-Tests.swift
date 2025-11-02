@@ -42,7 +42,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             
             let notifyCB: GitCheckoutNotifyCB =
             {
-                why, path, baseline, target, workdir, payload in
+                why, path, _, _, _, payload in
                 
                 guard
                     let payload: UnsafeMutableRawPointer = payload,

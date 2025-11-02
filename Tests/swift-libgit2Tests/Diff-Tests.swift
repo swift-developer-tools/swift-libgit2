@@ -1756,7 +1756,7 @@ private extension DiffTests
     
     static let binaryCB: GitDiffBinaryCB =
     {
-        delta, binary, payload in
+        _, _, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else
@@ -1777,7 +1777,7 @@ private extension DiffTests
     
     static let fileCB: GitDiffFileCB =
     {
-        delta, progress, payload in
+        _, _, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else
@@ -1798,7 +1798,7 @@ private extension DiffTests
     
     static let hunkCB: GitDiffHunkCB =
     {
-        delta, hunk, payload in
+        _, _, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else
@@ -1819,7 +1819,7 @@ private extension DiffTests
     
     static let lineCB: GitDiffLineCB =
     {
-        delta, hunk, line, payload in
+        _, _, _, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else
@@ -1840,7 +1840,7 @@ private extension DiffTests
     
     static let progressCB: GitDiffProgressCB =
     {
-        diffSoFar, oldPath, newPath, payload in
+        _, _, _, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else
@@ -1861,7 +1861,7 @@ private extension DiffTests
     
     static let notifyCB: GitDiffNotifyCB =
     {
-        diffSoFar, deltaToAdd, matchedPathspec, payload in
+        _, _, _, payload in
         
         guard let payload: UnsafeMutableRawPointer = payload
         else

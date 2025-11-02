@@ -279,7 +279,7 @@ final class PatchTests: XCTestCaseStopOnFail
             
             let diffLineCB: GitDiffLineCB =
             {
-                delta, hunk, line, payload in
+                _, _, _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else

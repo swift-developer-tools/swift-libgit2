@@ -358,7 +358,7 @@ final class RebaseTests: XCTestCaseStopOnFail
                     
         let rebaseSigningCB: GitRebaseOptions.SigningCB =
         {
-            signature, signatureField, commitContent, payload in
+            _, _, _, payload in
             
             guard let payload: UnsafeMutableRawPointer = payload
             else

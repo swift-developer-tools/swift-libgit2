@@ -166,7 +166,7 @@ final class TagTests: XCTestCaseStopOnFail
             
             let tagForEachCB: GitTagForEachCB =
             {
-                name, oid, payload in
+                _, oid, payload in
                 
                 guard
                     let payload : UnsafeMutableRawPointer           = payload,

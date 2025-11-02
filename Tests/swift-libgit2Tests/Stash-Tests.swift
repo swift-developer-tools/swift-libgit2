@@ -597,7 +597,7 @@ private extension StashTests
     {
         let stashCB: GitStashCB =
         {
-            index, message, stashOID, payload in
+            _, message, stashOID, payload in
             
             guard
                 let payload     : UnsafeMutableRawPointer   = payload,

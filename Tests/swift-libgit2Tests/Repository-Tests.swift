@@ -218,7 +218,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             let fetchheadForEachCB: GitRepositoryFETCHHEADForEachCB =
             {
-                refNane, remoteURL, oid, isMerge, payload in
+                _, remoteURL, _, _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else

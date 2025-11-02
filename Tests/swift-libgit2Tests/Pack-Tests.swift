@@ -25,7 +25,7 @@ final class PackTests: XCTestCaseStopOnFail
             
             let packbuilderForEachCB: GitPackbuilderForEachCB =
             {
-                buf, size, payload in
+                _, _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
@@ -304,7 +304,7 @@ final class PackTests: XCTestCaseStopOnFail
             
             let packbuilderProgressCB: GitPackbuilderProgressCB =
             {
-                stage, current, total, payload in
+                _, _, _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
@@ -493,7 +493,7 @@ private extension PackTests
             
             let indexerProgressCB: GitIndexerProgressCB =
             {
-                stats, payload in
+                _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
