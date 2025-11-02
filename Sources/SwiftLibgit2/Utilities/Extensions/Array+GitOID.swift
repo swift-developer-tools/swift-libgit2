@@ -14,7 +14,7 @@ import Foundation
 
 internal extension Array where Element == GitOID
 {
-    /// Calls the given closure with a pointer to an array of `git_oid`
+    /// Calls the given closure with a mutable pointer to an array of `git_oid`
     /// instances, and the length of that array.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
@@ -22,9 +22,9 @@ internal extension Array where Element == GitOID
     /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
-    /// `const git_oid *`.
+    /// `git_oid *` or `const git_oid *`.
     func withArrayOfGitOIDs<T>(
-        _ body: (UnsafePointer<git_oid>?, Int) throws -> T
+        _ body: (UnsafeMutablePointer<git_oid>?, Int) throws -> T
     ) rethrows -> T
     {
         guard !self.isEmpty

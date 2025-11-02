@@ -100,7 +100,8 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 
                 XCTAssertEqual(cArrayOfOIDsCount, arrayOfOIDs.count)
                 
-                guard let cArrayOfOIDs: UnsafePointer<git_oid> = cArrayOfOIDs
+                guard let cArrayOfOIDs: UnsafeMutablePointer<git_oid>
+                        = cArrayOfOIDs
                 else
                 {
                     XCTFail("The array of C OIDs was nil.")
@@ -124,7 +125,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
             [].withArrayOfGitOIDs
             {
                 (
-                    cOIDs       : UnsafePointer<git_oid>?,
+                    cOIDs       : UnsafeMutablePointer<git_oid>?,
                     cOIDsCount  : Int
                 ) in
                 
@@ -177,7 +178,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                 
                 XCTAssertEqual(cOuterArrayOfOIDsCount, outerArrayOfOIDs.count)
                 
-                guard let cOuterArrayOfOIDs: UnsafePointer<git_oid>
+                guard let cOuterArrayOfOIDs: UnsafeMutablePointer<git_oid>
                         = cOuterArrayOfOIDs
                 else
                 {
@@ -200,7 +201,7 @@ final class OIDArrayTests: XCTestCaseStopOnFail
                     
                     XCTAssertEqual(cInnerArrayOfOIdsCount, innerArrayOfOIDs.count)
                     
-                    guard let cInnerArrayOfOIDs: UnsafePointer<git_oid>
+                    guard let cInnerArrayOfOIDs: UnsafeMutablePointer<git_oid>
                             = cInnerArrayOfOIDs
                     else
                     {
