@@ -144,37 +144,37 @@ public struct GitConfigBackend: CStruct
     /// The repository configuration.
     public let cfg          : OpaquePointer?
     
-    /// Opens the backend at the given level.
+    /// Opens the given backend at the given level.
     public let open         : GitConfigBackend.Open?
     
-    /// Gets the specified configuration entry from the backend.
+    /// Gets the specified configuration entry from the given backend.
     public let get          : GitConfigBackend.Get?
     
-    /// Sets a configuration entry in the backend.
+    /// Sets a configuration entry in the given backend.
     public let set          : GitConfigBackend.Set?
     
-    /// Sets a multivar entry in the backend.
+    /// Sets a multivar entry in the given backend.
     public let setMultivar  : GitConfigBackend.SetMultivar?
     
-    /// Deletes the specified configuration entry from the backend.
+    /// Deletes the specified configuration entry from the given backend.
     public let del          : GitConfigBackend.Del?
     
-    /// Deletes the specified multivar entry from the backend.
+    /// Deletes the specified multivar entry from the given backend.
     public let delMultivar  : GitConfigBackend.DelMultivar?
     
-    /// Creates an iterator for the backend.
+    /// Creates an iterator for the given backend.
     public let iterator     : GitConfigBackend.Iterator?
     
-    /// Creates a read-only snapshot of the backend.
+    /// Creates a read-only snapshot of the given backend.
     public let snapshot     : GitConfigBackend.Snapshot?
     
-    /// Locks the backend.
+    /// Locks the given backend.
     public let lock         : GitConfigBackend.Lock?
     
-    /// Unlocks the backend.
+    /// Unlocks the given backend.
     public let unlock       : GitConfigBackend.Unlock?
     
-    /// Frees the memory allocated for the backend.
+    /// Frees the memory allocated for the given backend.
     public let free         : GitConfigBackend.Free?
     
     
