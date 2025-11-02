@@ -70,10 +70,10 @@ public struct GitTime: CStructReadable, CConvertible, Sendable
 /// [`git_writestream`](https://libgit2.org/docs/reference/main/types/git_writestream.html)
 public struct GitWritestream: CStruct
 {
-    /// Writes to the stream.
+    /// Writes to the given stream.
     public let write    : GitWritestream.Write?
     
-    /// Closes the stream.
+    /// Closes the given stream.
     public let close    : GitWritestream.Close?
     
     /// Frees the memory allocated for the given `git_writestream` instance.
@@ -98,8 +98,8 @@ public struct GitWritestream: CStruct
     /// The callback invoked to write to the given stream.
     /// - Parameters:
     ///   - stream: The stream to which to write.
-    ///   - buffer: The buffer to write.
-    ///   - len: The length of `buffer`.
+    ///   - data: The data to write.
+    ///   - len: The length of `data`.
     /// - Returns: `0` on success, or an error code.
     public typealias Write = @convention(c)
     (
