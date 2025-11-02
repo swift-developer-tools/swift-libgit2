@@ -1116,6 +1116,58 @@ internal extension Repository
     
     
     /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to an opened object database.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withODB<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var odbPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitODBFree(db: odbPointer)
+            }
+            
+            
+            
+            let odbOpenResult: GitErrorCode = gitODBOpen(
+                odbOut:         &odbPointer,
+                objectsDir:     repository.objectsURL.path()
+            )
+            
+            XCTAssertOK(odbOpenResult)
+            
+            guard let odbPointer: OpaquePointer = odbPointer
+            else
+            {
+                throw NSError.makeError("The ODB pointer was nil.")
+            }
+            
+            
+            
+            let backendCount: Int = gitODBNumBackends(odb: odbPointer)
+            
+            XCTAssertGreaterThan(backendCount, 0)
+            
+            
+            
+            return try body(
+                repository,
+                odbPointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a tree.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
