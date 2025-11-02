@@ -171,13 +171,13 @@ public struct GitODBStream: CStruct
     public let receivedBytes    : GitObjectSizeT
     
     /// Writes at most the specified number of bytes into the given buffer,
-    /// and advances the stream.
+    /// and advances the given stream.
     public let read             : GitODBStream.Read?
     
     /// Writes the specified number of bytes into the given buffer.
     public let write            : GitODBStream.Write?
     
-    /// Stores the contents of the stream as an object with the given ID.
+    /// Stores the contents of the given stream as an object with the given ID.
     ///
     /// ## Discussion
     ///
@@ -290,10 +290,10 @@ public struct GitODBWritePack: CStruct
     /// The object database backend.
     public let backend  : UnsafeMutablePointer<git_odb_backend>
     
-    /// Appends data to the packfile.
+    /// Appends the given data to the given packfile.
     public let append   : GitODBWritePack.Append?
     
-    /// Commits the packfile to the object database.
+    /// Commits the given packfile to the given object database.
     public let commit   : GitODBWritePack.Commit?
     
     /// Frees the memory allocated for the given `git_odb_writepack` instance.
