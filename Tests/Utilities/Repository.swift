@@ -818,6 +818,10 @@ internal extension Repository
     static let pushDestination      : String    = "refs/heads/origin/*"
     static let pushRefspec          : String    = "\(pushSource):\(pushDestination)"
     
+    static let remoteName           : String    = "origin1"
+    static let remoteURL            : String    = "https://example.com/fetch.git"
+    static let remotePushURL        : String    = "https://example.com/push.git"
+    
     static let treebuilderFileName  : String    = "treebuilder-test.txt"
     
     static let worktreeName         : String    = "worktree"
@@ -1209,6 +1213,87 @@ internal extension Repository
             return try body(
                 repository,
                 refDBPointer
+            )
+        }
+    }
+    
+    
+    
+    enum RemoteCreationType
+    {
+        case standard
+        case fetchspec
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to a remote.
+    /// - Parameters:
+    ///   - type: How to create the remote.
+    ///   - body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withRemote<T>(
+        type    : RemoteCreationType = .standard,
+        _ body  : (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var remotePointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitRemoteFree(remote: remotePointer)
+            }
+            
+            
+            
+            let remoteCreateResult: GitErrorCode
+            
+            switch type
+            {
+                case .standard:
+                    
+                    remoteCreateResult = gitRemoteCreate(
+                        out:    &remotePointer,
+                        repo:   repository.pointer,
+                        name:   Self.remoteName,
+                        url:    Self.remoteURL
+                    )
+                    
+                case .fetchspec:
+                    
+                    remoteCreateResult = gitRemoteCreateWithFetchspec(
+                        out:    &remotePointer,
+                        repo:   repository.pointer,
+                        name:   Self.remoteName,
+                        url:    Self.remoteURL,
+                        fetch:  Repository.fetchRefspec
+                    )
+            }
+            
+            XCTAssertOK(remoteCreateResult)
+            
+            guard let remotePointer: OpaquePointer = remotePointer
+            else
+            {
+                throw NSError.makeError("The remote pointer was nil.")
+            }
+            
+            
+            
+            try Remote.validateRemote(
+                remotePointer,
+                in: repository
+            )
+            
+            return try body(
+                repository,
+                remotePointer
             )
         }
     }
