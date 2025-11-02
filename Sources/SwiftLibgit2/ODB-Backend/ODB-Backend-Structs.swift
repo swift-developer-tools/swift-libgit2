@@ -290,10 +290,10 @@ public struct GitODBWritePack: CStruct
     /// The object database backend.
     public let backend  : UnsafeMutablePointer<git_odb_backend>
     
-    /// Appends data to the packfile.
+    /// Appends the given data to the given packfile.
     public let append   : GitODBWritePack.Append?
     
-    /// Commits the packfile to the object database.
+    /// Commits the given packfile to the given object database.
     public let commit   : GitODBWritePack.Commit?
     
     /// Frees the memory allocated for the given `git_odb_writepack` instance.
