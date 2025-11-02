@@ -208,7 +208,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigIteratorOperations() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -477,7 +477,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigLock() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -570,7 +570,7 @@ final class ConfigTests: XCTestCaseStopOnFail
         
         
         
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -838,7 +838,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigMultivarOperations() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1014,7 +1014,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigOnDiskOperations() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             repository, configPointer in
             
@@ -1155,7 +1155,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSetAndGetBool() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1189,7 +1189,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSetAndGetInt32() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1223,7 +1223,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSetAndGetInt64() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1257,7 +1257,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSetAndGetPath() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1297,7 +1297,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSetAndGetString() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1381,7 +1381,7 @@ final class ConfigTests: XCTestCaseStopOnFail
     
     func testGitConfigSnapshotAndWriteOrder() throws
     {
-        try withConfigOnDisk
+        try Repository.withConfig
         {
             _, configPointer in
             
@@ -1504,49 +1504,5 @@ private extension ConfigTests
         payloadPointer.pointee.values.append("\(name)=\(value)")
         
         return GitErrorCode.gitOK.rawValue
-    }
-    
-    
-    
-    /// Calls the closure with a ``Repository`` instance and a pointer to an
-    /// on-disk configuration object.
-    /// - Parameter body: The closure to call.
-    /// - Throws: An error if an operation fails.
-    func withConfigOnDisk(
-        _ body: (Repository, OpaquePointer) throws -> Void
-    ) throws
-    {
-        try Repository.withRepository
-        {
-            repository in
-            
-            var configPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitConfigFree(cfg: configPointer)
-            }
-            
-            
-            
-            let configOpenOnDiskResult: GitErrorCode = gitConfigOpenOnDisk(
-                out:    &configPointer,
-                path:   repository.configPath
-            )
-            
-            XCTAssertOK(configOpenOnDiskResult)
-            
-            guard let configPointer: OpaquePointer = configPointer
-            else
-            {
-                XCTFail("The configuration pointer was nil.")
-                return
-            }
-            
-            try body(
-                repository,
-                configPointer
-            )
-        }
     }
 }

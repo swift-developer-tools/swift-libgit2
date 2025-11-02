@@ -1025,6 +1025,50 @@ internal extension Repository
     
     
     
+    /// Calls the closure with a ``Repository`` instance and a pointer to an
+    /// on-disk configuration object.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withConfig<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var configPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitConfigFree(cfg: configPointer)
+            }
+            
+            
+            
+            let configOpenOnDiskResult: GitErrorCode = gitConfigOpenOnDisk(
+                out:    &configPointer,
+                path:   repository.configPath
+            )
+            
+            XCTAssertOK(configOpenOnDiskResult)
+            
+            guard let configPointer: OpaquePointer = configPointer
+            else
+            {
+                throw NSError.makeError("The configuration pointer was nil.")
+            }
+            
+            return try body(
+                repository,
+                configPointer
+            )
+        }
+    }
+    
+    
+    
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to the repository's index.
     /// - Parameter body: The closure to call.
