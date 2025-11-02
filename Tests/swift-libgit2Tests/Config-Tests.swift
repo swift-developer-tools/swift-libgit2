@@ -52,15 +52,15 @@ final class ConfigTests: XCTestCaseStopOnFail
                 test3 = value3
             """
             
-            let configBackendFromStringResult: Int32
-                = git_config_backend_from_string(
-                    &configBackend,
-                    configBackendContent,
-                    configBackendContent.count,
-                    nil
+            let configBackendFromStringResult: GitErrorCode
+                = gitConfigBackendFromString(
+                    out:    &configBackend,
+                    cfg:    configBackendContent,
+                    len:    configBackendContent.count,
+                    opts:   nil
                 )
             
-            XCTAssertOK(GitErrorCode(rawValue: configBackendFromStringResult))
+            XCTAssertOK(configBackendFromStringResult)
             
             guard let configBackend: UnsafeMutablePointer<git_config_backend>
                     = configBackend
