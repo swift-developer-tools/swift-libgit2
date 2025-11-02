@@ -1168,6 +1168,54 @@ internal extension Repository
     
     
     /// Calls the given closure with a ``Repository`` instance and a pointer
+    /// to an opened reference database.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if an operation fails.
+    static func withRefDB<T>(
+        _ body: (Repository, OpaquePointer) throws -> T
+    ) throws -> T
+    {
+        return try Repository.withRepository
+        {
+            repository in
+            
+            var refDBPointer: OpaquePointer? = nil
+            
+            defer
+            {
+                gitRefDBFree(refDB: refDBPointer)
+            }
+            
+            
+            
+            let refDBOpenResult: GitErrorCode = gitRefDBOpen(
+                out:    &refDBPointer,
+                repo:   repository.pointer
+            )
+            
+            XCTAssertOK(refDBOpenResult)
+            
+            guard let refDBPointer: OpaquePointer = refDBPointer
+            else
+            {
+                throw NSError.makeError(
+                    "The reference database pointer was nil."
+                )
+            }
+            
+            
+            
+            return try body(
+                repository,
+                refDBPointer
+            )
+        }
+    }
+    
+    
+    
+    /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a tree.
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.

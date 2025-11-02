@@ -15,6 +15,21 @@ import XCTest
 
 final class RefDBTests: XCTestCaseStopOnFail
 {
+    func testGitRefDBCompress() throws
+    {
+        try Repository.withRefDB
+        {
+            _, refDBPointer in
+            
+            let refDBCompressResult: GitErrorCode
+                = gitRefDBCompress(out: refDBPointer)
+            
+            XCTAssertOK(refDBCompressResult)
+        }
+    }
+    
+    
+    
     func testGitRefDBFree() throws
     {
         gitRefDBFree(refDB: nil)
@@ -49,41 +64,11 @@ final class RefDBTests: XCTestCaseStopOnFail
     
     
     
-    func testGitRefDBOpenAndCompress() throws
+    func testGitRefDBOpen() throws
     {
-        try Repository.withRepository
+        try Repository.withRefDB
         {
-            repository in
-            
-            var refDBPointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitRefDBFree(refDB: refDBPointer)
-            }
-            
-            
-            
-            let refDBOpenResult: GitErrorCode = gitRefDBOpen(
-                out:    &refDBPointer,
-                repo:   repository.pointer
-            )
-            
-            XCTAssertOK(refDBOpenResult)
-            
-            guard let refDBPointer: OpaquePointer = refDBPointer
-            else
-            {
-                XCTFail("The reference database pointer was nil.")
-                return
-            }
-            
-            
-            
-            let refDBCompressResult: GitErrorCode
-                = gitRefDBCompress(out: refDBPointer)
-            
-            XCTAssertOK(refDBCompressResult)
+            _, _ in
         }
     }
 }
