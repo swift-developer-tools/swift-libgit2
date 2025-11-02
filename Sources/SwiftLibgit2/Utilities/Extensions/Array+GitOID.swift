@@ -191,4 +191,44 @@ internal extension Array where Element == GitOID
         
         self = swiftOIDs
     }
+    
+    
+    
+    /// Initializes an array of ``GitOID`` instances from the given mutable
+    /// pointer to an array of `git_oid` instances.
+    /// - Parameters:
+    ///   - cArrayOfOIDs: The mutable pointer to the array of `git_oid`
+    ///   instances.
+    ///   - count: The length of `cArrayOfOIDs`.
+    init(
+        _ cArrayOfOIDs  : UnsafeMutablePointer<git_oid>?,
+        count           : Int
+    )
+    {
+        guard
+            count > 0,
+            let cArrayOfOIDs: UnsafeMutablePointer<git_oid> = cArrayOfOIDs
+        else
+        {
+            self = []
+            return
+        }
+        
+        
+        
+        var swiftArrayOfOIDs: [GitOID] = []
+        
+        swiftArrayOfOIDs.reserveCapacity(count)
+        
+        
+        
+        for index in 0..<count
+        {
+            let cOID: git_oid = cArrayOfOIDs[index]
+            
+            swiftArrayOfOIDs.append(GitOID(cValue: cOID))
+        }
+        
+        self = swiftArrayOfOIDs
+    }
 }
