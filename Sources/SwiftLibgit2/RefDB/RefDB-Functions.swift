@@ -11,7 +11,6 @@ import CLibgit2
 
 
 
-// TODO: Replace `git_refdb_set_backend()` in documentation.
 /// Creates a new reference database with no backends.
 /// - Parameters:
 ///   - out: The pointer in which to store the reference database. The
@@ -23,7 +22,8 @@ import CLibgit2
 /// ## Discussion
 ///
 /// Before the ODB can be used for reading or writing, a custom database
-/// backend must be manually added by calling `git_refdb_set_backend()`.
+/// backend must be manually added by calling
+/// ``gitRefDBSetBackend(refDB:backend:)``.
 ///
 /// ## C Equivalent
 ///
