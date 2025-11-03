@@ -9,11 +9,10 @@ Direct Swift bindings to libgit2.
 swift-libgit2 provides direct Swift bindings to [libgit2](https://libgit2.org). 
 libgit2 is a pure C implementation of core [Git](https://git-scm.com) methods.
 
-Swift bindings are provided for almost every API available in libgit2. Direct 
-access to the libgit2 C library is also provided by the package. There are no 
-bindings for opaque objects and initialization macros, but these may be 
-accessed by importing the C library. See [Usage](#Usage) for an example of how 
-to import and use either library.
+Swift bindings are provided for every libgit2 API, except opaque objects and 
+initialization macros. Direct access to the libgit2 C library is also provided 
+by the package. See [Usage](#Usage) for an example of how to import and use 
+either library.
 
 The bindings use the same signatures and names as their C equivalents, but are 
 written using [camel case](https://en.wikipedia.org/wiki/Camel_case) instead of 
@@ -27,16 +26,6 @@ The bindings use native Swift types wherever possible, while preserving
 libgit2's behavior and semantics. For example, some bindings use Swift types 
 like `String` instead of `UnsafePointer<CChar>`.
 
-Some bindings must use C types to maintain compatibility with libgit2's 
-memory management and calling conventions. This includes callbacks invoked 
-internally by libgit2, some output parameters, and other cases where C types 
-cannot be represented in Swift.
-
-The bindings for bitset C enums are represented as structs, but remain in their 
-respective "Enums" documentation section to match libgit2's API organization. 
-The bindings for C enums with mutually exclusive values are represented as 
-standard Swift enums.
-
 
 
 ## Installation
@@ -46,8 +35,8 @@ swift-libgit2 may be installed through
 by entering the following URL: 
 [https://github.com/swift-developer-tools/swift-libgit2.git](https://github.com/swift-developer-tools/swift-libgit2.git).
 
-See the Xcode documentation for step-by-step instructions on how to 
-[add package dependencies](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app).
+See [Xcode documentation](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app) 
+for instructions on how to add package dependencies.
 
 All necessary dependencies are handled by the package, which includes compiled 
 builds of libgit2, [libssh2](https://libssh2.org), and 
@@ -68,11 +57,13 @@ The macOS builds support both Apple Silicon and Intel.
 
 ## Usage
 
-swift-libgit2 
-[tests](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Tests/swift-libgit2Tests) 
-may be referenced for general usage and syntax examples. However, keep in mind 
-that these tests focus on validating binding behavior, not demonstrating 
-complete Git workflows or best practices.
+See [libgit2 documentation](https://libgit2.org/docs/) for in-depth guides, 
+examples, and references.
+
+[swift-libgit2 tests](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Tests/swift-libgit2Tests) 
+may also be referenced for general usage examples. However, keep in mind that 
+these tests focus on validating binding behavior, not demonstrating complete 
+Git workflows or best practices.
 
 Below is a brief example showing how to import both the Swift and C libraries 
 into a Swift project, and then use them to initialize and shut down the 
@@ -153,16 +144,17 @@ end-to-end encryption.
 
 ## License
 
-swift-libgit2 is licensed under the Apache License, Version 2.0. See the 
-[LICENSE](https://github.com/swift-developer-tools/swift-libgit2/blob/main/LICENSE.txt) 
-file for complete license information.
+swift-libgit2 is licensed under the Apache License, Version 2.0.
+
+See [LICENSE](https://github.com/swift-developer-tools/swift-libgit2/blob/main/LICENSE.txt) 
+for the complete license terms.
 
 
 
 ## Attribution
 
-See the [`Licenses`](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Licenses) 
-folder for complete license information.
+See [Licenses](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Licenses) 
+for the complete third-party license terms.
 
 ### Documentation
 
@@ -174,8 +166,9 @@ Copyright &copy; 2013 The libgit2 contributors
 
 ### Source Code
 
-swift-libgit2 includes source code adapted from the Swift.org open source 
-project under the Apache License, Version 2.0, with Runtime Library Exception.
+swift-libgit2 includes source code adapted from the 
+[Swift.org](https://www.swift.org) open source project under the Apache License, 
+Version 2.0, with Runtime Library Exception.
 
 Copyright &copy; 2014 - 2016 Apple Inc. and the Swift project authors.
 
