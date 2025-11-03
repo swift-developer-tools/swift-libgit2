@@ -30,28 +30,24 @@ like `String` instead of `UnsafePointer<CChar>`.
 
 ## Installation
 
-swift-libgit2 may be installed through 
-[Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/) 
-by entering the following URL: 
-[https://github.com/swift-developer-tools/swift-libgit2.git](https://github.com/swift-developer-tools/swift-libgit2.git).
+### Swift Package Manager
+
+swift-libgit2 may be installed using 
+[Swift Package Manager](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/).
 
 See [Xcode documentation](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app) 
 for instructions on how to add package dependencies.
 
-All necessary dependencies are handled by the package, which includes compiled 
-builds of libgit2, [libssh2](https://libssh2.org), and 
-[OpenSSL](https://www.openssl.org). See 
-[Bundled Dependencies](#Bundled-Dependencies) for more information.
-
-swift-libgit2 has been built to run on the following iOS and macOS platforms, 
-on both devices and simulators:
+### Requirements
 
 | Platform        | Minimum Version |
 |-----------------|-----------------|
 | iOS             | 15.0            |
-| macOS           | 11.0            |
+| macOS           | 13.0            |
+| Swift           | 6.1             |
 
-The macOS builds support both Apple Silicon and Intel.
+swift-libgit2 supports both devices and simulators. The macOS builds support 
+both Apple Silicon and Intel.
 
 
 
