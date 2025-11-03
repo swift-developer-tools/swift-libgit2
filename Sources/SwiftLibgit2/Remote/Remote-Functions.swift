@@ -538,7 +538,7 @@ public func gitRemoteGetFetchRefspecs(
             
             return git_remote_get_fetch_refspecs(
                 cArray,
-                remote,
+                remote
             )
         }
     }
@@ -601,7 +601,7 @@ public func gitRemoteGetPushRefspecs(
             
             return git_remote_get_push_refspecs(
                 cArray,
-                remote,
+                remote
             )
         }
     }

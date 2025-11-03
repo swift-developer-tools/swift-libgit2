@@ -259,7 +259,7 @@ public struct GitODBStream: CStruct
     public typealias FinalizeWrite = @convention(c)
     (
         UnsafeMutablePointer<git_odb_stream>?,
-        UnsafePointer<git_oid>?,
+        UnsafePointer<git_oid>?
     ) -> Int32
     
     
@@ -341,7 +341,7 @@ public struct GitODBWritePack: CStruct
     public typealias Commit = @convention(c)
     (
         UnsafeMutablePointer<git_odb_writepack>?,
-        UnsafeMutablePointer<git_indexer_progress>?,
+        UnsafeMutablePointer<git_indexer_progress>?
     ) -> Int32
     
     

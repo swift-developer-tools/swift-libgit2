@@ -113,7 +113,7 @@ public struct GitStream: CStruct, Sendable
     public typealias Certificate = @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutablePointer<git_cert>?>?,
-        UnsafeMutablePointer<git_stream>?,
+        UnsafeMutablePointer<git_stream>?
     ) -> Int32
     
     
