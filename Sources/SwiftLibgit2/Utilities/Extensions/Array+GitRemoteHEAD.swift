@@ -300,9 +300,9 @@ internal extension Array where Element == GitRemoteHEAD
         
         
         
-        var swiftArrayRemoteHEADs: [GitRemoteHEAD] = []
+        var swiftArrayOfRemoteHEADs: [GitRemoteHEAD] = []
         
-        swiftArrayRemoteHEADs.reserveCapacity(count)
+        swiftArrayOfRemoteHEADs.reserveCapacity(count)
         
         
         
@@ -315,9 +315,9 @@ internal extension Array where Element == GitRemoteHEAD
                 continue
             }
             
-            swiftArrayRemoteHEADs.append(GitRemoteHEAD(cValue: cRemoteHEAD))
+            swiftArrayOfRemoteHEADs.append(GitRemoteHEAD(cValue: cRemoteHEAD))
         }
         
-        self = swiftArrayRemoteHEADs
+        self = swiftArrayOfRemoteHEADs
     }
 }

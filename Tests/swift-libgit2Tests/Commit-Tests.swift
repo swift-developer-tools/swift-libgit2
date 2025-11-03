@@ -201,8 +201,7 @@ final class CommitTests: XCTestCaseStopOnFail
                         
             let commitCreateCB: GitCommitCreateCB =
             {
-                out, author, committer, messageEncoding, message,
-                tree, parentCount, parents, payload in
+                _, _, _, _, message, _, _, _, payload in
                 
                 guard
                     let payload: UnsafeMutableRawPointer = payload,

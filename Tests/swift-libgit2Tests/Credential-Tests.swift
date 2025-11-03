@@ -136,7 +136,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         let credentialSignCB: GitCredentialSignCB =
         {
-            session, sig, sigLen, data, dataLen, abstract in
+            _, _, _, _, _, _ in
             
             /// `abstract` is not the standard payload parameter. This callback
             /// will be invoked by libssh2 during actual SSH authentication,
@@ -179,8 +179,7 @@ final class CredentialTests: XCTestCaseStopOnFail
         
         let credentialSSHInteractiveCB: GitCredentialSSHInteractiveCB =
         {
-            name, nameLen, instructon, instructionLen,
-            numPrompts, prompts, responses, abstract in
+            _, _, _, _, _, _, _, _ in
             
             /// `abstract` is not the standard payload parameter. This callback
             /// will be invoked by libssh2 during actual SSH authentication,

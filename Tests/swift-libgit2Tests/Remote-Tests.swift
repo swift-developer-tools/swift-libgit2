@@ -244,13 +244,13 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteAddFetch() throws
     {
-        try withRemote(type: .fetchspec)
+        try Repository.withRemote(type: .fetchspec)
         {
             repository, _ in
             
             let remoteAddFetchResult: GitErrorCode = gitRemoteAddFetch(
                 repo:       repository.pointer,
-                remote:     Self.remoteName,
+                remote:     Repository.remoteName,
                 refspec:    "refs/heads/*:refs/remotes/something/*"
             )
             
@@ -262,13 +262,13 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteAddPushAndGetPushRefspecs() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             repository, _ in
             
             let remoteAddPushResult: GitErrorCode = gitRemoteAddPush(
                 repo:       repository.pointer,
-                remote:     Self.remoteName,
+                remote:     Repository.remoteName,
                 refspec:    Repository.pushRefspec
             )
             
@@ -288,7 +288,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             let remoteLookupResult: GitErrorCode = gitRemoteLookup(
                 out:    &remotePointer,
                 repo:   repository.pointer,
-                name:   Self.remoteName
+                name:   Repository.remoteName
             )
             
             XCTAssertOK(remoteLookupResult)
@@ -320,13 +320,13 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteAutoTag() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             repository, _ in
             
             let remoteSetAutoTagResult: GitErrorCode = gitRemoteSetAutoTag(
                 repo:       repository.pointer,
-                remote:     Self.remoteName,
+                remote:     Repository.remoteName,
                 value:      .gitRemoteDownloadTagsAll
             )
             
@@ -346,7 +346,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             let remoteLookupResult: GitErrorCode = gitRemoteLookup(
                 out:    &remotePointer,
                 repo:   repository.pointer,
-                name:   Self.remoteName
+                name:   Repository.remoteName
             )
             
             XCTAssertOK(remoteLookupResult)
@@ -528,7 +528,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteConnectAndDefaultBranch() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -568,7 +568,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteConnectExt() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -639,7 +639,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteCreateAndLookup() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, _ in
             
@@ -667,7 +667,7 @@ final class RemoteTests: XCTestCaseStopOnFail
                 = gitRemoteCreateAnonymous(
                     out:    &remotePointer,
                     repo:   repository.pointer,
-                    url:    Self.remoteURL
+                    url:    Repository.remoteURL
                 )
             
             XCTAssertOK(remoteCreateAnonymousResult)
@@ -692,7 +692,7 @@ final class RemoteTests: XCTestCaseStopOnFail
                 = gitRemoteURL(remote: remotePointer)
             
             XCTAssertNotNil(remoteURL)
-            XCTAssertEqual(remoteURL, Self.remoteURL)
+            XCTAssertEqual(remoteURL, Repository.remoteURL)
         }
     }
     
@@ -712,7 +712,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         let remoteCreateDetachedResult: GitErrorCode
             = gitRemoteCreateDetached(
                 out:    &remotePointer,
-                url:    Self.remoteURL
+                url:    Repository.remoteURL
             )
         
         XCTAssertOK(remoteCreateDetachedResult)
@@ -737,7 +737,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             = gitRemoteURL(remote: remotePointer)
         
         XCTAssertNotNil(remoteURL)
-        XCTAssertEqual(remoteURL, Self.remoteURL)
+        XCTAssertEqual(remoteURL, Repository.remoteURL)
     }
     
     
@@ -816,7 +816,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteCreateWithFetchspec() throws
     {
-        try withRemote(type: .fetchspec)
+        try Repository.withRemote(type: .fetchspec)
         {
             _, remotePointer in
             
@@ -854,7 +854,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             var remoteCreateOptions = GitRemoteCreateOptions()
             
             remoteCreateOptions.repository  = repository.pointer
-            remoteCreateOptions.name        = Self.remoteName
+            remoteCreateOptions.name        = Repository.remoteName
             remoteCreateOptions.fetchspec   = Repository.fetchRefspec
             
             
@@ -862,7 +862,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             let remoteCreateWithOptsResult: GitErrorCode
                 = gitRemoteCreateWithOpts(
                     out:    &remotePointer,
-                    url:    Self.remoteURL,
+                    url:    Repository.remoteURL,
                     opts:   remoteCreateOptions
                 )
             
@@ -870,7 +870,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             
             
-            try validateRemote(
+            try Remote.validateRemote(
                 remotePointer,
                 in: repository
             )
@@ -881,13 +881,13 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDelete() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             repository, _ in
             
             let remoteDeleteResult: GitErrorCode = gitRemoteDelete(
                 repo:   repository.pointer,
-                name:   Self.remoteName
+                name:   Repository.remoteName
             )
             
             XCTAssertOK(remoteDeleteResult)
@@ -906,7 +906,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             let remoteLookupResult: GitErrorCode = gitRemoteLookup(
                 out:    &remotePointer,
                 repo:   repository.pointer,
-                name:   Self.remoteName
+                name:   Repository.remoteName
             )
             
             XCTAssertNotOK(remoteLookupResult)
@@ -918,7 +918,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDisconnect() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -940,7 +940,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDownload() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -958,7 +958,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteDup() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -985,7 +985,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteFetch() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1011,7 +1011,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteGetRefspec() throws
     {
-        try withRemote(type: .fetchspec)
+        try Repository.withRemote(type: .fetchspec)
         {
             _, remotePointer in
             
@@ -1047,7 +1047,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteList() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             repository, _ in
             
@@ -1060,7 +1060,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             XCTAssertOK(remoteListResult)
             XCTAssertGreaterThan(remoteNames.count, 0)
-            XCTAssertTrue(remoteNames.contains(Self.remoteName))
+            XCTAssertTrue(remoteNames.contains(Repository.remoteName))
         }
     }
     
@@ -1068,7 +1068,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteLS() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1119,7 +1119,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemotePrune() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1136,7 +1136,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemotePruneRefs() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1148,13 +1148,13 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemotePush() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
             let remotePushResult: GitErrorCode = gitRemotePush(
                 remote:     remotePointer,
-                refspecs:   [Self.remotePushURL],
+                refspecs:   [Repository.remotePushURL],
                 opts:       nil
             )
             
@@ -1205,7 +1205,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteRefspecCount() throws
     {
-        try withRemote(type: .fetchspec)
+        try Repository.withRemote(type: .fetchspec)
         {
             _, remotePointer in
             
@@ -1220,7 +1220,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteRename() throws
     {
-        try withRemote(type: .fetchspec)
+        try Repository.withRemote(type: .fetchspec)
         {
             repository, _ in
             
@@ -1230,7 +1230,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             let remoteRenameResult: GitErrorCode = gitRemoteRename(
                 problems:   &refspecProblems,
                 repo:       repository.pointer,
-                name:       Self.remoteName,
+                name:       Repository.remoteName,
                 newName:    newRemoteName
             )
             
@@ -1250,7 +1250,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             var remoteLookupResult: GitErrorCode = gitRemoteLookup(
                 out:    &remotePointer,
                 repo:   repository.pointer,
-                name:   Self.remoteName
+                name:   Repository.remoteName
             )
             
             XCTAssertNotOK(remoteLookupResult)
@@ -1286,14 +1286,14 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetInstancePushURL() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
             let remoteSetInstancePushURLResult: GitErrorCode
                 = gitRemoteSetInstancePushURL(
                     remote:     remotePointer,
-                    url:        Self.remotePushURL
+                    url:        Repository.remotePushURL
                 )
             
             XCTAssertOK(remoteSetInstancePushURLResult)
@@ -1304,7 +1304,7 @@ final class RemoteTests: XCTestCaseStopOnFail
                 = gitRemotePushURL(remote: remotePointer)
             
             XCTAssertNotNil(remotePushURL)
-            XCTAssertEqual(remotePushURL, Self.remotePushURL)
+            XCTAssertEqual(remotePushURL, Repository.remotePushURL)
         }
     }
     
@@ -1312,7 +1312,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetInstanceURL() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1339,14 +1339,14 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetPushURL() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             repository, _ in
             
             let remoteSetPushURLResult: GitErrorCode = gitRemoteSetPushURL(
                 repo:       repository.pointer,
-                remote:     Self.remoteName,
-                url:        Self.remotePushURL
+                remote:     Repository.remoteName,
+                url:        Repository.remotePushURL
             )
             
             XCTAssertOK(remoteSetPushURLResult)
@@ -1357,13 +1357,13 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteSetURL() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             repository, _ in
             
             let remoteSetURLResult: GitErrorCode = gitRemoteSetURL(
                 repo:       repository.pointer,
-                remote:     Self.remoteName,
+                remote:     Repository.remoteName,
                 url:        "https://fetch2.example.com/example.git"
             )
             
@@ -1375,7 +1375,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteStats() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1390,7 +1390,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteStop() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1431,7 +1431,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteUpdateTips() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1451,7 +1451,7 @@ final class RemoteTests: XCTestCaseStopOnFail
     
     func testGitRemoteUpload() throws
     {
-        try withRemote
+        try Repository.withRemote
         {
             _, remotePointer in
             
@@ -1493,20 +1493,6 @@ final class RemoteTests: XCTestCaseStopOnFail
 
 private extension RemoteTests
 {
-    static let remoteName       : String    = "origin1"
-    static let remoteURL        : String    = "https://example.com/fetch.git"
-    static let remotePushURL    : String    = "https://example.com/push.git"
-    
-    
-    
-    enum RemoteCreationType
-    {
-        case standard
-        case fetchspec
-    }
-    
-    
-    
     /// Asserts that the given libgit2 operation result code is
     /// ``GitErrorCode/gitError``, and that the error is because the remote
     /// has never connected.
@@ -1529,147 +1515,5 @@ private extension RemoteTests
         XCTAssertNotNil(error)
         XCTAssertEqual(error?.message, "this remote has never connected")
         XCTAssertEqual(error?.klass, .gitErrorNet)
-    }
-    
-    
-    
-    /// Calls the given closure with a ``Repository`` instance and a pointer
-    /// to a remote.
-    /// - Parameters:
-    ///   - type: How to create the remote.
-    ///   - body: The closure to call.
-    /// - Throws: An error if an operation fails.
-    func withRemote(
-        type    : RemoteCreationType = .standard,
-        _ body  : (Repository, OpaquePointer) throws -> Void
-    ) throws
-    {
-        try Repository.withRepository
-        {
-            repository in
-            
-            var remotePointer: OpaquePointer? = nil
-            
-            defer
-            {
-                gitRemoteFree(remote: remotePointer)
-            }
-            
-            
-            
-            let remoteCreateResult: GitErrorCode
-            
-            switch type
-            {
-                case .standard:
-                    
-                    remoteCreateResult = gitRemoteCreate(
-                        out:    &remotePointer,
-                        repo:   repository.pointer,
-                        name:   Self.remoteName,
-                        url:    Self.remoteURL
-                    )
-                    
-                case .fetchspec:
-                    
-                    remoteCreateResult = gitRemoteCreateWithFetchspec(
-                        out:    &remotePointer,
-                        repo:   repository.pointer,
-                        name:   Self.remoteName,
-                        url:    Self.remoteURL,
-                        fetch:  Repository.fetchRefspec
-                    )
-            }
-            
-            XCTAssertOK(remoteCreateResult)
-            
-            guard let remotePointer: OpaquePointer = remotePointer
-            else
-            {
-                XCTFail("The remote pointer was nil.")
-                return
-            }
-            
-            
-            
-            try validateRemote(
-                remotePointer,
-                in: repository
-            )
-            
-            try body(
-                repository,
-                remotePointer
-            )
-        }
-    }
-    
-    
-    
-    /// Looks up the given remote and validates its properties.
-    /// - Parameters:
-    ///   - remotePointer: The remote to validate. The underlying type must be
-    ///   `git_remote`.
-    ///   - repository: The repository containing the given remote.
-    /// - Throws: An error if an operation fails.
-    func validateRemote(
-        _   remotePointer   : OpaquePointer?,
-        in  repository      : Repository
-    ) throws
-    {
-        guard remotePointer != nil
-        else
-        {
-            XCTFail("The remote pointer was nil.")
-            return
-        }
-        
-        
-        
-        var lookedUpRemotePointer: OpaquePointer? = nil
-        
-        defer
-        {
-            gitRemoteFree(remote: lookedUpRemotePointer)
-        }
-        
-        
-        
-        let remoteLookupResult: GitErrorCode = gitRemoteLookup(
-            out:    &lookedUpRemotePointer,
-            repo:   repository.pointer,
-            name:   Self.remoteName
-        )
-        
-        XCTAssertOK(remoteLookupResult)
-        
-        guard let lookedUpRemotePointer: OpaquePointer
-                = lookedUpRemotePointer
-        else
-        {
-            XCTFail( "The looked-up remote pointer was nil.")
-            return
-        }
-        
-        
-        
-        let remoteName: String? = gitRemoteName(remote: lookedUpRemotePointer)
-        
-        XCTAssertNotNil(remoteName)
-        XCTAssertEqual(remoteName, Self.remoteName)
-        
-        
-        
-        let remoteURL: String? = gitRemoteURL(remote: lookedUpRemotePointer)
-        
-        XCTAssertNotNil(remoteURL)
-        XCTAssertEqual(remoteURL, Self.remoteURL)
-        
-        
-        
-        let ownerPointer: OpaquePointer
-            = gitRemoteOwner(remote: lookedUpRemotePointer)
-        
-        XCTAssertEqual(ownerPointer, repository.pointer)
     }
 }

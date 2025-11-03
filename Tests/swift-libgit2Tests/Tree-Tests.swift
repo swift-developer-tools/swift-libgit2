@@ -829,7 +829,7 @@ final class TreeTests: XCTestCaseStopOnFail
             
             let treeWalkCB: GitTreewalkCB =
             {
-                root, entry, payload in
+                _, _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else

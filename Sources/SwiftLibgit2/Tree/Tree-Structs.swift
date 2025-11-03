@@ -16,7 +16,7 @@ import CLibgit2
 /// ## C Equivalent
 ///
 /// [`git_tree_update`](https://libgit2.org/docs/reference/main/tree/git_tree_update.html)
-public struct GitTreeUpdate: CStructMutable, WithCConvertible
+public struct GitTreeUpdate: CStructMutable, WithCConvertible, Sendable
 {
     /// The type of tree update.
     ///

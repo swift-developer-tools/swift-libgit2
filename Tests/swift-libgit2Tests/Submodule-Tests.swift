@@ -300,7 +300,7 @@ final class SubmoduleTests: XCTestCaseStopOnFail
             
             let submoduleCB: GitSubmoduleCB =
             {
-                sm, name, payload in
+                _, name, payload in
                 
                 guard
                     let payload: UnsafeMutableRawPointer = payload,

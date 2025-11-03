@@ -250,7 +250,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             let indexMatchedPathCB: GitIndexMatchedPathCB =
             {
-                path, matchedPathspec, payload in
+                path, _, payload in
                 
                 guard
                     let payload: UnsafeMutableRawPointer = payload,

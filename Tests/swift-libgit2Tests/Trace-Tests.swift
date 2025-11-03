@@ -50,7 +50,7 @@ final class TraceTests: XCTestCaseStopOnFail
     {
         let traceCB: GitTraceCB =
         {
-            level, message in
+            level, _ in
             
             guard GitTraceLevelT(cValue: level) != nil
             else

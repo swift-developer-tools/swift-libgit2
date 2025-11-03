@@ -11,7 +11,6 @@ import CLibgit2
 
 
 
-// TODO: Replace `git_transport_remote_connect_options()` in documentation.
 /// Frees the memory allocated for the given `git_remote_connect_options`
 /// instance.
 /// - Parameter opts: The remote connect options to free.
@@ -23,7 +22,7 @@ import CLibgit2
 ///
 /// - Important: This function must be called only with a
 /// `git_remote_connect_options` instance that was returned by
-/// `git_transport_remote_connect_options()`.
+/// ``gitTransportRemoteConnectOptions(out:transport:)``.
 ///
 /// ## C Equivalent
 ///

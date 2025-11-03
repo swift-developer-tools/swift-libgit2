@@ -60,7 +60,7 @@ final class IndexerTests: XCTestCaseStopOnFail
             
             let indexerProgressCB: GitIndexerProgressCB =
             {
-                stats, payload in
+                _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else

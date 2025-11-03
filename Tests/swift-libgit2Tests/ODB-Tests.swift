@@ -209,11 +209,11 @@ final class ODBTests: XCTestCaseStopOnFail
             
             let odbForEachCB: GitODBForEachCB =
             {
-                oidPointer, payload in
+                id, payload in
                 
                 guard
-                    let payload     : UnsafeMutableRawPointer   = payload,
-                    let oidPointer  : UnsafePointer<git_oid>    = oidPointer
+                    let payload : UnsafeMutableRawPointer   = payload,
+                    let id      : UnsafePointer<git_oid>    = id
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -226,7 +226,7 @@ final class ODBTests: XCTestCaseStopOnFail
                 payloadPointer.pointee.callCount += 1
                 
                 payloadPointer.pointee.oids.append(
-                    GitOID(cValue: oidPointer.pointee)
+                    GitOID(cValue: id.pointee)
                 )
                 
                 return GitErrorCode.gitOK.rawValue
@@ -941,7 +941,7 @@ private extension ODBTests
             
             let indexerProgressCB: GitIndexerProgressCB =
             {
-                stats, payload in
+                _, payload in
                 
                 guard let payload: UnsafeMutableRawPointer = payload
                 else
@@ -1067,9 +1067,6 @@ private extension ODBTests
                     !backendOwnershipTransferred,
                     backendPointer != nil
                 {
-                    /// Ownership of the memory transfers to libgit2 after
-                    /// adding the backend. Free the memory manually if the
-                    /// memory was allocated, but the add operation failed.
                     backendPointer?.pointee.free(backendPointer)
                 }
             }
