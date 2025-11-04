@@ -22,16 +22,8 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let content: String = "Hello World!"
-            
-            guard let data: Data = content.data(using: .utf8)
-            else
-            {
-                XCTFail("The content data was nil.")
-                return
-            }
-            
-            
+            let content : String    = "Hello World!"
+            let data    : Data      = Data(content.utf8)
             
             let blobOID: GitOID = Blob.createBlob(
                 in:     repository,
@@ -54,11 +46,11 @@ final class BlobTests: XCTestCaseStopOnFail
         {
             repository in
             
-            let fileContent: String = "Hello World!"
+            let content: String = "Hello World!"
             
             let fileURL: URL = try repository.modifyFile(
                 at:     "test.txt",
-                with:   fileContent
+                with:   content
             )
             
             
@@ -71,7 +63,7 @@ final class BlobTests: XCTestCaseStopOnFail
             Blob.validateBlobContent(
                 in:     repository,
                 id:     blobOID,
-                as:     fileContent
+                as:     content
             )
         }
     }
@@ -104,16 +96,8 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            let content: String = "Hello World!"
-            
-            guard let data: Data = content.data(using: .utf8)
-            else
-            {
-                XCTFail("The content data was nil.")
-                return
-            }
-            
-            
+            let content : String    = "Hello World!"
+            let data    : Data      = Data(content.utf8)
             
             let writeResult: Int32 = try data.withCString
             {

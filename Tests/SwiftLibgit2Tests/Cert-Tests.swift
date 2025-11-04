@@ -34,16 +34,6 @@ final class CertTests: XCTestCaseStopOnFail
     
     func testGitCertHostKey() throws
     {
-        guard let hostKeyData: Data
-                = "ssh-rsa ABCXYZHostKey".data(using: .utf8)
-        else
-        {
-            XCTFail("The data was nil.")
-            return
-        }
-        
-        
-        
         let md5Hash = Data(
         [
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
@@ -130,6 +120,8 @@ final class CertTests: XCTestCaseStopOnFail
             .gitCertSSHSHA256,
             .gitCertSSHRaw
         ]
+        
+        let hostKeyData = Data("ssh-rsa ABCXYZHostKey".utf8)
         
         hostKeyData.withUnsafeBytes
         {
@@ -285,15 +277,6 @@ final class CertTests: XCTestCaseStopOnFail
     
     func testGitCertX509() throws
     {
-        guard let data: Data = "Mock X.509 certificate data".data(using: .utf8)
-        else
-        {
-            XCTFail("The data was nil.")
-            return
-        }
-        
-        
-        
         var cParentCert = git_cert()
         
         cParentCert.cert_type = GIT_CERT_X509
@@ -305,6 +288,8 @@ final class CertTests: XCTestCaseStopOnFail
         baseCertX509.parent = cParentCert
         
         
+        
+        let data = Data("Mock X.509 certificate data".utf8)
         
         data.withUnsafeBytes
         {
