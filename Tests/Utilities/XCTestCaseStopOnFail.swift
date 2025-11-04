@@ -36,7 +36,12 @@ class XCTestCaseStopOnFail: XCTestCase
     /// Provides an opportunity to perform cleanup after a test case ends.
     override class func tearDown()
     {
-        _ = gitLibgit2Shutdown()
+        let remainingInitializations: Int32 = gitLibgit2Shutdown()
+        
+        for _ in 0..<remainingInitializations
+        {
+            _ = gitLibgit2Shutdown()
+        }
         
         super.tearDown()
     }
