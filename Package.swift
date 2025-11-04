@@ -15,6 +15,11 @@ import PackageDescription
 
 let package = Package(
     name: "swift-libgit2",
+    platforms:
+    [
+        .iOS(.v15),
+        .macOS(.v13)
+    ],
     products:
     [
         .library(
@@ -26,25 +31,59 @@ let package = Package(
     [
         .package(
             name:   "swift-libgit2-base",
-            path:   "swift-libgit2-base"
+            path:   "../swift-libgit2-base"
+        ),
+        
+        .package(
+            url:    "https://github.com/apple/swift-docc-plugin",
+            from:   "1.4.5"
         )
     ],
     targets:
     [
         .target(
-            name: "SwiftLibgit2",
+            name: "CLibgit2Variadic",
             dependencies:
             [
                 .product(
-                    name:       "Clibgit2",
+                    name:       "CLibgit2",
                     package:    "swift-libgit2-base"
                 )
             ]
         ),
         
+        .target(
+            name: "SwiftLibgit2",
+            dependencies:
+            [
+                "CLibgit2Variadic",
+                .product(
+                    name:       "CLibgit2",
+                    package:    "swift-libgit2-base"
+                )
+            ]
+        ),
+        
+        .target(
+            name: "SwiftLibgit2TestUtilities",
+            dependencies:
+            [
+                "SwiftLibgit2",
+                .product(
+                    name:       "CLibgit2",
+                    package:    "swift-libgit2-base"
+                )
+            ],
+            path: "Tests/Utilities"
+        ),
+        
         .testTarget(
-            name:           "SwiftLibgit2Tests",
-            dependencies:   ["SwiftLibgit2"]
+            name: "SwiftLibgit2Tests",
+            dependencies:
+            [
+                "SwiftLibgit2",
+                "SwiftLibgit2TestUtilities"
+            ]
         )
     ]
 )

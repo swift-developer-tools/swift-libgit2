@@ -1,0 +1,22 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+/// A type that presents a mathematical set interface to a bitset.
+internal protocol COptionSet: CConvertible, CStruct, RawValueMutable, OptionSet
+    where RawValue == UInt32
+{
+    /// Creates an instance from a raw value.
+    ///
+    /// This must have a `public` access level.
+    ///
+    /// - Parameter rawValue: The raw value to use.
+    init(
+        rawValue: UInt32
+    )
+}

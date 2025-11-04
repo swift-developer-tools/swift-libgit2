@@ -1,0 +1,7 @@
+module CLibgit2Variadic
+{
+    header "commit.h"
+    header "common.h"
+    header "errors_advanced.h"
+    export *
+}

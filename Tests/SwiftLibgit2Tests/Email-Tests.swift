@@ -1,0 +1,119 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import CLibgit2
+import XCTest
+@testable import SwiftLibgit2
+@testable import SwiftLibgit2TestUtilities
+
+
+
+final class EmailTests: XCTestCaseStopOnFail
+{
+    func testEmailCreateFlagsT() throws
+    {
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateDefault.rawValue, GIT_EMAIL_CREATE_DEFAULT.rawValue)
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateOmitNumbers.rawValue, GIT_EMAIL_CREATE_OMIT_NUMBERS.rawValue)
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateAlwaysNumber.rawValue, GIT_EMAIL_CREATE_ALWAYS_NUMBER.rawValue)
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateNoRenames.rawValue, GIT_EMAIL_CREATE_NO_RENAMES.rawValue)
+        
+        XCTAssertEqual(GitEmailCreateFlagsT(rawValue: 123).cValue().rawValue, 123)
+        
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateDefault.cValue(), GIT_EMAIL_CREATE_DEFAULT)
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateOmitNumbers.cValue(), GIT_EMAIL_CREATE_OMIT_NUMBERS)
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateAlwaysNumber.cValue(), GIT_EMAIL_CREATE_ALWAYS_NUMBER)
+        XCTAssertEqual(GitEmailCreateFlagsT.gitEmailCreateNoRenames.cValue(), GIT_EMAIL_CREATE_NO_RENAMES)
+        
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_DEFAULT), .gitEmailCreateDefault)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_OMIT_NUMBERS), .gitEmailCreateOmitNumbers)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_ALWAYS_NUMBER), .gitEmailCreateAlwaysNumber)
+        XCTAssertEqual(GitEmailCreateFlagsT(cValue: GIT_EMAIL_CREATE_NO_RENAMES), .gitEmailCreateNoRenames)
+        
+        
+        
+        let flags: GitEmailCreateFlagsT =
+        [
+            .gitEmailCreateOmitNumbers,
+            .gitEmailCreateAlwaysNumber
+        ]
+        
+        XCTAssertTrue(flags.contains(.gitEmailCreateOmitNumbers))
+        XCTAssertTrue(flags.contains(.gitEmailCreateAlwaysNumber))
+        XCTAssertFalse(flags.contains(.gitEmailCreateNoRenames))
+    }
+    
+    
+    
+    func testGitEmailCreateFromCommit() throws
+    {
+        try Repository.withRepository
+        {
+            repository in
+            
+            try Commit.withHEADCommit(in: repository)
+            {
+                commitPointer in
+                
+                var emailCreateOptions = GitEmailCreateOptions()
+                
+                emailCreateOptions.flags            = .gitEmailCreateOmitNumbers
+                emailCreateOptions.subjectPrefix    = ""
+                
+                
+                
+                var emailPatch = Data()
+                
+                let emailCreateFromCommitResult: GitErrorCode
+                    = gitEmailCreateFromCommit(
+                        out:        &emailPatch,
+                        commit:     commitPointer,
+                        opts:       emailCreateOptions
+                    )
+                
+                XCTAssertOK(emailCreateFromCommitResult)
+                XCTAssertGreaterThan(emailPatch.count, 0)
+            }
+        }
+    }
+    
+    
+    
+    func testGitEmailCreateOptions() throws
+    {
+        let emailCreateOptions = GitEmailCreateOptions()
+        
+        XCTAssertEqual(emailCreateOptions.version, gitEmailCreateOptionsVersion)
+        XCTAssertEqual(emailCreateOptions.flags, .gitEmailCreateDefault)
+        XCTAssertNotNil(emailCreateOptions.diffOpts)
+        XCTAssertNotNil(emailCreateOptions.diffFindOpts)
+        XCTAssertEqual(emailCreateOptions.subjectPrefix, "PATCH")
+        XCTAssertEqual(emailCreateOptions.startNumber, 1)
+        XCTAssertEqual(emailCreateOptions.rerollNumber, 0)
+        
+        try emailCreateOptions.withCValue
+        {
+            cEmailCreateOptions in
+            
+            XCTAssertEqual(cEmailCreateOptions.pointee.version, gitEmailCreateOptionsVersion)
+            XCTAssertEqual(GitEmailCreateFlagsT(rawValue: cEmailCreateOptions.pointee.flags), .gitEmailCreateDefault)
+            XCTAssertNotNil(cEmailCreateOptions.pointee.diff_opts)
+            XCTAssertNotNil(cEmailCreateOptions.pointee.diff_find_opts)
+            XCTAssertEqual(String(optionalCString: cEmailCreateOptions.pointee.subject_prefix), "PATCH")
+            XCTAssertEqual(cEmailCreateOptions.pointee.start_number, 1)
+            XCTAssertEqual(cEmailCreateOptions.pointee.reroll_number, 0)
+        }
+    }
+    
+    
+    
+    func testGitEmailCreateOptionsVersion() throws
+    {
+        XCTAssertEqual(Int32(gitEmailCreateOptionsVersion), GIT_EMAIL_CREATE_OPTIONS_VERSION)
+    }
+}

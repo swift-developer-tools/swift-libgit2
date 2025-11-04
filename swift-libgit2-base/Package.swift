@@ -16,6 +16,11 @@ import PackageDescription
 /// This package only provides access to `Clibgit2`.
 let package = Package(
     name: "swift-libgit2-base",
+    platforms:
+    [
+        .iOS(.v15),
+        .macOS(.v11)
+    ],
     products:
     [
         .library(

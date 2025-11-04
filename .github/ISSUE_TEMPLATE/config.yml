@@ -1,0 +1,10 @@
+# ===----------------------------------------------------------------------===//
+#
+# This source file is part of the swift-libgit2 open source project.
+#
+# Copyright (c) Margins Technologies LLC.
+# Licensed under the Apache License, Version 2.0.
+#
+# ===----------------------------------------------------------------------===//
+
+blank_issues_enabled: false

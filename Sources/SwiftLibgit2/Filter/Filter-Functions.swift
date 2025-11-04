@@ -1,0 +1,376 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import CLibgit2
+import Foundation
+
+
+
+/// Loads the filter list for the given path.
+///
+/// The operation will succeed if no filters are requested for the specified
+/// file, but `filters` will be set to `nil`.
+///
+/// - Parameters:
+///   - filters: The pointer in which to store the filter list. The underlying
+///   type must be `git_filter_list`.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
+///   - blob: The blob to which to apply the filter. The underlying type must
+///   be `git_blob`.
+///   - path: The relative path to the file to filter.
+///   - mode: The filtering direction to use.
+///   - flags: The flags controlling the filtering process.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_load()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_load.html)
+public func gitFilterListLoad(
+    filters : UnsafeMutablePointer<OpaquePointer?>,
+    repo    : OpaquePointer,
+    blob    : OpaquePointer?,
+    path    : String,
+    mode    : GitFilterModeT,
+    flags   : GitFilterFlagT
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_filter_list_load(
+            filters,
+            repo,
+            blob,
+            path,
+            mode.cValue(),
+            flags.rawValue
+        )
+    }
+}
+
+
+
+/// Loads the filter list for the given path.
+///
+/// The operation will succeed if no filters are requested for the specified
+/// file, but `filters` will be set to `nil`.
+///
+/// - Parameters:
+///   - filters: The pointer in which to store the filter list. The underlying
+///   type must be `git_filter_list`.
+///   - repo: The repository containing the given path. The underlying type
+///   must be `git_repository`.
+///   - blob: The blob to which to apply the filter. The underlying type must
+///   be `git_blob`.
+///   - path: The relative path to the file to filter.
+///   - mode: The filtering direction to use.
+///   - opts: The filtering options to use.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_load_ext()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_load_ext.html)
+public func gitFilterListLoadExt(
+    filters : UnsafeMutablePointer<OpaquePointer?>,
+    repo    : OpaquePointer,
+    blob    : OpaquePointer?,
+    path    : String,
+    mode    : GitFilterModeT,
+    opts    : GitFilterOptions?
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try opts.withOptionalCValue
+        {
+            cOpts in
+            
+            return git_filter_list_load_ext(
+                filters,
+                repo,
+                blob,
+                path,
+                mode.cValue(),
+                cOpts
+            )
+        }
+    }
+}
+
+
+
+/// Checks whether the named filter will be applied.
+///
+/// The built-in filters ``gitFilterCRLF`` and ``gitFilterIdent`` can be
+/// queried.
+///
+/// - Parameters:
+///   - filters: The filter list to check. The underlying type must be
+///   `git_filter_list`.
+///   - name: The name of the filter to check.
+/// - Returns: Whether the named filter will be applied.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_contains()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_contains.html)
+public func gitFilterListContains(
+    filters : OpaquePointer?,
+    name    : String
+) -> Bool
+{
+    let containsName: Int32 = git_filter_list_contains(
+        filters,
+        name
+    )
+    
+    return Bool(containsName)
+}
+
+
+
+/// Applies the given filter list to the given input.
+/// - Parameters:
+///   - out: The `Data` instance in which to store the filtered content.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - input: The data to filter.
+///   - inputLen: The length of `input`.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_apply_to_buffer()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_buffer.html)
+public func gitFilterListApplyToBuffer(
+    out                     : inout Data,
+    filters                 : OpaquePointer?,
+    in          input       : Data,
+    inLen       inputLen    : Int
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try out.withMutatingGitBuf
+        {
+            cOut in
+            
+            return try input.withCString
+            {
+                cInput, cInputCount in
+                
+                return git_filter_list_apply_to_buffer(
+                    cOut,
+                    filters,
+                    cInput,
+                    cInputCount
+                )
+            }
+        }
+    }
+}
+
+
+
+/// Applies the given filter list to the contents of the specified on-disk file.
+///
+/// If `path` is a relative path, it will be interpreted as being relative to
+/// the working directory.
+///
+/// - Parameters:
+///   - out: The `Data` instance in which to store the filtered content.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - repo: The repository containing the specified file. The underlying
+///   type must be `git_repository`.
+///   - path: The path to the file to filter.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_apply_to_file()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_file.html)
+public func gitFilterListApplyToFile(
+    out     : inout Data,
+    filters : OpaquePointer?,
+    repo    : OpaquePointer,
+    path    : String
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try out.withMutatingGitBuf
+        {
+            cOut in
+            
+            return git_filter_list_apply_to_file(
+                cOut,
+                filters,
+                repo,
+                path
+            )
+        }
+    }
+}
+
+
+
+/// Applies the given filter list to the contents of the given blob.
+/// - Parameters:
+///   - out: The `Data` instance in which to store the filtered content.
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - blob: The blob to filter. The underlying type must be `git_blob`.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_apply_to_blob()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_apply_to_blob.html)
+public func gitFilterListApplyToBlob(
+    out     : inout Data,
+    filters : OpaquePointer?,
+    blob    : OpaquePointer
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try out.withMutatingGitBuf
+        {
+            cOut in
+            
+            return git_filter_list_apply_to_blob(
+                cOut,
+                filters,
+                blob
+            )
+        }
+    }
+}
+
+
+
+/// Applies the given filter list to the given data as a stream.
+/// - Parameters:
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - buffer: The data to filter.
+///   - len: The length of `buffer`.
+///   - target: The stream in which to write the data.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_stream_buffer()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_stream_buffer.html)
+public func gitFilterListStreamBuffer(
+    filters : OpaquePointer?,
+    buffer  : Data,
+    len     : Int,
+    target  : UnsafeMutablePointer<git_writestream>
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try buffer.withCString
+        {
+            cBuffer, cBufferCount in
+            
+            return git_filter_list_stream_buffer(
+                filters,
+                cBuffer,
+                cBufferCount,
+                target
+            )
+        }
+    }
+}
+
+
+
+/// Applies the given filter list to the specified file as a stream.
+///
+/// If `path` is a relative path, it will be interpreted as being relative to
+/// the working directory.
+///
+/// - Parameters:
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - repo: The repository containing the specified file. The underlying
+///   type must be `git_repository`.
+///   - path: The path to the file to filter.
+///   - target: The stream in which to write the data.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_stream_file()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_stream_file.html)
+public func gitFilterListStreamFile(
+    filters : OpaquePointer?,
+    repo    : OpaquePointer,
+    path    : String,
+    target  : UnsafeMutablePointer<git_writestream>
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_filter_list_stream_file(
+            filters,
+            repo,
+            path,
+            target
+        )
+    }
+}
+
+
+
+/// Applies the given filter list to the given blob as a stream.
+/// - Parameters:
+///   - filters: The filter list to apply. The underlying type must be
+///   `git_filter_list`.
+///   - blob: The blob to filter. The underlying type must be `git_blob`.
+///   - target: The stream in which to write the data.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_stream_blob()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_stream_blob.html)
+public func gitFilterListStreamBlob(
+    filters : OpaquePointer?,
+    blob    : OpaquePointer,
+    target  : UnsafeMutablePointer<git_writestream>
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_filter_list_stream_blob(
+            filters,
+            blob,
+            target
+        )
+    }
+}
+
+
+
+/// Frees the memory allocated for the given `git_filter_list` instance.
+/// - Parameter filters: The filter list to free. The underlying type must
+/// be `git_filter_list`.
+///
+/// ## C Equivalent
+///
+/// [`git_filter_list_free()`](https://libgit2.org/docs/reference/main/filter/git_filter_list_free.html)
+public func gitFilterListFree(
+    filters: OpaquePointer?
+)
+{
+    guard let filters
+    else
+    {
+        return
+    }
+    
+    git_filter_list_free(filters)
+}

@@ -1,0 +1,349 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import CLibgit2
+import Foundation
+
+
+
+/// Checkout performance data.
+///
+/// ## C Equivalent
+///
+/// [`git_checkout_perfdata`](https://libgit2.org/docs/reference/main/checkout/git_checkout_perfdata.html)
+public struct GitCheckoutPerfData: CStructReadable, CConvertible, Sendable
+{
+    /// The number of times `mkdir` was called during the checkout operation.
+    public let mkdirCalls   : Int
+    
+    /// The number of times `stat` was called during the checkout operation.
+    public let statCalls    : Int
+    
+    /// The number of times `chmod` was called during the checkout operation.
+    public let chmodCalls   : Int
+    
+    
+    
+    /// Initializes a ``GitCheckoutPerfData`` instance from the given
+    /// `git_checkout_perfdata` instance.
+    /// - Parameter checkoutPerfData: The `git_checkout_perfdata` instance to
+    /// use.
+    internal init(
+        cValue checkoutPerfData: git_checkout_perfdata
+    )
+    {
+        self.mkdirCalls     = checkoutPerfData.mkdir_calls
+        self.statCalls      = checkoutPerfData.stat_calls
+        self.chmodCalls     = checkoutPerfData.chmod_calls
+    }
+    
+    
+    
+    /// Converts the ``GitCheckoutPerfData`` instance into a
+    /// `git_checkout_perfdata` instance.
+    /// - Returns: The `git_checkout_perfdata` instance.
+    internal func cValue() -> git_checkout_perfdata
+    {
+        var checkoutPerfData = git_checkout_perfdata()
+        
+        checkoutPerfData.mkdir_calls    = mkdirCalls
+        checkoutPerfData.stat_calls     = statCalls
+        checkoutPerfData.chmod_calls    = chmodCalls
+        
+        return checkoutPerfData
+    }
+}
+
+
+
+/// The options for checkout operations.
+///
+/// ## C Equivalent
+///
+/// [`git_checkout_options`](https://libgit2.org/docs/reference/main/checkout/git_checkout_options.html)
+public struct GitCheckoutOptions: CStructMutable, WithCConvertible
+{
+    /// The struct version.
+    ///
+    /// The default value is ``gitCheckoutOptionsVersion``.
+    public var version          : UInt32
+    
+    /// The checkout strategy.
+    ///
+    /// The default value is an empty option set.
+    public var checkoutStrategy : GitCheckoutStrategyT
+    
+    /// Whether to disable filters such as CRLF conversion.
+    ///
+    /// The default value is `false`.
+    public var disableFilters   : Bool
+    
+    /// The permission to use when creating directories.
+    ///
+    /// The default value is `0`.
+    ///
+    /// Pass `0` to use `0o755`.
+    public var dirMode          : UInt32
+    
+    /// The permission to use when creating files.
+    ///
+    /// The default value is `0`.
+    ///
+    /// Pass `0` to use `0o644` or `0o755`, as dictated by the blob.
+    public var fileMode         : UInt32
+    
+    /// The flags controlling the file opening process.
+    ///
+    /// The default value is `0`.
+    ///
+    /// Pass `0` to use `O_CREAT | O_TRUNC | O_WRONLY`.
+    public var fileOpenFlags    : Int32
+    
+    /// The flags controlling the behavior of checkout notifications.
+    ///
+    /// The default value is an empty option set.
+    public var notifyFlags      : GitCheckoutNotifyT
+    
+    /// The callback invoked for checkout notifications.
+    ///
+    /// The default value is `nil`.
+    public var notifyCB         : GitCheckoutNotifyCB?
+    
+    /// The payload passed to ``notifyCB``.
+    ///
+    /// The default value is `nil`.
+    public var notifyPayload    : UnsafeMutableRawPointer?
+    
+    /// The callback invoked to report checkout progress.
+    ///
+    /// The default value is `nil`.
+    public var progressCB       : GitCheckoutProgressCB?
+    
+    /// The payload passed to ``progressCB``.
+    ///
+    /// The default value is `nil`.
+    public var progressPayload  : UnsafeMutableRawPointer?
+    
+    /// The wildmatch patterns or paths.
+    ///
+    /// The default value is an empty array.
+    ///
+    /// Pass an empty array to process all paths. If an array of wildmatch
+    /// patterns is provided, those patterns will be used to determine which
+    /// paths to take into account.
+    ///
+    /// Use ``GitCheckoutStrategyT/gitCheckoutDisablePathspecMatch`` to treat
+    /// this as a simple list.
+    public var paths            : [String]
+    
+    /// The expected content of the working directory. The underlying type
+    /// must be `git_tree`.
+    ///
+    /// The default value is `nil`.
+    ///
+    /// Pass `nil` to use HEAD.
+    ///
+    /// A checkout conflict will occur if the working directory does not match
+    /// this baseline information.
+    public var baseline         : OpaquePointer?
+    
+    /// The expected content of the working directory, expressed as an index.
+    /// The underlying type must be `git_index`.
+    ///
+    /// The default value is `nil`.
+    /// 
+    /// This overrides ``baseline``.
+    public var baselineIndex    : OpaquePointer?
+    
+    /// The alternative checkout path to the working directory.
+    ///
+    /// The default value is `nil`.
+    public var targetDirectory  : String?
+    
+    /// The name of the common ancestor of conflicts.
+    ///
+    /// The default value is `nil`.
+    public var ancestorLabel    : String?
+    
+    /// The name of "our" side of conflicts.
+    ///
+    /// The default value is `nil`.
+    public var ourLabel         : String?
+    
+    /// The name of "their" side of conflicts.
+    ///
+    /// The default value is `nil`.
+    public var theirLabel       : String?
+    
+    /// The callback invoked to report checkout performance data.
+    ///
+    /// The default value is `nil`.
+    public var perfDataCB       : GitCheckoutPerfDataCB?
+    
+    /// The payload passed to ``perfDataCB``.
+    ///
+    /// The default value is `nil`.
+    public var perfDataPayload  : UnsafeMutableRawPointer?
+    
+    
+    
+    /// Initializes a ``GitCheckoutOptions`` instance, optionally specifying
+    /// values for its properties.
+    public init(
+        version             : UInt32                    = gitCheckoutOptionsVersion,
+        checkoutStrategy    : GitCheckoutStrategyT      = [],
+        disableFilters      : Bool                      = false,
+        dirMode             : UInt32                    = 0,
+        fileMode            : UInt32                    = 0,
+        fileOpenFlags       : Int32                     = 0,
+        notifyFlags         : GitCheckoutNotifyT        = [],
+        notifyCB            : GitCheckoutNotifyCB?      = nil,
+        notifyPayload       : UnsafeMutableRawPointer?  = nil,
+        progressCB          : GitCheckoutProgressCB?    = nil,
+        progressPayload     : UnsafeMutableRawPointer?  = nil,
+        paths               : [String]                  = [],
+        baseline            : OpaquePointer?            = nil,
+        baselineIndex       : OpaquePointer?            = nil,
+        targetDirectory     : String?                   = nil,
+        ancestorLabel       : String?                   = nil,
+        ourLabel            : String?                   = nil,
+        theirLabel          : String?                   = nil,
+        perfDataCB          : GitCheckoutPerfDataCB?    = nil,
+        perfDataPayload     : UnsafeMutableRawPointer?  = nil
+    )
+    {
+        self.version            = version
+        self.checkoutStrategy   = checkoutStrategy
+        self.disableFilters     = disableFilters
+        self.dirMode            = dirMode
+        self.fileMode           = fileMode
+        self.fileOpenFlags      = fileOpenFlags
+        self.notifyFlags        = notifyFlags
+        self.notifyCB           = notifyCB
+        self.notifyPayload      = notifyPayload
+        self.progressCB         = progressCB
+        self.progressPayload    = progressPayload
+        self.paths              = paths
+        self.baseline           = baseline
+        self.baselineIndex      = baselineIndex
+        self.targetDirectory    = targetDirectory
+        self.ancestorLabel      = ancestorLabel
+        self.ourLabel           = ourLabel
+        self.theirLabel         = theirLabel
+        self.perfDataCB         = perfDataCB
+        self.perfDataPayload    = perfDataPayload
+    }
+    
+    
+    
+    /// Initializes a ``GitCheckoutOptions`` instance from the given
+    /// `git_checkout_options` instance.
+    /// - Parameter checkoutOptions: The `git_checkout_options` instance to use.
+    internal init(
+        cValue checkoutOptions: git_checkout_options
+    )
+    {
+        self.version            = checkoutOptions.version
+        self.checkoutStrategy   = GitCheckoutStrategyT(rawValue: checkoutOptions.checkout_strategy)
+        self.disableFilters     = Bool(checkoutOptions.disable_filters)
+        self.dirMode            = checkoutOptions.dir_mode
+        self.fileMode           = checkoutOptions.file_mode
+        self.fileOpenFlags      = checkoutOptions.file_open_flags
+        self.notifyFlags        = GitCheckoutNotifyT(rawValue: checkoutOptions.notify_flags)
+        self.notifyCB           = checkoutOptions.notify_cb
+        self.notifyPayload      = checkoutOptions.notify_payload
+        self.progressCB         = checkoutOptions.progress_cb
+        self.progressPayload    = checkoutOptions.progress_payload
+        self.paths              = Array(checkoutOptions.paths)
+        self.baseline           = checkoutOptions.baseline
+        self.baselineIndex      = checkoutOptions.baseline_index
+        self.targetDirectory    = String(optionalCString: checkoutOptions.target_directory)
+        self.ancestorLabel      = String(optionalCString: checkoutOptions.ancestor_label)
+        self.ourLabel           = String(optionalCString: checkoutOptions.our_label)
+        self.theirLabel         = String(optionalCString: checkoutOptions.their_label)
+        self.perfDataCB         = checkoutOptions.perfdata_cb
+        self.perfDataPayload    = checkoutOptions.perfdata_payload
+    }
+    
+    
+    
+    /// Calls the given closure with a mutable pointer to a
+    /// `git_checkout_options` instance.
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
+    internal func withCValue<T>(
+        _ body: (UnsafeMutablePointer<git_checkout_options>) throws -> T
+    ) throws -> T
+    {
+        var checkoutOptions = git_checkout_options()
+        
+        let checkoutOptionsInitResult: GitErrorCode = gitCheckoutOptionsInit(
+            opts:       &checkoutOptions,
+            version:    version
+        )
+        
+        if checkoutOptionsInitResult != .gitOK
+        {
+            throw NSError.makeCConversionError()
+        }
+        
+        checkoutOptions.checkout_strategy   = checkoutStrategy.rawValue
+        checkoutOptions.disable_filters     = disableFilters.int32Value
+        checkoutOptions.dir_mode            = dirMode
+        checkoutOptions.file_mode           = fileMode
+        checkoutOptions.file_open_flags     = fileOpenFlags
+        checkoutOptions.notify_flags        = notifyFlags.rawValue
+        checkoutOptions.notify_cb           = notifyCB
+        checkoutOptions.notify_payload      = notifyPayload
+        checkoutOptions.progress_cb         = progressCB
+        checkoutOptions.progress_payload    = progressPayload
+        checkoutOptions.baseline            = baseline
+        checkoutOptions.baseline_index      = baselineIndex
+        checkoutOptions.perfdata_cb         = perfDataCB
+        checkoutOptions.perfdata_payload    = perfDataPayload
+        
+        return try paths.withGitStrArray
+        {
+            cPaths in
+            
+            checkoutOptions.paths = cPaths.pointee
+            
+            return try targetDirectory.withOptionalCString
+            {
+                cTargetDirectory in
+                
+                checkoutOptions.target_directory = cTargetDirectory
+                
+                return try ancestorLabel.withOptionalCString
+                {
+                    cAncestorLabel in
+                    
+                    checkoutOptions.ancestor_label = cAncestorLabel
+                    
+                    return try ourLabel.withOptionalCString
+                    {
+                        cOurLabel in
+                        
+                        checkoutOptions.our_label = cOurLabel
+                        
+                        return try theirLabel.withOptionalCString
+                        {
+                            cTheirLabel in
+                            
+                            checkoutOptions.their_label = cTheirLabel
+                            
+                            return try body(&checkoutOptions)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

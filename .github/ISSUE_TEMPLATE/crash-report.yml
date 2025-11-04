@@ -1,0 +1,76 @@
+# ===----------------------------------------------------------------------===//
+#
+# This source file is part of the swift-libgit2 open source project.
+#
+# Copyright (c) Margins Technologies LLC.
+# Licensed under the Apache License, Version 2.0.
+#
+# ===----------------------------------------------------------------------===//
+
+name: 💥 Crash Report
+description: >
+    Report a crash or an unexpected termination.
+labels:
+  - bug
+  - crash
+  - triage
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: >
+        A clear and concise description of what happened.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: >
+        Step-by-step instructions to consistently reproduce the issue.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Stack Trace
+      description: >
+        The complete stack trace.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: >
+        A clear and concise description of the expected behavior.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Package Version
+      description: >
+        The swift-libgit2 version used when the issue occurred.
+      placeholder: e.g. swift-libgit2 1.0.0
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Swift Version
+      description: >
+        The Swift version used when the issue occurred.
+      placeholder: e.g. Swift 6.2
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Platform and Version
+      description: >
+        The iOS, iPadOS, or macOS version used when the issue occurred.
+      placeholder: e.g. macOS 26.0.1
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: >
+        Additional context that may help. For example, logs or error messages.
+    validations:
+      required: false

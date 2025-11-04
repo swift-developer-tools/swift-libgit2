@@ -1,0 +1,38 @@
+# ===----------------------------------------------------------------------===//
+#
+# This source file is part of the swift-libgit2 open source project.
+#
+# Copyright (c) Margins Technologies LLC.
+# Licensed under the Apache License, Version 2.0.
+#
+# ===----------------------------------------------------------------------===//
+
+name: ✨ Feature Request
+description: >
+    Request a new feature or an improvement to an existing feature.
+labels:
+  - enhancement
+  - triage
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: >
+        A clear and concise description of the new feature or change.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Motivation
+      description: >
+        A clear and concise description of how the new feature or change would 
+        benefit users.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: >
+        Additional context that may help.
+    validations:
+      required: false

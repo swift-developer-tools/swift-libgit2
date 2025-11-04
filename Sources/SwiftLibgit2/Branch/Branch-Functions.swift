@@ -1,0 +1,634 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+import CLibgit2
+
+
+
+/// Creates a new branch pointing at the given target commit.
+///
+/// This function will write a proper reference in the `refs/heads` namespace,
+/// pointing to the provided target commit.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the reference. The underlying type
+///   must be `git_reference`.
+///   - repo: The repository in which to create the branch. The underlying type
+///   must be `git_repository`.
+///   - branchName: The branch name. The name will be validated for consistency
+///   and must not conflict with an existing branch name.
+///   - target: The commit to which to point the branch. The underlying type
+///   must be `git_commit`. The commit must belong to the given repository.
+///   - force: Whether to overwrite an existing branch.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_create()`](https://libgit2.org/docs/reference/main/branch/git_branch_create.html)
+public func gitBranchCreate(
+    out         : UnsafeMutablePointer<OpaquePointer?>,
+    repo        : OpaquePointer,
+    branchName  : String,
+    target      : OpaquePointer,
+    force       : Bool
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_create(
+            out,
+            repo,
+            branchName,
+            target,
+            force.int32Value
+        )
+    }
+}
+
+
+
+/// Creates a new branch pointing at the given target annotated commit.
+///
+/// This function behaves like
+/// ``gitBranchCreate(out:repo:branchName:target:force:)``, but takes an
+/// annotated commit. This enables more exact reflog messages by being able to
+/// specify the extended SHA syntax string which was specified by a user.
+///
+/// - Parameters:
+///   - refOut: The pointer in which to store the reference. The underlying
+///   type must be `git_reference`.
+///   - repo: The repository in which to create the branch. The underlying type
+///   must be `git_repository`.
+///   - branchName: The branch name. The name will be validated for consistency
+///   and must not conflict with an existing branch name.
+///   - target: The commit to which to point the branch. The underlying type
+///   must be `git_annotated_commit`. The commit must belong to the given
+///   repository.
+///   - force: Whether to overwrite an existing branch.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_create_from_annotated()`](https://libgit2.org/docs/reference/main/branch/git_branch_create_from_annotated.html)
+public func gitBranchCreateFromAnnotated(
+    refOut      : UnsafeMutablePointer<OpaquePointer?>,
+    repo        : OpaquePointer,
+    branchName  : String,
+    target      : OpaquePointer,
+    force       : Bool
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_create_from_annotated(
+            refOut,
+            repo,
+            branchName,
+            target,
+            force.int32Value
+        )
+    }
+}
+
+
+
+/// Deletes an existing branch.
+///
+/// - Important: If the deletion is successful, the given branch reference
+/// will no longer be valid and must be freed immediately with
+/// ``gitReferenceFree(ref:)``.
+///
+/// - Parameter branch: The branch to delete. The underlying type must be
+/// `git_reference`.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_delete()`](https://libgit2.org/docs/reference/main/branch/git_branch_delete.html)
+public func gitBranchDelete(
+    branch: OpaquePointer
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_delete(branch)
+    }
+}
+
+
+
+/// Creates an iterator which loops over the requested branches.
+/// - Parameters:
+///   - out: The pointer in which to store the iterator. The underlying type
+///   must be `git_branch_iterator`.
+///   - repo: The repository containing the branches. The underlying type
+///   must be `git_repository`.
+///   - listFlags: The branch type flags to use.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_iterator_new()`](https://libgit2.org/docs/reference/main/branch/git_branch_iterator_new.html)
+public func gitBranchIteratorNew(
+    out         : UnsafeMutablePointer<OpaquePointer?>,
+    repo        : OpaquePointer,
+    listFlags   : GitBranchT
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_iterator_new(
+            out,
+            repo,
+            listFlags.cValue()
+        )
+    }
+}
+
+
+
+/// Gets the next branch from the given branch iterator.
+/// - Parameters:
+///   - out: The pointer in which to store the branch. The underlying type must
+///   be `git_reference`.
+///   - outType: The ``GitBranchT`` instance in which to store the branch type.
+///   - iter: The branch iterator to use. The underlying type must be
+///   `git_branch_iterator`.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_next()`](https://libgit2.org/docs/reference/main/branch/git_branch_next.html)
+public func gitBranchNext(
+    out     : UnsafeMutablePointer<OpaquePointer?>,
+    outType : inout GitBranchT,
+    iter    : OpaquePointer
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try outType.withMutatingCValue
+        {
+            cOutType in
+            
+            return git_branch_next(
+                out,
+                cOutType,
+                iter
+            )
+        }
+    }
+}
+
+
+
+/// Frees the memory allocated for the given `git_branch_iterator` instance.
+/// - Parameter iter: The branch iterator to free. The underlying type must be
+/// `git_branch_iterator`.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_iterator_free()`](https://libgit2.org/docs/reference/main/branch/git_branch_iterator_free.html)
+public func gitBranchIteratorFree(
+    iter: OpaquePointer?
+)
+{
+    guard let iter
+    else
+    {
+        return
+    }
+    
+    git_branch_iterator_free(iter)
+}
+
+
+
+/// Moves or renames the given local branch.
+///
+/// - Important: If the move is successful, the given branch reference will
+/// no longer be valid and must be freed immediately with
+/// ``gitReferenceFree(ref:)``.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the updated name. The underlying
+///   type must be `git_reference`.
+///   - branch: The local branch. The underlying type must be `git_reference`.
+///   - newBranchName: The new branch name to use, once the move has been
+///   performed. The name will be validated for consistency.
+///   - force: Whether to overwrite an existing branch.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_move()`](https://libgit2.org/docs/reference/main/branch/git_branch_move.html)
+public func gitBranchMove(
+    out             : UnsafeMutablePointer<OpaquePointer?>,
+    branch          : OpaquePointer,
+    newBranchName   : String,
+    force           : Bool
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_move(
+            out,
+            branch,
+            newBranchName,
+            force.int32Value
+        )
+    }
+}
+
+
+
+/// Looks up a branch by its name in the given repository.
+/// - Parameters:
+///   - out: The pointer in which to store the looked-up branch. The underlying
+///   type must be `git_reference`.
+///   - repo: The repository containing the branches. The underlying type
+///   must be `git_repository`.
+///   - branchName: The name of the branch to lookup. The name will be
+///   validated for consistency.
+///   - branchType: The branch type flags to use.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_lookup()`](https://libgit2.org/docs/reference/main/branch/git_branch_lookup.html)
+public func gitBranchLookup(
+    out         : UnsafeMutablePointer<OpaquePointer?>,
+    repo        : OpaquePointer,
+    branchName  : String,
+    branchType  : GitBranchT
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_lookup(
+            out,
+            repo,
+            branchName,
+            branchType.cValue()
+        )
+    }
+}
+
+
+
+/// Gets the branch name from the given reference.
+///
+/// This function checks that the given reference is actually a branch and, if
+/// it is a branch, returns the branch part of the reference name.
+///
+/// - Note: Branches are references that exist in `refs/heads/` or
+/// `refs/remotes/`.
+///
+/// - Parameters:
+///   - out: The `String` instance in which to store the branch name.
+///   - ref: A reference object, ideally pointing to a branch. The underlying
+///   type must be `git_reference`.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_name.html)
+public func gitBranchName(
+    out : inout String?,
+    ref : OpaquePointer
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return out.withOptionalMutatingCString
+        {
+            cOut in
+            
+            return git_branch_name(
+                cOut,
+                ref
+            )
+        }
+    }
+}
+
+
+
+/// Gets the upstream of the given local branch.
+///
+/// This function returns the reference object that corresponds to the given
+/// branch's remote-tracking branch.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the upstream. The underlying type
+///   must be `git_reference`.
+///   - ref: The local branch for which to get the upstream. The underlying
+///   type must be `git_reference`.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_upstream()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream.html)
+public func gitBranchUpstream(
+    out : UnsafeMutablePointer<OpaquePointer?>,
+    ref : OpaquePointer
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_upstream(
+            out,
+            ref
+        )
+    }
+}
+
+
+
+/// Sets the upstream of the given branch.
+///
+/// The tracking reference must have already been created for the operation
+/// to succeed.
+///
+/// - Parameters:
+///   - branch: The branch for which to set the upstream. The underlying type
+///   must be `git_reference`.
+///   - branchName: The name of the remote-tracking or local branch to set as
+///   the upstream branch. Pass `nil` to unset the upstream information.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_set_upstream()`](https://libgit2.org/docs/reference/main/branch/git_branch_set_upstream.html)
+public func gitBranchSetUpstream(
+    branch      : OpaquePointer,
+    branchName  : String?
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return git_branch_set_upstream(
+            branch,
+            branchName
+        )
+    }
+}
+
+
+
+/// Gets the upstream name of the given local branch.
+///
+/// This function will return the remote-tracking branch information of the
+/// given local branch as a full reference name.
+///
+/// For example, `feature/nice` would become `refs/remote/origin/feature/nice`,
+/// depending on that branch's configuration.
+///
+/// - Parameters:
+///   - out: The `String` instance in which to store the upstream name.
+///   - repo: The repository containing the branches. The underlying type must
+///   be `git_repository`.
+///   - refName: The name of the local branch for which to get the upstream
+///   name.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_upstream_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_name.html)
+public func gitBranchUpstreamName(
+    out     : inout String?,
+    repo    : OpaquePointer,
+    refName : String
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try out.withOptionalMutatingGitBuf
+        {
+            cOut in
+            
+            return git_branch_upstream_name(
+                cOut,
+                repo,
+                refName
+            )
+        }
+    }
+}
+
+
+
+/// Checks whether HEAD points to the given local branch.
+/// - Parameter branch: The local branch to check. The underlying type must be
+/// `git_reference`.
+/// - Returns: Whether HEAD points to the given local branch, or `nil` if
+/// there was an error.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_is_head()`](https://libgit2.org/docs/reference/main/branch/git_branch_is_head.html)
+public func gitBranchIsHEAD(
+    branch: OpaquePointer
+) -> Bool?
+{
+    let isHEAD: Int32 = git_branch_is_head(branch)
+    
+    if
+        isHEAD != 0,
+        isHEAD != 1
+    {
+        return nil
+    }
+    
+    return Bool(isHEAD)
+}
+
+
+
+/// Checks whether any HEAD points to the given local branch.
+///
+/// This function iterates over all known linked repositories (usually in the
+/// form of worktrees) to determine whether any HEAD points to the branch.
+///
+/// - Parameter branch: The local branch to check. The underlying type must be
+/// `git_reference`.
+/// - Returns: Whether any HEAD points to the given local branch, or `nil` if
+/// there was an error.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_is_checked_out()`](https://libgit2.org/docs/reference/main/branch/git_branch_is_checked_out.html)
+public func gitBranchIsCheckedOut(
+    branch: OpaquePointer
+) -> Bool?
+{
+    let isCheckedOut: Int32 = git_branch_is_checked_out(branch)
+    
+    if
+        isCheckedOut != 0,
+        isCheckedOut != 1
+    {
+        return nil
+    }
+    
+    return Bool(isCheckedOut)
+}
+
+
+
+/// Gets the remote name of the given remote-tracking branch.
+///
+/// This function will return the name of the remote with a refspec matching
+/// the given branch.
+///
+/// For example, `refs/remotes/test/main` has a remote name of `test`.
+///
+/// If refspecs from multiple remotes match, the returned error code will be
+/// ``GitErrorCode/gitEAmbiguous``.
+///
+/// - Parameters:
+///   - out: The `String` instance in which to store the remote name.
+///   - repo: The repository containing the branch. The underlying type must
+///   be `git_repository`.
+///   - refName: The full reference name of the branch for which to get the
+///   remote name.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_remote_name()`](https://libgit2.org/docs/reference/main/branch/git_branch_remote_name.html)
+public func gitBranchRemoteName(
+    out     : inout String?,
+    repo    : OpaquePointer,
+    refName : String
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try out.withOptionalMutatingGitBuf
+        {
+            cOut in
+            
+            return git_branch_remote_name(
+                cOut,
+                repo,
+                refName
+            )
+        }
+    }
+}
+
+
+
+/// Gets the upstream remote name of the given local branch.
+///
+/// This function will return the currently-configured `branch.*.remote` for
+/// the given branch.
+///
+/// - Parameters:
+///   - buf: The `String` instance in which to store the upstream remote name.
+///   - repo: The repository containing the branch. The underlying type must
+///   be `git_repository`.
+///   - refName: The full reference name of the branch for which to get the
+///   upstream remote name.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_upstream_remote()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_remote.html)
+public func gitBranchUpstreamRemote(
+    buf     : inout String?,
+    repo    : OpaquePointer,
+    refName : String
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try buf.withOptionalMutatingGitBuf
+        {
+            cBuf in
+            
+            return git_branch_upstream_remote(
+                cBuf,
+                repo,
+                refName
+            )
+        }
+    }
+}
+
+
+
+/// Gets the upstream merge name of the given local branch.
+///
+/// This function will return the currently-configured `branch.*.merge` for
+/// the given branch.
+///
+/// - Parameters:
+///   - buf: The `String` instance in which to store the upstream merge name.
+///   - repo: The repository containing the branch. The underlying type must
+///   be `git_repository`.
+///   - refName: The full reference name of the branch for which to get the
+///   upstream merge name.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_upstream_merge()`](https://libgit2.org/docs/reference/main/branch/git_branch_upstream_merge.html)
+public func gitBranchUpstreamMerge(
+    buf     : inout String?,
+    repo    : OpaquePointer,
+    refName : String
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return try buf.withOptionalMutatingGitBuf
+        {
+            cBuf in
+            
+            return git_branch_upstream_merge(
+                cBuf,
+                repo,
+                refName
+            )
+        }
+    }
+}
+
+
+
+/// Checks whether the given branch name is valid.
+/// - Parameters:
+///   - valid: The `Bool` instance in which to store whether the given branch
+///   name is valid.
+///   - name: The branch name to check.
+/// - Returns: A ``GitErrorCode`` instance.
+///
+/// ## C Equivalent
+///
+/// [`git_branch_name_is_valid()`](https://libgit2.org/docs/reference/main/branch/git_branch_name_is_valid.html)
+public func gitBranchNameIsValid(
+    valid   : inout Bool,
+    name    : String
+) -> GitErrorCode
+{
+    return withCConversion
+    {
+        return valid.withMutatingBool
+        {
+            cValid in
+            
+            return git_branch_name_is_valid(
+                cValid,
+                name
+            )
+        }
+    }
+}

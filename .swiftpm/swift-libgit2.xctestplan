@@ -1,0 +1,73 @@
+{
+  "configurations" : [
+    {
+      "id" : "63F12DEB-4DC1-447C-8642-CB98019778D6",
+      "name" : "Address Sanitizer",
+      "options" : {
+        "addressSanitizer" : {
+          "detectStackUseAfterReturn" : true,
+          "enabled" : true
+        },
+        "mallocScribbleEnabled" : true,
+        "undefinedBehaviorSanitizerEnabled" : true
+      }
+    },
+    {
+      "id" : "91B98A00-3617-4340-9D7B-57D407B58004",
+      "name" : "Thread Sanitizer",
+      "options" : {
+        "threadSanitizerEnabled" : true,
+        "undefinedBehaviorSanitizerEnabled" : true
+      }
+    },
+    {
+      "id" : "D2514B8A-2CEE-491E-B2A9-5FF4992FD198",
+      "name" : "Malloc Guard Edges",
+      "options" : {
+        "mallocGuardEdgesEnabled" : true,
+        "mallocScribbleEnabled" : true,
+        "mallocStackLoggingOptions" : {
+          "loggingType" : "liveAllocations"
+        }
+      }
+    },
+    {
+      "id" : "7CE440AF-0359-4118-8D35-D6528AFA5C78",
+      "name" : "Hardware Memory Tagging",
+      "options" : {
+        "checkedAllocations" : {
+          "enabled" : true,
+          "requiresHardwareAcceleration" : false
+        },
+        "mallocStackLoggingOptions" : {
+          "loggingType" : "liveAllocations"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "mainThreadCheckerDetectionPolicy" : {
+      "severity" : "failure"
+    },
+    "nsZombieEnabled" : true,
+    "performanceAntipatternCheckerEnabled" : true,
+    "runtimeIssueDetection" : {
+      "severity" : "failure"
+    },
+    "testExecutionOrdering" : "random",
+    "threadPerformanceCheckerRuntimeIssueDetection" : {
+      "severity" : "failure"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SwiftLibgit2Tests",
+        "name" : "SwiftLibgit2Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

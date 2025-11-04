@@ -1,0 +1,31 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+/// The callback invoked for each attribute name and value.
+///
+/// This callback will be invoked only once per attribute name, even if there
+/// are multiple rules for a given file. The highest priority rule will be used.
+///
+/// - Parameters:
+///   - name: The name of the attribute being iterated.
+///   - value: The value of the attribute being iterated. This may be `nil` if
+///   the attribute is explicitly set to unspecified using the exclamation mark
+///   (`!`) operator.
+///   - payload: The payload provided by the caller.
+/// - Returns: `0` to continue looping, or a non-zero value to stop looping.
+///
+/// ## C Equivalent
+///
+/// [`git_attr_foreach_cb()`](https://libgit2.org/docs/reference/main/attr/git_attr_foreach_cb.html)
+public typealias GitAttrForEachCB = @convention(c)
+(
+    UnsafePointer<CChar>?,
+    UnsafePointer<CChar>?,
+    UnsafeMutableRawPointer?
+) -> Int32

@@ -1,0 +1,43 @@
+//===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-libgit2 open source project.
+//
+// Copyright (c) Margins Technologies LLC.
+// Licensed under the Apache License, Version 2.0.
+//
+//===----------------------------------------------------------------------===//
+
+/// A type that can be converted to and from the equivalent C value, which
+/// must be freed.
+///
+/// A struct that conforms to ``CStructInternalMutable`` may also need to
+/// conform to ``CFreeable`` if libgit2 provides a corresponding memory-freeing
+/// function. See the ``CStruct`` documenation for more information.
+internal protocol CFreeable: CStruct
+{
+    /// The type of the pointer passed to ``freeCValue(_:)`` to free the memory
+    /// allocated for the C value.
+    ///
+    /// This must have an `internal` access level.
+    ///
+    /// The default type is `UnsafeMutablePointer<C>?`, which is appropriate
+    /// for most conforming structs. Conforming structs may override this if
+    /// a different type of pointer is required.
+    associatedtype P = UnsafeMutablePointer<C>?
+    
+    
+    
+    /// Frees the memory allocated for the C value.
+    ///
+    /// This must have an `internal` access level.
+    ///
+    /// This function will be called automatically when
+    /// ``withMutatingCValue(_:)`` is used with C  functions that expect `C **`
+    /// parameters, and libgit2 allocates new memory. Implementations must
+    /// call the appropriate memory-freeing function.
+    ///
+    /// - Parameter pointer: The pointer to the memory to free.
+    static func freeCValue(
+        _ pointer: P
+    )
+}
