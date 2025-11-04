@@ -662,7 +662,7 @@ public func gitDiffToBuf(
 ///
 /// Since a blob lacks some contextual information compared to a file,
 /// the `git_diff_file` given to the callback will include some placeholder
-/// data. For example, `mode` will be `0` and `path` will be `NULL`.
+/// data. For example, `mode` will be `0` and `path` will be `nil`.
 ///
 /// Either `oldBlob` or `newBlob` may be `nil`. If both are `nil`, this
 /// function will do nothing.
@@ -737,7 +737,7 @@ public func gitDiffBlobs(
 ///
 /// Since a blob lacks some contextual information compared to a file,
 /// the `git_diff_file` given to the callback will include some placeholder
-/// data. For example, `mode` will be `0` and `path` will be `NULL`.
+/// data. For example, `mode` will be `0` and `path` will be `nil`.
 ///
 /// - Parameters:
 ///   - oldBlob: The old blob to use in the diff operation. The underlying type
@@ -810,7 +810,7 @@ public func gitDiffBlobToBuffer(
 ///
 /// Since a blob lacks some contextual information compared to a file,
 /// the `git_diff_file` given to the callback will include some placeholder
-/// data. For example, `mode` will be `0` and `path` will be `NULL`.
+/// data. For example, `mode` will be `0` and `path` will be `nil`.
 ///
 /// - Parameters:
 ///   - oldBuffer: The raw data for the old side of the diff.
