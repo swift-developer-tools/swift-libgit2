@@ -147,14 +147,6 @@ public func gitStashApplyOptionsInit(
 
 /// Applies the specified stashed state from the stash list of the given
 /// repository.
-/// - Parameters:
-///   - repo: The repository containing the stash. The underlying type must
-///   be `git_repository`.
-///   - index: The index of the stashed state to apply.
-///   - options: The stash apply options to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If local changes in the working directory conflict with changes in the
 /// stash, the index and working directory will remain unmodified. However,
@@ -166,6 +158,13 @@ public func gitStashApplyOptionsInit(
 /// ``GitStashApplyFlags/gitStashApplyReinstateIndex``, but reinstating the
 /// index would cause conflicts, then the index and working directory will
 /// remain unmodified.
+///
+/// - Parameters:
+///   - repo: The repository containing the stash. The underlying type must
+///   be `git_repository`.
+///   - index: The index of the stashed state to apply.
+///   - options: The stash apply options to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

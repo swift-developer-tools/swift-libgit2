@@ -326,16 +326,6 @@ public func gitMergeBaseMany(
 
 
 /// Finds the merge bases between the given commits.
-/// - Parameters:
-///   - out: The array of ``GitOID`` instances in which to store the merge
-///   bases.
-///   - repo: The repository containing the given commits. The underlying
-///   type must be `git_repository`.
-///   - length: The length of `inputArray`.
-///   - inputArray: The IDs for which to find a merge base.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function is similar to `git merge-base`.
 ///
@@ -368,6 +358,15 @@ public func gitMergeBaseMany(
 ///
 /// - Note: To find the common ancestor of the given commits, use
 /// ``gitMergeBaseOctopus(out:repo:length:inputArray:)`` instead.
+///
+/// - Parameters:
+///   - out: The array of ``GitOID`` instances in which to store the merge
+///   bases.
+///   - repo: The repository containing the given commits. The underlying
+///   type must be `git_repository`.
+///   - length: The length of `inputArray`.
+///   - inputArray: The IDs for which to find a merge base.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -592,6 +591,11 @@ public func gitMergeFileResultFree(
 
 
 /// Merges the given trees.
+///
+/// The resulting index may be written as-is to the working directory or
+/// checked out. If the index is to be converted to a tree, the caller must
+/// resolve any conflicts that arose during the merge operation.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the index. The underlying type must
 ///   be `git_index`.
@@ -604,12 +608,6 @@ public func gitMergeFileResultFree(
 ///   be `git_tree`.
 ///   - opts: The merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The resulting index may be written as-is to the working directory or
-/// checked out. If the index is to be converted to a tree, the caller must
-/// resolve any conflicts that arose during the merge operation.
 ///
 /// ## C Equivalent
 ///
@@ -644,6 +642,11 @@ public func gitMergeTrees(
 
 
 /// Merges the given commits.
+///
+/// The resulting index may be written as-is to the working directory or
+/// checked out. If the index is to be converted to a tree, the caller must
+/// resolve any conflicts that arose during the merge operation.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the index. The underlying type must
 ///   be `git_index`.
@@ -655,12 +658,6 @@ public func gitMergeTrees(
 ///   must be `git_commit`.
 ///   - opts: The merge options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The resulting index may be written as-is to the working directory or
-/// checked out. If the index is to be converted to a tree, the caller must
-/// resolve any conflicts that arose during the merge operation.
 ///
 /// ## C Equivalent
 ///
@@ -694,6 +691,15 @@ public func gitMergeCommits(
 
 /// Merges the given commits into HEAD, and writes the results into the
 /// working directory.
+///
+/// Any changes will be staged for commit, and any conflicts will be written
+/// to the index. Callers should inspect the repository's index after this
+/// operation completes, resolve any conflicts, and then prepare a commit.
+///
+/// - Note: To maintain compatability with Git, the repository is put into
+/// a merging state. Once the commit is done, or the process is aborted, use
+/// ``gitRepositoryStateCleanup(repo:)`` to clear the merging state.
+///
 /// - Parameters:
 ///   - repo: The repository to merge. The underlying type must be
 ///   `git_repository`.
@@ -703,16 +709,6 @@ public func gitMergeCommits(
 ///   - mergeOpts: The merge options to use.
 ///   - checkoutOpts: The checkout options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Any changes will be staged for commit, and any conflicts will be written
-/// to the index. Callers should inspect the repository's index after this
-/// operation completes, resolve any conflicts, and then prepare a commit.
-///
-/// - Note: To maintain compatability with Git, the repository is put into
-/// a merging state. Once the commit is done, or the process is aborted, use
-/// ``gitRepositoryStateCleanup(repo:)`` to clear the merging state.
 ///
 /// ## C Equivalent
 ///

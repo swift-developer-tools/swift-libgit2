@@ -171,15 +171,14 @@ public func gitRemoteCreateAnonymous(
 
 
 /// Creates a detached remote without a connected repository.
+///
+/// A detached remote will not consider any repository configuration values.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the remote. The underlying type
 ///   must be `git_remote`.
 ///   - url: The remote URL to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// A detached remote will not consider any repository configuration values.
 ///
 /// ## C Equivalent
 ///
@@ -232,15 +231,14 @@ public func gitRemoteLookup(
 
 
 /// Creates an in-memory copy of the given remote.
+///
+/// All internal strings will be duplicated. Callbacks will not be duplicated.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the copied remote. The underlying
 ///   type must be `git_remote`.
 ///   - source: The remote to copy. The underlying type must be `git_remote`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// All internal strings will be duplicated. Callbacks will not be duplicated.
 ///
 /// ## C Equivalent
 ///
@@ -262,15 +260,14 @@ public func gitRemoteDup(
 
 
 /// Gets the repository containing the given remote.
+///
+/// - Important: The returned pointer is owned by the given remote and must
+/// not be freed.
+///
 /// - Parameter remote: The remote for which to get the repository. The
 /// underlying type must be `git_remote`.
 /// - Returns: The repository containing the given remote. The underlying
 /// type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given remote and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -304,16 +301,15 @@ public func gitRemoteName(
 
 
 /// Gets the URL of the given remote.
-/// - Parameter remote: The remote for which to get the URL. The underlying
-/// type must be `git_remote`.
-/// - Returns: The URL of the given remote.
-///
-/// ## Discussion
 ///
 /// If `url.*.insteadOf` has been configured for the remote URL, this function
 /// will return the modified URL.
 ///
 /// - Note: Use ``gitRemotePushURL(remote:)`` to get the push URL.
+///
+/// - Parameter remote: The remote for which to get the URL. The underlying
+/// type must be `git_remote`.
+/// - Returns: The URL of the given remote.
 ///
 /// ## C Equivalent
 ///
@@ -330,16 +326,15 @@ public func gitRemoteURL(
 
 
 /// Gets the push URL of the given remote.
-/// - Parameter remote: The remote for which to get the push URL. The
-/// underlying type must be `git_remote`.
-/// - Returns: The push URL of the given remote.
-///
-/// ## Discussion
 ///
 /// If `url.*.insteadOf` has been configured for the remote URL, this function
 /// will return the modified URL. Similarly, if
 /// ``gitRemoteSetInstancePushURL(remote:url:)``has been called with the
 /// given remote, this function will return the instance push URL.
+///
+/// - Parameter remote: The remote for which to get the push URL. The
+/// underlying type must be `git_remote`.
+/// - Returns: The push URL of the given remote.
 ///
 /// ## C Equivalent
 ///
@@ -356,18 +351,17 @@ public func gitRemotePushURL(
 
 
 /// Sets the URL of the specified remote.
+///
+/// In-memory remotes will not be affected by this change.
+///
+/// - Note: This function supports only single-URL remotes.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - remote: The name of the remote to update.
 ///   - url: The URL to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// In-memory remotes will not be affected by this change.
-///
-/// - Note: This function supports only single-URL remotes.
 ///
 /// ## C Equivalent
 ///
@@ -391,18 +385,17 @@ public func gitRemoteSetURL(
 
 
 /// Sets the push URL of the specified remote.
+///
+/// In-memory remotes will not be affected by this change.
+///
+/// - Note: This function supports only single-URL remotes.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - remote: The name of the remote to update.
 ///   - url: The push URL to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// In-memory remotes will not be affected by this change.
-///
-/// - Note: This function supports only single-URL remotes.
 ///
 /// ## C Equivalent
 ///
@@ -426,14 +419,13 @@ public func gitRemoteSetPushURL(
 
 
 /// Sets the URL of the given remote.
+///
+/// The URL in the configuration will not be affected by this change.
+///
 /// - Parameters:
 ///   - remote: The remote to update. The underlying type must be `git_remote`.
 ///   - url: The URL to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The URL in the configuration will not be affected by this change.
 ///
 /// ## C Equivalent
 ///
@@ -455,14 +447,13 @@ public func gitRemoteSetInstanceURL(
 
 
 /// Sets the push URL of the given remote.
+///
+/// The URL in the configuration will not be affected by this change.
+///
 /// - Parameters:
 ///   - remote: The remote to update. The underlying type must be `git_remote`.
 ///   - url: The push URL to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The URL in the configuration will not be affected by this change.
 ///
 /// ## C Equivalent
 ///
@@ -484,16 +475,15 @@ public func gitRemoteSetInstancePushURL(
 
 
 /// Adds the given fetch refspec to the specified remote.
+///
+/// Loaded remotes will not be affected by this change.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - remote: The name of the remote to update.
 ///   - refspec: The fetch refspec to add.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Loaded remotes will not be affected by this change.
 ///
 /// ## C Equivalent
 ///
@@ -547,16 +537,15 @@ public func gitRemoteGetFetchRefspecs(
 
 
 /// Adds the given push refspec to the specified remote.
+///
+/// Loaded remotes will not be affected by this change.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - remote: The name of the remote to update.
 ///   - refspec: The push refspec to add.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Loaded remotes will not be affected by this change.
 ///
 /// ## C Equivalent
 ///
@@ -627,16 +616,15 @@ public func gitRemoteRefspecCount(
 
 
 /// Gets the refspec at the specified index in the given remote.
+///
+/// - Important: The returned pointer is owned by the given remote and must
+/// not be freed.
+///
 /// - Parameters:
 ///   - remote: The remote to search. The underlying type must be `git_remote`.
 ///   - n: The index of the refspec to retrieve.
 /// - Returns: The refspec at the specified index in the given remote. The
 /// underlying type will be `git_refspec`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given remote and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -655,18 +643,17 @@ public func gitRemoteGetRefspec(
 
 
 /// Gets the reference advertisment list of the given remote.
+///
+/// The transport of the given remote must have connected to the remote host.
+/// The reference advertisment list will be available as soon as the connection
+/// to the remote is initiated, and it remains available after disconnecting.
+///
 /// - Parameters:
 ///   - out: The array of ``GitRemoteHEAD`` instances in which to store the
 ///   reference advertisment list of the given remote.
 ///   - size: The length of `out`.
 ///   - remote: The remote to use. The underlying type must be `git_remote`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The transport of the given remote must have connected to the remote host.
-/// The reference advertisment list will be available as soon as the connection
-/// to the remote is initiated, and it remains available after disconnecting.
 ///
 /// ## C Equivalent
 ///
@@ -716,14 +703,13 @@ public func gitRemoteConnected(
 
 
 /// Cancels any in-progress operation of the given remote.
-/// - Parameter remote: The remote for which to cancel any in-progress
-/// operation. The underlying type must be `git_remote`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// At certain points in the operation, the network code checks whether the
 /// operation as been cancelled before proceeding.
+///
+/// - Parameter remote: The remote for which to cancel any in-progress
+/// operation. The underlying type must be `git_remote`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -761,13 +747,12 @@ public func gitRemoteDisconnect(
 
 
 /// Frees the memory allocated for the given `git_remote` instance.
-/// - Parameter remote: The remote to free. The underlying type must be
-/// `git_remote`.
-///
-/// ## Discussion
 ///
 /// If the connection has not yet been closed, this method will also
 /// disconnect from the given remote.
+///
+/// - Parameter remote: The remote to free. The underlying type must be
+/// `git_remote`.
 ///
 /// ## C Equivalent
 ///
@@ -920,6 +905,9 @@ public func gitRemoteConnectOptionsInit(
 
 
 /// Opens a connection to the given remote.
+///
+/// The transport will be selected based on the remote URL.
+///
 /// - Parameters:
 ///   - remote: The remote to which to connect. The underlying type must be
 ///   `git_remote`.
@@ -928,10 +916,6 @@ public func gitRemoteConnectOptionsInit(
 ///   - proxyOpts: The proxy connection options to use.
 ///   - customHeaders: The extra HTTP headers to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The transport will be selected based on the remote URL.
 ///
 /// ## C Equivalent
 ///
@@ -974,20 +958,19 @@ public func gitRemoteConnect(
 
 
 /// Opens a connection to the given remote.
-/// - Parameters:
-///   - remote: The remote to which to connect. The underlying type must be
-///   `git_remote`.
-///   - direction: The remote connection direction to use.
-///   - opts: The remote connection options to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The transport will be selected based on the remote URL.
 ///
 /// The given remote connection options will form the defaults for connection
 /// options and callback setup. Use ``GitFetchOptions`` or ``GitPushOptions``
 /// in subsequent connections to override these defaults.
+///
+/// - Parameters:
+///   - remote: The remote to which to connect. The underlying type must be
+///   `git_remote`.
+///   - direction: The remote connection direction to use.
+///   - opts: The remote connection options to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1016,14 +999,6 @@ public func gitRemoteConnectExt(
 
 
 /// Downloads and indexes the packfile of the given remote.
-/// - Parameters:
-///   - remote: The remote to use. The underlying type must be `git_remote`.
-///   - refspecs: The refspecs to use. Pass an empty array to use the default
-///   refspecs.
-///   - opts: The fetch options to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function will connect to the given remote if a connection has not yet
 /// been opened. If fetch options are provided, and the remote is already
@@ -1032,6 +1007,13 @@ public func gitRemoteConnectExt(
 ///
 /// The `.idx` file will be created, and both it and the packfile will be
 /// renamed to their final names.
+///
+/// - Parameters:
+///   - remote: The remote to use. The underlying type must be `git_remote`.
+///   - refspecs: The refspecs to use. Pass an empty array to use the default
+///   refspecs.
+///   - opts: The fetch options to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1065,19 +1047,18 @@ public func gitRemoteDownload(
 
 
 /// Creates a packfile and sends it to the given remote.
+///
+/// This function will connect to the given remote if a connection has not yet
+/// been opened. If push options are provided, and the remote is already
+/// connected, then the existing remote connection options will be discarded
+/// and the remote will use the given options.
+///
 /// - Parameters:
 ///   - remote: The remote to use. The underlying type must be `git_remote`.
 ///   - refspecs: The refspecs to use. Pass an empty array to use the default
 ///   refspecs.
 ///   - opts: The push options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will connect to the given remote if a connection has not yet
-/// been opened. If push options are provided, and the remote is already
-/// connected, then the existing remote connection options will be discarded
-/// and the remote will use the given options.
 ///
 /// ## C Equivalent
 ///
@@ -1111,6 +1092,12 @@ public func gitRemoteUpload(
 
 
 /// Updates the tips of the given remote.
+///
+/// This function will connect to the given remote if a connection has not yet
+/// been opened. If push options are provided, and the remote is already
+/// connected, then the existing remote connection options will be discarded
+/// and the remote will use the given options.
+///
 /// - Parameters:
 ///   - remote: The remote to update. The underlying type must be `git_remote`.
 ///   - callbacks: The remote callbacks to use.
@@ -1120,13 +1107,6 @@ public func gitRemoteUpload(
 ///   use `fetch <name>`, where `name` is the remote name, or the URL for
 ///   in-memory remotes.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will connect to the given remote if a connection has not yet
-/// been opened. If push options are provided, and the remote is already
-/// connected, then the existing remote connection options will be discarded
-/// and the remote will use the given options.
 ///
 /// ## C Equivalent
 ///
@@ -1160,6 +1140,11 @@ public func gitRemoteUpdateTips(
 
 /// Connects to the given remote, downloads the data, disconnects, and then
 /// updates the remote-tracking branches.
+///
+/// If fetch options are provided, and the remote is already connected, then
+/// the existing remote connection options will be discarded and the remote
+/// will use the given options.
+///
 /// - Parameters:
 ///   - remote: The remote from which to fetch. The underlying type must be
 ///   `git_remote`.
@@ -1168,12 +1153,6 @@ public func gitRemoteUpdateTips(
 ///   - opts: The fetch options to use.
 ///   - reflogMessage: The reflog message to use. Pass `nil` to use `fetch`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If fetch options are provided, and the remote is already connected, then
-/// the existing remote connection options will be discarded and the remote
-/// will use the given options.
 ///
 /// ## C Equivalent
 ///
@@ -1239,6 +1218,11 @@ public func gitRemotePrune(
 
 
 /// Pushes to the given remote.
+///
+/// If push options are provided, and the remote is already connected, then
+/// the existing remote connection options will be discarded and the remote
+/// will use the given options.
+///
 /// - Parameters:
 ///   - remote: The remote to which to push. The underlying type must be
 ///   `git_remote`.
@@ -1246,12 +1230,6 @@ public func gitRemotePrune(
 ///   refspecs.
 ///   - opts: The push options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If push options are provided, and the remote is already connected, then
-/// the existing remote connection options will be discarded and the remote
-/// will use the given options.
 ///
 /// ## C Equivalent
 ///
@@ -1329,16 +1307,15 @@ public func gitRemoteAutoTag(
 
 
 /// Sets the automatic tag-following option of the specified remote.
+///
+/// Loaded remotes will not be affected by this change.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - remote: The name of the remote to update.
 ///   - value: The automatic tag-following option to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Loaded remotes will not be affected by this change.
 ///
 /// ## C Equivalent
 ///
@@ -1382,6 +1359,10 @@ public func gitRemotePruneRefs(
 
 
 /// Renames the specified remote.
+///
+/// All remote-tracking branches and configuration settings for the specified
+/// remote will be updated. Loaded remotes will not be affected by this change.
+///
 /// - Parameters:
 ///   - problems: The array of strings in which to store the non-default
 ///   refspecs that cannot be renamed.
@@ -1391,11 +1372,6 @@ public func gitRemotePruneRefs(
 ///   validity.
 ///   - newName: The new remote name to use. This will be checked for validity.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// All remote-tracking branches and configuration settings for the specified
-/// remote will be updated. Loaded remotes will not be affected by this change.
 ///
 /// ## C Equivalent
 ///
@@ -1457,16 +1433,15 @@ public func gitRemoteNameIsValid(
 
 
 /// Deletes the specified remote.
+///
+/// All remote-tracking branches and configuration settings for the specified
+/// remote will be deleted.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified remote. The underlying
 ///   type must be `git_repository`.
 ///   - name: The name of the remote to delete.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// All remote-tracking branches and configuration settings for the specified
-/// remote will be deleted.
 ///
 /// ## C Equivalent
 ///
@@ -1488,12 +1463,6 @@ public func gitRemoteDelete(
 
 
 /// Gets the default branch name of the given remote.
-/// - Parameters:
-///   - out: The `String` instance in which to store the default branch name.
-///   - remote: The remote to check. The underlying type must be `git_remote`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default branch of a repository is the branch to which HEAD points. If
 /// the given remote does not support reporting this information directly, this
@@ -1502,6 +1471,11 @@ public func gitRemoteDelete(
 /// If the main branch is a candidate, that branch will be chosen.
 ///
 /// - Note: This function must only be called after connecting to the remote.
+///
+/// - Parameters:
+///   - out: The `String` instance in which to store the default branch name.
+///   - remote: The remote to check. The underlying type must be `git_remote`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

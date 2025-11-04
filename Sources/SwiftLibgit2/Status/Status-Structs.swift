@@ -21,21 +21,15 @@ public struct GitStatusOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitStatusOptionsVersion``.
     public var version          : UInt32
     
     /// The type of file to select for status reporting.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitStatusShowT/gitStatusShowIndexAndWorkdir``.
     public var show             : GitStatusShowT
     
     /// The flags controlling status callbacks.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags            : GitStatusOptT
@@ -44,15 +38,11 @@ public struct GitStatusOptions: CStructMutable, WithCConvertible
     /// to match exactly if ``flags`` specifies
     /// ``GitStatusOptT/gitStatusOptDisablePathspecMatch``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty array.
     public var pathspec         : [String]
     
     /// The tree used for comparing the index and the working directory. The
     /// underlying type must be `git_tree`.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -60,8 +50,6 @@ public struct GitStatusOptions: CStructMutable, WithCConvertible
     public var baseline         : OpaquePointer?
     
     /// The threshold above which similar files will be considered renames.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `50`.
     ///

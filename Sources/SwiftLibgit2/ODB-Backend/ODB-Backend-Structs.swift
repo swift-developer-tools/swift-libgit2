@@ -20,14 +20,10 @@ public struct GitODBBackendPackOptions: CStructMutable, CConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitODBBackendPackOptionsVersion``.
     public var version  : UInt32
     
     /// The type of ID to use for the object database.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitOIDT/gitOIDSHA1``.
     public var oidType  : GitOIDT
@@ -86,14 +82,10 @@ public struct GitODBBackendLooseOptions: CStructMutable, CConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitODBBackendLooseOptionsVersion``.
     public var version  : UInt32
     
     /// The type of ID to use for the object database.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitOIDT/gitOIDSHA1``.
     public var oidType  : GitOIDT
@@ -145,8 +137,6 @@ public struct GitODBBackendLooseOptions: CStructMutable, CConvertible, Sendable
 
 /// A stream to read and write from an object database backend.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_odb_stream` instead.
 ///
@@ -179,8 +169,6 @@ public struct GitODBStream: CStruct
     
     /// Stores the contents of the given stream as an object with the given ID.
     ///
-    /// ## Discussion
-    ///
     /// This method might not be invoked if any of the following are true:
     ///
     /// - An error occured in an earlier ``write`` callback.
@@ -190,8 +178,6 @@ public struct GitODBStream: CStruct
     public let finalizeWrite    : GitODBStream.FinalizeWrite?
     
     /// Frees the memory allocated for the given `git_odb_stream` instance.
-    ///
-    /// ## Discussion
     ///
     /// This method may be called without previously invoking ``finalizeWrite``
     /// if an error occurs, or if the object is alreaedy present in the object
@@ -276,8 +262,6 @@ public struct GitODBStream: CStruct
 
 
 /// A stream to write a packfile to the object database.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_odb_writepack` instead.

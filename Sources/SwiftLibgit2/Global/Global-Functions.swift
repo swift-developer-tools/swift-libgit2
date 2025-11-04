@@ -12,13 +12,12 @@ import CLibgit2
 
 
 /// Initializes the global libgit2 state.
-/// - Returns: The number of times libgit2 has been initialized (including
-/// this initialization), without having been subsequently been shutdown.
-///
-/// ## Discussion
 ///
 /// This function must be called before any other libgit2 function in order
 /// to set up global state and threading, and may be called multiple times.
+///
+/// - Returns: The number of times libgit2 has been initialized (including
+/// this initialization), without having been subsequently been shutdown.
 ///
 /// ## C Equivalent
 ///
@@ -31,13 +30,12 @@ public func gitLibgit2Init() -> Int32
 
 
 /// Shuts down the global libgit2 state.
-/// - Returns: The number of remainining libgit2 initializations that have not
-/// been shutdown (after this one).
-///
-/// ## Discussion
 ///
 /// This function may be used to clean up the global state and threading
 /// context by calling it as many times as ``gitLibgit2Init()`` was called.
+///
+/// - Returns: The number of remainining libgit2 initializations that have not
+/// been shutdown (after this one).
 ///
 /// ## C Equivalent
 ///

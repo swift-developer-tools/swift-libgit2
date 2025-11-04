@@ -64,15 +64,11 @@ public struct GitCertHostKey: CStructReadable, WithCConvertible, Sendable
     
     /// The MD5 hash of the host key.
     ///
-    /// ## Discussion
-    ///
     /// This will represent the MD5 hash of the host key if
     /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHMD5``.
     public let hashMD5      : Data
     
     /// The SHA-1 hash of the host key.
-    ///
-    /// ## Discussion
     ///
     /// This will represent the SHA-1 hash of the host key if
     /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHSHA1``.
@@ -80,15 +76,11 @@ public struct GitCertHostKey: CStructReadable, WithCConvertible, Sendable
     
     /// The SHA-256 hash of the host key.
     ///
-    /// ## Discussion
-    ///
     /// This will represent the SHA-256 hash of the host key if
     /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHSHA256``.
     public let hashSHA256   : Data
     
     /// The type of the raw host key.
-    ///
-    /// ## Discussion
     ///
     /// This will represent the type of the raw host key if
     /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHRaw``.
@@ -96,15 +88,11 @@ public struct GitCertHostKey: CStructReadable, WithCConvertible, Sendable
     
     /// The content of the raw host key.
     ///
-    /// ## Discussion
-    ///
     /// This will represent the content of the raw host key if
     /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHRaw``.
     public let hostKey      : Data?
     
     /// The length of ``hostKey``.
-    ///
-    /// ## Discussion
     ///
     /// This will represent the content length of the raw host key if
     /// ``GitCertHostKey/type`` contains ``GitCertSSHT/gitCertSSHRaw``.

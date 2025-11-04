@@ -20,8 +20,6 @@ public struct GitTreeUpdate: CStructMutable, WithCConvertible, Sendable
 {
     /// The type of tree update.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitTreeUpdateT/gitTreeUpdateUpsert``.
     ///
     /// If this is ``GitTreeUpdateT/gitTreeUpdateRemove``, only ``path`` will
@@ -30,21 +28,15 @@ public struct GitTreeUpdate: CStructMutable, WithCConvertible, Sendable
     
     /// The ID of the entry.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public var id       : GitOID
     
     /// The file mode.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitFileModeT/gitFileModeUnreadable``.
     public var fileMode : GitFileModeT
     
     /// The full path from the root tree.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///

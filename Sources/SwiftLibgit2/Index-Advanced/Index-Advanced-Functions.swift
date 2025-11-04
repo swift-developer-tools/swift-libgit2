@@ -216,6 +216,10 @@ public func gitIndexREUCGetByIndex(
 
 
 /// Adds the specified resolve-undo (REUC) entry to the given index.
+///
+/// If a previous REUC entry exists that has the same path as the specififed
+/// entry, it will be replaced.
+///
 /// - Parameters:
 ///   - index: The index to update. The underlying type must be `git_index`.
 ///   This index must not be bare.
@@ -227,11 +231,6 @@ public func gitIndexREUCGetByIndex(
 ///   - theirMode: The mode of "their" file.
 ///   - theirID: The ID of "their" file.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If a previous REUC entry exists that has the same path as the specififed
-/// entry, it will be replaced.
 ///
 /// ## C Equivalent
 ///

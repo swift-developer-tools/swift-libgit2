@@ -20,29 +20,21 @@ public enum GitSmartServiceT: UInt32, CEnum
 {
     /// List the references available for fetching or cloning.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git-upload-pack --advertise-refs` or
     /// `git-upload-pack --http-backend-info-refs`.
     case gitServiceUploadPackLS     = 1
     
     /// Fetch objects from the remote repository.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git-upload-pack`.
     case gitServiceUploadPack       = 2
     
     /// List the references available for pushing.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git-receive-pack --http-backend-info-refs`.
     case gitServiceReceivePackLS    = 3
     
     /// Push objects to the remote repository.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git-receive-pack`.
     case gitServiceReceivePack      = 4

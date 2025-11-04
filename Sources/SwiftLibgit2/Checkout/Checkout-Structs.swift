@@ -71,28 +71,20 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitCheckoutOptionsVersion``.
     public var version          : UInt32
     
     /// The checkout strategy.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var checkoutStrategy : GitCheckoutStrategyT
     
     /// Whether to disable filters such as CRLF conversion.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public var disableFilters   : Bool
     
     /// The permission to use when creating directories.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     ///
@@ -101,16 +93,12 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     
     /// The permission to use when creating files.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     ///
     /// Pass `0` to use `0o644` or `0o755`, as dictated by the blob.
     public var fileMode         : UInt32
     
     /// The flags controlling the file opening process.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     ///
@@ -119,42 +107,30 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     
     /// The flags controlling the behavior of checkout notifications.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty option set.
     public var notifyFlags      : GitCheckoutNotifyT
     
     /// The callback invoked for checkout notifications.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var notifyCB         : GitCheckoutNotifyCB?
     
     /// The payload passed to ``notifyCB``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var notifyPayload    : UnsafeMutableRawPointer?
     
     /// The callback invoked to report checkout progress.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var progressCB       : GitCheckoutProgressCB?
     
     /// The payload passed to ``progressCB``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var progressPayload  : UnsafeMutableRawPointer?
     
     /// The wildmatch patterns or paths.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty array.
     ///
@@ -169,8 +145,6 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The expected content of the working directory. The underlying type
     /// must be `git_tree`.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to use HEAD.
@@ -182,8 +156,6 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     /// The expected content of the working directory, expressed as an index.
     /// The underlying type must be `git_index`.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     /// 
     /// This overrides ``baseline``.
@@ -191,42 +163,30 @@ public struct GitCheckoutOptions: CStructMutable, WithCConvertible
     
     /// The alternative checkout path to the working directory.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var targetDirectory  : String?
     
     /// The name of the common ancestor of conflicts.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var ancestorLabel    : String?
     
     /// The name of "our" side of conflicts.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var ourLabel         : String?
     
     /// The name of "their" side of conflicts.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var theirLabel       : String?
     
     /// The callback invoked to report checkout performance data.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var perfDataCB       : GitCheckoutPerfDataCB?
     
     /// The payload passed to ``perfDataCB``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var perfDataPayload  : UnsafeMutableRawPointer?

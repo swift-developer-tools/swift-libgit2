@@ -21,14 +21,10 @@ public struct GitIndexTime: CStructMutable, CConvertible, Sendable
 {
     /// The number of seconds since the UNIX epoch.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var seconds      : Int32
     
     /// The nanoseconds fraction of the timestamp.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var nanoseconds  : UInt32
@@ -85,84 +81,60 @@ public struct GitIndexEntry: CStructMutable, WithCConvertible, Sendable
 {
     /// The last time the file's metadata changed.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitIndexTime`` instance.
     public var cTime            : GitIndexTime
     
     /// The last time the file's data changed.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitIndexTime`` instance.
     public var mTime            : GitIndexTime
     
     /// The device ID containing the file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var dev              : UInt32
     
     /// The inode number of the file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var ino              : UInt32
     
     /// The file mode and object type (regular file, symbolic link, or Gitlink).
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var mode             : UInt32
     
     /// The user ID of the file owner.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var uid              : UInt32
     
     /// The group ID of the file owner.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var gid              : UInt32
     
     /// The on-disk file size.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var fileSize         : UInt32
     
     /// The ID of the Git object.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var id               : GitOID
     
     /// The flags for index entries.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty option set.
     public var flags            : GitIndexEntryFlagT
     
-    /// The flags for on-disk fields of an index entry.
-    ///
-    /// ## Discussion
+    /// The flags for on-disk fields of the index entry.
     ///
     /// The default value is an empty option set.
     public var flagsExtended    : GitIndexEntryExtendedFlagT
     
     /// The entry path name, relative to the repository's root folder.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty string.
     public  var path            : String
@@ -206,15 +178,14 @@ public struct GitIndexEntry: CStructMutable, WithCConvertible, Sendable
     
     /// Initializes a ``GitIndexEntry`` instance from the given
     /// `git_index_entry` instance.
-    /// - Parameter indexEntry: The `git_index_entry` instance to use.
-    ///
-    /// ## Discussion
     ///
     /// The C enum members of ``GitIndexEntryFlagT`` and
     /// ``GitIndexEntryExtendedFlagT`` use a type of `UInt32`, but the `flags`
     /// and `flags_extended` fields of `git_index_entry` use `UInt16`. The
     /// values can be safely cast from `UInt16` to `UInt32`, since this is a
     /// widening conversion.
+    ///
+    /// - Parameter indexEntry: The `git_index_entry` instance to use.
     internal init(
         cValue indexEntry: git_index_entry
     )

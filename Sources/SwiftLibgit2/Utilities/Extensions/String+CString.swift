@@ -73,10 +73,6 @@ internal extension String
     
     
     /// Initializes a new string from the given optional C string pointer.
-    /// - Parameter cString: The optional C string pointer from which to
-    /// initialize a new string.
-    ///
-    /// ## Discussion
     ///
     /// This initializer handles C string pointers that may be `nil` in cases
     /// where libgit2 returns `nil` for absent or inapplicable values, such as
@@ -95,6 +91,9 @@ internal extension String
     /// always use this initializer to prevent runtime crashes, unless an
     /// explicit `guard` statement has been used to verify that the pointer
     /// is not `nil`.
+    ///
+    /// - Parameter cString: The optional C string pointer from which to
+    /// initialize a new string.
     init?(
         optionalCString cString: UnsafePointer<CChar>?
     )
@@ -168,15 +167,14 @@ internal extension Optional where Wrapped == String
     
     /// Calls the given closure with a mutable pointer to an optional C string,
     /// and updates the receiver with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// - Important: This method does not free any memory. Only use this method
     /// with libgit2 functions that return pointers to memory owned by other
     /// objects. Do not use this method with libgit2 functions that allocate
     /// memory that must be freed by the caller.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     mutating func withOptionalMutatingCString<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>) throws -> T
     ) rethrows -> T

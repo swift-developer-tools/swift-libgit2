@@ -1199,6 +1199,10 @@ private extension SubmoduleTests
     
     /// Calls the given closure with a ``Repository`` instance and a pointer
     /// to a submodule.
+    ///
+    /// The name, URL, and path of the submodule default to ``submoduleName``,
+    /// ``submoduleURL``, and ``submodulePath``, respectively.
+    ///
     /// - Parameters:
     ///   - name: The name of the submodule to create.
     ///   - url: The URL of the submodule to create.
@@ -1208,11 +1212,6 @@ private extension SubmoduleTests
     ///   empty repository at the specified location in the working directory.
     ///   - body: The closure to call.
     /// - Throws: An error if an operation fails.
-    ///
-    /// ## Discussion
-    ///
-    /// The name, URL, and path of the submodule default to ``submoduleName``,
-    /// ``submoduleURL``, and ``submodulePath``, respectively.
     func withSubmodule(
         name        : String    = "submodules/test-submodule",
         url         : String    = "https://example.com/repo/sub.git",

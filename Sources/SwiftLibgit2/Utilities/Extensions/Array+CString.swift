@@ -27,16 +27,14 @@ import Foundation
 /// Computes the prefix sums of a sequence by cumulatively applying a binary
 /// operation to each element of the sequence.
 ///
+/// For example, `scan([1, 2, 3, 4], 0, +)` returns `[1, 3, 6, 10]`.
+///
 /// - Parameters:
 ///   - seq: The sequence to process.
 ///   - initial: The initial value to start the accumulation.
 ///   - combine: A binary operation that combines the running result with each
 ///   element.
 /// - Returns: An array containing the cumulative results of applying `combine`.
-///
-/// ## Discussion
-///
-/// For example, `scan([1, 2, 3, 4], 0, +)` returns `[1, 3, 6, 10]`.
 internal func scan<S: Sequence, U>(
     _   seq     : S,
     _   initial : U,

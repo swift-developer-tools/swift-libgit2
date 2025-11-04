@@ -21,35 +21,25 @@ public struct GitStashSaveOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitStashSaveOptionsVersion``.
     public var version  : UInt32
     
     /// The flags controlling stash saving.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags    : GitStashFlags
     
     /// The actor performing the stash.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitSignature`` instance.
     public var stasher  : GitSignature
     
     /// The stash message.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var message  : String?
     
     /// The paths controlling which files are stashed.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty array.
     public var paths    : [String]
@@ -152,21 +142,15 @@ public struct GitStashApplyOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitStashApplyOptionsVersion``.
     public var version          : UInt32
     
     /// The type of stash application.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitStashApplyFlags/gitStashApplyDefault``.
     public var flags            : GitStashApplyFlags
     
     /// The checkout options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.
@@ -174,14 +158,10 @@ public struct GitStashApplyOptions: CStructMutable, WithCConvertible
     
     /// The callback invoked to report stash application progress.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var progressCB       : GitStashApplyProgressCB?
     
     /// The payload passed to ``progressCB``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var progressPayload  : UnsafeMutableRawPointer?

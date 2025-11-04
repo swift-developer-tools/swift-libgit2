@@ -20,29 +20,21 @@ public struct GitFilterOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitFilterOptionsVersion``.
     public var version      : UInt32
     
     /// The flags controlling the filtering process.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags        : GitFilterFlagT
     
     /// The commit ID.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var commitID     : GitOID?
     
     /// The commit to load attributes from when
     /// ``GitFilterFlagT/gitFilterAttributesFromCommit`` is specified.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public var attrCommitID : GitOID

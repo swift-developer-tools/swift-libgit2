@@ -46,8 +46,6 @@ public let gitFilterIdentPriority: Int32 = 100
 /// The priority with which custom filters imitating core Git filter drivers
 /// will be registered.
 ///
-/// ## Discussion
-///
 /// The custom filters will be run last on checkout and first on checkin. This
 /// does not need to be used, but it improves compatibility.
 ///

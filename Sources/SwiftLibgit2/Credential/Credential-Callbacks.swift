@@ -12,17 +12,6 @@ import CLibgit2
 
 
 /// The callback invoked to acquire credentials.
-/// - Parameters:
-///   - out: The pointer in which to store the acquired credential.
-///   - url: The resource for which a credential is being demanded.
-///   - usernameFromURL: The username that is embedded in a `user@host` remote
-///   URL.
-///   - allowedTypes: The allowed credential types. See ``GitCredentialT``.
-///   - payload: The payload provided by the caller.
-/// - Returns: A negative value if an error occurred, a positive value if no
-/// credential was acquired, or `0` on success.
-///
-/// ## Discussion
 ///
 /// This callback is usually involved any time another system might need
 /// authentication. A valid `git_credential` object must be provided, depending
@@ -32,6 +21,16 @@ import CLibgit2
 /// This callback will be called repeatedly until the authentication succeeds
 /// or an error is reported. Take care to stop providing the same incorrect
 /// credentials, otherwise it is easy to fall into an infinite loop.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the acquired credential.
+///   - url: The resource for which a credential is being demanded.
+///   - usernameFromURL: The username that is embedded in a `user@host` remote
+///   URL.
+///   - allowedTypes: The allowed credential types. See ``GitCredentialT``.
+///   - payload: The payload provided by the caller.
+/// - Returns: A negative value if an error occurred, a positive value if no
+/// credential was acquired, or `0` on success.
 ///
 /// ## C Equivalent
 ///

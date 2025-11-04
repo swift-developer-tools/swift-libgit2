@@ -53,18 +53,17 @@ public typealias GitPushNegotiationCB = @convention(c)
 
 
 /// The callback invoked for remote status update notifications.
+///
+/// This function will be called for each updated reference on push.
+/// If `status` is not `nil`, then update was rejected by the remote server
+/// and `status` contains the rejection reason given by the server.
+///
 /// - Parameters:
 ///   - refname: The reference name specifying the remote reference that was
 ///   updated.
 ///   - status: The status message sent from the remote.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// This function will be called for each updated reference on push.
-/// If `status` is not `nil`, then update was rejected by the remote server
-/// and `status` contains the rejection reason given by the server.
 ///
 /// ## C Equivalent
 ///
@@ -79,17 +78,16 @@ public typealias GitPushUpdateReferenceCB = @convention(c)
 
 
 /// The callback invoked to resolve URLs.
+///
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``gitRemoteSetInstanceURL(remote:url:)`` instead.
+///
 /// - Parameters:
 ///   - urlResolved: The buffer to which to write the resolved URL.
 ///   - url: The URL to resolve.
 ///   - direction: The direction of the connection. See ``GitDirection``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next
-/// major release. Use ``gitRemoteSetInstanceURL(remote:url:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -105,17 +103,16 @@ public typealias GitURLResolveCB = @convention(c)
 
 
 /// The callback invoked immediately before attempting a remote connection.
+///
+/// The URL may be changed before the connection by calling
+/// ``gitRemoteSetInstanceURL(remote:url:)``.
+///
 /// - Parameters:
 ///   - remote: The remote to be connected. The underlying type must be
 ///   `git_remote`.
 ///   - direction: The direction of the connection. See ``GitDirection``.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// The URL may be changed before the connection by calling
-/// ``gitRemoteSetInstanceURL(remote:url:)``.
 ///
 /// ## C Equivalent
 ///

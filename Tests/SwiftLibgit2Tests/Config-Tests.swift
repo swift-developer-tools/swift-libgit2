@@ -16,8 +16,6 @@ import XCTest
 
 /// Tests for Config bindings.
 ///
-/// ## Discussion
-///
 /// Operations in these tests may succeed or fail depending on the environment.
 /// ``XCTAssertOK(_:)`` is not used to check operation results when this is the
 /// case.

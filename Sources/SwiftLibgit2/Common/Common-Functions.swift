@@ -41,14 +41,13 @@ public func gitLibgit2Version(
 
 
 /// Gets the name of the libgit2 prerelease state.
-/// - Returns: The name of the prerelease state.
-///
-/// ## Discussion
 ///
 /// For nightly builds during active development, the prerelease state name
 /// will be `alpha`. Releases may have a `beta` or release candidate (`rc1`,
 /// `rc2`, etc.) prerelease. This function will return `nil` for a final
 /// release.
+///
+/// - Returns: The name of the prerelease state.
 ///
 /// ## C Equivalent
 ///
@@ -84,11 +83,6 @@ public func gitLibgit2Features() -> GitFeatureT?
 
 
 /// Gets the backend details for the given compile-time feature in libgit2.
-/// - Parameter feature: The feature for which to get backend details.
-/// - Returns: The backend details for the given compile-time feature,
-/// or `nil` if the feature is not supported.
-///
-/// ## Discussion
 ///
 /// This function will return the "backend" for the feature, which is useful
 /// for things like HTTPS or SSH support that can have multiple backends that
@@ -99,6 +93,10 @@ public func gitLibgit2Features() -> GitFeatureT?
 /// reflect the compilation options specified to the build system (though in
 /// all lower case). The backend may be `builtin` for features that are
 /// provided by libgit2 itself.
+///
+/// - Parameter feature: The feature for which to get backend details.
+/// - Returns: The backend details for the given compile-time feature,
+/// or `nil` if the feature is not supported.
 ///
 /// ## C Equivalent
 ///
@@ -116,13 +114,12 @@ public func gitLibgit2FeatureBackend(
 
 
 /// Gets the maximum `mmap()` window size.
-/// - Parameter size: The pointer in which to store the window size value.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter size: The pointer in which to store the window size value.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -140,13 +137,12 @@ public func gitLibgit2OptGetMWindowSize(
 
 
 /// Sets the maximum `mmap()` window size.
-/// - Parameter size: The maximum `mmap()` window size to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter size: The maximum `mmap()` window size to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -164,13 +160,12 @@ public func gitLibgit2OptSetMWindowSize(
 
 
 /// Gets the maximum memory that will be mapped in total by libgit2.
-/// - Parameter limit: The pointer in which to store the maximum memory value.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter limit: The pointer in which to store the maximum memory value.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -188,13 +183,12 @@ public func gitLibgit2OptGetMWindowMappedLimit(
 
 
 /// Sets the maximum amount of memory that can be mapped in total by libgit2.
-/// - Parameter limit: The maximum memory value to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter limit: The maximum memory value to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -212,12 +206,6 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 
 
 /// Gets the search path for the given level of configuration data.
-/// - Parameters:
-///   - level: The priority level for which to get the search path.
-///   - buf: The `String` instance in which to store the search path.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// `level` must be one of the following values:
 ///
@@ -228,6 +216,11 @@ public func gitLibgit2OptSetMWindowMappedLimit(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameters:
+///   - level: The priority level for which to get the search path.
+///   - buf: The `String` instance in which to store the search path.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -254,12 +247,6 @@ public func gitLibgit2OptGetSearchPath(
 
 
 /// Sets the search path for the given level of configuration data.
-/// - Parameters:
-///   - level: The priority level for which to set the search path.
-///   - path: The search path to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// `level` must be one of the following values:
 /// - ``GitConfigLevelT/gitConfigLevelProgramData``
@@ -274,6 +261,11 @@ public func gitLibgit2OptGetSearchPath(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameters:
+///   - level: The priority level for which to set the search path.
+///   - path: The search path to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -296,12 +288,6 @@ public func gitLibgit2OptSetSearchPath(
 
 /// Sets the maximum data size for the given type of object to be considered
 /// eligible for caching in memory.
-/// - Parameters:
-///   - type: The type of object for which to set the maximum data size.
-///   - size: The maximum data size to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Setting the limit to `0` means that the given type of object will not be
 /// cached.
@@ -312,6 +298,11 @@ public func gitLibgit2OptSetSearchPath(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameters:
+///   - type: The type of object for which to set the maximum data size.
+///   - size: The maximum data size to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -334,10 +325,6 @@ public func gitLibgit2OptSetCacheObjectLimit(
 
 /// Sets the maximum total data size that will be cached in memory across all
 /// repositories before libgit2 starts evicting objects from the cache.
-/// - Parameter maxStorageBytes: The maximum total data size to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is 256 MB.
 ///
@@ -346,6 +333,9 @@ public func gitLibgit2OptSetCacheObjectLimit(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter maxStorageBytes: The maximum total data size to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -363,10 +353,6 @@ public func gitLibgit2OptSetCacheMaxSize(
 
 
 /// Enables or disable caching completely.
-/// - Parameter enabled: Whether to enable caching.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Since caches are repository-specific, disabling the cache cannot
 /// immediately clear all cached objects, but each cache will be cleared on
@@ -374,6 +360,9 @@ public func gitLibgit2OptSetCacheMaxSize(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable caching.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -392,17 +381,16 @@ public func gitLibgit2OptEnableCaching(
 
 /// Gets the current number of bytes in the cache and the maximum number of
 /// bytes that would be allowed in the cache.
+///
+/// - Note: This function is a type-safe binding to the variadic function
+/// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
 /// - Parameters:
 ///   - current: The pointer in which to store the current number of bytes in
 ///   the cache.
 ///   - allowed: The pointer in which to store the maximum number of bytes
 ///   that would be allowed in the cache.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is a type-safe binding to the variadic function
-/// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
 ///
 /// ## C Equivalent
 ///
@@ -424,13 +412,12 @@ public func gitLibgit2OptGetCachedMemory(
 
 
 /// Gets the default template path.
-/// - Parameter out: The `String` instance in which to store the template path.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter out: The `String` instance in which to store the template path.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -453,13 +440,12 @@ public func gitLibgit2OptGetTemplatePath(
 
 
 /// Sets the default template path.
-/// - Parameter path: The default template path to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter path: The default template path to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -477,14 +463,6 @@ public func gitLibgit2OptSetTemplatePath(
 
 
 /// Sets the SSL certificate-authority locations.
-/// - Parameters:
-///   - file: The location of a file containing several certificates
-///   concatenated together.
-///   - path: The path to a directory holding several certificates, one
-///   per file.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Either `file` or `path` may be `nil`, but both may not be `nil`.
 ///
@@ -493,6 +471,13 @@ public func gitLibgit2OptSetTemplatePath(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameters:
+///   - file: The location of a file containing several certificates
+///   concatenated together.
+///   - path: The path to a directory holding several certificates, one
+///   per file.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -514,10 +499,6 @@ public func gitLibgit2OptSetSSLCertLocations(
 
 
 /// Sets the value of the comment section of the User-Agent header.
-/// - Parameter userAgent: The comment section value to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The value can represent information about the product and its version.
 /// The default value is `libgit2` followed by the libgit2 version
@@ -530,6 +511,9 @@ public func gitLibgit2OptSetSSLCertLocations(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter userAgent: The comment section value to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -548,10 +532,6 @@ public func gitLibgit2OptSetUserAgent(
 
 /// Enables strict input validation when creating new objects to ensure that
 /// all inputs to the new objects are valid.
-/// - Parameter enabled: Whether to enable strict object creation.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `true`.
 ///
@@ -560,6 +540,9 @@ public func gitLibgit2OptSetUserAgent(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable strict object creation.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -577,10 +560,6 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 
 
 /// Enables validation of the target of a symbolic reference during creation.
-/// - Parameter enabled: Whether to enable strict symbolic reference creation.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `true`.
 ///
@@ -592,6 +571,9 @@ public func gitLibgit2OptEnableStrictObjectCreation(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable strict symbolic reference creation.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -611,13 +593,12 @@ public func gitLibgit2OptEnableStrictSymbolicRefCreation(
 
 
 /// Sets the SSL ciphers use for HTTPS connections.
-/// - Parameter ciphers: The SSL ciphers to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter ciphers: The SSL ciphers to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -635,14 +616,13 @@ public func gitLibgit2OptSetSSLCiphers(
 
 
 /// Gets the value of the comment section of the User-Agent header.
-/// - Parameter out: The `String` instance in which to store the comment
-/// section of the User-Agent header.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter out: The `String` instance in which to store the comment
+/// section of the User-Agent header.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -666,10 +646,6 @@ public func gitLibgit2OptGetUserAgent(
 
 /// Enables or disables the use of offset deltas when creating packfiles,
 /// and the negotiation of them when talking to a remote server.
-/// - Parameter enabled: Whether to enable offset deltas.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `true`.
 ///
@@ -679,6 +655,9 @@ public func gitLibgit2OptGetUserAgent(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable offset deltas.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -698,16 +677,15 @@ public func gitLibgit2OptEnableOFSDelta(
 /// Enables synchronized writes of files in the Git directory using `fsync`
 /// (or the platform equivalent) to ensure that new object data is written to
 /// permanent storage, not simply cached.
-/// - Parameter enabled: Whether to enable synchronized writes of files in the
-/// Git directory.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `false`.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable synchronized writes of files in the
+/// Git directory.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -725,13 +703,12 @@ public func gitLibgit2OptEnableFSyncGitDir(
 
 
 /// Gets the share mode used when opening files on Windows.
-/// - Parameter value: The pointer in which to store the share mode value.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter value: The pointer in which to store the share mode value.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -749,10 +726,6 @@ public func gitLibgit2OptGetWindowsShareMode(
 
 
 /// Sets the share mode used when opening files on Windows.
-/// - Parameter value: The share mode value to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `FILE_SHARE_READ | FILE_SHARE_WRITE`.
 ///
@@ -760,6 +733,9 @@ public func gitLibgit2OptGetWindowsShareMode(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter value: The share mode value to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -778,15 +754,14 @@ public func gitLibgit2OptSetWindowsShareMode(
 
 /// Enables strict verification of object hash sums when reading objects from
 /// disk.
-/// - Parameter enabled: Whether to enable strict hash verification.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `true`.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable strict hash verification.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -804,16 +779,15 @@ public func gitLibgit2OptEnableStrictHashVerification(
 
 
 /// Sets the memory allocator to a different memory allocator.
-/// - Parameter allocator: The memory allocator to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The given allocator will then be used to make all memory allocations for
 /// libgit2 operations. Pass `nil` to restore the system default allocator.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter allocator: The memory allocator to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -833,15 +807,14 @@ public func gitLibgit2OptSetAllocator(
 /// Ensures that there are no unsaved changes in the index before beginning
 /// any operation that reloads the index from disk (for example, the checkout
 /// operation).
-/// - Parameter enabled: Whether to enable unsaved index safety.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `true`.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable unsaved index safety.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -860,14 +833,13 @@ public func gitLibgit2OptEnableUnsavedIndexSafety(
 
 /// Gets the maximum number of objects libgit2 will allow in a pack file when
 /// downloading a packfile from a remote.
-/// - Parameter out: The pointer in which to store the maximum number of
-/// objects.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter out: The pointer in which to store the maximum number of
+/// objects.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -886,16 +858,15 @@ public func gitLibgit2OptGetPackMaxObjects(
 
 /// Sets the maximum number of objects libgit2 will allow in a pack file when
 /// downloading a packfile from a remote.
-/// - Parameter objects: The maximum number of objects to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Setting a maximum object limit can reduce memory usage when fetching from
 /// an untrusted remote.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter objects: The maximum number of objects to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -913,16 +884,15 @@ public func gitLibgit2OptSetPackMaxObjects(
 
 
 /// Skips `.keep` file existence checks when accessing packfiles.
-/// - Parameter skip: Whether to skip `.keep` file existence checks.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Skipping file existence checks can improve performance with remote file
 /// systems.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter skip: Whether to skip `.keep` file existence checks.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -941,15 +911,14 @@ public func gitLibgit2OptDisablePackKeepFileChecks(
 
 /// Uses `expect`/`continue` when connecting to a server using NTLM or
 /// Negotiate authentication.
-/// - Parameter enabled: Whether to enable HTTP `expect`/`continue`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This option is not available on Windows.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether to enable HTTP `expect`/`continue`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -967,14 +936,13 @@ public func gitLibgit2OptEnableHTTPExpectContinue(
 
 
 /// Gets the maximum number of files that will be mapped at any time by libgit2.
-/// - Parameter limit: The pointer in which to store the maximum number of
-/// files.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter limit: The pointer in which to store the maximum number of
+/// files.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -992,15 +960,14 @@ public func gitLibgit2OptGetMWindowFileLimit(
 
 
 /// Sets the maximum number of files that will be mapped at any time by libgit2.
-/// - Parameter limit: The maximum number of files.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value (`0`) is unlimited.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter limit: The maximum number of files.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1019,13 +986,12 @@ public func gitLibgit2OptSetMWindowFileLimit(
 
 /// Overrides the default priority of the packed object database backend,
 /// which is added when default backends are assigned to a repository.
-/// - Parameter priority: The priority level to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter priority: The priority level to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1044,13 +1010,12 @@ public func gitLibgit2OptSetODBPackedPriority(
 
 /// Overrides the default priority of the loose object database backend, which
 /// is added when default backends are assigned to a repository.
-/// - Parameter priority: The priority level to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter priority: The priority level to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1068,11 +1033,6 @@ public func gitLibgit2OptSetODBLoosePriority(
 
 
 /// Gets the supported Git extensions.
-/// - Parameter out: The array of strings in which to store the supported Git
-/// extensions.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This is the list of built-in extensions supported by libgit2 and custom
 /// extensions that have been added with
@@ -1081,6 +1041,10 @@ public func gitLibgit2OptSetODBLoosePriority(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter out: The array of strings in which to store the supported Git
+/// extensions.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1103,12 +1067,6 @@ public func gitLibgit2OptGetExtensions(
 
 
 /// Sets the list of supported Git extensions.
-/// - Parameters:
-///   - extensions: The Git extensions to set.
-///   - len: The length of `extensions`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Extensions supported by libgit2 may be negated by prefixing them with an
 /// exclamation mark (`!`).
@@ -1119,6 +1077,11 @@ public func gitLibgit2OptGetExtensions(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameters:
+///   - extensions: The Git extensions to set.
+///   - len: The length of `extensions`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1145,14 +1108,13 @@ public func gitLibgit2OptSetExtensions(
 
 
 /// Gets the owner validation setting for repository directories.
-/// - Parameter enabled: The `Bool` instance in which to store the owner
-/// validation setting for repository directories.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: The `Bool` instance in which to store the owner
+/// validation setting for repository directories.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1175,15 +1137,14 @@ public func gitLibgit2OptGetOwnerValidation(
 
 
 /// Sets the owner validation setting for repository directories.
-/// - Parameter enabled: Whether owner validation is enabled.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `true`.
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter enabled: Whether owner validation is enabled.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1201,14 +1162,13 @@ public func gitLibgit2OptSetOwnerValidation(
 
 
 /// Gets the current user's home directory to be used for file lookups.
-/// - Parameter out: The `String` instance in which to store the home
-/// directory path.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter out: The `String` instance in which to store the home
+/// directory path.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1231,13 +1191,12 @@ public func gitLibgit2OptGetHomeDir(
 
 
 /// Sets the current user's home directory to be used for file lookups.
-/// - Parameter path: The home directory path to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter path: The home directory path to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1256,13 +1215,12 @@ public func gitLibgit2OptSetHomeDir(
 
 /// Sets the timeout (in milliseconds) to attempt connections to a remote
 /// server.
-/// - Parameter timeout: The timeout to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter timeout: The timeout to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1281,13 +1239,12 @@ public func gitLibgit2OptSetServerConnectTimeout(
 
 /// Gets the timeout (in milliseconds) to attempt connections to a remote
 /// server.
-/// - Parameter timeout: The pointer in which to store the timeout value.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter timeout: The pointer in which to store the timeout value.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1306,13 +1263,12 @@ public func gitLibgit2OptGetServerConnectTimeout(
 
 /// Sets the timeout (in milliseconds) for reading from and writing to a
 /// remote server.
-/// - Parameter timeout: The timeout to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter timeout: The timeout to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1331,13 +1287,12 @@ public func gitLibgit2OptSetServerTimeout(
 
 /// Gets the timeout (in milliseconds) for reading from and writing to a
 /// remote server.
-/// - Parameter timeout: The pointer in which to store the timeout value.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter timeout: The pointer in which to store the timeout value.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1355,10 +1310,6 @@ public func gitLibgit2OptGetServerTimeout(
 
 
 /// Sets the value of the product portion of the User-Agent header.
-/// - Parameter userAgent: The product section value to set.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The default value is `git/2.0`, for compatibility with other Git clients.
 ///
@@ -1370,6 +1321,9 @@ public func gitLibgit2OptGetServerTimeout(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter userAgent: The product section value to set.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1387,14 +1341,13 @@ public func gitLibgit2OptSetUserAgentProduct(
 
 
 /// Gets the value of the product section of the User-Agent header.
-/// - Parameter out: The `String` instance in which to store the product
-/// section of the User-Agent header.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter out: The `String` instance in which to store the product
+/// section of the User-Agent header.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1417,11 +1370,6 @@ public func gitLibgit2OptGetUserAgentProduct(
 
 
 /// Adds a raw X.509 certificate into the SSL certifications store.
-/// - Parameter cert: The raw X.509 certificate to add into the SSL
-/// certifications store.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This certificate is only used by libgit2 invocations during the application
 /// lifetime and is not persisted to the disk. This certificate cannot be
@@ -1429,6 +1377,10 @@ public func gitLibgit2OptGetUserAgentProduct(
 ///
 /// - Note: This function is a type-safe binding to the variadic function
 /// `git_libgit2_opts()`. See ``GitLibgit2OptT`` for more information.
+///
+/// - Parameter cert: The raw X.509 certificate to add into the SSL
+/// certifications store.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

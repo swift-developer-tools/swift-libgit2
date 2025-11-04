@@ -21,14 +21,10 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitRebaseOptionsVersion``.
     public var version          : UInt32
     
     /// Whether to perform a quiet rebase.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `false`.
     ///
@@ -37,8 +33,6 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     public var quiet            : Bool
     
     /// Whether to perform an in-memory rebase.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `false`.
     ///
@@ -51,8 +45,6 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     /// The name of the notes reference used to rewrite notes for rebased
     /// commits.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// If this is `nil`, the contents of the configuration option
@@ -63,23 +55,17 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     
     /// The merge options.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitMergeOptions``
     /// instance.
     public var mergeOptions     : GitMergeOptions
     
     /// The checkout options.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.
     public var checkoutOptions  : GitCheckoutOptions
     
     /// The callback invoked to create a commit.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -88,8 +74,6 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     public var commitCreateCB   : GitCommitCreateCB?
     
     /// The callback invoked to add a signature to the rebase commit.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -101,8 +85,6 @@ public struct GitRebaseOptions: CStructMutable, WithCConvertible
     public var signingCB        : GitRebaseOptions.SigningCB?
     
     /// The payload passed to ``commitCreateCB`` and ``signingCB``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var payload          : UnsafeMutableRawPointer?
@@ -236,14 +218,10 @@ public struct GitRebaseOperation: CStructInternalMutable, WithCConvertible, Send
 {
     /// The type of rebase operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitRebaseOperationT/gitRebaseOperationPick``.
     public private(set) var type    : GitRebaseOperationT   = .gitRebaseOperationPick
     
     /// The ID of the commit being cherry-picked.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     ///
@@ -252,8 +230,6 @@ public struct GitRebaseOperation: CStructInternalMutable, WithCConvertible, Send
     public private(set) var id      : GitOID                = GitOID()
     
     /// The requested executable command.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -285,11 +261,6 @@ public struct GitRebaseOperation: CStructInternalMutable, WithCConvertible, Send
     
     /// Calls the given closure with a mutable pointer to a
     /// `git_rebase_operation` instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// - Important: `rebase_operation->id` has a type of `const git_oid`,
     /// unlike most other structs with ID properties of the type `git_oid`.
@@ -297,6 +268,10 @@ public struct GitRebaseOperation: CStructInternalMutable, WithCConvertible, Send
     /// method does not set its value. ``GitRebaseOperation`` is used as a
     /// read-only struct, so this currently has no impact. If the typing
     /// changes in a later version, this field must be set for consistency.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     internal func withCValue<T>(
         _ body: (UnsafeMutablePointer<git_rebase_operation>) throws -> T
     ) throws -> T

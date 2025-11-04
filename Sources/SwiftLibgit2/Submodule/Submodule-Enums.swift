@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The flags representing the status of a submodule.
 ///
-/// ## Discussion
-///
 /// Submodule information is contained in the HEAD tree, the index, the
 /// configuration files (both `/git/config` and `.gitmodules`), and the
 /// working directory. All of these are considered when determining the status
@@ -114,8 +112,6 @@ public struct GitSubmoduleStatusT: COptionSet
 
 /// Submodule update rules.
 ///
-/// ## Discussion
-///
 /// These cases represent the value of the `submodule.<name>.update`
 /// configuration variable, which determines how to handle updating the
 /// specified submodule.
@@ -192,8 +188,6 @@ public enum GitSubmoduleUpdateT: UInt32, CEnum
 
 /// Submodule ignore rules.
 ///
-/// ## Discussion
-///
 /// These cases represent the value of the `submodule.<name>.ignore`
 /// configuration variable, which determines how deeply to look at the working
 /// directory when determining the submodule status.
@@ -264,8 +258,6 @@ public enum GitSubmoduleIgnoreT: Int32, CEnum
 
 
 /// Submodule recursion rules.
-///
-/// ## Discussion
 ///
 /// These flags represent the value of the
 /// `submodule.<name>.fetchRecurseSubmodules` configuration variable.

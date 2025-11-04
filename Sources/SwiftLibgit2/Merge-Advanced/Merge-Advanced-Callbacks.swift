@@ -12,13 +12,12 @@ import CLibgit2
 
 
 /// The callback invoked to initialize the given merge driver.
-/// - Parameter self: The merge driver to initialize.
-/// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
 ///
 /// This callback will be invoked at most once, immediately before the merge
 /// driver is first used.
+///
+/// - Parameter self: The merge driver to initialize.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
 ///
@@ -32,13 +31,12 @@ public typealias GitMergeDriverInitFN = @convention(c)
 
 
 /// The callback invoked to shut down the given merge driver.
-/// - Parameter self: The merge driver to initialize.
-///
-/// ## Discussion
 ///
 /// This callback will be invoked at most once, when the given merge driver is
 /// unregistered or when libgit2 is shutting down. This may be called even
 /// if ``GitMergeDriverInitFN`` was not invoked.
+///
+/// - Parameter self: The merge driver to initialize.
 ///
 /// ## C Equivalent
 ///

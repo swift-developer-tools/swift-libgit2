@@ -13,10 +13,6 @@ import Foundation
 
 
 /// Creates a new mempack backend.
-/// - Parameter out: The pointer in which to store the mempack backend.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The mempack backend must be added to an existing object database with the
 /// highest priority.
@@ -26,6 +22,9 @@ import Foundation
 /// ``gitMempackDump(pack:repo:backend:)``. Subsequent reads will also be
 /// served from the in-memory backend to ensure consistency, until the mempack
 /// backend is dumped.
+///
+/// - Parameter out: The pointer in which to store the mempack backend.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -43,13 +42,6 @@ public func gitMempackNew(
 
 
 /// Writes a thin packfile with the objects in the given mempack backend.
-/// - Parameters:
-///   - backend: The mempack backend to use.
-///   - pb: The packbuilder to use. The underlying type must be
-///   `git_packbuilder`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A thin packfile is a packfile that does not contain its transitive closure
 /// of references. This is useful for efficiently distributing additions to a
@@ -62,6 +54,12 @@ public func gitMempackNew(
 ///
 /// - Note: This function does not reset the in-memory object database. Use
 /// ``gitMempackReset(backend:)`` instead.
+///
+/// - Parameters:
+///   - backend: The mempack backend to use.
+///   - pb: The packbuilder to use. The underlying type must be
+///   `git_packbuilder`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -84,13 +82,6 @@ public func gitMempackWriteThinPack(
 
 /// Stores all the queued in-memory writes of the given mempack backend in a
 /// raw packfile.
-/// - Parameters:
-///   - pack: The `Data` instance in which to store the raw packfile.
-///   - repo: The repository in which the mempack backend is loaded.
-///   - backend: The mempack backend to dump.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function does not make the written packfile available to the given
 /// repository. It must be made available manually, for example, by writing it
@@ -101,6 +92,12 @@ public func gitMempackWriteThinPack(
 /// memory store before the packfile has been written to the disk will result
 /// in an inconsistent repository, since the objects in the memory store will
 /// not be accessible.
+///
+/// - Parameters:
+///   - pack: The `Data` instance in which to store the raw packfile.
+///   - repo: The repository in which the mempack backend is loaded.
+///   - backend: The mempack backend to dump.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -129,10 +126,6 @@ public func gitMempackDump(
 
 
 /// Clears all queued objects of the given mempack backend.
-/// - Parameter backend: The mempack backend to reset.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function assumes that ``gitMempackDump(pack:repo:backend:)`` has been
 /// called with the given mempack backend to store all the queued objects in
@@ -140,6 +133,9 @@ public func gitMempackDump(
 ///
 /// Alternatively, call this function without a previous dump to undo all the
 /// recently written objects.
+///
+/// - Parameter backend: The mempack backend to reset.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

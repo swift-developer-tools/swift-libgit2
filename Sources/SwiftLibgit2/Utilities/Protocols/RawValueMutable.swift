@@ -22,13 +22,12 @@ internal extension RawValueMutable
 {
     /// Calls the given closure with a mutable pointer to a `RawValue`,
     /// and updates the receiver with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `RawValue *`.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     mutating func withMutatingRawValue<T>(
         _ body: (UnsafeMutablePointer<RawValue>) throws -> T
     ) rethrows -> T
@@ -57,13 +56,12 @@ internal extension RawValueMutable
     /// Calls the given closure with a mutable pointer to an optional mutable
     /// pointer to a `RawValue`, and updates the receiver with any changes
     /// made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `RawValue **`.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     mutating func withBorrowingRawValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<RawValue>?>) throws -> T
     ) rethrows -> T
@@ -97,13 +95,12 @@ internal extension RawValueMutable
     /// Calls the given closure with a mutable pointer to an optional pointer
     /// to a `RawValue`, and updates the receiver with any changes made by
     /// the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `const RawValue **`.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     mutating func withMutatingRawValue<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<RawValue>?>) throws -> T
     ) rethrows -> T

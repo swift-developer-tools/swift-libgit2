@@ -20,8 +20,6 @@ public struct GitSignature: CStructInternalMutable, WithCConvertible, CFreeable,
 {
     /// The full name of the actor.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty string.
     ///
     /// - Note: Angle brackets (`<` and `>`) are not allowed.
@@ -29,16 +27,12 @@ public struct GitSignature: CStructInternalMutable, WithCConvertible, CFreeable,
     
     /// The email of the actor.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty string.
     ///
     /// - Note: Angle brackets (`<` and `>`) are not allowed.
     public private(set) var email   : String = ""
     
     /// The time when the action happened.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitTime`` instance.
     public private(set) var when    : GitTime = GitTime(cValue: git_time())
@@ -52,14 +46,13 @@ public struct GitSignature: CStructInternalMutable, WithCConvertible, CFreeable,
     
     /// Initializes a ``GitSignature`` instance from the given `git_signature`
     /// instance.
-    /// - Parameter signature: The `git_signature` instance to use.
-    ///
-    /// ## Discussion
     ///
     /// The default values of ``name`` and ``email`` are empty strings instead
     /// of `nil` to ensure validation failures, since Git requires non-empty
     /// identity information. Generally, neither of these should ever be `nil`
     /// when initializing from a `git_signature` returned by libgit2.
+    ///
+    /// - Parameter signature: The `git_signature` instance to use.
     internal init(
         cValue signature: git_signature
     )

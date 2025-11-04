@@ -21,35 +21,25 @@ public struct GitApplyOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitApplyOptionsVersion``.
     public var version : UInt32
     
     /// The callback invoked for each delta (file).
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var deltaCB : GitApplyDeltaCB?
     
     /// The callback invoked for each hunk.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var hunkCB  : GitApplyHunkCB?
     
     /// The payload passed to ``deltaCB`` and ``hunkCB``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var payload : UnsafeMutableRawPointer?
     
     /// The flags to use when applying.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags   : GitApplyFlagsT

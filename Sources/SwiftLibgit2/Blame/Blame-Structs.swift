@@ -21,14 +21,10 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitBlameOptionsVersion``.
     public var version              : UInt32
     
     /// The flags to use during the blame operation.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags                : GitBlameFlagT
@@ -36,8 +32,6 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     /// The lower bound on the number of alphanumeric characters that must be
     /// detected as moving/copying within a file for it to associate those
     /// lines with the parent commit.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `20`.
     ///
@@ -50,16 +44,12 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     
     /// The ID of the newest commit to consider.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitOID`` instance.
     ///
     /// Pass a default-initialized instance to use HEAD.
     public var newestCommit         : GitOID
     
     /// The ID of the oldest commit to consider.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     ///
@@ -69,14 +59,10 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
     
     /// The first line in the file to blame.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `1` (line numbers are 1-indexed).
     public var minLine              : Int
     
     /// The last line in the file to blame.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -183,23 +169,17 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible, Sendable
     
     /// The author of ``GitBlameHunk/finalCommitID``.
     ///
-    /// ## Discussion
-    ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
     /// contain the canonical real name and email address.
     public let finalSignature       : GitSignature?
     
     /// The committer of ``GitBlameHunk/finalCommitID``.
     ///
-    /// ## Discussion
-    ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
     /// contain the canonical real name and email address.
     public let finalCommitter       : GitSignature?
     
     /// The ID of the commit where this hunk was found.
-    ///
-    /// ## Discussion
     ///
     /// This will usually be the same as ``GitBlameHunk/finalCommitID``,
     /// except when ``GitBlameFlagT/gitBlameTrackCopiesAnyCommitCopies`` has
@@ -217,15 +197,11 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible, Sendable
     
     /// The author of ``GitBlameHunk/origCommitID``.
     ///
-    /// ## Discussion
-    ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
     /// contain the canonical real name and email address.
     public let origSignature        : GitSignature?
     
     /// The committer of ``GitBlameHunk/origCommitID``.
-    ///
-    /// ## Discussion
     ///
     /// If ``GitBlameFlagT/gitBlameUseMailmap`` has been specified, this will
     /// contain the canonical real name and email address.
@@ -235,8 +211,6 @@ public struct GitBlameHunk: CStructReadable, WithCConvertible, Sendable
     public let summary              : String?
     
     /// Whether this hunk was traced to a boundary commit.
-    ///
-    /// ## Discussion
     ///
     /// This value will be `true` if and only if the hunk has been tracked to
     /// a boundary commit (the root, or the commit specified in

@@ -12,13 +12,12 @@ import CLibgit2
 
 
 /// The callback invoked to initialize the given filter.
-/// - Parameter self: The filter to initialize.
-/// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
 ///
 /// This callback will be invoked at most once, immediately before the filter
 /// is first used.
+///
+/// - Parameter self: The filter to initialize.
+/// - Returns: `0` on success, or an error code.
 ///
 /// ## C Equivalent
 ///
@@ -31,13 +30,12 @@ public typealias GitFilterInitFN = @convention(c)
 
 
 /// The callback invoked to shut down the given filter.
-/// - Parameter self: The filter to initialize.
-///
-/// ## Discussion
 ///
 /// This callback will be invoked at most once, when the given filter is
 /// unregistered or when libgit2 is shutting down. This may be called even
 /// if ``GitFilterInitFN`` was not invoked.
+///
+/// - Parameter self: The filter to initialize.
 ///
 /// ## C Equivalent
 ///
@@ -51,6 +49,10 @@ public typealias GitFilterShutdownFN = @convention(c)
 
 /// The callback invoked to determine whether the given source needs the
 /// given filter.
+///
+/// If the filter allocates and assigns a value to the given `payload`,
+/// ``GitFilterCleanupFN`` must be used to free the payload.
+///
 /// - Parameters:
 ///   - self: The filter to check.
 ///   - payload: The payload provided by the caller. This must be allocated on
@@ -61,11 +63,6 @@ public typealias GitFilterShutdownFN = @convention(c)
 ///   - attrValues: The pointer in which to store the values of any attributes
 ///   given in the filter definition.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// If the filter allocates and assigns a value to the given `payload`,
-/// ``GitFilterCleanupFN`` must be used to free the payload.
 ///
 /// ## C Equivalent
 ///
@@ -81,6 +78,13 @@ public typealias GitFilterCheckFN = @convention(c)
 
 
 /// The callback invoked to perform data filtering.
+///
+/// If the filter allocates and assigns a value to the given `payload`,
+/// ``GitFilterCleanupFN`` must be used to free the payload.
+///
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``GitFilterStreamFN`` instead.
+///
 /// - Parameters:
 ///   - self: The filter to check.
 ///   - payload: The payload provided by the caller. This must be allocated on
@@ -90,14 +94,6 @@ public typealias GitFilterCheckFN = @convention(c)
 ///   - src: The filter source to use. The underlying type must be
 ///   `git_filter_source`.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// If the filter allocates and assigns a value to the given `payload`,
-/// ``GitFilterCleanupFN`` must be used to free the payload.
-///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next
-/// major release. Use ``GitFilterStreamFN`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -114,6 +110,10 @@ public typealias GitFilterApplyFN = @convention(c)
 
 
 /// The callback invoked to perform data filtering.
+///
+/// If the filter allocates and assigns a value to the given `payload`,
+/// ``GitFilterCleanupFN`` must be used to free the payload.
+///
 /// - Parameters:
 ///   - out: The stream in which to write the original data.
 ///   - self: The filter to check.
@@ -123,11 +123,6 @@ public typealias GitFilterApplyFN = @convention(c)
 ///   `git_filter_source`.
 ///   - next: The stream in which to write the filtered data.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// If the filter allocates and assigns a value to the given `payload`,
-/// ``GitFilterCleanupFN`` must be used to free the payload.
 ///
 /// ## C Equivalent
 ///

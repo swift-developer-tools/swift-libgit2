@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The priority level of a configuration file.
 ///
-/// ## Discussion
-///
 /// These priority levels correspond to the natural escalation logic (from
 /// higher to lower) when reading or searching for configuration entries in
 /// `git.git`. This means that for the same key, the configuration in the
@@ -37,57 +35,41 @@ public enum GitConfigLevelT: Int32, CEnum
 {
     /// System-wide on Windows.
     ///
-    /// ## Discussion
-    ///
     /// This is used for compatibility with Portable Git.
     case gitConfigLevelProgramData  = 1
     
     /// System-wide configuration file.
-    ///
-    /// ## Discussion
     ///
     /// This is typically `/etc/gitconfig` on Linux.
     case gitConfigLevelSystem       = 2
     
     /// XDG compatible configuration file.
     ///
-    /// ## Discussion
-    ///
     /// This is typically `~/.config/git/config`.
     case gitConfigLevelXDG          = 3
     
     /// Global configuration file is the user-specific configuration.
-    ///
-    /// ## Discussion
     ///
     /// This is typically `~/.gitconfig`.
     case gitConfigLevelGlobal       = 4
     
     /// Local configuration, the repository-specific configuration file.
     ///
-    /// ## Discussion
-    ///
     /// This is typically `$GIT_DIR/config`.
     case gitConfigLevelLocal        = 5
     
     /// Worktree-specific configuration.
-    ///
-    /// ## Discussion
     ///
     /// This is typically `$GIT_DIR/config.worktree`.
     case gitConfigLevelWorktree     = 6
     
     /// Application-specific configuration file.
     ///
-    /// ## Discussion
-    ///
     /// Callers into libgit2 can add custom configuration beginning at this
     /// level.
     case gitConfigLevelApp          = 7
     
     /// The most specific configuration file available that is loaded.
-    ///
-    /// ## Discussion
     ///
     /// This is not a configuration level. Callers can use this value when
     /// querying configuration levels to retrieve data from the current
@@ -143,8 +125,6 @@ public enum GitConfigLevelT: Int32, CEnum
 
 /// The configuration variable mapping type.
 ///
-/// ## Discussion
-///
 /// This defines the different types of values that can be matched when using
 /// configuration mapping functions. Each type determines how to interpret the
 /// configuration value during the mapping operation.
@@ -156,15 +136,11 @@ public enum GitConfigMapT: UInt32, CEnum
 {
     /// The configuration variable matches boolean false values.
     ///
-    /// ## Discussion
-    ///
     /// Boolean false values include `false`, `FALSE`, `no`, `off`, `0`,
     /// and other similar values.
     case gitConfigMapFalse      = 0
     
     /// The configuration variable matches boolean true values.
-    ///
-    /// ## Discussion
     ///
     /// Boolean true values include `true`, `TRUE`, `yes`, `on`, `1`,
     /// and other similar values.

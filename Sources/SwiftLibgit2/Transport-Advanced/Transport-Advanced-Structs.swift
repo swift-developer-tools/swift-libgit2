@@ -93,8 +93,6 @@ public struct GitFetchNegotiation: CStructReadable, WithCConvertible, Sendable
 
 /// Stream registration information.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_transport` instead.
 ///
@@ -332,8 +330,6 @@ public struct GitTransport: CStruct, Sendable
 /// A stream used by a smart transport to read and write data from a
 /// subtransport.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_smart_subtransport_stream`
 /// instead.
@@ -375,16 +371,15 @@ public struct GitSmartSubtransportStream: CStruct
     
     
     /// The callback invoked to read from the given stream.
+    ///
+    /// The implementation may read less than requested.
+    ///
     /// - Parameters:
     ///   - stream: The stream from which to read.
     ///   - buffer: The buffer in which to store the read data.
     ///   - bufSize: The length of `buffer`.
     ///   - bytesRead: The pointer in which to store the number of read bytes.
     /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
-    ///
-    /// The implementation may read less than requested.
     public typealias Read = @convention(c)
     (
         UnsafeMutablePointer<git_smart_subtransport_stream>?,
@@ -396,15 +391,14 @@ public struct GitSmartSubtransportStream: CStruct
     
     
     /// The callback invoked to write to the given stream.
+    ///
+    /// The implementation must write all the given data, or return an error.
+    ///
     /// - Parameters:
     ///   - stream: The stream to which to write.
     ///   - data: The data to write.
     ///   - len: The length of `data`.
     /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
-    ///
-    /// The implementation must write all the given data, or return an error.
     public typealias Write = @convention(c)
     (
         UnsafeMutablePointer<git_smart_subtransport_stream>?,
@@ -426,8 +420,6 @@ public struct GitSmartSubtransportStream: CStruct
 
 
 /// A subtransport that carries data for a smart transport.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_smart_subtransport` instead.
@@ -483,10 +475,6 @@ public struct GitSmartSubtransport: CStruct, Sendable
     
     
     /// The callback invoked to close the given transport.
-    /// - Parameter transport: The transport to close.
-    /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
     ///
     /// Subtransports are guaranteed to be closed between actions, except for
     /// the following two "natural" progressions of actions against a constant
@@ -496,6 +484,9 @@ public struct GitSmartSubtransport: CStruct, Sendable
     /// ``GitSmartServiceT/gitServiceUploadPack``.
     /// - ``GitSmartServiceT/gitServiceReceivePackLS`` to
     /// ``GitSmartServiceT/gitServiceReceivePack``.
+    ///
+    /// - Parameter transport: The transport to close.
+    /// - Returns: `0` on success, or an error code.
     public typealias Close = @convention(c)
     (
         UnsafeMutablePointer<git_smart_subtransport>?
@@ -516,8 +507,6 @@ public struct GitSmartSubtransport: CStruct, Sendable
 
 /// A subtransport definition.
 ///
-/// ## Discussion
-///
 /// A smart transport knows how to speak the Git protocol, but it has no
 /// knowledge of how to establish a connection between itself and another
 /// endpoint, or how to move data back and forth. A smart transport uses
@@ -536,8 +525,6 @@ public struct GitSmartSubtransportDefinition: CStructMutable, CConvertible
     /// The callback invoked to create a new subtransport for the given smart
     /// transport.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// - Important: This must not be `nil` at runtime.
@@ -545,14 +532,10 @@ public struct GitSmartSubtransportDefinition: CStructMutable, CConvertible
     
     /// Whether the protocol is stateless.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public var rpc      : Bool
     
     /// The payload passed to ``callback``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var param    : UnsafeMutableRawPointer?

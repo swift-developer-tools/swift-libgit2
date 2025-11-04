@@ -52,8 +52,6 @@ public struct GitReferenceFormatT: COptionSet
     
     /// Control whether one-level reference names are accepted.
     ///
-    /// ## Discussion
-    ///
     /// One-level reference names are reference names that do not contain
     /// multiple separated components. They are expected to be written using
     /// only uppercase letters and an underscore, for example, `FETCH_HEAD`.
@@ -61,8 +59,6 @@ public struct GitReferenceFormatT: COptionSet
     
     /// Interpret the reference name as a reference pattern for a refspec,
     /// as used with remote repositories.
-    ///
-    /// ## Discussion
     ///
     /// If this flag is enabled, the reference name is allowed to contain a
     /// single asterisk (`*`) in place of one full pathname component.

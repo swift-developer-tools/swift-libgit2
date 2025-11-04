@@ -21,21 +21,15 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible, Sendable
 {
     /// The number of objects being indexed.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var totalObjects    : UInt32    = 0
     
     /// The number of received objects that have been hashed.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var indexedObjects  : UInt32    = 0
     
     /// The number of objects that have been downloaded.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public private(set) var receivedObjects : UInt32    = 0
@@ -43,28 +37,20 @@ public struct GitIndexerProgress: CStructInternalMutable, CConvertible, Sendable
     /// The number of locally-available objects that have been injected in
     /// order to fix a thin pack.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var localObjects    : UInt32    = 0
     
     /// The number of deltas being indexed.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public private(set) var totalDeltas     : UInt32    = 0
     
     /// The number of deltas that have been indexed.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var indexedDeltas   : UInt32    = 0
     
     /// The number of bytes that been received up until the current time.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public private(set) var receivedBytes   : Int       = 0
@@ -124,28 +110,20 @@ public struct GitIndexerOptions: CStructMutable, ThrowingCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitIndexerOptionsVersion``.
     public var version              : UInt32
     
     /// The callback invoked to report indexing progress.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var progressCB           : GitIndexerProgressCB?
     
     /// The payload passed to ``progressCB``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var progressCBPayload    : UnsafeMutableRawPointer?
     
     /// Whether to perform connectivity checks for the received pack.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `false`.
     public var verify               : Bool

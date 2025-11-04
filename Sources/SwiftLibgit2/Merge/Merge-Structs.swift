@@ -21,14 +21,10 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitMergeFileInputVersion``.
     public var version  : UInt32
     
     /// The contents of the file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var ptr      : Data?
@@ -41,16 +37,12 @@ public struct GitMergeFileInput: CStructMutable, WithCConvertible, Sendable
     
     /// The file name of the conflicted file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to not merge the path.
     public var path     : String?
     
     /// The file mode of the conflicted file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     ///
@@ -144,28 +136,20 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitMergeFileOptionsVersion``.
     public var version          : UInt32
     
     /// The name of the common ancestor of conflicts
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var ancestorLabel    : String?
     
     /// The name of "our" side of conflicts.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var ourLabel         : String?
     
     /// The name of "their" side of conflicts.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var theirLabel       : String?
@@ -173,21 +157,15 @@ public struct GitMergeFileOptions: CStructMutable, WithCConvertible, Sendable
     /// How to handle conflicting file regions during file-level merge
     /// operations.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitMergeFileFavorT/gitMergeFileFavorNormal``.
     public var favor            : GitMergeFileFavorT
     
     /// The flags controlling the behavior of the file-merging operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an option set.
     public var flags            : GitMergeFileFlagT
     
     /// The size of conflict markers.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``gitMergeConflictMarkerSize``.
     public var markerSize       : UInt16
@@ -297,38 +275,28 @@ public struct GitMergeFileResult: CStructInternalMutable, WithCConvertible, CFre
 {
     /// Whether the output was auto-merged.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     ///
     /// If the output contains conflict markers, it cannot be auto-merged.
     public private(set) var automergeable   : Bool      = false
     
-    /// The path of resulting file, or `nil` if a file name conflict would
-    /// have otherwise occurred.
-    ///
-    /// ## Discussion
+    /// The path of file, or `nil` if a file name conflict would have
+    /// otherwise occurred.
     ///
     /// The default value is `nil`.
     public private(set) var path            : String?   = nil
     
-    /// The file mode of the resulting file.
-    ///
-    /// ## Discussion
+    /// The file mode.
     ///
     /// The default value is `0`.
     public private(set) var mode            : UInt32    = 0
     
     /// The contents of the merge.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public private(set) var ptr             : Data?     = nil
     
     /// The length of ``ptr``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var len                          : Int
@@ -424,21 +392,15 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitMergeOptionsVersion``.
     public var version          : UInt32
     
     /// The flags controlling the behavior of the merge operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty option set.
     public var flags            : GitMergeFlagT
     
     /// The similarity percentage beyond which to treat a file as a rename.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `50`.
     ///
@@ -450,8 +412,6 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     
     /// Maximum similarity sources to examine for renames.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `200`.
     ///
     /// If the number of rename candidates (add/delete pairs) is greater than
@@ -462,8 +422,6 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     
     /// The pluggable similarity metric.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to use the internal metric.
@@ -471,8 +429,6 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     
     /// The maximum number of times to merge common ancestors to build a
     /// virtual merge base when faced with criss-cross merges.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0` (unlimited).
     ///
@@ -483,8 +439,6 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// The default merge driver to be used when both sides of a merge have
     /// changed.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to use the `text` driver.
@@ -493,14 +447,10 @@ public struct GitMergeOptions: CStructMutable, WithCConvertible
     /// How to handle conflicting file regions during file-level merge
     /// operations.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitMergeFileFavorT/gitMergeFileFavorNormal``.
     public var fileFavor        : GitMergeFileFavorT
     
     /// The flags controlling the behavior of the file-merging operation.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var fileFlags        : GitMergeFileFlagT

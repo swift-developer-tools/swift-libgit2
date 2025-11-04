@@ -20,14 +20,10 @@ public struct GitODBOptions: CStructMutable, CConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitODBOptionsVersion``.
     public var version  : UInt32
     
     /// The type of ID to use for the object database.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitOIDT/gitOIDSHA1``.
     public var oidType  : GitOIDT
@@ -86,21 +82,15 @@ public struct GitODBExpandID: CStructMutable, CConvertible, Sendable
 {
     /// The ID to expand.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public var id       : GitOID
     
     /// The length of the object ID.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var length   : UInt16
     
     /// The type of object for which to search.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitObjectT/gitObjectAny``.
     public var type    : GitObjectT

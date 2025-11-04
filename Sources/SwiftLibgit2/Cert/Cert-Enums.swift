@@ -20,8 +20,6 @@ public enum GitCertT: UInt32, CEnum
 {
     /// No information about the certificate is available.
     ///
-    /// ## Discussion
-    ///
     /// This value may be encountered when using Curl.
     case gitCertNone            = 0
     
@@ -35,8 +33,6 @@ public enum GitCertT: UInt32, CEnum
     
     /// The callback's certificate parameter will contain a `git_strarray`
     /// with `name:content` strings.
-    ///
-    /// ## Discussion
     ///
     /// This value may be encountered when using Curl.
     case gitCertStrArray        = 3

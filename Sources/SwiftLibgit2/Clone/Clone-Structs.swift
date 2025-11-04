@@ -21,22 +21,16 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitCloneOptionsVersion``.
     public var version              : UInt32
     
     /// The checkout options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.
     public var checkoutOpts         : GitCheckoutOptions
     
     /// The fetch options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitFetchOptions``
     /// instance.
@@ -47,21 +41,15 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     
     /// Whether to create a bare repository.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public var bare                 : Bool
     
     /// The option for bypassing the Git-aware transport on clone.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitCloneLocalT/gitCloneLocalAuto``.
     public var local                : GitCloneLocalT
     
     /// The name of the branch to checkout.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -69,8 +57,6 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     public var checkoutBranch       : String?
     
     /// The callback invoked to create a new repository.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -80,8 +66,6 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     
     /// The payload passed to ``repositoryCB``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// This property will be ignored unless ``repositoryCB`` is not `nil`.
@@ -90,14 +74,10 @@ public struct GitCloneOptions: CStructMutable, WithCConvertible
     /// The callback invoked to add a remote with the default fetch refspec to
     /// the repository's configuration.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var remoteCB             : GitRemoteCreateCB?
     
     /// The payload passed to ``remoteCB``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///

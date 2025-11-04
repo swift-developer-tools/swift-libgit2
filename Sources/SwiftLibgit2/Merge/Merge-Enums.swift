@@ -49,16 +49,12 @@ public struct GitMergeFlagT: COptionSet
     /// Detect renames that occur between the common ancestor and "our" side,
     /// or the common ancestor and "their" side.
     ///
-    /// ## Discussion
-    ///
     /// This flag enables the ability to merge between a modified and renamed
     /// file.
     public static let gitMergeFindRenames       = GitMergeFlagT(rawValue: GIT_MERGE_FIND_RENAMES.rawValue)
     
     /// If a conflict occurs, exit immediately instead of attempting to
     /// continue resolving conflicts.
-    ///
-    /// ## Discussion
     ///
     /// If a conflict occurs, the merge operation will fail with ``GitErrorCode/gitEMergeConflict``,
     /// and no index will be returned.
@@ -71,15 +67,11 @@ public struct GitMergeFlagT: COptionSet
     /// recursive merge base (by merging the multiple merge bases), instead
     /// simply use the first base.
     ///
-    /// ## Discussion
-    ///
     /// This flag provides a similar merge base to `git-merge-resolve`.
     public static let gitMergeNoRecursive       = GitMergeFlagT(rawValue: GIT_MERGE_NO_RECURSIVE.rawValue)
     
     /// Treat this merge as if it will produce the virtual base of a recursive
     /// merge.
-    ///
-    /// ## Discussion
     ///
     /// This flag will ensure that there are no conflicts. Any conflicting
     /// regions will keep conflict markers in the merge result.
@@ -285,8 +277,6 @@ public struct GitMergeAnalysisT: COptionSet
     
     /// No merge is possible.
     ///
-    /// ## Discussion
-    ///
     /// - Note: This flag is unused.
     public static let gitMergeAnalysisNone          = GitMergeAnalysisT(rawValue: GIT_MERGE_ANALYSIS_NONE.rawValue)
     
@@ -301,15 +291,11 @@ public struct GitMergeAnalysisT: COptionSet
     /// The given merge input is a fast-forward from HEAD, and no merge is
     /// necessary.
     ///
-    /// ## Discussion
-    ///
     /// In this case, the caller may check out the given merge input.
     public static let gitMergeAnalysisFastForward   = GitMergeAnalysisT(rawValue: GIT_MERGE_ANALYSIS_FASTFORWARD.rawValue)
     
     /// The HEAD of the current repository is unborn and does not point to a
     /// valid commit, and no merge can be performed.
-    ///
-    /// ## Discussion
     ///
     /// In this case, the caller may set HEAD to the target commit(s).
     public static let gitMergeAnalysisUnborn        = GitMergeAnalysisT(rawValue: GIT_MERGE_ANALYSIS_UNBORN.rawValue)

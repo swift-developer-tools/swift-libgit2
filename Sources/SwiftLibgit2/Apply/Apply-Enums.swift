@@ -49,8 +49,6 @@ public struct GitApplyFlagsT: COptionSet
     
     /// Do not actually make changes, just test that the patch applies.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git apply --check`.
     public static let gitApplyCheck = GitApplyFlagsT(rawValue: GIT_APPLY_CHECK.rawValue)
     
@@ -104,21 +102,15 @@ public struct GitApplyLocationT: COptionSet
     
     /// Apply the patch to the working directory, leaving the index untouched.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git apply` with no location argument.
     public static let gitApplyLocationWorkdir  = GitApplyLocationT(rawValue: GIT_APPLY_LOCATION_WORKDIR.rawValue)
     
     /// Apply the patch to the index, leaving the working directory untouched.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git apply --cached`.
     public static let gitApplyLocationIndex    = GitApplyLocationT(rawValue: GIT_APPLY_LOCATION_INDEX.rawValue)
     
     /// Apply the patch to both the working directory and the index.
-    ///
-    /// ## Discussion
     ///
     /// This is the equivalent of `git apply --index`.
     public static let gitApplyLocationBoth     = GitApplyLocationT(rawValue: GIT_APPLY_LOCATION_BOTH.rawValue)

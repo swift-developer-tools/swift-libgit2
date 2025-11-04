@@ -20,35 +20,25 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitCommitCreateOptionsVersion``.
     public var version          : UInt32
     
     /// Whether to allow a commit with no changes from the prior commit.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `false`.
     public var allowEmptyCommit : Bool
     
     /// The commit author.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var author           : GitSignature?
     
     /// The committer.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var committer        : GitSignature?
     
     /// The encoding for the commit message.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -135,8 +125,6 @@ public struct GitCommitCreateOptions: CStructMutable, WithCConvertible, Sendable
 
 
 /// An array of commits.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not used
 /// by other bindings. All bindings use `[OpaquePointer]` instead.

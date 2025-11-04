@@ -13,12 +13,11 @@ import Foundation
 
 
 /// Frees the memory allocated for the given `git_credential` instance.
-/// - Parameter cred: The entry to free.
-///
-/// ## Discussion
 ///
 /// - Important: This function is only needed when libgit2 does not own the
 /// `git_credential` (when the caller is a transport).
+///
+/// - Parameter cred: The entry to free.
 ///
 /// ## C Equivalent
 ///
@@ -75,15 +74,14 @@ public func gitCredentialGetUsername(
 
 
 /// Creates a new plaintext username and password credentials.
+///
+/// The credential will be internally duplicated.
+///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - username: The username of the credential.
 ///   - password: The password of the credentials.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The credential will be internally duplicated.
 ///
 /// ## C Equivalent
 ///
@@ -152,17 +150,16 @@ public func gitCredentialUsernameNew(
 
 
 /// Creates a new SSH key credential.
+///
+/// The credential will be internally duplicated.
+///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - username: The username of the credential.
 ///   - publicKey: The path to the public key of the credential.
 ///   - privateKey: The path to the private key of the credential.
 ///   - passphrase: The passphrase of the credential.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The credential will be internally duplicated.
 ///
 /// ## C Equivalent
 ///
@@ -224,17 +221,16 @@ public func gitCredentialSSHKeyMemoryNew(
 
 
 /// Creates a new SSH keyboard-interactive credential.
+///
+/// The credential will be internally duplicated.
+///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - username: The username of the credential.
 ///   - promptCallback: The ``GitCredentialSSHInteractiveCB`` callback to
 ///   invoke for interactive SSH credential prompts.
 ///   - payload: The payload to pass to `promptCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The credential will be internally duplicated.
 ///
 /// ## C Equivalent
 ///
@@ -260,14 +256,13 @@ public func gitCredentialSSHInteractiveNew(
 
 
 /// Creates a new SSH key credential used for querying an SSH agent.
-/// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
-///   - username: The username of the credential.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The credential will be internally duplicated.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the credential.
+///   - username: The username of the credential.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -289,8 +284,11 @@ public func gitCredentialSSHKeyFromAgent(
 
 
 /// Creates an SSH key credential with a custom signing function.
+///
+/// The credential will be internally duplicated.
+///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - username: The username of the credential.
 ///   - publicKey: The public key of the credential.
 ///   - publicKeyLen: The length of `publicKey`.
@@ -298,10 +296,6 @@ public func gitCredentialSSHKeyFromAgent(
 ///   sign credentials.
 ///   - payload: The payload to pass to `signCallback`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The credential will be internally duplicated.
 ///
 /// ## C Equivalent
 ///

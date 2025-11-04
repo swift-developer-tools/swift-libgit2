@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The flags controlling the behavior of the checkout operation.
 ///
-/// ## Discussion
-///
 /// The checkout operation considers the following:
 /// - The target tree to be checked out.
 /// - The baseline tree of what was previously checked out.
@@ -83,8 +81,6 @@ public struct GitCheckoutStrategyT: COptionSet
     
     /// Allow safe updates that cannot overwrite uncommitted data.
     ///
-    /// ## Discussion
-    ///
     /// If the uncommitted changes do not conflict with the checked out files,
     /// then the checkout will still proceed, leaving the changes intact.
     public static let gitCheckoutSafe                       = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_SAFE.rawValue)
@@ -108,16 +104,12 @@ public struct GitCheckoutStrategyT: COptionSet
     
     /// Only updated existing files, but do not create new files.
     ///
-    /// ## Discussion
-    ///
     /// This will only update the content of files that already exist. Files
     /// will neither be created nor deleted. Adds, deletes, and type-changes
     /// will all be skipped.
     public static let gitCheckoutUpdateOnly                 = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_ONLY.rawValue)
     
     /// Do not update index entries as the checkout proceeds.
-    ///
-    /// ## Discussion
     ///
     /// This implies ``gitCheckoutDontWriteIndex``.
     public static let gitCheckoutDontUpdateIndex            = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_DONT_UPDATE_INDEX.rawValue)
@@ -139,8 +131,6 @@ public struct GitCheckoutStrategyT: COptionSet
     
     /// Ignore directories that are in use.
     ///
-    /// ## Discussion
-    ///
     /// The ignored directories will be left empty.
     public static let gitCheckoutSkipLockedDirectories      = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_SKIP_LOCKED_DIRECTORIES.rawValue)
     
@@ -154,8 +144,6 @@ public struct GitCheckoutStrategyT: COptionSet
     public static let gitCheckoutConflictStyleDiff3         = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_CONFLICT_STYLE_DIFF3.rawValue)
     
     /// Do not overwrite existing files or folders.
-    ///
-    /// ## Discussion
     ///
     /// This prevents the checkout operation from removing files or folders
     /// that fold to the same name on case-insensitive file systems. This may
@@ -175,8 +163,6 @@ public struct GitCheckoutStrategyT: COptionSet
     
     /// Do not perform the checkout and do not fire callbacks.
     ///
-    /// ## Discussion
-    ///
     /// This is primarily useful only for internal functions that will perform
     /// the checkout themselves, but need to pass checkout options into another
     /// function, like ``gitClone(out:url:localPath:options:)``.
@@ -184,16 +170,12 @@ public struct GitCheckoutStrategyT: COptionSet
     
     /// Recursively checkout submodules with the same options.
     ///
-    /// ## Discussion
-    ///
     /// - Note: This has not yet been implemented, but is reserved for future
     /// use.
     public static let gitCheckoutUpdateSubmodules           = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_SUBMODULES.rawValue)
     
     /// Recursively checkout submodules with the same options, if HEAD moved
     /// in the super repository.
-    ///
-    /// ## Discussion
     ///
     /// - Note: This has not yet been implemented, but is reserved for future
     /// use.
@@ -213,8 +195,6 @@ public struct GitCheckoutStrategyT: COptionSet
 
 
 /// The flags controlling the behavior of checkout notifications.
-///
-/// ## Discussion
 ///
 /// The checkout operation will invoke a checkout notification callback for
 /// certain cases specified by the given flags.
@@ -267,8 +247,6 @@ public struct GitCheckoutNotifyT: COptionSet
     public static let gitCheckoutNotifyConflict     = GitCheckoutNotifyT(rawValue: GIT_CHECKOUT_NOTIFY_CONFLICT.rawValue)
     
     /// Send notifications for dirty files.
-    ///
-    /// ## Discussion
     ///
     /// This notifies about files with uncommitted changes that would be
     /// overwritten by the checkout operation. Core Git displays these files

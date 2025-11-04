@@ -12,14 +12,13 @@ import CLibgit2
 
 
 /// The callback invoked for each reference.
+///
+/// - Important: This callback must free each reference passed to it.
+///
 /// - Parameters:
 ///   - reference: The reference. The underlying type must be `git_reference`.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// - Important: This callback must free each reference passed to it.
 ///
 /// ## C Equivalent
 ///

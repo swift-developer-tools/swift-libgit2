@@ -137,15 +137,14 @@ public func gitCommitID(
 
 
 /// Gets the repository containing the given commit.
+///
+/// - Important: The returned pointer is owned by the given commit and must
+/// not be freed.
+///
 /// - Parameter commit: The commit for which to get the repository. The
 /// underlying type must be `git_commit`.
 /// - Returns: The repository containing the given commit. The underlying
 /// type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given commit and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -179,14 +178,13 @@ public func gitCommitMessageEncoding(
 
 
 /// Gets the message of the given commit.
-/// - Parameter commit: The commit for which to get the message. The underlying
-/// type must be `git_commit`.
-/// - Returns: The message of the given commit.
-///
-/// ## Discussion
 ///
 /// The commit message will be slightly prettified by removing any potential
 /// leading newlines.
+///
+/// - Parameter commit: The commit for which to get the message. The underlying
+/// type must be `git_commit`.
+/// - Returns: The message of the given commit.
 ///
 /// ## C Equivalent
 ///
@@ -222,14 +220,13 @@ public func gitCommitMessageRaw(
 
 
 /// Gets the summary of the given commit.
-/// - Parameter commit: The commit for which to get the summary. The underlying
-/// type must be `git_commit`.
-/// - Returns: The summary of the given commit.
-///
-/// ## Discussion
 ///
 /// The summary of a commit is the first paragraph of the commit message with
 /// whitespace trimmed.
+///
+/// - Parameter commit: The commit for which to get the summary. The underlying
+/// type must be `git_commit`.
+/// - Returns: The summary of the given commit.
 ///
 /// ## C Equivalent
 ///
@@ -246,14 +243,13 @@ public func gitCommitSummary(
 
 
 /// Gets the body of the given commit.
-/// - Parameter commit: The commit for which to get the body. The underlying
-/// type must be `git_commit`.
-/// - Returns: The body of the given commit.
-///
-/// ## Discussion
 ///
 /// The body of a commit is everything except the first paragraph of the
 /// commit message. Leading and trailing whitespace will be trimmed.
+///
+/// - Parameter commit: The commit for which to get the body. The underlying
+/// type must be `git_commit`.
+/// - Returns: The body of the given commit.
 ///
 /// ## C Equivalent
 ///
@@ -471,14 +467,13 @@ public func gitCommitTree(
 
 
 /// Gets the ID of the tree pointed to by the given commit.
-/// - Parameter commit: The commit for which to get the tree ID. The underlying
-/// type must be `git_commit`.
-/// - Returns: The ID of the tree pointed to by the given commit.
-///
-/// ## Discussion
 ///
 /// This function differs from ``gitCommitTree(out:commit:)`` in that no
 /// attempts will be made to fetch an object from the object database.
+///
+/// - Parameter commit: The commit for which to get the tree ID. The underlying
+/// type must be `git_commit`.
+/// - Returns: The ID of the tree pointed to by the given commit.
 ///
 /// ## C Equivalent
 ///
@@ -577,6 +572,10 @@ public func gitCommitParentID(
 
 /// Gets the commit that is the n<sup>th</sup> generation ancestor of the
 /// given commit, following only the first parents.
+///
+/// Passing `0` as the generation number will return another instance of the
+/// given commit.
+///
 /// - Parameters:
 ///   - ancestor: The pointer in which to store the ancestor commit. The
 ///   underlying type must be `git_commit`.
@@ -584,11 +583,6 @@ public func gitCommitParentID(
 ///   ancestor. The underlying type must be `git_commit`.
 ///   - n: The 0-indexed generation.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Passing `0` as the generation number will return another instance of the
-/// given commit.
 ///
 /// ## C Equivalent
 ///
@@ -646,6 +640,13 @@ public func gitCommitHeaderField(
 
 
 /// Extracts the signature from a commit.
+///
+/// If `commitID` is not the ID of a commit, the error class will be
+/// ``GitErrorT/gitErrorInvalid``.
+///
+/// If the commit does not have a signature, the error class will be
+/// ``GitErrorT/gitErrorObject``.
+///
 /// - Parameters:
 ///   - signature: The `Data` instance in which to store the signature block.
 ///   - signedData: The `Data` instance in which to store the signed data (the
@@ -656,14 +657,6 @@ public func gitCommitHeaderField(
 ///   - field: The name of the header field containing the signature block.
 ///   Pass `nil` to extract `gpgsig`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If `commitID` is not the ID of a commit, the error class will be
-/// ``GitErrorT/gitErrorInvalid``.
-///
-/// If the commit does not have a signature, the error class will be
-/// ``GitErrorT/gitErrorObject``.
 ///
 /// ## C Equivalent
 ///
@@ -706,6 +699,16 @@ public func gitCommitExtractSignature(
 
 
 /// Creates a new commit in the given repository.
+///
+/// The commit message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the commit message.
+///
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
+///
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
@@ -724,17 +727,6 @@ public func gitCommitExtractSignature(
 ///   must belong to the given repository. This may be `nil` if `parentCount`
 ///   is `0`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The commit message will not be cleaned up automatically. Use
-/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
-/// up the commit message.
-///
-/// If `updateRef` is not direct, it will be resolved to a direct reference.
-/// Pass `HEAD` to update the HEAD of the current branch and make it point to
-/// this commit. If the reference does not exist yet, it will be created.
-/// If it does exist, the first parent must be the tip of this branch.
 ///
 /// ## C Equivalent
 ///
@@ -787,6 +779,16 @@ public func gitCommitCreate(
 
 
 /// Creates a new commit in the given repository.
+///
+/// The commit message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the commit message.
+///
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
+///
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
@@ -803,17 +805,6 @@ public func gitCommitCreate(
 ///   - parents: The parents of the commit. The underlying types must be
 ///   `git_commit`. All the commits must belong to the given repository.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The commit message will not be cleaned up automatically. Use
-/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
-/// up the commit message.
-///
-/// If `updateRef` is not direct, it will be resolved to a direct reference.
-/// Pass `HEAD` to update the HEAD of the current branch and make it point to
-/// this commit. If the reference does not exist yet, it will be created.
-/// If it does exist, the first parent must be the tip of this branch.
 ///
 /// ## C Equivalent
 ///
@@ -871,6 +862,9 @@ public func gitCommitCreateV(
 
 
 /// Commits the staged changes in the repository.
+///
+/// This is a near analog of `git commit -m message`.
+///
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
@@ -879,10 +873,6 @@ public func gitCommitCreateV(
 ///   - message: The commit message to use.
 ///   - opts: The commit creation options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is a near analog of `git commit -m message`.
 ///
 /// ## C Equivalent
 ///
@@ -918,21 +908,6 @@ public func gitCommitCreateFromStage(
 
 
 /// Amends an existing commit by replacing only non-`nil` values.
-/// - Parameters:
-///   - id: The ``GitOID`` instance in which to store the ID of the
-///   newly-created commit.
-///   - commitToAmend: The commit to amend. The underlying type must be
-///   `git_commit`.
-///   - updateRef: The name of the reference to update to point to the commit.
-///   - author: The author signature to use.
-///   - committer: The committer signature to use.
-///   - messageEncoding: The commit message encoding to use. Pass `nil` to
-///   use the original message encoding.
-///   - message: The commit message to use.
-///   - tree: The commit tree to use. The underlying type must be `git_tree`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function creates a new commit that is exactly the same as the old
 /// commit, except that any non-`nil` values will be updated. The new commit
@@ -946,6 +921,20 @@ public func gitCommitCreateFromStage(
 /// Unlike ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
 /// the `author`, `committer`, `message`,  and `tree` parameters can be `nil`,
 /// in which case the values from the original `commitToAmend` will be used.
+///
+/// - Parameters:
+///   - id: The ``GitOID`` instance in which to store the ID of the
+///   newly-created commit.
+///   - commitToAmend: The commit to amend. The underlying type must be
+///   `git_commit`.
+///   - updateRef: The name of the reference to update to point to the commit.
+///   - author: The author signature to use.
+///   - committer: The committer signature to use.
+///   - messageEncoding: The commit message encoding to use. Pass `nil` to
+///   use the original message encoding.
+///   - message: The commit message to use.
+///   - tree: The commit tree to use. The underlying type must be `git_tree`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -995,6 +984,14 @@ public func gitCommitAmend(
 
 /// Creates a new commit in the given repository and updates the given `Data`
 /// instance with the commit content.
+///
+/// `parents` may be `nil` if `parentCount` is `0`.
+///
+/// This function is similar to
+/// ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
+/// except instead of writing the new commit into the object database, it
+/// updates the given `Data` instance with the commit content.
+///
 /// - Parameters:
 ///   - out: The `Data` instance in which to store the commit content.
 ///   - repo: The repository in which to create the commit. The underlying type
@@ -1010,15 +1007,6 @@ public func gitCommitAmend(
 ///   array of `git_commit` instances, of length `parentCount`. All the given
 ///   commits must belong to the given repository.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// `parents` may be `nil` if `parentCount` is `0`.
-///
-/// This function is similar to
-/// ``gitCommitCreate(id:repo:updateRef:author:committer:messageEncoding:message:tree:parentCount:parents:)``,
-/// except instead of writing the new commit into the object database, it
-/// updates the given `Data` instance with the commit content.
 ///
 /// ## C Equivalent
 ///
@@ -1137,12 +1125,11 @@ public func gitCommitDup(
 
 
 /// Frees the memory allocated for the commits of a `git_commitarray` instance.
-/// - Parameter array: The array containing the commits to free.
-///
-/// ## Discussion
 ///
 /// This function does not free the `git_commitarray` instance itself, since
 /// libgit2 will never allocate that object directly.
+///
+/// - Parameter array: The array containing the commits to free.
 ///
 /// ## C Equivalent
 ///

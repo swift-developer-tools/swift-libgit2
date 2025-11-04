@@ -21,28 +21,20 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitDescribeOptionsVersion``.
     public var version                  : UInt32
     
     /// The maximum number of candidate tags.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``gitDescribeDefaultMaxCandidatesTags``.
     public var maxCandidatesTags        : UInt32
     
     /// The reference lookup strategy.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitDescribeStrategyT/gitDescribeDefault``.
     public var describeStrategy         : GitDescribeStrategyT
     
     /// The pattern to match.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var pattern                  : String?
@@ -50,15 +42,11 @@ public struct GitDescribeOptions: CStructMutable, WithCConvertible, Sendable
     /// Whether to walk down only the first parent's ancestry when calculating
     /// the distance from the matching tag or reference.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public var onlyFollowFirstParent    : Bool
     
     /// Whether to show the full commit ID if no matching tag or reference is
     /// found.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `false`.
     ///
@@ -154,14 +142,10 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible, Sendab
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitDescribeFormatOptionsVersion``.
     public var version              : UInt32
     
     /// The lower bound of the size of the abbreviated commit ID.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``gitDescribeDefaultAbbreviatedSize``.
     public var abbreviatedSize      : UInt32
@@ -169,15 +153,11 @@ public struct GitDescribeFormatOptions: CStructMutable, WithCConvertible, Sendab
     /// Whether to always use the long format, even when a shorter name is
     /// possible.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public var alwaysUseLongFormat  : Bool
     
     /// The suffix to append to the description if the working directory is
     /// dirty.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var dirtySuffix          : String?

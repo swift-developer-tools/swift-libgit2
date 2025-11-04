@@ -37,12 +37,6 @@ public func gitODBInitBackend(
 
 
 /// Allocates memory for an object of the given object database.
-/// - Parameters:
-///   - backend: The object database for which to allocate the memory.
-///   - len: The number of bytes to allocate.
-/// - Returns: The allocated buffer.
-///
-/// ## Discussion
 ///
 /// Custom object database backends may use this function to provide data
 /// to the object database from read functions.
@@ -51,6 +45,11 @@ public func gitODBInitBackend(
 /// If a custom object database uses this function, but encounters an error
 /// and does not return the memory to libgit2, it must use
 /// ``gitODBBackendDataFree(backend:data:)`` to free the buffer.
+///
+/// - Parameters:
+///   - backend: The object database for which to allocate the memory.
+///   - len: The number of bytes to allocate.
+/// - Returns: The allocated buffer.
 ///
 /// ## C Equivalent
 ///
@@ -70,11 +69,6 @@ public func gitODBBackendDataAlloc(
 
 /// Frees the memory allocated for the given custom-allocated object database
 /// buffer.
-/// - Parameters:
-///   - backend: The object database for which to free the memory.
-///   - data: The buffer to free.
-///
-/// ## Discussion
 ///
 /// Custom object database backends may use this function to provide data
 /// to the object database from read functions.
@@ -82,6 +76,10 @@ public func gitODBBackendDataAlloc(
 /// - Important: This function must be called only if a custom object database
 /// used ``gitODBBackendDataAlloc(backend:len:)`` to allocate memory, but
 /// encountered an error and did not return the memory to libgit2.
+///
+/// - Parameters:
+///   - backend: The object database for which to free the memory.
+///   - data: The buffer to free.
 ///
 /// ## C Equivalent
 ///
@@ -108,12 +106,6 @@ public func gitODBBackendDataFree(
 
 
 /// Allocates memory for an object of the given object database.
-/// - Parameters:
-///   - backend: The object database for which to allocate the memory.
-///   - len: The number of bytes to allocate.
-/// - Returns: The allocated buffer.
-///
-/// ## Discussion
 ///
 /// Custom object database backends may use this function to provide data
 /// to the object database from read functions.
@@ -125,6 +117,11 @@ public func gitODBBackendDataFree(
 ///
 /// - Warning: This is deprecated in libgit2 and will be removed in the next
 /// major release. Use ``gitODBBackendDataAlloc(backend:len:)`` instead.
+///
+/// - Parameters:
+///   - backend: The object database for which to allocate the memory.
+///   - len: The number of bytes to allocate.
+/// - Returns: The allocated buffer.
 ///
 /// ## C Equivalent
 ///

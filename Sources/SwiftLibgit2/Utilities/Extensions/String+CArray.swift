@@ -14,12 +14,6 @@ import Foundation
 internal extension String
 {
     /// Initializes a new string from the given fixed-size C character array.
-    /// - Parameters:
-    ///   - cArray: The fixed-size C character array.
-    ///   - count: The number of meaningful bytes. Pass `nil` to scan for the
-    ///   null terminator.
-    ///
-    /// ## Discussion
     ///
     /// Use this initializer to convert fixed-size C character arrays.
     ///
@@ -37,6 +31,11 @@ internal extension String
     /// - Note: A generic type is used for `cArray` because Swift represents
     /// fixed-size C character arrays as `CChar` tuples. The generic type
     /// allows this initializer to accept arrays of any length.
+    ///
+    /// - Parameters:
+    ///   - cArray: The fixed-size C character array.
+    ///   - count: The number of meaningful bytes. Pass `nil` to scan for the
+    ///   null terminator.
     init?<T>(
         cArray  : T,
         count   : Int?  = nil
@@ -97,12 +96,6 @@ internal extension String
     
     
     /// Copies the receiver string into a fixed-size C character array buffer.
-    /// - Parameters:
-    ///   - cArray: The pointer to the destination buffer.
-    ///   - byteCount: The size of the destination buffer, including space for
-    ///   the null terminator.
-    ///
-    /// ## Discussion
     ///
     /// Use this method to populate fixed-size C character array fields.
     /// The string content will be truncated if it exceeds `byteCount - 1`.
@@ -110,6 +103,11 @@ internal extension String
     /// - Important: The destination buffer must have at least `byteCount`
     /// bytes of allocated memory. This method will zero the entire buffer
     /// before copying to ensure a clean state.
+    ///
+    /// - Parameters:
+    ///   - cArray: The pointer to the destination buffer.
+    ///   - byteCount: The size of the destination buffer, including space for
+    ///   the null terminator.
     func copyMemory(
         to cArray   : UnsafeMutablePointer<CChar>,
         byteCount   : Int

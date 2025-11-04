@@ -112,8 +112,6 @@ final class CommonTests: XCTestCaseStopOnFail
     /// Tests that the C bindings compile and communicate correctly with
     /// libgit2.
     ///
-    /// ## Discussion
-    ///
     /// The main purpose of this is to test that the C bindings around the
     /// variadic `git_libgit2_opts()` function compile and work correctly,
     /// not to test libgit2 behavior with specific option values. The "get"

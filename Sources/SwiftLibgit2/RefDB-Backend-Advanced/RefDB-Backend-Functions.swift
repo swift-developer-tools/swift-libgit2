@@ -37,18 +37,17 @@ public func gitRefDBInitBackend(
 
 
 /// Creates a default reference database backend, based on the file system.
+///
+/// This function is normally called automatically when a repository is
+/// created or opened. It may be called manually to explicitly create a file
+/// system-based reference database backend for a repository.
+///
 /// - Parameters:
 ///   - backendOut: The pointer in which to store the reference database
 ///   backend.
 ///   - repo: The repository to use. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function is normally called automatically when a repository is
-/// created or opened. It may be called manually to explicitly create a file
-/// system-based reference database backend for a repository.
 ///
 /// ## C Equivalent
 ///
@@ -71,17 +70,16 @@ public func gitRefDBBackendFS(
 
 /// Sets the given reference database backend as the custom backend of the
 /// given reference database.
+///
+/// - Important: If the operation succeeds, ownership of the given reference
+/// database backend will be transferred to the given reference database. The
+/// caller must not free the reference database backend.
+///
 /// - Parameters:
 ///   - refDB: The reference database to update. The underlying type must be
 ///   `git_refdb`.
 ///   - backend: The reference database backend to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: If the operation succeeds, ownership of the given reference
-/// database backend will be transferred to the given reference database. The
-/// caller must not free the reference database backend.
 ///
 /// ## C Equivalent
 ///

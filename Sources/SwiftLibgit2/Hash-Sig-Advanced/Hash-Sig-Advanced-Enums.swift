@@ -49,8 +49,6 @@ public struct GitHashSigOptionT: COptionSet
     
     /// Use all available data.
     ///
-    /// ## Discussion
-    ///
     /// This flag, ``gitHashSigIgnoreWhitespace``, and
     /// ``gitHashSigSmartWhitespace`` are mutually exclusive. They must not
     /// be combined.
@@ -58,15 +56,11 @@ public struct GitHashSigOptionT: COptionSet
     
     /// Ignore whitespace.
     ///
-    /// ## Discussion
-    ///
     /// This flag, ``gitHashSigNormal``, and ``gitHashSigSmartWhitespace``
     /// are mutually exclusive. They must not be combined.
     public static let gitHashSigIgnoreWhitespace    = GitHashSigOptionT(rawValue: GIT_HASHSIG_IGNORE_WHITESPACE.rawValue)
     
     /// Ignore carriage returns and all whitespace after line breaks.
-    ///
-    /// ## Discussion
     ///
     /// This flag, ``gitHashSigNormal``, and ``gitHashSigIgnoreWhitespace``
     /// are mutually exclusive. They must not be combined.

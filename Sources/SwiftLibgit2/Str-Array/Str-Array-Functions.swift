@@ -12,12 +12,11 @@ import CLibgit2
 
 
 /// Frees the memory allocated for the strings of a `git_strarray` instance.
-/// - Parameter array: The array containing the strings to free.
-///
-/// ## Discussion
 ///
 /// This function does not free the `git_strarray` instance itself, since
 /// libgit2 will never allocate that object directly.
+///
+/// - Parameter array: The array containing the strings to free.
 ///
 /// ## C Equivalent
 ///

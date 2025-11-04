@@ -154,18 +154,17 @@ public func gitObjectID(
 
 
 /// Gets the abbreviated ID for the given object.
-/// - Parameters:
-///   - out: The `String` instance in which to store the abbreviated ID.
-///   - obj: The object for which to get the abbreviated ID. The underlying
-///   type must be `git_object`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function begins at the `core.abbrev` length (which defaults to 7
 /// characters) and iteratively extends to a longer string if that length is
 /// ambiguous. The resulting ID will be unambiguous until new objects are
 /// added to the repository.
+///
+/// - Parameters:
+///   - out: The `String` instance in which to store the abbreviated ID.
+///   - obj: The object for which to get the abbreviated ID. The underlying
+///   type must be `git_object`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -211,15 +210,14 @@ public func gitObjectType(
 
 
 /// Gets the repository containing the given object.
+///
+/// - Important: The returned pointer is owned by the given object and must
+/// not be freed.
+///
 /// - Parameter obj: The object for which to get the repository. The underlying
 /// type must be `git_object`.
 /// - Returns: The repository containing the given object. The underlying
 /// type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given object and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -352,6 +350,9 @@ public func gitObjectDup(
 
 
 /// Checks whether the given raw object content is valid.
+///
+/// - Note: Blobs are always valid.
+///
 /// - Parameters:
 ///   - valid: The `Bool` instance in which to store whether the given raw
 ///   object content is valid.
@@ -359,10 +360,6 @@ public func gitObjectDup(
 ///   - len: The length of `buf`.
 ///   - objectType: The type of the object to check.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: Blobs are always valid.
 ///
 /// ## C Equivalent
 ///

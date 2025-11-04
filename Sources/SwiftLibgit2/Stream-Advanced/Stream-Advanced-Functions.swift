@@ -12,16 +12,15 @@ import CLibgit2
 
 
 /// Registers the specified stream constructor.
+///
+/// If the specified stream constructor has already been registered, it will
+/// be overwritten.
+///
 /// - Parameters:
 ///   - type: The type of stream to register.
 ///   - registration: The stream registration information to use. Pass `nil`
 ///   to unregister the stream and use the system defaults.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If the specified stream constructor has already been registered, it will
-/// be overwritten.
 ///
 /// ## C Equivalent
 ///
@@ -43,16 +42,15 @@ public func gitStreamRegister(
 
 
 /// Registers a TLS stream constructor.
-/// - Parameter ctor: The ``GitStreamCB`` callback to invoke to create a new
-/// connection. Pass `nil` to unregister the stream and use the system defaults.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function does not support HTTP CONNECT proxies.
 ///
 /// - Warning: This is deprecated in libgit2 and will be removed in the next
 /// major release. Use ``GitStreamRegistration/Initialize`` instead.
+///
+/// - Parameter ctor: The ``GitStreamCB`` callback to invoke to create a new
+/// connection. Pass `nil` to unregister the stream and use the system defaults.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

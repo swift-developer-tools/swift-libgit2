@@ -68,8 +68,6 @@ public struct GitIndexEntryFlagT: COptionSet
 
 /// The flags for on-disk fields of an index entry.
 ///
-/// ## Discussion
-///
 /// The ``GitIndexEntry/flagsExtended`` property contains flags that are
 /// persisted to the disk, and flags that exist only in memory for libgit2's
 /// internal use.

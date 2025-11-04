@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The base for all credential types.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_credential` instead.
 ///
@@ -57,8 +55,6 @@ public struct GitCredential: CStruct, Sendable
 
 /// A plaintext username and password credential.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_credential_userpass_plaintext`
 /// instead.
@@ -97,8 +93,6 @@ public struct GitCredentialUserPassPlaintext: CStruct, Sendable
 
 /// A username-only credential.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_credential_username` instead.
 ///
@@ -131,8 +125,6 @@ public struct GitCredentialUsername: CStruct, Sendable
 
 
 /// An on-disk SSH key.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_credential_ssh_key` instead.
@@ -179,8 +171,6 @@ public struct GitCredentialSSHKey: CStruct, Sendable
 
 /// An interactive SSH authenticator.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_credential_ssh_interactive`
 /// instead.
@@ -222,8 +212,6 @@ public struct GitCredentialSSHInteractive: CStruct
 
 
 /// SSH credentials with a custom signature function.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_credential_ssh_custom` instead.

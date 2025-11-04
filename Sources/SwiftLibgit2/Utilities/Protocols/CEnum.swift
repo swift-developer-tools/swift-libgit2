@@ -12,11 +12,10 @@ internal protocol CEnum: CConvertible, CMutable, RawValueMutable
     where RawValue: FixedWidthInteger
 {
     /// Creates an instance from the equivalent C value.
-    /// - Parameter cValue: The C value to use.
-    ///
-    /// ## Discussion
     ///
     /// This must have an `internal` access level.
+    ///
+    /// - Parameter cValue: The C value to use.
     init?(
         cValue: C
     )

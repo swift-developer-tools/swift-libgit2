@@ -21,16 +21,12 @@ public enum GitFilterModeT: UInt32, CEnum
     /// Filters are applied when exporting a file from the object database to
     /// the working directory (smudging).
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to both `GIT_FILTER_TO_WORKTREE` and
     /// `GIT_FILTER_SMUDGE`.
     case gitFilterToWorktree    = 0
     
     /// Filters are applied when importing a file from the working directory
     /// to the object database (cleaning).
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to both `GIT_FILTER_TO_ODB` and `GIT_FILTER_CLEAN`.
     case gitFilterToODB         = 1
@@ -119,8 +115,6 @@ public struct GitFilterFlagT: COptionSet
     public static let gitFilterAttributesFromHEAD       = GitFilterFlagT(rawValue: GIT_FILTER_ATTRIBUTES_FROM_HEAD.rawValue)
     
     /// Load attributes from `.gitattributes` in a given commit.
-    ///
-    /// ## Discussion
     ///
     /// - Note: This flag may only be used as part of ``GitFilterOptions``.
     public static let gitFilterAttributesFromCommit     = GitFilterFlagT(rawValue: GIT_FILTER_ATTRIBUTES_FROM_COMMIT.rawValue)

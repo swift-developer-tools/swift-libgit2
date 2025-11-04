@@ -19,11 +19,10 @@ internal protocol CMutable
     
     
     /// Creates an instance from the equivalent C value.
-    /// - Parameter cValue: The C value to use.
-    ///
-    /// ## Discussion
     ///
     /// This must have an `internal` access level.
+    ///
+    /// - Parameter cValue: The C value to use.
     init?(
         cValue: C
     )
@@ -37,14 +36,13 @@ internal extension CMutable where Self: WithCConvertible
 {
     /// Calls the given closure with a mutable pointer to a `C` instance,
     /// and updates the receiver with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `C *`.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<C>) throws -> T
     ) throws -> T
@@ -71,14 +69,13 @@ internal extension CMutable where Self: WithCConvertible
     /// Calls the given closure with a mutable pointer to an optional mutable
     /// pointer to a `C` instance, and updates the receiver with any changes
     /// made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `C **`.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     mutating func withBorrowingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) throws -> T
@@ -109,13 +106,12 @@ internal extension CMutable where Self: WithCConvertible
     /// Calls the given closure with a mutable pointer to an optional pointer
     /// to a `C` instance, and updates the receiver with any changes made by
     /// the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `const C **`.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<C>?>) throws -> T
     ) rethrows -> T
@@ -143,11 +139,6 @@ internal extension CMutable where Self: WithCConvertible & CFreeable
     /// Calls the given closure with a mutable pointer to an optional mutable
     /// pointer to a `C` instance, and updates the receiver with any changes
     /// made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `C **`.
@@ -155,6 +146,10 @@ internal extension CMutable where Self: WithCConvertible & CFreeable
     /// - Important: If libgit2 allocates new memory, this method will
     /// automatically free that memory by calling the receiver's
     /// ``freeCValue(_:)`` method after copying the data.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     mutating func withMutatingCValue<T>(
         _ body: (UnsafeMutablePointer<UnsafeMutablePointer<C>?>) throws -> T
     ) throws -> T where P == UnsafeMutablePointer<C>?

@@ -133,15 +133,14 @@ public func gitBlobID(
 
 
 /// Gets the repository containing the given blob.
+///
+/// - Important: The returned pointer is owned by the given blob and must
+/// not be freed.
+///
 /// - Parameter blob: The blob for which to get the repository. The underlying
 /// type must be `git_blob`.
 /// - Returns: The repository containing the given blob. The underlying
 /// type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given blob and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -232,15 +231,6 @@ public func gitBlobFilterOptionsInit(
 
 
 /// Gets the filtered content of the given blob.
-/// - Parameters:
-///   - out: The `Data` instance in which to store the filtered content.
-///   - blob: The blob for which to get the filtered content. The underlying
-///   type must be `git_blob`.
-///   - asPath: The path used for attribute lookups and other operations.
-///   - opts: The blob filter options to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This applies filters as if the blob was being checked out to the working
 /// directory under the specified file name. This may apply `CRLF` filtering or
@@ -249,6 +239,14 @@ public func gitBlobFilterOptionsInit(
 ///
 /// If no filters need to be applied, then the `out` parameter will be updated
 /// with the raw content of the blob.
+///
+/// - Parameters:
+///   - out: The `Data` instance in which to store the filtered content.
+///   - blob: The blob for which to get the filtered content. The underlying
+///   type must be `git_blob`.
+///   - asPath: The path used for attribute lookups and other operations.
+///   - opts: The blob filter options to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -357,15 +355,6 @@ public func gitBlobCreateFromDisk(
 
 
 /// Creates a stream to write a new blob into the object database.
-/// - Parameters:
-///   - out: The pointer in which to store the write stream.
-///   - repo: The repository in which to write the blob. The underlying type
-///   must be `git_repository`. This repository may be bare.
-///   - hintPath: The path to use when selecting data filters to apply onto the
-///   content of the blob to be created.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function may need to buffer the data on the disk and is generally not
 /// the correct choice if the size of the data to write is known.
@@ -379,6 +368,14 @@ public func gitBlobCreateFromDisk(
 /// - Important: Do not manually close this stream. Instead, pass it to
 /// ``gitBlobCreateFromStreamCommit(out:stream:)`` to commit the write to the
 /// object database and get the ID.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the write stream.
+///   - repo: The repository in which to write the blob. The underlying type
+///   must be `git_repository`. This repository may be bare.
+///   - hintPath: The path to use when selecting data filters to apply onto the
+///   content of the blob to be created.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -476,14 +473,13 @@ public func gitBlobCreateFromBuffer(
 
 
 /// Checks whether the blob content is most likely binary.
-/// - Parameter blob: The blob to check. The underlying type must be `git_blob`.
-/// - Returns: Whether the blob content is most likely binary.
-///
-/// ## Discussion
 ///
 /// The heuristic used to guess whether a file is binary is taken from core Git
 /// and involves searching for `NUL` bytes and looking for a reasonable ratio
 /// of printable to non-printable characters among the first 8,000 bytes.
+///
+/// - Parameter blob: The blob to check. The underlying type must be `git_blob`.
+/// - Returns: Whether the blob content is most likely binary.
 ///
 /// ## C Equivalent
 ///
@@ -500,17 +496,16 @@ public func gitBlobIsBinary(
 
 
 /// Checks whether the given content is most likely binary.
+///
+/// The heuristic used to guess whether file content is binary is taken from
+/// core Git and is the same mechanism used by ``gitBlobIsBinary(blob:)``, but
+/// only looks at raw data.
+///
 /// - Parameters:
 ///   - data: The blob data to check.
 ///   - len: The length `data`.
 /// - Returns: Whether the given content is most likely binary, or `nil` if
 /// there was an error.
-///
-/// ## Discussion
-///
-/// The heuristic used to guess whether file content is binary is taken from
-/// core Git and is the same mechanism used by ``gitBlobIsBinary(blob:)``, but
-/// only looks at raw data.
 ///
 /// ## C Equivalent
 ///

@@ -21,29 +21,21 @@ public struct GitRepositoryInitOptions: CStructMutable, WithCConvertible, Sendab
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitRepositoryInitOptionsVersion``.
     public var version      : UInt32
     
     /// The flags controlling repository initialization.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags        : GitRepositoryInitFlagT
     
     /// The repository initialization mode.
     ///
-    /// ## Discussion
-    ///
     /// The default value is
     /// ``GitRepositoryInitModeT/gitRepositoryInitSharedUmask``.
     public var mode         : GitRepositoryInitModeT
     
     /// The path to the working directory.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -57,8 +49,6 @@ public struct GitRepositoryInitOptions: CStructMutable, WithCConvertible, Sendab
     
     /// The contents of the repository description file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to use template content.
@@ -66,16 +56,12 @@ public struct GitRepositoryInitOptions: CStructMutable, WithCConvertible, Sendab
     
     /// The path to the external template directory.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to use the configuration or default directory options.
     public var templatePath : String?
     
     /// The name of the head at which to point HEAD.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -86,8 +72,6 @@ public struct GitRepositoryInitOptions: CStructMutable, WithCConvertible, Sendab
     public var initialHEAD  : String?
     
     /// The remote URL.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///

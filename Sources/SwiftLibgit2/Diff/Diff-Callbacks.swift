@@ -112,19 +112,18 @@ public typealias GitDiffHunkCB = @convention(c)
 
 
 /// The callback invoked for each line in a diff.
+///
+/// In this context, the provided range will be `nil`.
+///
+/// - Note: `git_diff_print_callback__to_buf()` may be used as a stock
+/// implementation of this callback.
+///
 /// - Parameters:
 ///   - delta: The delta to process.
 ///   - hunk: The diff hunk to process.
 ///   - line: The diff line to process.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// In this context, the provided range will be `nil`.
-///
-/// - Note: `git_diff_print_callback__to_buf()` may be used as a stock
-/// implementation of this callback.
 ///
 /// ## C Equivalent
 ///

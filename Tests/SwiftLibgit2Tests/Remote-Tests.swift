@@ -16,8 +16,6 @@ import XCTest
 
 /// Tests for Remote bindings.
 ///
-/// ## Discussion
-///
 /// The remote URLs used in these tests are not actual Git repositories.
 /// Connection attempts and operations that depend on a connected remote
 /// are expected to fail.

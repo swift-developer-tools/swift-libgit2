@@ -75,18 +75,17 @@ public func gitOIDFromStrP(
 
 /// Parses the specified number of characters of the given ID hex string into
 /// the given ``GitOID`` instance.
+///
+/// This function supports parsing partial IDs. If `length` is odd, the final
+/// byte of the ID will have its high nibble set from the last character and
+/// its low nibble set to zero.
+///
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID.
 ///   - str: The ID hex string to parse. This must have at least
 ///   the number of characters specified by `length`.
 ///   - length: The number of characters of `str` to parse.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function supports parsing partial IDs. If `length` is odd, the final
-/// byte of the ID will have its high nibble set from the last character and
-/// its low nibble set to zero.
 ///
 /// ## C Equivalent
 ///
@@ -150,17 +149,16 @@ public func gitOIDFromRaw(
 
 
 /// Formats the given ID into a hex string.
+///
+/// - Important: Only the ID digits will be written to the given pointer. The
+/// caller must add a terminator if necessary.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the hex string. This must point to
 ///   the start of the hex sequence, and must have at least 40 bytes for SHA-1
 ///   or 256 bytes for SHA-256.
 ///   - id: The ID to format.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: Only the ID digits will be written to the given pointer. The
-/// caller must add a terminator if necessary.
 ///
 /// ## C Equivalent
 ///
@@ -187,16 +185,15 @@ public func gitOIDFmt(
 
 
 /// Formats the given ID into a partial hex string.
+///
+/// - Important: If `n` is less than ``gitOIDSHA1HexSize``, the extra bytes
+/// will be zeroed. Otherwise, a null terminator will not be added.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the partial hex string.
 ///   - n: The number of characters to write.
 ///   - id: The ID to format.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: If `n` is less than ``gitOIDSHA1HexSize``, the extra bytes
-/// will be zeroed. Otherwise, a null terminator will not be added.
 ///
 /// ## C Equivalent
 ///
@@ -225,14 +222,6 @@ public func gitOIDNFmt(
 
 
 /// Formats the given ID into a loose-object path string.
-/// - Parameters:
-///   - out: The pointer in which to store the loose-object path string. This
-///   must point to the start of the hex sequence, and must have at least 40
-///   bytes for SHA-1 or 256 bytes for SHA-256.
-///   - id: The ID to format.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The resulting string will be `aa/...`, where `aa` represents the first two
 /// hex digits of the ID, and the ellipsis (`...`) represents the remaining
@@ -240,6 +229,13 @@ public func gitOIDNFmt(
 ///
 /// - Important: Only the ID digits will be written to the given pointer. The
 /// caller must add a terminator if necessary.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the loose-object path string. This
+///   must point to the start of the hex sequence, and must have at least 40
+///   bytes for SHA-1 or 256 bytes for SHA-256.
+///   - id: The ID to format.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -289,17 +285,16 @@ public func gitOIDToStrS(
 
 
 /// Formats the given ID into a hex string.
+///
+/// If the given buffer is smaller than the size of an ID hex string plus
+/// an additional byte, then the resulting ID hex string will be truncated
+/// to `n - 1` characters, but will still be null terminated.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the hex string.
 ///   - n: The number of characters to write.
 ///   - id: The ID to format.
 /// - Returns: The formatted string representation of the given ID.
-///
-/// ## Discussion
-///
-/// If the given buffer is smaller than the size of an ID hex string plus
-/// an additional byte, then the resulting ID hex string will be truncated
-/// to `n - 1` characters, but will still be null terminated.
 ///
 /// ## C Equivalent
 ///
@@ -561,14 +556,13 @@ public func gitOIDIsZero(
 
 
 /// Creates a new ID shortener.
-/// - Parameter minLength: The minimum length to use for all IDs.
-/// - Returns: The new ID shortener. The underlying type will be
-/// `git_oid_shorten`.
-///
-/// ## Discussion
 ///
 /// The given minimum length will be used even if shorter IDs would still
 /// be unique.
+///
+/// - Parameter minLength: The minimum length to use for all IDs.
+/// - Returns: The new ID shortener. The underlying type will be
+/// `git_oid_shorten`.
 ///
 /// ## C Equivalent
 ///
@@ -584,6 +578,10 @@ public func gitOIDShortenNew(
 
 /// Adds the given ID to the given set of shortened IDs, and calculates the
 /// minimum length necessary to uniquely identify all the IDs in the set.
+///
+/// - Note: For performance reasons, no more than about 32,000 IDs may be
+/// added to a single set.
+///
 /// - Parameters:
 ///   - os: The set of shortened IDs to use. The underlying type must be
 ///   `git_oid_shorten`.
@@ -591,11 +589,6 @@ public func gitOIDShortenNew(
 ///   40 bytes.
 /// - Returns: The minimum length necessary to uniquely identify all the IDs
 /// in the set, or an error code.
-///
-/// ## Discussion
-///
-/// - Note: For performance reasons, no more than about 32,000 IDs may be
-/// added to a single set.
 ///
 /// ## C Equivalent
 ///

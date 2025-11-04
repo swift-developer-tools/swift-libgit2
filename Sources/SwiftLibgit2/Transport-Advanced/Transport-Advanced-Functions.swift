@@ -103,18 +103,17 @@ public func gitTransportSSHWithPaths(
 
 /// Adds the specified custom transport definition to the built-in set of
 /// libgit2 transports.
+///
+/// - Note: The caller is repsonsible for synchronizing calls to this function
+/// and ``gitTransportUnregister(prefix:)`` with other calls that instantiate
+/// transports.
+///
 /// - Parameters:
 ///   - prefix: The scheme to match. This must end with a scheme delimiter
 ///   (`://`).
 ///   - cb: The ``GitTransportCB`` callback to invoke to create the transport.
 ///   - param: The payload to pass to `cb`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: The caller is repsonsible for synchronizing calls to this function
-/// and ``gitTransportUnregister(prefix:)`` with other calls that instantiate
-/// transports.
 ///
 /// ## C Equivalent
 ///
@@ -138,15 +137,14 @@ public func gitTransportRegister(
 
 
 /// Unregisters the specified custom transport.
-/// - Parameter prefix: The scheme to match. This must end with a scheme
-/// delimiter (`://`).
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: The caller is repsonsible for synchronizing calls to this function
 /// and ``gitTransportRegister(prefix:cb:param:)`` with other calls that
 /// instantiate transports.
+///
+/// - Parameter prefix: The scheme to match. This must end with a scheme
+/// delimiter (`://`).
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -193,17 +191,16 @@ public func gitTransportLocal(
 
 
 /// Creates an instance of the smart transport.
+///
+/// - Important: If the operation succeeds, ownership of the given transport
+/// will be transferred to the remote. The caller must not free the transport.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the transport.
 ///   - owner: The remote to own the transport. The underlying type must be
 ///   `git_remote`.
 ///   - payload: The subtransport definition to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: If the operation succeeds, ownership of the given transport
-/// will be transferred to the remote. The caller must not free the transport.
 ///
 /// ## C Equivalent
 ///

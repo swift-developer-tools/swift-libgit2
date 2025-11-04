@@ -13,8 +13,6 @@ import CLibgit2
 
 /// A backend reference iterator.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_reference_iterator` instead.
 ///
@@ -96,8 +94,6 @@ public struct GitReferenceIterator: CStruct
 
 
 /// A custom reference database backend.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_refdb_backend` instead.
@@ -247,6 +243,17 @@ public struct GitRefDBBackend: CStruct, Sendable
     
     /// The callback invoked to write the given reference to the given
     /// reference database backend.
+    ///
+    /// If `old` is not `nil` and `force` is `false`, then the new reference
+    /// value will be written only if the reference is at the given `old` ID.
+    ///
+    /// If `oldTarget` is not `nil` and `force` is `false`, then the new
+    /// reference value will be written only if the symbolic reference is
+    /// at the given `oldTarget`.
+    ///
+    /// If both `old` and `oldTarget` are `nil`, then the reference must not
+    /// exist at the point of writing.
+    ///
     /// - Parameters:
     ///   - backend: The reference database backend to update.
     ///   - ref: The reference to write. The underlying type must be
@@ -258,18 +265,6 @@ public struct GitRefDBBackend: CStruct, Sendable
     ///   - oldTarget: The name of the old target reference to use. This will
     ///   be checked for validity.
     /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
-    ///
-    /// If `old` is not `nil` and `force` is `false`, then the new reference
-    /// value will be written only if the reference is at the given `old` ID.
-    ///
-    /// If `oldTarget` is not `nil` and `force` is `false`, then the new
-    /// reference value will be written only if the symbolic reference is
-    /// at the given `oldTarget`.
-    ///
-    /// If both `old` and `oldTarget` are `nil`, then the reference must not
-    /// exist at the point of writing.
     public typealias Write = @convention(c)
     (
         UnsafeMutablePointer<git_refdb_backend>?,
@@ -312,16 +307,6 @@ public struct GitRefDBBackend: CStruct, Sendable
     
     /// The callback invoked to delete the specified reference the given
     /// reference database backend.
-    /// - Parameters:
-    ///   - backend: The reference database backend to update.
-    ///   - refName: The name of the reference to delete. This will be checked
-    ///   for validity.
-    ///   - oldID: The old reference ID to use.
-    ///   - oldTarget: The name of the old target reference to use. This will
-    ///   be checked for validity.
-    /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
     ///
     /// If `oldID` is not `nil` and `force` is `false`, then the new reference
     /// value will be deleted only if the reference is at the given `oldID`.
@@ -332,6 +317,15 @@ public struct GitRefDBBackend: CStruct, Sendable
     ///
     /// If both `oldID` and `oldTarget` are `nil`, then the reference must not
     /// exist at the point of deletion.
+    ///
+    /// - Parameters:
+    ///   - backend: The reference database backend to update.
+    ///   - refName: The name of the reference to delete. This will be checked
+    ///   for validity.
+    ///   - oldID: The old reference ID to use.
+    ///   - oldTarget: The name of the old target reference to use. This will
+    ///   be checked for validity.
+    /// - Returns: `0` on success, or an error code.
     public typealias Del = @convention(c)
     (
         UnsafeMutablePointer<git_refdb_backend>?,
@@ -344,13 +338,12 @@ public struct GitRefDBBackend: CStruct, Sendable
     
     /// The callback invoked to suggest that the given reference database
     /// backend compress or optimize its references.
-    /// - Parameter backend: The reference database backend to update.
-    /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
     ///
     /// This is implementation-specific. It may pack all loose references for
     /// on-disk reference databases.
+    ///
+    /// - Parameter backend: The reference database backend to update.
+    /// - Returns: `0` on success, or an error code.
     public typealias Compress = @convention(c)
     (
         UnsafeMutablePointer<git_refdb_backend>?

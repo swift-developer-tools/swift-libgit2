@@ -21,14 +21,10 @@ public struct GitWorktreeAddOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitWorktreeAddOptionsVersion``.
     public var version          : UInt32
     
     /// Whether to lock the worktree.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `false`.
     public var lock             : Bool
@@ -36,22 +32,16 @@ public struct GitWorktreeAddOptions: CStructMutable, WithCConvertible
     /// Whether to allow checkout of an existing branch matching the
     /// worktree name.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public var checkoutExisting : Bool
     
     /// The reference to use for the worktree HEAD. The underlying type must
     /// be `git_reference`.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var ref              : OpaquePointer?
     
     /// The checkout options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.
@@ -143,14 +133,10 @@ public struct GitWorktreePruneOptions: CStructMutable, WithCConvertible, Sendabl
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitWorktreePruneOptionsVersion``.
     public var version  : UInt32
     
     /// The flags controlling worktree pruning.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags    : GitWorktreePruneT

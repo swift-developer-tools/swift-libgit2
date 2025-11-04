@@ -12,12 +12,11 @@ import CLibgit2
 
 
 /// Frees the memory allocated for the given `git_buf` instance.
-/// - Parameter buffer: The buffer to free.
-///
-/// ## Discussion
 ///
 /// This function does not free the `git_buf` instance itself, since libgit2
 /// will never allocate that object directly.
+///
+/// - Parameter buffer: The buffer to free.
 ///
 /// ## C Equivalent
 ///

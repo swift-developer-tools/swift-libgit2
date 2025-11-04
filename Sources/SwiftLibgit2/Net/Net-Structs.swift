@@ -21,36 +21,26 @@ public struct GitRemoteHEAD: CStructInternalMutable, WithCConvertible, Sendable
 {
     /// Whether the reference exists locally.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `false`.
     public private(set) var local           : Bool      = false
     
     /// The ID of the reference.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public private(set) var oid             : GitOID    = GitOID()
     
     /// The local ID of the reference.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public private(set) var loid            : GitOID    = GitOID()
     
     /// The name of the reference.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var name            : String?   = nil
     
     /// The target of the symbolic reference, if the server sent a symref
     /// mapping for the reference.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var symRefTarget    : String?   = nil

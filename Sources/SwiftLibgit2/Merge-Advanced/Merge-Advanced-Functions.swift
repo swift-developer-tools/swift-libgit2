@@ -28,15 +28,14 @@ public func gitMergeDriverLookup(
 
 
 /// Gets the repository containing the given merge driver source.
+///
+/// - Important: The returned pointer is owned by the given merge driver source
+/// and must not be freed.
+///
 /// - Parameter src: The merge driver source for which to get the repository.
 /// The underlying type must be `git_merge_driver_source`.
 /// - Returns: The repository containing the given merge driver source. The
 /// underlying type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given merge driver source
-/// and must not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -149,18 +148,17 @@ public func gitMergeDriverSourceFileOptions(
 
 
 /// Registers the given merge driver with the given name.
-/// - Parameters:
-///   - name: The merge driver name to use.
-///   - driver: The merge driver to register.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Important: The `driver` pointer will be stored by libgit2 and must remain
 /// valid until the merge driver is unregistered or until libgit2 is shut down.
 /// The pointer must be a durable allocation, meaning it must be statically
 /// allocated or heap-allocated. Passing a stack-allocated pointer will result
 /// in data loss or undefined behavior.
+///
+/// - Parameters:
+///   - name: The merge driver name to use.
+///   - driver: The merge driver to register.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -182,12 +180,11 @@ public func gitMergeDriverRegister(
 
 
 /// Unregisters the specified merge driver.
+///
+/// The built-in libgit2 merge drivers cannot be removed.
+///
 /// - Parameter name: The name of the merge driver to unregister.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The built-in libgit2 merge driver cannot be removed.
 ///
 /// ## C Equivalent
 ///

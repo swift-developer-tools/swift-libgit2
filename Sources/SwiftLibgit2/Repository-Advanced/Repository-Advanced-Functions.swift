@@ -12,11 +12,6 @@ import CLibgit2
 
 
 /// Creates a blank repository with no backend or configuration.
-/// - Parameter out: The pointer in which to store the repository. The
-/// underlying type must be `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A blank repository is useful if it needs to be associated with an object
 /// database and configuration store that are not backed by a file system.
@@ -26,6 +21,10 @@ import CLibgit2
 /// `$GIT_INFO_DIR` are impacted.
 ///
 /// - Note: This function supports only SHA-1 repositories.
+///
+/// - Parameter out: The pointer in which to store the repository. The
+/// underlying type must be `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -43,15 +42,14 @@ public func gitRepositoryNew(
 
 
 /// Resets the internal state of the given repository.
-/// - Parameter repo: The repository to reset. The underlying type must be
-/// `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: ``gitRepositoryFree(repo:)`` performs this operation before
 /// deallocating the given repository. It is generally unnecessary to call
 /// this function.
+///
+/// - Parameter repo: The repository to reset. The underlying type must be
+/// `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -69,13 +67,6 @@ public func gitRepositoryCleanup(
 
 
 /// Updates the file system configuration for the given open repository.
-/// - Parameters:
-///   - repo: The repository to use. The underlying type must be
-///   `git_repository`.
-///   - recurseSubmodules: Whether to recursively update submodules.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// When a repository is initialized, configuration values such as
 /// `core.ignorecase`, `core.filemode`, and `core.symlinks` are set based on
@@ -83,6 +74,12 @@ public func gitRepositoryCleanup(
 /// system, these properties may no longer be correct, and the repository may
 /// not behave as expected. This function reruns the phase of repository
 /// initialization that sets those configuration properties.
+///
+/// - Parameters:
+///   - repo: The repository to use. The underlying type must be
+///   `git_repository`.
+///   - recurseSubmodules: Whether to recursively update submodules.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -104,17 +101,16 @@ public func gitRepositoryReinitFileSystem(
 
 
 /// Sets the configuration file of the given repository.
+///
+/// - Important: Ownership of the given configuration will not transfer to the
+/// repository. The caller must still free it.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - config: The configuration to use. The underlying type must be
 ///   `git_config`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: Ownership of the given configuration will not transfer to the
-/// repository. The caller must still free it.
 ///
 /// ## C Equivalent
 ///
@@ -136,17 +132,16 @@ public func gitRepositorySetConfig(
 
 
 /// Sets the object database of the given repository.
+///
+/// - Important: Ownership of the given object database will not transfer to
+/// the repository. The caller must still free it.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - odb: The object database to use. The underlying type must be
 ///   `git_odb`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: Ownership of the given object database will not transfer to
-/// the repository. The caller must still free it.
 ///
 /// ## C Equivalent
 ///
@@ -168,17 +163,16 @@ public func gitRepositorySetODB(
 
 
 /// Sets the reference database of the given repository.
+///
+/// - Important: Ownership of the given reference database will not transfer to
+/// the repository. The caller must still free it.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - refDB: The reference database to use. The underlying type must be
 ///   `git_refdb`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: Ownership of the given reference database will not transfer to
-/// the repository. The caller must still free it.
 ///
 /// ## C Equivalent
 ///
@@ -200,16 +194,15 @@ public func gitRepositorySetRefDB(
 
 
 /// Sets the index of the given repository.
+///
+/// - Important: Ownership of the given index will not transfer to the
+/// repository. The caller must still free it.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - index: The index to use. The underlying type must be `git_index`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: Ownership of the given index will not transfer to the
-/// repository. The caller must still free it.
 ///
 /// ## C Equivalent
 ///
@@ -231,11 +224,6 @@ public func gitRepositorySetIndex(
 
 
 /// Converts the given repository to a bare repository.
-/// - Parameter repo: The repository to update. The underlying type must be
-/// `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function will clear the working directory of the given repository,
 /// and set `core.bare` to `true`.
@@ -243,6 +231,10 @@ public func gitRepositorySetIndex(
 /// - Note: This function will not update the index. Consider calling
 /// ``gitRepositorySetIndex(repo:index:)`` to set the index to `nil`,
 /// since a bare repository generally does not have an index.
+///
+/// - Parameter repo: The repository to update. The underlying type must be
+/// `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -260,16 +252,15 @@ public func gitRepositorySetBare(
 
 
 /// Loads and caches all submodules of the given repository.
-/// - Parameter repo: The repository containing the submodules to cache. The
-/// underlying type must be `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Since the `.gitmodules` file is unstructured, loading submodules is an
 /// `O(n)` operation. Any operation that requires accessing all submodules is
 /// `O(n²)`. This function loads and caches all submodules, so that
 /// subsequent calls to ``gitSubmoduleLookup(out:repo:name:)`` are `O(1)`.
+///
+/// - Parameter repo: The repository containing the submodules to cache. The
+/// underlying type must be `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -287,15 +278,14 @@ public func gitRepositorySubmoduleCacheAll(
 
 
 /// Clears the submodule cache of the given repository.
-/// - Parameter repo: The repository containing the submodule cache to clear.
-/// The underlying type must be `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The submodule cache incorporates data from the repository's configuration
 /// and the state of the working tree, the index, and HEAD. Any time one of
 /// these has changed, the submodule cache may become invalid.
+///
+/// - Parameter repo: The repository containing the submodule cache to clear.
+/// The underlying type must be `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

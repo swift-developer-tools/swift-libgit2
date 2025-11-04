@@ -12,6 +12,12 @@ import CLibgit2
 
 
 /// Counts the number of unique commits between the given commits.
+///
+/// There is no need for the branches containing the commits to have any
+/// upstream relationship, but it helps to think of one as a branch and the
+/// other as its upstream. The ahead and behind values will be what Git would
+/// report for the branches in such a scenario.
+///
 /// - Parameters:
 ///   - ahead: The pointer in which to store the number of unique commits in
 ///   `upstream`.
@@ -22,13 +28,6 @@ import CLibgit2
 ///   - local: The ID of the local commit to evaluate.
 ///   - upstream: The ID of the upstream commit to evaluate.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// There is no need for the branches containing the commits to have any
-/// upstream relationship, but it helps to think of one as a branch and the
-/// other as its upstream. The ahead and behind values will be what Git would
-/// report for the branches in such a scenario.
 ///
 /// ## C Equivalent
 ///
@@ -67,6 +66,10 @@ public func gitGraphAheadBehind(
 
 /// Checks whether the given commit is the descendant of the given ancestor
 /// commit.
+///
+/// In contrast to `git merge-base --is-ancestor`, this function does not
+/// consider a commit to be a descendant of itself.
+///
 /// - Parameters:
 ///   - repo: The repository containing the given commits. The underlying type
 ///   must be `git_repository`.
@@ -74,11 +77,6 @@ public func gitGraphAheadBehind(
 ///   - ancestor: The ID of the ancestor commit to check against.
 /// - Returns: Whether the given commit is the descendant of the given ancestor
 /// commit, or `nil` if there was an error.
-///
-/// ## Discussion
-///
-/// In contrast to `git merge-base --is-ancestor`, this function does not
-/// consider a commit to be a descendant of itself.
 ///
 /// ## C Equivalent
 ///

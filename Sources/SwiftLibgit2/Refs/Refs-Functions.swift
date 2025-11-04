@@ -109,20 +109,6 @@ public func gitReferenceDWIM(
 
 
 /// Conditionally creates a new symbolic reference.
-/// - Parameters:
-///   - out: The pointer in which to store the reference. The underlying type
-///   must be `git_reference`.
-///   - repo: The repository containing the reference. The underlying type must
-///   be `git_repository`.
-///   - name: The reference name to use. This will be checked for validity.
-///   - target: The name of the target reference to use. This will be checked
-///   for validity.
-///   - force: Whether to overwrite an existing reference.
-///   - currentValue: The reference value at the time of the update.
-///   - logMessage: The one-line long message to append to the reflog.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A symbolic reference is a reference name that refers to another reference
 /// name. If the other name moves, the symbolic name will also move. For
@@ -135,6 +121,19 @@ public func gitReferenceDWIM(
 /// The given reflog message will be ignored if the reference does not belong
 /// in the standard set (`HEAD`, branches, and remote-tracking branches), and
 /// it does not have a reflog.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the reference. The underlying type
+///   must be `git_reference`.
+///   - repo: The repository containing the reference. The underlying type must
+///   be `git_repository`.
+///   - name: The reference name to use. This will be checked for validity.
+///   - target: The name of the target reference to use. This will be checked
+///   for validity.
+///   - force: Whether to overwrite an existing reference.
+///   - currentValue: The reference value at the time of the update.
+///   - logMessage: The one-line long message to append to the reflog.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -166,19 +165,6 @@ public func gitReferenceSymbolicCreateMatching(
 
 
 /// Creates a new symbolic reference.
-/// - Parameters:
-///   - out: The pointer in which to store the reference. The underlying type
-///   must be `git_reference`.
-///   - repo: The repository containing the reference. The underlying type must
-///   be `git_repository`.
-///   - name: The reference name to use. This will be checked for validity.
-///   - target: The name of the target reference to use. This will be checked
-///   for validity.
-///   - force: Whether to overwrite an existing reference.
-///   - logMessage: The one-line long message to append to the reflog.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A symbolic reference is a reference name that refers to another reference
 /// name. If the other name moves, the symbolic name will also move. For
@@ -191,6 +177,18 @@ public func gitReferenceSymbolicCreateMatching(
 /// The given reflog message will be ignored if the reference does not belong
 /// in the standard set (`HEAD`, branches, and remote-tracking branches), and
 /// it does not have a reflog.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the reference. The underlying type
+///   must be `git_reference`.
+///   - repo: The repository containing the reference. The underlying type must
+///   be `git_repository`.
+///   - name: The reference name to use. This will be checked for validity.
+///   - target: The name of the target reference to use. This will be checked
+///   for validity.
+///   - force: Whether to overwrite an existing reference.
+///   - logMessage: The one-line long message to append to the reflog.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -220,18 +218,6 @@ public func gitReferenceSymbolicCreate(
 
 
 /// Creates a new direct reference.
-/// - Parameters:
-///   - out: The pointer in which to store the reference. The underlying type
-///   must be `git_reference`.
-///   - repo: The repository containing the reference. The underlying type must
-///   be `git_repository`.
-///   - name: The reference name to use. This will be checked for validity.
-///   - id: The ID to which the specified reference points.
-///   - force: Whether to overwrite an existing reference.
-///   - logMessage: The one-line long message to append to the reflog.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A direct reference (also called an object ID reference) refers directly to
 /// a specific object in the repository. The ID permanently refers to the
@@ -243,6 +229,17 @@ public func gitReferenceSymbolicCreate(
 /// The given reflog message will be ignored if the reference does not belong
 /// in the standard set (`HEAD`, branches, and remote-tracking branches), and
 /// it does not have a reflog.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the reference. The underlying type
+///   must be `git_reference`.
+///   - repo: The repository containing the reference. The underlying type must
+///   be `git_repository`.
+///   - name: The reference name to use. This will be checked for validity.
+///   - id: The ID to which the specified reference points.
+///   - force: Whether to overwrite an existing reference.
+///   - logMessage: The one-line long message to append to the reflog.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -277,19 +274,6 @@ public func gitReferenceCreate(
 
 
 /// Conditionally creates a new direct reference.
-/// - Parameters:
-///   - out: The pointer in which to store the reference. The underlying type
-///   must be `git_reference`.
-///   - repo: The repository containing the reference. The underlying type must
-///   be `git_repository`.
-///   - name: The reference name to use. This will be checked for validity.
-///   - id: The ID to which the specified reference points.
-///   - force: Whether to overwrite an existing reference.
-///   - currentID: The reference ID at the time of the update.
-///   - logMessage: The one-line long message to append to the reflog.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A direct reference (also called an object ID reference) refers directly to
 /// a specific object in the repository. The ID permanently refers to the
@@ -301,6 +285,18 @@ public func gitReferenceCreate(
 /// The given reflog message will be ignored if the reference does not belong
 /// in the standard set (`HEAD`, branches, and remote-tracking branches), and
 /// it does not have a reflog.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the reference. The underlying type
+///   must be `git_reference`.
+///   - repo: The repository containing the reference. The underlying type must
+///   be `git_repository`.
+///   - name: The reference name to use. This will be checked for validity.
+///   - id: The ID to which the specified reference points.
+///   - force: Whether to overwrite an existing reference.
+///   - currentID: The reference ID at the time of the update.
+///   - logMessage: The one-line long message to append to the reflog.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -342,15 +338,14 @@ public func gitReferenceCreateMatching(
 
 
 /// Gets the ID to which the given direct reference points.
-/// - Parameter ref: The direct reference to use. The underlying type must be
-/// `git_reference`.
-/// - Returns: The ID to which the given direct reference points.
-///
-/// ## Discussion
 ///
 /// - Note: The find the ID of a symbolic reference, call
 /// ``gitReferenceResolve(out:ref:)`` before calling this function, or use
 /// ``gitReferenceNameToID(out:repo:name:)`` instead.
+///
+/// - Parameter ref: The direct reference to use. The underlying type must be
+/// `git_reference`.
+/// - Returns: The ID to which the given direct reference points.
 ///
 /// ## C Equivalent
 ///
@@ -453,18 +448,17 @@ public func gitReferenceName(
 
 
 /// Resolves the given symbolic reference to a direct reference.
+///
+/// This function iteratively peels the given symbolic reference until it
+/// resolves to a direct reference to an ID. If the given reference is a
+/// direct reference, a copy of that reference will be returned.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the resolved reference. The
 ///   underlying type must be `git_reference`.
 ///   - ref: The reference to resolve. The underlying type must be
 ///   `git_reference`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function iteratively peels the given symbolic reference until it
-/// resolves to a direct reference to an ID. If the given reference is a
-/// direct reference, a copy of that reference will be returned.
 ///
 /// ## C Equivalent
 ///
@@ -486,15 +480,14 @@ public func gitReferenceResolve(
 
 
 /// Gets the repository containing the given reference.
+///
+/// - Important: The returned pointer is owned by the given reference and must
+/// not be freed.
+///
 /// - Parameter ref: The reference for which to get the repository. The
 /// underlying type must be `git_reference`.
 /// - Returns: The repository containing the given reference. The underlying
 /// type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given reference and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -511,6 +504,13 @@ public func gitReferenceOwner(
 
 /// Creates a new reference with the same name as the given reference, but with
 /// the given symbolic target.
+///
+/// The new reference will be written to the disk.
+///
+/// The given reflog message will be ignored if the reference does not belong
+/// in the standard set (`HEAD`, branches, and remote-tracking branches), and
+/// it does not have a reflog.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the reference. The underlying type
 ///   must be `git_reference`.
@@ -520,14 +520,6 @@ public func gitReferenceOwner(
 ///   for validity.
 ///   - logMessage: The one-line long message to append to the reflog.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The new reference will be written to the disk.
-///
-/// The given reflog message will be ignored if the reference does not belong
-/// in the standard set (`HEAD`, branches, and remote-tracking branches), and
-/// it does not have a reflog.
 ///
 /// ## C Equivalent
 ///
@@ -554,6 +546,10 @@ public func gitReferenceSymbolicSetTarget(
 
 /// Conditionally creates a new reference with the same name as the given
 /// reference, but with the given symbolic target.
+///
+/// The new reference will be written to the disk, overwriting the given
+/// reference.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the reference. The underlying type
 ///   must be `git_reference`.
@@ -562,11 +558,6 @@ public func gitReferenceSymbolicSetTarget(
 ///   - id: The new target ID for the reference.
 ///   - logMessage: The one-line long message to append to the reflog.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The new reference will be written to the disk, overwriting the given
-/// reference.
 ///
 /// ## C Equivalent
 ///
@@ -634,14 +625,13 @@ public func gitReferenceRename(
 
 
 /// Deletes the given reference.
-/// - Parameter ref: The reference to delete. The underlying type must be
-///   `git_reference`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Important: The given reference will be immediately removed from the disk,
 /// but the caller must free the memory.
+///
+/// - Parameter ref: The reference to delete. The underlying type must be
+///   `git_reference`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -659,15 +649,14 @@ public func gitReferenceDelete(
 
 
 /// Deletes the specified reference.
+///
+/// The specified reference will be removed without considering its old value.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified reference. The underlying
 ///   type must be `git_repository`.
 ///   - name: The name of the reference to delete.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The specified reference will be removed without considering its old value.
 ///
 /// ## C Equivalent
 ///
@@ -991,6 +980,13 @@ public func gitReferenceIteratorFree(
 
 /// Loops over the names of all the references contained by the given
 /// repository, matching the given glob.
+///
+/// The pattern will be matched using `fnmatch`-style matching:
+///
+/// - An asterisk (`*`) matches any sequence of letters.
+/// - A question mark (`?`) matches any letter.
+/// - Brackets (`[]`) define ranges (for example, `[0-9]` for digits).
+///
 /// - Parameters:
 ///   - repo: The repository containing the references. The underlying type
 ///   must be `git_repository`.
@@ -999,14 +995,6 @@ public func gitReferenceIteratorFree(
 ///   each reference name.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The pattern will be matched using `fnmatch`-style matching:
-///
-/// - An asterisk (`*`) matches any sequence of letters.
-/// - A question mark (`?`) matches any letter.
-/// - Brackets (`[]`) define ranges (for example, `[0-9]` for digits).
 ///
 /// ## C Equivalent
 ///
@@ -1167,6 +1155,11 @@ public func gitReferenceIsNote(
 
 
 /// Normalizes the given references name.
+///
+/// This function will normalize the given reference name by removing any
+/// leading slash (`/`) and collapsing adjacent slashes between name components
+/// into a single slash.
+///
 /// - Parameters:
 ///   - bufferOut: The `Data` instance in which to store the normalized name.
 ///   - bufferSize: The length of `bufferOut`.
@@ -1174,12 +1167,6 @@ public func gitReferenceIsNote(
 ///   checked for validity.
 ///   - flags: The flags controlling reference name validation.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will normalize the given reference name by removing any
-/// leading slash (`/`) and collapsing adjacent slashes between name components
-/// into a single slash.
 ///
 /// ## C Equivalent
 ///
@@ -1241,13 +1228,6 @@ public func gitReferencePeel(
 
 
 /// Checks whether the given reference name is valid.
-/// - Parameters:
-///   - valid: The `Bool` instance in which to store whether the given
-///   reference name is valid.
-///   - refName: The reference name to check.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Valid reference names must follow one of the following patterns:
 ///
@@ -1264,6 +1244,12 @@ public func gitReferencePeel(
 ///     - Two dots (`..`)
 ///     - An at sign followed by an opening curly brace (`@{`)
 ///     - Line breaks
+///
+/// - Parameters:
+///   - valid: The `Bool` instance in which to store whether the given
+///   reference name is valid.
+///   - refName: The reference name to check.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1290,14 +1276,13 @@ public func gitReferenceNameIsValid(
 
 
 /// Gets the shorthand name of the given reference.
-/// - Parameter ref: The reference for whicih to get the shorthand name. The
-/// underlying type must be `git_reference`.
-/// - Returns: The shorthand of the given reference.
-///
-/// ## Discussion
 ///
 /// The full name will be returned if there is no appropriate shorthand name
 /// for the given reference.
+///
+/// - Parameter ref: The reference for whicih to get the shorthand name. The
+/// underlying type must be `git_reference`.
+/// - Returns: The shorthand of the given reference.
 ///
 /// ## C Equivalent
 ///

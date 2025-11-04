@@ -12,14 +12,6 @@ import CLibgit2
 
 
 /// Creates a new revision walker for the given repository.
-/// - Parameters:
-///   - out: The pointer in which to store the revision walker. The underlying
-///   type must be `git_revwalk`.
-///   - repo: The repository to iterate. The underlying type must be
-///   `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The revision walker uses a custom memory pool and an internal commit cache,
 /// so it is relatively expensive to allocate. For maximum performance, reuse
@@ -28,6 +20,13 @@ import CLibgit2
 /// - Important: The revision walker is not thread-safe. It must be used only
 /// in a single thread. However, it is possible to have several revision
 /// walkers in different threads, walking the same repository.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the revision walker. The underlying
+///   type must be `git_revwalk`.
+///   - repo: The repository to iterate. The underlying type must be
+///   `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -49,16 +48,15 @@ public func gitRevwalkNew(
 
 
 /// Resets the given revision walker.
-/// - Parameter walker: The revision walker to reset. The underlying type must
-/// be `git_revwalk`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This will clear all the pushed and hidden commits, and leave the given
 /// revision walker in a blank state.
 ///
 /// - Note: A revision walker is automatically reset when a walk ends.
+///
+/// - Parameter walker: The revision walker to reset. The underlying type must
+/// be `git_revwalk`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -76,19 +74,18 @@ public func gitRevwalkReset(
 
 
 /// Adds a new root to the given revision walker.
+///
+/// The pushed commit will be marked as one of the roots from which to start
+/// the walk. The commit may not be walked if it is hidden, or if one of its
+/// child commits is hidden. At least one commit must be pushed onto the
+/// revision walker before the walk can begin.
+///
 /// - Parameters:
 ///   - walk: The revision walker to update. The underlying type must be
 ///   `git_revwalk`.
 ///   - id: The ID of the committish object from which to start walking. The
 ///   object must belong to the repository being walked.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The pushed commit will be marked as one of the roots from which to start
-/// the walk. The commit may not be walked if it is hidden, or if one of its
-/// child commits is hidden. At least one commit must be pushed onto the
-/// revision walker before the walk can begin.
 ///
 /// ## C Equivalent
 ///
@@ -115,21 +112,20 @@ public func gitRevwalkPush(
 
 
 /// Pushes the IDs matching the given glob pattern to the given revision walker.
+///
+/// A leading `refs/` will be implied if it is not present in the given glob
+/// pattern. Similarly, a trailing `/\*` sequence will be implied if the glob
+/// pattern lacks a question mark (`?`), an opening bracket (`[`), or a
+/// backslash-asterisk (`\*`) sequence.
+///
+/// Any references matching the glob pattern that do not point to a committish
+/// object will be ignored.
+///
 /// - Parameters:
 ///   - walk: The revision walker to update. The underlying type must be
 ///   `git_revwalk`.
 ///   - glob: The glob pattern to match.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// A leading `refs/` will be implied, if it is not present in the given glob
-/// pattern. Similarly, a trailing `/\*` sequence will be implied, if the glob
-/// pattern lacks a question mark (`?`), opening bracket (`[`), or a `\*`
-/// sequence.
-///
-/// Any references matching the glob pattern that do not point to a committish
-/// object will be ignored.
 ///
 /// ## C Equivalent
 ///
@@ -204,21 +200,20 @@ public func gitRevwalkHide(
 
 
 /// Hides the IDs matching the given glob pattern to the given revision walker.
+///
+/// A leading `refs/` will be implied if it is not present in the given glob
+/// pattern. Similarly, a trailing `/\*` sequence will be implied if the glob
+/// pattern lacks a question mark (`?`), opening bracket (`[`), or a
+/// backslash-asterisk (`\*`) sequence.
+///
+/// Any references matching the glob pattern that do not point to a committish
+/// object will be ignored.
+///
 /// - Parameters:
 ///   - walk: The revision walker to update. The underlying type must be
 ///   `git_revwalk`.
 ///   - glob: The glob pattern to match.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// A leading `refs/` will be implied, if it is not present in the given glob
-/// pattern. Similarly, a trailing `/\*` sequence will be implied, if the glob
-/// pattern lacks a question mark (`?`), opening bracket (`[`), or a `\*`
-/// sequence.
-///
-/// Any references matching the glob pattern that do not point to a committish
-/// object will be ignored.
 ///
 /// ## C Equivalent
 ///
@@ -314,14 +309,6 @@ public func gitRevwalkHideRef(
 
 
 /// Gets the ID of next commit from the given revision walker.
-/// - Parameters:
-///   - out: The ``GitOID`` instance in which to store the ID of the next
-///   commit.
-///   - walk: The revision walker to use. The underlying type must be
-///   `git_revwalk`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The initial call to the function will not be blocking when iterating a
 /// repository with chronological sorting.
@@ -329,6 +316,13 @@ public func gitRevwalkHideRef(
 /// The initial call to the function will be blocking when iterating with
 /// topological or inverted sorting, in order to preprocess the commit list.
 /// The block should generally be unnoticeable on most repositories.
+///
+/// - Parameters:
+///   - out: The ``GitOID`` instance in which to store the ID of the next
+///   commit.
+///   - walk: The revision walker to use. The underlying type must be
+///   `git_revwalk`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -410,14 +404,13 @@ public func gitRevwalkPushRange(
 
 
 /// Simplifies the history of the given revision walker by first-parent.
-/// - Parameter walk: The revision walker to update. The underlying type must
-/// be `git_revwalk`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// When the revision history is simplified, no parent commits other than the
 /// first parent of each commit will be walked.
+///
+/// - Parameter walk: The revision walker to update. The underlying type must
+/// be `git_revwalk`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -457,14 +450,13 @@ public func gitRevwalkFree(
 
 
 /// Gets the repository being walked by the given revision walker.
-/// - Parameter walk: The revision walker to use. The underlying type must be
-/// `git_revwalk`.
-/// - Returns: The repository being walked by the given revision walker.
-///
-/// ## Discussion
 ///
 /// - Important: The returned pointer is owned by the given revision walker
 /// and must not be freed.
+///
+/// - Parameter walk: The revision walker to use. The underlying type must be
+/// `git_revwalk`.
+/// - Returns: The repository being walked by the given revision walker.
 ///
 /// ## C Equivalent
 ///

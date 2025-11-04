@@ -15,12 +15,11 @@ internal extension Array where Element == OpaquePointer
 {
     /// Calls the given closure with a mutable pointer to a `git_commitarray`
     /// instance.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// - Important: The commits are owned by the caller and must not be freed.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     func withGitCommitArray<T>(
         _ body: (UnsafeMutablePointer<git_commitarray>) throws -> T
     ) rethrows -> T
@@ -62,12 +61,11 @@ internal extension Array where Element == OpaquePointer
     
     /// Calls the given closure with a mutable pointer to a `git_commitarray`
     /// instance, and updates the receiver with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    ///
-    /// ## Discussion
     ///
     /// - Important: The commits are owned by the caller and must not be freed.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
     mutating func withMutatingGitCommitArray<T>(
         _ body: (UnsafeMutablePointer<git_commitarray>) throws -> T
     ) rethrows -> T

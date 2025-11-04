@@ -13,6 +13,10 @@ import Foundation
 
 
 /// Loads the filter list for the given path.
+///
+/// The operation will succeed if no filters are requested for the specified
+/// file, but `filters` will be set to `nil`.
+///
 /// - Parameters:
 ///   - filters: The pointer in which to store the filter list. The underlying
 ///   type must be `git_filter_list`.
@@ -24,11 +28,6 @@ import Foundation
 ///   - mode: The filtering direction to use.
 ///   - flags: The flags controlling the filtering process.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The operation will succeed if no filters are requested for the specified
-/// file, but `filters` will be set to `nil`.
 ///
 /// ## C Equivalent
 ///
@@ -58,6 +57,10 @@ public func gitFilterListLoad(
 
 
 /// Loads the filter list for the given path.
+///
+/// The operation will succeed if no filters are requested for the specified
+/// file, but `filters` will be set to `nil`.
+///
 /// - Parameters:
 ///   - filters: The pointer in which to store the filter list. The underlying
 ///   type must be `git_filter_list`.
@@ -69,11 +72,6 @@ public func gitFilterListLoad(
 ///   - mode: The filtering direction to use.
 ///   - opts: The filtering options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The operation will succeed if no filters are requested for the specified
-/// file, but `filters` will be set to `nil`.
 ///
 /// ## C Equivalent
 ///
@@ -108,16 +106,15 @@ public func gitFilterListLoadExt(
 
 
 /// Checks whether the named filter will be applied.
+///
+/// The built-in filters ``gitFilterCRLF`` and ``gitFilterIdent`` can be
+/// queried.
+///
 /// - Parameters:
 ///   - filters: The filter list to check. The underlying type must be
 ///   `git_filter_list`.
 ///   - name: The name of the filter to check.
 /// - Returns: Whether the named filter will be applied.
-///
-/// ## Discussion
-///
-/// The built-in filters ``gitFilterCRLF`` and ``gitFilterIdent`` can be
-/// queried.
 ///
 /// ## C Equivalent
 ///
@@ -180,6 +177,10 @@ public func gitFilterListApplyToBuffer(
 
 
 /// Applies the given filter list to the contents of the specified on-disk file.
+///
+/// If `path` is a relative path, it will be interpreted as being relative to
+/// the working directory.
+///
 /// - Parameters:
 ///   - out: The `Data` instance in which to store the filtered content.
 ///   - filters: The filter list to apply. The underlying type must be
@@ -188,11 +189,6 @@ public func gitFilterListApplyToBuffer(
 ///   type must be `git_repository`.
 ///   - path: The path to the file to filter.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If `path` is a relative path, it will be interpreted as being relative to
-/// the working directory.
 ///
 /// ## C Equivalent
 ///
@@ -294,6 +290,10 @@ public func gitFilterListStreamBuffer(
 
 
 /// Applies the given filter list to the specified file as a stream.
+///
+/// If `path` is a relative path, it will be interpreted as being relative to
+/// the working directory.
+///
 /// - Parameters:
 ///   - filters: The filter list to apply. The underlying type must be
 ///   `git_filter_list`.
@@ -302,11 +302,6 @@ public func gitFilterListStreamBuffer(
 ///   - path: The path to the file to filter.
 ///   - target: The stream in which to write the data.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If `path` is a relative path, it will be interpreted as being relative to
-/// the working directory.
 ///
 /// ## C Equivalent
 ///

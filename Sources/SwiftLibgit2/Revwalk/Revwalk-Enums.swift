@@ -52,21 +52,15 @@ public struct GitSortT: COptionSet
     /// Sort in topological order, showing no parent commit until all of its
     /// child commits are shown.
     ///
-    /// ## Discussion
-    ///
     /// This flag may be combined with chronological sorting.
     public static let gitSortTopological    = GitSortT(rawValue: GIT_SORT_TOPOLOGICAL.rawValue)
     
     /// Sort in chronological order.
     ///
-    /// ## Discussion
-    ///
     /// This flag may be combined with topological sorting.
     public static let gitSortTime           = GitSortT(rawValue: GIT_SORT_TIME.rawValue)
     
     /// Sort in reverse order.
-    ///
-    /// ## Discussion
     ///
     /// This flag may be combined with any other flag.
     public static let gitSortReverse        = GitSortT(rawValue: GIT_SORT_REVERSE.rawValue)

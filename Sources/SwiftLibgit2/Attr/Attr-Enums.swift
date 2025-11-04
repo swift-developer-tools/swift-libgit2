@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The flags controlling the behavior of attribute examination.
 ///
-/// ## Discussion
-///
 /// - Note: The options of ``GitAttrCheckFlagsT`` correspond to flag macros
 /// in libgit2. For consistency with other APIs and type-safe usage,
 /// swift-libgit2 binds these macros as if they were a bitset enum in libgit2.
@@ -82,12 +80,11 @@ public struct GitAttrCheckFlagsT: COptionSet
     
     
     /// Converts the ``GitAttrCheckFlagsT`` instance into a raw value.
-    /// - Returns: The raw value.
-    ///
-    /// ## Discussion
     ///
     /// Since the options of ``GitAttrCheckFlagsT`` correspond to flag macros
     /// in libgit2, there is no equivalent C value other than the raw value.
+    ///
+    /// - Returns: The raw value.
     internal func cValue() -> UInt32
     {
         return rawValue

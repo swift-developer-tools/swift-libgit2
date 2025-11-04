@@ -248,17 +248,6 @@ private extension ApplyTests
     /// Tests `git apply` functionality by creating a diff and applying it
     /// with the given options.
     ///
-    /// - Parameters:
-    ///   - location: The target location for applying the diff (the working
-    ///   directory, the index, or both).
-    ///   - flags: The flags to control the apply behavior.
-    ///   - checkIndex: Whether to check that the index contains staged changes
-    ///   after applying.
-    ///   - endContent: The expected file content after applying.
-    /// - Throws: An error if an operation fails.
-    ///
-    /// ## Discussion
-    ///
     /// The test is performed by following these steps:
     ///
     /// 1. Create a modified version of the repository's `README.md` file.
@@ -269,6 +258,15 @@ private extension ApplyTests
     /// 6. Check that both the delta and hunk callbacks were invoked.
     /// 7. Check that the final file content is correct.
     /// 8. Optionally check that the index contains staged changes.
+    ///
+    /// - Parameters:
+    ///   - location: The target location for applying the diff (the working
+    ///   directory, the index, or both).
+    ///   - flags: The flags to control the apply behavior.
+    ///   - checkIndex: Whether to check that the index contains staged changes
+    ///   after applying.
+    ///   - endContent: The expected file content after applying.
+    /// - Throws: An error if an operation fails.
     func testGitApplyFlow(
         location        : GitApplyLocationT,
         flags           : GitApplyFlagsT?,

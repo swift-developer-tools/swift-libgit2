@@ -8,16 +8,15 @@
 //===----------------------------------------------------------------------===//
 
 /// Checks whether the given attribute is set.
-/// - Parameter attr: The attribute to check.
-/// - Returns: Whether the given attribute is set.
-///
-/// ## Discussion
 ///
 /// In core Git parlance, this is the value for set attributes.
 ///
 /// For example, if the attribute file contains `*.c foo`, then for file
 /// `xyz.c`, looking up attribute `foo` gives a value for which
 /// ``gitAttrIsTrue(attr:)`` will return `true`.
+///
+/// - Parameter attr: The attribute to check.
+/// - Returns: Whether the given attribute is set.
 ///
 /// ## C Equivalent
 ///
@@ -34,10 +33,6 @@ public func gitAttrIsTrue(
 
 
 /// Checks whether the given attribute is unset.
-/// - Parameter attr: The attribute to check.
-/// - Returns: Whether the given attribute is unset.
-///
-/// ## Discussion
 ///
 /// In core Git parlance, this is the value for unset attributes (not to be
 /// confused with values that are unspecified).
@@ -45,6 +40,9 @@ public func gitAttrIsTrue(
 /// For example, if the attribute file contains `*.h -foo`, then for file
 /// `zyx.h`, looking up attribute `foo` gives a value for which
 /// ``gitAttrIsFalse(attr:)`` will return `true`.
+///
+/// - Parameter attr: The attribute to check.
+/// - Returns: Whether the given attribute is unset.
 ///
 /// ## C Equivalent
 ///
@@ -61,10 +59,6 @@ public func gitAttrIsFalse(
 
 
 /// Checks whether the given attribute is unspecified.
-/// - Parameter attr: The attribute to check.
-/// - Returns: Whether the given attribute is unspecified.
-///
-/// ## Discussion
 ///
 /// An attribute may be unspecified due to the it not being mentioned at all
 /// or because the it was explicitly set to unspecified via the exclamation
@@ -77,6 +71,9 @@ public func gitAttrIsFalse(
 ///
 /// Looking up `foo` on file `onefile.rb` or looking up `bar` on any file will
 /// yield a value for which ``gitAttrIsUnspecified(attr:)`` will return `true`.
+///
+/// - Parameter attr: The attribute to check.
+/// - Returns: Whether the given attribute is unspecified.
 ///
 /// ## C Equivalent
 ///
@@ -93,10 +90,6 @@ public func gitAttrIsUnspecified(
 
 
 /// Checks whether the given attribute is set to a value.
-/// - Parameter attr: The attribute to check.
-/// - Returns: Whether the given attribute is set to a value.
-///
-/// ## Discussion
 ///
 /// An attribute may be set to a value as opposed to being set, unset, or
 /// unspecified.
@@ -104,6 +97,9 @@ public func gitAttrIsUnspecified(
 /// For example, if the attribute file contains: `*.txt eol=lf`, then for file
 /// `onefile.txt`, looking up attribute `eol` yields a value for which
 /// ``gitAttrHasValue(attr:)`` will return `true`.
+///
+/// - Parameter attr: The attribute to check.
+/// - Returns: Whether the given attribute is set to a value.
 ///
 /// ## C Equivalent
 ///

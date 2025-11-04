@@ -132,15 +132,14 @@ public func gitTagID(
 
 
 /// Gets the repository containing the given tag.
+///
+/// - Important: The returned pointer is owned by the given tag and must
+/// not be freed.
+///
 /// - Parameter tag: The tag for which to get the repository. The underlying
 /// type must be `git_tag`.
 /// - Returns: The repository containing the given tag. The underlying type
 /// will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given tag and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -286,6 +285,11 @@ public func gitTagMessage(
 
 
 /// Creates a tag in the given repository.
+///
+/// The tag message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the tag message.
+///
 /// - Parameters:
 ///   - oid: The ``GitOID`` instance in which to store the ID of the tag.
 ///   - repo: The repository in which to create the tag. The underlying type
@@ -297,12 +301,6 @@ public func gitTagMessage(
 ///   - message: The tag message to use.
 ///   - force: Whether to overwrite an existing tag.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The tag message will not be cleaned up automatically. Use
-/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
-/// up the tag message.
 ///
 /// ## C Equivalent
 ///
@@ -344,6 +342,11 @@ public func gitTagCreate(
 
 
 /// Creates a tag in the given repository.
+///
+/// The tag message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the tag message.
+///
 /// - Parameters:
 ///   - oid: The ``GitOID`` instance in which to store the ID of the tag.
 ///   - repo: The repository in which to create the tag. The underlying type
@@ -354,12 +357,6 @@ public func gitTagCreate(
 ///   - tagger: The author signature to use.
 ///   - message: The tag message to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The tag message will not be cleaned up automatically. Use
-/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
-/// up the tag message.
 ///
 /// ## C Equivalent
 ///
