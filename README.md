@@ -122,9 +122,9 @@ to ensure thread-safe access to libgit2.
 
 ### Concurrency
 
-Some libgit2 functions are asynchronous, but are not exposed as asynchronous. 
-Generally, any function that interacts with a remote repository is asynchronous.
-Since swift-libgit2 provides direct bindings to libgit2, no function bindings 
+Some libgit2 APIs are asynchronous, but are not exposed as asynchronous. 
+Generally, any API that interacts with a remote repository is asynchronous. 
+Since swift-libgit2 provides direct bindings to libgit2, no Swift bindings 
 are asynchronous either.
 
 Consider using an appropriate 
