@@ -8,6 +8,10 @@
 //===----------------------------------------------------------------------===//
 
 /// The callback invoked for each attribute name and value.
+///
+/// This callback will be invoked only once per attribute name, even if there
+/// are multiple rules for a given file. The highest priority rule will be used.
+///
 /// - Parameters:
 ///   - name: The name of the attribute being iterated.
 ///   - value: The value of the attribute being iterated. This may be `nil` if
@@ -15,11 +19,6 @@
 ///   (`!`) operator.
 ///   - payload: The payload provided by the caller.
 /// - Returns: `0` to continue looping, or a non-zero value to stop looping.
-///
-/// ## Discussion
-///
-/// This callback will be invoked only once per attribute name, even if there
-/// are multiple rules for a given file. The highest priority rule will be used.
 ///
 /// ## C Equivalent
 ///

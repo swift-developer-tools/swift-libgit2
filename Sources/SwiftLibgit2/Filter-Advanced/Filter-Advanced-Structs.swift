@@ -13,8 +13,6 @@ import CLibgit2
 
 /// A custom filter.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_filter` instead.
 ///

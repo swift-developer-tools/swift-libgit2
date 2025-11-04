@@ -59,8 +59,6 @@ public struct GitRepositoryOpenFlagT: COptionSet
     /// `core.bare.config`, and defer loading the configuration file for
     /// faster setup.
     ///
-    /// ## Discussion
-    ///
     /// Unlike ``gitRepositoryOpenBare(out:barePath:)``, this flag can
     /// enable following Gitlinks.
     public static let gitRepositoryOpenBare         = GitRepositoryOpenFlagT(rawValue: GIT_REPOSITORY_OPEN_BARE.rawValue)
@@ -72,8 +70,6 @@ public struct GitRepositoryOpenFlagT: COptionSet
     
     /// Find and open a repository, respecting the environment variables used
     /// by the Git command line tools.
-    ///
-    /// ## Discussion
     ///
     /// If this flag is enabled,
     /// ``gitRepositoryOpenExt(out:path:flags:ceilingDirs:)`` will ignore any
@@ -151,8 +147,6 @@ public struct GitRepositoryInitFlagT: COptionSet
     
     /// Create the repository path and working directory path if necessary.
     ///
-    /// ## Discussion
-    ///
     /// The initialization is always willing to create the `.git` directory
     /// even without this flag being enabled. If this flag is enabled, the
     /// initialization will also create the trailing component of the
@@ -164,8 +158,6 @@ public struct GitRepositoryInitFlagT: COptionSet
     public static let gitRepositoryInitMkpath               = GitRepositoryInitFlagT(rawValue: GIT_REPOSITORY_INIT_MKPATH.rawValue)
     
     /// Use an external template to initialize the repository.
-    ///
-    /// ## Discussion
     ///
     /// libgit2 normally uses internal templates to initialize a new
     /// repository. If this flag is enabled, libgit2 will use

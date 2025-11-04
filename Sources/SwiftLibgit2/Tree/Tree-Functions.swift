@@ -97,7 +97,7 @@ public func gitTreeFree(
     tree: OpaquePointer?
 )
 {
-    guard let tree: OpaquePointer = tree
+    guard let tree
     else
     {
         return
@@ -132,15 +132,14 @@ public func gitTreeID(
 
 
 /// Gets the repository containing the given tree.
+///
+/// - Important: The returned pointer is owned by the given tree and must
+/// not be freed.
+///
 /// - Parameter tree: The tree for which to get the repository. The underlying
 /// type must be `git_tree`.
 /// - Returns: The repository containing the given tree. The underlying type
 /// will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given tree and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -171,16 +170,15 @@ public func gitTreeEntryCount(
 
 
 /// Gets the specified entry in the given tree.
+///
+/// - Important: The returned pointer is owned by the given tree and must
+/// not be freed.
+///
 /// - Parameters:
 ///   - tree: The tree to check. The underlying type must be `git_tree`.
 ///   - fileName: The file name of the entry to retrieve.
 /// - Returns: The specified entry in the given tree. The underlying type will
 /// be `git_tree_entry`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given tree and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -199,16 +197,15 @@ public func gitTreeEntryByName(
 
 
 /// Gets the entry at the specified index in the given tree.
+///
+/// - Important: The returned pointer is owned by the given tree and must
+/// not be freed.
+///
 /// - Parameters:
 ///   - tree: The tree to check. The underlying type must be `git_tree`.
 ///   - idx: The index of the entry to retrieve.
 /// - Returns: The entry at the specified index in the given tree. The
 /// underlying type will be `git_tree_entry`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given tree and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -227,19 +224,18 @@ public func gitTreeEntryByIndex(
 
 
 /// Gets the specified entry in the given tree.
-/// - Parameters:
-///   - tree: The tree to check. The underlying type must be `git_tree`.
-///   - id: The ID of the entry to retrieve.
-/// - Returns: The specified entry in the given tree. The underlying type will
-/// be `git_tree_entry`.
-///
-/// ## Discussion
 ///
 /// This function must examine every entry in the given tree. If performance
 /// is a priority, consider using another lookup function.
 ///
 /// - Important: The returned pointer is owned by the given tree and must
 /// not be freed.
+///
+/// - Parameters:
+///   - tree: The tree to check. The underlying type must be `git_tree`.
+///   - id: The ID of the entry to retrieve.
+/// - Returns: The specified entry in the given tree. The underlying type will
+/// be `git_tree_entry`.
 ///
 /// ## C Equivalent
 ///
@@ -330,7 +326,7 @@ public func gitTreeEntryFree(
     entry: OpaquePointer?
 )
 {
-    guard let entry: OpaquePointer = entry
+    guard let entry
     else
     {
         return
@@ -421,14 +417,12 @@ public func gitTreeEntryFileMode(
 
 
 
-/// Gets the raw file mode of the given tree entry.
+/// Gets the raw file mode of the given tree entry, without performing any
+/// normalization.
+///
 /// - Parameter entry: The tree entry for which to get the raw file mode. The
 /// underlying type must be `git_tree_entry`.
 /// - Returns: The raw file mode of the given tree entry.
-///
-/// ## Discussion
-///
-/// This function does not perform any normalization.
 ///
 /// ## C Equivalent
 ///
@@ -579,7 +573,7 @@ public func gitTreebuilderFree(
     bld: OpaquePointer?
 )
 {
-    guard let bld: OpaquePointer = bld
+    guard let bld
     else
     {
         return
@@ -591,16 +585,15 @@ public func gitTreebuilderFree(
 
 
 /// Gets the specified entry from the given treebuilder.
+///
+/// - Important: The returned pointer is owned by the given treebuilder and
+/// must not be freed.
+///
 /// - Parameters:
 ///   - bld: The treebuilder to search. The underlying type must be
 ///   `git_treebuilder`.
 ///   - fileName: The file name of the entry to retrieve.
 /// - Returns: The specified entry from the given treebuilder.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given treebuilder and
-/// must not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -619,17 +612,6 @@ public func gitTreebuilderGet(
 
 
 /// Adds or updates an entry in the given treebuilder.
-/// - Parameters:
-///   - out: The pointer in which to store the added or updated entry. The
-///   underlying type must be `git_tree_entry`.
-///   - bld: The treebuilder to update. The underlying type must be
-///   `git_treebuilder`.
-///   - fileName: The file name of the entry to add or update.
-///   - id: The ID of the entry to add or update.
-///   - fileMode: The file mode of the entry to add or update.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If an entry with the given file name already exists, the entry will be
 /// updated.
@@ -641,6 +623,16 @@ public func gitTreebuilderGet(
 /// - Important: The `out` pointer is owned by libgit2 and must not be freed.
 /// It may not be valid past the next operation in the given treebuilder.
 /// Duplicate the entry if necessary.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the added or updated entry. The
+///   underlying type must be `git_tree_entry`.
+///   - bld: The treebuilder to update. The underlying type must be
+///   `git_treebuilder`.
+///   - fileName: The file name of the entry to add or update.
+///   - id: The ID of the entry to add or update.
+///   - fileMode: The file mode of the entry to add or update.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -818,6 +810,17 @@ public func gitTreeDup(
 
 
 /// Creates a tree based on the given tree, with the given updates.
+///
+/// This function is optimized for common file and directory addition, removal,
+/// and replacement in trees. It is much more efficient than reading the tree
+/// into a `git_index` instance and then modifying that, but it is not as
+/// flexible.
+///
+/// - Important: Deleting and adding the same entry is undefined behavior.
+///
+/// - Note: This function does not support changing a tree to a blob or
+/// changing a blob to a tree.
+///
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created tree.
@@ -829,18 +832,6 @@ public func gitTreeDup(
 ///   - nUpdates: The length of `updates`.
 ///   - updates: The updates to perform.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function is optimized for common file and directory addition, removal,
-/// and replacement in trees. It is much more efficient than reading the tree
-/// into a `git_index` instance and then modifying that, but it is not as
-/// flexible.
-///
-/// - Important: Deleting and adding the same entry is undefined behavior.
-///
-/// - Note: This function does not support changing a tree to a blob or
-/// changing a blob to a tree.
 ///
 /// ## C Equivalent
 ///

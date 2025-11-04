@@ -80,7 +80,7 @@ public func gitNoteIteratorFree(
     it: OpaquePointer?
 )
 {
-    guard let it: OpaquePointer = it
+    guard let it
     else
     {
         return
@@ -365,6 +365,10 @@ public func gitNoteCreate(
 
 
 /// Adds a note for an object from the given commit.
+///
+/// The notes commit will be dangling. No reference will be created pointing
+/// at it.
+///
 /// - Parameters:
 ///   - notesCommitOut: The ``GitOID`` instance in which to store the note
 ///   commit ID.
@@ -379,11 +383,6 @@ public func gitNoteCreate(
 ///   - note: The note to add for the given object.
 ///   - allowNoteOverwrite: Whether to overwrite an existing note.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The resulting notes commit will be dangling. No reference will be created
-/// pointing at it.
 ///
 /// ## C Equivalent
 ///
@@ -495,6 +494,11 @@ public func gitNoteRemove(
 
 
 /// Removes the note for the given object.
+///
+/// When removing a note, a new tree containing all notes except for the note
+/// being removed will be created. A new commit pointing to that tree will also
+/// be created. The new tree may be empty.
+///
 /// - Parameters:
 ///   - notesCommitOut: The ``GitOID`` instance in which to store the note
 ///   commit ID.
@@ -506,12 +510,6 @@ public func gitNoteRemove(
 ///   - committer: The signature of the notes commit committer.
 ///   - oid: The ID of the object from which to remove the note.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// When removing a note, a new tree containing all notes except for the note
-/// being removed will be created. A new commit pointing to that tree will also
-/// be created. The new tree may be empty.
 ///
 /// ## C Equivalent
 ///
@@ -570,7 +568,7 @@ public func gitNoteFree(
     note: OpaquePointer?
 )
 {
-    guard let note: OpaquePointer = note
+    guard let note
     else
     {
         return

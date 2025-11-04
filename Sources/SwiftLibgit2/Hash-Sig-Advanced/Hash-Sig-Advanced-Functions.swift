@@ -50,18 +50,17 @@ public func gitHashSigCreate(
 
 
 /// Creates a similarity signature for the specified file.
+///
+/// This function will walk through the specified file and load a maximum of
+/// 4K of file data at a time. Otherwise, it behaves the same as
+/// ``gitHashSigCreate(out:buf:bufLen:opts:)``.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the similarity signature. The
 ///   underlying type must be `git_hashsig`.
 ///   - path: The path to the file for which to create a similarity signature.
 ///   - opts: The flags controlling similarity signature computation.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will walk through the specified file and load a maximum of
-/// 4K of file data at a time. Otherwise, it behaves the same as
-/// ``gitHashSigCreate(out:buf:bufLen:opts:)``.
 ///
 /// ## C Equivalent
 ///
@@ -95,7 +94,7 @@ public func gitHashSigFree(
     sig: OpaquePointer?
 )
 {
-    guard let sig: OpaquePointer = sig
+    guard let sig
     else
     {
         return

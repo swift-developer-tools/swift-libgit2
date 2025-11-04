@@ -71,8 +71,6 @@ public struct GitMessageTrailer: CStructReadable, WithCConvertible, Sendable
 
 /// An array of message trailers.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All bindings use an array of ``GitMessageTrailer``
 /// instances instead.
@@ -93,8 +91,6 @@ public struct GitMessageTrailerArray: CStruct, Sendable
     
     /// The trailer block.
     ///
-    /// ## Discussion
-    ///
     /// This is intended to be a private libgit2 field and should not be
     /// used by callers.
     private let trailerBlock    : String?
@@ -111,6 +107,5 @@ public struct GitMessageTrailerArray: CStruct, Sendable
     {
         self.trailers       = Array(messageTrailerArray)
         self.trailerBlock   = String(optionalCString: messageTrailerArray._trailer_block)
-        
     }
 }

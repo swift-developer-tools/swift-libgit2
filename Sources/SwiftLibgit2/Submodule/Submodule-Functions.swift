@@ -37,6 +37,12 @@ public func gitSubmoduleUpdateOptionsInit(
 
 
 /// Updates the given submodule.
+///
+/// This function will clone a missing submodule and checkout the subrepository
+/// to the commit specified in the index of the containing repository. If the
+/// submodule repository does not contain the target commit, then the submodule
+/// will be fetched using the given fetch options.
+///
 /// - Parameters:
 ///   - submodule: The submodule to update. The underlying type must be
 ///   `git_submodule`.
@@ -44,13 +50,6 @@ public func gitSubmoduleUpdateOptionsInit(
 ///   if the submodule is not already initialized.
 ///   - options: The submodule update options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will clone a missing submodule and checkout the subrepository
-/// to the commit specified in the index of the containing repository. If the
-/// submodule repository does not contain the target commit, then the submodule
-/// will be fetched using the given fetch options.
 ///
 /// ## C Equivalent
 ///
@@ -147,7 +146,7 @@ public func gitSubmoduleFree(
     submodule: OpaquePointer?
 )
 {
-    guard let submodule: OpaquePointer = submodule
+    guard let submodule
     else
     {
         return
@@ -188,6 +187,17 @@ public func gitSubmoduleForEach(
 
 
 /// Adds a new submodule to the given repository.
+///
+/// This function will prepare a new submodule, create an entry in
+/// `.gitmodules`, and create an empty initialized repository either at the
+/// given path in the working directory, or in `.git/modules` with a Gitlink
+/// from the working directory to the new repository.
+///
+/// To fully replicate the behavior of `git submodule add`, call this function,
+/// then open the submodule repository and perform the clone step by calling
+/// ``gitSubmoduleClone(out:submodule:opts:)`` and
+/// ``gitSubmoduleAddFinalize(submodule:)``.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the submodule. The underlying type
 ///   must be `git_submodule`.
@@ -199,18 +209,6 @@ public func gitSubmoduleForEach(
 ///   the repository in `.git/modules`, as opposed to initializing an empty
 ///   repository at the specified location in the working directory.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will prepare a new submodule, create an entry in
-/// `.gitmodules`, and create an empty initialized repository either at the
-/// given path in the working directory, or in `.git/modules` with a Gitlink
-/// from the working directory to the new repository.
-///
-/// To fully replicate the behavior of `git submodule add`, call this function,
-/// then open the submodule repository and perform the clone step by calling
-/// ``gitSubmoduleClone(out:submodule:opts:)`` and
-/// ``gitSubmoduleAddFinalize(submodule:)``.
 ///
 /// ## C Equivalent
 ///
@@ -273,16 +271,15 @@ public func gitSubmoduleClone(
 
 
 /// Resolves the setup of the given newly-created submodule.
-/// - Parameter submodule: The newly-created submodule to resolve. The
-/// underlying type must be `git_submodule`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Call this function after adding and cloning the given submodule. This
 /// function will add the `.gitmodules` file and the newly-cloned submodule
 /// to the index, where they will be ready to commit. This function does not
 /// perform the commit.
+///
+/// - Parameter submodule: The newly-created submodule to resolve. The
+/// underlying type must be `git_submodule`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -300,16 +297,15 @@ public func gitSubmoduleAddFinalize(
 
 
 /// Adds the HEAD of the given submodule to the index of the superproject.
+///
+/// If `writeIndex` is `false`, use ``gitIndexWrite(index:)`` to save the
+/// changes.
+///
 /// - Parameters:
 ///   - submodule: The submodule to add. The underlying type must be
 ///   `git_submodule`.
 ///   - writeIndex: Whether to immediately write the index file.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If `writeIndex` is `false`, use ``gitIndexWrite(index:)`` to save the
-/// changes.
 ///
 /// ## C Equivalent
 ///
@@ -331,17 +327,16 @@ public func gitSubmoduleAddToIndex(
 
 
 /// Gets the repository containing the given submodule.
-/// - Parameter submodule: The submodule for which to get the repository. The
-/// underlying type must be `git_submodule`.
-/// - Returns: The repository containing the given submodule. The underlying
-/// type will be `git_repository`.
-///
-/// ## Discussion
 ///
 /// - Important: The returned pointer is owned by the given submodule and
 /// must not be freed. It will be a reference to the repository that was
 /// passed to ``gitSubmoduleLookup(out:repo:name:)``. If that repository has
 /// been freed, the returned pointer will be a dangling reference.
+///
+/// - Parameter submodule: The submodule for which to get the repository. The
+/// underlying type must be `git_submodule`.
+/// - Returns: The repository containing the given submodule. The underlying
+/// type will be `git_repository`.
 ///
 /// ## C Equivalent
 ///
@@ -375,14 +370,13 @@ public func gitSubmoduleName(
 
 
 /// Gets the path of the given submodule.
-/// - Parameter submodule: The submodule for which to get the path. The
-/// underlying type must be `git_submodule`.
-/// - Returns: The path of the given submodule.
-///
-/// ## Discussion
 ///
 /// The path of a submodule is generally the same as its name, although the
 /// two are not required to match.
+///
+/// - Parameter submodule: The submodule for which to get the path. The
+/// underlying type must be `git_submodule`.
+/// - Returns: The path of the given submodule.
 ///
 /// ## C Equivalent
 ///
@@ -472,17 +466,16 @@ public func gitSubmoduleBranch(
 
 
 /// Sets the branch of the specified submodule.
+///
+/// After calling this function, optionally use ``gitSubmoduleSync(submodule:)``
+/// to write the changes to the checked out submodule repository.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - name: The name of the submodule for which to set the branch.
 ///   - branch: The name of the branch to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// After calling this function, optionally use ``gitSubmoduleSync(submodule:)``
-/// to write the changes to the checked out submodule repository.
 ///
 /// ## C Equivalent
 ///
@@ -506,17 +499,16 @@ public func gitSubmoduleSetBranch(
 
 
 /// Sets the URL of the specified submodule.
+///
+/// After calling this function, optionally use ``gitSubmoduleSync(submodule:)``
+/// to write the changes to the checked out submodule repository.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - name: The name of the submodule for which to set the URL.
 ///   - url: The URL to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// After calling this function, optionally use ``gitSubmoduleSync(submodule:)``
-/// to write the changes to the checked out submodule repository.
 ///
 /// ## C Equivalent
 ///
@@ -588,16 +580,15 @@ public func gitSubmoduleHEADID(
 
 
 /// Gets the ID of the given submodule in the working directory.
-/// - Parameter submodule: The submodule for which to get the ID. The
-/// underlying type must be `git_submodule`.
-/// - Returns: The ID of the given submodule in the working directory.
-///
-/// ## Discussion
 ///
 /// This function returns the ID corresponding to the HEAD of the checked out
 /// submodule, and does not account for pending changes in the index. Use
 /// ``gitSubmoduleStatus(status:repo:name:ignore:)`` for more complete
 /// information about the state of the working directory.
+///
+/// - Parameter submodule: The submodule for which to get the ID. The
+/// underlying type must be `git_submodule`.
+/// - Returns: The ID of the given submodule in the working directory.
 ///
 /// ## C Equivalent
 ///
@@ -639,16 +630,15 @@ public func gitSubmoduleIgnore(
 
 
 /// Sets the ignore rule of the specified submodule.
+///
+/// - Note: This does not affect any existing submodule instances.
+///
 /// - Parameters:
 ///   - repo: The repository containing the submodule. The underlying type must
 ///   be `git_repository`.
 ///   - name: The name of the submodule for which to set the ignore rule.
 ///   - ignore: The submodule ignore rule to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This does not affect any existing submodule instances.
 ///
 /// ## C Equivalent
 ///
@@ -692,16 +682,15 @@ public func gitSubmoduleUpdateStrategy(
 
 
 /// Sets the update rule of the specified submodule.
+///
+/// - Note: This does not affect any existing submodule instances.
+///
 /// - Parameters:
 ///   - repo: The repository containing the submodule. The underlying type must
 ///   be `git_repository`.
 ///   - name: The name of the submodule for which to set the update rule.
 ///   - ignore: The submodule update rule to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This does not affect any existing submodule instances.
 ///
 /// ## C Equivalent
 ///
@@ -725,17 +714,16 @@ public func gitSubmoduleSetUpdate(
 
 
 /// Gets the recursion rule of the given submodule.
-/// - Parameter submodule: The submodule for which to get the recursion rule.
-/// The underlying type must be `git_submodule`.
-/// - Returns: The recursion rule of the given submodule.
-///
-/// ## Discussion
 ///
 /// This function accesses the `submodule.<name>.fetchRecurseSubmodules`
 /// configuration variable value for the given submodule.
 ///
 /// - Note: libgit2 does not honor this recursion setting, and the fetch
 /// functionality ignores submodules.
+///
+/// - Parameter submodule: The submodule for which to get the recursion rule.
+/// The underlying type must be `git_submodule`.
+/// - Returns: The recursion rule of the given submodule.
 ///
 /// ## C Equivalent
 ///
@@ -753,16 +741,15 @@ public func gitSubmoduleFetchRecurseSubmodules(
 
 
 /// Sets the recursion rule of the specified submodule.
+///
+/// - Note: This does not affect any existing submodule instances.
+///
 /// - Parameters:
 ///   - repo: The repository containing the submodule. The underlying type must
 ///   be `git_repository`.
 ///   - name: The name of the submodule for which to set the recursion rule.
 ///   - fetchRecurseSubmodules: The submodule recursion rule to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This does not affect any existing submodule instances.
 ///
 /// ## C Equivalent
 ///
@@ -787,15 +774,14 @@ public func gitSubmoduleSetFetchRecurseSubmodules(
 
 /// Copies the information of the given submodule into the superproject's
 /// `.git/config` file.
+///
+/// This is similar to `git submodule init`.
+///
 /// - Parameters:
 ///   - submodule: The submodule to write into the superproject's `.git/config`
 ///   file. The underlying type must be `git_submodule`.
 ///   - overwrite: Whether to overwrite existing entries.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is similar to `git submodule init`.
 ///
 /// ## C Equivalent
 ///
@@ -851,13 +837,12 @@ public func gitSubmoduleRepoInit(
 
 /// Copies the remote information of the given submodule into the checked out
 /// submodule configuration.
+///
+/// This is similar to `git submodule sync`.
+///
 /// - Parameter submodule: The submodule to copy. The underlying type must be
 /// `git_submodule`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is similar to `git submodule sync`.
 ///
 /// ## C Equivalent
 ///
@@ -875,6 +860,10 @@ public func gitSubmoduleSync(
 
 
 /// Opens the repository of the given submodule.
+///
+/// Multiple calls to this function will return distinct `git_repository`
+/// instances.
+///
 /// - Parameters:
 ///   - repo: The pointer in which to store the opened repository. The
 ///   underlying type must be `git_repository`.
@@ -882,11 +871,6 @@ public func gitSubmoduleSync(
 ///   `git_submodule`. The submodule must be checked out into the working
 ///   directory.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Multiple calls to this function will return distinct `git_repository`
-/// instances.
 ///
 /// ## C Equivalent
 ///
@@ -973,17 +957,16 @@ public func gitSubmoduleStatus(
 
 
 /// Gets the location status of the specified submodule.
+///
+/// This function is a lightweight version of
+/// ``gitSubmoduleStatus(status:repo:name:ignore:)``.
+///
 /// - Parameters:
 ///   - locationStatus: The ``GitSubmoduleStatusT`` instance in which to store
 ///   the submodule location status.
 ///   - submodule: The submodule for which to get the location status. The
 ///   underlying type must be `git_submodule`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function is a lightweight version of
-/// ``gitSubmoduleStatus(status:repo:name:ignore:)``.
 ///
 /// ## C Equivalent
 ///

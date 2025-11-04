@@ -13,6 +13,14 @@ import CLibgit2
 
 /// Sets the HEAD of the given repository to the specified commit, and
 /// optionally resets the index and worktree to match.
+///
+/// If the given committish object is a tag, it must be deferenceable to a
+/// commit.
+///
+/// If `checkoutOpts` is provided for a hard reset, the
+/// ``GitCheckoutOptions/checkoutStrategy`` property will be overriden by
+/// `resetType`.
+///
 /// - Parameters:
 ///   - repo: The repository to reset. The underlying type must be
 ///   `git_repository`.
@@ -22,15 +30,6 @@ import CLibgit2
 ///   - resetType: The type of reset to perform.
 ///   - checkoutOpts: The checkout options to use for a hard reset.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If the given committish object is a tag, it must be deferenceable to a
-/// commit.
-///
-/// If `checkoutOpts` is provided for a hard reset, the
-/// ``GitCheckoutOptions/checkoutStrategy`` property will be overriden by
-/// `resetType`.
 ///
 /// ## C Equivalent
 ///
@@ -62,17 +61,6 @@ public func gitReset(
 
 /// Sets the HEAD of the given repository to the given annotated commit, and
 /// optionally resets the index and worktree to match.
-/// - Parameters:
-///   - repo: The repository to reset. The underlying type must be
-///   `git_repository`.
-///   - target: The annotated commit to which HEAD should move. The underlying
-///   type must be `git_annotated_commit`. This must belong to the given
-///   repository.
-///   - resetType: The type of reset to perform.
-///   - checkoutOpts: The checkout options to use for a hard reset.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If `checkoutOpts` is provided for a hard reset, the
 /// ``GitCheckoutOptions/checkoutStrategy`` property will be overriden by
@@ -82,6 +70,16 @@ public func gitReset(
 /// ``gitReset(repo:target:resetType:checkoutOpts:)``, but takes an
 /// annotated commit. This enables more exact reflog messages by being able to
 /// specify the extended SHA syntax string which was specified by a user.
+///
+/// - Parameters:
+///   - repo: The repository to reset. The underlying type must be
+///   `git_repository`.
+///   - target: The annotated commit to which HEAD should move. The underlying
+///   type must be `git_annotated_commit`. This must belong to the given
+///   repository.
+///   - resetType: The type of reset to perform.
+///   - checkoutOpts: The checkout options to use for a hard reset.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -113,6 +111,11 @@ public func gitResetFromAnnotated(
 
 /// Updates some entries in the index of the given repository, from the
 /// specified commit tree.
+///
+/// The scope of the updated entries will be determined by the given pathspecs.
+/// If the given committish object is `nil`, entries in the index matching the
+/// provided pathspecs will be removed.
+///
 /// - Parameters:
 ///   - repo: The repository to reset. The underlying type must be
 ///   `git_repository`.
@@ -121,12 +124,6 @@ public func gitResetFromAnnotated(
 ///   given repository.
 ///   - pathspecs: The pathspecs to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The scope of the updated entries will be determined by the given pathspecs.
-/// If the given committish object is `nil`, entries in the index matching the
-/// provided pathspecs will be removed.
 ///
 /// ## C Equivalent
 ///

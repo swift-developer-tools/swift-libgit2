@@ -21,22 +21,16 @@ public struct GitCommitGraphWriterOptions: CStructMutable, ThrowingCConvertible,
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitCommitGraphWriterOptionsVersion``.
     public var version      : UInt32
     
     /// The split stategy.
-    ///
-    /// ## Discussion
     ///
     /// The default value is
     /// ``GitCommitGraphSplitStrategyT/gitCommitGraphSplitStrategySingleFile``.
     public var splitStategy : GitCommitGraphSplitStrategyT
     
     /// The ratio between consecutive levels.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `2`.
     ///
@@ -45,8 +39,6 @@ public struct GitCommitGraphWriterOptions: CStructMutable, ThrowingCConvertible,
     public var sizeMultiple : Float
     
     /// The maximum number of commits in a level.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `64,000`.
     ///

@@ -57,8 +57,7 @@ enum Remote
         
         XCTAssertOK(remoteLookupResult)
         
-        guard let retrievedRemotePointer: OpaquePointer
-                = retrievedRemotePointer
+        guard let retrievedRemotePointer
         else
         {
             XCTFail( "The retrieved remote pointer was nil.")

@@ -21,29 +21,21 @@ public struct GitRevertOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitRevertOptionsVersion``.
     public var version      : UInt32
     
     /// The parent of the revert commit, if it is a merge commit.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var mainline     : UInt32
     
     /// The merge options.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitMergeOptions``
     /// instance.
     public var mergeOpts    : GitMergeOptions
     
     /// The checkout options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.

@@ -28,6 +28,10 @@ public func gitFilterLookup(
 
 
 /// Creates an empty filter list.
+///
+/// This function may be used with ``gitFilterLookup(name:)`` and
+/// ``gitFilterListPush(fl:filter:payload:)`` to assemble a chain of filters.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the filter list. The underlying
 ///   type must be `git_filter_lister`.
@@ -36,11 +40,6 @@ public func gitFilterLookup(
 ///   - mode: The filtering direction to use.
 ///   - options: The flags controlling the filtering process.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function may be used with ``gitFilterLookup(name:)`` and
-/// ``gitFilterListPush(fl:filter:payload:)`` to assemble a chain of filters.
 ///
 /// ## C Equivalent
 ///
@@ -66,14 +65,6 @@ public func gitFilterListNew(
 
 
 /// Adds the given filter the given filter list.
-/// - Parameters:
-///   - fl: The filter list to update. The underlying type must be
-///   `git_filter_list`.
-///   - filter: The filter to add.
-///   - payload: The filter payload to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function allows more direct manipulation of filter lists. This
 /// function is usually not necessary, since the filter list is created by
@@ -82,6 +73,13 @@ public func gitFilterListNew(
 ///
 /// - Note: A payload may be provided if the expected payload format is known.
 /// Some filters will fail if the given payload is `nil`.
+///
+/// - Parameters:
+///   - fl: The filter list to update. The underlying type must be
+///   `git_filter_list`.
+///   - filter: The filter to add.
+///   - payload: The filter payload to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -122,15 +120,14 @@ public func gitFilterListLength(
 
 
 /// Gets the repository containing the given filter source.
+///
+/// - Important: The returned pointer is owned by the given filter source and
+/// must not be freed.
+///
 /// - Parameter src: The filter source for which to get the repository. The
 /// underlying type must be `git_filter_source`.
 /// - Returns: The repository containing the given filter source. The
 /// underlying type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given filter source and
-/// must not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -270,19 +267,18 @@ public func gitFilterInit(
 
 
 /// Registers the given filter with the given name and priority.
-/// - Parameters:
-///   - name: The filter name to use.
-///   - filter: The filter to register.
-///   - priority: The filter priority to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Important: The `filter` pointer will be stored by libgit2 and must remain
 /// valid until the filter is unregistered or until libgit2 is shut down.
 /// The pointer must be a durable allocation, meaning it must be statically
 /// allocated or heap-allocated. Passing a stack-allocated pointer will result
 /// in data loss or undefined behavior.
+///
+/// - Parameters:
+///   - name: The filter name to use.
+///   - filter: The filter to register.
+///   - priority: The filter priority to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -306,12 +302,11 @@ public func gitFilterRegister(
 
 
 /// Unregisters the specified filter.
-/// - Parameter name: The name of the filter to unregister.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The built-in libgit2 filters cannot be removed.
+///
+/// - Parameter name: The name of the filter to unregister.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

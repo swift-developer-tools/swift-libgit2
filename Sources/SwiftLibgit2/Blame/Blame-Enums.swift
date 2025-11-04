@@ -51,46 +51,38 @@ public struct GitBlameFlagT: COptionSet
     
     /// Track lines that have moved within a file.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git blame -M`.
     ///
-    /// - Note: This has not yet been implemented, but is reserved for
-    /// future use.
+    /// - Note: This has not been implemented in libgit2 yet, but is reserved
+    /// for future use.
     public static let gitBlameTrackCopiesSameFile           = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_SAME_FILE.rawValue)
     
     /// Track lines that have moved across files in the same commit.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git blame -C`.
     ///
-    /// - Note: This has not yet been implemented, but is reserved for
-    /// future use.
+    /// - Note: This has not been implemented in libgit2 yet, but is reserved
+    /// for future use.
     public static let gitBlameTrackCopiesSameCommitMoves    = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_SAME_COMMIT_MOVES.rawValue)
     
     /// Track lines that have been copied from another file that exists in the
     /// same commit.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git blame -CC`, and implies
     /// ``gitBlameTrackCopiesSameFile``.
     ///
-    /// - Note: This has not yet been implemented, but is reserved for
-    /// future use.
+    /// - Note: This has not been implemented in libgit2 yet, but is reserved
+    /// for future use.
     public static let gitBlameTrackCopiesSameCommitCopies   = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_SAME_COMMIT_COPIES.rawValue)
     
     /// Track lines that have been copied from another file that exists in
     /// any commit.
     ///
-    /// ## Discussion
-    ///
     /// This is the equivalent of `git blame -CCC`, and implies
     /// ``gitBlameTrackCopiesSameCommitCopies``.
     ///
-    /// - Note: This has not yet been implemented, but is reserved for
-    /// future use.
+    /// - Note: This has not been implemented in libgit2 yet, but is reserved
+    /// for future use.
     public static let gitBlameTrackCopiesAnyCommitCopies    = GitBlameFlagT(rawValue: GIT_BLAME_TRACK_COPIES_ANY_COMMIT_COPIES.rawValue)
     
     /// Restrict the search of commits to those reachable by following only
@@ -99,8 +91,6 @@ public struct GitBlameFlagT: COptionSet
     
     /// Use the mailmap file to map author and committer names and email
     /// addresses to canonical real names and email addresses.
-    ///
-    /// ## Discussion
     ///
     /// The mailmap file will be read from the working directory, or from
     /// HEAD in a bare repository.

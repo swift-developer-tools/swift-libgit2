@@ -12,12 +12,11 @@ import CLibgit2
 
 
 /// Frees the memory allocated for the IDs of a `git_oidarray` instance.
-/// - Parameter array: The array containing the IDs to free.
-///
-/// ## Discussion
 ///
 /// This function does not free the `git_oidarray` instance itself, since
 /// libgit2 will never allocate that object directly.
+///
+/// - Parameter array: The array containing the IDs to free.
 ///
 /// ## C Equivalent
 ///
@@ -26,7 +25,7 @@ public func gitOIDArrayDispose(
     array: UnsafeMutablePointer<git_oidarray>?
 )
 {
-    guard let array: UnsafeMutablePointer<git_oidarray> = array
+    guard let array
     else
     {
         return

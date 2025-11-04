@@ -13,17 +13,16 @@ import Foundation
 
 
 /// Creates a new object database with no backends.
-/// - Parameter odb: The pointer in which to store the object database. The
-/// underlying type must be `git_odb`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Before the ODB can be used for reading or writing, a custom database
 /// backend must be manually added by calling
 /// ``gitODBAddBackend(odb:backend:priority:)``.
 ///
 /// - Note: This function supports only SHA-1 object databases.
+///
+/// - Parameter odb: The pointer in which to store the object database. The
+/// underlying type must be `git_odb`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -41,13 +40,6 @@ public func gitODBNew(
 
 
 /// Creates a new obejct database, and automatically adds two default backends.
-/// - Parameters:
-///   - odbOut: The pointer in which to store the object database. The
-///   underlying type must be `git_odb`.
-///   - objectsDir: The path to the Objects directory of the repository.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The two default backends are:
 ///
@@ -58,6 +50,12 @@ public func gitODBNew(
 /// the corresponding data.
 ///
 /// - Note: This function supports only SHA-1 object databases.
+///
+/// - Parameters:
+///   - odbOut: The pointer in which to store the object database. The
+///   underlying type must be `git_odb`.
+///   - objectsDir: The path to the Objects directory of the repository.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -79,16 +77,15 @@ public func gitODBOpen(
 
 
 /// Adds an on-disk alternate backend to the given object database.
+///
+/// Alternate backends are always checked for objects after all the main
+/// backends have been checked. Writing is disabled on alternate backends.
+///
 /// - Parameters:
 ///   - odb: The object database to update. The underlying type must be
 ///   `git_odb`.
 ///   - path: The path to the Objects directory of the alternate backend.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Alternate backends are always checked for objects after all the main
-/// backends have been checked. Writing is disabled on alternate backends.
 ///
 /// ## C Equivalent
 ///
@@ -120,7 +117,7 @@ public func gitODBFree(
     db: OpaquePointer?
 )
 {
-    guard let db: OpaquePointer = db
+    guard let db
     else
     {
         return
@@ -132,6 +129,9 @@ public func gitODBFree(
 
 
 /// Reads the specified object from the given object database.
+///
+/// - Note: This function will query all available object database backends.
+///
 /// - Parameters:
 ///   - obj: The pointer in which to store the object. The underlying type
 ///   must be `git_odb_object`.
@@ -139,10 +139,6 @@ public func gitODBFree(
 ///   `git_odb`.
 ///   - id: The ID of the object to read.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function will query all available object database backends.
 ///
 /// ## C Equivalent
 ///
@@ -172,6 +168,9 @@ public func gitODBRead(
 
 /// Reads the specified object from the given object database, using a prefix
 /// of the object's ID.
+///
+/// This function will query all available object database backends.
+///
 /// - Parameters:
 ///   - obj: The pointer in which to store the object. The underlying type must
 ///   be `git_odb_object`.
@@ -182,10 +181,6 @@ public func gitODBRead(
 ///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
 ///   object matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will query all available object database backends.
 ///
 /// ## C Equivalent
 ///
@@ -217,6 +212,10 @@ public func gitODBReadPrefix(
 
 /// Reads the header of the specified object from the given object database,
 /// without reading its full contents.
+///
+/// - Note: Most backends do not support reading only the header of an object,
+/// so the whole object will be read.
+///
 /// - Parameters:
 ///   - lenOut: The pointer in which to store the object size.
 ///   - typeOut: The ``GitObjectT`` instance in which to store the object type.
@@ -224,11 +223,6 @@ public func gitODBReadPrefix(
 ///   `git_odb`.
 ///   - id: The ID of the object to read.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: Most backends do not support reading only the header of an object,
-/// so the whole object will be read.
 ///
 /// ## C Equivalent
 ///
@@ -332,6 +326,9 @@ public func gitODBExistsExt(
 
 /// Checks whether the specified object can be found the given object database,
 /// using a prefix of the object's ID.
+///
+/// This function will query all available object database backends.
+///
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the full ID of the found
 ///   object.
@@ -342,10 +339,6 @@ public func gitODBExistsExt(
 ///   equal to ``gitOIDMinPrefixLen``, and long enough to identify a unique
 ///   object matching the prefix.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will query all available object database backends.
 ///
 /// ## C Equivalent
 ///
@@ -382,14 +375,6 @@ public func gitODBExistsPrefix(
 
 /// Checks whether one or more objects can be found in the given object
 /// database by their abbreviated object IDs and types.
-/// - Parameters:
-///   - db: The object database to search. The underlying type must be
-///   `git_odb`.
-///   - ids: The array of ``GitODBExpandID`` instances for which to search.
-///   - count: The length of `ids`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// For each abbreviated ID in the given array that is unique in the object
 /// database, and of the specified type, the full object ID and type will be
@@ -400,6 +385,13 @@ public func gitODBExistsPrefix(
 /// - Note: Since this function operates on multiple objects, the underlying
 /// object database will not be reloaded if an object is not found, unlike
 /// other object database operations.
+///
+/// - Parameters:
+///   - db: The object database to search. The underlying type must be
+///   `git_odb`.
+///   - ids: The array of ``GitODBExpandID`` instances for which to search.
+///   - count: The length of `ids`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -428,11 +420,6 @@ public func gitODBExpandIDs(
 
 
 /// Refreshes the given object database to load newly added files.
-/// - Parameter db: The object database to refresh. The underlying type must
-/// be `git_odb`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function will force a reload of the underlying indices if the on-disk
 /// object databases have changed while libgit2.
@@ -440,6 +427,10 @@ public func gitODBExpandIDs(
 /// - Note: It is generally unnecessary to call this function. libgit2 will
 /// automatically attempt to refresh the object database when a lookup fails,
 /// to check whether the object exists on-disk but has not been loaded yet.
+///
+/// - Parameter db: The object database to refresh. The underlying type must
+/// be `git_odb`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -457,17 +448,16 @@ public func gitODBRefresh(
 
 
 /// Loops over all objects available in the given object database.
+///
+/// The objects in the given object database will most likely be iterated in
+/// the index order. Accessing objects in that order is generally inefficient.
+///
 /// - Parameters:
 ///   - db: The object database to search. The underlying type must be
 ///   `git_odb`.
 ///   - cb: The ``GitODBForEachCB`` callback to invoke for each object.
 ///   - payload: The payload to pass to `cb`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The objects in the given object database will most likely be iterated in
-/// the index order. Accessing objects in that order is generally inefficient.
 ///
 /// ## C Equivalent
 ///
@@ -491,6 +481,14 @@ public func gitODBForEach(
 
 
 /// Writes the specified object into the given object database.
+///
+/// In most cases, it is preferrable to write objects to an object database
+/// using a write stream, which is both faster and less memory intensive,
+/// especially for larger objects.
+///
+/// This function is best used with custom backends which are not able to
+/// support write streams.
+///
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the ID of the write
 ///   operation.
@@ -500,15 +498,6 @@ public func gitODBForEach(
 ///   - len: The length of `data`.
 ///   - type: The type of object to write.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// In most cases, it is preferrable to write objects to an object database
-/// using a write stream, which is both faster and less memory intensive,
-/// especially for larger objects.
-///
-/// This function is best used with custom backends which are not able to
-/// support write streams.
 ///
 /// ## C Equivalent
 ///
@@ -546,6 +535,11 @@ public func gitODBWrite(
 
 
 /// Opens a stream to write an object into the given object database.
+///
+/// The type of the opened stream will be ``GitODBStreamT/gitStreamWROnly``,
+/// and it will not be effective until
+/// ``gitODBStreamFinalizeWrite(out:stream:)`` is successfully called.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the stream.
 ///   - db: The object database to update. The underlying type must be
@@ -553,12 +547,6 @@ public func gitODBWrite(
 ///   - size: The size of the object to write.
 ///   - type: The type of the object to write.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The type of the resulting stream will be ``GitODBStreamT/gitStreamWROnly``,
-/// and it will not be effective until
-/// ``gitODBStreamFinalizeWrite(out:stream:)`` is successfully called.
 ///
 /// ## C Equivalent
 ///
@@ -584,16 +572,15 @@ public func gitODBOpenWStream(
 
 
 /// Writes to the given object database stream.
+///
+/// - Note: The write operation will fail if if number of received bytes
+/// exceeds the size declared with ``gitODBOpenWStream(out:db:size:type:)``.
+///
 /// - Parameters:
 ///   - stream: The stream in which to write.
 ///   - buffer: The data to write.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: The write operation will fail if if number of received bytes
-/// exceeds the size declared with ``gitODBOpenWStream(out:db:size:type:)``.
 ///
 /// ## C Equivalent
 ///
@@ -622,19 +609,18 @@ public func gitODBStreamWrite(
 
 
 /// Finishes writing to an object database stream.
-/// - Parameters:
-///   - out: The ``GitOID`` instance in which to store the ID of the write
-///   operation.
-///   - stream: The stream to finalize.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// After the finalization operation successfully completes, the object will
 /// take its final name and will be available to the object database.
 ///
 /// - Note: The finalization operation will fail if if number of received bytes
 /// exceeds the size declared with ``gitODBOpenWStream(out:db:size:type:)``.
+///
+/// - Parameters:
+///   - out: The ``GitOID`` instance in which to store the ID of the write
+///   operation.
+///   - stream: The stream to finalize.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -661,15 +647,14 @@ public func gitODBStreamFinalizeWrite(
 
 
 /// Reads from the given object database stream.
+///
+/// - Note: Most backends do not implement streaming reads.
+///
 /// - Parameters:
 ///   - stream: The stream to read.
 ///   - buffer: The `Data` instance in which to store the read data.
 ///   - len: The length of `buffer`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: Most backends do not implement streaming reads.
 ///
 /// ## C Equivalent
 ///
@@ -707,7 +692,7 @@ public func gitODBStreamFree(
     stream: UnsafeMutablePointer<git_odb_stream>?
 )
 {
-    guard let stream: UnsafeMutablePointer<git_odb_stream> = stream
+    guard let stream
     else
     {
         return
@@ -719,6 +704,13 @@ public func gitODBStreamFree(
 
 
 /// Opens a stream to read the specified object from the given object database.
+///
+/// The type of the opened stream will be ``GitODBStreamT/gitStreamRDOnly``,
+/// and will have `read()` and `free()` methods.
+///
+/// - Note: Most backends do not support streaming reads, since the objects are
+/// stored as compressed/delta blobs. Use ``gitODBRead(obj:db:id:)`` instead.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the stream.
 ///   - len: The pointer in which to store the size of the object.
@@ -727,14 +719,6 @@ public func gitODBStreamFree(
 ///   `git_odb`.
 ///   - oid: The ID of the object to read.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The type of the resulting stream will be ``GitODBStreamT/gitStreamWROnly``,
-/// and will have `read()` and `free()` methods.
-///
-/// - Note: Most backends do not support streaming reads, since the objects are
-/// stored as compressed/delta blobs. Use ``gitODBRead(obj:db:id:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -772,16 +756,6 @@ public func gitODBOpenRStream(
 
 
 /// Opens a stream for writing a packfile to the given object database.
-/// - Parameters:
-///   - out: The pointer in which to store the writepack functions.
-///   - db: The object database from which to read. The underlying type must
-///   be `git_odb`.
-///   - progressCB: The ``GitIndexerProgressCB`` callback to invoke to report
-///   indexing progress.
-///   - progressPayload: The payload to pass to `progressCB`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If the object database layer understands pack files, then the given
 /// packfile will most likely be streamed directly to the disk, and a
@@ -790,6 +764,15 @@ public func gitODBOpenRStream(
 ///
 /// - Note: The callback will be invoked inline with network operations and
 /// indexing operations, and may affect performance.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the writepack functions.
+///   - db: The object database from which to read. The underlying type must
+///   be `git_odb`.
+///   - progressCB: The ``GitIndexerProgressCB`` callback to invoke to report
+///   indexing progress.
+///   - progressPayload: The payload to pass to `progressCB`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -816,17 +799,16 @@ public func gitODBWritePack(
 
 /// Writes a `multi-pack-index` file from all the `.pack` files in the given
 /// object database.
-/// - Parameter db: The object database to update. The underlying type must be
-/// `git_odb`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If the object database layer understands pack files, then a file called
 /// `multi-pack-index` will be created next to the `.pack` and `.idx` files.
 /// The created file will contain an index of all the objects stored in `.pack`
 /// files. This enables `O(log(n))` lookups, regardless of the number of
 /// packfiles.
+///
+/// - Parameter db: The object database to update. The underlying type must be
+/// `git_odb`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -844,17 +826,16 @@ public func gitODBWriteMultiPackIndex(
 
 
 /// Gets the object ID of the given data.
+///
+/// The retrieved ID will be the identifier of the given data as if the data
+/// were written to the object database.
+///
 /// - Parameters:
 ///   - oid: The ``GitOID`` instance in which to store the object ID.
 ///   - data: The data to hash.
 ///   - len: The length of `data`.
 ///   - objectType: The type of object to hash.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The resulting ID will be the identifier of the given data as if the data
-/// were written to the object database.
 ///
 /// ## C Equivalent
 ///
@@ -892,18 +873,17 @@ public func gitODBHash(
 /// Reads the specified file from the disk and gets the ID that the file would
 /// have, if it were written to the object database as an object of the given
 /// type, without applying filters.
-/// - Parameters:
-///   - oid: The ``GitOID`` instance in which to store the object ID.
-///   - path: The path to the file to read.
-///   - objectType: The type of object to hash.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This is similar to `git hash-object --no-filters`.
 ///
 /// - Note: To apply filters, use
 /// ``gitRepositoryHashFile(out:repo:path:type:asPath:)`` instead.
+///
+/// - Parameters:
+///   - oid: The ``GitOID`` instance in which to store the object ID.
+///   - path: The path to the file to read.
+///   - objectType: The type of object to hash.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -969,7 +949,7 @@ public func gitODBObjectFree(
     object: OpaquePointer?
 )
 {
-    guard let object: OpaquePointer = object
+    guard let object
     else
     {
         return
@@ -1005,14 +985,13 @@ public func gitODBObjectID(
 
 
 /// Gets the raw content of the given database object.
-/// - Parameter object: The database object for which to get the raw content.
-/// The underlying type must be `git_odb_object`.
-/// - Returns: The raw content of the given database object.
-///
-/// ## Discussion
 ///
 /// The raw content of a database object is the uncompressed, raw data as read
 /// from the object database, without the leading header.
+///
+/// - Parameter object: The database object for which to get the raw content.
+/// The underlying type must be `git_odb_object`.
+/// - Returns: The raw content of the given database object.
 ///
 /// ## C Equivalent
 ///
@@ -1103,17 +1082,16 @@ public func gitODBAddBackend(
 
 
 /// Adds the given alternate backend to the given object database.
+///
+/// Alternate backends are always checked for objects after all the main
+/// backends have been checked. Writing is disabled on alternate backends.
+///
 /// - Parameters:
 ///   - odb: The object database to update. The underlying type must be
 ///   `git_odb`.
 ///   - backend: The alternate backend to add.
 ///   - priority: The priority for ordering the backends queue.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Alternate backends are always checked for objects after all the main
-/// backends have been checked. Writing is disabled on alternate backends.
 ///
 /// ## C Equivalent
 ///
@@ -1183,17 +1161,16 @@ public func gitODBGetBackend(
 
 
 /// Sets the given commit graph for the given object database.
+///
+/// - Important: If the operation succeeds, ownership of the given commit graph
+/// will be transferred to libgit2. The caller must not free the commit graph.
+///
 /// - Parameters:
 ///   - odb: The object database to update. The underlying type must be
 ///   `git_odb`.
 ///   - cGraph: The commit graph to set. The underlying type must be
 ///   `git_commit_graph`. Pass `nil` to unset the commit graph.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Important: If the operation succeeds, ownership of the given commit graph
-/// will be transferred to libgit2. The caller must not free the commit graph.
 ///
 /// ## C Equivalent
 ///

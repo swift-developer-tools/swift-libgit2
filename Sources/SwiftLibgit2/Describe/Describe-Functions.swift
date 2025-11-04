@@ -97,6 +97,10 @@ public func gitDescribeCommit(
 
 
 /// Describes the current commit and worktree.
+///
+/// A status check will be run after performing the describe operation on HEAD.
+/// The description will be considered dirity if there are any entries.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the description. The underlying
 ///   type must be `git_describe_result`.
@@ -104,11 +108,6 @@ public func gitDescribeCommit(
 ///   be `git_repository`.
 ///   - opts: The describe options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// A status check will be run after performing the describe operation on HEAD.
-/// The description will be considered dirity if there are any entries.
 ///
 /// ## C Equivalent
 ///
@@ -186,7 +185,7 @@ public func gitDescribeResultFree(
     result: OpaquePointer?
 )
 {
-    guard let result: OpaquePointer = result
+    guard let result
     else
     {
         return

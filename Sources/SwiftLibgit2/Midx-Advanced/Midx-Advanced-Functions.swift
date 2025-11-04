@@ -51,7 +51,7 @@ public func gitMidxWriterFree(
     w: OpaquePointer?
 )
 {
-    guard let w: OpaquePointer = w
+    guard let w
     else
     {
         return

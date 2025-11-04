@@ -12,15 +12,14 @@ import CLibgit2
 
 
 /// Gets the last error that was generated.
-/// - Returns: The last error that was generated.
-///
-/// ## Discussion
 ///
 /// The returned ``GitError`` instance may contain stale information if this
 /// function is called after a different function that succeeded.
 ///
 /// - Important: Do not rely on this to determine whether an error has occurred.
 /// Instead, examine the ``GitErrorCode`` instances returned by functions.
+///
+/// - Returns: The last error that was generated.
 ///
 /// ## C Equivalent
 ///

@@ -60,8 +60,6 @@ public struct GitTime: CStructReadable, CConvertible, Sendable
 
 /// A type to write in a streaming fashion.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_writestream` instead.
 ///

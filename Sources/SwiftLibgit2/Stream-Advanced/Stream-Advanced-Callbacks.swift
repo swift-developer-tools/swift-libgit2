@@ -12,16 +12,15 @@ import CLibgit2
 
 
 /// The callback invoked to create a new connection to the given host and port.
+///
+/// - Warning: This is deprecated in libgit2 and will be removed in the next
+/// major release. Use ``GitStreamRegistration/Initialize`` instead.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the stream.
 ///   - host: The name of the host to which to connect the stream.
 ///   - port: The port to which to connect the stream.
 /// - Returns: `0` on success, or an error code.
-///
-/// ## Discussion
-///
-/// - Warning: This is deprecated in libgit2 and will be removed in the next
-/// major release. Use ``GitStreamRegistration/Initialize`` instead.
 ///
 /// ## C Equivalent
 ///

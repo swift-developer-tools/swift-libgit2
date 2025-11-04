@@ -13,8 +13,6 @@ import CLibgit2
 
 /// An array of strings.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All bindings use `[String]` instead.
 ///

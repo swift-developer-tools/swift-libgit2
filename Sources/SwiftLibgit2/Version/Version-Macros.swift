@@ -57,8 +57,6 @@ public let libgit2VersionPatch: Int = 0
 
 /// The libgit2 prerelease version number.
 ///
-/// ## Discussion
-///
 /// For nightly builds during active development, the prerelease state name
 /// will be `alpha`. Releases may have a `beta` or release candidate (`rc1`,
 /// `rc2`, etc.) prerelease. This will be `nil` for a final release.
@@ -73,8 +71,6 @@ public let libgit2VersionPrerelease: String? = nil
 
 /// The libgit2 ABI shared object version number.
 ///
-/// ## Discussion
-///
 /// This is changed only for breaking ABI changes and may not reflect the
 /// API version number.
 ///
@@ -87,8 +83,6 @@ public let libgit2SOVersion: String
 
 
 /// The libgit2 version number.
-///
-/// ## Discussion
 ///
 /// This is an integer value representing the libgit2 semantic version number.
 /// For example, `1.9.1` is `1_090_100`.

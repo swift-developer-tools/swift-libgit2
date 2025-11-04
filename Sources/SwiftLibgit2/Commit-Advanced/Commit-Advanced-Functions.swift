@@ -12,6 +12,19 @@ import CLibgit2
 
 
 /// Creates a commit in the given repository, from the given IDs.
+///
+/// The commit message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the commit message.
+///
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
+///
+/// - Important: This function does not validate the given tree ID or any of
+/// the parent IDs.
+///
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
@@ -28,20 +41,6 @@ import CLibgit2
 ///   - parents: The IDs of the commits to use as parents of the commit. Pass
 ///   an empty array to create a commit with no parents.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The commit message will not be cleaned up automatically. Use
-/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
-/// up the commit message.
-///
-/// If `updateRef` is not direct, it will be resolved to a direct reference.
-/// Pass `HEAD` to update the HEAD of the current branch and make it point to
-/// this commit. If the reference does not exist yet, it will be created.
-/// If it does exist, the first parent must be the tip of this branch.
-///
-/// - Important: This function does not validate the given tree ID or any of
-/// the parent IDs.
 ///
 /// ## C Equivalent
 ///
@@ -104,6 +103,18 @@ public func gitCommitCreateFromIDs(
 
 
 /// Creates a commit in the given repository, from the given IDs.
+///
+/// The commit message will not be cleaned up automatically. Use
+/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
+/// up the commit message.
+///
+/// If `updateRef` is not direct, it will be resolved to a direct reference.
+/// Pass `HEAD` to update the HEAD of the current branch and make it point to
+/// this commit. If the reference does not exist yet, it will be created.
+/// If it does exist, the first parent must be the tip of this branch.
+///
+/// - Important: This function does not validate the given tree ID.
+///
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the ID of the
 ///   newly-created commit.
@@ -120,19 +131,6 @@ public func gitCommitCreateFromIDs(
 ///   parents of the commit.
 ///   - parentPayload: The payload to pass to `parentCB`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The commit message will not be cleaned up automatically. Use
-/// ``gitMessagePrettify(out:message:stripComments:commentChar:)`` to clean
-/// up the commit message.
-///
-/// If `updateRef` is not direct, it will be resolved to a direct reference.
-/// Pass `HEAD` to update the HEAD of the current branch and make it point to
-/// this commit. If the reference does not exist yet, it will be created.
-/// If it does exist, the first parent must be the tip of this branch.
-///
-/// - Important: This function does not validate the given tree ID.
 ///
 /// ## C Equivalent
 ///

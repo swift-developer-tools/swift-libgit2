@@ -20,21 +20,15 @@ public struct GitDiffPerfData: CStructInternalMutable, CConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitDiffPerfDataVersion``.
     public private(set) var version         : UInt32    = gitDiffPerfDataVersion
     
     /// The number of `stat()` invocations.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var statCalls       : Int       = 0
     
     /// The number of IDs calculated.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public private(set) var oidCalculations : Int       = 0

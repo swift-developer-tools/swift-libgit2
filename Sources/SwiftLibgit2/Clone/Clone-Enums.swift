@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The options for bypassing the Git-aware transport on clone.
 ///
-/// ## Discussion
-///
 /// Bypassing the Git-aware transport on clone means that instead of a fetch,
 /// libgit2 will copy the object database directory instead of figuring out
 /// what it needs, which is faster. If possible, it will hardlink the files

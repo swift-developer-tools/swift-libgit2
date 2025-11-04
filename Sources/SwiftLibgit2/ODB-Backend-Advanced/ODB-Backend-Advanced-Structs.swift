@@ -13,8 +13,6 @@ import CLibgit2
 
 /// A custom object database backend.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_odb_backend` instead.
 ///
@@ -271,13 +269,12 @@ public struct GitODBBackend: CStruct
     
     /// The callback invoked to refresh the given object database backend to
     /// load newly added files.
-    /// - Parameter backend: The object database backend to refresh.
-    /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
     ///
     /// The object database layer will automatically invoke this callback when
     /// needed on failed lookups.
+    ///
+    /// - Parameter backend: The object database backend to refresh.
+    /// - Returns: `0` on success, or an error code.
     public typealias Refresh = @convention(c)
     (
         UnsafeMutablePointer<git_odb_backend>?
@@ -336,12 +333,6 @@ public struct GitODBBackend: CStruct
     
     /// The callback invoked to update the last-used time of the specified
     /// object in the given object database backend.
-    /// - Parameters:
-    ///   - backend: The object database backend to to update.
-    ///   - id: The ID of the object to freshen.
-    /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
     ///
     /// The last-used time of an object occurs when
     /// ``gitODBWrite(out:odb:data:len:type:)`` is called, but the specified
@@ -349,6 +340,11 @@ public struct GitODBBackend: CStruct
     ///
     /// The underlying implementation may need to update the last-used
     /// timestamps.
+    ///
+    /// - Parameters:
+    ///   - backend: The object database backend to to update.
+    ///   - id: The ID of the object to freshen.
+    /// - Returns: `0` on success, or an error code.
     public typealias Freshen = @convention(c)
     (
         UnsafeMutablePointer<git_odb_backend>?,

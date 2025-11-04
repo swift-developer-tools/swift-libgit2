@@ -12,17 +12,16 @@ import CLibgit2
 
 
 /// Generates formatted diff text.
+///
+/// - Note: This function is provided for documentation purposes, but is not
+/// intended to be called directly. Use ``GitDiffLineCB`` instead.
+///
 /// - Parameters:
 ///   - delta: The delta to process.
 ///   - hunk: The diff hunk to process.
 ///   - line: The diff line to process.
 ///   - payload: The payload provided by the diff generator.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is provided for documentation purposes, but is not
-/// intended to be called directly. Use ``GitDiffLineCB`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -63,17 +62,16 @@ public func gitDiffPrintCallbackToBuf(
 
 
 /// Generates formatted diff text.
+///
+/// - Note: This function is provided for documentation purposes, but is not
+/// intended to be called directly. Use ``GitDiffLineCB`` instead.
+///
 /// - Parameters:
 ///   - delta: The delta to process.
 ///   - hunk: The diff hunk to process.
 ///   - line: The diff line to process.
 ///   - payload: The payload provided by the diff generator.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function is provided for documentation purposes, but is not
-/// intended to be called directly. Use ``GitDiffLineCB`` instead.
 ///
 /// ## C Equivalent
 ///

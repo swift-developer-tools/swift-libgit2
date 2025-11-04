@@ -21,15 +21,11 @@ public struct GitRemoteCreateOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitRemoteCreateOptionsVersion``.
     public var version      : UInt32
     
     /// The repository to own the remote. The underlying type must be
     /// `git_repository`.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -38,8 +34,6 @@ public struct GitRemoteCreateOptions: CStructMutable, WithCConvertible
     
     /// The acceptable prune settings when performing a fetch operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// If this is `nil`, the remote will be an in-memory/anonymous remote.
@@ -47,14 +41,10 @@ public struct GitRemoteCreateOptions: CStructMutable, WithCConvertible
     
     /// The fetchspec the remote should use.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var fetchspec    : String?
     
     /// The flags controlling remote creation.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags        : GitRemoteCreateFlags
@@ -151,28 +141,20 @@ public struct GitPushUpdate: CStructInternalMutable, WithCConvertible, Sendable
 {
     /// The source name of the reference.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public private(set) var srcRefName  : String?   = nil
     
     /// The destination name of the reference.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var dstRefName  : String?   = nil
     
     /// The ID of the current target of the reference.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public private(set) var src         : GitOID    = GitOID()
     
     /// The ID of the new target of the reference.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public private(set) var dst         : GitOID    = GitOID()
@@ -244,14 +226,10 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitRemoteCallbacksVersion``.
     public var version              : UInt32
     
     /// The callback invoked for transport messages.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -261,8 +239,6 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     
     /// The callback invoked to report download progress.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// - Note: This property is unused.
@@ -270,28 +246,20 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     
     /// The callback invoked to acquire credentials.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var credentials          : GitCredentialAcquireCB?
     
     /// The callback invoked to check custom certificates.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var certificateCheck     : GitTransportCertificateCheckCB?
     
     /// The callback invoked to report indexing progress.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var transferProgress     : GitIndexerProgressCB?
     
     /// The callback invoked for local reference update notifications.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -304,56 +272,40 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     
     /// The callback invoked to report packfile iteration progress.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var packProgress         : GitPackbuilderProgressCB?
     
     /// The callback invoked to report push network progress.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var pushTransferProgress : GitPushTransferProgressCB?
     
     /// The callback invoked for remote status update notifications.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var pushUpdateReference  : GitPushUpdateReferenceCB?
     
     /// The callback invoked for upcoming update notifications.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var pushNegotation       : GitPushNegotiationCB?
     
     /// The callback invoked to create a transport.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var transport            : GitTransportCB?
     
     /// The callback invoked immediately before attempting a remote connection.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var remoteReady          : GitRemoteReadyCB?
     
     /// The payload passed to the callbacks of ``GitRemoteCallbacks``.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var payload              : UnsafeMutableRawPointer?
     
     /// The callback invoked to resolve URLs.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -362,8 +314,6 @@ public struct GitRemoteCallbacks: CStructMutable, ThrowingCConvertible
     public var resolveURL           : GitURLResolveCB?
     
     /// The callback invoked for local reference update notifications.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -543,15 +493,11 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitFetchOptionsVersion``.
     public var version          : Int32
     
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitRemoteCallbacks``
     /// instance.
@@ -559,14 +505,10 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     
     /// The acceptable prune settings when performing a fetch operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitFetchPruneT/gitFetchPruneUnspecified``.
     public var prune            : GitFetchPruneT
     
     /// The flags controlling remote updates.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var updateFETCHHEAD  : GitRemoteUpdateFlags
@@ -574,15 +516,11 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     /// The automatic tag-following option used to determine which `--tags`
     /// option to use.
     ///
-    /// ## Discussion
-    ///
     /// The default value is
     /// ``GitRemoteAutoTagOptionT/gitRemoteDownloadTagsAuto``.
     public var downloadTags     : GitRemoteAutoTagOptionT
     
     /// The proxy options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitProxyOptions``
     /// instance.
@@ -590,21 +528,15 @@ public struct GitFetchOptions: CStructMutable, WithCConvertible
     
     /// The shallowness of the fetch operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitFetchDepthT/gitFetchDepthFull``.
     public var depth            : GitFetchDepthT
     
     /// The remote redirection settings.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitRemoteRedirectT/gitRemoteRedirectNone``.
     public var followRedirects  : GitRemoteRedirectT
     
     /// The extra headers for the fetch operation.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty array.
     public var customHeaders    : [String]
@@ -733,15 +665,11 @@ public struct GitPushOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitPushOptionsVersion``.
     public var version              : UInt32
     
     /// Whether to auto-detect the number of worker threads to create when
     /// building a packfile.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `true`.
     public var pbParallelism        : Bool
@@ -749,15 +677,11 @@ public struct GitPushOptions: CStructMutable, WithCConvertible
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitRemoteCallbacks``
     /// instance.
     public var callbacks            : GitRemoteCallbacks
     
     /// The proxy options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitProxyOptions``
     /// instance.
@@ -765,21 +689,15 @@ public struct GitPushOptions: CStructMutable, WithCConvertible
     
     /// The remote redirection settings.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitRemoteRedirectT/gitRemoteRedirectNone``.
     public var followRedirects      : GitRemoteRedirectT
     
     /// The extra headers for the push operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty array.
     public var customHeaders        : [String]
     
     /// The push options to deliver to the remote.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty array.
     public var remotePushOptions    : [String]
@@ -889,15 +807,11 @@ public struct GitRemoteConnectOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitRemoteConnectOptionsVersion``.
     public var version              : UInt32
     
     /// The callbacks invoked by the remote to inform the user about the
     /// progress of network operations.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitRemoteCallbacks``
     /// instance.
@@ -905,22 +819,16 @@ public struct GitRemoteConnectOptions: CStructMutable, WithCConvertible
     
     /// The proxy options.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitProxyOptions``
     /// instance.
     public var proxyOpts            : GitProxyOptions
     
     /// The remote redirection settings.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitRemoteRedirectT/gitRemoteRedirectNone``.
     public var followRedirects      : GitRemoteRedirectT
     
     /// The extra headers for the push operation.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty array.
     public var customHeaders        : [String]

@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The available trace levels.
 ///
-/// ## Discussion
-///
 /// When tracing is set to a particular level, callers will be provided tracing
 /// at the specified level and at all lower levels.
 ///

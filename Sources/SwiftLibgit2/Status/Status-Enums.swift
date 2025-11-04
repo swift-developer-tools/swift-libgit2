@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The flags representing the status of a file.
 ///
-/// ## Discussion
-///
 /// These flags represent the status of the file after comparing the working
 /// directory, the index, and HEAD. The index flags represent the status of the
 /// file in the index relative to HEAD. The working directory flags represent
@@ -117,8 +115,6 @@ public enum GitStatusShowT: UInt32, CEnum
     /// Show the status based on comparing the working directory, the index,
     /// and HEAD.
     ///
-    /// ## Discussion
-    ///
     /// This is similar to `git status --porcelain`, in relation to the
     /// included files and the order.
     case gitStatusShowIndexAndWorkdir   = 0
@@ -216,8 +212,6 @@ public struct GitStatusOptT: COptionSet
     
     /// Do not include submodules.
     ///
-    /// ## Discussion
-    ///
     /// This only applies if there are no pending type changes to the
     /// submodule, either from another type or to another type.
     public static let gitStatusOptExcludeSubmodules             = GitStatusOptT(rawValue: GIT_STATUS_OPT_EXCLUDE_SUBMODULES.rawValue)
@@ -230,8 +224,6 @@ public struct GitStatusOptT: COptionSet
     public static let gitStatusOptDisablePathspecMatch          = GitStatusOptT(rawValue: GIT_STATUS_OPT_DISABLE_PATHSPEC_MATCH.rawValue)
     
     /// Include all files in ignored directories.
-    ///
-    /// ## Discussion
     ///
     /// This is similar to `git ls-files -o -i --exclude-standard`.
     public static let gitStatusOptRecurseIgnoredDirs            = GitStatusOptT(rawValue: GIT_STATUS_OPT_RECURSE_IGNORED_DIRS.rawValue)
@@ -257,16 +249,12 @@ public struct GitStatusOptT: COptionSet
     
     /// Bypass the default status behavior of performing a soft index reload.
     ///
-    /// ## Discussion
-    ///
     /// A soft index reload involves reloading the index data if the file on
     /// the disk has been modified outside libgit2.
     public static let gitStatusOptNoRefresh                     = GitStatusOptT(rawValue: GIT_STATUS_OPT_NO_REFRESH.rawValue)
     
     /// Refresh the cache in the index for files that unchanged, but have
     /// out-of-date information in the index.
-    ///
-    /// ## Discussion
     ///
     /// If this flag is enabled, it will result in less work being performed
     /// on subsequent status calls. This flag cannot be combined with the

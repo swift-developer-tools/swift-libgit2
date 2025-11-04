@@ -63,8 +63,6 @@ public struct GitCredentialT: COptionSet
     
     /// A username-only authentication request.
     ///
-    /// ## Discussion
-    ///
     /// This is used as a pre-authentication step if the underlying transport
     /// does not know which username to use (for example, SSH with no username
     /// in its URL).

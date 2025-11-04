@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The base for all stream types.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_stream` instead.
 ///
@@ -34,15 +32,11 @@ public struct GitStream: CStruct, Sendable
     
     /// The timeout for read and write operations.
     ///
-    /// ## Discussion
-    ///
     /// If this is `0`, all read and write operations will be blocked
     /// indefinitely.
     public let timeout          : Int32
     
     /// The timeout for connecting to the remote server.
-    ///
-    /// ## Discussion
     ///
     /// If this is `0`, the system defaults will be used. This may be shorter
     /// than the system default, which is usually 75 seconds, but it must not
@@ -113,7 +107,7 @@ public struct GitStream: CStruct, Sendable
     public typealias Certificate = @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutablePointer<git_cert>?>?,
-        UnsafeMutablePointer<git_stream>?,
+        UnsafeMutablePointer<git_stream>?
     ) -> Int32
     
     
@@ -186,8 +180,6 @@ public struct GitStream: CStruct, Sendable
 
 /// Stream registration information.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_stream_registration` instead.
 ///
@@ -240,19 +232,18 @@ public struct GitStreamRegistration: CStruct, Sendable
     
     /// The callback invoked to create a new connection on top of the given
     /// stream.
+    ///
+    /// If the given stream is a TLS stream, then this callback may be used to
+    /// proxy a TLS stream over an HTTP CONNECT session. If this callback is
+    /// used to unset the stream, then HTTP CONNECT proxies will not be
+    /// supported.
+    ///
     /// - Parameters:
     ///   - out: The pointer in which to store the stream.
     ///   - input: The stream to which to add TLS.
     ///   - host: The name of the host to which the stream is connected. This
     ///   will be used for certificate validation.
     /// - Returns: `0` on success, or an error code.
-    ///
-    /// ## Discussion
-    ///
-    /// If the given stream is a TLS stream, then this callback may be used to
-    /// proxy a TLS stream over an HTTP CONNECT session. If this callback is
-    /// used to unset the stream, then HTTP CONNECT proxies will not be
-    /// supported.
     public typealias Wrap = @convention(c)
     (
         UnsafeMutablePointer<UnsafeMutablePointer<git_stream>?>?,

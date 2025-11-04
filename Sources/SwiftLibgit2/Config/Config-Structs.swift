@@ -20,14 +20,10 @@ public struct GitConfigEntry: CStructInternalMutable, WithCConvertible, CFreeabl
 {
     /// The normalized name of the configuration entry.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public private(set) var name            : String?           = nil
     
     /// The value of the configuration entry.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var value           : String?           = nil
@@ -35,14 +31,10 @@ public struct GitConfigEntry: CStructInternalMutable, WithCConvertible, CFreeabl
     /// The type of backend in which the configuration entry exists
     /// (for example, `file`).
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public private(set) var backendType     : String?           = nil
     
     /// The path to the origin of the configuration entry.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -51,15 +43,11 @@ public struct GitConfigEntry: CStructInternalMutable, WithCConvertible, CFreeabl
     
     /// The depth of includes where the configuration entry was found.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var includeDepth    : UInt32            = 0
     
     /// The configuration level for the file in which the configuration entry
     /// was found.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitConfigLevelT/gitConfigLevelLocal``.
     public private(set) var level           : GitConfigLevelT   = .gitConfigLevelLocal
@@ -148,8 +136,6 @@ public struct GitConfigEntry: CStructInternalMutable, WithCConvertible, CFreeabl
 
 /// A mapping from configuration variables to integer values.
 ///
-/// ## Discussion
-///
 /// This defines how to map configuration values to integer constants by
 /// specifying the type of value ot match, an optional string to match against,
 /// and the integer value to map when a match is found.
@@ -161,14 +147,10 @@ public struct GitConfigMap: CStructMutable, WithCConvertible, Sendable
 {
     /// The type of configuration value to match.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitConfigMapT/gitConfigMapFalse``.
     public var type     : GitConfigMapT
     
     /// The specific string to match against.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -178,8 +160,6 @@ public struct GitConfigMap: CStructMutable, WithCConvertible, Sendable
     public var strMatch : String?
     
     /// The integer value to return when a match is found.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var mapValue : Int32

@@ -85,16 +85,6 @@ public func gitSignatureNow(
 
 /// Creates new author and/or committer signatures with default information
 /// based on the configuration and environment variables.
-/// - Parameters:
-///   - authorOut: The ``GitSignature`` instance in which to store the new
-///   author signature.
-///   - committerOut: The ``GitSignature`` instance in which to store the
-///   new committer signature.
-///   - repo: The repository to use. The underlying type must be
-///   `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// At least one of `authorOut` or `committerOut` must not be `nil`. If both
 /// are `nil`, this function will return ``GitErrorCode/gitEUser``.
@@ -119,6 +109,15 @@ public func gitSignatureNow(
 /// The return value will be ``GitErrorCode/gitENotFound`` if either `user.name`
 /// or `user.email `are not set, and there is no fallback from an environment
 /// variable.
+///
+/// - Parameters:
+///   - authorOut: The ``GitSignature`` instance in which to store the new
+///   author signature.
+///   - committerOut: The ``GitSignature`` instance in which to store the
+///   new committer signature.
+///   - repo: The repository to use. The underlying type must be
+///   `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -217,12 +216,6 @@ public func gitSignatureDefaultFromEnv(
 
 /// Creates a new signature with the default user and a timestamp representing
 /// the current time.
-/// - Parameters:
-///   - out: The ``GitSignature`` instance in which to store the new signature.
-///   - repo: The repository. The underlying type must be `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function looks up the `user.name` and `user.email` from the
 /// configuration, uses the current time as the timestamp, and creates a new
@@ -235,6 +228,11 @@ public func gitSignatureDefaultFromEnv(
 /// only the configuration files. Use
 /// ``gitSignatureDefaultFromEnv(authorOut:committerOut:repo:)`` to consider
 /// the environment variables.
+///
+/// - Parameters:
+///   - out: The ``GitSignature`` instance in which to store the new signature.
+///   - repo: The repository. The underlying type must be `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -261,17 +259,16 @@ public func gitSignatureDefault(
 
 
 /// Creates a new signature by parsing the given string.
-/// - Parameters:
-///   - out: The ``GitSignature`` instance in which to store the new signature.
-///   - buf: The signature string to parse.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The string is expected to be in the format
 /// `Real Name <email> timestamp tzoffset`, where `timestamp` is the number
 /// of seconds since the UNIX epoch and `tzoffset` is the timezone offset in
 /// `hhmm` format (without colon separators).
+///
+/// - Parameters:
+///   - out: The ``GitSignature`` instance in which to store the new signature.
+///   - buf: The signature string to parse.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -298,15 +295,14 @@ public func gitSignatureFromBuffer(
 
 
 /// Creates a copy of an existing signature.
+///
+/// All internal strings are also duplicated.
+///
 /// - Parameters:
 ///   - dest: The ``GitSignature`` instance in which to store the copied
 ///   signature.
 ///   - sig: The signature to copy.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// All internal strings are also duplicated.
 ///
 /// ## C Equivalent
 ///
@@ -338,13 +334,12 @@ public func gitSignatureDup(
 
 
 /// Frees the memory allocated for the given `git_signature` instance.
-/// - Parameter sig: The signature to free.
-///
-/// ## Discussion
 ///
 /// Since `git_signature` is not an opaque object, it is legal to free it
 /// manually, but be sure to free the `name` and `email` strings in addition
 /// to the `git_signature` struct itself.
+///
+/// - Parameter sig: The signature to free.
 ///
 /// ## C Equivalent
 ///
@@ -353,7 +348,7 @@ public func gitSignatureFree(
     sig: UnsafeMutablePointer<git_signature>?
 )
 {
-    guard let sig: UnsafeMutablePointer<git_signature> = sig
+    guard let sig
     else
     {
         return

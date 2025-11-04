@@ -14,9 +14,7 @@ import Foundation
 
 /// The description of one side of a diff delta.
 ///
-/// ## Discussion
-///
-/// Although this is called a "file", it could represent a file, a symbolic
+/// Although this is called a file, it could represent a file, a symbolic
 /// link, a submodule commit ID, or even a tree (when tracking type changes
 /// or ignored or untracked directories).
 ///
@@ -26,8 +24,6 @@ import Foundation
 public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
 {
     /// The ID of the item.
-    ///
-    /// ## Discussion
     ///
     /// If the entry represents an absent side of a diff (for example, the
     /// `old_file` of a ``GitDeltaT/gitDeltaAdded`` delta), then the ID will
@@ -49,8 +45,6 @@ public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
     public let mode     : GitFileModeT
     
     /// The known length of the ID field, when converted to a hex string.
-    ///
-    /// ## Discussion
     ///
     /// This is generally the value of ``gitOIDSHA1HexSize``, unless the delta
     /// was created from reading a patch file, in which case it may be
@@ -106,8 +100,6 @@ public struct GitDiffFile: CStructReadable, WithCConvertible, Sendable
 
 
 /// The description of changes to an entry.
-///
-/// ## Discussion
 ///
 /// A delta is a file pair with old and new versions. The old version may be
 /// absent if the file was just created and the new version may be absent if
@@ -238,21 +230,15 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitDiffOptionsVersion``.
     public var version          : UInt32
     
     /// The flags controlling the diff operation.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty option set.
     public var flags            : GitDiffOptionT
     
     /// The submodule ignore options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is
     /// ``GitSubmoduleIgnoreT/gitSubmoduleIgnoreUnspecified``.
@@ -260,14 +246,10 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     
     /// The paths or `fnmatch` patterns to constrain the diff.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty array.
     public var pathspec         : [String]
     
     /// The callback for notifications of new diff deltas being added.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var notifyCB         : GitDiffNotifyCB?
@@ -275,14 +257,10 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The callback invoked for notifications of which files are being
     /// examined.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var progressCB       : GitDiffProgressCB?
     
     /// The payload passed to ``notifyCB`` and ``progressCB``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var payload          : UnsafeMutableRawPointer?
@@ -290,22 +268,16 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The number of unchanged lines that define the boundaries of a diff hunk,
     /// displayed before and after each hunk.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `3`.
     public var contextLines     : UInt32
     
     /// The maximum number of unchanged lines between diff hunk boundaries
     /// before the hunks are merged.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public var interHunkLines   : UInt32
     
     /// The type of ID to emit in diffs.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -320,8 +292,6 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     
     /// The abbreviation length to use when formatting IDs.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// Pass `nil` to use the value of `core.abbrev` from the configuration
@@ -331,8 +301,6 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     /// The maximum size, in bytes, above which a blob will be automatically
     /// marked as binary.
     ///
-    /// ## Discussion
-    ///
     /// The default value is 512 MB.
     ///
     /// Pass a negative value to disable the limit.
@@ -340,14 +308,10 @@ public struct GitDiffOptions: CStructMutable, WithCConvertible
     
     /// The virtual directory prefix for old file names in diff hunk headers.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `a`.
     public var oldPrefix        : String
     
     /// The virtual directory prefix for new file names in diff hunk headers.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `b`.
     public var newPrefix        : String
@@ -527,7 +491,7 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
         diffBinaryFile.type = type.cValue()
         
         guard
-            let data: Data = data,
+            let data,
             !data.isEmpty
         else
         {
@@ -555,8 +519,6 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
 
 /// The binary contents of a diff.
 ///
-/// ## Discussion
-///
 /// A binary file or binary delta is a file (or pair of files) for which no
 /// text diffs are generated. A diff can contain delta entries that are binary,
 /// but no diff content is output for those files.
@@ -567,8 +529,6 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
 public struct GitDiffBinary: CStructReadable, WithCConvertible, Sendable
 {
     /// Whether there is data in the binary.
-    ///
-    /// ## Discussion
     ///
     /// If this is `false`, then the instance was generated knowing only that
     /// a binary file changed, but without providing the data.
@@ -631,8 +591,6 @@ public struct GitDiffBinary: CStructReadable, WithCConvertible, Sendable
 
 /// A hunk of a diff.
 ///
-/// ## Discussion
-///
 /// A hunk is a span of modified lines in a diff delta along with some stable
 /// surrounding context. Each hunk also comes with a header that described
 /// where it starts and ends in the delta, in both the old and new files.
@@ -644,35 +602,25 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
 {
     /// The starting line number in the old file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var oldStart    : Int32     = 0
     
     /// The number of lines in the old file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public private(set) var oldLines    : Int32     = 0
     
     /// The starting line number in the new file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var newStart    : Int32     = 0
     
     /// The number of lines in the new file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var newLines    : Int32     = 0
     
     /// The length of ``header``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var headerLen                : Int
@@ -681,8 +629,6 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
     }
     
     /// The header text.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var header      : String?   = nil
@@ -736,8 +682,6 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
 
 /// A line of a diff.
 ///
-/// ## Discussion
-///
 /// A line (or data span) is a range of characters inside a diff hunk.
 /// It could be a context line (a line that exists in both the old and new
 /// versions), an added line (a line that exists only in the new version),
@@ -750,35 +694,25 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
 {
     /// The type of line origin.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``GitDiffLineT/gitDiffLineContext``.
     public private(set) var origin          : GitDiffLineT  = .gitDiffLineContext
     
     /// The line number in the old file, or `-1` to indicate an added line.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public private(set) var oldLineNo       : Int32         = 0
     
     /// The line number in the new file, or `-1` to indicate a deleted line.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var newLineNo       : Int32         = 0
     
     /// The number of newline characters in the diff text.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var numLines        : Int32         = 0
     
     /// The length of ``content``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var contentLen                   : Int
@@ -788,14 +722,10 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
     
     /// The offset in the original file to the diff text.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `0`.
     public private(set) var contentOffset   : GitOffT       = 0
     
     /// The diff text.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var content         : Data?         = nil
@@ -858,7 +788,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
         diffLine.content_offset     = contentOffset
         
         guard
-            let content: Data = content,
+            let content,
             !content.isEmpty
         else
         {
@@ -891,35 +821,25 @@ public struct GitDiffSimilarityMetric: CStructMutable, CConvertible
 {
     /// Generates a signature for the given file.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var fileSignature    : GitDiffSimilarityMetric.FileSignature?    = nil
     
     /// Generates a signature for the given buffer.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var bufferSignature  : GitDiffSimilarityMetric.BufferSignature?  = nil
     
     /// Frees the memory allocated for the given signature.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var freeSignature    : GitDiffSimilarityMetric.FreeSignature?    = nil
     
     /// Calculates the similarity of the given signatures.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var similarity       : GitDiffSimilarityMetric.Similarity?       = nil
     
     /// The payload provided by the caller.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var payload          : UnsafeMutableRawPointer?                  = nil
@@ -1059,21 +979,15 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitDiffFindOptionsVersion``.
     public var version                      : UInt32
     
     /// The flags controlling diff rename and copy detection.
     ///
-    /// ## Discussion
-    ///
     /// The default value is an empty option set.
     public var flags                        : GitDiffFindT
     
     /// The threshold above which similar files will be considered renames.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `50`.
     ///
@@ -1083,16 +997,12 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// The threshold below which similar files will be eligible to be a
     /// rename source.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `50`.
     ///
     /// This is equivalent to the first part of `git diff --break-rewrites`.
     public var renameFromRewriteThreshold   : UInt16
     
     /// The threshold above which similar files will be considered copies.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `50`.
     ///
@@ -1102,16 +1012,12 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     /// The threshold below which similar files will be split into an
     /// add/delete pair.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `50`.
     ///
     /// This is equivalent to the last part of `git diff --break-rewrites`.
     public var breakRewriteThreshold        : UInt16
     
     /// The maximum number of matches to consider for a particular file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `50`.
     ///
@@ -1121,8 +1027,6 @@ public struct GitDiffFindOptions: CStructMutable, ThrowingCConvertible
     public var renameLimit                  : Int
     
     /// The pluggable similarity metric.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -1225,14 +1129,10 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitDiffParseOptionsVersion``.
     public var version  : UInt32
     
     /// The ID type used in the patch file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitOIDT/gitOIDSHA1``.
     public var oidType  : GitOIDT
@@ -1284,9 +1184,8 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 
 /// The options for calculating patch IDs.
 ///
-/// ## Discussion
-///
-/// - Note: This is reserved for future use. No options are currently available.
+/// - Note: This has not been implemented in libgit2 yet, but is reserved
+/// for future use.
 ///
 /// ## C Equivalent
 ///
@@ -1294,8 +1193,6 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 public struct GitDiffPatchIDOptions: CStructMutable, ThrowingCConvertible, Sendable
 {
     /// The struct version.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``gitDiffPatchIDOptionsVersion``.
     public var version  : UInt32

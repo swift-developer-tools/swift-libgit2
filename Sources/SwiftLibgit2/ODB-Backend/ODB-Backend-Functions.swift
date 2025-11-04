@@ -37,15 +37,14 @@ public func gitODBBackendPack(
 
 
 /// Creates a backend from the specified packfile.
+///
+/// Creating a backend from a packfile can be useful for inspecting the
+/// contents of that packfile.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the backend object.
 ///   - indexFile: The path to the packfile's `.idx` file.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Creating a backend from a packfile can be useful for inspecting the
-/// contents of that packfile.
 ///
 /// ## C Equivalent
 ///

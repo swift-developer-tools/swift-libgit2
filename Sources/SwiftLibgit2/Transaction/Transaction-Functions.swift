@@ -12,17 +12,16 @@ import CLibgit2
 
 
 /// Creates a new transaction from the given repository.
+///
+/// This function does not lock anything, but sets up the transaction to know
+/// from which repository to lock.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the transaction. The underlying type
 ///   must be `git_transaction`.
 ///   - repo: The repository to search. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function does not lock anything, but sets up the transaction to know
-/// from which repository to lock.
 ///
 /// ## C Equivalent
 ///
@@ -158,17 +157,16 @@ public func gitTransactionSetSymbolicTarget(
 
 
 /// Sets the reflog of the specified reference.
+///
+/// If this is combined with setting the target of the reference, then that
+/// update will not be written to the reflog.
+///
 /// - Parameters:
 ///   - tx: The transaction to use. The underlying type must be
 ///   `git_transaction`.
 ///   - refName: The name of the reference to update.
 ///   - reflog: The reflog to write out.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If this is combined with setting the target of the reference, then that
-/// update will not be written to the reflog.
 ///
 /// ## C Equivalent
 ///
@@ -218,14 +216,13 @@ public func gitTransactionRemove(
 
 
 /// Commits the changes from the given transaction.
-/// - Parameter tx: The transaction to commit. The underlying type must be
-/// `git_transaction`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The updates will be made sequentially. The first failure with stop the
 /// process.
+///
+/// - Parameter tx: The transaction to commit. The underlying type must be
+/// `git_transaction`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -253,7 +250,7 @@ public func gitTransactionFree(
     tx: OpaquePointer?
 )
 {
-    guard let tx: OpaquePointer = tx
+    guard let tx
     else
     {
         return

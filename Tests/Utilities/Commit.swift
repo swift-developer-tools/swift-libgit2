@@ -44,7 +44,7 @@ enum Commit
         
         XCTAssertOK(commitLookupResult)
         
-        guard let commitPointer: OpaquePointer = commitPointer
+        guard let commitPointer
         else
         {
             throw NSError.makeError("The commit pointer was nil.")

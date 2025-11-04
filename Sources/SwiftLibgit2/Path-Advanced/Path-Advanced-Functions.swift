@@ -12,6 +12,12 @@ import CLibgit2
 
 
 /// Checks whether the given path component corresponds to a `.git$SUFFIX` file.
+///
+/// Since some file systems have special behavior when writing files to the
+/// disk, a plain string comparison is not always possible to verify whether
+/// a file name matches an expected path. This function performs a more
+/// in-depth check to verify the given path component.
+///
 /// - Parameters:
 ///   - path: The path component to check.
 ///   - pathLen: The length `path`.
@@ -19,13 +25,6 @@ import CLibgit2
 ///   - fs: The type of file system check to perform.
 /// - Returns: Whether the given path component corresponds to a `.git$SUFFIX`
 /// file, or `nil` if there was an error.
-///
-/// ## Discussion
-///
-/// Since some file systems have special behavior when writing files to the
-/// disk, a plain string comparison is not always possible to verify whether
-/// a file name matches an expected path. This function performs a more
-/// in-depth check to verify the given path component.
 ///
 /// ## C Equivalent
 ///

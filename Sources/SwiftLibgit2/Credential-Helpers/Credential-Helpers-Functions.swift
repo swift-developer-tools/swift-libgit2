@@ -12,20 +12,19 @@ import CLibgit2
 
 
 /// Creates a new plaintext username and password credential.
-/// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
-///   - url: The resource for which a credential is being demanded.
-///   - userFromURL: The username that is embedded in a `user@host` remote URL.
-///   - allowedTypes: The allowed credential types.
-///   - payload: The payload provided by the caller.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This is a stock implementation of the ``GitCredentialAcquireCB`` callback,
 /// and will call ``gitCredentialUserPassPlaintextNew(out:username:password:)``,
 /// unless ``GitCredentialT/gitCredentialUserPassPlaintext`` is not an allowed
 /// type.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the credential.
+///   - url: The resource for which a credential is being demanded.
+///   - userFromURL: The username that is embedded in a `user@host` remote URL.
+///   - allowedTypes: The allowed credential types.
+///   - payload: The payload provided by the caller.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

@@ -12,17 +12,16 @@ import CLibgit2
 
 
 /// Opens the specified repository.
+///
+/// This function will automatically detect if the repository at the specified
+/// location is a normal or bare repository, and will fail if neither is true.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
 ///   - path: The path to the repository to open. This must point to either a
 ///   `.git` directory or an existing working directory.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will automatically detect if the repository at the specified
-/// location is a normal or bare repository, and will fail if neither is true.
 ///
 /// ## C Equivalent
 ///
@@ -70,16 +69,15 @@ public func gitRepositoryOpenFromWorktree(
 
 
 /// Creates a repository to wrap the given object database.
+///
+/// This function does not create a normal repository. The created repository
+/// will not have any associated paths.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
 ///   - odb: The object database to wrap. The underlying type must be `git_odb`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function does not create a normal repository. The created repository
-/// will not have any associated paths.
 ///
 /// ## C Equivalent
 ///
@@ -101,6 +99,10 @@ public func gitRepositoryWrapODB(
 
 
 /// Gets the path of the specified repository.
+///
+/// The search will always begin with `startPath`, and will stop if any of
+/// the paths in `ceilingDirs` are reached.
+///
 /// - Parameters:
 ///   - out: The `String` instance in which to store the found path.
 ///   - startPath: The base path at which to begin searching.
@@ -108,11 +110,6 @@ public func gitRepositoryWrapODB(
 ///   - ceilingDirs: A list of absolute symbolic link free paths, separated
 ///   by ``gitPathListSeparator``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The search will always begin with `startPath`, and will stop if any of
-/// the paths in `ceilingDirs` are reached.
 ///
 /// ## C Equivalent
 ///
@@ -143,6 +140,10 @@ public func gitRepositoryDiscover(
 
 
 /// Opens the specified repository.
+///
+/// `path` may be `nil` only if `flags` is
+/// ``GitRepositoryOpenFlagT/gitRepositoryOpenFromEnv``.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
@@ -152,11 +153,6 @@ public func gitRepositoryDiscover(
 ///   - ceilingDirs: A list of absolute symbolic link free paths, separated
 ///   by ``gitPathListSeparator``.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// `path` may be `nil` only if `flags` is
-/// ``GitRepositoryOpenFlagT/gitRepositoryOpenFromEnv``.
 ///
 /// ## C Equivalent
 ///
@@ -182,16 +178,15 @@ public func gitRepositoryOpenExt(
 
 
 /// Opens the specified bare repository.
+///
+/// This is a fast-open for bare repositories that can help improve performance
+/// when hosting repositories.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
 ///   - barePath: The path to the bare repository to open.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is a fast-open for bare repositories that can help improve performance
-/// when hosting repositories.
 ///
 /// ## C Equivalent
 ///
@@ -213,14 +208,13 @@ public func gitRepositoryOpenBare(
 
 
 /// Frees the memory allocated for the given `git_repository` instance.
-/// - Parameter repo: The repository to free. The underlying type must be
-/// `git_repository`.
-///
-/// ## Discussion
 ///
 /// - Important: After a repository is freed, all its associated objects
 /// will still exist until they are manually freed. Accessing any of the
 /// objects will result in undefined behavior.
+///
+/// - Parameter repo: The repository to free. The underlying type must be
+/// `git_repository`.
 ///
 /// ## C Equivalent
 ///
@@ -229,7 +223,7 @@ public func gitRepositoryFree(
     repo: OpaquePointer?
 )
 {
-    guard let repo: OpaquePointer = repo
+    guard let repo
     else
     {
         return
@@ -295,17 +289,16 @@ public func gitRepositoryInitOptionsInit(
 
 
 /// Creates a repository at the specified location.
+///
+/// This function will auto-detect the case sensitivity of the file system and
+/// whether it correctly supports file mode bits.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the repository. The underlying type
 ///   must be `git_repository`.
 ///   - repoPath: The path to the location at which to create the repository.
 ///   - opts: The repository initialization options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function will auto-detect the case sensitivity of the file system and
-/// whether it correctly supports file mode bits.
 ///
 /// ## C Equivalent
 ///
@@ -391,15 +384,14 @@ public func gitRepositoryHEADForWorktree(
 
 
 /// Checks whether the given repository's HEAD is detached.
+///
+/// A repository's HEAD is detached when it points directly to a commit
+/// instead of a branch.
+///
 /// - Parameter repo: The repository to check. The underlying type must be
 /// `git_repository`.
 /// - Returns: Whether the given repository's HEAD is detached, or `nil` if
 /// there was an error.
-///
-/// ## Discussion
-///
-/// A repository's HEAD is detached when it points directly to a commit
-/// instead of a branch.
 ///
 /// ## C Equivalent
 ///
@@ -423,17 +415,16 @@ public func gitRepositoryHEADDetached(
 
 
 /// Checks whether the specified worktree's HEAD is detached.
+///
+/// A worktree's HEAD is detached when it points directly to a commit instead
+/// of a branch.
+///
 /// - Parameters:
 ///   - repo: The repository containing the specified worktree. The underlying
 ///   type must be `git_repository`.
 ///   - name: The name of the worktree to check.
 /// - Returns: Whether the specified worktree's HEAD is detached, or `nil` if
 /// there was an error.
-///
-/// ## Discussion
-///
-/// A worktree's HEAD is detached when it points directly to a commit instead
-/// of a branch.
 ///
 /// ## C Equivalent
 ///
@@ -461,15 +452,14 @@ public func gitRepositoryHEADDetachedForWorktree(
 
 
 /// Checks whether the given repository's HEAD is unborn.
+///
+/// An unborn branch is one named from HEAD, but which does not exist in the
+/// `refs` namespace because it does not point to a commit.
+///
 /// - Parameter repo: The repository to check. The underlying type must be
 /// `git_repository`.
 /// - Returns: Whether the given repository's HEAD is unborn, or `nil` if
 /// there was an error.
-///
-/// ## Discussion
-///
-/// An unborn branch is one named from HEAD, but which does not exist in the
-/// `refs` namespace because it does not point to a commit.
 ///
 /// ## C Equivalent
 ///
@@ -493,17 +483,16 @@ public func gitRepositoryHEADUnborn(
 
 
 /// Checks whether the given repository is empty.
-/// - Parameter repo: The repository to check. The underlying type must be
-/// `git_repository`.
-/// - Returns: Whether the given repository is empty, or `nil` if there was
-/// an error.
-///
-/// ## Discussion
 ///
 /// A repository is empty if it has just been initialized and contains no
 /// references apart from HEAD, which must be pointing to the unborn main
 /// branch, or the branch specified for the repository in the
 /// `init.defaultBranch` configuration variable.
+///
+/// - Parameter repo: The repository to check. The underlying type must be
+/// `git_repository`.
+/// - Returns: Whether the given repository is empty, or `nil` if there was
+/// an error.
 ///
 /// ## C Equivalent
 ///
@@ -580,13 +569,12 @@ public func gitRepositoryPath(
 
 
 /// Gets the path of the working directory of the given repository.
+///
+/// - Note: A bare repository has no working directory.
+///
 /// - Parameter repo: The repository for which to get the working directory
 /// path. The underlying type must be `git_repository`.
 /// - Returns: The path of the working directory of the given repository.
-///
-/// ## Discussion
-///
-/// - Note: A bare repository has no working directory.
 ///
 /// ## C Equivalent
 ///
@@ -604,16 +592,15 @@ public func gitRepositoryWorkdir(
 
 
 /// Gets the path of the common directory of the given repository.
-/// - Parameter repo: The repository for which to get the common directory
-/// path. The underlying type must be `git_repository`.
-/// - Returns: The path of the common directory of the given repository.
-///
-/// ## Discussion
 ///
 /// If the given repository is bare, the common directory is the repository's
 /// root directory. If the repository is a worktree, the common directory is
 /// the parent repository's `.git` directory. Otherwise, the common directory
 /// is the `.git` directory.
+///
+/// - Parameter repo: The repository for which to get the common directory
+/// path. The underlying type must be `git_repository`.
+/// - Returns: The path of the common directory of the given repository.
 ///
 /// ## C Equivalent
 ///
@@ -631,6 +618,14 @@ public func gitRepositoryCommonDir(
 
 
 /// Sets the working directory path of the given repository.
+///
+/// The working directory does not need to be the same directory that contains
+/// the `.git` directory of the given repository.
+///
+/// If the given repository is bare, settings its working directory will
+/// convert it to a normal repository capable of performing all the common
+/// working directory operations, such as checkout and index manipulation.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
@@ -639,15 +634,6 @@ public func gitRepositoryCommonDir(
 ///   directory, and set the `core.worktree` configuration variable (if the
 ///   working direcory is not the parent of the `.git` directory).
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The working directory does not need to be the same directory that contains
-/// the `.git` directory of the given repository.
-///
-/// If the given repository is bare, settings its working directory will
-/// convert it to a normal repository capable of performing all the common
-/// working directory operations, such as checkout and index manipulation.
 ///
 /// ## C Equivalent
 ///
@@ -709,18 +695,17 @@ public func gitRepositoryIsWorktree(
 
 
 /// Gets the configuration of the given repository.
+///
+/// The default configuration will be returned if a configuration file has not
+/// been set. The default configuration includes global and system
+/// configurations, if they are available.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the configuration. The underlying
 ///   type must be `git_config`.
 ///   - repo: The repository for which to get the configuration. The underlying
 ///   type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The default configuration will be returned if a configuration file has not
-/// been set. The default configuration includes global and system
-/// configurations, if they are available.
 ///
 /// ## C Equivalent
 ///
@@ -742,17 +727,16 @@ public func gitRepositoryConfig(
 
 
 /// Gets a snapshot of the configuration of the given repository.
+///
+/// The contents of the snapshot will not change, even if the underlying
+/// configuration files are modified.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the configuration snapshot. The
 ///   underlying type must be `git_config`.
 ///   - repo: The repository for which to get the configuration snapshot. The
 ///   underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The contents of the snapshot will not change, even if the underlying
-/// configuration files are modified.
 ///
 /// ## C Equivalent
 ///
@@ -774,17 +758,16 @@ public func gitRepositoryConfigSnapshot(
 
 
 /// Gets the object database of the given repository.
+///
+/// The default object database will be returned if a custom object database
+/// has not been set. The default object database is located in `.git/objects`.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the object database. The underlying
 ///   type must be `git_odb`.
 ///   - repo: The repository for which to get the object database. The
 ///   underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The default object database will be returned if a custom object database
-/// has not been set. The default object database is located in `.git/objects`.
 ///
 /// ## C Equivalent
 ///
@@ -806,18 +789,17 @@ public func gitRepositoryODB(
 
 
 /// Gets the reference database of the given repository.
+///
+/// The default reference database will be returned if a custom reference
+/// database has not been set. The default reference database is the database
+/// that manipulates loose and packed references in the `.git` directory.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the reference database. The
 ///   underlying type must be `git_refdb`.
 ///   - repo: The repository for which to get the reference database. The
 ///   underlying type must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The default reference database will be returned if a custom reference
-/// database has not been set. The default reference database is the database
-/// that manipulates loose and packed references in the `.git` directory.
 ///
 /// ## C Equivalent
 ///
@@ -839,17 +821,16 @@ public func gitRepositoryRefDB(
 
 
 /// Gets the index of the given repository.
+///
+/// The default index will be returned if a custom index has not been set.
+/// The default index is located in `.git/index`.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the index. The underlying type
 ///   must be `git_index`.
 ///   - repo: The repository for which to get the index. The underlying type
 ///   must be `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The default index will be returned if a custom index has not been set.
-/// The default index is located in `.git/index`.
 ///
 /// ## C Equivalent
 ///
@@ -871,13 +852,6 @@ public func gitRepositoryIndex(
 
 
 /// Gets the prepared message of the given repository.
-/// - Parameters:
-///   - out: The `String` instance in which to store the prepared message.
-///   - repo: The repository for which to get the prepared message. The
-///   underlying type must be `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function gets the contents of `.git/MERGE_MSG`. Operations such as
 /// cherry-pick, revert, and merging with the `-n` flag stop just short of
@@ -886,6 +860,12 @@ public func gitRepositoryIndex(
 /// possibly be amended.
 ///
 /// - Note: The `.git/MERGE_MSG` file must be removed after creating a commit.
+///
+/// - Parameters:
+///   - out: The `String` instance in which to store the prepared message.
+///   - repo: The repository for which to get the prepared message. The
+///   underlying type must be `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -912,14 +892,13 @@ public func gitRepositoryMessage(
 
 
 /// Removes the prepared message of the given repository.
-/// - Parameter repo: The repository for which to remove the prepared message.
-/// The underlying type must be `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: See ``gitRepositoryMessage(out:repo:)`` for more information on
 /// the prepared message.
+///
+/// - Parameter repo: The repository for which to remove the prepared message.
+/// The underlying type must be `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1018,6 +997,10 @@ public func gitRepositoryMERGEHEADForEach(
 
 
 /// Calculates the hash of the specified on-disk file in the given repository.
+///
+/// - Note: To calculate the hash of an on-disk file without filters, use
+/// ``gitODBHashFile(oid:path:objectType:)`` instead.
+///
 /// - Parameters:
 ///   - out: The ``GitOID`` instance in which to store the calculated ID hash.
 ///   - repo: The repository containing the specified file. The underlying type
@@ -1028,11 +1011,6 @@ public func gitRepositoryMERGEHEADForEach(
 ///   - asPath: The path to use to look up filtering rules. Pass an empty
 ///   string to apply no filters.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: To calculate the hash of an on-disk file without filters, use
-/// ``gitODBHashFile(oid:path:objectType:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -1065,13 +1043,6 @@ public func gitRepositoryHashFile(
 
 
 /// Sets the HEAD reference of the given repository.
-/// - Parameters:
-///   - repo: The repository to update. The underlying type must be
-///   `git_repository`.
-///   - refName: The canonical name of the reference to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If the specified reference points to a tree or blob, then HEAD will not be
 /// updated.
@@ -1083,6 +1054,12 @@ public func gitRepositoryHashFile(
 ///
 /// If the specified reference points to a commit, HEAD will point to that
 /// commit and will be detached.
+///
+/// - Parameters:
+///   - repo: The repository to update. The underlying type must be
+///   `git_repository`.
+///   - refName: The canonical name of the reference to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1104,18 +1081,17 @@ public func gitRepositorySetHEAD(
 
 
 /// Points the HEAD reference of the given repository to the specified commit.
-/// - Parameters:
-///   - repo: The repository to update. The underlying type must be
-///   `git_repository`.
-///   - committish: The ID of the commit to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If the specified committish object cannot be found in the given repository,
 /// or cannot be peeled to a commit, then HEAD will not be updated.
 ///
 /// Otherwise, HEAD will point to the specified commit and will be detached.
+///
+/// - Parameters:
+///   - repo: The repository to update. The underlying type must be
+///   `git_repository`.
+///   - committish: The ID of the commit to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1142,19 +1118,18 @@ public func gitRepositorySetHEADDetached(
 
 
 /// Points the HEAD reference of the given repository to the specified commit.
+///
+/// This function behaves like
+/// ``gitRepositorySetHEADDetached(repo:committish:)``, but takes an
+/// annotated commit. This enables more exact reflog messages by being able to
+/// specify the extended SHA syntax string which was specified by a user.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - committish: The annotated commit to use. The underlying type must be
 ///   `git_annotated_commit`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function behaves like
-/// ``gitRepositorySetHEADDetached(repo:committish:)``, but takes an
-/// annotated commit. This enables more exact reflog messages by being able to
-/// specify the extended SHA syntax string which was specified by a user.
 ///
 /// ## C Equivalent
 ///
@@ -1176,11 +1151,6 @@ public func gitRepositorySetHEADDetachedFromAnnotated(
 
 
 /// Detaches the HEAD of the given repository.
-/// - Parameter repo: The repository to update. The underlying type must be
-/// `git_repository`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If HEAD is already detached and points to a tag, then HEAD will be updated
 /// to point to the peeled commit.
@@ -1189,6 +1159,10 @@ public func gitRepositorySetHEADDetachedFromAnnotated(
 /// HEAD will not be updated.
 ///
 /// Otherwise, HEAD will point to the peeled commit and will be detached.
+///
+/// - Parameter repo: The repository to update. The underlying type must be
+/// `git_repository`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -1230,16 +1204,15 @@ public func gitRepositoryState(
 
 
 /// Sets the active namespace of the given repository.
+///
+/// The given namespace must not contain the `refs` directory. For example, to
+/// namespace all references under `refs/namespaces/name`, pass only `name`.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
 ///   - nmspace: The namespace to set.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The given namespace must not contain the `refs` directory. For example, to
-/// namespace all references under `refs/namespaces/name`, pass only `name`.
 ///
 /// ## C Equivalent
 ///
@@ -1348,6 +1321,10 @@ public func gitRepositoryIdent(
 
 
 /// Sets the reflog identity of the given repository.
+///
+/// If the reflog identity is unset, the identity will be taken from the
+/// repository's configuration.
+///
 /// - Parameters:
 ///   - repo: The repository to update. The underlying type must be
 ///   `git_repository`.
@@ -1355,11 +1332,6 @@ public func gitRepositoryIdent(
 ///   - email: The email to use for reflog entries. Pass `nil` to unset the
 ///   email.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If the reflog identity is unset, the identity will be taken from the
-/// repository's configuration.
 ///
 /// ## C Equivalent
 ///
@@ -1403,6 +1375,10 @@ public func gitRepositoryOIDType(
 
 /// Gets the parents of the next commit, considering the state of the given
 /// repository.
+///
+/// The parent of the next commit is generally HEAD, except when performing a
+/// merge, in which case the parents are two or more commits.
+///
 /// - Parameters:
 ///   - commits: The array of `OpaquePointer` instances in which to store the
 ///   parents of the next commit. The underlying type of the pointers must be
@@ -1410,11 +1386,6 @@ public func gitRepositoryOIDType(
 ///   - repo: The repository to search. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The parent of the next commit is generally HEAD, except when performing a
-/// merge, in which case the parents are two or more commits.
 ///
 /// ## C Equivalent
 ///

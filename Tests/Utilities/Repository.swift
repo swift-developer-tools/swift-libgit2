@@ -216,7 +216,7 @@ struct Repository
         
         XCTAssertOK(repoIndexResult)
         
-        guard let indexPointer: OpaquePointer = indexPointer
+        guard let indexPointer
         else
         {
             throw NSError.makeError("The index pointer was nil.")
@@ -224,7 +224,7 @@ struct Repository
         
         
         
-        if let path: String = path
+        if let path
         {
             let indexAddBypathResult: GitErrorCode = gitIndexAddByPath(
                 index:  indexPointer,
@@ -277,7 +277,7 @@ struct Repository
             
             XCTAssertOK(commitLookupResult)
             
-            guard let commitPointer: OpaquePointer = commitPointer
+            guard let commitPointer
             else
             {
                 throw NSError.makeError("The staged commit pointer was nil.")
@@ -343,7 +343,7 @@ struct Repository
         
         XCTAssertOK(treeLookupResult)
         
-        guard let treePointer: OpaquePointer = treePointer
+        guard let treePointer
         else
         {
             throw NSError.makeError("The tree pointer was nil.")
@@ -484,7 +484,7 @@ struct Repository
         
         XCTAssertOK(commitLookupResult)
         
-        guard let commitPointer: OpaquePointer = commitPointer
+        guard let commitPointer
         else
         {
             XCTFail("The commit pointer was nil.")
@@ -551,7 +551,7 @@ struct Repository
         
         XCTAssertOK(packbuilderNewResult)
         
-        guard let packbuilderPointer: OpaquePointer = packbuilderPointer
+        guard let packbuilderPointer
         else
         {
             throw NSError.makeError("The packbuilder pointer was nil.")
@@ -576,8 +576,8 @@ struct Repository
             data, size, payload in
             
             guard
-                let data    : UnsafeMutableRawPointer   = data,
-                let payload : UnsafeMutableRawPointer   = payload
+                let data,
+                let payload
             else
             {
                 XCTFail("All or some callback parameters were nil.")
@@ -674,7 +674,7 @@ struct Repository
         
         XCTAssertOK(indexerNewResult)
         
-        guard let indexerPointer: OpaquePointer = indexerPointer
+        guard let indexerPointer
         else
         {
             throw NSError.makeError("The indexer pointer was nil.")
@@ -714,7 +714,7 @@ struct Repository
         
         let packfileName: String? = gitIndexerName(idx: indexerPointer)
         
-        guard let packfileName: String = packfileName
+        guard let packfileName
         else
         {
             throw NSError.makeError("The packfile name was nil.")
@@ -973,7 +973,7 @@ internal extension Repository
         
         
         
-        if let options: GitRepositoryInitOptions = options
+        if let options
         {
             let repoInitExtResult: GitErrorCode = gitRepositoryInitExt(
                 out:        &repoPointer,
@@ -994,7 +994,7 @@ internal extension Repository
             XCTAssertOK(repoInitResult)
         }
         
-        guard let repoPointer: OpaquePointer = repoPointer
+        guard let repoPointer
         else
         {
             throw NSError.makeError("The repository pointer was nil.")
@@ -1058,7 +1058,7 @@ internal extension Repository
             
             XCTAssertOK(configOpenOnDiskResult)
             
-            guard let configPointer: OpaquePointer = configPointer
+            guard let configPointer
             else
             {
                 throw NSError.makeError("The configuration pointer was nil.")
@@ -1102,7 +1102,7 @@ internal extension Repository
             
             XCTAssertOK(repoIndexResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 throw NSError.makeError("The index pointer was nil.")
@@ -1148,7 +1148,7 @@ internal extension Repository
             
             XCTAssertOK(odbOpenResult)
             
-            guard let odbPointer: OpaquePointer = odbPointer
+            guard let odbPointer
             else
             {
                 throw NSError.makeError("The ODB pointer was nil.")
@@ -1200,7 +1200,7 @@ internal extension Repository
             
             XCTAssertOK(refDBOpenResult)
             
-            guard let refDBPointer: OpaquePointer = refDBPointer
+            guard let refDBPointer
             else
             {
                 throw NSError.makeError(
@@ -1278,7 +1278,7 @@ internal extension Repository
             
             XCTAssertOK(remoteCreateResult)
             
-            guard let remotePointer: OpaquePointer = remotePointer
+            guard let remotePointer
             else
             {
                 throw NSError.makeError("The remote pointer was nil.")
@@ -1342,7 +1342,7 @@ internal extension Repository
             
             XCTAssertOK(treeLookupResult)
             
-            guard let treePointer: OpaquePointer = treePointer
+            guard let treePointer
             else
             {
                 throw NSError.makeError("The tree pointer was nil.")
@@ -1389,7 +1389,7 @@ internal extension Repository
             
             XCTAssertOK(treebuilderNewResult)
             
-            guard let treebuilderPointer: OpaquePointer = treebuilderPointer
+            guard let treebuilderPointer
             else
             {
                 throw NSError.makeError("The treebuilder pointer was nil.")
@@ -1453,7 +1453,7 @@ internal extension Repository
             
             XCTAssertOK(worktreeAddResult)
             
-            guard let worktreePointer: OpaquePointer = worktreePointer
+            guard let worktreePointer
             else
             {
                 throw NSError.makeError("The worktree pointer was nil.")

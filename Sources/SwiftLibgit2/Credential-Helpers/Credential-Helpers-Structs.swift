@@ -13,8 +13,6 @@ import CLibgit2
 
 /// The payload for plaintext username/password authentication.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not used
 /// by other bindings. All bindings use `UnsafeMutableRawPointer` instead.
 ///

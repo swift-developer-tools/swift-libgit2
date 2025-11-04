@@ -13,6 +13,10 @@ import CLibgit2
 
 /// Cleans up excess whitespace in the given message, and adds a trailing
 /// newline if necessary.
+///
+/// If `stripComments` is `true`, `commentChar` must not be `nil`. Otherwise,
+/// this function will return ``GitErrorCode/gitEUser``.
+///
 /// - Parameters:
 ///   - out: The `String` instance in which to store the prettified message.
 ///   - message: The message to prettify.
@@ -20,11 +24,6 @@ import CLibgit2
 ///   - commentChar: The comment character at the start of lines to remove,
 ///   if `stripComments` is `true`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If `stripComments` is `true`, `commentChar` must not be `nil`. Otherwise,
-/// this function will return ``GitErrorCode/gitEUser``.
 ///
 /// ## C Equivalent
 ///
@@ -103,7 +102,7 @@ public func gitMessageTrailerArrayFree(
     arr: UnsafeMutablePointer<git_message_trailer_array>?
 )
 {
-    guard let arr: UnsafeMutablePointer<git_message_trailer_array> = arr
+    guard let arr
     else
     {
         return

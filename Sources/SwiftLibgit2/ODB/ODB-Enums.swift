@@ -49,8 +49,6 @@ public struct GitODBLookupFlagsT: COptionSet
     
     /// Do not refresh the object database if the lookup fails.
     ///
-    /// ## Discussion
-    ///
     /// This is useful when batching lookup operations for objects that may
     /// legitimately not exist. If this flag is used, the caller may
     /// manually call ``gitODBRefresh(db:)`` before processing a batch of

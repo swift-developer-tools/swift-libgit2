@@ -17,6 +17,10 @@ import XCTest
 enum Branch
 {
     /// Creates a local branch from the HEAD commit.
+    ///
+    /// - Important: If `free` is `false`, then the caller is responsible for
+    /// freeing the branch.
+    ///
     /// - Parameters:
     ///   - branchName: The branch name.
     ///   - repository: The repository in which to create the branch.
@@ -27,10 +31,6 @@ enum Branch
     /// - Returns: A pointer to the branch. If `free` is `true`, the pointer
     /// will be `nil`.
     /// - Throws: An error if an operation fails.
-    ///
-    /// ## Discussion
-    ///
-    /// If `free` is `false`, the caller is responsible for freeing the branch.
     @discardableResult
     static func createLocalBranch(
         named       branchName  : String,
@@ -66,8 +66,7 @@ enum Branch
             
             XCTAssertOK(annotatedCommitLookup)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 throw NSError.makeError(

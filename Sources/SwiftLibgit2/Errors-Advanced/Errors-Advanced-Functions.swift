@@ -26,13 +26,6 @@ public func gitErrorClear()
 
 /// Sets the error message string for the caller's thread, using
 /// `printf`-style formatting.
-/// - Parameters:
-///   - errorClass: The error category to set.
-///   - fmt: The `printf`-style format string to set.
-///   - args: The arguments for `fmt`. The underlying types must be C types.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function is public in libgit2 so custom object database
 /// backends and other APIs can relay error messages. In most cases, any value
@@ -44,6 +37,12 @@ public func gitErrorClear()
 /// for the duration of the function call. Passing Swift types will result in
 /// data loss or undefined behavior. Use ``gitErrorSetStr(errorClass:string:)``
 /// to pass a static Swift string instead.
+///
+/// - Parameters:
+///   - errorClass: The error category to set.
+///   - fmt: The `printf`-style format string to set.
+///   - args: The arguments for `fmt`. The underlying types must be C types.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -97,8 +96,6 @@ public func gitErrorSetStr(
 
 
 /// Sets the error message to a special value for memory allocation failure.
-///
-/// ## Discussion
 ///
 /// ``gitErrorSetStr(errorClass:string:)`` calls `strdup()` with the given
 /// string, but this is not ideal when the error is related to a memory

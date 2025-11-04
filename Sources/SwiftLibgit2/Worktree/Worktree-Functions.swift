@@ -73,17 +73,16 @@ public func gitWorktreeLookup(
 
 
 /// Opens a worktree in the given repository.
+///
+/// If the given repository is a worktree instead of the main tree, this
+/// function will look up the worktree inside the parent repository.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the worktree. The underlying type
 ///   must be `git_worktree`.
 ///   - repo: The repository to use. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If the given repository is a worktree instead of the main tree, this
-/// function will look up the worktree inside the parent repository.
 ///
 /// ## C Equivalent
 ///
@@ -115,7 +114,7 @@ public func gitWorktreeFree(
     wt: OpaquePointer?
 )
 {
-    guard let wt: OpaquePointer = wt
+    guard let wt
     else
     {
         return
@@ -127,14 +126,13 @@ public func gitWorktreeFree(
 
 
 /// Validates the given worktree.
-/// - Parameter wt: The worktree to validate. The underlying type must be
-/// `git_worktree`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// A valid worktree requires both the Git data structures inside the linked
 /// parent repository and the linked working directory to be present.
+///
+/// - Parameter wt: The worktree to validate. The underlying type must be
+/// `git_worktree`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -381,13 +379,6 @@ public func gitWorktreePruneOptionsInit(
 
 
 /// Checks whether the given worktree is prunable.
-/// - Parameters:
-///   - wt: The worktree to check. The underlying type must be `git_worktree`.
-///   - opts: The worktree pruning options to use.
-/// - Returns: Whether the given worktree is prunable, or `nil` if there was
-/// an error.
-///
-/// ## Discussion
 ///
 /// A worktree is not prunable in the following scenarios:
 ///
@@ -395,6 +386,12 @@ public func gitWorktreePruneOptionsInit(
 /// ``GitWorktreePruneT/gitWorktreePruneValid`` flag to disable this check.
 /// - The worktree is locked. Use the
 /// ``GitWorktreePruneT/gitWorktreePruneLocked`` flag to disable this check.
+///
+/// - Parameters:
+///   - wt: The worktree to check. The underlying type must be `git_worktree`.
+///   - opts: The worktree pruning options to use.
+/// - Returns: Whether the given worktree is prunable, or `nil` if there was
+/// an error.
 ///
 /// ## C Equivalent
 ///
@@ -415,7 +412,7 @@ public func gitWorktreeIsPrunable(
     }
     
     guard
-        let isPrunableResult: Int32 = isPrunableResult,
+        let isPrunableResult,
         isPrunableResult >= 0
     else
     {

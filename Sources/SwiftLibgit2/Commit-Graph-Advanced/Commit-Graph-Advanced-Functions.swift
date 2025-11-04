@@ -40,15 +40,14 @@ public func gitCommitGraphOpen(
 
 
 /// Frees the memory allocated for the given `git_commit_graph` instance.
-/// - Parameter cGraph: The commit graph to free. The underlying type must
-/// be `git_commit_graph`.
-///
-/// ## Discussion
 ///
 /// - Important: This function must be used only when the memory allocated
 /// using ``gitCommitGraphOpen(cGraphOut:objectsDir:)`` is not returned to
 /// libgit2, because it was not associated with the object database through
 /// a successful call to ``gitODBSetCommitGraph(odb:cGraph:)``.
+///
+/// - Parameter cGraph: The commit graph to free. The underlying type must
+/// be `git_commit_graph`.
 ///
 /// ## C Equivalent
 ///
@@ -57,7 +56,7 @@ public func gitCommitGraphFree(
     cGraph: OpaquePointer?
 )
 {
-    guard let cGraph: OpaquePointer = cGraph
+    guard let cGraph
     else
     {
         return
@@ -139,7 +138,7 @@ public func gitCommitGraphWriterFree(
     w: OpaquePointer?
 )
 {
-    guard let w: OpaquePointer = w
+    guard let w
     else
     {
         return

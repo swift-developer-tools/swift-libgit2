@@ -12,11 +12,10 @@ internal protocol COptionSet: CConvertible, CStruct, RawValueMutable, OptionSet
     where RawValue == UInt32
 {
     /// Creates an instance from a raw value.
-    /// - Parameter rawValue: The raw value to use.
-    ///
-    /// ## Discussion
     ///
     /// This must have a `public` access level.
+    ///
+    /// - Parameter rawValue: The raw value to use.
     init(
         rawValue: UInt32
     )

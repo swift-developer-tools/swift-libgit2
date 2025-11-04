@@ -54,16 +54,12 @@ public struct GitDiffOptionT: COptionSet
     
     /// Include ignored files in the diff.
     ///
-    /// ## Discussion
-    ///
     /// This flag includes all files of an ignored directory as a single entry
     /// in the diff. Use ``gitDiffRecurseIgnoredDirs`` to include all files of
     /// an ignored directory as separate entries.
     public static let gitDiffIncludeIgnored                 = GitDiffOptionT(rawValue: GIT_DIFF_INCLUDE_IGNORED.rawValue)
     
     /// Add all ignored files in a directory as ignored entries.
-    ///
-    /// ## Discussion
     ///
     /// ``gitDiffIncludeIgnored`` includes all files of an ignored directory
     /// as a single entry in the diff. This includes all files of of an ignored
@@ -72,16 +68,12 @@ public struct GitDiffOptionT: COptionSet
     
     /// Include untracked files in the diff.
     ///
-    /// ## Discussion
-    ///
     /// This flag includes all files of an untracked directory as a single
     /// entry in the diff. Use ``gitDiffRecurseUntrackedDirs`` to include all
     /// files of an untracked directory as separate entries.
     public static let gitDiffIncludeUntracked               = GitDiffOptionT(rawValue: GIT_DIFF_INCLUDE_UNTRACKED.rawValue)
     
     /// Add all untracked files in a directory as untracked entries.
-    ///
-    /// ## Discussion
     ///
     /// ``gitDiffIncludeUntracked`` includes all files of an untracked
     /// directory as a single entry in the diff. This includes all files of an
@@ -93,8 +85,6 @@ public struct GitDiffOptionT: COptionSet
     
     /// Use type change deltas in the diff.
     ///
-    /// ## Discussion
-    ///
     /// The normal behavior is to treat type changes as add/delete pairs in
     /// the diff.
     ///
@@ -104,8 +94,6 @@ public struct GitDiffOptionT: COptionSet
     public static let gitDiffIncludeTypeChange              = GitDiffOptionT(rawValue: GIT_DIFF_INCLUDE_TYPECHANGE.rawValue)
     
     /// Use type change deltas for blob-to-tree type changes.
-    ///
-    /// ## Discussion
     ///
     /// ``gitDiffIncludeTypeChange`` uses type change deltas in the diff,
     /// instead of add/delete pairs. However, blob-to-tree type changes are
@@ -125,15 +113,11 @@ public struct GitDiffOptionT: COptionSet
     
     /// Represent case changes as an add/delete pair.
     ///
-    /// ## Discussion
-    ///
     /// This flag may be combined with ``gitDiffIgnoreCase`` to represent case
     /// changes as an add/delete pair.
     public static let gitDiffIncludeCaseChange              = GitDiffOptionT(rawValue: GIT_DIFF_INCLUDE_CASECHANGE.rawValue)
     
     /// Treat paths as literal paths instead of `fnmatch` patterns.
-    ///
-    /// ## Discussion
     ///
     /// If the pathspec is set in the diff options, this flags indicates that
     /// the paths should be treated as literal paths instead of `fnmatch`
@@ -147,8 +131,6 @@ public struct GitDiffOptionT: COptionSet
     
     /// Disable updating the `binary` flag in the delta records.
     ///
-    /// ## Discussion
-    ///
     /// When iterating over a diff, disabling updating the `binary` flag in
     /// the delta records is useful if the hunk and data callbacks are not
     /// needed. This avoids having to completely load each file.
@@ -156,8 +138,6 @@ public struct GitDiffOptionT: COptionSet
     
     /// Label untracked directories as untracked, without scanning for ignored
     /// files.
-    ///
-    /// ## Discussion
     ///
     /// The normal Git behavior is to scan the entire content of an untracked
     /// directory. If all the content of an untracked directory is ignored,
@@ -169,8 +149,6 @@ public struct GitDiffOptionT: COptionSet
     public static let gitDiffEnableFastUntrackedDirs        = GitDiffOptionT(rawValue: GIT_DIFF_ENABLE_FAST_UNTRACKED_DIRS.rawValue)
     
     /// Update the index with correct stat information from the index.
-    ///
-    /// ## Discussion
     ///
     /// This flag indicates that when the diff finds a file in the working
     /// directory with stat information different from the index, but with
@@ -188,8 +166,6 @@ public struct GitDiffOptionT: COptionSet
     public static let gitDiffIncludeUnreadableAsUntracked   = GitDiffOptionT(rawValue: GIT_DIFF_INCLUDE_UNREADABLE_AS_UNTRACKED.rawValue)
     
     /// Use a heuristic that accounts for indentation and whitespace.
-    ///
-    /// ## Discussion
     ///
     /// This flag can generally produce better diffs when dealing with
     /// ambiguous diff hunks.
@@ -215,8 +191,6 @@ public struct GitDiffOptionT: COptionSet
     
     /// Include the content of untracked files when generating patch text.
     ///
-    /// ## Discussion
-    ///
     /// This flag will automatically disable ``gitDiffIncludeUntracked``, but
     /// will not automatically enable ``gitDiffRecurseUntrackedDirs``. Use the
     /// latter flag to add all untracked files in a directory as untracked
@@ -225,8 +199,6 @@ public struct GitDiffOptionT: COptionSet
     
     /// Include the names of unmodified files when generating output, if the
     /// files are included in the diff.
-    ///
-    /// ## Discussion
     ///
     /// Normally, unmodified files are skipped in the formats that list files
     /// (for example, name-only, name-status, and raw). Even if this flag is
@@ -259,14 +231,12 @@ public struct GitDiffOptionT: COptionSet
 /// The flags for the delta object and the file objects on each side of the
 /// delta.
 ///
-/// ## Discussion
-///
 /// These flags are used for both the ``GitDiffDelta/flags`` property of
 /// ``GitDiffDelta`` and the ``GitDiffFile/flags`` property of ``GitDiffFile``
 /// that represent the old and new sides of the delta.
 ///
-/// Values outside of the public supported range are reserved for internal or
-/// future use.
+/// - Note: Values outside of the public supported range are reserved for
+/// internal or future use.
 ///
 /// ## C Equivalent
 ///
@@ -330,8 +300,6 @@ public struct GitDiffFlagT: COptionSet
 
 
 /// The type of change described by a diff delta.
-///
-/// ## Discussion
 ///
 /// ``gitDeltaRenamed`` and ``gitDeltaCopied`` will only appear if
 /// ``gitDiffFindSimilar(diff:options:)`` is called on the diff.
@@ -431,8 +399,6 @@ public enum GitDeltaT: UInt32, CEnum
 
 
 /// The type of binary data.
-///
-/// ## Discussion
 ///
 /// When producing a binary diff, the returned binary data will be the smaller
 /// of the deflated full (literal) content of the file, or the deflated binary
@@ -607,35 +573,25 @@ public struct GitDiffFindT: COptionSet
     
     /// Obey `diff.renames`.
     ///
-    /// ## Discussion
-    ///
     /// This flag will be overridden by any other flag.
     public static let gitDiffFindByConfig                   = GitDiffFindT(rawValue: GIT_DIFF_FIND_BY_CONFIG.rawValue)
     
     /// Look for renames.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git diff --find-renames`.
     public static let gitDiffFindRenames                    = GitDiffFindT(rawValue: GIT_DIFF_FIND_RENAMES.rawValue)
     
     /// Consider the old side of modified files for renames.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git diff --break-rewrites=N`.
     public static let gitDiffFindRenamesFromRewrites        = GitDiffFindT(rawValue: GIT_DIFF_FIND_RENAMES_FROM_REWRITES.rawValue)
     
     /// Look for copies.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git diff --find-copies`.
     public static let gitDiffFindCopies                     = GitDiffFindT(rawValue: GIT_DIFF_FIND_COPIES.rawValue)
     
     /// Consider unmodified files as copy sources.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git diff --find-copies-harder`.
     ///
@@ -645,8 +601,6 @@ public struct GitDiffFindT: COptionSet
     public static let gitDiffFindCopiesFromUnmodified       = GitDiffFindT(rawValue: GIT_DIFF_FIND_COPIES_FROM_UNMODIFIED.rawValue)
     
     /// Mark significant rewrites for split.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git diff --break-rewrites=/M`.
     public static let gitDiffFindRewrites                   = GitDiffFindT(rawValue: GIT_DIFF_FIND_REWRITES.rawValue)
@@ -658,8 +612,6 @@ public struct GitDiffFindT: COptionSet
     public static let gitDiffFindAndBreakRewrites           = GitDiffFindT(rawValue: GIT_DIFF_FIND_AND_BREAK_REWRITES.rawValue)
     
     /// Find renames and copies for untracked files in the working directory.
-    ///
-    /// ## Discussion
     ///
     /// For this flag to work correctly, use
     /// ``GitDiffOptionT/gitDiffIncludeUntracked`` when the initial diff is
@@ -681,14 +633,10 @@ public struct GitDiffFindT: COptionSet
     
     /// Measure similarity only by comparing SHAs.
     ///
-    /// ## Discussion
-    ///
     /// This flag enabled fast and computationally cheap similarity measurement.
     public static let gitDiffFindExactMatchOnly             = GitDiffFindT(rawValue: GIT_DIFF_FIND_EXACT_MATCH_ONLY.rawValue)
     
     /// Do not break rewrites unless they contribute to a rename.
-    ///
-    /// ## Discussion
     ///
     /// Normally, the ``gitDiffFindAndBreakRewrites`` flag will measure the
     /// self-similarity of modified files, and split the ones that have changed
@@ -701,8 +649,6 @@ public struct GitDiffFindT: COptionSet
     public static let gitDiffBreakRewritesForRenamesOnly    = GitDiffFindT(rawValue: GIT_DIFF_BREAK_REWRITES_FOR_RENAMES_ONLY.rawValue)
     
     /// Remove any unmodified deltas after the similarity measurement is done.
-    ///
-    /// ## Discussion
     ///
     /// Using the ``gitDiffFindCopiesFromUnmodified`` flag to emulate the
     /// behavior of `git diff --find-copies-harder` requires building a diff
@@ -739,21 +685,15 @@ public enum GitDiffFormatT: UInt32, CEnum
     
     /// Show the raw diff.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git diff --raw`.
     case gitDiffFormatRaw           = 3
     
     /// Show only the name of each changed file in the post-image tree.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git diff --name-only`.
     case gitDiffFormatNameOnly      = 4
     
     /// Show only the names and statuses of each changed file.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git diff --name-status`.
     case gitDiffFormatNameStatus    = 5
@@ -845,29 +785,21 @@ public struct GitDiffStatsFormatT: COptionSet
     
     /// Generate full statistics.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git diff --stat`.
     public static let gitDiffStatsFull              = GitDiffStatsFormatT(rawValue: GIT_DIFF_STATS_FULL.rawValue)
     
     /// Generate short statistics.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git diff --shortstat`.
     public static let gitDiffStatsShort             = GitDiffStatsFormatT(rawValue: GIT_DIFF_STATS_SHORT.rawValue)
     
     /// Generate number statistics.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git diff --numstat`.
     public static let gitDiffStatsNumber            = GitDiffStatsFormatT(rawValue: GIT_DIFF_STATS_NUMBER.rawValue)
     
     /// Generate a concise summary of extended header information, such as
     /// creations, renames, and mode changes.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git diff --summary`.
     public static let gitDiffStatsIncludeSummary    = GitDiffStatsFormatT(rawValue: GIT_DIFF_STATS_INCLUDE_SUMMARY.rawValue)

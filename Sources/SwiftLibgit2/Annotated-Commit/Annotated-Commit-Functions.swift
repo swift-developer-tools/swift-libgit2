@@ -84,6 +84,13 @@ public func gitAnnotatedCommitFromFetchhead(
 
 
 /// Creates an annotated commit from the given commit ID.
+///
+/// An annotated commit contains information about how it was looked up, which
+/// may be useful for functions like merge or rebase to provide context to the
+/// operation. For example, conflict files will include the name of the source
+/// or target branches being merged. When that data is known, use
+/// ``gitAnnotatedCommitFromRef(out:repo:ref:)`` instead.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the annotated commit. The underlying
 ///   type must be `git_annotated_commit`.
@@ -91,14 +98,6 @@ public func gitAnnotatedCommitFromFetchhead(
 ///   must be `git_repository`.
 ///   - id: The commit ID to look up.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// An annotated commit contains information about how it was looked up, which
-/// may be useful for functions like merge or rebase to provide context to the
-/// operation. For example, conflict files will include the name of the source
-/// or target branches being merged. When that data is known, use
-/// ``gitAnnotatedCommitFromRef(out:repo:ref:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -127,6 +126,11 @@ public func gitAnnotatedCommitLookup(
 
 
 /// Creates an annotated commit from a revision string.
+///
+/// - Note: See the
+/// [Git revisions documentation](http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions)
+/// for information on the accepted revspec syntax.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the annotated commit. The underlying
 ///   type must be `git_annotated_commit`.
@@ -134,12 +138,6 @@ public func gitAnnotatedCommitLookup(
 ///   must be `git_repository`.
 ///   - revspec: The extended SHA syntax string to use to lookup the commit.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: See the
-/// [Git revisions documentation](http://git-scm.com/docs/git-rev-parse.html#_specifying_revisions)
-/// for information on the accepted revspec syntax.
 ///
 /// ## C Equivalent
 ///
@@ -216,7 +214,7 @@ public func gitAnnotatedCommitFree(
     commit: OpaquePointer?
 )
 {
-    guard let commit: OpaquePointer = commit
+    guard let commit
     else
     {
         return

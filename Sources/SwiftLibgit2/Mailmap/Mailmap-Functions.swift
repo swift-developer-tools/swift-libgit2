@@ -13,14 +13,13 @@ import Foundation
 
 
 /// Creates a new mailmap.
+///
+/// - Note: The created mailmap will be empty. Add a mailmap file before
+/// using it.
+///
 /// - Parameter out: The pointer in which to store the mailmap. The underlying
 /// type must be `git_mailmap`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: The resulting mailmap will be empty. Add a mailmap file before
-/// using it.
 ///
 /// ## C Equivalent
 ///
@@ -48,7 +47,7 @@ public func gitMailmapFree(
     mm: OpaquePointer?
 )
 {
-    guard let mm: OpaquePointer = mm
+    guard let mm
     else
     {
         return
@@ -129,13 +128,6 @@ public func gitMailmapFromBuffer(
 
 /// Creates a new mailmap from the given repository, loading mailmap files
 /// based on the repository's configuration.
-/// - Parameters:
-///   - out: The pointer in which to store the mailmap. The underlying type
-///   must be `git_mailmap`.
-///   - repo: The repository from which to load mailmap information.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// Mailmaps will be loaded in the following order:
 ///
@@ -144,6 +136,12 @@ public func gitMailmapFromBuffer(
 /// 2. From the blob specified by the `mailmap.blob` configuration entry,
 /// if set. This entry defaults to `HEAD:.mailmap` in bare repositories.
 /// 3. The path in the `mailmap.file` configuration entry, if set.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the mailmap. The underlying type
+///   must be `git_mailmap`.
+///   - repo: The repository from which to load mailmap information.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

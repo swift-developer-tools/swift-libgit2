@@ -15,11 +15,6 @@ internal extension Data
 {
     /// Calls the given closure with a pointer to a C string, and the length of
     /// that C string.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `const char *`.
@@ -43,6 +38,10 @@ internal extension Data
     /// - Empty data would cause undefined behavior in the C function.
     ///
     /// In these cases, the thrown error appropriately signals invalid input.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     func withCString<T>(
         _ body: (UnsafePointer<CChar>, Int) throws -> T
     ) throws -> T
@@ -68,17 +67,16 @@ internal extension Data
     
     /// Calls the given closure with mutable pointer to a pointer to a C string,
     /// and the length of that C string.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// Use this method with C functions that expect a parameter of the type
     /// `const char **`.
     ///
     /// - Important: See ``withCString(_:)`` for more information on when
     /// to check for empty data before calling this method.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     func withMutableCString<T>(
         _ body: (UnsafeMutablePointer<UnsafePointer<CChar>?>, Int) throws -> T
     ) throws -> T
@@ -153,11 +151,6 @@ internal extension Optional where Wrapped == Data
 {
     /// Calls the given closure with an optional pointer to a C string, and the
     /// length of that C string.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// When the receiver is `nil`, this method passes `nil` and `0` to the
     /// closure.
@@ -167,6 +160,10 @@ internal extension Optional where Wrapped == Data
     ///
     /// - Important: See ``withCString(_:)`` for more information on when
     /// to check for empty data before calling this method.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     func withOptionalCString<T>(
         _ body: (UnsafePointer<CChar>?, Int) throws -> T
     ) throws -> T

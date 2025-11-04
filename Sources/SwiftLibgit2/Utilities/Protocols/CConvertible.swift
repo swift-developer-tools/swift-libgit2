@@ -9,7 +9,6 @@
 
 /// A type that can be converted to the equivalent C value.
 ///
-/// ## Discussion
 ///
 /// These protocols standardize the implementation of Swift binding types
 /// that can be converted to their C equivalents using an instance method.
@@ -114,11 +113,10 @@ internal protocol CConvertible: WithCConvertible
     
     
     /// Converts the receiver to the equivalent C value.
-    /// - Returns: The equivalent C value
-    ///
-    /// ## Discussion
     ///
     /// This must have an `internal` access level.
+    ///
+    /// - Returns: The equivalent C value
     func cValue() -> C
 }
 
@@ -134,12 +132,11 @@ internal protocol ThrowingCConvertible: WithCConvertible
     
     
     /// Converts the receiver to the equivalent C value.
-    /// - Returns: The equivalent C value
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// This must have an `internal` access level.
+    ///
+    /// - Returns: The equivalent C value
+    /// - Throws: An error if the conversion fails.
     func cValue() throws -> C
 }
 
@@ -156,13 +153,12 @@ internal protocol WithCConvertible
     
     /// Calls the given closure with a mutable pointer to the equivalent C
     /// value.
+    ///
+    /// This must have an `internal` access level.
+    ///
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
-    ///
-    /// This must have an `internal` access level.
     func withCValue<T>(
         _ body: (UnsafeMutablePointer<C>) throws -> T
     ) throws -> T
@@ -171,13 +167,12 @@ internal protocol WithCConvertible
     
     /// Calls the given closure with an optional mutable pointer to the
     /// equivalent C value.
+    ///
+    /// This must have an `internal` access level.
+    ///
     /// - Parameter body: The closure to call.
     /// - Returns: The return value of the given closure.
     /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
-    ///
-    /// This must have an `internal` access level.
     func withOptionalCValue<T>(
         _ body: (UnsafeMutablePointer<C>?) throws -> T
     ) throws -> T

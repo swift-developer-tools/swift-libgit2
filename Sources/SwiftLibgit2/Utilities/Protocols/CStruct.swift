@@ -11,8 +11,6 @@
 
 /// A type that can be initialized from the equivalent C value.
 ///
-/// ## Discussion
-///
 /// These protocols standardize the implementation of Swift binding structs
 /// that can be initialized from their C equivalents.
 ///
@@ -131,11 +129,10 @@ internal protocol CStruct: CMutable
     associatedtype C
     
     /// Creates an instance from a C value.
-    /// - Parameter cValue: The C value to use.
-    ///
-    /// ## Discussion
     ///
     /// This must have an `internal` access level.
+    ///
+    /// - Parameter cValue: The C value to use.
     init(
         cValue: C
     )

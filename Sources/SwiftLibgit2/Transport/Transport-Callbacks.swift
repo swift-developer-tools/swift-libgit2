@@ -32,7 +32,7 @@ public typealias GitTransportMessageCB = @convention(c)
 
 /// The callback invoked to create a transport.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting transport.
+///   - out: The pointer in which to store the transport.
 ///   - owner: The owner of the transport. The underlying type must be
 ///   `git_remote`.
 ///   - payload: The payload provided by the caller.

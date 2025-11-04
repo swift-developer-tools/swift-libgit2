@@ -206,16 +206,15 @@ internal extension Array where Element == GitRemoteHEAD
     /// Calls the given closure with a mutable pointer to an array of
     /// `git_remote_head` instances, and a mutable pointer to the length of
     /// that array, and updates the receiver with any changes made by the closure.
-    /// - Parameter body: The closure to call.
-    /// - Returns: The return value of the given closure.
-    /// - Throws: An error if the conversion fails.
-    ///
-    /// ## Discussion
     ///
     /// This method is used with ``gitRemoteLS(out:size:remote:)``. The memory
     /// allocated by libgit2 belongs to the remote, and must not be freed by
     /// this method. The memory is valid as long as a new connection is not
     /// initiated. The caller must manage the lifetime of the remote itself.
+    ///
+    /// - Parameter body: The closure to call.
+    /// - Returns: The return value of the given closure.
+    /// - Throws: An error if the conversion fails.
     mutating func withMutatingArrayOfGitRemoteHEADs<T>(
         _ body: (
             UnsafeMutablePointer<UnsafeMutablePointer<UnsafePointer<git_remote_head>?>?>,
@@ -290,8 +289,7 @@ internal extension Array where Element == GitRemoteHEAD
     {
         guard
             count > 0,
-            let cArrayOfRemoteHEADs: UnsafePointer<UnsafePointer<git_remote_head>?>
-                = cArrayOfRemoteHEADs
+            let cArrayOfRemoteHEADs
         else
         {
             self = []

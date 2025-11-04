@@ -13,8 +13,6 @@ import CLibgit2
 
 /// A custom memory allocator.
 ///
-/// ## Discussion
-///
 /// All properties of the custom memory allocator must be set for it to work
 /// correctly.
 ///

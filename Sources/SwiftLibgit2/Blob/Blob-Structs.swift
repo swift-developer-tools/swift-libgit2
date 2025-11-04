@@ -21,31 +21,24 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible, Sendable
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitBlobFilterOptionsVersion``.
     public var version      : Int32
     
     /// The flags to use during the blob filtering operation.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags        : GitBlobFilterFlagT
     
     /// The commit ID.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
-    /// - Note: This property is unused, but is reserved for API compatibility.
+    /// - Note: This property is unused in libgit2, but is reserved for API
+    /// compatibility.
     public var commitID     : GitOID?
     
     /// The commit from which to load attributes when
     /// ``GitBlobFilterFlagT/gitBlobFilterAttributesFromCommit`` is specified.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitOID`` instance.
     public var attrCommitID : GitOID

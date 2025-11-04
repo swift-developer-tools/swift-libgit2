@@ -38,6 +38,10 @@ public func gitRebaseOptionsInit(
 
 /// Creates a rebase object to rebase the changes in the given branch,
 /// relative to the given upstream, onto the other given branch.
+///
+/// - Note: If the initialization is successful, call
+/// ``gitRebaseNext(operation:rebase:)`` to begin the rebase operation.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the rebase. The underlying type
 ///   must be `git_rebase`.
@@ -52,11 +56,6 @@ public func gitRebaseOptionsInit(
 ///   `git_annotated_commit`. Pass `nil` to rebase onto the given upstream.
 ///   - opts: The rebase options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: If the initialization is successful, call
-/// ``gitRebaseNext(operation:rebase:)`` to begin the rebase operation.
 ///
 /// ## C Equivalent
 ///
@@ -91,6 +90,11 @@ public func gitRebaseInit(
 
 
 /// Opens an in-progress rebase.
+///
+/// This function may be used to open a rebase that was started by
+/// ``gitRebaseInit(out:repo:branch:upstream:onto:opts:)``, or by another
+/// client.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the rebase. The underlying type
 ///   must be `git_rebase`.
@@ -98,12 +102,6 @@ public func gitRebaseInit(
 ///   type must be `git_repository`.
 ///   - opts: The rebase options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This function may be used to open a rebase that was started by
-/// ``gitRebaseInit(out:repo:branch:upstream:onto:opts:)``, or by another
-/// client.
 ///
 /// ## C Equivalent
 ///
@@ -283,20 +281,19 @@ public func gitRebaseOperationByIndex(
 
 
 /// Gets the next rebase opertion of the given in-progress rebase.
-/// - Parameters:
-///   - operation: The ``GitRebaseOperation`` instance in which to store the
-///   rebase operation.
-///   - rebase: The in-progress rebase to use. The underlying type must be
-///   `git_rebase`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// If the next rebase opeartion is one that applies a patch (which is any
 /// operation except ``GitRebaseOperationT/gitRebaseOperationExec``), then the
 /// patch will be applied, and the index and working directory will be updated
 /// with the changes. If there are conflicts, they must be resolved before
 /// committing the changes.
+///
+/// - Parameters:
+///   - operation: The ``GitRebaseOperation`` instance in which to store the
+///   rebase operation.
+///   - rebase: The in-progress rebase to use. The underlying type must be
+///   `git_rebase`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -323,20 +320,19 @@ public func gitRebaseNext(
 
 
 /// Gets the index produced by the last rebase operation.
-/// - Parameters:
-///   - index: The pointer in which to store the index. The underlying type
-///   must be `git_index`.
-///   - rebase: The in-progress rebase to use. The underlying type must be
-///   `git_rebase`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function is useful for resolving conflicts in an in-memory rebase
 /// before committing the changes.
 ///
 /// - Note: This is only applicable for in-memory rebases. For rebases within
 /// a working directory, the changes are applied to the repository's index.
+///
+/// - Parameters:
+///   - index: The pointer in which to store the index. The underlying type
+///   must be `git_index`.
+///   - rebase: The in-progress rebase to use. The underlying type must be
+///   `git_rebase`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -358,6 +354,15 @@ public func gitRebaseInMemoryIndex(
 
 
 /// Commits the current patch.
+///
+/// If `message` is `nil`, then `messageEncoding` should also be `nil` to use
+/// the original message encoding. If `message` is not `nil`, then
+/// `messageEncoding` may be `nil` to use UTF-8 and to not write an encoding
+/// header.
+///
+/// - Note: Any conflicts that were introduced during the patch application
+/// must be resolved before committing the patch.
+///
 /// - Parameters:
 ///   - id: The ``GitOID`` instance in which to store the commit ID.
 ///   - rebase: The in-progress rebase to use. The underlying type must be
@@ -370,16 +375,6 @@ public func gitRebaseInMemoryIndex(
 ///   - message: The commit message to use. Pass `nil` to use the original
 ///   message.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If `message` is `nil`, then `messageEncoding` should also be `nil` to use
-/// the original message encoding. If `message` is not `nil`, then
-/// `messageEncoding` may be `nil` to use UTF-8 and to not write an encoding
-/// header.
-///
-/// - Note: Any conflicts that were introduced during the patch application
-/// must be resolved before committing the patch.
 ///
 /// ## C Equivalent
 ///
@@ -486,7 +481,7 @@ public func gitRebaseFree(
     rebase: OpaquePointer?
 )
 {
-    guard let rebase: OpaquePointer = rebase
+    guard let rebase
     else
     {
         return

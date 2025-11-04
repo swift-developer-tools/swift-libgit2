@@ -66,6 +66,12 @@ public func gitStatusForEach(
 
 
 /// Loops over all the file statuses in the given repository.
+///
+/// If ``GitStatusOptions/pathspec`` is provided in the given options to
+/// filter the statuses, then the results of rename detection may not be
+/// accurate. In order to properly detect renames by considering all files,
+/// do not provide any pathspecs.
+///
 /// - Parameters:
 ///   - repo: The repository containing the files. The underlying type must
 ///   be `git_repository`.
@@ -73,13 +79,6 @@ public func gitStatusForEach(
 ///   - callback: The ``GitStatusCB`` callback to invoke for each status.
 ///   - payload: The payload to pass to `callback`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If ``GitStatusOptions/pathspec`` is provided in the given options to
-/// filter the statuses, then the results of rename detection may not be
-/// accurate. In order to properly detect renames by considering all files,
-/// do not provide any pathspecs.
 ///
 /// ## C Equivalent
 ///
@@ -110,18 +109,17 @@ public func gitStatusForEachExt(
 
 
 /// Gets the status for the specified file.
+///
+/// - Note: This function does not perform any rename detection due to lack of
+/// information as a result of path filtering. To detect renames, use
+/// ``gitStatusListNew(out:repo:opts:)`` instead.
+///
 /// - Parameters:
 ///   - statusFlags: The ``GitStatusT`` instance in which to store the status.
 ///   - repo: The repository containing the file. The underlying type must be
 ///   `git_repository`.
 ///   - path: The exact path to the file to evaluate.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// - Note: This function does not perform any rename detection due to lack of
-/// information as a result of path filtering. To detect renames, use
-/// ``gitStatusListNew(out:repo:opts:)`` instead.
 ///
 /// ## C Equivalent
 ///
@@ -150,6 +148,12 @@ public func gitStatusFile(
 
 
 /// Gets the statuses of the files in the given repository.
+///
+/// If ``GitStatusOptions/pathspec`` is provided in the given options to
+/// filter the statuses, then the results of rename detection may not be
+/// accurate. In order to properly detect renames by considering all files,
+/// do not provide any pathspecs.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the statuses. The underlying type
 ///   must be `git_status_list`.
@@ -157,13 +161,6 @@ public func gitStatusFile(
 ///   be `git_repository`.
 ///   - opts: The status options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// If ``GitStatusOptions/pathspec`` is provided in the given options to
-/// filter the statuses, then the results of rename detection may not be
-/// accurate. In order to properly detect renames by considering all files,
-/// do not provide any pathspecs.
 ///
 /// ## C Equivalent
 ///
@@ -249,7 +246,7 @@ public func gitStatusListFree(
     statusList: OpaquePointer?
 )
 {
-    guard let statusList: OpaquePointer = statusList
+    guard let statusList
     else
     {
         return

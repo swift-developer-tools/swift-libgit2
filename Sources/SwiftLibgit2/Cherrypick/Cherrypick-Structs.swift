@@ -21,29 +21,21 @@ public struct GitCherrypickOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitCherrypickOptionsVersion``.
     public var version      : UInt32
     
     /// The parent for merge commits.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var mainline     : UInt32
     
     /// The merge options.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitMergeOptions``
     /// instance.
     public var mergeOpts    : GitMergeOptions
     
     /// The checkout options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.

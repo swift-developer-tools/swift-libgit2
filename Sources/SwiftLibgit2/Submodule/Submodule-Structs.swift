@@ -21,22 +21,16 @@ public struct GitSubmoduleUpdateOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitSubmoduleUpdateOptionsVersion``.
     public var version      : UInt32
     
     /// The checkout options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitCheckoutOptions``
     /// instance.
     public var checkoutOpts : GitCheckoutOptions
     
     /// The fetch options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitFetchOptions``
     /// instance.
@@ -47,8 +41,6 @@ public struct GitSubmoduleUpdateOptions: CStructMutable, WithCConvertible
     
     /// Whether to allow fetching from the submodule's default remote, if
     /// the target commit is not found.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `true`.
     public var allowFetch   : Bool

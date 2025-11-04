@@ -21,28 +21,20 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitProxyOptionsVersion``.
     public var version          : UInt32
     
     /// The type of proxy.
-    ///
-    /// ## Discussion
     ///
     /// The default value is ``GitProxyT/gitProxyNone``.
     public var type             : GitProxyT
     
     /// The URL of the proxy.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var url              : String?
     
     /// The callback invoked to acquire credentials.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///
@@ -53,8 +45,6 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     
     /// The callback invoked to check custom certificates.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     ///
     /// If certificate verification fails, this function will be called to
@@ -63,8 +53,6 @@ public struct GitProxyOptions: CStructMutable, WithCConvertible
     public var certificateCheck : GitTransportCertificateCheckCB?
     
     /// The payload passed to ``credentials`` and ``certificateCheck``.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public var payload          : UnsafeMutableRawPointer?

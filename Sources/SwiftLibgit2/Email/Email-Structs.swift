@@ -20,36 +20,26 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitEmailCreateOptionsVersion``.
     public var version          : UInt32
     
     /// The flags controlling the formatting of generated emails.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags            : GitEmailCreateFlagsT
     
     /// The diff options.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a default-initialized ``GitDiffOptions`` instance.
     public var diffOpts         : GitDiffOptions
     
     /// The diff rename and copy detection options.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a default-initialized ``GitDiffFindOptions``
     /// instance.
     public var diffFindOpts     : GitDiffFindOptions
     
     /// The subject prefix.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `PATCH`.
     ///
@@ -60,16 +50,12 @@ public struct GitEmailCreateOptions: CStructMutable, WithCConvertible
     
     /// The starting patch number.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `1`.
     ///
     /// - Important: The starting patch number must not be `0`.
     public var startNumber      : Int
     
     /// The reroll number.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `0`.
     public var rerollNumber     : Int

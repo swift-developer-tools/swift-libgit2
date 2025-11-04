@@ -13,15 +13,14 @@ import Foundation
 
 
 /// Gets the repository containing the given patch.
+///
+/// - Important: The returned pointer is owned by the given patch and must
+/// not be freed.
+///
 /// - Parameter patch: The patch for which to get the repository. The
 /// underlying type must be `git_patch`.
 /// - Returns: The repository containing the given patch. The underlying
 /// type will be `git_repository`.
-///
-/// ## Discussion
-///
-/// - Important: The returned pointer is owned by the given patch and must
-/// not be freed.
 ///
 /// ## C Equivalent
 ///
@@ -36,14 +35,6 @@ public func gitPatchOwner(
 
 
 /// Gets the patch for the specified entry in the given diff.
-/// - Parameters:
-///   - out: The pointer in which to store the patch. The underlying type must
-///   be `git_patch`.
-///   - diff: The diff to search. The underlying type must be `git_diff`.
-///   - idx: The index of the entry in the given diff.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// The returned patch can be used to loop over all the hunks and lines in the
 /// given diff.
@@ -54,6 +45,13 @@ public func gitPatchOwner(
 ///
 /// Either the patch pointed to by `out` or `diff` may be `nil`. If the patch
 /// is `nil`, then no text diff will be calculated.
+///
+/// - Parameters:
+///   - out: The pointer in which to store the patch. The underlying type must
+///   be `git_patch`.
+///   - diff: The diff to search. The underlying type must be `git_diff`.
+///   - idx: The index of the entry in the given diff.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -77,6 +75,12 @@ public func gitPatchFromDiff(
 
 
 /// Creates a patch from the difference between the given blobs.
+///
+/// This is similar to
+/// ``gitDiffBlobs(oldBlob:oldAsPath:newBlob:newAsPath:options:fileCB:binaryCB:hunkCB:lineCB:payload:)``,
+/// except this function generates a patch for the diff instead of directly
+/// invoking callbacks.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the patch. The underlying type must
 ///   be `git_patch`.
@@ -88,13 +92,6 @@ public func gitPatchFromDiff(
 ///   - newAsPath: The file name to use for `newBlob`.
 ///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is similar to
-/// ``gitDiffBlobs(oldBlob:oldAsPath:newBlob:newAsPath:options:fileCB:binaryCB:hunkCB:lineCB:payload:)``,
-/// except this function generates a patch for the diff instead of directly
-/// invoking callbacks.
 ///
 /// ## C Equivalent
 ///
@@ -129,6 +126,12 @@ public func gitPatchFromBlobs(
 
 
 /// Creates a patch from the difference between the given blob and buffer.
+///
+/// This is similar to
+/// ``gitDiffBlobToBuffer(oldBlob:oldAsPath:buffer:bufferLen:bufferAsPath:options:fileCB:binaryCB:hunkCB:lineCB:payload:)``,
+/// except this function generates a patch for the diff instead of directly
+/// invoking callbacks.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the patch. The underlying type must
 ///   be `git_patch`.
@@ -140,13 +143,6 @@ public func gitPatchFromBlobs(
 ///   - bufferAsPath: The file name to use for `buffer`.
 ///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is similar to
-/// ``gitDiffBlobToBuffer(oldBlob:oldAsPath:buffer:bufferLen:bufferAsPath:options:fileCB:binaryCB:hunkCB:lineCB:payload:)``,
-/// except this function generates a patch for the diff instead of directly
-/// invoking callbacks.
 ///
 /// ## C Equivalent
 ///
@@ -188,6 +184,12 @@ public func gitPatchFromBlobAndBuffer(
 
 
 /// Creates a patch from the difference between the given buffers.
+///
+/// This is similar to
+/// ``gitDiffBuffers(oldBuffer:oldBufferLen:oldBufferAsPath:newBuffer:newBufferLen:newBufferAsPath:options:fileCB:binaryCB:hunkCB:lineCB:payload:)`,
+/// except this function generates a patch for the diff instead of directly
+/// invoking callbacks.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the patch. The underlying type must
 ///   be `git_patch`.
@@ -199,13 +201,6 @@ public func gitPatchFromBlobAndBuffer(
 ///   - newAsPath: The file name to use for `newBuffer`.
 ///   - opts: The diff options to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is similar to
-/// ``gitDiffBuffers(oldBuffer:oldBufferLen:oldBufferAsPath:newBuffer:newBufferLen:newBufferAsPath:options:fileCB:binaryCB:hunkCB:lineCB:payload:)`,
-/// except this function generates a patch for the diff instead of directly
-/// invoking callbacks.
 ///
 /// ## C Equivalent
 ///
@@ -264,7 +259,7 @@ public func gitPatchFree(
     patch: OpaquePointer?
 )
 {
-    guard let patch: OpaquePointer = patch
+    guard let patch
     else
     {
         return
@@ -317,6 +312,9 @@ public func gitPatchNumHunks(
 
 
 /// Gets the line counts of the given patch.
+///
+/// This is similar to `git diff --numstat`.
+///
 /// - Parameters:
 ///   - totalContext: The pointer in which to store the number of context lines.
 ///   - totalAdditions: The pointer in which to store the number of addition
@@ -325,10 +323,6 @@ public func gitPatchNumHunks(
 ///   lines.
 ///   - patch: The patch to evaluate. The underlying type must be `git_patch`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// This is similar to `git diff --numstat`.
 ///
 /// ## C Equivalent
 ///

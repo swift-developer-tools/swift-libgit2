@@ -31,13 +31,12 @@ public func gitStdAllocInitAllocator(
 
 
 /// Initializes the given allocator to use the `crtdbg` pointer.
-/// - Parameter allocator: The allocator to initialize.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: This function is provided for documentation purposes, but is not
 /// available on the supported platforms.
+///
+/// - Parameter allocator: The allocator to initialize.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

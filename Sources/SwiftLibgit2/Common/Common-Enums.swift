@@ -61,14 +61,10 @@ public struct GitFeatureT: COptionSet
     
     /// HTTP parsing.
     ///
-    /// ## Discussion
-    ///
     /// This feature is always available.
     public static let gitFeatureHTTPParser      = GitFeatureT(rawValue: GIT_FEATURE_HTTP_PARSER.rawValue)
     
     /// Regular expression support.
-    ///
-    /// ## Discussion
     ///
     /// This feature is always available.
     public static let gitFeatureRegex           = GitFeatureT(rawValue: GIT_FEATURE_REGEX.rawValue)
@@ -84,14 +80,10 @@ public struct GitFeatureT: COptionSet
     
     /// ZLib support.
     ///
-    /// ## Discussion
-    ///
     /// This feature is always available.
     public static let gitFeatureCompression     = GitFeatureT(rawValue: GIT_FEATURE_COMPRESSION.rawValue)
     
     /// SHA-1 object support.
-    ///
-    /// ## Discussion
     ///
     /// This feature is always available.
     public static let gitFeatureSHA1            = GitFeatureT(rawValue: GIT_FEATURE_SHA1.rawValue)
@@ -113,8 +105,6 @@ public struct GitFeatureT: COptionSet
 
 /// Global libgit2 options.
 ///
-/// ## Discussion
-///
 /// - Note: In libgit2, these values are intended for use with the variadic
 /// function called [`git_libgit2_opts()`](https://libgit2.org/docs/reference/main/common/git_libgit2_opts.html).
 /// There is no binding for `git_libgit2_opts()`, since it uses C-style
@@ -132,23 +122,17 @@ public enum GitLibgit2OptT: UInt32, CEnum
 {
     /// Gets the maximum `mmap()` window size.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetMWindowSize(size:)`` to interact with
     /// this option.
     case gitOptGetMWindowSize                   = 0
     
     /// Sets the maximum `mmap()` window size.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetMWindowSize(size:)`` to interact with
     /// this option.
     case gitOptSetMWindowSize                   = 1
     
     /// Gets the maximum memory that will be mapped in total by libgit2.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetMWindowMappedLimit(limit:)`` to interact
     /// with this option.
@@ -157,23 +141,17 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Sets the maximum amount of memory that can be mapped in total by
     /// libgit2.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetMWindowMappedLimit(limit:)`` to interact
     /// with this option.
     case gitOptSetMWindowMappedLimit            = 3
     
     /// Gets the search path for the given level of configuration data.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetSearchPath(level:buf:)`` to interact with
     /// this option.
     case gitOptGetSearchPath                    = 4
     
     /// Sets the search path for the given level of configuration data.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetSearchPath(level:path:)`` to interact
     /// with this option.
@@ -182,8 +160,6 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Sets the maximum data size for the given type of object to be
     /// considered eligible for caching in memory.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetCacheObjectLimit(type:size:)`` to
     /// interact with this option.
     case gitOptSetCacheObjectLimit              = 6
@@ -191,15 +167,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Sets the maximum total data size that will be cached in memory across
     /// all repositories before libgit2 starts evicting objects from the cache.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetCacheMaxSize(maxStorageBytes:)`` to
     /// interact with this option.
     case gitOptSetCacheMaxSize                  = 7
     
     /// Enables or disable caching completely.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptEnableCaching(enabled:)`` to interact with
     /// this option.
@@ -208,15 +180,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Gets the current number of bytes in the cache and the maximum number
     /// of bytes that would be allowed in the cache.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetCachedMemory(current:allowed:)`` to
     /// interact with this option.
     case gitOptGetCachedMemory                  = 9
     
     /// Gets the default template path.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetTemplatePath(out:)`` to interact with
     /// this option.
@@ -224,23 +192,17 @@ public enum GitLibgit2OptT: UInt32, CEnum
     
     /// Sets the default template path.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetTemplatePath(path:)`` to interact with
     /// this option.
     case gitOptSetTemplatePath                  = 11
     
     /// Sets the SSL certificate-authority locations.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetSSLCertLocations(file:path:)`` to
     /// interact with this option.
     case gitOptSetSSLCertLocations              = 12
     
     /// Sets the value of the comment section of the User-Agent header.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetUserAgent(userAgent:)`` to interact with
     /// this option.
@@ -249,15 +211,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Enables strict input validation when creating new objects to ensure
     /// that all inputs to the new objects are valid.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptEnableStrictObjectCreation(enabled:)`` to
     /// interact with this option.
     case gitOptEnableStrictObjectCreation       = 14
     
     /// Enables validation of the target of a symbolic ref during creation.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptEnableStrictSymbolicRefCreation(enabled:)``
     /// to interact with this option.
@@ -265,15 +223,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     
     /// Sets the SSL ciphers use for HTTPS connections.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetSSLCiphers(ciphers:)`` to interact with
     /// this option.
     case gitOptSetSSLCiphers                    = 16
     
     /// Gets the value of the User-Agent header.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetUserAgent(out:)`` to interact with this
     /// option.
@@ -281,8 +235,6 @@ public enum GitLibgit2OptT: UInt32, CEnum
     
     /// Enables or disables the use of offset deltas when creating packfiles,
     /// and the negotiation of them when talking to a remote server.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptEnableOFSDelta(enabled:)`` to interact with
     /// this option.
@@ -292,23 +244,17 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// (or the platform equivalent) to ensure that new object data is written
     /// to permanent storage, not simply cached.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptEnableFSyncGitDir(enabled:)`` to interact
     /// with this option.
     case gitOptEnableFSyncGitDir                = 19
     
     /// Gets the share mode used when opening files on Windows.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetWindowsShareMode(value:)`` to interact
     /// with this option.
     case gitOptGetWindowsShareMode              = 20
     
     /// Sets the share mode used when opening files on Windows.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetWindowsShareMode(value:)`` to interact
     /// with this option.
@@ -317,15 +263,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Enables strict verification of object hash sums when reading objects
     /// from disk.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptEnableStrictHashVerification(enabled:)``
     /// to interact with this option.
     case gitOptEnableStrictHashVerification     = 22
     
     /// Sets the memory allocator to a different memory allocator.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetAllocator(allocator:)`` to interact with
     /// this option.
@@ -335,16 +277,12 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// any operation that reloads the index from disk (for example, the
     /// checkout operation).
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptEnableUnsavedIndexSafety(enabled:)`` to
     /// interact with this option.
     case gitOptEnableUnsavedIndexSafety         = 24
     
     /// Gets the maximum number of objects libgit2 will allow in a pack file
     /// when downloading a packfile from a remote.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetPackMaxObjects(out:)`` to interact with
     /// this option.
@@ -353,15 +291,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Sets the maximum number of objects libgit2 will allow in a pack file
     /// when downloading a packfile from a remote.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetPackMaxObjects(objects:)`` to interact
     /// with this option.
     case gitOptSetPackMaxObjects                = 26
     
     /// Skips `.keep` file existence checks when accessing packfiles.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptDisablePackKeepFileChecks(skip:)`` to
     /// interact with this option.
@@ -370,8 +304,6 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Uses `expect`/`continue` when connecting to a server using NTLM or
     /// Negotiate authentication.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptEnableHTTPExpectContinue(enabled:)`` to
     /// interact with this option.
     case gitOptEnableHTTPExpectContinue         = 28
@@ -379,16 +311,12 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Gets the maximum number of files that will be mapped at any time by
     /// libgit2.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetMWindowFileLimit(limit:)`` to interact
     /// with this option.
     case gitOptGetMWindowFileLimit              = 29
     
     /// Sets the maximum number of files that can be mapped at any time by
     /// libgit2.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetMWindowFileLimit(limit:)`` to interact
     /// with this option.
@@ -398,8 +326,6 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// backend, which is added when default backends are assigned to a
     /// repository.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetODBPackedPriority(priority:)`` to
     /// interact with this option.
     case gitOptSetODBPackedPriority             = 31
@@ -407,15 +333,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Overrides the default priority of the loose object database backend,
     /// which is added when default backends are assigned to a repository.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetODBLoosePriority(priority:)`` to interact
     /// with this option.
     case gitOptSetODBLoosePriority              = 32
     
     /// Gets the list of supported Git extensions.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetExtensions(out:)`` to interact with
     /// this option.
@@ -423,15 +345,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     
     /// Sets the list of supported Git extensions.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetExtensions(extensions:len:)`` to interact
     /// with this option.
     case gitOptSetExtensions                    = 34
     
     /// Gets the owner validation setting for repository directories.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetOwnerValidation(enabled:)`` to interact
     /// with this option.
@@ -439,23 +357,17 @@ public enum GitLibgit2OptT: UInt32, CEnum
     
     /// Specifies that the current user owns the repository directories.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetOwnerValidation(enabled:)`` to interact
     /// with this option.
     case gitOptSetOwnerValidation               = 36
     
     /// Gets the current user's home directory to be used for file lookups.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetHomeDir(out:)`` to interact with this
     /// option.
     case gitOptGetHomeDir                       = 37
     
     /// Sets the current user's home directory to be used for file lookups.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetHomeDir(path:)`` to interact with this
     /// option.
@@ -464,16 +376,12 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Sets the timeout (in milliseconds) to attempt connections to a remote
     /// server.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetServerConnectTimeout(timeout:)`` to
     /// interact with this option.
     case gitOptSetServerConnectTimeout          = 39
     
     /// Gets the timeout (in milliseconds) to attempt connections to a remote
     /// server.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptGetServerConnectTimeout(timeout:)`` to
     /// interact with this option.
@@ -482,8 +390,6 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Sets the timeout (in milliseconds) for reading from and writing to a
     /// remote server.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptSetServerTimeout(timeout:)`` to interact
     /// with this option.
     case gitOptSetServerTimeout                 = 41
@@ -491,15 +397,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     /// Gets the timeout (in milliseconds) for reading from and writing to a
     /// remote server.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetServerTimeout(timeout:)`` to interact
     /// with this option.
     case gitOptGetServerTimeout                 = 42
     
     /// Sets the value of the product portion of the User-Agent header.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptSetUserAgentProduct(userAgent:)`` to
     /// interact with this option.
@@ -507,15 +409,11 @@ public enum GitLibgit2OptT: UInt32, CEnum
     
     /// Gets the value of the User-Agent product header.
     ///
-    /// ## Discussion
-    ///
     /// - Note: Use ``gitLibgit2OptGetUserAgentProduct(out:)`` to interact
     /// with this option.
     case gitOptGetUserAgentProduct              = 44
     
     /// Adds a raw X.509 certificate into the SSL certifications store.
-    ///
-    /// ## Discussion
     ///
     /// - Note: Use ``gitLibgit2OptAddSSLX509Cert(cert:)`` to interact with
     /// this option.

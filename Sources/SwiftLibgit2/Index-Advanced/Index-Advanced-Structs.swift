@@ -20,21 +20,15 @@ public struct GitIndexNameEntry: CStructInternalMutable, WithCConvertible, Senda
 {
     /// The name of the common ancestor.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public private(set) var ancestor    : String?   = nil
     
     /// The name of "our" side.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public private(set) var ours        : String?   = nil
     
     /// The name of "their" side.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var theirs      : String?   = nil
@@ -107,22 +101,16 @@ public struct GitIndexREUCEntry: CStructInternalMutable, WithCConvertible, Senda
 {
     /// The file mode for each stage.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a 3-element tuple in which all elements are `0`.
     public private(set) var mode    : REUCStages<UInt32>    = (0, 0, 0)
     
     /// The IDs of each stage.
-    ///
-    /// ## Discussion
     ///
     /// The default value is a 3-element tuple in which all elements are a
     /// default-initialized ``GitOID`` instance.
     public private(set) var oid     : REUCStages<GitOID>    = (GitOID(), GitOID(), GitOID())
     
     /// The path to the file.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     public private(set) var path    : String?               = nil
@@ -187,8 +175,6 @@ public struct GitIndexREUCEntry: CStructInternalMutable, WithCConvertible, Senda
     
     
     /// The three stages of a resolve-undo (REUC) entry.
-    ///
-    /// ## Discussion
     ///
     /// The three elements of the tuple are the ancestor, "our" side, and
     /// "their" side, in order.

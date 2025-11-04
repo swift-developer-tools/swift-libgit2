@@ -13,8 +13,6 @@ import CLibgit2
 
 /// An entry in a backend configuration file.
 ///
-/// ## Discussion
-///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use ``GitConfigEntry`` instead.
 ///
@@ -58,8 +56,6 @@ public struct GitConfigBackendEntry: CStruct, Sendable
 
 
 /// A configuration iterator.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_config_iterator` instead.
@@ -124,8 +120,6 @@ public struct GitConfigIterator: CStruct
 
 
 /// A generic configuration backend.
-///
-/// ## Discussion
 ///
 /// - Note: This struct is provided for documentation purposes, but is not
 /// used by other bindings. All binding use `git_config_backend` instead.
@@ -370,21 +364,15 @@ public struct GitConfigBackendMemoryOptions: CStructMutable, WithCConvertible, S
 {
     /// The struct version.
     ///
-    /// ## Discussion
-    ///
     /// The default value is ``gitConfigBackendMemoryOptionsVersion``.
     public var version      : UInt32
     
     /// The type of backend.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `in-memory`.
     public var backendType  : String
     
     /// The path to the origin.
-    ///
-    /// ## Discussion
     ///
     /// The default value is `nil`.
     ///

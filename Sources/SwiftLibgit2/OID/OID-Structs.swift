@@ -21,8 +21,6 @@ public struct GitOID: CStructInternalMutable, CConvertible, Sendable
 {
     /// The raw binary-formatted ID.
     ///
-    /// ## Discussion
-    ///
     /// The default value is a `Data` instance with a `count` of 20 bytes.
     public private(set) var id: Data = Data(count: Self.size)
     

@@ -13,8 +13,6 @@ import CLibgit2
 
 /// Remote redirection behavior.
 ///
-/// ## Discussion
-///
 /// The default behavior of Git is to follow a redirect on the initial request
 /// (`/info/refs`), but not on subsequent requests.
 ///

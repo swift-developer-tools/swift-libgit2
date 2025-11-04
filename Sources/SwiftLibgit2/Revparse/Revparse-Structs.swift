@@ -11,7 +11,7 @@ import CLibgit2
 
 
 
-/// The revision spec.
+/// A revision spec.
 ///
 /// ## C Equivalent
 ///
@@ -21,22 +21,16 @@ public struct GitRevspec: CStructMutable, CConvertible
     /// The left element of the revspec. The underlying type must be
     /// `git_object`.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var from     : OpaquePointer?
     
     /// The right element of the revspec. The underlying type must be
     /// `git_object`.
     ///
-    /// ## Discussion
-    ///
     /// The default value is `nil`.
     public var to       : OpaquePointer?
     
     /// The flags controlling revision parsing.
-    ///
-    /// ## Discussion
     ///
     /// The default value is an empty option set.
     public var flags    : GitRevspecT

@@ -38,6 +38,12 @@ public func gitConfigInitBackend(
 
 
 /// Adds a generic configuration file to the given configuration.
+///
+/// Further queries on the configuration will access each of the configuration
+/// files in order (files with a higher priority level will be accessed first).
+///
+/// - Important: The configuration will free the file automatically.
+///
 /// - Parameters:
 ///   - cfg: The configuration to update. The underlying type must be
 ///   `git_config`.
@@ -47,13 +53,6 @@ public func gitConfigInitBackend(
 ///   underlying type must be `git_repository`.
 ///   - force: Whether to overwrite an existing configuration file.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Further queries on the configuration will access each of the configuration
-/// files in order (files with a higher priority level will be accessed first).
-///
-/// - Important: The configuration will free the file automatically.
 ///
 /// ## C Equivalent
 ///

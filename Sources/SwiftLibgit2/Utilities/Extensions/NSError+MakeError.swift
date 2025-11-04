@@ -15,18 +15,17 @@ import Foundation
 internal extension NSError
 {
     /// Initializes an `NSError` from the given information.
-    /// - Parameters:
-    ///   - code: The error code.
-    ///   - message: The localized description.
-    /// - Returns: The created `NSError`.
-    ///
-    /// ## Discussion
     ///
     /// libgit2 result codes use a type of `Int32`, but `NSError` uses `Int`.
     /// ``code`` can be safely cast from `Int32` to `Int`, since this is a
     /// widening conversion. `Int` is guaranteed to be at least as large as
     /// `Int32` on all platforms (`Int` will be the same size as `Int32` on
     /// 32-bit platforms and the same size as `Int64` on 64-bit platforms).
+    ///
+    /// - Parameters:
+    ///   - code: The error code.
+    ///   - message: The localized description.
+    /// - Returns: The created `NSError`.
     static func makeError(
         code    : Int32,
         message : String

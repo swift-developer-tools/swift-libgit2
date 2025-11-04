@@ -38,13 +38,6 @@ public func gitCheckoutOptionsInit(
 
 /// Updates files in the index and in the working tree to match the conent of
 /// the commit pointed at by HEAD.
-/// - Parameters:
-///   - repo: The repository to check out. The underlying type must be
-///   `git_repository`. This repository must not be bare.
-///   - opts: The checkout options to use.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// This function is not the correct mechanism to switch between branches.
 /// Changing HEAD and then calling this function, would cause checkout
@@ -52,6 +45,12 @@ public func gitCheckoutOptionsInit(
 ///
 /// Instead, checkout the target of the branch and then update HEAD using
 /// ``gitRepositorySetHEAD(repo:refName:)`` to point to the checked-out branch.
+///
+/// - Parameters:
+///   - repo: The repository to check out. The underlying type must be
+///   `git_repository`. This repository must not be bare.
+///   - opts: The checkout options to use.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///

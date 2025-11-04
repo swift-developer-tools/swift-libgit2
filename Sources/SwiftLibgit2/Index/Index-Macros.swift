@@ -35,14 +35,13 @@ public let gitIndexEntryStageShift: Int = 12
 
 
 /// Sets the stage value for the given index entry.
-/// - Parameters:
-///   - entry: The ``GitIndexEntry`` for which to set the stage.
-///   - stage: The stage value (`0` for the main index, or a conflict value).
-///
-/// ## Discussion
 ///
 /// If `stage` is ``GitIndexStageT/gitIndexStageAny``, this function returns
 /// without modifying the given index entry.
+///
+/// - Parameters:
+///   - entry: The ``GitIndexEntry`` for which to set the stage.
+///   - stage: The stage value (`0` for the main index, or a conflict value).
 ///
 /// ## C Equivalent
 ///

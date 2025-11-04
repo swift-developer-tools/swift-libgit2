@@ -63,17 +63,16 @@ public func gitPackbuilderSetThreads(
 
 
 /// Inserts the specified object into the specified packfile.
+///
+/// For optimal packfiles, objects must be inserted in recency order: commits,
+/// trees, then blobs.
+///
 /// - Parameters:
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
 ///   - id: The ID of the object to insert.
 ///   - name: The object reference name to use.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// For optimal packfiles, objects must be inserted in recency order: commits,
-/// trees, then blobs.
 ///
 /// ## C Equivalent
 ///
@@ -102,16 +101,15 @@ public func gitPackbuilderInsert(
 
 
 /// Inserts the specified root tree into the specified packfile.
+///
+/// The tree and all referenced trees and blobs will be added to the specified
+/// packfile.
+///
 /// - Parameters:
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
 ///   - id: The ID of the root tree to insert.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The tree and all referenced trees and blobs will be added to the specified
-/// packfile.
 ///
 /// ## C Equivalent
 ///
@@ -138,16 +136,15 @@ public func gitPackbuilderInsertTree(
 
 
 /// Inserts the specified commit into the specified packfile.
+///
+/// The commit and the completed referenced tree will be added to the
+/// specified packfile.
+///
 /// - Parameters:
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
 ///   - id: The ID of the commit to insert.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The commit and the completed referenced tree will be added to the
-/// specified packfile.
 ///
 /// ## C Equivalent
 ///
@@ -174,17 +171,16 @@ public func gitPackbuilderInsertCommit(
 
 
 /// Inserts the objects of the given revwalk into the specified packfile.
+///
+/// The commits and all referenced objects will be added to the specified
+/// packfile.
+///
 /// - Parameters:
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
 ///   - walk: The revwalk to use to fill the given packbuilder. The underlying
 ///   type must be `git_revwalk`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The commits and all referenced objects will be added to the specified
-/// packfile.
 ///
 /// ## C Equivalent
 ///
@@ -241,17 +237,16 @@ public func gitPackbuilderInsertRecur(
 
 
 /// Gets the contents of the specified packfile.
+///
+/// The contents of `buf` will become a valid packfile, even though there will
+/// be no attached index.
+///
 /// - Parameters:
 ///   - buf: The `Data` instance in which to store the contents of the
 ///   specified packfile.
 ///   - pb: The packbuilder to use. The underlying type must be
 ///   `git_packbuilder`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The contents of `buf` will become a valid packfile, even though there will
-/// be no attached index.
 ///
 /// ## C Equivalent
 ///
@@ -472,7 +467,7 @@ public func gitPackbuilderFree(
     pb: OpaquePointer?
 )
 {
-    guard let pb: OpaquePointer = pb
+    guard let pb
     else
     {
         return

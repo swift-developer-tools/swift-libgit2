@@ -12,18 +12,17 @@ import CLibgit2
 
 
 /// Creates a new reference database with no backends.
+///
+/// Before the ODB can be used for reading or writing, a custom database
+/// backend must be manually added by calling
+/// ``gitRefDBSetBackend(refDB:backend:)``.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the reference database. The
 ///   underlying type must be `git_refdb`.
 ///   - repo: The repository to use. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// Before the ODB can be used for reading or writing, a custom database
-/// backend must be manually added by calling
-/// ``gitRefDBSetBackend(refDB:backend:)``.
 ///
 /// ## C Equivalent
 ///
@@ -45,18 +44,17 @@ public func gitRefDBNew(
 
 
 /// Creates a new reference database, and automatically adds a default backend.
+///
+/// The default backend is a backend to read and write loose and packed
+/// references from the disk, assuming the repository directory as the
+/// directory.
+///
 /// - Parameters:
 ///   - out: The pointer in which to store the reference database. The
 ///   underlying type must be `git_refdb`.
 ///   - repo: The repository to use. The underlying type must be
 ///   `git_repository`.
 /// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
-///
-/// The default backend is a backend to read and write loose and packed
-/// references from the disk, assuming the repository directory as the
-/// directory.
 ///
 /// ## C Equivalent
 ///
@@ -79,14 +77,13 @@ public func gitRefDBOpen(
 
 /// Suggests that the given reference database compresses or optimizes its
 /// references.
-/// - Parameter out: The reference database to compress. The underlying type
-/// must be `git_refdb`.
-/// - Returns: A ``GitErrorCode`` instance.
-///
-/// ## Discussion
 ///
 /// - Note: The compression is implementation-specific. For example, for
 /// on-disk reference databases, this may pack all loose references.
+///
+/// - Parameter out: The reference database to compress. The underlying type
+/// must be `git_refdb`.
+/// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
 ///
@@ -114,7 +111,7 @@ public func gitRefDBFree(
     refDB: OpaquePointer?
 )
 {
-    guard let refDB: OpaquePointer = refDB
+    guard let refDB
     else
     {
         return

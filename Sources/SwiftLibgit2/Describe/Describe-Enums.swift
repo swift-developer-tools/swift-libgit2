@@ -20,21 +20,15 @@ public enum GitDescribeStrategyT: UInt32, CEnum
 {
     /// Show any annotated tag reference.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git-describe`.
     case gitDescribeDefault     = 0
     
     /// Show any reference in the `refs/tags/` namespace.
     ///
-    /// ## Discussion
-    ///
     /// This is equivalent to `git-describe --tags`
     case gitDescribeTags        = 1
     
     /// Show any reference in the `refs/` namespace.
-    ///
-    /// ## Discussion
     ///
     /// This is equivalent to `git-describe --all`
     case gitDescribeAll         = 2
@@ -62,10 +56,6 @@ public enum GitDescribeStrategyT: UInt32, CEnum
     
     /// Initializes a ``GitDescribeStrategyT`` instance from the given raw
     /// value.
-    /// - Parameter rawValue: The raw value to use.
-    /// - Returns: The equivalent ``GitDescribeStrategyT`` instance.
-    ///
-    /// ## Discussion
     ///
     /// This method is necessary since `git_describe_options->describe_strategy`
     /// does not use the `git_describe_strategy_t` type, but uses `unsigned int`
@@ -75,6 +65,9 @@ public enum GitDescribeStrategyT: UInt32, CEnum
     /// `init(rawValue:)` matches a requirement in the public `RawRepresentable`
     /// protocol, and the initializer would need to be public as well.
     /// ``CEnum`` initializers are required to be internal.
+    ///
+    /// - Parameter rawValue: The raw value to use.
+    /// - Returns: The equivalent ``GitDescribeStrategyT`` instance.
     internal static func makeStrategy(
         rawValue: UInt32
     ) -> GitDescribeStrategyT?

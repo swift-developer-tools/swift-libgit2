@@ -18,7 +18,7 @@ let package = Package(
     platforms:
     [
         .iOS(.v15),
-        .macOS(.v11)
+        .macOS(.v13)
     ],
     products:
     [
@@ -64,9 +64,26 @@ let package = Package(
             ]
         ),
         
+        .target(
+            name: "SwiftLibgit2TestUtilities",
+            dependencies:
+            [
+                "SwiftLibgit2",
+                .product(
+                    name:       "CLibgit2",
+                    package:    "swift-libgit2-base"
+                )
+            ],
+            path: "Tests/Utilities"
+        ),
+        
         .testTarget(
-            name:           "SwiftLibgit2Tests",
-            dependencies:   ["SwiftLibgit2"]
+            name: "SwiftLibgit2Tests",
+            dependencies:
+            [
+                "SwiftLibgit2",
+                "SwiftLibgit2TestUtilities"
+            ]
         )
     ]
 )

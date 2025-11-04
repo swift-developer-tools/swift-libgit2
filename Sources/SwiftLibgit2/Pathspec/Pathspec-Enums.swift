@@ -51,15 +51,11 @@ public struct GitPathspecFlagT: COptionSet
     
     /// Force case-insensitive matching.
     ///
-    /// ## Discussion
-    ///
     /// If this flag is not enabled, the native file system case match
     /// sensitivity will be used.
     public static let gitPathspecIgnoreCase     = GitPathspecFlagT(rawValue: GIT_PATHSPEC_IGNORE_CASE.rawValue)
     
     /// Force case-sensitive matching.
-    ///
-    /// ## Discussion
     ///
     /// If this flag is not enabled, the native file system case match
     /// sensitivity will be used.
@@ -76,8 +72,6 @@ public struct GitPathspecFlagT: COptionSet
     public static let gitPathspecFindFailures   = GitPathspecFlagT(rawValue: GIT_PATHSPEC_FIND_FAILURES.rawValue)
     
     /// Do not keep the matching file names.
-    ///
-    /// ## Discussion
     ///
     /// This flag can be used to test if there were any matches at all, or in
     /// combination with ``gitPathspecFindFailures`` to validate a pathspec.
