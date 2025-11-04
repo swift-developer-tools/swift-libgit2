@@ -19,7 +19,7 @@ import CLibgit2
 /// type.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - url: The resource for which a credential is being demanded.
 ///   - userFromURL: The username that is embedded in a `user@host` remote URL.
 ///   - allowedTypes: The allowed credential types.

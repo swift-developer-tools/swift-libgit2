@@ -14,7 +14,7 @@ import Foundation
 
 /// Creates a new mailmap.
 ///
-/// - Note: The resulting mailmap will be empty. Add a mailmap file before
+/// - Note: The created mailmap will be empty. Add a mailmap file before
 /// using it.
 ///
 /// - Parameter out: The pointer in which to store the mailmap. The underlying

@@ -888,10 +888,10 @@ public func gitDiffBuffers(
 
 /// Writes the given patch file contents into a diff.
 ///
-/// The resulting diff will be similar to the one that would be produced by
-/// comparing two trees, but with subtle differences. For example, a patch
-/// file likely contains abbreviated IDs, so the IDs in a diff delta
-/// produced by this function will also be abbreviated.
+/// The diff will be similar to the one that would be produced by comparing
+/// two trees, but with subtle differences. For example, a patch file likely
+/// contains abbreviated IDs, so the IDs in a diff delta produced by this
+/// function will also be abbreviated.
 ///
 /// - Note: This function supports only SHA-1 patch files, and will read only
 /// patch files created by a Git implementation. It will not read unified
@@ -1098,8 +1098,8 @@ public func gitDiffPatchIDOptionsInit(
 /// Calculates the patch ID for the given patch, by summing the hash of the
 /// file diffs, and ignoring whitespace and line numbers.
 ///
-/// The resulting patch ID can be used to derive whether two diffs are the
-/// same with a high probability.
+/// The patch ID can be used to derive whether two diffs are the same with a
+/// high probability.
 ///
 /// - Note: Currently, this function calculates only stable patch IDs as
 /// defined in `git-patch-id(1)`, and should generate the same IDs as the ones

@@ -157,7 +157,7 @@ public func gitObjectID(
 ///
 /// This function begins at the `core.abbrev` length (which defaults to 7
 /// characters) and iteratively extends to a longer string if that length is
-/// ambiguous. The resulting ID will be unambiguous until new objects are
+/// ambiguous. The abbreviated ID will be unambiguous until new objects are
 /// added to the repository.
 ///
 /// - Parameters:

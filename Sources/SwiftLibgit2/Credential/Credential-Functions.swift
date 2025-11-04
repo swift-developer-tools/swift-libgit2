@@ -106,7 +106,7 @@ public func gitCredentialUserPassPlaintextNew(
 
 /// Creates a default credential usable with Negotiate mechanisms like NTLM or
 /// Kerberos authentication.
-/// - Parameter out: The pointer in which to store the resulting credential.
+/// - Parameter out: The pointer in which to store the credential.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
 /// ## C Equivalent
@@ -126,7 +126,7 @@ public func gitCredentialDefaultNew(
 
 /// Creates a credential to specify a username.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - username: The username of the credential.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -188,7 +188,7 @@ public func gitCredentialSSHKeyNew(
 
 /// Creates a new SSH key credential by reading the keys from memory.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting credential.
+///   - out: The pointer in which to store the credential.
 ///   - username: The username of the credential.
 ///   - publicKey: The public key of the credential.
 ///   - privateKey: The private key of the credential.

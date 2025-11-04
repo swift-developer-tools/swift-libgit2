@@ -536,7 +536,7 @@ public func gitODBWrite(
 
 /// Opens a stream to write an object into the given object database.
 ///
-/// The type of the resulting stream will be ``GitODBStreamT/gitStreamWROnly``,
+/// The type of the opened stream will be ``GitODBStreamT/gitStreamWROnly``,
 /// and it will not be effective until
 /// ``gitODBStreamFinalizeWrite(out:stream:)`` is successfully called.
 ///
@@ -705,7 +705,7 @@ public func gitODBStreamFree(
 
 /// Opens a stream to read the specified object from the given object database.
 ///
-/// The type of the resulting stream will be ``GitODBStreamT/gitStreamWROnly``,
+/// The type of the opened stream will be ``GitODBStreamT/gitStreamRDOnly``,
 /// and will have `read()` and `free()` methods.
 ///
 /// - Note: Most backends do not support streaming reads, since the objects are

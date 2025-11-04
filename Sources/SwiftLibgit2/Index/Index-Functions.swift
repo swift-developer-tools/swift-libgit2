@@ -16,7 +16,7 @@ import Foundation
 /// the given path.
 ///
 /// Since there is no object database or working directory behind the
-/// resulting index, any index APIs which rely on these will fail with
+/// created index, any index APIs which rely on these will fail with
 /// the ``GitErrorCode/gitError`` result code.
 ///
 /// - Note: To access the index of an actual repository, use
@@ -51,8 +51,8 @@ public func gitIndexOpen(
 
 /// Creates an in-memory index.
 ///
-/// The resulting index cannot be read or written to the file system, but
-/// may be used to perform in-memory index operations.
+/// The created index cannot be read or written to the file system, but may be
+/// used to perform in-memory index operations.
 ///
 /// - Note: This function supports only SHA-1 indices.
 ///

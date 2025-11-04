@@ -223,7 +223,7 @@ public func gitOIDNFmt(
 
 /// Formats the given ID into a loose-object path string.
 ///
-/// The resulting string will be `aa/...`, where `aa` represents the first two
+/// The path string will be `aa/...`, where `aa` represents the first two
 /// hex digits of the ID, and the ellipsis (`...`) represents the remaining
 /// 38 digits.
 ///
@@ -287,8 +287,8 @@ public func gitOIDToStrS(
 /// Formats the given ID into a hex string.
 ///
 /// If the given buffer is smaller than the size of an ID hex string plus
-/// an additional byte, then the resulting ID hex string will be truncated
-/// to `n - 1` characters, but will still be null terminated.
+/// an additional byte, then the hex string will be truncated to `n - 1`
+/// characters, but will still be null terminated.
 ///
 /// - Parameters:
 ///   - out: The pointer in which to store the hex string.

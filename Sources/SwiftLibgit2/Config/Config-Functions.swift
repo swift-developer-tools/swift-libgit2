@@ -180,8 +180,8 @@ public func gitConfigOpenDefault(
 
 /// Allocates a new configuration.
 ///
-/// The resulting configuration will be empty. A file must be added to it
-/// before it can be used.
+/// The new configuration will be empty. A file must be added to it before it
+/// can be used.
 ///
 /// - Parameter out: The pointer in which to store the configuration. The
 /// underlying type must be `git_config`.
@@ -287,8 +287,8 @@ public func gitConfigOpenOnDisk(
 /// Builds a single-level focused configuration from a multi-level
 /// configuration.
 ///
-/// The resulting configuration can be used to perform get, set, or delete
-/// operations on a single specific level.
+/// The configuration can be used to perform get, set, or delete operations on
+/// a single specific level.
 ///
 /// Getting the same level multiple times from the same parent multi-level
 /// configuration will return different configurations, each containing the
@@ -495,7 +495,7 @@ public func gitConfigGetEntry(
 /// entry will be returned.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting integer.
+///   - out: The pointer in which to store the retrieved integer.
 ///   - cfg: The configuration to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -529,7 +529,7 @@ public func gitConfigGetInt32(
 /// entry will be returned.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting integer.
+///   - out: The pointer in which to store the retrieved integer.
 ///   - cfg: The configuration to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -768,7 +768,7 @@ public func gitConfigGetMultivarForEach(
 /// lower-cased, and the subsection part will be left unchanged.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting iterator.
+///   - out: The pointer in which to store the iterator.
 ///   - cfg: The configuration to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable for which to get the value.
@@ -1131,7 +1131,7 @@ public func gitConfigForEach(
 /// ``gitConfigIteratorFree(iter:)`` to free the iterator.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting iterator.
+///   - out: The pointer in which to store the iterator.
 ///   - cfg: The configuration to search. The underlying type must be
 ///   `git_config`.
 /// - Returns: A ``GitErrorCode`` instance.
@@ -1165,7 +1165,7 @@ public func gitConfigIteratorNew(
 /// lower-cased, and the subsection part will be left unchanged.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting iterator.
+///   - out: The pointer in which to store the iterator.
 ///   - cfg: The configuration to search. The underlying type must be
 ///   `git_config`.
 ///   - regExp: The regular expression used to match the configuration names.
@@ -1263,7 +1263,7 @@ public func gitConfigForEachMatch(
 /// An error code will be returned if no matches are found.
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting map.
+///   - out: The pointer in which to store the map.
 ///   - cfg: The configuration to search. The underlying type must be
 ///   `git_config`.
 ///   - name: The name of the configuration variable to query.
@@ -1303,7 +1303,7 @@ public func gitConfigGetMapped(
 
 /// Maps the given string value to an integer constant.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting map.
+///   - out: The pointer in which to store the map.
 ///   - maps: The configuration maps specifying the possible mappings.
 ///   - mapN: The length of `maps`.
 ///   - value: The value to parse.
@@ -1386,7 +1386,7 @@ public func gitConfigParseBool(
 /// | g      | 1,073,741,824 |
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting integer.
+///   - out: The pointer in which to store the parsed integer.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///
@@ -1420,7 +1420,7 @@ public func gitConfigParseInt32(
 /// | g      | 1,073,741,824 |
 ///
 /// - Parameters:
-///   - out: The pointer in which to store the resulting integer.
+///   - out: The pointer in which to store the parsed integer.
 ///   - value: The value to parse.
 /// - Returns: A ``GitErrorCode`` instance.
 ///

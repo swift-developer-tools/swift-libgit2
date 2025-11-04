@@ -13,7 +13,7 @@ import CLibgit2
 
 /// The callback invoked to create a commit.
 /// - Parameters:
-///   - out: The pointer in which to store the resulting commit.
+///   - out: The pointer in which to store the commit.
 ///   - author: The author's signature.
 ///   - committer: The committer's signature.
 ///   - messageEncoding: The commit message encoding. The default value is
