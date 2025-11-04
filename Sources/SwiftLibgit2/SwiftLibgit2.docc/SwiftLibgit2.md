@@ -23,12 +23,19 @@ written using [camel case](https://en.wikipedia.org/wiki/Camel_case) instead of
 [snake case](https://en.wikipedia.org/wiki/Snake_case).
 
 Similar to libgit2, the bindings do not use 
- [namespaces](https://en.wikipedia.org/wiki/Namespace). All bindings are 
+[namespaces](https://en.wikipedia.org/wiki/Namespace). All bindings are 
 available globally.
 
 The bindings use native Swift types wherever possible, while preserving 
 libgit2's behavior and semantics. For example, some bindings use Swift types 
 like `String` instead of `UnsafePointer<CChar>`.
+
+
+
+## Documentation
+
+See [swift-libgit2 documentation](https://swift-developer-tools.github.io/swift-libgit2/documentation/swiftlibgit2) 
+for the complete API reference. 
 
 
 
@@ -158,7 +165,6 @@ for the complete third-party license terms.
 
 ### Documentation
 
-<!-- TODO: Link to GitHub Pages -->
 swift-libgit2 documentation is adapted from libgit2 under the
 MIT License.
 
