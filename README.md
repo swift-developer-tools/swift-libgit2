@@ -63,7 +63,7 @@ both Apple Silicon and Intel.
 See [libgit2 documentation](https://libgit2.org/docs/) for in-depth guides, 
 examples, and references.
 
-[swift-libgit2 tests](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Tests/swift-libgit2Tests) 
+[swift-libgit2 tests](https://github.com/swift-developer-tools/swift-libgit2/tree/main/Tests/SwiftLibgit2Tests) 
 may also be referenced for general usage examples. However, keep in mind that 
 these tests focus on validating binding behavior, not demonstrating complete 
 Git workflows or best practices.
