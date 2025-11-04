@@ -1184,7 +1184,8 @@ public struct GitDiffParseOptions: CStructMutable, CConvertible, Sendable
 
 /// The options for calculating patch IDs.
 ///
-/// - Note: This is reserved for future use. No options are currently available.
+/// - Note: This has not been implemented in libgit2 yet, but is reserved
+/// for future use.
 ///
 /// ## C Equivalent
 ///

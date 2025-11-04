@@ -30,7 +30,10 @@ public struct GitBuf: CStruct
     /// contains a null terminator at position `size + 1`.
     public let ptr      : UnsafeMutablePointer<CChar>?
     
-    /// This property is unused, but is reserved for API compatibility.
+    /// A reserved property.
+    ///
+    /// - Note: This property is unused in libgit2, but is reserved for API
+    /// compatibility.
     ///
     /// The default value is `0`.
     public let reserved : Int

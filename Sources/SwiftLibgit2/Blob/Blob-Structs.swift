@@ -33,7 +33,8 @@ public struct GitBlobFilterOptions: CStructMutable, WithCConvertible, Sendable
     ///
     /// The default value is `nil`.
     ///
-    /// - Note: This property is unused, but is reserved for API compatibility.
+    /// - Note: This property is unused in libgit2, but is reserved for API
+    /// compatibility.
     public var commitID     : GitOID?
     
     /// The commit from which to load attributes when

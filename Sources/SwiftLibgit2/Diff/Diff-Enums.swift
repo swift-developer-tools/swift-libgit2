@@ -235,8 +235,8 @@ public struct GitDiffOptionT: COptionSet
 /// ``GitDiffDelta`` and the ``GitDiffFile/flags`` property of ``GitDiffFile``
 /// that represent the old and new sides of the delta.
 ///
-/// Values outside of the public supported range are reserved for internal or
-/// future use.
+/// - Note: Values outside of the public supported range are reserved for
+/// internal or future use.
 ///
 /// ## C Equivalent
 ///

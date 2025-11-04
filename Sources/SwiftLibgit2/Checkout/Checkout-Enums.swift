@@ -170,15 +170,15 @@ public struct GitCheckoutStrategyT: COptionSet
     
     /// Recursively checkout submodules with the same options.
     ///
-    /// - Note: This has not yet been implemented, but is reserved for future
-    /// use.
+    /// - Note: This has not been implemented in libgit2 yet, but is reserved
+    /// for future use.
     public static let gitCheckoutUpdateSubmodules           = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_SUBMODULES.rawValue)
     
     /// Recursively checkout submodules with the same options, if HEAD moved
     /// in the super repository.
     ///
-    /// - Note: This has not yet been implemented, but is reserved for future
-    /// use.
+    /// - Note: This has not been implemented in libgit2 yet, but is reserved
+    /// for future use.
     public static let gitCheckoutUpdateSubmodulesIfChanged  = GitCheckoutStrategyT(rawValue: GIT_CHECKOUT_UPDATE_SUBMODULES_IF_CHANGED.rawValue)
     
     
