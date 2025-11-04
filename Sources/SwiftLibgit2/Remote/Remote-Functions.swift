@@ -776,7 +776,7 @@ public func gitRemoteFree(
     remote: OpaquePointer?
 )
 {
-    guard let remote: OpaquePointer = remote
+    guard let remote
     else
     {
         return

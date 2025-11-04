@@ -26,7 +26,7 @@ public func gitBufDispose(
     buffer: UnsafeMutablePointer<git_buf>?
 )
 {
-    guard let buffer: UnsafeMutablePointer<git_buf> = buffer
+    guard let buffer
     else
     {
         return

@@ -277,7 +277,7 @@ final class IndexAdvancedTests: XCTestCaseStopOnFail
                 n:      0
             )
             
-            guard let indexREUCEntry: GitIndexREUCEntry = indexREUCEntry
+            guard let indexREUCEntry
             else
             {
                 XCTFail("The index REUC entry was nil.")
@@ -326,7 +326,7 @@ final class IndexAdvancedTests: XCTestCaseStopOnFail
                 path:   Self.fileName
             )
             
-            guard let indexREUCEntry: GitIndexREUCEntry = indexREUCEntry
+            guard let indexREUCEntry
             else
             {
                 XCTFail("The index REUC entry was nil.")

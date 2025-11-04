@@ -253,7 +253,7 @@ public func gitTransactionFree(
     tx: OpaquePointer?
 )
 {
-    guard let tx: OpaquePointer = tx
+    guard let tx
     else
     {
         return

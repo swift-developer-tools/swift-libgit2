@@ -94,7 +94,7 @@ final class ResetTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoIndexResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 XCTFail("The index pointer was nil.")
@@ -136,7 +136,7 @@ final class ResetTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitLookupResult)
             
-            guard let commitPointer: OpaquePointer = commitPointer
+            guard let commitPointer
             else
             {
                 XCTFail("The commit pointer was nil.")
@@ -258,8 +258,7 @@ final class ResetTests: XCTestCaseStopOnFail
             
             XCTAssertOK(annotatedCommitLookupResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")

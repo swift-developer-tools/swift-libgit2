@@ -111,9 +111,9 @@ final class TreeTests: XCTestCaseStopOnFail
                 entry, payload in
                 
                 guard
-                    let entry       : OpaquePointer             = entry,
-                    let fileName    : String                    = gitTreeEntryName(entry: entry),
-                    let payload     : UnsafeMutableRawPointer   = payload
+                    let entry,
+                    let payload,
+                    let fileName: String = gitTreeEntryName(entry: entry)
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -832,7 +832,7 @@ final class TreeTests: XCTestCaseStopOnFail
             {
                 _, _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")

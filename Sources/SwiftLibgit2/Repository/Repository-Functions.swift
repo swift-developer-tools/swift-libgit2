@@ -229,7 +229,7 @@ public func gitRepositoryFree(
     repo: OpaquePointer?
 )
 {
-    guard let repo: OpaquePointer = repo
+    guard let repo
     else
     {
         return

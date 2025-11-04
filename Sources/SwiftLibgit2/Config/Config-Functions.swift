@@ -21,7 +21,7 @@ public func gitConfigEntryFree(
     entry: UnsafeMutablePointer<git_config_entry>?
 )
 {
-    guard let entry: UnsafeMutablePointer<git_config_entry> = entry
+    guard let entry
     else
     {
         return
@@ -453,7 +453,7 @@ public func gitConfigFree(
     cfg: OpaquePointer?
 )
 {
-    guard let cfg: OpaquePointer = cfg
+    guard let cfg
     else
     {
         return
@@ -864,7 +864,7 @@ public func gitConfigIteratorFree(
     iter: UnsafeMutablePointer<git_config_iterator>?
 )
 {
-    guard let iter: UnsafeMutablePointer<git_config_iterator> = iter
+    guard let iter
     else
     {
         return

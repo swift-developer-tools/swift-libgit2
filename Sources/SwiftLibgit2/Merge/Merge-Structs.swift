@@ -390,7 +390,7 @@ public struct GitMergeFileResult: CStructInternalMutable, WithCConvertible, CFre
             mergeFileResult.path = cPath
             
             guard
-                let ptr: Data = ptr,
+                let ptr,
                 !ptr.isEmpty
             else
             {

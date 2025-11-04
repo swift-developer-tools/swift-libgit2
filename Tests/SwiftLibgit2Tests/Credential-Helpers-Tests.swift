@@ -32,9 +32,8 @@ final class CredentialHelpersTests: XCTestCaseStopOnFail
             out, url, usernameFromURL, allowedTypes, payload in
             
             guard
-                let out     : UnsafeMutablePointer<
-                                UnsafeMutablePointer<git_credential>?>  = out,
-                let payload : UnsafeMutableRawPointer                   = payload,
+                let out,
+                let payload,
                 let url             = String(optionalCString: url),
                 let userFromURL     = String(optionalCString: usernameFromURL)
             else

@@ -51,7 +51,7 @@ public func gitRefspecFree(
     refspec: OpaquePointer?
 )
 {
-    guard let refspec: OpaquePointer = refspec
+    guard let refspec
     else
     {
         return

@@ -211,8 +211,7 @@ final class MessageTests: XCTestCaseStopOnFail
                         
                         XCTAssertEqual(cArrayOfMessageTrailersCount, arrayOfMessageTrailers.count)
                         
-                        guard let cArrayOfMessageTrailers: UnsafePointer<git_message_trailer>
-                                = cArrayOfMessageTrailers
+                        guard let cArrayOfMessageTrailers
                         else
                         {
                             XCTFail("The array of C message trailers was nil.")

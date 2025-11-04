@@ -63,7 +63,7 @@ final class IndexerTests: XCTestCaseStopOnFail
             {
                 _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")

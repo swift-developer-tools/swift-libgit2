@@ -221,7 +221,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             {
                 _, remoteURL, _, _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -853,8 +853,8 @@ final class RepositoryTests: XCTestCaseStopOnFail
                 oid, payload in
                 
                 guard
-                    let oid     : UnsafePointer<git_oid>    = oid,
-                    let payload : UnsafeMutableRawPointer   = payload
+                    let oid,
+                    let payload
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -1006,7 +1006,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoOpenResult)
             
-            guard let repoPointer: OpaquePointer = repoPointer
+            guard let repoPointer
             else
             {
                 XCTFail("The repository pointer was nil.")
@@ -1050,7 +1050,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoOpenBareResult)
             
-            guard let repoPointer: OpaquePointer = repoPointer
+            guard let repoPointer
             else
             {
                 XCTFail("The repository pointer was nil.")
@@ -1156,7 +1156,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoOpenFromWorktreeResult)
             
-            guard let repoPointer: OpaquePointer = repoPointer
+            guard let repoPointer
             else
             {
                 XCTFail("The repository pointer was nil.")
@@ -1288,7 +1288,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refLookupResult)
             
-            guard let headPointer: OpaquePointer = headPointer
+            guard let headPointer
             else
             {
                 XCTFail("The HEAD pointer was nil.")
@@ -1363,8 +1363,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(annotatedCommitLookupResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -1546,7 +1545,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoODBResult)
             
-            guard let odbPointer: OpaquePointer = odbPointer
+            guard let odbPointer
             else
             {
                 XCTFail("The ODB pointer was nil.")
@@ -1562,7 +1561,7 @@ final class RepositoryTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoWrapODBResult)
             
-            guard let repoPointer: OpaquePointer = repoPointer
+            guard let repoPointer
             else
             {
                 XCTFail("The repository pointer was nil.")

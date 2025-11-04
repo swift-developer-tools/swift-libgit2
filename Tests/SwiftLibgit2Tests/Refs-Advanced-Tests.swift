@@ -40,7 +40,7 @@ final class RefsAdvancedTests: XCTestCaseStopOnFail
                 peel:   refOID
             )
             
-            guard let directRefPointer: OpaquePointer = directRefPointer
+            guard let directRefPointer
             else
             {
                 XCTFail("The direct reference pointer was nil.")
@@ -94,7 +94,7 @@ final class RefsAdvancedTests: XCTestCaseStopOnFail
             target:     refTargetName
         )
         
-        guard let symbolicRefPointer: OpaquePointer = symbolicRefPointer
+        guard let symbolicRefPointer
         else
         {
             XCTFail("The symbolic reference pointer was nil.")

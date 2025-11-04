@@ -34,7 +34,8 @@ final class CertTests: XCTestCaseStopOnFail
     
     func testGitCertHostKey() throws
     {
-        guard let hostKeyData: Data = "ssh-rsa ABCXYZHostKey".data(using: .utf8)
+        guard let hostKeyData: Data
+                = "ssh-rsa ABCXYZHostKey".data(using: .utf8)
         else
         {
             XCTFail("The data was nil.")

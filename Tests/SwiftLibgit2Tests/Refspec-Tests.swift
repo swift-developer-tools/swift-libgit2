@@ -106,7 +106,7 @@ final class RefspecTests: XCTestCaseStopOnFail
         
         XCTAssertOK(refspecParseResult)
         
-        guard let refspecPointer: OpaquePointer = refspecPointer
+        guard let refspecPointer
         else
         {
             XCTFail("The refspec pointer was nil.")
@@ -235,7 +235,7 @@ final class RefspecTests: XCTestCaseStopOnFail
         
         XCTAssertOK(refspecParseResult)
         
-        guard let refspecPointer: OpaquePointer = refspecPointer
+        guard let refspecPointer
         else
         {
             XCTFail("The refspec pointer was nil.")
@@ -340,7 +340,7 @@ private extension RefspecTests
         
         XCTAssertOK(refspecParseResult)
         
-        guard let refspecPointer: OpaquePointer = refspecPointer
+        guard let refspecPointer
         else
         {
             XCTFail("The refspec pointer was nil.")

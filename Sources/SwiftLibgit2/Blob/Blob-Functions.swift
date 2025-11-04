@@ -98,7 +98,7 @@ public func gitBlobFree(
     blob: OpaquePointer?
 )
 {
-    guard let blob: OpaquePointer = blob
+    guard let blob
     else
     {
         return

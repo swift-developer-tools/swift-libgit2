@@ -147,7 +147,7 @@ public func gitSubmoduleFree(
     submodule: OpaquePointer?
 )
 {
-    guard let submodule: OpaquePointer = submodule
+    guard let submodule
     else
     {
         return

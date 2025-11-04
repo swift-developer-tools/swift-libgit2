@@ -194,7 +194,7 @@ public struct GitCertHostKey: CStructReadable, WithCConvertible, Sendable
         }
         
         guard
-            let hostKey: Data = hostKey,
+            let hostKey,
             !hostKey.isEmpty
         else
         {

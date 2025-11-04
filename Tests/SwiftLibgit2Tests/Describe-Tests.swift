@@ -58,8 +58,7 @@ final class DescribeTests: XCTestCaseStopOnFail
                 XCTAssertOK(describeCommitResult)
             }
             
-            guard let describeResultPointer: OpaquePointer
-                    = describeResultPointer
+            guard let describeResultPointer
             else
             {
                 XCTFail("The describe result pointer was nil.")
@@ -133,8 +132,7 @@ final class DescribeTests: XCTestCaseStopOnFail
                 XCTAssertOK(describeCommitResult)
             }
             
-            guard let describeResultPointer: OpaquePointer
-                    = describeResultPointer
+            guard let describeResultPointer
             else
             {
                 XCTFail("The describe result pointer was nil.")

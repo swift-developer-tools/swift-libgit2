@@ -116,7 +116,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refCreateMatchingResult)
             
-            guard let matchingRefPointer: OpaquePointer = matchingRefPointer
+            guard let matchingRefPointer
             else
             {
                 XCTFail("The matching reference pointer was nil.")
@@ -172,8 +172,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refDupResult)
             
-            guard let duplicatedRefPointer: OpaquePointer
-                    = duplicatedRefPointer
+            guard let duplicatedRefPointer
             else
             {
                 XCTFail("The duplicated reference pointer was nil.")
@@ -327,7 +326,7 @@ final class RefsTests: XCTestCaseStopOnFail
                 name, payload in
                 
                 guard
-                    let payload: UnsafeMutableRawPointer = payload,
+                    let payload,
                     let refName = String(optionalCString: name)
                 else
                 {
@@ -513,8 +512,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refIteratorGlobNewResult)
             
-            guard let iterator: UnsafeMutablePointer<git_reference_iterator>
-                    = iterator
+            guard let iterator
             else
             {
                 XCTFail("The reference iterator was nil.")
@@ -577,8 +575,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refIteratorNewResult)
             
-            guard let iterator: UnsafeMutablePointer<git_reference_iterator>
-                    = iterator
+            guard let iterator
             else
             {
                 XCTFail("The reference iterator was nil.")
@@ -922,7 +919,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refCreateSymbolicResult)
             
-            guard let symbolicRefPointer: OpaquePointer = symbolicRefPointer
+            guard let symbolicRefPointer
             else
             {
                 XCTFail("The symbolic reference pointer was nil.")
@@ -938,7 +935,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refResolveResult)
             
-            guard let resolvedRefPointer: OpaquePointer = resolvedRefPointer
+            guard let resolvedRefPointer
             else
             {
                 XCTFail("The resolved reference pointer was nil.")
@@ -1008,7 +1005,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refSetTargetResult)
             
-            guard let newRefPointer: OpaquePointer = newRefPointer
+            guard let newRefPointer
             else
             {
                 XCTFail("The new reference pointer was nil.")
@@ -1037,7 +1034,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refRenameResult)
             
-            guard let renamedRefPointer: OpaquePointer = renamedRefPointer
+            guard let renamedRefPointer
             else
             {
                 XCTFail("The renamed reference pointer was nil.")
@@ -1084,7 +1081,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refSymbolicCreateMatchingResult)
             
-            guard let matchingRefPointer: OpaquePointer = matchingRefPointer
+            guard let matchingRefPointer
             else
             {
                 XCTFail("The matching reference pointer was nil.")
@@ -1140,7 +1137,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refCreateSymbolicResult)
             
-            guard let symbolicRefPointer: OpaquePointer = symbolicRefPointer
+            guard let symbolicRefPointer
             else
             {
                 XCTFail("The symbolic reference pointer was nil.")
@@ -1159,7 +1156,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refSymbolicSetTargetResult)
             
-            guard let updatedRefPointer: OpaquePointer = updatedRefPointer
+            guard let updatedRefPointer
             else
             {
                 XCTFail("The updated reference pointer was nil.")
@@ -1226,7 +1223,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refCreateResult)
             
-            guard let tagRefPointer: OpaquePointer = tagRefPointer
+            guard let tagRefPointer
             else
             {
                 XCTFail("The tag reference pointer was nil.")
@@ -1276,7 +1273,7 @@ final class RefsTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refCreateSymbolicResult)
             
-            guard let symbolicRefPointer: OpaquePointer = symbolicRefPointer
+            guard let symbolicRefPointer
             else
             {
                 XCTFail("The symbolic reference pointer was nil.")
@@ -1325,9 +1322,9 @@ private extension RefsTests
         }
         
         guard
-            let payload     : UnsafeMutableRawPointer   = payload,
-            let reference   : OpaquePointer             = reference,
-            let refName     : String                    = gitReferenceName(ref: reference)
+            let payload,
+            let reference,
+            let refName: String = gitReferenceName(ref: reference)
         else
         {
             XCTFail("All or some callback parameters were nil.")
@@ -1350,7 +1347,7 @@ private extension RefsTests
         name, payload in
         
         guard
-            let payload: UnsafeMutableRawPointer = payload,
+            let payload,
             let refName = String(optionalCString: name)
         else
         {
@@ -1411,7 +1408,7 @@ private extension RefsTests
             
             XCTAssertOK(refCreateResult)
             
-            guard let directRefPointer: OpaquePointer = directRefPointer
+            guard let directRefPointer
             else
             {
                 XCTFail("The direct reference pointer was nil.")

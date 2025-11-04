@@ -53,7 +53,7 @@ public func gitPathspecFree(
     ps: OpaquePointer?
 )
 {
-    guard let ps: OpaquePointer = ps
+    guard let ps
     else
     {
         return
@@ -244,7 +244,7 @@ public func gitPathspecMatchListFree(
     m: OpaquePointer?
 )
 {
-    guard let m: OpaquePointer = m
+    guard let m
     else
     {
         return

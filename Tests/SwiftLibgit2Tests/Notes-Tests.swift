@@ -81,7 +81,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitLookupResult)
             
-            guard let notesCommitPointer: OpaquePointer = notesCommitPointer
+            guard let notesCommitPointer
             else
             {
                 XCTFail("The notes commit pointer was nil.")
@@ -99,7 +99,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(noteCommitReadResult)
             
-            guard let notePointer: OpaquePointer = notePointer
+            guard let notePointer
             else
             {
                 XCTFail("The note pointer was nil.")
@@ -214,8 +214,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(secondCommitLookupResult)
             
-            guard let secondNotesCommitPointer: OpaquePointer
-                    = secondNotesCommitPointer
+            guard let secondNotesCommitPointer
             else
             {
                 XCTFail("The second notes commit pointer was nil.")
@@ -241,7 +240,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(noteCommitIteratorNewResult)
             
-            guard let iteratorPointer: OpaquePointer = iteratorPointer
+            guard let iteratorPointer
             else
             {
                 XCTFail("The note iterator pointer was nil.")
@@ -328,7 +327,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitLookupResult)
             
-            guard let notesCommitPointer: OpaquePointer = notesCommitPointer
+            guard let notesCommitPointer
             else
             {
                 XCTFail("The notes commit pointer was nil.")
@@ -362,8 +361,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(newCommitLookupResult)
             
-            guard let newNotesCommitPointer: OpaquePointer
-                    = newNotesCommitPointer
+            guard let newNotesCommitPointer
             else
             {
                 XCTFail("The new notes commit pointer was nil.")
@@ -512,9 +510,9 @@ final class NotesTests: XCTestCaseStopOnFail
                 blobOID, annotatedObjectOID, payload in
                 
                 guard
-                    let payload     : UnsafeMutableRawPointer   = payload,
-                    let blobOID     : UnsafePointer<git_oid>    = blobOID,
-                    let objectOID   : UnsafePointer<git_oid>    = annotatedObjectOID
+                    let blobOID,
+                    let annotatedObjectOID,
+                    let payload
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -531,7 +529,7 @@ final class NotesTests: XCTestCaseStopOnFail
                 )
                 
                 payloadPointer.pointee.annotatedOIDs.append(
-                    GitOID(cValue: objectOID.pointee)
+                    GitOID(cValue: annotatedObjectOID.pointee)
                 )
                 
                 return GitErrorCode.gitOK.rawValue
@@ -651,7 +649,7 @@ final class NotesTests: XCTestCaseStopOnFail
             
             XCTAssertOK(noteIteratorNewResult)
             
-            guard let iteratorPointer: OpaquePointer = iteratorPointer
+            guard let iteratorPointer
             else
             {
                 XCTFail("The note iterator pointer was nil.")
@@ -801,7 +799,7 @@ private extension NotesTests
             
             XCTAssertOK(noteReadResult)
             
-            guard let notePointer: OpaquePointer = notePointer
+            guard let notePointer
             else
             {
                 XCTFail("The note pointer was nil.")

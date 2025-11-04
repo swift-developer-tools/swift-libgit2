@@ -66,8 +66,7 @@ enum Branch
             
             XCTAssertOK(annotatedCommitLookup)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 throw NSError.makeError(

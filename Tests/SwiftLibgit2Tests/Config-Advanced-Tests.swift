@@ -36,7 +36,7 @@ final class ConfigAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configNewResult)
             
-            guard let configPointer: OpaquePointer = configPointer
+            guard let configPointer
             else
             {
                 XCTFail("The configuration pointer was nil.")
@@ -64,8 +64,7 @@ final class ConfigAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configBackendFromStringResult)
             
-            guard let configBackend: UnsafeMutablePointer<git_config_backend>
-                    = configBackend
+            guard let configBackend
             else
             {
                 XCTFail("The configuration backend pointer was nil.")
@@ -108,7 +107,7 @@ final class ConfigAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configNewResult)
             
-            guard let configPointer: OpaquePointer = configPointer
+            guard let configPointer
             else
             {
                 XCTFail("The configuration pointer was nil.")
@@ -147,8 +146,7 @@ final class ConfigAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configBackendFromStringResult)
             
-            guard let firstConfigBackend: UnsafeMutablePointer<git_config_backend>
-                    = firstConfigBackend
+            guard let firstConfigBackend
             else
             {
                 XCTFail("The first configuration backend pointer was nil.")
@@ -179,8 +177,7 @@ final class ConfigAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configBackendFromStringResult)
             
-            guard let secondConfigBackend: UnsafeMutablePointer<git_config_backend>
-                    = secondConfigBackend
+            guard let secondConfigBackend
             else
             {
                 XCTFail("The second configuration backend pointer was nil.")
@@ -382,8 +379,7 @@ private extension ConfigAdvancedTests
                 XCTAssertOK(configBackendFromValuesResult)
         }
 
-        guard let configBackend: UnsafeMutablePointer<git_config_backend>
-                = configBackend
+        guard let configBackend
         else
         {
             XCTFail("The configuration backend pointer was nil.")

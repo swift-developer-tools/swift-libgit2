@@ -818,7 +818,7 @@ public func gitReferenceFree(
     ref: OpaquePointer?
 )
 {
-    guard let ref: OpaquePointer = ref
+    guard let ref
     else
     {
         return
@@ -978,7 +978,7 @@ public func gitReferenceIteratorFree(
     iter: UnsafeMutablePointer<git_reference_iterator>?
 )
 {
-    guard let iter: UnsafeMutablePointer<git_reference_iterator> = iter
+    guard let iter
     else
     {
         return

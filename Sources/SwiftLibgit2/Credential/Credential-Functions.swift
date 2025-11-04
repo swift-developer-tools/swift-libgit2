@@ -27,7 +27,7 @@ public func gitCredentialFree(
     cred: UnsafeMutablePointer<git_credential>?
 )
 {
-    guard let cred: UnsafeMutablePointer<git_credential> = cred
+    guard let cred
     else
     {
         return

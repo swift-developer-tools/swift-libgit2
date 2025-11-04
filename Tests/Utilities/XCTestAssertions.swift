@@ -213,7 +213,7 @@ func XCTAssertZeroOID(
     _ oid : GitOID?
 )
 {
-    guard let oid: GitOID = oid
+    guard let oid
     else
     {
         XCTFail("The OID is nil.")
@@ -233,7 +233,7 @@ func XCTAssertNotZeroOID(
     _ oid : GitOID?
 )
 {
-    guard let oid: GitOID = oid
+    guard let oid
     else
     {
         XCTFail("The OID is nil.")

@@ -153,7 +153,7 @@ public struct GitBlameOptions: CStructMutable, WithCConvertible, Sendable
         blameOptions.min_match_characters   = minMatchCharacters
         blameOptions.min_line               = minLine
         
-        if let maxLine: Int = maxLine
+        if let maxLine
         {
             blameOptions.max_line = maxLine
         }
@@ -388,7 +388,7 @@ public struct GitBlameLine: CStructReadable, WithCConvertible, Sendable
         var blameLine = git_blame_line()
         
         guard
-            let ptr: Data = ptr,
+            let ptr,
             !ptr.isEmpty
         else
         {

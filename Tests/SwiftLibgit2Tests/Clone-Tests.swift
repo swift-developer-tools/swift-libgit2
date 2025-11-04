@@ -173,7 +173,7 @@ final class CloneTests: XCTestCaseStopOnFail
             {
                 out, path, isBare, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -198,7 +198,7 @@ final class CloneTests: XCTestCaseStopOnFail
             {
                 out, repo, name, url, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -299,7 +299,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             XCTAssertOK(cloneResult)
             
-            guard let clonedRepoPointer: OpaquePointer = clonedRepoPointer
+            guard let clonedRepoPointer
             else
             {
                 XCTFail("The repository pointer was nil.")
@@ -324,8 +324,7 @@ final class CloneTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repositoryHEADResult)
             
-            guard let headReferencePointer: OpaquePointer
-                    = headReferencePointer
+            guard let headReferencePointer
             else
             {
                 XCTFail("The HEAD reference pointer was nil.")

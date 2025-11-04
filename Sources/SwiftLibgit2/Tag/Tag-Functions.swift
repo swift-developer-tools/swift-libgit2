@@ -97,7 +97,7 @@ public func gitTagFree(
     tag: OpaquePointer?
 )
 {
-    guard let tag: OpaquePointer = tag
+    guard let tag
     else
     {
         return

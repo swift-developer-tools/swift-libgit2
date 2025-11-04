@@ -363,7 +363,7 @@ final class StatusTests: XCTestCaseStopOnFail
             
             XCTAssertOK(statusListNewResult)
             
-            guard let statusListPointer: OpaquePointer = statusListPointer
+            guard let statusListPointer
             else
             {
                 XCTFail("The status list pointer was nil.")
@@ -703,7 +703,7 @@ private extension StatusTests
         path, statusFlags, payload in
         
         guard
-            let payload: UnsafeMutableRawPointer = payload,
+            let payload,
             let path = String(optionalCString: path)
         else
         {

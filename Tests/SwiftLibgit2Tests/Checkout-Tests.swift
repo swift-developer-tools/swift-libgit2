@@ -46,7 +46,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 why, path, _, _, _, payload in
                 
                 guard
-                    let payload: UnsafeMutableRawPointer = payload,
+                    let payload,
                     let path = String(optionalCString: path)
                 else
                 {
@@ -70,7 +70,7 @@ final class CheckoutTests: XCTestCaseStopOnFail
             {
                 path, completedSteps, totalSteps, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload pointer was nil.")
@@ -93,8 +93,8 @@ final class CheckoutTests: XCTestCaseStopOnFail
                 perfData, payload in
                 
                 guard
-                    let perfData    : UnsafePointer<git_checkout_perfdata>  = perfData,
-                    let payload     : UnsafeMutableRawPointer               = payload
+                    let perfData,
+                    let payload
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")

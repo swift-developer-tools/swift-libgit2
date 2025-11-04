@@ -282,7 +282,7 @@ final class PatchTests: XCTestCaseStopOnFail
             {
                 _, _, _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -422,7 +422,7 @@ private extension PatchTests
                 
                 XCTAssertOK(patchFromDiffResult)
                 
-                guard let patchPointer: OpaquePointer = patchPointer
+                guard let patchPointer
                 else
                 {
                     XCTFail("The patch pointer was nil.")

@@ -134,7 +134,7 @@ enum Blob
         
         XCTAssertOK(blobLookupResult)
         
-        guard let blobPointer: OpaquePointer = blobPointer
+        guard let blobPointer
         else
         {
             XCTFail("The blob pointer was nil.")

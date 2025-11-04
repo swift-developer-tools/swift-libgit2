@@ -244,7 +244,7 @@ public func gitObjectFree(
     object: OpaquePointer?
 )
 {
-    guard let object: OpaquePointer = object
+    guard let object
     else
     {
         return

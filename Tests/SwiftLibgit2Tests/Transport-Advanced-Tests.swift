@@ -227,8 +227,7 @@ final class TransportAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(transportNewResult)
             
-            guard let transportPointer: UnsafeMutablePointer<git_transport>
-                    = transportPointer
+            guard let transportPointer
             else
             {
                 XCTFail("The transport pointer was nil.")
@@ -510,7 +509,7 @@ private extension TransportAdvancedTests
             {
                 _, _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -550,8 +549,7 @@ private extension TransportAdvancedTests
             
             XCTAssertGreaterThan(callbackData.callCount, 0)
             
-            guard let transportPointer: UnsafeMutablePointer<git_transport>
-                    = transportPointer
+            guard let transportPointer
             else
             {
                 XCTFail("The transport pointer was nil.")

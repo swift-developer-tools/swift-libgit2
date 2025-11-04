@@ -120,7 +120,7 @@ public func gitODBFree(
     db: OpaquePointer?
 )
 {
-    guard let db: OpaquePointer = db
+    guard let db
     else
     {
         return
@@ -707,7 +707,7 @@ public func gitODBStreamFree(
     stream: UnsafeMutablePointer<git_odb_stream>?
 )
 {
-    guard let stream: UnsafeMutablePointer<git_odb_stream> = stream
+    guard let stream
     else
     {
         return
@@ -969,7 +969,7 @@ public func gitODBObjectFree(
     object: OpaquePointer?
 )
 {
-    guard let object: OpaquePointer = object
+    guard let object
     else
     {
         return

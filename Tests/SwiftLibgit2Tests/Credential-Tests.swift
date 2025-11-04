@@ -32,9 +32,8 @@ final class CredentialTests: XCTestCaseStopOnFail
             out, url, usernameFromURL, allowedTypes, payload in
             
             guard
-                let out     : UnsafeMutablePointer<
-                                UnsafeMutablePointer<git_credential>?>  = out,
-                let payload : UnsafeMutableRawPointer                   = payload,
+                let out,
+                let payload,
                 let url                 = String(optionalCString: url),
                 let usernameFromURL     = String(optionalCString: usernameFromURL)
             else
@@ -442,8 +441,7 @@ private extension CredentialTests
         equals  expectedUsername    : String = Repository.commitAuthorName
     )
     {
-        guard let credentialPointer: UnsafeMutablePointer<git_credential>
-                = credentialPointer
+        guard let credentialPointer
         else
         {
             XCTFail("The credential pointer was nil.")

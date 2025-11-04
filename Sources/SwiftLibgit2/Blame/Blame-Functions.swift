@@ -347,7 +347,7 @@ public func gitBlameFree(
     blame: OpaquePointer?
 )
 {
-    guard let blame: OpaquePointer = blame
+    guard let blame
     else
     {
         return

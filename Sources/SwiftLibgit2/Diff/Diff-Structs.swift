@@ -527,7 +527,7 @@ public struct GitDiffBinaryFile: CStructReadable, WithCConvertible, Sendable
         diffBinaryFile.type = type.cValue()
         
         guard
-            let data: Data = data,
+            let data,
             !data.isEmpty
         else
         {
@@ -858,7 +858,7 @@ public struct GitDiffLine: CStructInternalMutable, WithCConvertible, Sendable
         diffLine.content_offset     = contentOffset
         
         guard
-            let content: Data = content,
+            let content,
             !content.isEmpty
         else
         {

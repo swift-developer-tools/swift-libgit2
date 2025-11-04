@@ -99,7 +99,7 @@ internal extension String
         optionalCString cString: UnsafePointer<CChar>?
     )
     {
-        guard let cString: UnsafePointer<CChar> = cString
+        guard let cString
         else
         {
             return nil

@@ -249,7 +249,7 @@ public func gitStatusListFree(
     statusList: OpaquePointer?
 )
 {
-    guard let statusList: OpaquePointer = statusList
+    guard let statusList
     else
     {
         return

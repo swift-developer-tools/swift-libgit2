@@ -264,7 +264,7 @@ public func gitPatchFree(
     patch: OpaquePointer?
 )
 {
-    guard let patch: OpaquePointer = patch
+    guard let patch
     else
     {
         return

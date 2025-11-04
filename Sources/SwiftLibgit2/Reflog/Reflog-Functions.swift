@@ -328,7 +328,7 @@ public func gitReflogFree(
     reflog: OpaquePointer?
 )
 {
-    guard let reflog: OpaquePointer = reflog
+    guard let reflog
     else
     {
         return

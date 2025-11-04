@@ -207,7 +207,7 @@ internal extension Array where Element == GitOID
     {
         guard
             count > 0,
-            let cArrayOfOIDs: UnsafeMutablePointer<git_oid> = cArrayOfOIDs
+            let cArrayOfOIDs
         else
         {
             self = []

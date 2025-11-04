@@ -115,7 +115,7 @@ public func gitWorktreeFree(
     wt: OpaquePointer?
 )
 {
-    guard let wt: OpaquePointer = wt
+    guard let wt
     else
     {
         return
@@ -415,7 +415,7 @@ public func gitWorktreeIsPrunable(
     }
     
     guard
-        let isPrunableResult: Int32 = isPrunableResult,
+        let isPrunableResult,
         isPrunableResult >= 0
     else
     {

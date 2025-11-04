@@ -561,7 +561,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             XCTAssertOK(diffIndexToIndexResult)
             
-            guard let diffPointer: OpaquePointer = diffPointer
+            guard let diffPointer
             else
             {
                 XCTFail("The diff pointer was nil.")
@@ -848,7 +848,7 @@ final class DiffTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(diffGetStatsResult)
                 
-                guard let diffStatsPointer: OpaquePointer = diffStatsPointer
+                guard let diffStatsPointer
                 else
                 {
                     XCTFail("The diff stats pointer was nil.")
@@ -976,7 +976,7 @@ final class DiffTests: XCTestCaseStopOnFail
             
             XCTAssertOK(newRepoIndexResult)
             
-            guard let newIndexPointer: OpaquePointer = newIndexPointer
+            guard let newIndexPointer
             else
             {
                 XCTFail("The new index pointer was nil.")
@@ -1759,7 +1759,7 @@ private extension DiffTests
     {
         _, _, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard let payload
         else
         {
             XCTFail("The payload was nil.")
@@ -1780,7 +1780,7 @@ private extension DiffTests
     {
         _, _, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard let payload
         else
         {
             XCTFail("The payload was nil.")
@@ -1801,7 +1801,7 @@ private extension DiffTests
     {
         _, _, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard let payload
         else
         {
             XCTFail("The payload was nil.")
@@ -1822,7 +1822,7 @@ private extension DiffTests
     {
         _, _, _, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard let payload
         else
         {
             XCTFail("The payload was nil.")
@@ -1843,7 +1843,7 @@ private extension DiffTests
     {
         _, _, _, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard let payload
         else
         {
             XCTFail("The payload was nil.")
@@ -1864,7 +1864,7 @@ private extension DiffTests
     {
         _, _, _, payload in
         
-        guard let payload: UnsafeMutableRawPointer = payload
+        guard let payload
         else
         {
             XCTFail("The payload was nil.")

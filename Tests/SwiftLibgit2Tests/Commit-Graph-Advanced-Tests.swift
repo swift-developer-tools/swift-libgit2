@@ -195,7 +195,7 @@ private extension CommitGraphAdvancedTests
             
             XCTAssertOK(graphOpenResult)
             
-            guard let commitGraphPointer: OpaquePointer = commitGraphPointer
+            guard let commitGraphPointer
             else
             {
                 XCTFail("The commit graph pointer was nil.")
@@ -257,7 +257,7 @@ private extension CommitGraphAdvancedTests
             
             XCTAssertOK(revwalkNewResult)
             
-            guard let revwalkPointer: OpaquePointer = revwalkPointer
+            guard let revwalkPointer
             else
             {
                 XCTFail("The revwalk pointer was nil.")
@@ -274,7 +274,7 @@ private extension CommitGraphAdvancedTests
             
             XCTAssertOK(writerNewResult)
             
-            guard let writerPointer: OpaquePointer = writerPointer
+            guard let writerPointer
             else
             {
                 XCTFail("The commit graph writer pointer was nil.")

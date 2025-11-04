@@ -68,7 +68,7 @@ final class BlameTests: XCTestCaseStopOnFail
                 index:  0
             )
             
-            guard let blameHunk: GitBlameHunk = blameHunk
+            guard let blameHunk
             else
             {
                 XCTFail("The blame hunk was nil.")
@@ -169,7 +169,7 @@ final class BlameTests: XCTestCaseStopOnFail
                 index:  0
             )
             
-            guard let blameHunk: GitBlameHunk = blameHunk
+            guard let blameHunk
             else
             {
                 XCTFail("The blame hunk was nil.")
@@ -219,7 +219,7 @@ final class BlameTests: XCTestCaseStopOnFail
                 lineNo:     1
             )
             
-            guard let blameHunk: GitBlameHunk = blameHunk
+            guard let blameHunk
             else
             {
                 XCTFail("The blame hunk was nil.")
@@ -497,7 +497,7 @@ private extension BlameTests
             
             XCTAssertOK(blameFileResult)
             
-            guard let blamePointer: OpaquePointer = blamePointer
+            guard let blamePointer
             else
             {
                 XCTFail("The blame pointer was nil.")

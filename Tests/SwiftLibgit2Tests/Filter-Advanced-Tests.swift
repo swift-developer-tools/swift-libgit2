@@ -352,7 +352,7 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
             XCTAssertOK(blobLookupResult)
             XCTAssertNotNil(blobPointer)
             
-            guard let blobPointer: OpaquePointer = blobPointer
+            guard let blobPointer
             else
             {
                 XCTFail("The blob pointer was nil.")
@@ -375,7 +375,7 @@ final class FilterAdvancedTests: XCTestCaseStopOnFail
             {
                 _, _, src, _ in
                 
-                guard let src: OpaquePointer = src
+                guard let src
                 else
                 {
                     XCTFail("The source was nil.")
@@ -559,7 +559,7 @@ private extension FilterAdvancedTests
             
             XCTAssertOK(filterListNewResult)
             
-            guard let filterListPointer: OpaquePointer = filterListPointer
+            guard let filterListPointer
             else
             {
                 XCTFail("The filter list pointer was nil.")

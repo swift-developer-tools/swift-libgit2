@@ -601,8 +601,8 @@ private extension StashTests
             _, message, stashOID, payload in
             
             guard
-                let payload     : UnsafeMutableRawPointer   = payload,
-                let stashOID    : UnsafePointer<git_oid>    = stashOID,
+                let payload,
+                let stashOID,
                 let message = String(optionalCString: message)
             else
             {

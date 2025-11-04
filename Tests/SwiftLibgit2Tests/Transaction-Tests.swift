@@ -156,7 +156,7 @@ final class TransactionTests: XCTestCaseStopOnFail
             
             XCTAssertOK(reflogReadResult)
             
-            guard let reflogPointer: OpaquePointer = reflogPointer
+            guard let reflogPointer
             else
             {
                 XCTFail("The reflog pointer was nil.")
@@ -269,7 +269,7 @@ final class TransactionTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refLookupResult)
             
-            guard let headPointer: OpaquePointer = headPointer
+            guard let headPointer
             else
             {
                 XCTFail("The HEAD pointer was nil.")
@@ -375,7 +375,7 @@ private extension TransactionTests
             
             XCTAssertOK(transactionNewResult)
             
-            guard let transactionPointer: OpaquePointer = transactionPointer
+            guard let transactionPointer
             else
             {
                 XCTFail("The transaction pointer was nil.")

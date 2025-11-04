@@ -144,7 +144,7 @@ private extension MidxAdvancedTests
             
             XCTAssertOK(midxWriterNewResult)
             
-            guard let midxWriterPointer: OpaquePointer = midxWriterPointer
+            guard let midxWriterPointer
             else
             {
                 XCTFail("The multi-pack index writer pointer was nil.")

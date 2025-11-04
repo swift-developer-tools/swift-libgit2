@@ -132,7 +132,7 @@ final class RebaseTests: XCTestCaseStopOnFail
             
             XCTAssertOK(rebaseInitResult)
             
-            guard let rebasePointer: OpaquePointer = rebasePointer
+            guard let rebasePointer
             else
             {
                 XCTFail("The rebase pointer was nil.")
@@ -361,7 +361,7 @@ final class RebaseTests: XCTestCaseStopOnFail
         {
             _, _, _, payload in
             
-            guard let payload: UnsafeMutableRawPointer = payload
+            guard let payload
             else
             {
                 XCTFail("The payload was nil.")
@@ -481,7 +481,7 @@ private extension RebaseTests
             
             XCTAssertOK(rebaseInitResult)
             
-            guard let rebasePointer: OpaquePointer = rebasePointer
+            guard let rebasePointer
             else
             {
                 XCTFail("The rebase pointer was nil.")

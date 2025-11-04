@@ -624,8 +624,8 @@ private extension RevwalkTests
                 commitOID, payload in
                 
                 guard
-                    let commitOID   : UnsafePointer<git_oid>    = commitOID,
-                    let payload     : UnsafeMutableRawPointer   = payload
+                    let commitOID,
+                    let payload
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -777,7 +777,7 @@ private extension RevwalkTests
             
             XCTAssertOK(revwalkNewResult)
             
-            guard let revwalkPointer: OpaquePointer = revwalkPointer
+            guard let revwalkPointer
             else
             {
                 XCTFail("The revwalk pointer was nil.")

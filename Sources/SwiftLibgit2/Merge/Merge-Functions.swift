@@ -580,7 +580,7 @@ public func gitMergeFileResultFree(
     result: UnsafeMutablePointer<git_merge_file_result>?
 )
 {
-    guard let result: UnsafeMutablePointer<git_merge_file_result> = result
+    guard let result
     else
     {
         return

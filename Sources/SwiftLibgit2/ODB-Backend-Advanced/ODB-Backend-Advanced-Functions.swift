@@ -92,8 +92,8 @@ public func gitODBBackendDataFree(
 )
 {
     guard
-        let backend : UnsafeMutablePointer<git_odb_backend>     = backend,
-        let data    : UnsafeMutableRawPointer                   = data
+        let backend,
+        let data
     else
     {
         return

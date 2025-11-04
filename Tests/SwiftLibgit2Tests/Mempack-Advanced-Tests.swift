@@ -159,7 +159,7 @@ final class MempackTests: XCTestCaseStopOnFail
             
             XCTAssertOK(packbuilderNewResult)
             
-            guard let packbuilderPointer: OpaquePointer = packbuilderPointer
+            guard let packbuilderPointer
             else
             {
                 XCTFail("The packbuilder pointer was nil.")
@@ -218,7 +218,7 @@ private extension MempackTests
             
             XCTAssertOK(repoODBResult)
             
-            guard let odbPointer: OpaquePointer = odbPointer
+            guard let odbPointer
             else
             {
                 XCTFail("The ODB pointer was nil.")
@@ -248,8 +248,7 @@ private extension MempackTests
             
             XCTAssertOK(mempackNewResult)
             
-            guard let backendPointer: UnsafeMutablePointer<git_odb_backend>
-                    = backendPointer
+            guard let backendPointer
             else
             {
                 XCTFail("The backend pointer was nil.")

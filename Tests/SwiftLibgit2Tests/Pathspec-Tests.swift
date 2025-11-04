@@ -308,7 +308,7 @@ final class PathspecTests: XCTestCaseStopOnFail
                 XCTAssertOK(pathspecMatchWorkdirResult)
             }
             
-            guard let matchListPointer: OpaquePointer = matchListPointer
+            guard let matchListPointer
             else
             {
                 XCTFail("The match list pointer was nil.")
@@ -395,7 +395,7 @@ final class PathspecTests: XCTestCaseStopOnFail
                 XCTAssertOK(commitTreeResult)
             }
             
-            guard let treePointer: OpaquePointer = treePointer
+            guard let treePointer
             else
             {
                 XCTFail("The tree pointer was nil.")
@@ -531,7 +531,7 @@ private extension PathspecTests
         
         XCTAssertOK(pathspecNewResult)
         
-        guard let pathspecPointer: OpaquePointer = pathspecPointer
+        guard let pathspecPointer
         else
         {
             XCTFail("The pathspec pointer was nil.")
@@ -557,7 +557,7 @@ private extension PathspecTests
         expectDiffEntries   : Bool
     ) throws
     {
-        guard let matchListPointer: OpaquePointer = matchListPointer
+        guard let matchListPointer
         else
         {
             XCTFail("The match list pointer was nil.")

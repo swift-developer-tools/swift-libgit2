@@ -120,7 +120,7 @@ private extension HashSigAdvancedTests
         
         XCTAssertOK(hashSigCreateResult)
         
-        guard let firstHashSignature: OpaquePointer = firstHashSignature
+        guard let firstHashSignature
         else
         {
             XCTFail("The first hash signature was nil.")
@@ -138,7 +138,7 @@ private extension HashSigAdvancedTests
         
         XCTAssertOK(hashSigCreateResult)
         
-        guard let secondHashSignature: OpaquePointer = secondHashSignature
+        guard let secondHashSignature
         else
         {
             XCTFail("The second hash signature was nil.")
@@ -217,7 +217,7 @@ private extension HashSigAdvancedTests
             
             XCTAssertOK(hashSigCreateFromFileResult)
             
-            guard let firstHashSignature: OpaquePointer = firstHashSignature
+            guard let firstHashSignature
             else
             {
                 XCTFail("The first hash signature was nil.")
@@ -234,7 +234,7 @@ private extension HashSigAdvancedTests
             
             XCTAssertOK(hashSigCreateFromFileResult)
             
-            guard let secondHashSignature: OpaquePointer = secondHashSignature
+            guard let secondHashSignature
             else
             {
                 XCTFail("The second hash signature was nil.")

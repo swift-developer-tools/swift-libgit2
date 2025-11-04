@@ -290,8 +290,7 @@ internal extension Array where Element == GitRemoteHEAD
     {
         guard
             count > 0,
-            let cArrayOfRemoteHEADs: UnsafePointer<UnsafePointer<git_remote_head>?>
-                = cArrayOfRemoteHEADs
+            let cArrayOfRemoteHEADs
         else
         {
             self = []

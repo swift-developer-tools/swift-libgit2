@@ -208,7 +208,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 stage:  .gitIndexStageNormal
             )
             
-            guard let retrievedIndexEntry: GitIndexEntry = retrievedIndexEntry
+            guard let retrievedIndexEntry
             else
             {
                 XCTFail("The retrieved index entry was nil.")
@@ -254,7 +254,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 path, _, payload in
                 
                 guard
-                    let payload: UnsafeMutableRawPointer = payload,
+                    let payload,
                     let path = String(optionalCString: path)
                 else
                 {
@@ -507,7 +507,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 stage:  .gitIndexStageNormal
             )
             
-            guard let baseIndexEntry: GitIndexEntry = baseIndexEntry
+            guard let baseIndexEntry
             else
             {
                 XCTFail("The base index entry was nil.")
@@ -617,7 +617,7 @@ final class IndexTests: XCTestCaseStopOnFail
                     stage:  .gitIndexStageNormal
                 )
                 
-                guard let baseIndexEntry: GitIndexEntry = baseIndexEntry
+                guard let baseIndexEntry
                 else
                 {
                     XCTFail("The base index entry was nil.")
@@ -665,7 +665,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertOK(indexConflictIteratorNewResult)
             
-            guard let iteratorPointer: OpaquePointer = iteratorPointer
+            guard let iteratorPointer
             else
             {
                 XCTFail("The index conflict iterator was nil.")
@@ -860,7 +860,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 stage:  .gitIndexStageNormal
             )
             
-            guard let indexEntry: GitIndexEntry = indexEntry
+            guard let indexEntry
             else
             {
                 XCTFail("The index entry was nil.")
@@ -1156,7 +1156,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 stage:  .gitIndexStageNormal
             )
             
-            guard let baseIndexEntry: GitIndexEntry = baseIndexEntry
+            guard let baseIndexEntry
             else
             {
                 XCTFail("The base index entry was nil.")
@@ -1231,7 +1231,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertOK(indexIteratorNewResult)
             
-            guard let iteratorPointer: OpaquePointer = iteratorPointer
+            guard let iteratorPointer
             else
             {
                 XCTFail("The index iterator was nil.")
@@ -1379,7 +1379,7 @@ final class IndexTests: XCTestCaseStopOnFail
         
         XCTAssertOK(indexNewResult)
         
-        guard let indexPointer: OpaquePointer = indexPointer
+        guard let indexPointer
         else
         {
             XCTFail("The index pointer was nil.")
@@ -1453,7 +1453,7 @@ final class IndexTests: XCTestCaseStopOnFail
             
             XCTAssertOK(treeLookupResult)
             
-            guard let treePointer: OpaquePointer = treePointer
+            guard let treePointer
             else
             {
                 XCTFail("The tree pointer was nil.")
@@ -1671,7 +1671,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 stage:  .gitIndexStageNormal
             )
             
-            guard let originalIndexEntry: GitIndexEntry = originalIndexEntry
+            guard let originalIndexEntry
             else
             {
                 XCTFail("The original index entry was nil.")
@@ -1704,7 +1704,7 @@ final class IndexTests: XCTestCaseStopOnFail
                 stage:  .gitIndexStageNormal
             )
             
-            guard let updatedIndexEntry: GitIndexEntry = updatedIndexEntry
+            guard let updatedIndexEntry
             else
             {
                 XCTFail("The updated index entry was nil.")

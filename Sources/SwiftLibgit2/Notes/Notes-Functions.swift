@@ -80,7 +80,7 @@ public func gitNoteIteratorFree(
     it: OpaquePointer?
 )
 {
-    guard let it: OpaquePointer = it
+    guard let it
     else
     {
         return
@@ -570,7 +570,7 @@ public func gitNoteFree(
     note: OpaquePointer?
 )
 {
-    guard let note: OpaquePointer = note
+    guard let note
     else
     {
         return

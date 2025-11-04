@@ -102,7 +102,7 @@ public func gitCommitFree(
     commit: OpaquePointer?
 )
 {
-    guard let commit: OpaquePointer = commit
+    guard let commit
     else
     {
         return
@@ -1151,7 +1151,7 @@ public func gitCommitArrayDispose(
     array: UnsafeMutablePointer<git_commitarray>?
 )
 {
-    guard let array: UnsafeMutablePointer<git_commitarray> = array
+    guard let array
     else
     {
         return

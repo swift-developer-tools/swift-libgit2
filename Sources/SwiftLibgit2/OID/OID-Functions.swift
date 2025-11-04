@@ -624,7 +624,7 @@ public func gitOIDShortenFree(
     os: OpaquePointer?
 )
 {
-    guard let os: OpaquePointer = os
+    guard let os
     else
     {
         return

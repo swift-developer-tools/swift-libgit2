@@ -26,7 +26,7 @@ enum Diff
         type            : GitDeltaT?        = nil
     )
     {
-        guard let diffPointer: OpaquePointer = diffPointer
+        guard let diffPointer
         else
         {
             XCTFail("The diff pointer was nil.")
@@ -45,7 +45,7 @@ enum Diff
         
         
         
-        guard let type: GitDeltaT = type
+        guard let type
         else
         {
             return
@@ -120,7 +120,7 @@ enum Diff
         
         XCTAssertOK(oldCommitLookupResult)
         
-        guard let oldCommitPointer: OpaquePointer = oldCommitPointer
+        guard let oldCommitPointer
         else
         {
             throw NSError.makeError("The old commit pointer was nil.")
@@ -136,7 +136,7 @@ enum Diff
         
         XCTAssertOK(newCommitLookupResult)
         
-        guard let newCommitPointer: OpaquePointer = newCommitPointer
+        guard let newCommitPointer
         else
         {
             throw NSError.makeError("The new commit pointer was nil.")
@@ -174,7 +174,7 @@ enum Diff
         
         XCTAssertOK(diffTreeToTreeResult)
         
-        guard let diffPointer: OpaquePointer = diffPointer
+        guard let diffPointer
         else
         {
             throw NSError.makeError("The diff pointer was nil.")
@@ -250,7 +250,7 @@ enum Diff
         
         XCTAssertOK(diffTreeToWorkdirResult)
         
-        guard let diffPointer: OpaquePointer = diffPointer
+        guard let diffPointer
         else
         {
             throw NSError.makeError("The diff pointer was nil.")

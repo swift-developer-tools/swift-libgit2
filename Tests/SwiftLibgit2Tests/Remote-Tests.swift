@@ -294,7 +294,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             XCTAssertOK(remoteLookupResult)
             
-            guard let remotePointer: OpaquePointer = remotePointer
+            guard let remotePointer
             else
             {
                 XCTFail("The remote pointer was nil.")
@@ -352,7 +352,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             XCTAssertOK(remoteLookupResult)
             
-            guard let remotePointer: OpaquePointer = remotePointer
+            guard let remotePointer
             else
             {
                 XCTFail("The remote pointer was nil.")
@@ -673,7 +673,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             XCTAssertOK(remoteCreateAnonymousResult)
             
-            guard let remotePointer: OpaquePointer = remotePointer
+            guard let remotePointer
             else
             {
                 XCTFail("The remote pointer was nil.")
@@ -718,7 +718,7 @@ final class RemoteTests: XCTestCaseStopOnFail
         
         XCTAssertOK(remoteCreateDetachedResult)
         
-        guard let remotePointer: OpaquePointer = remotePointer
+        guard let remotePointer
         else
         {
             XCTFail("The remote pointer was nil.")
@@ -1267,7 +1267,7 @@ final class RemoteTests: XCTestCaseStopOnFail
             
             XCTAssertOK(remoteLookupResult)
             
-            guard let remotePointer: OpaquePointer = remotePointer
+            guard let remotePointer
             else
             {
                 XCTFail("The remote pointer was nil.")

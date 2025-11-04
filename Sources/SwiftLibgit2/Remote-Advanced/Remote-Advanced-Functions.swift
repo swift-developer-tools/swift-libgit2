@@ -31,7 +31,7 @@ public func gitRemoteConnectOptionsDispose(
     opts: UnsafeMutablePointer<git_remote_connect_options>?
 )
 {
-    guard let opts: UnsafeMutablePointer<git_remote_connect_options> = opts
+    guard let opts
     else
     {
         return

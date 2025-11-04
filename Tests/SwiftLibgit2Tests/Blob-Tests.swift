@@ -95,8 +95,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobCreateFromStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_writestream>
-                    = streamPointer
+            guard let streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")
@@ -189,7 +188,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             
             
-            guard let blobPointer: OpaquePointer = blobPointer
+            guard let blobPointer
             else
             {
                 XCTFail("The blob pointer was nil.")
@@ -266,7 +265,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobLookupResult)
             
-            guard let blobPointer: OpaquePointer = blobPointer
+            guard let blobPointer
             else
             {
                 XCTFail("The blob pointer was nil.")
@@ -420,7 +419,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobLookupResult)
             
-            guard let originalBlobPointer: OpaquePointer = originalBlobPointer
+            guard let originalBlobPointer
             else
             {
                 XCTFail("The original blob pointer was nil.")
@@ -436,8 +435,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobDupResult)
             
-            guard let duplicatedBlobPointer: OpaquePointer
-                    = duplicatedBlobPointer
+            guard let duplicatedBlobPointer
             else
             {
                 XCTFail("The duplicated blob pointer was nil.")
@@ -513,7 +511,7 @@ final class BlobTests: XCTestCaseStopOnFail
             
             XCTAssertOK(blobLookupResult)
             
-            guard let blobPointer: OpaquePointer = blobPointer
+            guard let blobPointer
             else
             {
                 XCTFail("The blob pointer was nil.")

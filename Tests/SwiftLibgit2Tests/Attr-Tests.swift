@@ -259,7 +259,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             let eolAttribute: UnsafePointer<CChar>? = valueOut[1]
             
-            guard let eolAttribute: UnsafePointer<CChar> = eolAttribute
+            guard let eolAttribute
             else
             {
                 XCTFail("The EOL attribute was nil.")
@@ -268,7 +268,8 @@ final class AttrTests: XCTestCaseStopOnFail
             
             XCTAssertTrue(gitAttrHasValue(attr: eolAttribute))
             
-            guard let eolAttributeString = String(optionalCString: eolAttribute)
+            guard let eolAttributeString
+                    = String(optionalCString: eolAttribute)
             else
             {
                 XCTFail("The EOL attribute string was nil.")
@@ -317,7 +318,7 @@ final class AttrTests: XCTestCaseStopOnFail
             
             let customAttribute: UnsafePointer<CChar>? = valueOut[0]
             
-            guard let customAttribute: UnsafePointer<CChar> = customAttribute
+            guard let customAttribute
             else
             {
                 XCTFail("The custom attribute was nil.")
@@ -542,7 +543,7 @@ private extension AttrTests
         name, value, payload in
         
         guard
-            let payload: UnsafeMutableRawPointer = payload,
+            let payload,
             let name    = String(optionalCString: name),
             let value   = String(optionalCString: value)
         else

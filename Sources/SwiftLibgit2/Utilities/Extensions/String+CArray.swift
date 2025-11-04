@@ -46,7 +46,7 @@ internal extension String
         {
             bytes in
             
-            if let count: Int = count
+            if let count
             {
                 guard count > 0
                 else
@@ -85,7 +85,7 @@ internal extension String
         
         
         
-        guard let string: String = string
+        guard let string
         else
         {
             return nil

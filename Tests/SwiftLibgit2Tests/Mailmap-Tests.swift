@@ -32,7 +32,7 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         XCTAssertOK(mailmapNewResult)
         
-        guard let mailmapPointer: OpaquePointer = mailmapPointer
+        guard let mailmapPointer
         else
         {
             XCTFail("The mailmap pointer was nil.")
@@ -138,7 +138,7 @@ final class MailmapTests: XCTestCaseStopOnFail
         
         XCTAssertOK(mailmapFromBufferResult)
         
-        guard let mailmapPointer: OpaquePointer = mailmapPointer
+        guard let mailmapPointer
         else
         {
             XCTFail("The mailmap pointer was nil.")
@@ -224,7 +224,7 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             XCTAssertOK(mailmapFromRepositoryResult)
             
-            guard let mailmapPointer: OpaquePointer = mailmapPointer
+            guard let mailmapPointer
             else
             {
                 XCTFail("The mailmap pointer was nil.")
@@ -331,7 +331,7 @@ final class MailmapTests: XCTestCaseStopOnFail
             
             XCTAssertOK(mailmapFromRepositoryResult)
             
-            guard let mailmapPointer: OpaquePointer = mailmapPointer
+            guard let mailmapPointer
             else
             {
                 XCTFail("The mailmap pointer was nil.")

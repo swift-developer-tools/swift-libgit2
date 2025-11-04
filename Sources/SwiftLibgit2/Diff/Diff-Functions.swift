@@ -72,7 +72,7 @@ public func gitDiffFree(
     diff: OpaquePointer?
 )
 {
-    guard let diff: OpaquePointer = diff
+    guard let diff
     else
     {
         return
@@ -1073,7 +1073,7 @@ public func gitDiffStatsFree(
     stats: OpaquePointer?
 )
 {
-    guard let stats: OpaquePointer = stats
+    guard let stats
     else
     {
         return

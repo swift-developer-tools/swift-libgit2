@@ -213,8 +213,8 @@ final class ODBTests: XCTestCaseStopOnFail
                 id, payload in
                 
                 guard
-                    let payload : UnsafeMutableRawPointer   = payload,
-                    let id      : UnsafePointer<git_oid>    = id
+                    let payload,
+                    let id
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -447,7 +447,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             XCTAssertOK(odbReadResult)
             
-            guard let sourceObjectPointer: OpaquePointer = sourceObjectPointer
+            guard let sourceObjectPointer
             else
             {
                 XCTFail("The source ODB object pointer was nil.")
@@ -463,8 +463,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             XCTAssertOK(odbObjectDupResult)
             
-            guard let duplicatedObjectPointer: OpaquePointer
-                    = duplicatedObjectPointer
+            guard let duplicatedObjectPointer
             else
             {
                 XCTFail("The duplicated ODB object pointer was nil.")
@@ -796,8 +795,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             XCTAssertOK(odbOpenWStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_odb_stream>
-                    = streamPointer
+            guard let streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")
@@ -888,7 +886,7 @@ final class ODBTests: XCTestCaseStopOnFail
             
             XCTAssertOK(odbReadResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The ODB object pointer was nil.")
@@ -944,7 +942,7 @@ private extension ODBTests
             {
                 _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -1040,7 +1038,7 @@ private extension ODBTests
             
             XCTAssertOK(odbNewResult)
             
-            guard let odbPointer: OpaquePointer = odbPointer
+            guard let odbPointer
             else
             {
                 XCTFail("The ODB pointer was nil.")
@@ -1085,8 +1083,7 @@ private extension ODBTests
             
             XCTAssertOK(odbBackendLooseResult)
             
-            guard let backendPointer: UnsafeMutablePointer<git_odb_backend>
-                    = backendPointer
+            guard let backendPointer
             else
             {
                 XCTFail("The ODB backend pointer was nil.")
@@ -1165,7 +1162,7 @@ private extension ODBTests
         
         XCTAssertOK(odbReadResult)
         
-        guard let objectPointer: OpaquePointer = objectPointer
+        guard let objectPointer
         else
         {
             XCTFail("The ODB object pointer was nil.")

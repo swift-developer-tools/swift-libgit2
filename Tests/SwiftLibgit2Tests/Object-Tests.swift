@@ -42,7 +42,7 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             XCTAssertOK(objectLookupResult)
             
-            guard let sourceObjectPointer: OpaquePointer = sourceObjectPointer
+            guard let sourceObjectPointer
             else
             {
                 XCTFail("The source object pointer was nil.")
@@ -58,8 +58,7 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             XCTAssertOK(objectDupResult)
             
-            guard let duplicatedObjectPointer: OpaquePointer
-                    = duplicatedObjectPointer
+            guard let duplicatedObjectPointer
             else
             {
                 XCTFail("The duplicated object pointer was nil.")
@@ -158,7 +157,7 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             XCTAssertOK(objectLookupResult)
             
-            guard let treeishPointer: OpaquePointer = treeishPointer
+            guard let treeishPointer
             else
             {
                 XCTFail("The treeish pointer was nil.")
@@ -176,7 +175,7 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             XCTAssertOK(objectLookupByPathResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
@@ -218,7 +217,7 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             XCTAssertOK(objectLookupResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
@@ -235,7 +234,7 @@ final class ObjectTests: XCTestCaseStopOnFail
             
             XCTAssertOK(objectPeelResult)
             
-            guard let peeledObjectPointer: OpaquePointer = peeledObjectPointer
+            guard let peeledObjectPointer
             else
             {
                 XCTFail("The peeled object pointer was nil.")
@@ -437,7 +436,7 @@ private extension ObjectTests
                 return
             }
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
@@ -453,7 +452,8 @@ private extension ObjectTests
             
             
             
-            guard let objectType: GitObjectT = gitObjectType(obj: objectPointer)
+            guard let objectType: GitObjectT
+                    = gitObjectType(obj: objectPointer)
             else
             {
                 XCTFail("The object type was nil.")
@@ -507,7 +507,8 @@ private extension ObjectTests
             
             
             
-            let headOIDStringPrefix = String(headOIDString.prefix(prefixLength))
+            let headOIDStringPrefix
+                = String(headOIDString.prefix(prefixLength))
             
             let objectLookupPrefixResult: GitErrorCode = gitObjectLookupPrefix(
                 objectOut:   &objectPointer,

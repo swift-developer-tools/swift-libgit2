@@ -222,7 +222,7 @@ public func gitIndexerFree(
     idx: OpaquePointer?
 )
 {
-    guard let idx: OpaquePointer = idx
+    guard let idx
     else
     {
         return

@@ -216,7 +216,7 @@ public func gitAnnotatedCommitFree(
     commit: OpaquePointer?
 )
 {
-    guard let commit: OpaquePointer = commit
+    guard let commit
     else
     {
         return

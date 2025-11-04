@@ -77,7 +77,7 @@ final class BranchTests: XCTestCaseStopOnFail
             {
                 branchPointer in
                 
-                guard let branchPointer: OpaquePointer = branchPointer
+                guard let branchPointer
                 else
                 {
                     XCTFail("The branch pointer was nil.")
@@ -104,7 +104,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(branchMoveResult)
                 
-                guard let movedBranchPointer: OpaquePointer = movedBranchPointer
+                guard let movedBranchPointer
                 else
                 {
                     XCTFail("The moved branch pointer was nil.")
@@ -158,8 +158,7 @@ final class BranchTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(branchIteratorNewResult)
                 
-                guard let branchIteratorPointer: OpaquePointer
-                        = branchIteratorPointer
+                guard let branchIteratorPointer
                 else
                 {
                     XCTFail("The branch iterator pointer was nil.")
@@ -219,7 +218,7 @@ final class BranchTests: XCTestCaseStopOnFail
             {
                 branchPointer in
                 
-                guard let branchPointer: OpaquePointer = branchPointer
+                guard let branchPointer
                 else
                 {
                     XCTFail("The branch pointer was nil.")

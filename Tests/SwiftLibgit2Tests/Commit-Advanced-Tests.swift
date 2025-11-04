@@ -127,7 +127,7 @@ private extension CommitAdvancedTests
         
         var callbackData = CallbackData()
         
-        if let parent: GitOID = parent
+        if let parent
         {
             parentCount             = 1
             callbackData.parent     = parent.cValue()
@@ -140,7 +140,7 @@ private extension CommitAdvancedTests
         {
             idx, payload in
             
-            guard let payload: UnsafeMutableRawPointer = payload
+            guard let payload
             else
             {
                 XCTFail("The payload was nil.")
@@ -293,7 +293,7 @@ private extension CommitAdvancedTests
         
         XCTAssertOK(commitLookupResult)
         
-        guard let commitPointer: OpaquePointer = commitPointer
+        guard let commitPointer
         else
         {
             XCTFail("The commit pointer was nil.")

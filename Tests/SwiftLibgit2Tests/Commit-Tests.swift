@@ -84,7 +84,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(treeLookupResult)
             
-            guard let treePointer: OpaquePointer = treePointer
+            guard let treePointer
             else
             {
                 XCTFail("The tree pointer was nil.")
@@ -205,7 +205,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 _, _, _, _, message, _, _, _, payload in
                 
                 guard
-                    let payload: UnsafeMutableRawPointer = payload,
+                    let payload,
                     let message = String(optionalCString: message)
                 else
                 {
@@ -268,7 +268,7 @@ final class CommitTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(rebaseInitResult)
                 
-                guard let rebasePointer: OpaquePointer = rebasePointer
+                guard let rebasePointer
                 else
                 {
                     XCTFail("The rebase pointer was nil.")
@@ -456,7 +456,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(treeLookupResult)
             
-            guard let treePointer: OpaquePointer = treePointer
+            guard let treePointer
             else
             {
                 XCTFail("The tree pointer was nil.")
@@ -570,7 +570,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitLookupResult)
             
-            guard let commitPointer: OpaquePointer = commitPointer
+            guard let commitPointer
             else
             {
                 XCTFail("The commit pointer was nil.")
@@ -777,7 +777,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitLookupResult)
             
-            guard let commitPointer: OpaquePointer = commitPointer
+            guard let commitPointer
             else
             {
                 XCTFail("The commit pointer was nil.")
@@ -933,8 +933,7 @@ private extension CommitTests
             
             XCTAssertOK(commitLookupResult)
             
-            guard let originalCommitPointer: OpaquePointer
-                    = originalCommitPointer
+            guard let originalCommitPointer
             else
             {
                 XCTFail("The original commit pointer was nil.")
@@ -985,7 +984,7 @@ private extension CommitTests
             
             
             
-            guard let newCommitPointer: OpaquePointer = newCommitPointer
+            guard let newCommitPointer
             else
             {
                 XCTFail("The new commit pointer was nil.")

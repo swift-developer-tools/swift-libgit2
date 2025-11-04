@@ -28,7 +28,7 @@ final class PackTests: XCTestCaseStopOnFail
             {
                 _, _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -102,7 +102,7 @@ final class PackTests: XCTestCaseStopOnFail
                 return gitCommitTreeID(commit: commitPointer)
             }
             
-            guard let treeOID: GitOID = treeOID
+            guard let treeOID
             else
             {
                 XCTFail("The tree OID was nil.")
@@ -127,8 +127,7 @@ final class PackTests: XCTestCaseStopOnFail
             
             XCTAssertOK(packbuilderNewResult)
             
-            guard let treePackbuilderPointer: OpaquePointer
-                    = treePackbuilderPointer
+            guard let treePackbuilderPointer
             else
             {
                 XCTFail("The tree packbuilder pointer was nil.")
@@ -214,7 +213,7 @@ final class PackTests: XCTestCaseStopOnFail
             
             XCTAssertOK(revwalkNewResult)
             
-            guard let revwalkPointer: OpaquePointer = revwalkPointer
+            guard let revwalkPointer
             else
             {
                 XCTFail("The revwalk pointer was nil.")
@@ -307,7 +306,7 @@ final class PackTests: XCTestCaseStopOnFail
             {
                 _, _, _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -496,7 +495,7 @@ private extension PackTests
             {
                 _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -584,7 +583,7 @@ private extension PackTests
             
             XCTAssertOK(packbuilderNewResult)
             
-            guard let packbuilderPointer: OpaquePointer = packbuilderPointer
+            guard let packbuilderPointer
             else
             {
                 XCTFail("The packbuilder pointer was nil.")
@@ -593,7 +592,7 @@ private extension PackTests
             
             
             
-            if let insertCommit: CommitInsertType = insertCommit
+            if let insertCommit
             {
                 let commitOID: GitOID = try repository.commit(
                     "Test content",

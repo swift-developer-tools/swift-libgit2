@@ -159,7 +159,7 @@ final class MergeAdvancedTests: XCTestCaseStopOnFail
             {
                 _, _, _, _, _, src in
                 
-                guard let src: OpaquePointer = src
+                guard let src
                 else
                 {
                     XCTFail("The source was nil.")

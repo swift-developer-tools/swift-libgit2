@@ -97,7 +97,7 @@ public func gitTreeFree(
     tree: OpaquePointer?
 )
 {
-    guard let tree: OpaquePointer = tree
+    guard let tree
     else
     {
         return
@@ -330,7 +330,7 @@ public func gitTreeEntryFree(
     entry: OpaquePointer?
 )
 {
-    guard let entry: OpaquePointer = entry
+    guard let entry
     else
     {
         return
@@ -579,7 +579,7 @@ public func gitTreebuilderFree(
     bld: OpaquePointer?
 )
 {
-    guard let bld: OpaquePointer = bld
+    guard let bld
     else
     {
         return

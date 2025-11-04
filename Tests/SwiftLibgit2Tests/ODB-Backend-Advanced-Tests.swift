@@ -118,8 +118,7 @@ private extension ODBBackendAdvancedTests
             
             XCTAssertOK(odbBackendLooseResult)
             
-            guard let backendPointer: UnsafeMutablePointer<git_odb_backend>
-                    = backendPointer
+            guard let backendPointer
             else
             {
                 XCTFail("The ODB backend pointer was nil.")

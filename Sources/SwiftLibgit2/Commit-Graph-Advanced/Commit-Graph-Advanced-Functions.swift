@@ -57,7 +57,7 @@ public func gitCommitGraphFree(
     cGraph: OpaquePointer?
 )
 {
-    guard let cGraph: OpaquePointer = cGraph
+    guard let cGraph
     else
     {
         return
@@ -139,7 +139,7 @@ public func gitCommitGraphWriterFree(
     w: OpaquePointer?
 )
 {
-    guard let w: OpaquePointer = w
+    guard let w
     else
     {
         return

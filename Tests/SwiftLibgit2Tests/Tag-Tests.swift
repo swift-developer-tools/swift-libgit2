@@ -170,8 +170,8 @@ final class TagTests: XCTestCaseStopOnFail
                 _, oid, payload in
                 
                 guard
-                    let payload : UnsafeMutableRawPointer           = payload,
-                    let oid     : UnsafeMutablePointer<git_oid>     = oid
+                    let payload,
+                    let oid
                 else
                 {
                     XCTFail("All or some callback parameters were nil.")
@@ -435,7 +435,7 @@ final class TagTests: XCTestCaseStopOnFail
             
             XCTAssertOK(tagPeelResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
@@ -560,7 +560,7 @@ private extension TagTests
             
             XCTAssertOK(tagLookupResult)
             
-            guard let tagPointer: OpaquePointer = tagPointer
+            guard let tagPointer
             else
             {
                 XCTFail("The tag pointer was nil.")

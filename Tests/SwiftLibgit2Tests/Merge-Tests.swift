@@ -415,7 +415,7 @@ final class MergeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(ourCommitLookupResult)
             
-            guard let ourCommitPointer: OpaquePointer = ourCommitPointer
+            guard let ourCommitPointer
             else
             {
                 XCTFail("Our commit pointer was nil.")
@@ -432,7 +432,7 @@ final class MergeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(theirCommitLookupResult)
             
-            guard let theirCommitPointer: OpaquePointer = theirCommitPointer
+            guard let theirCommitPointer
             else
             {
                 XCTFail("Their commit pointer was nil.")
@@ -458,7 +458,7 @@ final class MergeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(mergeCommitsResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 XCTFail("The index pointer was nil.")
@@ -1042,7 +1042,7 @@ final class MergeTests: XCTestCaseStopOnFail
                 XCTAssertOK(ourCommitTreeResult)
             }
             
-            guard let ourTreePointer: OpaquePointer = ourTreePointer
+            guard let ourTreePointer
             else
             {
                 XCTFail("Our tree pointer was nil.")
@@ -1075,7 +1075,7 @@ final class MergeTests: XCTestCaseStopOnFail
                 XCTAssertOK(theirCommitTreeResult)
             }
             
-            guard let theirTreePointer: OpaquePointer = theirTreePointer
+            guard let theirTreePointer
             else
             {
                 XCTFail("Their tree pointer was nil.")
@@ -1106,7 +1106,7 @@ final class MergeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(mergeTreesResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 XCTFail("The index pointer was nil.")
@@ -1184,8 +1184,7 @@ private extension MergeTests
             
             XCTAssertOK(annotatedCommitLookupResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -1206,8 +1205,7 @@ private extension MergeTests
             
             XCTAssertOK(referenceLookupResult)
             
-            guard let headReferencePointer: OpaquePointer
-                    = headReferencePointer
+            guard let headReferencePointer
             else
             {
                 XCTFail("The HEAD reference pointer was nil.")

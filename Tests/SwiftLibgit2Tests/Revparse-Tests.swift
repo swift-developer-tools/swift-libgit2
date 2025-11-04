@@ -121,14 +121,14 @@ final class RevparseTests: XCTestCaseStopOnFail
             
             XCTAssertOK(revparseExtResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
                 return
             }
             
-            guard let refPointer: OpaquePointer = refPointer
+            guard let refPointer
             else
             {
                 XCTFail("The reference pointer was nil.")
@@ -193,7 +193,7 @@ final class RevparseTests: XCTestCaseStopOnFail
             XCTAssertOK(revparseExtResult)
             XCTAssertNil(refPointer)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
@@ -242,7 +242,7 @@ final class RevparseTests: XCTestCaseStopOnFail
             
             XCTAssertOK(revparseSingleResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")
@@ -385,7 +385,7 @@ final class RevparseTests: XCTestCaseStopOnFail
             
             XCTAssertOK(revparseSingleResult)
             
-            guard let objectPointer: OpaquePointer = objectPointer
+            guard let objectPointer
             else
             {
                 XCTFail("The object pointer was nil.")

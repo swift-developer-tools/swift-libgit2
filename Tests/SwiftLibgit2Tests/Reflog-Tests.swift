@@ -137,7 +137,7 @@ final class ReflogTests: XCTestCaseStopOnFail
             
             XCTAssertOK(reflogReadAfterDeleteResult)
             
-            guard let reflogPointer: OpaquePointer = reflogPointer
+            guard let reflogPointer
             else
             {
                 XCTFail("The reflog pointer was nil.")
@@ -367,7 +367,7 @@ private extension ReflogTests
             
             XCTAssertOK(reflogReadResult)
             
-            guard let reflogPointer: OpaquePointer = reflogPointer
+            guard let reflogPointer
             else
             {
                 XCTFail("The reflog pointer was nil.")

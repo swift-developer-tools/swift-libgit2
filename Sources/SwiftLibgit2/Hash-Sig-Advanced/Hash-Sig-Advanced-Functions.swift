@@ -95,7 +95,7 @@ public func gitHashSigFree(
     sig: OpaquePointer?
 )
 {
-    guard let sig: OpaquePointer = sig
+    guard let sig
     else
     {
         return

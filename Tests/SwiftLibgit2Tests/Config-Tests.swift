@@ -63,8 +63,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configBackendFromStringResult)
             
-            guard let configBackend: UnsafeMutablePointer<git_config_backend>
-                    = configBackend
+            guard let configBackend
             else
             {
                 XCTFail("The configuration backend pointer was nil.")
@@ -286,8 +285,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configIteratorNewResult)
             
-            guard let configIterator: UnsafeMutablePointer<git_config_iterator>
-                    = configIterator
+            guard let configIterator
             else
             {
                 XCTFail("The configuration iterator was nil.")
@@ -339,8 +337,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configIteratorGlobNewResult)
             
-            guard let configGlobIterator: UnsafeMutablePointer<git_config_iterator>
-                    = configGlobIterator
+            guard let configGlobIterator
             else
             {
                 XCTFail("The configuration glob iterator was nil.")
@@ -404,7 +401,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             guard
                 isOK(configOpenDefaultResult),
-                let parentConfigPointer: OpaquePointer = parentConfigPointer
+                let parentConfigPointer
             else
             {
                 /// This may succeed or fail depending on the environment.
@@ -931,8 +928,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configMultivarIteratorNewResult)
             
-            guard let configIterator: UnsafeMutablePointer<git_config_iterator>
-                    = configIterator
+            guard let configIterator
             else
             {
                 XCTFail("The configuration iterator was nil.")
@@ -1033,7 +1029,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configNewResult)
             
-            guard let newConfigPointer: OpaquePointer = newConfigPointer
+            guard let newConfigPointer
             else
             {
                 XCTFail("The new configuration pointer was nil.")
@@ -1415,7 +1411,7 @@ final class ConfigTests: XCTestCaseStopOnFail
             
             XCTAssertOK(configSnapshotResult)
             
-            guard let snapshotPointer: OpaquePointer = snapshotPointer
+            guard let snapshotPointer
             else
             {
                 XCTFail("The configuration snapshot pointer was nil.")
@@ -1489,7 +1485,7 @@ private extension ConfigTests
         }
         
         guard
-            let payload: UnsafeMutableRawPointer = payload,
+            let payload,
             let name    = String(optionalCString: entry?.pointee.name),
             let value   = String(optionalCString: entry?.pointee.value)
         else

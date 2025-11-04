@@ -65,7 +65,7 @@ final class RevertTests: XCTestCaseStopOnFail
             
             XCTAssertOK(commitLookupResult)
             
-            guard let commitPointer: OpaquePointer = commitPointer
+            guard let commitPointer
             else
             {
                 XCTFail("The commit pointer was nil.")
@@ -91,7 +91,7 @@ final class RevertTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoIndexResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 XCTFail("The index pointer was nil.")
@@ -181,7 +181,7 @@ final class RevertTests: XCTestCaseStopOnFail
             
             XCTAssertOK(revertCommitLookupResult)
             
-            guard let revertCommitPointer: OpaquePointer = revertCommitPointer
+            guard let revertCommitPointer
             else
             {
                 XCTFail("The revert commit pointer was nil.")
@@ -198,7 +198,7 @@ final class RevertTests: XCTestCaseStopOnFail
             
             XCTAssertOK(ourCommitLookupResult)
             
-            guard let ourCommitPointer: OpaquePointer = ourCommitPointer
+            guard let ourCommitPointer
             else
             {
                 XCTFail("Our commit pointer was nil.")
@@ -218,7 +218,7 @@ final class RevertTests: XCTestCaseStopOnFail
             
             XCTAssertOK(revertCommitResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 XCTFail("The index pointer was nil.")

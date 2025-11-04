@@ -103,7 +103,7 @@ public func gitMessageTrailerArrayFree(
     arr: UnsafeMutablePointer<git_message_trailer_array>?
 )
 {
-    guard let arr: UnsafeMutablePointer<git_message_trailer_array> = arr
+    guard let arr
     else
     {
         return

@@ -371,7 +371,7 @@ public func gitFilterListFree(
     filters: OpaquePointer?
 )
 {
-    guard let filters: OpaquePointer = filters
+    guard let filters
     else
     {
         return

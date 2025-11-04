@@ -272,7 +272,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(worktreeLookupResult)
             
-            guard let worktreePointer: OpaquePointer = worktreePointer
+            guard let worktreePointer
             else
             {
                 XCTFail("The worktree pointer was nil.")
@@ -329,7 +329,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(repoOpenResult)
             
-            guard let repoPointer: OpaquePointer = repoPointer
+            guard let repoPointer
             else
             {
                 XCTFail("The repository pointer was nil.")
@@ -346,7 +346,7 @@ final class WorktreeTests: XCTestCaseStopOnFail
             
             XCTAssertOK(worktreeOpenFromRepoResult)
             
-            guard let worktreePointer: OpaquePointer = worktreePointer
+            guard let worktreePointer
             else
             {
                 XCTFail("The worktree pointer was nil.")

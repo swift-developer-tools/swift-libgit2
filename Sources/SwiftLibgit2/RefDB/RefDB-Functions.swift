@@ -114,7 +114,7 @@ public func gitRefDBFree(
     refDB: OpaquePointer?
 )
 {
-    guard let refDB: OpaquePointer = refDB
+    guard let refDB
     else
     {
         return

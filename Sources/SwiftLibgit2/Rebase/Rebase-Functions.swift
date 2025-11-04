@@ -486,7 +486,7 @@ public func gitRebaseFree(
     rebase: OpaquePointer?
 )
 {
-    guard let rebase: OpaquePointer = rebase
+    guard let rebase
     else
     {
         return

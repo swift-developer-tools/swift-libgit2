@@ -99,8 +99,7 @@ final class RefDBBackendAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refDBBackendFSResult)
             
-            guard let backendPointer: UnsafeMutablePointer<git_refdb_backend>
-                    = backendPointer
+            guard let backendPointer
             else
             {
                 XCTFail("The reference database backend pointer was nil.")
@@ -116,7 +115,7 @@ final class RefDBBackendAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(refDBNewResult)
             
-            guard let refDBPointer: OpaquePointer = refDBPointer
+            guard let refDBPointer
             else
             {
                 XCTFail("The reference database pointer was nil.")

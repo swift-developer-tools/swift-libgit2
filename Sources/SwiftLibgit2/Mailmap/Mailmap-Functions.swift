@@ -48,7 +48,7 @@ public func gitMailmapFree(
     mm: OpaquePointer?
 )
 {
-    guard let mm: OpaquePointer = mm
+    guard let mm
     else
     {
         return

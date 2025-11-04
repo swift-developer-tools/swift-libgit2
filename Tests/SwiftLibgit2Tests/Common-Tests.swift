@@ -306,7 +306,7 @@ final class CommonTests: XCTestCaseStopOnFail
         
         
         
-        if let prerelease: String = prerelease
+        if let prerelease
         {
             XCTAssertFalse(prerelease.isEmpty)
             

@@ -92,7 +92,7 @@ final class DiffAdvancedTests: XCTestCaseStopOnFail
             
             XCTAssertOK(statusListNewResult)
             
-            guard let statusListPointer: OpaquePointer = statusListPointer
+            guard let statusListPointer
             else
             {
                 XCTFail("The status list pointer was nil.")

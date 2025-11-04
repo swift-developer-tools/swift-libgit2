@@ -44,7 +44,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             XCTAssertOK(featureCommitLookupResult)
             
-            guard let featureCommitPointer: OpaquePointer = featureCommitPointer
+            guard let featureCommitPointer
             else
             {
                 XCTFail("The feature commit pointer was nil.")
@@ -138,7 +138,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             XCTAssertOK(mainCommitLookupResult)
             
-            guard let mainCommitPointer: OpaquePointer = mainCommitPointer
+            guard let mainCommitPointer
             else
             {
                 XCTFail("The main commit pointer was nil.")
@@ -155,7 +155,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             XCTAssertOK(featureCommitLookupResult)
             
-            guard let featureCommitPointer: OpaquePointer = featureCommitPointer
+            guard let featureCommitPointer
             else
             {
                 XCTFail("The feature commit pointer was nil.")
@@ -175,7 +175,7 @@ final class CherrypickTests: XCTestCaseStopOnFail
             
             XCTAssertOK(cherrypickCommitResult)
             
-            guard let indexPointer: OpaquePointer = indexPointer
+            guard let indexPointer
             else
             {
                 XCTFail("The index pointer was nil.")
@@ -329,7 +329,7 @@ private extension CherrypickTests
         
         XCTAssertOK(repoHEADResult)
         
-        guard let branchPointer: OpaquePointer = branchPointer
+        guard let branchPointer
         else
         {
             throw NSError.makeError("The branch pointer was nil.")

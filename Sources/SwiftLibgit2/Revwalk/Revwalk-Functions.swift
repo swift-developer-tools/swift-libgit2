@@ -445,7 +445,7 @@ public func gitRevwalkFree(
     walk: OpaquePointer?
 )
 {
-    guard let walk: OpaquePointer = walk
+    guard let walk
     else
     {
         return

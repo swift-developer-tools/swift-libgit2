@@ -324,7 +324,7 @@ private extension FilterTests
                 in: repository
             )
             
-            guard let blobPointer: OpaquePointer = blobPointer
+            guard let blobPointer
             else
             {
                 XCTFail("The blob pointer was nil.")
@@ -421,7 +421,7 @@ private extension FilterTests
                 in: repository
             )
             
-            guard let blobPointer: OpaquePointer = blobPointer
+            guard let blobPointer
             else
             {
                 XCTFail("The blob pointer was nil.")
@@ -453,8 +453,7 @@ private extension FilterTests
             
             XCTAssertOK(blobCreateFromStreamResult)
             
-            guard let streamPointer: UnsafeMutablePointer<git_writestream>
-                    = streamPointer
+            guard let streamPointer
             else
             {
                 XCTFail("The stream pointer was nil.")

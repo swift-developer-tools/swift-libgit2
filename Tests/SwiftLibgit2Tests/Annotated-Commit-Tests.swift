@@ -51,8 +51,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(annotatedCommitFromFetchheadResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -94,8 +93,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(referenceLookupResult)
             
-            guard let headReferencePointer: OpaquePointer
-                    = headReferencePointer
+            guard let headReferencePointer
             else
             {
                 XCTFail("The HEAD reference pointer was nil.")
@@ -122,8 +120,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(annotatedCommitFromRefResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -174,8 +171,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(annotatedCommitFromRevspecResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")
@@ -221,8 +217,7 @@ final class AnnotatedCommitTests: XCTestCaseStopOnFail
             
             XCTAssertOK(annotatedCommitLookupResult)
             
-            guard let annotatedCommitPointer: OpaquePointer
-                    = annotatedCommitPointer
+            guard let annotatedCommitPointer
             else
             {
                 XCTFail("The annotated commit pointer was nil.")

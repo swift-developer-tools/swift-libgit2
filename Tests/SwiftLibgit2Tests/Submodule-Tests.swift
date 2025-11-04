@@ -53,7 +53,7 @@ final class SubmoduleTests: XCTestCaseStopOnFail
             
             XCTAssertOK(submoduleAddSetupResult)
             
-            guard let submodulePointer: OpaquePointer = submodulePointer
+            guard let submodulePointer
             else
             {
                 XCTFail("The submodule pointer was nil.")
@@ -69,7 +69,7 @@ final class SubmoduleTests: XCTestCaseStopOnFail
             
             XCTAssertOK(submoduleOpenResult)
             
-            guard let subRepoPointer: OpaquePointer = subRepoPointer
+            guard let subRepoPointer
             else
             {
                 XCTFail("The subrepository pointer was nil.")
@@ -285,7 +285,7 @@ final class SubmoduleTests: XCTestCaseStopOnFail
                 
                 XCTAssertOK(submoduleAddSetupResult)
                 
-                guard let submodulePointer: OpaquePointer = submodulePointer
+                guard let submodulePointer
                 else
                 {
                     XCTFail("The submodule pointer was nil.")
@@ -304,7 +304,7 @@ final class SubmoduleTests: XCTestCaseStopOnFail
                 _, name, payload in
                 
                 guard
-                    let payload: UnsafeMutableRawPointer = payload,
+                    let payload,
                     let name = String(optionalCString: name)
                 else
                 {
@@ -1244,7 +1244,7 @@ private extension SubmoduleTests
             
             XCTAssertOK(submoduleAddSetupResult)
             
-            guard let submodulePointer: OpaquePointer = submodulePointer
+            guard let submodulePointer
             else
             {
                 XCTFail("The submodule pointer was nil.")

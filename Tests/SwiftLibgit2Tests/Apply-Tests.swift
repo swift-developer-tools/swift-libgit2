@@ -144,7 +144,7 @@ final class ApplyTests: XCTestCaseStopOnFail
                 XCTAssertOK(commitTreeResult)
             }
             
-            guard let treePointer: OpaquePointer = treePointer
+            guard let treePointer
             else
             {
                 XCTFail("The tree pointer was nil.")
@@ -371,7 +371,7 @@ private extension ApplyTests
             
             XCTAssertOK(diffTreeToTreeResult)
             
-            guard let diffPointer: OpaquePointer = diffPointer
+            guard let diffPointer
             else
             {
                 XCTFail("The diff pointer was nil.")
@@ -390,7 +390,7 @@ private extension ApplyTests
             {
                 _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -411,7 +411,7 @@ private extension ApplyTests
             {
                 _, payload in
                 
-                guard let payload: UnsafeMutableRawPointer = payload
+                guard let payload
                 else
                 {
                     XCTFail("The payload was nil.")
@@ -438,7 +438,7 @@ private extension ApplyTests
                 applyOptions.hunkCB     = hunkCB
                 applyOptions.payload    = UnsafeMutableRawPointer(callbackDataPointer)
                 
-                if let flags: GitApplyFlagsT = flags
+                if let flags
                 {
                     applyOptions.flags = flags
                 }

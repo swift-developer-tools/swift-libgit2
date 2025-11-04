@@ -472,7 +472,7 @@ public func gitPackbuilderFree(
     pb: OpaquePointer?
 )
 {
-    guard let pb: OpaquePointer = pb
+    guard let pb
     else
     {
         return
