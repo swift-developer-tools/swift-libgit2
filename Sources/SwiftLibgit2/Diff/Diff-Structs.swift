@@ -635,7 +635,7 @@ public struct GitDiffHunk: CStructInternalMutable, CConvertible, Sendable
     
     
     
-    /// Initializes a default ``GitDiffHunk``.
+    /// Initializes a default ``GitDiffHunk`` instance.
     public init() { }
     
     

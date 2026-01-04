@@ -12,7 +12,7 @@
 ///
 /// A struct that conforms to ``CStructInternalMutable`` may also need to
 /// conform to ``CFreeable`` if libgit2 provides a corresponding memory-freeing
-/// function. See the ``CStruct`` documenation for more information.
+/// function. See the ``CStruct`` documentation for more information.
 internal protocol CFreeable: CStruct
 {
     /// The type of the pointer passed to ``freeCValue(_:)`` to free the memory

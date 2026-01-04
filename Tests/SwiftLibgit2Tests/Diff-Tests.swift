@@ -172,7 +172,7 @@ final class DiffTests: XCTestCaseStopOnFail
             _ = gitDiffBlobs(
                 oldBlob:    oldBlobPointer,
                 oldAsPath:  "old.txt",
-                newBlob:     newBlobPointer,
+                newBlob:    newBlobPointer,
                 newAsPath:  "new.txt",
                 options:    nil,
                 fileCB:     nil,

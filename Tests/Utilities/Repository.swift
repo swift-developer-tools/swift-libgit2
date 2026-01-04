@@ -1038,7 +1038,7 @@ internal extension Repository
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        return try Repository.withRepository
+        return try withRepository
         {
             repository in
             
@@ -1128,7 +1128,7 @@ internal extension Repository
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        return try Repository.withRepository
+        return try withRepository
         {
             repository in
             
@@ -1180,7 +1180,7 @@ internal extension Repository
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        return try Repository.withRepository
+        return try withRepository
         {
             repository in
             
@@ -1239,7 +1239,7 @@ internal extension Repository
         _ body  : (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        return try Repository.withRepository
+        return try withRepository
         {
             repository in
             
@@ -1272,7 +1272,7 @@ internal extension Repository
                         repo:   repository.pointer,
                         name:   Self.remoteName,
                         url:    Self.remoteURL,
-                        fetch:  Repository.fetchRefspec
+                        fetch:  fetchRefspec
                     )
             }
             
@@ -1368,7 +1368,7 @@ internal extension Repository
         _ body: (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        return try Repository.withRepository
+        return try withRepository
         {
             repository in
             
@@ -1426,7 +1426,7 @@ internal extension Repository
         _ body  : (Repository, OpaquePointer) throws -> T
     ) throws -> T
     {
-        return try Repository.withRepository
+        return try withRepository
         {
             repository in
             

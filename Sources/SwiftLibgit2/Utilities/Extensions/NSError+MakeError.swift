@@ -34,7 +34,7 @@ internal extension NSError
         return NSError(
             domain:     Bundle.main.bundleIdentifier ?? "swift-libgit2",
             code:       Int(code),
-            userInfo:   [NSLocalizedDescriptionKey: message]
+            userInfo:   [NSLocalizedDescriptionKey : message]
         )
     }
     

@@ -35,7 +35,7 @@ public struct GitDiffPerfData: CStructInternalMutable, CConvertible, Sendable
     
     
     
-    /// Initializes a default ``GitDiffPerfData``.
+    /// Initializes a default ``GitDiffPerfData`` instance.
     public init() { }
     
     

@@ -784,13 +784,13 @@ public func gitDiffBlobToBuffer(
             
             return try buffer.withOptionalCString
             {
-                cBuffer, cBufferLength in
+                cBuffer, cBufferCount in
                 
                 return git_diff_blob_to_buffer(
                     oldBlob,
                     oldAsPath,
                     cBuffer,
-                    cBufferLength,
+                    cBufferCount,
                     bufferAsPath,
                     cOptions,
                     fileCB,
