@@ -14,17 +14,19 @@ initialization macros. Direct access to the libgit2 C library is also provided
 by the package. See [Usage](#Usage) for an example of how to import and use 
 either library.
 
+The bindings use memory-safe Swift types wherever possible, while preserving 
+libgit2's behavior and semantics. For example, some bindings use native Swift 
+types like `String` instead of `UnsafePointer<CChar>`, and accept `inout` 
+parameters to memory-safe Swift structs instead of unsafe pointers to C structs. 
+In these cases, swift-libgit2 safely converts types between Swift and C, 
+managing and freeing memory as needed. See 
+[Memory Management](#Memory-Management) for more information.
+
 The bindings use the same signatures and names as their C equivalents, but are 
 written using [camel case](https://en.wikipedia.org/wiki/Camel_case) instead of 
-[snake case](https://en.wikipedia.org/wiki/Snake_case).
-
-Similar to libgit2, the bindings do not use 
-[namespaces](https://en.wikipedia.org/wiki/Namespace). All bindings are 
-available globally.
-
-The bindings use native Swift types wherever possible, while preserving 
-libgit2's behavior and semantics. For example, some bindings use Swift types 
-like `String` instead of `UnsafePointer<CChar>`.
+[snake case](https://en.wikipedia.org/wiki/Snake_case). Similar to libgit2, the 
+bindings do not use [namespaces](https://en.wikipedia.org/wiki/Namespace). All 
+bindings are available globally.
 
 
 
@@ -103,13 +105,17 @@ converted from Swift to C, or in other cases specific to individual functions.
 
 ### Memory Management
 
-swift-libgit2 directly invokes libgit2 C code. The caller is responsible for 
-freeing memory allocated by libgit2, unless otherwise specified.
+swift-libgit2 handles memory management for most bindings. For example, `inout` 
+Swift types are safely converted between Swift and C, with any allocated 
+memory being freed as needed.
+
+However, some bindings require manual memory management, particularly when 
+working with opaque or unsafe pointers. The caller is responsible for freeing 
+the memory using the appropriate swift-libgit2 or libgit2 function.
 
 Consider using 
 [`defer`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/statements/#Defer-Statement)
-statements with memory-freeing function bindings to consistently and safely 
-free memory.
+statements with memory-freeing functions to consistently and safely free memory.
 
 ### Thread Safety
 
