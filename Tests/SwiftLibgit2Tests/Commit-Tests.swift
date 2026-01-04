@@ -326,7 +326,7 @@ final class CommitTests: XCTestCaseStopOnFail
             
             XCTAssertGreaterThan(callbackData.callCount, 0)
             XCTAssertNotNil(callbackData.lastMessage)
-            XCTAssertFalse(callbackData.lastMessage?.isEmpty ?? false)
+            XCTAssertFalse(callbackData.lastMessage?.isEmpty ?? true)
         }
     }
     
